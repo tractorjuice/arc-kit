@@ -2,7 +2,7 @@
 // UK food overlay helper. Standard library only.
 // Commands are entries in COMMANDS; each is one exported function returning an exit code.
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, realpathSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, realpathSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -1173,6 +1173,10 @@ export const worksheetJson = (parsed) =>
 
 export const SECTION_DOCS = { FOODXC: 'XC', FOODCLN: 'CL', FOODCHL: 'CH', FOODCOOK: 'CK', FOODMGT: 'MG' };
 export const DOC_CODES = [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN'];
+// The completion record: rendered and checked like the documents above, but it reports on them, so it
+// is neither in their status nor signed off itself. See the status part below.
+export const COMPLETION_RECORD = 'FOODCMP';
+const RENDERED_CODES = [...DOC_CODES, COMPLETION_RECORD];
 export const UNANSWERED = '**NOT YET ANSWERED**';
 // Printed before every answer in a business's document, and before the unanswered and proposed strings.
 export const OUR_ANSWER = '**Our answer:** ';
@@ -1450,10 +1454,19 @@ function ownEntryChunks(entry) {
   return [...chunks, ['The text below is the business\'s own, and this tool did not write or check it.'], fenced(entry.suppliedText)];
 }
 
+const worksheetName = (section) => `answers-${section}.md`;
+const worksheetFile = (project, section) => join(project, 'food-safety', worksheetName(section));
+// A file's text as a hash takes it: what the parser does not read makes no difference. That is a byte
+// order mark at the start, Windows line endings, spaces and tabs at the ends of lines and blank lines
+// at the end. Every other character counts, blank lines inside included: one ends a value, and the
+// guidance comment is compared line by line.
+const normalised = (text) => text.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').replace(/[ \t]+$/gm, '')
+  .replace(/\n*$/, '\n');
+
 // What to do about `file`, which holds the `found` worksheet where the `wanted` one should be. Making
 // the wanted worksheet in its place would overwrite it, so it is moved or renamed first.
 function misplaced(file, found, wanted, project) {
-  const home = join(project, 'food-safety', `answers-${found}.md`);
+  const home = worksheetFile(project, found);
   const taken = existsSync(home) ? ', but there is already a file there: compare the two before you move it' : '';
   return `${file} is the ${found} worksheet, not the ${wanted} one. Move or rename it first, so that it is not ` +
     `overwritten: it probably belongs in ${home}${taken}. Then make the ${wanted} worksheet with: ` +
@@ -1469,7 +1482,7 @@ function readSources(doc, project, data) {
   const refused = [];
   const problems = [];
   for (const section of HASH_ORDER.filter((name) => uses.includes(name))) {
-    const file = join(project, 'food-safety', `answers-${section}.md`);
+    const file = worksheetFile(project, section);
     if (!existsSync(file)) {
       if (needs.includes(section)) refused.push(`${file} does not exist. Make it with: ${makeWorksheet(section, file)}, then fill it in.`);
       continue;
@@ -1482,9 +1495,9 @@ function readSources(doc, project, data) {
       continue;
     }
     const text = bytes.toString('utf8');
-    // The hash is of the text as the parser reads it: a byte order mark and Windows line endings do
-    // not change it, so a worksheet saved on Windows renders the same body.
-    hash.update(text.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n'));
+    // The hash is of the text as the parser reads it (normalised), so a worksheet saved on Windows,
+    // say, renders the same body. answersHash, in the status part, hashes in the same way.
+    hash.update(normalised(text));
     const parsed = parseWorksheet(text, data);
     if (parsed.data !== null && parsed.data !== DATA_ID) {
       refused.push(`${file} answers data ${parsed.data}, but the helper's data is ${DATA_ID}. Keep a copy of it, make a ` +
@@ -1504,7 +1517,8 @@ function readSources(doc, project, data) {
 // Renders a document's body from the worksheets in `project`/food-safety. Returns { exit: 0, text }
 // or { exit, messages }; nothing is rendered from a worksheet the parser could not read cleanly.
 export function renderDocument(doc, project, data) {
-  if (!DOC_CODES.includes(doc)) return { exit: 2, messages: [`--doc is one of ${DOC_CODES.join(', ')}`] };
+  if (doc === COMPLETION_RECORD) return completionRecordDocument(project, data);
+  if (!DOC_CODES.includes(doc)) return { exit: 2, messages: [`--doc is one of ${RENDERED_CODES.join(', ')}`] };
   const section = SECTION_DOCS[doc];
   // The profile quotes the special-processes paragraph from CK.json.
   const dataNeeded = section ?? (doc === 'FOODPROF' ? 'CK' : null);
@@ -1617,15 +1631,18 @@ export function checkDocument(doc, project, report, data) {
   const at = index < 0 ? Math.min(region.length, expected.length) : index;
   const line = body.begin + at;
   const stale = at === 0 && body.marker[3] !== BEGIN_MARKER.exec(expected[0])[3];
-  const what = stale
-    ? 'the worksheets have changed since this body was rendered: render the document again.'
-    : `this line is not what a fresh render of ${doc} gives.`;
+  // The completion record also depends on which documents are written, in step and signed off, so
+  // any difference means it no longer matches the project.
+  let what = `this line is not what a fresh render of ${doc} gives.`;
+  if (doc === COMPLETION_RECORD) what = COMPLETION_STALE;
+  else if (stale) what = 'the worksheets have changed since this body was rendered: render the document again.';
   const [want, got] = [expected[at] ?? '', region[at] ?? ''];
   const { column, expectedChar, foundChar } = firstDifference(want, got);
   return {
     exit: 1, ok: false, line, column, expected: want, found: got, expectedChar, foundChar,
     message: `${report}:${line}: ${what} The lines first differ at column ${column}, where the render has ${expectedChar} ` +
-      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}\n${CHECK_ADVICE}`
+      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}` +
+      (doc === COMPLETION_RECORD ? '' : `\n${CHECK_ADVICE}`)
   };
 }
 
@@ -1649,7 +1666,7 @@ function failure(io, result) {
 function documentOptions(args, valued, flags = []) {
   const { options, error } = readOptions(args, ['doc', 'project', 'data', ...valued], flags);
   if (error) return { usage: error };
-  if (!DOC_CODES.includes(options.doc)) return { usage: `--doc is one of ${DOC_CODES.join(', ')}` };
+  if (!RENDERED_CODES.includes(options.doc)) return { usage: `--doc is one of ${RENDERED_CODES.join(', ')}` };
   if (!options.project) return { usage: '--project names the project folder that holds food-safety/' };
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
   return dataError ? { input: dataError } : { options, data };
@@ -1692,6 +1709,530 @@ export function referenceCommand(args, io = { out: console.log, err: console.err
   return 0;
 }
 
+// ---------------------------------------------------------------------------------------------
+// Status, the completion record and sign-off.
+//
+// `status` says, for each document, how far its worksheets have got, whether the document is written
+// and in step with them, and whether a named person has signed it off; then the special processes and
+// foods the business does, with the own entries that cover them; then, in plain English, everything
+// that is not finished. The completion record, FOODCMP, is the pack's own record (diary pages 78 and
+// 79) filled in from that status, followed by the same list. `sign-off` records that a named person
+// has confirmed a finished document, and refuses anything else: it is the only way a document becomes
+// signed off. The helper never edits a document file.
+//
+// A document is a file in the project folder (not in food-safety/) named
+// ARC-<3 digits>-<CODE>-v<version>.md. Of several for one code, the current one has the highest
+// version, compared part by part as numbers, so 1.10 comes after 1.9. Sign-offs are appended to
+// food-safety/sign-offs.json and never changed. A document is signed off only when the last sign-off
+// recorded for its code names the current file and version and carries the answers hash the document
+// has now, and the document passes check.
+//
+// Nothing counts as answered unless the parser marks it answered, and nothing in a worksheet with
+// problems is relied on: none of its answers counts as confirmed, and the special processes it names
+// or the own entries it holds are not read from it.
+// ---------------------------------------------------------------------------------------------
+
+// The documents status lists, in its order. The completion record is not one: it reports on them.
+export const STATUS_ORDER = ['FOODPROF', ...Object.keys(SECTION_DOCS), 'FOODOWN'];
+export const SIGN_OFFS_SCHEMA = 'uk-food-sign-offs-1.0';
+const SIGN_OFF_FIELDS = ['doc', 'version', 'file', 'name', 'role', 'date', 'paperSigned', 'answers'];
+// What the completion record prints in the date and signature cells of a document not signed off.
+export const PENDING = '[PENDING]';
+const NOT_RELEVANT = 'Not relevant';
+const UNFINISHED_HEADING = '## Unfinished';
+const NOTHING_OUTSTANDING = 'Nothing is outstanding.';
+// The rows of the pack's completion record whose wording differs from their safe method's title,
+// spelt as printed on page 78. A test ties each to the data.
+export const COMPLETION_ROWS = { 'Personal hygiene': 'XC-01', 'Food allergies': 'XC-04' };
+const COMPLETION_FORM = 'completionRecord';
+const COMPLETION_STALE = 'this completion record is out of date: it no longer matches the project\'s worksheets, documents ' +
+  'and sign-offs, or it was edited. It is generated, so it is not changed by hand: render it again.';
+const DOCUMENT_FILE = /^ARC-\d{3}-([A-Z]+)-v(\d+(?:\.\d+)*)\.md$/;
+// What the completion record and status call the documents that are not a section's.
+const DOC_NAMES = { FOODPROF: 'Business profile', FOODOWN: 'Own methods' };
+const DOC_OF_SECTION = Object.fromEntries(Object.entries(SECTION_DOCS).map(([doc, section]) => [section, doc]));
+const docName = (code, data) => DOC_NAMES[code] ?? sentenceCase(data.sections.get(SECTION_DOCS[code]).section.title);
+// A sign-off's name or role: some text, on one line, with no control character and no character that
+// cannot be seen.
+const isPersonText = (value) => isString(value) && value.trim() !== '' && !/[\x00-\x1F\x7F]/.test(value) && !hiddenIn(value);
+const counted = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+// What a document asks a person to answer, and what an answer to it is called.
+const nounsOf = (code) => (code === 'FOODOWN' ? ['own entry', 'own entries', 'own entry', 'own entries'] : ['question', 'questions', 'answer', 'answers']);
+const signOffsFile = (project) => join(project, 'food-safety', 'sign-offs.json');
+const localToday = () => {
+  const now = new Date();
+  return [now.getFullYear(), now.getMonth() + 1, now.getDate()].map((n, i) => String(n).padStart(i ? 2 : 4, '0')).join('-');
+};
+
+// The worksheets a document reads, its own first: a section document and the own methods document
+// read their own worksheet and the profile, and the profile reads every worksheet. `needs` are those
+// it cannot be rendered without.
+const worksheetsOf = (code) => {
+  const { uses, needs } = sourcesOf(code);
+  const own = SECTION_DOCS[code] ?? (code === 'FOODOWN' ? 'own' : 'profile');
+  return { reads: [own, ...uses.filter((section) => section !== own)], needs };
+};
+
+// Reads and parses every worksheet in the project: a Map from section, in HASH_ORDER, to null when its
+// file does not exist, or to { name, file, text, parsed, problems, clean }. `problems` are the
+// parser's, as file:line: message, and a worksheet in the wrong file is one. Throws when a file exists
+// but cannot be read.
+function readWorksheets(project, data) {
+  const sheets = new Map();
+  for (const section of HASH_ORDER) {
+    const file = worksheetFile(project, section);
+    if (!existsSync(file)) {
+      sheets.set(section, null);
+      continue;
+    }
+    const text = readFileSync(file, 'utf8');
+    const parsed = parseWorksheet(text, data);
+    const problems = parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`);
+    if (parsed.section !== null && parsed.section !== section) problems.push(misplaced(file, parsed.section, section, project));
+    sheets.set(section, { name: worksheetName(section), file, text, parsed, problems, clean: problems.length === 0 });
+  }
+  return sheets;
+}
+
+// A document's answers hash, as render puts it in the BEGIN marker: the sha256 of the worksheets it
+// reads that exist, normalised, in HASH_ORDER, then of any further texts given.
+function answersHash(sheets, sections, more = []) {
+  const hash = createHash('sha256');
+  for (const section of HASH_ORDER) {
+    if (sections.includes(section) && sheets.get(section)) hash.update(normalised(sheets.get(section).text));
+  }
+  for (const text of more) hash.update(normalised(text));
+  return hash.digest('hex');
+}
+
+// Compares two versions part by part, as numbers: negative when `a` comes first.
+const compareVersions = (a, b) => {
+  const [x, y] = [a, b].map((version) => version.split('.').map(Number));
+  for (let i = 0; i < Math.max(x.length, y.length); i++) {
+    if ((x[i] ?? 0) !== (y[i] ?? 0)) return (x[i] ?? 0) - (y[i] ?? 0);
+  }
+  return 0;
+};
+
+// The current document of each code in the project folder: a Map from code to { file, version }. Of
+// two versions equal as numbers, such as 1.0 and 1.00, the later file name is current, so that the
+// choice is the same every time.
+function currentDocuments(project) {
+  const current = new Map();
+  for (const entry of readdirSync(project, { withFileTypes: true })) {
+    const match = DOCUMENT_FILE.exec(entry.name);
+    if (!match || entry.isDirectory()) continue;
+    const [, code, version] = match;
+    const best = current.get(code);
+    if (!best || (compareVersions(version, best.version) || (entry.name > best.file ? 1 : -1)) > 0) {
+      current.set(code, { file: entry.name, version });
+    }
+  }
+  return current;
+}
+
+// Reads food-safety/sign-offs.json: { records, text }, with no records and text null when there is
+// none, or { error } when it cannot be read or is not the shape sign-off writes. Such a file is never
+// rewritten: a sign-off is a record, and only a person may put one right.
+function readSignOffs(project) {
+  const file = signOffsFile(project);
+  if (!existsSync(file)) return { records: [], text: null };
+  const leave = 'It has not been changed: put it right by hand, or restore it from a copy, then run this again.';
+  let text;
+  let value;
+  try {
+    text = readFileSync(file, 'utf8');
+  } catch (error) {
+    return { error: `cannot read ${file}: ${error.message}` };
+  }
+  try {
+    value = JSON.parse(text.replace(/^\uFEFF/, ''));
+  } catch (error) {
+    return { error: `${file} is not valid JSON (${error.message}), so the sign-offs in it cannot be read. ${leave}` };
+  }
+  const problems = signOffProblems(value);
+  if (problems.length) return { error: `${file} is not a sign-offs file this helper can read: ${problems.join('; ')}. ${leave}` };
+  return { records: value.signOffs, text };
+}
+
+// What is wrong with the shape of a parsed sign-offs file: nothing, or each fault in turn.
+function signOffProblems(value) {
+  if (!isObject(value)) return ['it is not a JSON object'];
+  const problems = Object.keys(value).filter((name) => !['schema', 'signOffs'].includes(name)).map((name) => `unknown key ${name}`);
+  if (value.schema !== SIGN_OFFS_SCHEMA) problems.push(`its schema is not ${SIGN_OFFS_SCHEMA}`);
+  if (!Array.isArray(value.signOffs)) return [...problems, 'signOffs is not a list'];
+  value.signOffs.forEach((record, i) => {
+    const at = `sign-off ${i + 1}`;
+    if (!isObject(record)) return problems.push(`${at} is not an object`);
+    for (const name of Object.keys(record)) if (!SIGN_OFF_FIELDS.includes(name)) problems.push(`${at} has an unknown key ${name}`);
+    const lacking = SIGN_OFF_FIELDS.filter((name) => !isString(record[name]));
+    if (lacking.length) return problems.push(`${at} has no ${andList(lacking)} written as text`);
+    const file = DOCUMENT_FILE.exec(record.file);
+    const checks = [
+      [DOC_CODES.includes(record.doc), `doc ${JSON.stringify(record.doc)} is not one of ${DOC_CODES.join(', ')}`],
+      [file && file[1] === record.doc && file[2] === record.version,
+        `file ${JSON.stringify(record.file)} is not a ${record.doc} document of version ${JSON.stringify(record.version)}`],
+      [isPersonText(record.name), 'its name is empty, runs over more than one line or holds a character that cannot be seen'],
+      [isPersonText(record.role), 'its role is empty, runs over more than one line or holds a character that cannot be seen'],
+      [isIsoDate(record.date), `date ${JSON.stringify(record.date)} is not a real date written YYYY-MM-DD`],
+      [['yes', 'no'].includes(record.paperSigned), `paperSigned ${JSON.stringify(record.paperSigned)} is not yes or no`],
+      [/^[0-9a-f]{64}$/.test(record.answers), 'answers is not a sha256 hash']
+    ];
+    for (const [ok, message] of checks) if (!ok) problems.push(`${at}: ${message}`);
+  });
+  return problems;
+}
+
+// How many questions a person must answer for a document, from its own worksheet, and where they
+// stand: the profile's questions; an own worksheet's entries, each confirmed when the parser marks it
+// answered; or a section's questions under the methods not marked not relevant. Nothing in a
+// worksheet with problems counts as confirmed.
+function countsOf(code, sheet, data) {
+  const parsed = sheet?.parsed;
+  const counts = { questions: 0, confirmed: 0, proposed: 0, notRelevantMethods: [], adaptedMethods: [] };
+  const count = (record) => {
+    counts.questions++;
+    if (sheet?.clean && record?.answered) counts.confirmed++;
+    else if (record?.state === 'proposed') counts.proposed++;
+  };
+  if (code === 'FOODPROF') PROFILE_QUESTIONS.forEach((question) => count(parsed?.answers.get(question.id)));
+  else if (code === 'FOODOWN') [...(parsed?.entries.values() ?? [])].forEach(count);
+  else {
+    for (const method of data.sections.get(SECTION_DOCS[code]).methods) {
+      const status = parsed?.methods.get(method.id)?.status;
+      if (status === 'not-relevant') {
+        counts.notRelevantMethods.push(method.id);
+        continue;
+      }
+      if (status === 'adapted') counts.adaptedMethods.push(method.id);
+      for (const { question } of methodQuestions(method)) count(parsed?.answers.get(question.id));
+    }
+  }
+  return { ...counts, unanswered: counts.questions - counts.confirmed - counts.proposed };
+}
+
+// The special processes and foods the profile confirms the business does, each with the confirmed own
+// entry of kind special-process whose title names it (ignoring letter case) and that entry's review;
+// and the confirmed own entries whose environmental health review is pending.
+function specialProcessesOf(sheets) {
+  const profile = sheets.get('profile');
+  const own = sheets.get('own');
+  const yes = (id) => profile.parsed.answers.get(id)?.answered && profile.parsed.answers.get(id).value === 'yes';
+  const done = profile?.clean ? EXTRA_CARE_ASKED.filter(({ id }) => yes(id)) : [];
+  const entries = own?.clean ? [...own.parsed.entries.values()].filter((entry) => entry.answered) : [];
+  const specialProcesses = done.map(({ name }) => {
+    const entry = entries.find((e) => e.kind === 'special-process' && e.title.toLowerCase().includes(name.toLowerCase()));
+    return { name, ownEntry: entry?.id ?? null, ehReview: entry?.ehReview ?? null };
+  });
+  return { specialProcesses, awaiting: entries.filter((entry) => entry.ehReview === 'pending') };
+}
+
+// Everything not finished, in plain English, one { code, what } a line: for each document in order, a
+// worksheet not started or with problems, questions not yet answered or only proposed, the document not
+// written or out of date, and not signed off; then each special process or food with no own entry, and
+// each own entry awaiting environmental health review. Empty when nothing is outstanding.
+function unfinishedOf(documents, sheets, specialProcesses, awaiting) {
+  const lines = [];
+  const add = (code, what) => lines.push({ code, what });
+  for (const doc of documents) {
+    const [one, many, answer, answers] = nounsOf(doc.code);
+    for (const name of doc.missingWorksheets) add(doc.code, `worksheet ${name} not started`);
+    for (const section of worksheetsOf(doc.code).reads) {
+      const problems = sheets.get(section)?.problems.length;
+      if (problems) add(doc.code, `worksheet ${worksheetName(section)} has ${counted(problems, 'problem', 'problems')}`);
+    }
+    if (doc.unanswered) add(doc.code, `${counted(doc.unanswered, one, many)} not yet answered`);
+    if (doc.proposed) add(doc.code, `${counted(doc.proposed, answer, answers)} proposed and not confirmed`);
+    if (!doc.rendered) add(doc.code, 'document not written');
+    else if (!doc.inSync) add(doc.code, `document ${doc.file} out of date: it does not match its worksheets`);
+    if (!doc.signedOff) {
+      add(doc.code, doc.signOff ? `signed off by ${doc.signOff.name} on ${doc.signOff.date}, but changed since: sign off again`
+        : 'document not signed off');
+    }
+  }
+  for (const { name, ownEntry } of specialProcesses) {
+    if (!ownEntry) add('FOODOWN', `${name} has no own entry: add one of kind special-process whose title names it`);
+  }
+  for (const entry of awaiting) add('FOODOWN', `own entry ${entry.id} (${entry.title}) awaiting environmental health review`);
+  return lines;
+}
+
+// Everything status reports, with what sign-off and the completion record need besides: { status,
+// sheets, hashes, signOffs }, or { exit: 2, messages } when the project cannot be read.
+function collectStatus(project, data) {
+  const lacking = SECTION_IDS.find((id) => !data.sections.has(id));
+  if (lacking) return { exit: 2, messages: [`the data has no ${lacking}.json`] };
+  let folder = false;
+  try {
+    folder = statSync(project).isDirectory();
+  } catch {
+    folder = false;
+  }
+  if (!folder) return { exit: 2, messages: [`${project} is not a folder: --project names the project folder that holds food-safety/`] };
+  const signOffs = readSignOffs(project);
+  if (signOffs.error) return { exit: 2, messages: [signOffs.error] };
+  let sheets;
+  let files;
+  try {
+    sheets = readWorksheets(project, data);
+    files = currentDocuments(project);
+  } catch (error) {
+    return { exit: 2, messages: [`cannot read the project in ${project}: ${error.message}`] };
+  }
+  const hashes = new Map();
+  const documents = STATUS_ORDER.map((code) => {
+    const { reads, needs } = worksheetsOf(code);
+    const current = files.get(code) ?? null;
+    const inSync = Boolean(current) && checkDocument(code, project, join(project, current.file), data).exit === 0;
+    const hash = answersHash(sheets, reads);
+    hashes.set(code, hash);
+    const signOff = signOffs.records.filter((record) => record.doc === code).at(-1) ?? null;
+    const counts = countsOf(code, sheets.get(reads[0]), data);
+    return {
+      code,
+      worksheets: reads.map(worksheetName),
+      missingWorksheets: reads.filter((section) => needs.includes(section) && !sheets.get(section)).map(worksheetName),
+      problems: reads.reduce((sum, section) => sum + (sheets.get(section)?.problems.length ?? 0), 0),
+      questions: counts.questions,
+      confirmed: counts.confirmed,
+      proposed: counts.proposed,
+      unanswered: counts.unanswered,
+      notRelevantMethods: counts.notRelevantMethods,
+      adaptedMethods: counts.adaptedMethods,
+      file: current?.file ?? null,
+      version: current?.version ?? null,
+      rendered: Boolean(current),
+      inSync,
+      signedOff: Boolean(signOff && inSync && signOff.answers === hash && signOff.version === current.version &&
+        signOff.file === current.file),
+      signOff
+    };
+  });
+  const { specialProcesses, awaiting } = specialProcessesOf(sheets);
+  const status = {
+    data: DATA_ID, documents, specialProcesses, ownAwaitingReview: awaiting.map((entry) => entry.id),
+    unfinished: unfinishedOf(documents, sheets, specialProcesses, awaiting)
+  };
+  return { status, sheets, hashes, signOffs };
+}
+
+// The status of the project in `project`, as status --json prints it, or { exit: 2, messages }.
+export function projectStatus(project, data) {
+  const result = collectStatus(project, data);
+  return result.exit ? result : result.status;
+}
+
+// Matches each row of the pack's completion record (each an array of its cells) to what it records:
+// a row whose wording, ignoring letter case and runs of white space, is a section's title records that
+// section; one that is a safe method's title, or a key of COMPLETION_ROWS, records that method.
+// Returns { rows: [{ section, method }] }, method null for a section's own row, or { error } unless
+// every row matches exactly one and every safe method is recorded exactly once.
+export function completionTargets(rows, data) {
+  const plain = (text) => String(text).replace(/\s+/g, ' ').trim().toLowerCase();
+  const named = new Map(Object.entries(COMPLETION_ROWS).map(([wording, id]) => [plain(wording), id]));
+  const reached = new Set();
+  const targets = [];
+  for (const [wording] of rows) {
+    const key = plain(wording);
+    const found = [...data.sections].flatMap(([section, file]) => [
+      ...(plain(file.section.title) === key ? [{ section, method: null }] : []),
+      ...file.methods.filter((m) => plain(m.title) === key || named.get(key) === m.id).map((m) => ({ section, method: m.id }))
+    ]);
+    if (found.length !== 1) {
+      return { error: `the completion record's row "${wording}" matches ${found.length} sections and safe methods, not one` };
+    }
+    const [target] = found;
+    if (target.method && reached.has(target.method)) return { error: `the completion record has more than one row for ${target.method}` };
+    if (target.method) reached.add(target.method);
+    targets.push(target);
+  }
+  const missed = [...data.sections.values()].flatMap((file) => file.methods.map((m) => m.id)).filter((id) => !reached.has(id));
+  if (missed.length) return { error: `the completion record has no row for ${andList(missed)}` };
+  return { rows: targets };
+}
+
+// The pack's completion record, from the blocks of diary.json marked completionRecord: the title of
+// its pages, the text on them, its columns and its rows, each row with what it records. { error } when
+// the data holds no such record, or one this helper cannot fill in.
+function completionRecordData(data) {
+  const pages = (data.diary?.pages ?? []).filter((page) => page.blocks.some((block) => block.form === COMPLETION_FORM));
+  const tables = pages.flatMap((page) => page.blocks.filter((block) => block.form === COMPLETION_FORM));
+  if (!tables.length) return { error: `the data's diary.json has no completion record: no block is marked ${COMPLETION_FORM}` };
+  const { columns } = tables[0];
+  if (columns?.length !== 4 || tables.some((table) => table.kind !== 'table' || table.columns.join('\n') !== columns.join('\n'))) {
+    return { error: 'the completion record in the data\'s diary.json is not a table of four columns, the same on each of its pages' };
+  }
+  const rows = tables.flatMap((table) => table.rows);
+  const matched = completionTargets(rows, data);
+  if (matched.error) return { error: `${matched.error}, in the data's diary.json` };
+  return {
+    title: pages[0].title,
+    intro: pages.flatMap((page) => page.blocks.filter((block) => block.kind === 'text' && !block.fromImage)).map((block) => block.text),
+    columns,
+    rows: rows.map((cells, i) => ({ wording: cells[0], ...matched.rows[i] }))
+  };
+}
+
+// The completion record's body: the pack's title, text and table, each row's date and signature taken
+// from the sign-off of the section document it belongs to (a section's own row as well as its methods'),
+// or PENDING in both when that document is not signed off, and "Not relevant" beside a method marked
+// not relevant; then what is unfinished; then the closing notice and the source line. Its marker's
+// hash is of every worksheet, then of the sign-offs file; since the record also changes when a
+// document is written or edited, check simply compares it with a fresh render.
+function completionRecordDocument(project, data) {
+  const record = completionRecordData(data);
+  if (record.error) return { exit: 2, messages: [record.error] };
+  const collected = collectStatus(project, data);
+  if (collected.exit) return collected;
+  const { status, sheets, signOffs } = collected;
+  const documents = new Map(status.documents.map((doc) => [doc.code, doc]));
+  const rows = record.rows.map(({ wording, section, method }) => {
+    const doc = documents.get(DOC_OF_SECTION[section]);
+    const signed = doc.signedOff ? doc.signOff : null;
+    return [wording, signed ? businessText(signed.date) : PENDING, signed ? businessText(signed.name) : PENDING,
+      method && doc.notRelevantMethods.includes(method) ? NOT_RELEVANT : ''];
+  });
+  // A line may quote a sign-off's name and date, which are business text, so each is escaped whole: the
+  // helper's own words in it hold no character that businessText changes.
+  const unfinished = status.unfinished.map(({ code, what }) => `- ${docName(code, data)} (${code}): ${businessText(what)}`);
+  const profile = sheets.get('profile');
+  const name = profile?.clean ? profile.parsed.answers.get(NAME_QUESTION) : null;
+  const chunks = [
+    ...(record.title ? [[`## ${record.title}`]] : []),
+    ...record.intro.flatMap(paragraphs),
+    tableLines(record.columns, rows),
+    [UNFINISHED_HEADING],
+    unfinished.length ? unfinished : [NOTHING_OUTSTANDING],
+    [closingNotice(name?.answered ? name.answer : null)],
+    [sourceLine(data.source)]
+  ];
+  const hash = answersHash(sheets, HASH_ORDER, signOffs.text === null ? [] : [signOffs.text]);
+  return { exit: 0, text: [beginMarker(COMPLETION_RECORD, hash), ...chunks.map((chunk) => chunk.join('\n')), END_MARKER].join('\n\n') };
+}
+
+// Records that a named person has confirmed a document, when it is finished: its worksheets present
+// and free of problems, every question confirmed, and its current file of the version given and in
+// step. `person` is { name, role, version, date, paperSigned }. Returns { exit: 0, record, message }, or
+// { exit, messages }: 1 for a refusal, which writes nothing, and 2 when the project cannot be read.
+export function signOffDocument(code, project, person, data) {
+  const collected = collectStatus(project, data);
+  if (collected.exit) return collected;
+  const { status, sheets, hashes, signOffs } = collected;
+  const doc = status.documents.find((d) => d.code === code);
+  const { reads, needs } = worksheetsOf(code);
+  const [one, many, answer, answers] = nounsOf(code);
+  const reasons = [];
+  for (const section of reads) {
+    const sheet = sheets.get(section);
+    if (!sheet && needs.includes(section)) {
+      const file = worksheetFile(project, section);
+      reasons.push(`the worksheet ${file} does not exist: make it with: ${makeWorksheet(section, file)}, then fill it in`);
+    } else if (sheet?.problems.length) {
+      reasons.push(`${sheet.name} has ${counted(sheet.problems.length, 'problem', 'problems')}:`, ...sheet.problems.map((problem) => `  ${problem}`));
+    }
+  }
+  if (doc.unanswered) reasons.push(`${counted(doc.unanswered, one, many)} not yet answered: every ${one} must be confirmed before sign-off`);
+  if (doc.proposed) reasons.push(`${counted(doc.proposed, answer, answers)} proposed and not confirmed: a proposed answer counts only once the business confirms it`);
+  if (!doc.rendered) {
+    reasons.push(`no ${code} document exists in ${project}: a document is a file there named ARC-<3 digits>-${code}-v<version>.md, holding a fresh render`);
+  } else {
+    if (doc.version !== person.version) reasons.push(`the current ${code} document is ${doc.file}, version ${doc.version}, not version ${person.version}`);
+    if (!doc.inSync) {
+      reasons.push(`${doc.file} does not pass check: it is out of date or was edited by hand. To see where, run: node "${HELPER}" check ` +
+        `--doc ${code} --project "${project}" --report "${join(project, doc.file)}"`);
+    }
+  }
+  if (reasons.length) {
+    return { exit: 1, messages: [`${code} is not signed off, and nothing was written, because:`, ...reasons.map((r) => (r.startsWith('  ') ? r : `- ${r}`))] };
+  }
+  const record = { doc: code, version: doc.version, file: doc.file, name: person.name, role: person.role, date: person.date,
+    paperSigned: person.paperSigned, answers: hashes.get(code) };
+  const file = signOffsFile(project);
+  // Written whole to a file beside it, then moved into place, so the record is never left half written.
+  const next = `${file}.${process.pid}.tmp`;
+  try {
+    writeFileSync(next, `${JSON.stringify({ schema: SIGN_OFFS_SCHEMA, signOffs: [...signOffs.records, record] }, null, 2)}\n`);
+    renameSync(next, file);
+  } catch (error) {
+    rmSync(next, { force: true });
+    return { exit: 2, messages: [`cannot write ${file}: ${error.message}`] };
+  }
+  return {
+    exit: 0, record,
+    message: `Recorded in ${file}: ${person.name}, ${person.role}, signed off ${doc.file} (${code}, version ${doc.version}) on ` +
+      `${person.date}${person.paperSigned === 'yes' ? ', with a signed paper copy' : ''}. The document's header still says DRAFT ` +
+      'until the slash command updates it: this helper does not edit document files.'
+  };
+}
+
+// The status as short lines a person can read: one for each document, then the special processes and
+// the own entries awaiting review, then what is unfinished.
+function statusLines(status, data) {
+  const lines = [`Food safety status, data ${status.data}`];
+  for (const doc of status.documents) {
+    const [, many] = nounsOf(doc.code);
+    const parts = [
+      ...(doc.missingWorksheets.length ? [`not started: ${doc.missingWorksheets.join(', ')}`] : []),
+      ...(doc.problems ? [counted(doc.problems, 'worksheet problem', 'worksheet problems')] : []),
+      `${doc.confirmed} of ${doc.questions} ${many} confirmed${doc.proposed ? `, ${doc.proposed} proposed` : ''}`,
+      ...(doc.notRelevantMethods.length ? [`not relevant: ${doc.notRelevantMethods.join(', ')}`] : []),
+      ...(doc.adaptedMethods.length ? [`adapted: ${doc.adaptedMethods.join(', ')}`] : []),
+      doc.rendered ? `${doc.file} ${doc.inSync ? 'in step with its worksheets' : 'out of date'}` : 'not written',
+      doc.signedOff ? `signed off by ${doc.signOff.name}, ${doc.signOff.role}, on ${doc.signOff.date}` : 'not signed off'
+    ];
+    lines.push(`${doc.code} (${docName(doc.code, data)}): ${parts.join('; ')}`);
+  }
+  if (status.specialProcesses.length) {
+    lines.push(`Special processes and foods: ${status.specialProcesses.map(({ name, ownEntry, ehReview }) =>
+      (ownEntry ? `${name} (own entry ${ownEntry}, environmental health review: ${ehReview})` : `${name} (no own entry)`)).join('; ')}`);
+  }
+  if (status.ownAwaitingReview.length) lines.push(`Awaiting environmental health review: ${status.ownAwaitingReview.join(', ')}`);
+  lines.push(status.unfinished.length ? 'Unfinished:' : NOTHING_OUTSTANDING);
+  return [...lines, ...status.unfinished.map(({ code, what }) => `- ${code}: ${what}`)];
+}
+
+export function statusCommand(args, io = { out: console.log, err: console.error }) {
+  const { options, error } = readOptions(args, ['project', 'data'], ['json']);
+  if (error) return usageError(io, error);
+  if (!options.project) return usageError(io, '--project names the project folder that holds food-safety/');
+  const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
+  if (dataError) return failure(io, { exit: 2, messages: [dataError] });
+  const result = collectStatus(options.project, data);
+  if (result.exit) return failure(io, result);
+  io.out(options.json ? JSON.stringify(result.status, null, 2) : statusLines(result.status, data).join('\n'));
+  return 0;
+}
+
+export function signOffCommand(args, io = { out: console.log, err: console.error }) {
+  const { options, error } = readOptions(args, ['doc', 'project', 'name', 'role', 'version', 'paper-signed', 'date', 'data']);
+  if (error) return usageError(io, error);
+  if (options.doc === COMPLETION_RECORD) {
+    return usageError(io, `${COMPLETION_RECORD}, the completion record, is not signed off: it is a report, signed through the ` +
+      'documents it lists, so sign off each of them');
+  }
+  if (!DOC_CODES.includes(options.doc)) return usageError(io, `--doc is one of ${DOC_CODES.join(', ')}`);
+  if (!options.project) return usageError(io, '--project names the project folder that holds food-safety/');
+  for (const [field, what] of [['name', 'name of the person signing off'], ['role', 'role of the person signing off, such as owner']]) {
+    if (!isPersonText(options[field])) {
+      return usageError(io, `--${field} is the ${what}: some text, on one line, with no character that cannot be seen`);
+    }
+  }
+  if (!options.version) {
+    return usageError(io, '--version is the version of the document signed off, as in its file name: 1.0 for ARC-001-FOODCOOK-v1.0.md');
+  }
+  const paperSigned = options['paper-signed'] ?? 'no';
+  if (!['yes', 'no'].includes(paperSigned)) return usageError(io, '--paper-signed is yes, when a signed paper copy is kept, or no');
+  const date = options.date ?? localToday();
+  if (!isIsoDate(date)) return usageError(io, `--date is a real date written YYYY-MM-DD, not ${JSON.stringify(date)}`);
+  const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
+  if (dataError) return failure(io, { exit: 2, messages: [dataError] });
+  const person = { name: options.name.trim(), role: options.role.trim(), version: options.version, date, paperSigned };
+  const result = signOffDocument(options.doc, options.project, person, data);
+  if (result.exit) return failure(io, result);
+  io.out(result.message);
+  return 0;
+}
+
 const USAGE = `usage: uk-food.mjs <command> [options]
 
 commands:
@@ -1703,13 +2244,22 @@ commands:
                                                      1 with problems
   render --doc DOC --project DIR [--data DIR]        print a document's body, from the worksheets in
                                                      DIR/food-safety; DOC is one of FOODXC, FOODCLN,
-                                                     FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN;
-                                                     exit 1, printing nothing, when a worksheet has
-                                                     problems
+                                                     FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN,
+                                                     or FOODCMP, the completion record; exit 1,
+                                                     printing nothing, when a worksheet a document
+                                                     needs has problems
   check --doc DOC --project DIR --report FILE        exit 0 when the body between the UK-FOOD markers
         [--data DIR] [--json]                        in FILE equals a fresh render, 1 when it does not
   reference --section SECTION [--data DIR]           print a section's text from the pack, with no
                                                      answers; SECTION is one of XC, CL, CH, CK, MG
+  status --project DIR [--data DIR] [--json]         say what is finished and what is not, for each
+                                                     document; exit 0 whenever the project can be read
+  sign-off --doc DOC --project DIR --name NAME       record that a named person has confirmed a
+           --role ROLE --version VERSION             finished document, in DIR/food-safety/
+           [--paper-signed yes|no] [--date DATE]     sign-offs.json; exit 1, writing nothing, when it
+           [--data DIR]                              has a question not confirmed, is not written, is
+                                                     not that version or does not pass check. DATE is
+                                                     YYYY-MM-DD, today when not given
 `;
 
 export function validateDataCommand(args, io = { out: console.log, err: console.error }) {
@@ -1795,14 +2345,15 @@ export function parseWorksheetCommand(args, io = { out: console.log, err: consol
   return parsed.problems.length ? 1 : 0;
 }
 
-// Later tasks add status and sign-off here.
 export const COMMANDS = {
   'validate-data': validateDataCommand,
   worksheet: worksheetCommand,
   'parse-worksheet': parseWorksheetCommand,
   render: renderCommand,
   check: checkCommand,
-  reference: referenceCommand
+  reference: referenceCommand,
+  status: statusCommand,
+  'sign-off': signOffCommand
 };
 
 export function main(argv, io = { out: console.log, err: console.error }) {
