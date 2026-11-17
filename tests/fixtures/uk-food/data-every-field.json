@@ -122,6 +122,10 @@
           {
             "kind": "check-it",
             "heading": "CHECK IT",
+            "columns": [
+              "WHY?",
+              "HOW DO YOU DO THIS?"
+            ],
             "text": null,
             "rows": [
               {

@@ -68,7 +68,8 @@ const ROWS = (v) => Array.isArray(v);
 const BLOCK_KINDS = {
   points: { required: ['rows'], fields: { columns: isStringArray, rows: ROWS } },
   'manage-it': { required: ['rows'], fields: { columns: isStringArray, rows: ROWS } },
-  'check-it': { required: [], fields: { text: isStringOrNull, rows: ROWS, questions: ROWS } },
+  // A check-it block's columns hold the headings printed after "CHECK IT" in its header row.
+  'check-it': { required: [], fields: { columns: isStringArray, text: isStringOrNull, rows: ROWS, questions: ROWS } },
   'think-twice': { required: ['text'], fields: { text: isString } },
   'prove-it': { required: ['text'], fields: { text: isString } },
   text: { required: ['text'], fields: { text: isString, fromImage: (v) => typeof v === 'boolean' } },

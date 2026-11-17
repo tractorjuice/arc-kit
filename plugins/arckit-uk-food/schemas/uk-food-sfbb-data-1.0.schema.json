@@ -416,6 +416,13 @@
                 "null"
               ]
             },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "$comment": "As on manage-it: the box name stays in heading; the other column headings printed in the box's header row go here."
+            },
             "page": {
               "$ref": "#/$defs/page"
             },

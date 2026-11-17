@@ -218,6 +218,18 @@
   ]
  },
  {
+  "name": "check-it columns not strings",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/3/columns",
+    "value": [
+     1
+    ]
+   }
+  ]
+ },
+ {
   "name": "points block without rows",
   "ops": [
    {
