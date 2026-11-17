@@ -67,6 +67,19 @@ for (const templatePath of TEMPLATES) {
     const at = html.indexOf("if (href.startsWith('#')) {");
     assert.ok(at > 0, 'no handler for in-document section links');
     const block = html.slice(at, at + 500);
-    assert.match(block, /e\.preventDefault\(\);\s+scrollToSection\(href\.slice\(1\)\);/);
+    assert.match(block, /e\.preventDefault\(\);\s+showSection\(href\.slice\(1\)\);/);
+  });
+
+  test(`${templatePath}: the page on show is remembered without its section`, () => {
+    // Otherwise a later section link puts an earlier section back in the address.
+    assert.equal((html.match(/shownHash = path;/g) || []).length, 2);
+    assert.doesNotMatch(html, /shownHash = window\.location\.hash/);
+  });
+
+  test(`${templatePath}: a link to the address already on show still opens it`, () => {
+    // Setting the hash to its current value fires no hashchange.
+    const at = html.indexOf('if (window.location.hash.slice(1) === resolvedPath) {');
+    assert.ok(at > 0, 'no same-address case in the document link handler');
+    assert.match(html.slice(at, at + 400), /loadDocument\(resolved\.join\('\/'\)\)/);
   });
 }

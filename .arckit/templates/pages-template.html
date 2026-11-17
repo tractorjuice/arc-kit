@@ -1993,8 +1993,19 @@
             return !!target;
         }
 
-        // The hash of the view or document on show, so a link to a section can put it back.
+        // The view or document on show, without any section, so a link to a
+        // section can put the address back on it.
         let shownHash = '';
+
+        // Go to a section of the page on show and say so in the address, without
+        // adding a history entry. A document's address can carry its section
+        // ("a/b.md#risks"), so a reload or a shared link opens the same place.
+        function showSection(id) {
+            const found = scrollToSection(id);
+            const onDocument = !!parseHash(shownHash).doc;
+            history.replaceState(null, '', '#' + (shownHash || 'dashboard') + (found && onDocument ? '#' + id : ''));
+            return found;
+        }
 
         function getRawUrl(path) {
             return `../${path}`;
@@ -4580,7 +4591,7 @@
                         // change the hash, and the hash is how a document is opened.
                         a.addEventListener('click', function(e) {
                             e.preventDefault();
-                            scrollToSection(href.slice(1));
+                            showSection(href.slice(1));
                         });
                         return;
                     }
@@ -4597,6 +4608,11 @@
                     a.href = '#' + resolvedPath;
                     a.addEventListener('click', function(e) {
                         e.preventDefault();
+                        if (window.location.hash.slice(1) === resolvedPath) {
+                            // Same address as now, so no hashchange will fire: open it here.
+                            loadDocument(resolved.join('/')).then(() => { if (fragment) scrollToSection(fragment.slice(1)); });
+                            return;
+                        }
                         // The hashchange handler loads the document and goes to its section.
                         window.location.hash = resolvedPath;
                     });
@@ -5249,7 +5265,7 @@
                 const initial = parseHash(window.location.hash.slice(1));
                 if (initial.view || initial.doc) {
                     const path = initial.view || initial.doc;
-                    shownHash = window.location.hash.slice(1);
+                    shownHash = path;
                     if (path === 'dashboard') {
                         showDashboard(healthData);
                     } else if (path === 'guides') {
@@ -5324,12 +5340,11 @@
             if (!target.view && !target.doc) {
                 // A link to a heading on the page on show: go to it, and keep the
                 // address on that page so a reload or a shared link opens it again.
-                scrollToSection(target.section);
-                history.replaceState(null, '', '#' + (shownHash || 'dashboard'));
+                showSection(target.section);
                 return;
             }
             const path = target.view || target.doc;
-            shownHash = window.location.hash.slice(1);
+            shownHash = path;
             if (path === 'dashboard') {
                 showDashboard(healthData);
             } else if (path === 'guides') {
