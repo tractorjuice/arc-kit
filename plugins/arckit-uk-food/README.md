@@ -30,6 +30,22 @@ These are planned. They are not in this overlay yet, and there are no dates.
 
 The pack's wording is bundled with the overlay and is never rewritten. The business's answers live in worksheets, and nothing counts until a named person confirms it: an answer that is blank or only suggested is shown as not yet answered. The documents are built from the worksheets by a script, which prints the pack's wording unchanged, and a second check proves the document still matches what the script builds. A named person then signs off each finished document.
 
+## Commands
+
+In Claude Code the commands carry the overlay's name:
+
+| Command | What it does | Document it writes |
+|---|---|---|
+| `/arckit-uk-food:uk-food-profile` | Records the business's profile: who runs it, where it is, what it sells, its equipment and staff, and whether it does any special process. | Business profile (`FOODPROF`) |
+| `/arckit-uk-food:uk-food-safe-methods` | Works through one section of safe methods with you, one safe method at a time. Name the section by its code (`XC`, `CL`, `CH`, `CK` or `MG`) or by its name; with none, it takes the first one that is unfinished. | Cross-contamination (`FOODXC`), cleaning (`FOODCLN`), chilling (`FOODCHL`), cooking (`FOODCOOK`) or management (`FOODMGT`) |
+| `/arckit-uk-food:uk-food-own-methods` | Records the business's own methods, and the written procedure for any special process, word for word. | Own methods (`FOODOWN`) |
+| `/arckit-uk-food:uk-food-check` | Shows what is finished and what is still waiting, and writes the completion record. | Completion record (`FOODCMP`) |
+| `/arckit-uk-food:uk-food-sign-off` | Records that a named person has read a finished document and confirms it, with their name, role and the version they confirmed. | None: it marks the signed document's header |
+
+Start with the profile, then work through the five sections in any order, then add your own methods. Run the check whenever you want to see where things stand. The commands ask their questions in conversation and record only what you tell them, with your name and the date; an answer nobody has given shows in the documents as not yet answered. The commands run the overlay's helper script, which needs Node.
+
+The other tools ArcKit supports name the commands their own way: for example `$arckit-uk-food-profile` in Codex and `/arckit:uk-food-profile` in Gemini and OpenCode.
+
 ## What it does not do
 
 - It does not keep the daily diary. The diary stays with people, on paper or in whatever the business uses today.
@@ -48,7 +64,9 @@ This overlay is not legal advice. The food business operator is responsible for 
 claude plugin install arckit-uk-food --marketplace tractorjuice/arckit-claude
 ```
 
-This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. Without `arckit` (core), the document codes (`FOODPROF`, `FOODXC`, `FOODCLN`, `FOODCHL`, `FOODCOOK`, `FOODMGT`, `FOODOWN`, `FOODCMP`) are not recognised by the file-name check.
+This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. It needs Claude Code 2.1.275 or later.
+
+Without `arckit` (core), the document codes (`FOODPROF`, `FOODXC`, `FOODCLN`, `FOODCHL`, `FOODCOOK`, `FOODMGT`, `FOODOWN`, `FOODCMP`) are not recognised by the file-name check.
 
 ## Source and licence
 
