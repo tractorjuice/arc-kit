@@ -972,7 +972,7 @@ def test_compare_reading_exit_codes(tmp_path):
     assert _run_compare(data).returncode == 2
 
 
-# The shared fixture and mutation table, also run by tests/plugin/uk-food-worksheet.test.mjs,
+# The shared fixture and mutation table, also run by tests/plugin/uk-food-data.test.mjs,
 # keep the helper's validateData and the JSON schema accepting and rejecting the same files.
 
 def _apply(fixture, ops):
