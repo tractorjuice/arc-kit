@@ -10,7 +10,7 @@ agreed it in By and the date, as YYYY-MM-DD, in On). Only confirmed answers go i
 Lines that start with > show what is asked. They are rewritten each time, so anything typed on them
 is not read.
 Status says whether a safe method applies to the business: applies; adapted (you do it differently:
-fill in Variation, Reason and Proved-safe); or not-relevant (fill in Reason and Decided-by).
+fill in Variation, Reason, Proved-safe and Decided-by); or not-relevant (fill in Reason and Decided-by).
 -->
 
 ## CK-01 Cooking safely

@@ -410,7 +410,7 @@ const OWN_FIELDS = [
 // The status fields each status uses. A field the status does not use, filled in, is reported:
 // no document would show it, and nothing a person writes is dropped without saying so.
 const STATUS_USES = {
-  applies: [], adapted: ['Variation', 'Reason', 'Proved-safe'], 'not-relevant': ['Reason', 'Decided-by']
+  applies: [], adapted: ['Variation', 'Reason', 'Proved-safe', 'Decided-by'], 'not-relevant': ['Reason', 'Decided-by']
 };
 // What an own entry of each kind must fill in before it can be proposed or confirmed.
 const KIND_NEEDS = {
@@ -470,7 +470,7 @@ const ANSWER_GUIDANCE = [
 ];
 const STATUS_GUIDANCE = [
   'Status says whether a safe method applies to the business: applies; adapted (you do it differently:',
-  'fill in Variation, Reason and Proved-safe); or not-relevant (fill in Reason and Decided-by).'
+  'fill in Variation, Reason, Proved-safe and Decided-by); or not-relevant (fill in Reason and Decided-by).'
 ];
 const OWN_GUIDANCE = [
   'Add an entry for each food safety control of your own that the pack does not cover, and for each',
@@ -1293,7 +1293,8 @@ function methodChunks(method, view) {
   const chunks = [heading, ...paragraphs(method.summary), ...method.blocks.flatMap((block) => blockChunks(block, view.answer))];
   if (!record) return chunks;
   return [...chunks, [record.status === 'adapted'
-    ? `Our variation: ${inline(record.variation)} Reason: ${inline(record.reason)} Shown to be safe by: ${inline(record.provedSafe)}`
+    ? `Our variation: ${inline(record.variation)} Reason: ${inline(record.reason)} Shown to be safe by: ${inline(record.provedSafe)} ` +
+      `Decided by: ${inline(record.decidedBy)}`
     : 'Our variation: none']];
 }
 
@@ -1333,7 +1334,7 @@ function methodStatusChunks(sources, data) {
   const rows = [...data.sections].flatMap(([id, file]) => file.methods.map((method) => {
     const record = sources.get(id)?.parsed.methods.get(method.id);
     return [method.id, method.title, record ? STATUS_WORDS[record.status] : 'not yet started',
-      record && record.status !== 'applies' ? record.reason : '', record?.status === 'not-relevant' ? record.decidedBy : ''];
+      record && record.status !== 'applies' ? record.reason : '', record && record.status !== 'applies' ? record.decidedBy : ''];
   }));
   return [
     ['## Safe methods'],

@@ -10,7 +10,7 @@ agreed it in By and the date, as YYYY-MM-DD, in On). Only confirmed answers go i
 Lines that start with > show what is asked. They are rewritten each time, so anything typed on them
 is not read.
 Status says whether a safe method applies to the business: applies; adapted (you do it differently:
-fill in Variation, Reason and Proved-safe); or not-relevant (fill in Reason and Decided-by).
+fill in Variation, Reason, Proved-safe and Decided-by); or not-relevant (fill in Reason and Decided-by).
 -->
 
 ## CL-01 Handwashing
@@ -305,6 +305,6 @@ Source:
 
 Status: adapted
 Reason: Staff can see it and sign it where they work.
-Decided-by:
+Decided-by: Sam Okafor
 Variation: Our cleaning schedule is a laminated sheet on the kitchen wall that staff initial as each job is done, instead of the schedule pages in the pack.
 Proved-safe: It lists the same things to clean, how often and who cleans them as the pack's schedule. The owner checks it every week and keeps each week's sheet.

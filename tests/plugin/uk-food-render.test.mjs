@@ -130,7 +130,8 @@ function generated(section) {
   list.forEach((method, i) => {
     const records = [
       { status: 'not-relevant', reason: `We have no need of ${method.id}.`, decidedBy: 'Dee Cider' },
-      { status: 'adapted', variation: `We vary ${method.id}.`, reason: `Because ${method.id}.`, provedSafe: `Tests of ${method.id}.` }
+      { status: 'adapted', variation: `We vary ${method.id}.`, reason: `Because ${method.id}.`, provedSafe: `Tests of ${method.id}.`,
+        decidedBy: 'Ada Apter' }
     ];
     methods.set(method.id, records[i] ?? { status: 'applies' });
   });
@@ -469,8 +470,9 @@ test('a not-relevant method shows its heading and the not-relevant line only; an
     `Not relevant to this business: ${ck.reason} (decided by ${ck.decidedBy}).`]);
   const clean = rendered('FOODCLN', CAFE);
   const cl = parseWorksheet(cafeText('CL'), data).methods.get('CL-04');
+  assert.ok(cl.decidedBy);
   assert.equal(methodLines(clean, 'CL-04').at(-1),
-    `Our variation: ${cl.variation} Reason: ${cl.reason} Shown to be safe by: ${cl.provedSafe}`);
+    `Our variation: ${cl.variation} Reason: ${cl.reason} Shown to be safe by: ${cl.provedSafe} Decided by: ${cl.decidedBy}`);
   for (const [text, section, skip] of [[cook, 'CK', 'CK-06'], [clean, 'CL', 'CL-04']]) {
     for (const method of data.sections.get(section).methods) {
       if (method.id !== skip) assert.equal(methodLines(text, method.id).at(-1), 'Our variation: none', method.id);
@@ -589,7 +591,7 @@ test('the profile lists every answer, every safe method\'s status and the own me
   const ck = parseWorksheet(cafeText('CK'), data).methods.get('CK-06');
   assert.ok(text.includes(`| CK-06 | HOT HOLDING | not relevant | ${ck.reason} | ${ck.decidedBy} |`));
   const cl = parseWorksheet(cafeText('CL'), data).methods.get('CL-04');
-  assert.ok(text.includes(`| CL-04 | YOUR CLEANING SCHEDULE | adapted | ${cl.reason} |  |`));
+  assert.ok(text.includes(`| CL-04 | YOUR CLEANING SCHEDULE | adapted | ${cl.reason} | ${cl.decidedBy} |`));
   assert.equal(count(text, '| applies |'), 29);
   assert.ok(text.includes('| OWN-01 Opened milk for coffee | additional control |  |'));
   assert.ok(text.includes('| OWN-02 Sous vide eggs | special process | pending |'));
@@ -638,7 +640,8 @@ test('every string the pack prints for each applicable method appears unchanged;
     assert.ok(own.length > 5, `${ignored.id}: only ${own.length} lines of its own`);
     for (const line of own) assert.ok(!text.includes(line), `${ignored.id}: ${line}`);
     assert.equal(methodLines(text, applying[0].id).at(-1),
-      `Our variation: We vary ${applying[0].id}. Reason: Because ${applying[0].id}. Shown to be safe by: Tests of ${applying[0].id}.`);
+      `Our variation: We vary ${applying[0].id}. Reason: Because ${applying[0].id}. Shown to be safe by: Tests of ${applying[0].id}. ` +
+      'Decided by: Ada Apter');
   }
 });
 

@@ -842,15 +842,35 @@ test('a not-relevant method needs a Reason and a Decided-by', () => {
   assert.match(noDecider.problems[0].message, /Decided-by/);
 });
 
-test('an adapted method needs a Variation, a Reason and Proved-safe', () => {
+test('an adapted method needs a Variation, a Reason, Proved-safe and who decided it', () => {
   const blank = blankWorksheet('CL', data);
-  const ok = parse(statusFields(blank, 'CL-04', ['Status: adapted', 'Reason: r', 'Decided-by:', 'Variation: v', 'Proved-safe: p']));
+  const ok = parse(statusFields(blank, 'CL-04', ['Status: adapted', 'Reason: r', 'Decided-by: d', 'Variation: v', 'Proved-safe: p']));
   assert.deepEqual(ok.problems, []);
-  assert.deepEqual(['variation', 'reason', 'provedSafe'].map((k) => ok.methods.get('CL-04')[k]), ['v', 'r', 'p']);
+  assert.deepEqual(['variation', 'reason', 'provedSafe', 'decidedBy'].map((k) => ok.methods.get('CL-04')[k]), ['v', 'r', 'p', 'd']);
   const parsed = parse(statusFields(blank, 'CL-04', ['Status: adapted', 'Reason: r', 'Decided-by:', 'Variation:', 'Proved-safe:']));
-  assert.equal(parsed.problems.length, 2);
+  assert.equal(parsed.problems.length, 3);
   assert.match(messages(parsed), /Variation/);
   assert.match(messages(parsed), /Proved-safe/);
+  assert.match(messages(parsed), /Decided-by/);
+  const text = statusFields(blank, 'CL-04', ['Status: adapted', 'Reason: r', 'Decided-by:', 'Variation: v', 'Proved-safe: p']);
+  const noDecider = parse(text);
+  assert.equal(noDecider.problems.length, 1);
+  assert.match(noDecider.problems[0].message, /CL-04 is adapted, so it needs Decided-by/);
+  assert.equal(noDecider.problems[0].line, lineOf(text, 'Decided-by:', '## CL-04'));
+});
+
+test('the guidance names the fields each status needs, as the parser requires them', () => {
+  for (const section of SECTION_IDS) {
+    const text = blankWorksheet(section, data);
+    assert.ok(text.includes('adapted (you do it differently:\nfill in Variation, Reason, Proved-safe and Decided-by); or not-relevant ' +
+      '(fill in Reason and Decided-by).'), section);
+  }
+  const blank = blankWorksheet('CL', data);
+  const all = ['Status: adapted', 'Reason: r', 'Decided-by: d', 'Variation: v', 'Proved-safe: p'];
+  for (const field of ['Reason', 'Decided-by', 'Variation', 'Proved-safe']) {
+    const lines = all.map((line) => (line.startsWith(`${field}:`) ? `${field}:` : line));
+    assert.match(messages(parse(statusFields(blank, 'CL-04', lines))), new RegExp(`adapted, so it needs ${field}`), field);
+  }
 });
 
 test('a status field that the method\'s status does not use is reported, not dropped', () => {
@@ -880,7 +900,7 @@ test('answers given for a method marked not relevant are reported, and not used'
 test('answers under a method whose status has a problem are not answered', () => {
   for (const lines of [
     ['Status: not relevant', 'Reason:', 'Decided-by:', 'Variation:', 'Proved-safe:'],
-    ['Status: adapted', 'Reason: r', 'Decided-by:', 'Variation:', 'Proved-safe: p'],
+    ['Status: adapted', 'Reason: r', 'Decided-by: d', 'Variation:', 'Proved-safe: p'],
     ['Status: applies', 'Reason: We sometimes skip this', 'Decided-by:', 'Variation:', 'Proved-safe:']
   ]) {
     const text = fill(statusFields(blankWorksheet('CK', data), 'CK-06', lines), 'CK-06-Q01', ...confirmed('yes'));
@@ -1261,11 +1281,11 @@ test('the cafe fixture: XC is about half answered, with exactly two proposed', (
   for (const answer of given) assert.equal(answer.answered, answer.state === 'confirmed', answer.id);
 });
 
-test('the cafe fixture: CL-04 is adapted with its variation, reason and proof', () => {
+test('the cafe fixture: CL-04 is adapted with its variation, reason, proof and who decided it', () => {
   const parsed = parse(fixture('CL'));
   const schedule = parsed.methods.get('CL-04');
   assert.equal(schedule.status, 'adapted');
-  assert.ok(schedule.variation && schedule.reason && schedule.provedSafe);
+  assert.ok(schedule.variation && schedule.reason && schedule.provedSafe && schedule.decidedBy);
   for (const method of parsed.methods.values()) if (method.id !== 'CL-04') assert.equal(method.status, 'applies');
 });
 

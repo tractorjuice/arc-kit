@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODPROF data=sfbb-caterers-2026-11-17 answers=c4703de27df0338f293176eb195ca55199f93627e555e348892ca698d839dc2e -->
+<!-- UK-FOOD:BEGIN doc=FOODPROF data=sfbb-caterers-2026-11-17 answers=e8c5c70dd3136f25fb779f2d49fe5d4dfd32381feee7ccf2f5a79a56ca8a6e0f -->
 
 ## The business
 
@@ -39,7 +39,7 @@
 | CL-01 | HANDWASHING | applies |  |  |
 | CL-02 | CLEANING EFFECTIVELY | applies |  |  |
 | CL-03 | CLEAR AND CLEAN AS YOU GO | applies |  |  |
-| CL-04 | YOUR CLEANING SCHEDULE | adapted | Staff can see it and sign it where they work. |  |
+| CL-04 | YOUR CLEANING SCHEDULE | adapted | Staff can see it and sign it where they work. | Sam Okafor |
 | CH-01 | CHILLED STORAGE AND DISPLAYING CHILLED FOOD | applies |  |  |
 | CH-02 | CHILLING DOWN HOT FOOD | applies |  |  |
 | CH-03 | DEFROSTING | applies |  |  |
