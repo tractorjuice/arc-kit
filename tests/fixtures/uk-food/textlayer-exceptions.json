@@ -3,5 +3,19 @@
     "Food Standards Agency l food.gov.uk/sfbb",
     "SAFE METHOD:"
   ],
-  "pages": {}
+  "pages": {},
+  "joins": {
+    "14": [
+      {"parts": ["and/", "or"], "as": "and/or", "reason": "XC-01 'Staff who have had diarrhoea and/or vomiting': the word breaks after the slash at a line end"},
+      {"parts": ["uniforms/", "disposable"], "as": "uniforms/disposable", "reason": "XC-01 'Where do you keep clean uniforms/disposable aprons?': the word breaks after the slash at a line end"}
+    ],
+    "17": [
+      {"parts": ["ready-", "to-eat"], "as": "ready-to-eat", "count": 2, "reason": "XC-03 'raw and ready-to-eat foods' (Delivery and collection) and 'raw and ready-to-eat food' (Storage): each breaks after the first hyphen at a line end"},
+      {"parts": ["meat/poultry/", "fish,"], "as": "meat/poultry/fish,", "reason": "XC-03 'raw and cooked meat/poultry/fish,': the word breaks after the second slash at a line end"},
+      {"parts": ["ready-to-", "eat"], "as": "ready-to-eat", "reason": "XC-03 'Same areas used for raw and ready-to-eat food preparation': the word breaks after the second hyphen at a line end"}
+    ],
+    "19": [
+      {"parts": ["allergen-", "free."], "as": "allergen-free.", "reason": "XC-04 'no longer allergen-free.': the word breaks after the hyphen at a line end"}
+    ]
+  }
 }

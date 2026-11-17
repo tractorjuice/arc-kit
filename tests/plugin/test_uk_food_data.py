@@ -3,9 +3,12 @@
 The fixture holds the words of the FSA pack's text layer (words only, never the
 PDF). Each data file must account for every word on the pages it declares, as a
 multiset, after `normalise`. Furniture phrases (the footer, "SAFE METHOD:") are
-subtracted from the fixture once per page, and only where they occur as a
-contiguous run of words. Per-page exceptions add tokens that sit in the text
-layer but are not words printed on the page.
+subtracted from the fixture once per page, and only where they occur exactly as
+printed (same case and punctuation) as a contiguous run of tokens, so the body
+words "this safe method." are never taken for the "SAFE METHOD:" label.
+Per-page exceptions add tokens that sit in the text layer but are not words
+printed on the page; per-page joins rejoin a printed word the text layer split
+in two at a line break.
 """
 import importlib.util
 import json
@@ -19,7 +22,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts" / "uk-food"))
-from textlayer import declared_pages, normalise, strings_of, words_of  # noqa: E402
+from textlayer import apply_joins, declared_pages, normalise, strings_of, words_of  # noqa: E402
 
 DATA_ID = "sfbb-caterers-2026-11-17"
 DATA_DIR = ROOT / "plugins" / "arckit-uk-food" / "data" / DATA_ID
@@ -46,16 +49,17 @@ def page_words(data_dir: Path, files: list[str] | None = None) -> dict[int, Coun
     return pages
 
 
-def _subtract_furniture(words: list[str], furniture: list[str]) -> Counter:
-    """Fixture words for a page, minus each furniture phrase once if contiguous."""
-    remaining = list(words)
+def _subtract_furniture(tokens: list[str], furniture: list[str]) -> Counter:
+    """Normalised fixture words for a page, minus each furniture phrase once where
+    its tokens occur contiguously exactly as printed."""
+    remaining = [t.strip() for t in tokens if t.strip()]
     for phrase in furniture:
-        target = words_of(phrase)
+        target = phrase.split()
         for i in range(len(remaining) - len(target) + 1):
             if target and remaining[i:i + len(target)] == target:
                 del remaining[i:i + len(target)]
                 break
-    return Counter(remaining)
+    return Counter(w for w in (normalise(t) for t in remaining) if w)
 
 
 def page_differences(data_dir: Path, fixture: dict, exceptions: dict,
@@ -73,8 +77,8 @@ def page_differences(data_dir: Path, fixture: dict, exceptions: dict,
     transcribed = page_words(data_dir, names)
     result: dict[int, dict[str, Counter]] = {}
     for page in sorted(declared):
-        layer = [w for w in (normalise(t) for t in fixture["pages"].get(str(page), [])) if w]
-        expected = _subtract_furniture(layer, exceptions.get("furniture", []))
+        tokens = apply_joins(fixture["pages"].get(str(page), []), exceptions.get("joins", {}).get(str(page), []))
+        expected = _subtract_furniture(tokens, exceptions.get("furniture", []))
         have = Counter(transcribed.get(page, Counter()))
         for entry in exceptions.get("pages", {}).get(str(page), []):
             token = normalise(entry["token"])
@@ -97,6 +101,40 @@ def test_section_pages_covered(name):
 def test_fixture_matches_declared_source():
     source = _load(DATA_DIR / "source.json")
     assert _load(FIXTURE)["source"]["sha256"] == source["sha256"]
+
+
+# Safe methods per section in full-pack page order, from the plan's identifier table.
+# A method's `title` is page text, so it is compared ignoring letter case and spacing.
+METHOD_COUNTS = {"XC": 7, "CL": 4, "CH": 4, "CK": 7, "MG": 9}
+METHOD_TITLES = {
+    "XC": ["Personal hygiene and fitness to work", "Cloths", "Separating foods", "Food hypersensitivity",
+           "Physical and chemical contamination", "Pest control", "Maintenance"],
+    "CL": ["Handwashing", "Cleaning effectively", "Clear and clean as you go", "Your cleaning schedule"],
+    "CH": ["Chilled storage and displaying chilled food", "Chilling down hot food", "Defrosting", "Freezing"],
+    "CK": ["Cooking safely", "Foods that need extra care", "Reheating", "Acrylamide", "Checking your menu",
+           "Hot holding", "Ready-to-eat food"],
+    "MG": ["Opening and closing checks", "Extra checks", "Prove it", "Managing food allergen information",
+           "Training and supervision", "Customers", "Suppliers and contractors", "Stock control",
+           "Product withdrawal and recall"],
+}
+# Sections whose data file must exist. Each transcription task adds its own section.
+REQUIRED_SECTIONS = ["XC"]
+
+
+def _title_key(title: str) -> str:
+    return " ".join(title.split()).lower()
+
+
+@pytest.mark.parametrize("section", list(METHOD_COUNTS))
+def test_section_counts(section):
+    path = DATA_DIR / f"{section}.json"
+    if not path.is_file():
+        assert section not in REQUIRED_SECTIONS, f"{section}.json is required but missing"
+        pytest.skip(f"{section}.json not transcribed yet")
+    methods = _load(path)["methods"]
+    assert len(methods) == METHOD_COUNTS[section] == len(METHOD_TITLES[section])
+    expected = [(f"{section}-{n:02d}", _title_key(title)) for n, title in enumerate(METHOD_TITLES[section], 1)]
+    assert [(m["id"], _title_key(m["title"])) for m in methods] == expected
 
 
 # Self-tests of the comparison itself, on a tiny fake data directory.
@@ -134,12 +172,39 @@ def test_furniture_is_subtracted_only_when_contiguous(tmp_path):
                                           "food.gov.uk/sfbb": 1})
 
 
+def test_furniture_is_matched_as_printed_never_in_body_text(tmp_path):
+    exceptions = {"furniture": ["SAFE METHOD:"], "pages": {}}
+    labelled = {"pages": {"1": ["SAFE", "METHOD:", "Train", "on", "this", "safe", "method."]}}
+    assert page_differences(_fake_dir(tmp_path, "Train on this safe method."), labelled, exceptions) == {}
+    # A page that prints no label keeps its body words "safe method.".
+    unlabelled = {"pages": {"1": ["Train", "on", "this", "safe", "method."]}}
+    assert page_differences(_fake_dir(tmp_path, "Train on this safe method."), unlabelled, exceptions) == {}
+
+
 def test_page_exceptions_add_tokens_the_page_does_not_print(tmp_path):
     fixture = {"pages": {"1": ["WASH", " "]}}
     # A token that normalises to nothing is ignored on both sides; a real one is added.
     exceptions = {"furniture": [], "pages": {"1": [{"token": "zz", "count": 1, "reason": "test"}]}}
     diff = page_differences(_fake_dir(tmp_path, "wash"), fixture, exceptions)
     assert diff[1]["extra"] == Counter({"zz": 1})
+
+
+def test_joins_rejoin_a_word_split_at_a_line_break(tmp_path):
+    fixture = {"pages": {"1": ["Wash", "ready-", "to-eat", "hands"]}}
+    joins = {"1": [{"parts": ["ready-", "to-eat"], "as": "ready-to-eat", "reason": "test"}]}
+    exceptions = {"furniture": [], "pages": {}, "joins": joins}
+    assert page_differences(_fake_dir(tmp_path, "Wash ready-to-eat hands"), fixture, exceptions) == {}
+    diff = page_differences(_fake_dir(tmp_path, "Wash ready-to-eat hands"), fixture, {"furniture": [], "pages": {}})
+    assert diff[1]["missing"] == Counter({"ready": 1, "to-eat": 1}) and diff[1]["extra"] == Counter({"ready-to-eat": 1})
+
+
+def test_joins_apply_count_times_and_refuse_stale_or_invented_words():
+    tokens = ["a-", "b", "x", "a-", "b"]
+    assert apply_joins(tokens, [{"parts": ["a-", "b"], "as": "a-b", "count": 2}]) == ["a-b", "x", "a-b"]
+    with pytest.raises(ValueError, match="not found"):
+        apply_joins(tokens, [{"parts": ["a-", "b"], "as": "a-b", "count": 3}])
+    with pytest.raises(ValueError, match="not the parts run together"):
+        apply_joins(tokens, [{"parts": ["a-", "b"], "as": "a-c"}])
 
 
 def test_from_image_elements_are_left_out(tmp_path):

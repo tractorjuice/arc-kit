@@ -31,6 +31,29 @@ def normalise(word: str) -> str:
     return _EDGE.sub("", word.lower().translate(_TRANSLATE))
 
 
+def apply_joins(tokens: list[str], joins: list[dict]) -> list[str]:
+    """Rejoin a printed word the text layer split in two at a line break.
+
+    Each join {"parts": [...], "as": "...", "count": n} replaces n contiguous runs
+    of the raw tokens `parts` (n defaults to 1) with the single token `as`, which
+    must be the parts run together: a join can only undo a split, never add a
+    word. A join that is not found raises ValueError, so a stale one cannot pass.
+    """
+    result = list(tokens)
+    for join in joins:
+        parts, whole = join["parts"], join["as"]
+        if whole != "".join(parts):
+            raise ValueError(f"join {parts} -> {whole!r}: not the parts run together")
+        for _ in range(join.get("count", 1)):
+            for i in range(len(result) - len(parts) + 1):
+                if result[i:i + len(parts)] == parts:
+                    result[i:i + len(parts)] = [whole]
+                    break
+            else:
+                raise ValueError(f"join {parts} -> {whole!r}: not found")
+    return result
+
+
 def words_of(text: str) -> list[str]:
     """Normalised words of a string, dropping any that normalise to nothing."""
     return [w for w in (normalise(t) for t in text.split()) if w]
