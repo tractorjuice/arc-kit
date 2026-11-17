@@ -1,4 +1,5 @@
 # Answers: Your own controls and special processes (own)
+
 <!-- uk-food-answers 1.0 data=sfbb-caterers-2026-11-17 section=own -->
 
 <!--
@@ -27,6 +28,7 @@ On:
 -->
 
 ## OWN-01 Opened milk for coffee
+
 Kind: additional
 Hazard: Milk going off once the carton has been opened.
 Control: Write the date on each carton when it is opened, and keep open cartons in the drinks fridge.
@@ -41,8 +43,9 @@ By: Priya Shah
 On: 2026-11-20
 
 ## OWN-02 Sous vide eggs
+
 Kind: special-process
-Hazard: Harmful bacteria in eggs surviving if they are not cooked as the method says.
+Hazard: Sous vide eggs are cooked at a low temperature, so harmful bacteria could survive if they are not cooked exactly as the method says.
 Control: We cook sous vide eggs only by our written method, below.
 Limit:
 Limit-source:

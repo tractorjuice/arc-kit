@@ -96,13 +96,33 @@ test('a blank worksheet opens with its title and marker, and lays out methods an
   const text = blankWorksheet('CK', data);
   const lines = text.split('\n');
   assert.equal(lines[0], '# Answers: Cooking (CK)');
-  assert.equal(lines[1], `<!-- uk-food-answers 1.0 data=${DATA_ID} section=CK -->`);
-  assert.match(text, /\n\n## CK-06 Hot holding\nStatus: applies\nReason:\nDecided-by:\nVariation:\nProved-safe:\n\n### CK-06-Q01\n/);
+  assert.equal(lines[1], '');
+  assert.equal(lines[2], `<!-- uk-food-answers 1.0 data=${DATA_ID} section=CK -->`);
+  assert.match(text, /\n\n## CK-06 Hot holding\n\nStatus: applies\nReason:\nDecided-by:\nVariation:\nProved-safe:\n\n### CK-06-Q01\n\n> /);
   assert.match(text, /\n> Do you hot hold\?  \(yes \/ no\)\nAnswer:\nState: unanswered\nBy:\nOn:\nSource:\n\n### CK-06-Q02\n/);
   assert.ok(text.endsWith('Source:\n'));
   for (const section of WORKSHEET_SECTIONS) {
     assert.doesNotMatch(blankWorksheet(section, data), /[ \t]$/m, `${section} has a line ending in white space`);
   }
+});
+
+test('only the profile turns a Markdown lint rule off, with its reason beside it, and the parser ignores both', () => {
+  for (const section of WORKSHEET_SECTIONS) {
+    const lines = blankWorksheet(section, data).split('\n');
+    const off = lines.filter((line) => line.includes('markdownlint-disable'));
+    assert.deepEqual(off, section === 'profile' ? ['<!-- markdownlint-disable MD001 -->'] : [], section);
+    if (section === 'profile') assert.match(lines[lines.indexOf(off[0]) + 1], /^<!-- MD001: \S.* -->$/);
+  }
+  assert.deepEqual(parse(blankWorksheet('profile', data)).problems, []);
+});
+
+test('a paragraph of the pack that reads as a list item is kept apart from the one above by an empty > line', () => {
+  const prompt = promptOf(blankWorksheet('CL', data), 'CL-02-Q01');
+  const first = prompt.findIndex((line) => /^> 1\. /.test(line));
+  assert.ok(first > 0);
+  assert.equal(prompt[first - 1], '>');
+  assert.match(prompt[first + 1], /^> 2\. /);
+  assert.equal(prompt.filter((line) => line === '>').length, 1);
 });
 
 // ---- Prompts ----
@@ -225,6 +245,42 @@ test('every question that prints no text says what it is about, unless its box h
   assert.deepEqual(bare, ['CK-03-Q02']);
   const box = methodOf('CK-03').blocks.find((b) => (b.questions ?? []).some((q) => q.id === 'CK-03-Q02'));
   assert.ok(!box.heading && !box.text && box.rows.length === 0, 'CK-03-Q02\'s box has a heading, text or row after all');
+});
+
+test('every > line is the pack\'s text unchanged, a join of a box\'s column headings, or ends in a fixed hint', () => {
+  const HINTS = ['(yes / no)', '(yes, or say what you do instead)', '(yes if you do this / no)', '(write your answer)', '(one item per line)'];
+  for (const section of SECTION_IDS) {
+    // Every whole paragraph of the section's headings, box text, points and question text (notes
+    // included), and every join of neighbouring column headings of a box.
+    const allowed = new Set();
+    const elseTexts = new Set();
+    const add = (text) => {
+      for (const paragraph of (text ?? '').split('\n')) allowed.add(paragraph.trimEnd());
+    };
+    for (const method of data.sections.get(section).methods) {
+      for (const block of method.blocks) {
+        add(block.heading);
+        if (block.kind === 'check-it') add(block.text);
+        const columns = block.columns ?? [];
+        for (let from = 0; from < columns.length; from++) {
+          for (let to = from + 1; to <= columns.length; to++) allowed.add(columns.slice(from, to).join(' / '));
+        }
+        for (const holder of holders(block)) {
+          if (holder !== block) add(holder.point);
+          for (const question of holder.questions ?? []) {
+            add(question.text);
+            if (question.elseText) elseTexts.add(question.elseText);
+          }
+        }
+      }
+    }
+    const endings = HINTS.flatMap((hint) => [hint, ...[...elseTexts].map((e) => `${hint} ${e}`)]);
+    const fits = (content) => allowed.has(content) || endings.some((ending) => content === ending ||
+      (content.endsWith(`  ${ending}`) && allowed.has(content.slice(0, -(ending.length + 2)))));
+    const strays = blankWorksheet(section, data).split('\n').filter((line) => line.startsWith('>'))
+      .map((line) => line.replace(/^> ?/, '')).filter((content) => content !== '' && !fits(content));
+    assert.deepEqual(strays, [], section);
+  }
 });
 
 // ---- Round trip ----
@@ -630,13 +686,13 @@ test('a note is not a question to answer', () => {
 
 test('a missing method, a missing question and a repeated question are each a problem', () => {
   const blank = blankWorksheet('CK', data);
-  const withoutMethod = blank.replace(/## CK-01 [^\n]*\nStatus: applies\nReason:\nDecided-by:\nVariation:\nProved-safe:\n\n/, '');
+  const withoutMethod = blank.replace(/## CK-01 [^\n]*\n\nStatus: applies\nReason:\nDecided-by:\nVariation:\nProved-safe:\n\n/, '');
   const parsed = parse(withoutMethod);
   assert.equal(parsed.problems.length, 1);
   assert.match(parsed.problems[0].message, /CK-01.*missing/);
-  assert.equal(parsed.problems[0].line, 2);
+  assert.equal(parsed.problems[0].line, 3);
   const start = blank.indexOf('### CK-06-Q05\n');
-  const end = blank.indexOf('\n\n', start) + 2;
+  const end = blank.indexOf('Source:\n', start) + 'Source:\n\n'.length;
   const withoutQuestion = blank.slice(0, start) + blank.slice(end);
   assert.match(messages(parse(withoutQuestion)), /CK-06-Q05.*missing/);
   const repeated = blank.slice(0, end) + blank.slice(start, end) + blank.slice(end);
@@ -694,7 +750,7 @@ test('the marker must name this data and a known section', () => {
   const blank = blankWorksheet('CK', data);
   const old = parse(blank.replace(`data=${DATA_ID}`, 'data=sfbb-caterers-2025-01-01'));
   assert.equal(old.problems.length, 1);
-  assert.equal(old.problems[0].line, 2);
+  assert.equal(old.problems[0].line, 3);
   assert.match(old.problems[0].message, /sfbb-caterers-2025-01-01/);
   assert.match(old.problems[0].message, new RegExp(DATA_ID));
   assert.match(messages(parse(blank.replace('section=CK', 'section=XX'))), /XX/);
@@ -767,6 +823,18 @@ test('the special processes and foods are named as printed in CK-02\'s "Other fo
   assert.equal(new Set([...EXTRA_CARE.processes, ...EXTRA_CARE.foods]).size, EXTRA_CARE.processes.length + EXTRA_CARE.foods.length);
 });
 
+test('the special processes and foods are every one the box\'s two "Example ... include:" lines name, in order', () => {
+  const box = methodOf('CK-02').blocks.find((b) => b.kind === 'text' && b.page === 53 && /Other foods that need extra care/.test(b.heading));
+  const named = (label) => {
+    const opening = `Example ${label} include: `;
+    const line = box.text.split('\n').find((l) => l.startsWith(opening));
+    assert.ok(line, `the box has no line starting ${JSON.stringify(opening)}`);
+    return line.slice(opening.length).trimEnd().split(', ');
+  };
+  assert.deepEqual(EXTRA_CARE.processes, named('processes'));
+  assert.deepEqual(EXTRA_CARE.foods, named('foods'));
+});
+
 test('the nation is England, Wales, Scotland, Northern Ireland or other, in any letter case', () => {
   const blank = blankWorksheet('profile', data);
   const read = (answer) => parse(fill(blank, 'PR-Q06', ...confirmed(answer)));
@@ -796,7 +864,7 @@ test('a profile with a method heading or a method question is a problem', () => 
 // ---- Own entries ----
 
 const OWN_ENTRY = [
-  '## OWN-01 Milk for coffee', 'Kind: additional', 'Hazard: Milk going off once opened', 'Control: Date each carton when opened',
+  '## OWN-01 Milk for coffee', '', 'Kind: additional', 'Hazard: Milk going off once opened', 'Control: Date each carton when opened',
   'Limit: Use within three days of opening', 'Limit-source: Dairy supplier\'s label', 'Check: Opening checks', 'If-it-fails: Throw it away',
   'Supplied-text:', 'EH-review:', 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20'
 ];
@@ -837,7 +905,7 @@ test('own entries: a Limit needs a Limit-source, and Kind must be one of the two
 
 test('own entries: a special process needs its supplied text and an EH-review of pending or a dated outcome', () => {
   const special = (review, supplied = 'Supplied-text: Our written sous vide method') => withEntry([
-    '## OWN-02 Sous vide eggs', 'Kind: special-process', 'Hazard:', 'Control:', 'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:',
+    '## OWN-02 Sous vide eggs', '', 'Kind: special-process', 'Hazard:', 'Control:', 'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:',
     supplied, `EH-review: ${review}`, 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20']);
   assert.deepEqual(parse(special('pending')).problems, []);
   assert.equal(parse(special('Pending')).entries.get('OWN-02').ehReview, 'pending');
@@ -966,14 +1034,27 @@ test('the cafe fixture: CL-04 is adapted with its variation, reason and proof', 
   for (const method of parsed.methods.values()) if (method.id !== 'CL-04') assert.equal(method.status, 'applies');
 });
 
-test('the cafe fixture: the profile is confirmed, in England, with sous vide its one special process', () => {
+test('the cafe fixture: the profile is confirmed, in England, with sous vide eggs its one special process', () => {
   const parsed = parse(fixture('profile'));
   for (const answer of parsed.answers.values()) assert.equal(answer.answered, true, answer.id);
   assert.equal(parsed.answers.get('PR-Q06').value, 'England');
+  // Sous vide eggs are cooked at a low temperature, so the cafe answers yes to both.
   const extra = PROFILE_QUESTIONS.slice(10);
-  const yes = extra.filter((q) => parsed.answers.get(q.id).value === 'yes');
-  assert.equal(yes.length, 1);
-  assert.ok(yes[0].text.includes('sous vide'));
+  const yes = extra.filter((q) => parsed.answers.get(q.id).value === 'yes').map((q) => q.text);
+  assert.deepEqual(yes.map((text) => EXTRA_CARE.processes.find((name) => text.includes(`: ${name}?`))), ['sous vide', 'low temperature cooking']);
+});
+
+test('the cafe fixture: the cafe agrees with itself', () => {
+  const profile = parse(fixture('profile'));
+  const equipment = profile.answers.get('PR-Q09').value.join('\n');
+  const sells = profile.answers.get('PR-Q08').value;
+  const own = parse(fixture('own')).entries;
+  // OWN-01 keeps opened milk in the drinks fridge; XC-02 washes cloths in a washing machine and dries salad in a spinner.
+  assert.match(own.get('OWN-01').control, /drinks fridge/);
+  for (const item of [/drinks fridge/i, /washing machine/i, /salad spinner/i, /sous vide/i, /meat slicer/i]) assert.match(equipment, item);
+  // CK-04's potato and frying rows are answered no, which the profile explains.
+  assert.match(sells, /no chips or other potato dishes/);
+  assert.match(sells, /no deep fat fryer/);
 });
 
 test('the cafe fixture: two own entries, one additional with a sourced limit, one sous vide awaiting review', () => {

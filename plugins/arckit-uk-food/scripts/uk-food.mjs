@@ -473,6 +473,12 @@ const OWN_GUIDANCE = [
   ...OWN_FIELDS.map((field) => (field === 'State' ? 'State: unanswered' : `${field}:`))
 ];
 
+// The Markdown lint rules a worksheet cannot meet without changing the pack's words or the
+// worksheet grammar, each turned off in that worksheet with its reason beside it.
+const LINT_EXCEPTIONS = {
+  profile: [['MD001', 'the profile has no methods, so its ### questions sit straight under the # title, as the worksheet grammar sets out']]
+};
+
 // The guidance comment each worksheet carries after its marker.
 const guidanceFor = (section) =>
   ({ own: OWN_GUIDANCE, profile: ANSWER_GUIDANCE })[section] ?? [...ANSWER_GUIDANCE, ...STATUS_GUIDANCE];
@@ -556,16 +562,23 @@ function methodQuestions(method) {
 }
 const everyQuestion = (method) => method.blocks.flatMap(holdersOf).flatMap((holder) => holder.questions);
 
+// A paragraph that Markdown reads as a list item, such as the pack's "1. Clean: ...".
+const LIST_ITEM = /^(\d{1,9}[.)]|[-*+])\s/;
+
 // The lines printed after ">" above a question: its context, then its own text (or, when it has
 // none, its column headings), ending with the form of answer the helper reads. Every paragraph of
-// the pack's text is printed whole on a line of its own: a cut-off FSA sentence is a misquote.
+// the pack's text is printed whole on a line of its own: a cut-off FSA sentence is a misquote. A
+// paragraph that starts like a list item, after one that does not, gets an empty ">" line before
+// it, so Markdown keeps it apart from the paragraph above without a word of the pack changing.
 function promptLines({ question, context, columns }) {
   const asked = question.text !== '' ? question.text.split('\n') : [columns.join(' / ')];
   let hint = HINTS[question.type];
   if (question.type === 'yes-no-else' && question.elseText) hint += ` ${question.elseText}`;
   const last = asked.length - 1;
   asked[last] = asked[last] === '' ? hint : `${asked[last]}  ${hint}`;
-  return [...context.flatMap((text) => text.split('\n')), ...asked].map((line) => line.trimEnd());
+  const lines = [...context.flatMap((text) => text.split('\n')), ...asked].map((line) => line.trimEnd());
+  return lines.flatMap((line, i) =>
+    (i > 0 && LIST_ITEM.test(line) && lines[i - 1] !== '' && !LIST_ITEM.test(lines[i - 1]) ? ['', line] : [line]));
 }
 const profilePrompt = (question) => promptLines({ question, context: [], columns: [] });
 
@@ -593,17 +606,21 @@ export function emitWorksheet(parsed, data) {
   const comment = (lines) => ['<!--', ...lines, '-->'];
   const answerBlock = (question, prompt, record = { state: 'unanswered' }) => [
     `### ${question.id}`,
+    '',
     ...prompt.map((line) => (line === '' ? '>' : `> ${line}`)),
     ...ANSWER_FIELDS.flatMap((field) => fieldLines(field, record[key(field)]))
   ];
   const blocks = [[
     `# Answers: ${worksheetTitle(section, data)}`,
-    `<!-- uk-food-answers ${WORKSHEET_VERSION} data=${DATA_ID} section=${section} -->`
+    '',
+    `<!-- uk-food-answers ${WORKSHEET_VERSION} data=${DATA_ID} section=${section} -->`,
+    ...(LINT_EXCEPTIONS[section] ?? []).flatMap(([rule, reason]) =>
+      [`<!-- markdownlint-disable ${rule} -->`, `<!-- ${rule}: ${reason} -->`])
   ]];
   blocks.push(comment(guidanceFor(section)));
   if (section === 'own') {
     for (const entry of parsed.entries.values()) {
-      blocks.push([`## ${entry.id}${entry.title ? ` ${entry.title}` : ''}`,
+      blocks.push([`## ${entry.id}${entry.title ? ` ${entry.title}` : ''}`, '',
         ...OWN_FIELDS.flatMap((field) => fieldLines(field, entry[key(field)]))]);
     }
   } else if (section === 'profile') {
@@ -613,7 +630,7 @@ export function emitWorksheet(parsed, data) {
   } else {
     for (const method of data.sections.get(section).methods) {
       const record = parsed.methods.get(method.id) ?? { status: 'applies' };
-      blocks.push([`## ${method.id} ${sentenceCase(method.title)}`,
+      blocks.push([`## ${method.id} ${sentenceCase(method.title)}`, '',
         ...METHOD_FIELDS.flatMap((field) => fieldLines(field, record[key(field)]))]);
       for (const asked of methodQuestions(method)) {
         blocks.push(answerBlock(asked.question, promptLines(asked), parsed.answers.get(asked.question.id)));
