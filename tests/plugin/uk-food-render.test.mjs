@@ -664,6 +664,9 @@ test('the own methods document shows each confirmed entry under its heading, and
   }
   const special = own.get('OWN-02');
   assert.ok(text.includes(`\n\`\`\`text\n${special.suppliedText}\n\`\`\`\n`));
+  // A special process names the pack's process it covers; an additional control has no such row.
+  assert.ok(text.includes('| Kind | special process |\n| Special process or food | sous vide |\n'), text);
+  assert.equal(count(text, '| Special process or food |'), 1);
   assert.ok(text.includes('| Environmental health review | pending |'));
   assert.ok(text.includes(`| Limit | ${own.get('OWN-01').limit} |`));
 });

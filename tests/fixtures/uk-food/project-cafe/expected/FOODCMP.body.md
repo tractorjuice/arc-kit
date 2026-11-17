@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODCMP data=sfbb-caterers-2026-11-17 answers=e8c5c70dd3136f25fb779f2d49fe5d4dfd32381feee7ccf2f5a79a56ca8a6e0f -->
+<!-- UK-FOOD:BEGIN doc=FOODCMP data=sfbb-caterers-2026-11-17 answers=bbcf55bdf551932e95a4ad626259b0ee68f025f52c813bf4571d30f881a9fdad -->
 
 ## SAFE METHOD COMPLETION RECORD
 
@@ -66,7 +66,7 @@ It does not matter in what order you work through the safe methods. As you compl
 - Management (FOODMGT): document not signed off
 - Own methods (FOODOWN): document not written
 - Own methods (FOODOWN): document not signed off
-- Own methods (FOODOWN): low temperature cooking has no own entry: add one of kind special-process whose title names it
+- Own methods (FOODOWN): low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it
 - Own methods (FOODOWN): own entry OWN-02 (Sous vide eggs) awaiting environmental health review
 
 This is Bramble Cafe's own food safety record. It is not legal advice. The food business operator is responsible for it, and the local council's environmental health team is the authority on whether it is adequate.

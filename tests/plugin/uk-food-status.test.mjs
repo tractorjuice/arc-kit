@@ -166,7 +166,7 @@ test('the unfinished list says, for each document in order, everything outstandi
     { code: 'FOODMGT', what: 'document not signed off' },
     { code: 'FOODOWN', what: 'document not written' },
     { code: 'FOODOWN', what: 'document not signed off' },
-    { code: 'FOODOWN', what: 'low temperature cooking has no own entry: add one of kind special-process whose title names it' },
+    { code: 'FOODOWN', what: 'low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it' },
     { code: 'FOODOWN', what: 'own entry OWN-02 (Sous vide eggs) awaiting environmental health review' }
   ]);
   // A worksheet not started, and one with problems, come first.
@@ -246,6 +246,24 @@ test('a document is in step only when it passes check: an edited document is out
   assert.equal(docStatus(dir, 'FOODCOOK').inSync, false);
   assert.deepEqual(linesFor(dir, 'FOODCOOK'), ['document ARC-001-FOODCOOK-v1.0.md out of date: it does not match its worksheets',
     'document not signed off']);
+});
+
+test('a special process is covered by the confirmed own entry whose Process names it, never by an entry\'s title', () => {
+  const dir = cafe();
+  // The profile says yes to smoking or curing meat or fish too. OWN-03 names it in its Process; OWN-04's
+  // title names low temperature cooking, but its Process is sous vide, so it does not cover it.
+  setSheet(dir, 'profile', sheet(dir, 'profile').replace(/(### PR-Q15\n\n[^\n]*\nAnswer: )no/, '$1yes'));
+  const entry = (id, title, process) => [`## ${id} ${title}`, '', 'Kind: special-process', `Process: ${process}`, 'Hazard:', 'Control:',
+    'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:', 'Supplied-text: Our written method', 'EH-review: 2026-12-01 accepted',
+    'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20'].join('\n');
+  setSheet(dir, 'own', `${sheet(dir, 'own')}\n${entry('OWN-03', 'Hot smoked salmon', 'smoking or curing meat/fish')}\n\n` +
+    `${entry('OWN-04', 'Low temperature cooking of eggs', 'sous vide')}\n`);
+  assert.deepEqual(parseWorksheet(sheet(dir, 'own'), data).problems, []);
+  assert.deepEqual(status(dir).specialProcesses, [
+    { name: 'sous vide', ownEntry: 'OWN-02', ehReview: 'pending' },
+    { name: 'low temperature cooking', ownEntry: null, ehReview: null },
+    { name: 'smoking or curing meat/fish', ownEntry: 'OWN-03', ehReview: '2026-12-01 accepted' }
+  ]);
 });
 
 // ---- Sign-off ----
@@ -544,7 +562,7 @@ test('the completion record lists what is unfinished, the sous vide entry awaiti
   const text = rendered('FOODCMP', dir);
   const list = text.slice(text.indexOf('\n## Unfinished\n'));
   assert.ok(list.includes('\n- Own methods (FOODOWN): own entry OWN-02 (Sous vide eggs) awaiting environmental health review\n'), list);
-  assert.ok(list.includes('\n- Own methods (FOODOWN): low temperature cooking has no own entry: add one of kind special-process whose title names it\n'));
+  assert.ok(list.includes('\n- Own methods (FOODOWN): low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it\n'));
   assert.ok(list.includes('\n- Cooking (FOODCOOK): document not written\n'));
   assert.equal(list.split('\n').filter((line) => line.startsWith('- ')).length, status(dir).unfinished.length);
   writeDocument(dir, 'FOODCOOK');

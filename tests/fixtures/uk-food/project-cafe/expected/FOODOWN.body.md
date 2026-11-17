@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODOWN data=sfbb-caterers-2026-11-17 answers=d793fa63165ac9737e588242636743f1d2643d8c2580a079242feb53bedc54c9 -->
+<!-- UK-FOOD:BEGIN doc=FOODOWN data=sfbb-caterers-2026-11-17 answers=16bc13e7c9e39e8140033423c4eb4cf54c3c5a0118af39e78321d5a35b3bde50 -->
 
 ## The business's own methods
 
@@ -20,6 +20,7 @@
 | Field | Value |
 | --- | --- |
 | Kind | special process |
+| Special process or food | sous vide |
 | Hazard | Sous vide eggs are cooked at a low temperature, so harmful bacteria could survive if they are not cooked exactly as the method says. |
 | Control | We cook sous vide eggs only by our written method, below. |
 | Check | Each morning the water bath's own thermometer is checked against the probe thermometer. |

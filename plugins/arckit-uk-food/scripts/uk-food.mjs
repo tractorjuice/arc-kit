@@ -404,7 +404,7 @@ export const OWN_KINDS = ['additional', 'special-process'];
 const METHOD_FIELDS = ['Status', 'Reason', 'Decided-by', 'Variation', 'Proved-safe'];
 const ANSWER_FIELDS = ['Answer', 'State', 'By', 'On', 'Source'];
 const OWN_FIELDS = [
-  'Kind', 'Hazard', 'Control', 'Limit', 'Limit-source', 'Check', 'If-it-fails', 'Supplied-text', 'EH-review',
+  'Kind', 'Process', 'Hazard', 'Control', 'Limit', 'Limit-source', 'Check', 'If-it-fails', 'Supplied-text', 'EH-review',
   'State', 'By', 'On'
 ];
 // The status fields each status uses. A field the status does not use, filled in, is reported:
@@ -412,9 +412,10 @@ const OWN_FIELDS = [
 const STATUS_USES = {
   applies: [], adapted: ['Variation', 'Reason', 'Proved-safe', 'Decided-by'], 'not-relevant': ['Reason', 'Decided-by']
 };
-// What an own entry of each kind must fill in before it can be proposed or confirmed.
+// What an own entry of each kind must fill in before it can be proposed or confirmed. Only a special
+// process has a Process: the pack's special process or food that it covers.
 const KIND_NEEDS = {
-  additional: ['Hazard', 'Control', 'Check', 'If-it-fails'], 'special-process': ['Supplied-text', 'EH-review']
+  additional: ['Hazard', 'Control', 'Check', 'If-it-fails'], 'special-process': ['Process', 'Supplied-text', 'EH-review']
 };
 // Printed after each question: the form of answer the helper reads. The helper's words, not the pack's.
 const HINTS = {
@@ -442,6 +443,13 @@ const HINT_TEXTS = Object.values(HINTS).flatMap((hint) => [hint, hint.slice(1, -
 export const EXTRA_CARE = {
   processes: ['Vacuum packing', 'sous vide', 'low temperature cooking', 'fermenting', 'smoking or curing meat/fish'],
   foods: ['Kebabs', 'sushi/sashimi', 'liver parfait', 'fish/meat carpaccio and tartare', 'less than thoroughly cooked burgers']
+};
+const EXTRA_CARE_NAMES = [...EXTRA_CARE.processes, ...EXTRA_CARE.foods];
+// The name of the pack's special process or food that `text` names, ignoring letter case and runs of
+// white space, in the pack's spelling; or null when it names none.
+const extraCareName = (text) => {
+  const plain = (name) => name.replace(/\s+/g, ' ').trim().toLowerCase();
+  return EXTRA_CARE_NAMES.find((name) => plain(name) === plain(text)) ?? null;
 };
 // The profile's questions. The pack asks none of them, so the words are the helper's own.
 export const PROFILE_QUESTIONS = [
@@ -476,6 +484,9 @@ const OWN_GUIDANCE = [
   'Add an entry for each food safety control of your own that the pack does not cover, and for each',
   'special process you use, such as sous vide. Copy the lines from "## OWN-01" down, paste them below',
   'this comment, and number the entries OWN-01, OWN-02 and so on. Kind is additional or special-process.',
+  'An entry of kind special-process names in Process the special process or food it covers, as the',
+  'profile asks about it; any other entry leaves Process empty. Process is one of these:',
+  `${EXTRA_CARE_NAMES.join('; ')}.`,
   'A Limit needs a Limit-source: where the figure comes from. EH-review is pending, or the date and',
   'outcome of the council\'s review, such as 2026-12-01 accepted. To carry a value on to more lines,',
   'start each extra line with two spaces. State is unanswered, proposed (suggested but not yet agreed)',
@@ -1106,6 +1117,13 @@ export function parseWorksheet(text, data) {
     record.ehReview = standard(record.ehReview, ['pending']);
     if (!record.title) report(b.line, `${b.id} has no title: write one after ${b.id} on its heading`, b);
     if (record.kind && !OWN_KINDS.includes(record.kind)) report(lineOf(b, 'Kind'), `${b.id}: Kind "${record.kind}" is not additional or special-process`, b);
+    // A special process names the pack's process or food it covers, kept in the pack's spelling.
+    if (record.process && record.kind !== 'special-process') {
+      report(lineOf(b, 'Process'), `${b.id}: Process is only for an entry of kind special-process: clear it, or set Kind to special-process`, b);
+    } else if (record.process && !extraCareName(record.process)) {
+      report(lineOf(b, 'Process'), `${b.id}: Process "${record.process}" is not one of the special processes and foods the pack ` +
+        `names, which are: ${EXTRA_CARE_NAMES.join('; ')}`, b);
+    } else if (record.process) record.process = extraCareName(record.process);
     if (record.limit && !record.limitSource) report(lineOf(b, 'Limit-source'), `${b.id} has a Limit, so it needs a Limit-source saying where the figure comes from`, b);
     const review = /^(\d{4}-\d{2}-\d{2})\s+\S/.exec(record.ehReview);
     if (record.ehReview && record.ehReview !== 'pending' && !(review && isIsoDate(review[1]))) {
@@ -1200,7 +1218,6 @@ const COVERED_NATIONS = ['England', 'Wales'];
 const NAME_QUESTION = PROFILE_QUESTIONS[0].id;
 const NATION_QUESTION = PROFILE_QUESTIONS.find((q) => q.type === 'nation').id;
 // The profile's last questions ask about the special processes and foods, in EXTRA_CARE's order.
-const EXTRA_CARE_NAMES = [...EXTRA_CARE.processes, ...EXTRA_CARE.foods];
 const EXTRA_CARE_ASKED = PROFILE_QUESTIONS.slice(-EXTRA_CARE_NAMES.length).map((q, i) => ({ id: q.id, name: EXTRA_CARE_NAMES[i] }));
 // The text box that names them; its first paragraph says what a business that does them must do.
 export const EXTRA_CARE_BOX = { method: 'CK-02', page: 53 };
@@ -1209,7 +1226,7 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 const STATUS_WORDS = { applies: 'applies', adapted: 'adapted', 'not-relevant': 'not relevant' };
 const KIND_WORDS = { additional: 'additional control', 'special-process': 'special process' };
 // An own entry's fields as the own methods document labels them. Supplied-text is quoted below.
-const OWN_ROWS = [['Kind', 'kind'], ['Hazard', 'hazard'], ['Control', 'control'], ['Limit', 'limit'],
+const OWN_ROWS = [['Kind', 'kind'], ['Special process or food', 'process'], ['Hazard', 'hazard'], ['Control', 'control'], ['Limit', 'limit'],
   ['Where the limit comes from', 'limitSource'], ['Check', 'check'], ['If it fails', 'ifItFails'],
   ['Environmental health review', 'ehReview']];
 const CHECK_ADVICE = 'The text between the UK-FOOD markers is generated, so it is not changed there: to change what ' +
@@ -1914,7 +1931,7 @@ function countsOf(code, sheet, data) {
 }
 
 // The special processes and foods the profile confirms the business does, each with the confirmed own
-// entry of kind special-process whose title names it (ignoring letter case) and that entry's review;
+// entry of kind special-process whose Process names it (never its title) and that entry's review;
 // and the confirmed own entries whose environmental health review is pending.
 function specialProcessesOf(sheets) {
   const profile = sheets.get('profile');
@@ -1923,7 +1940,7 @@ function specialProcessesOf(sheets) {
   const done = profile?.clean ? EXTRA_CARE_ASKED.filter(({ id }) => yes(id)) : [];
   const entries = own?.clean ? [...own.parsed.entries.values()].filter((entry) => entry.answered) : [];
   const specialProcesses = done.map(({ name }) => {
-    const entry = entries.find((e) => e.kind === 'special-process' && e.title.toLowerCase().includes(name.toLowerCase()));
+    const entry = entries.find((e) => e.kind === 'special-process' && e.process === name);
     return { name, ownEntry: entry?.id ?? null, ehReview: entry?.ehReview ?? null };
   });
   return { specialProcesses, awaiting: entries.filter((entry) => entry.ehReview === 'pending') };
@@ -1953,7 +1970,7 @@ function unfinishedOf(documents, sheets, specialProcesses, awaiting) {
     }
   }
   for (const { name, ownEntry } of specialProcesses) {
-    if (!ownEntry) add('FOODOWN', `${name} has no own entry: add one of kind special-process whose title names it`);
+    if (!ownEntry) add('FOODOWN', `${name} has no own entry: add an own entry of kind special-process whose Process is ${name}, and confirm it`);
   }
   for (const entry of awaiting) add('FOODOWN', `own entry ${entry.id} (${entry.title}) awaiting environmental health review`);
   return lines;

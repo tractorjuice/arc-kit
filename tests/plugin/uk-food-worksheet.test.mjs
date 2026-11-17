@@ -1196,7 +1196,7 @@ test('a profile with a method heading or a method question is a problem', () => 
 // ---- Own entries ----
 
 const OWN_ENTRY = [
-  '## OWN-01 Milk for coffee', '', 'Kind: additional', 'Hazard: Milk going off once opened', 'Control: Date each carton when opened',
+  '## OWN-01 Milk for coffee', '', 'Kind: additional', 'Process:', 'Hazard: Milk going off once opened', 'Control: Date each carton when opened',
   'Limit: Use within three days of opening', 'Limit-source: Dairy supplier\'s label', 'Check: Opening checks', 'If-it-fails: Throw it away',
   'Supplied-text:', 'EH-review:', 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20'
 ];
@@ -1239,7 +1239,7 @@ test('own entries: a Limit needs a Limit-source, and Kind must be one of the two
 
 test('own entries: a special process needs its supplied text and an EH-review of pending or a dated outcome', () => {
   const special = (review, supplied = 'Supplied-text: Our written sous vide method') => withEntry([
-    '## OWN-02 Sous vide eggs', '', 'Kind: special-process', 'Hazard:', 'Control:', 'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:',
+    '## OWN-02 Sous vide eggs', '', 'Kind: special-process', 'Process: sous vide', 'Hazard:', 'Control:', 'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:',
     supplied, `EH-review: ${review}`, 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20']);
   assert.deepEqual(parse(special('pending')).problems, []);
   assert.equal(parse(special('Pending')).entries.get('OWN-02').ehReview, 'pending');
@@ -1247,6 +1247,58 @@ test('own entries: a special process needs its supplied text and an EH-review of
   assert.match(messages(parse(special(''))), /EH-review/);
   assert.match(messages(parse(special('next week'))), /EH-review/);
   assert.match(messages(parse(special('pending', 'Supplied-text:'))), /Supplied-text/);
+});
+
+// A special-process entry with the Process line given, or with none when `process` is null.
+const specialEntry = (process, kind = 'special-process', state = 'confirmed') => withEntry([
+  '## OWN-02 Hot smoked salmon', '', `Kind: ${kind}`, ...(process === null ? [] : [`Process: ${process}`]), 'Hazard:', 'Control:', 'Limit:',
+  'Limit-source:', 'Check:', 'If-it-fails:', 'Supplied-text: Our smoking method', 'EH-review: pending', `State: ${state}`,
+  ...(state === 'confirmed' ? ['By: Sam Okafor', 'On: 2026-11-20'] : ['By:', 'On:'])]);
+const EXTRA_CARE_NAMES = [...EXTRA_CARE.processes, ...EXTRA_CARE.foods];
+
+test('own entries: a special process names in Process the pack\'s process or food it covers, in any letter case and spacing', () => {
+  for (const [typed, read] of [['smoking or curing meat/fish', 'smoking or curing meat/fish'], ['Smoking  or CURING meat/fish', 'smoking or curing meat/fish'],
+    ['sous vide', 'sous vide'], ['kebabs', 'Kebabs']]) {
+    const parsed = parse(specialEntry(typed));
+    assert.deepEqual(parsed.problems, [], typed);
+    assert.equal(parsed.entries.get('OWN-02').process, read, typed);
+    assert.equal(parsed.entries.get('OWN-02').answered, true, typed);
+  }
+  // Every name the pack gives is one a Process may take.
+  for (const name of EXTRA_CARE_NAMES) assert.deepEqual(parse(specialEntry(name)).problems, [], name);
+  // Kept through emit, in the pack's spelling.
+  const parsed = parse(specialEntry('Smoking  or CURING meat/fish'));
+  assert.equal(emitWorksheet(parsed, data), specialEntry('smoking or curing meat/fish'));
+});
+
+test('own entries: a Process that is not one of the pack\'s names is a problem listing them, and the entry is not used', () => {
+  const parsed = parse(specialEntry('hot smoking'));
+  assert.equal(parsed.problems.length, 1);
+  const [problem] = parsed.problems;
+  assert.match(problem.message, /OWN-02: Process "hot smoking" is not/);
+  for (const name of EXTRA_CARE_NAMES) assert.ok(problem.message.includes(name), name);
+  assert.equal(parsed.entries.get('OWN-02').answered, false);
+});
+
+test('own entries: a special process needs a Process, and an entry of another kind may not have one', () => {
+  for (const process of [null, '']) {
+    const missing = parse(specialEntry(process));
+    assert.equal(missing.problems.length, 1, String(process));
+    assert.match(missing.problems[0].message, /OWN-02 is confirmed and special-process, so it needs Process/);
+    assert.equal(missing.entries.get('OWN-02').answered, false);
+  }
+  const additional = parse(withEntry(OWN_ENTRY.map((l) => (l === 'Process:' ? 'Process: sous vide' : l))));
+  assert.equal(additional.problems.length, 1);
+  assert.match(additional.problems[0].message, /OWN-01: Process is only for an entry of kind special-process/);
+  assert.equal(additional.entries.get('OWN-01').answered, false);
+});
+
+test('the own worksheet\'s template has a Process line after Kind, and its guidance says what Process takes', () => {
+  const text = blankWorksheet('own', data);
+  assert.match(text, /\n## OWN-01 Name of the control\n\nKind:\nProcess:\nHazard:\n/);
+  const guidance = text.slice(text.indexOf('<!--\n'), text.indexOf('\n## OWN-01 Name of the control'));
+  assert.match(guidance, /Process/);
+  for (const name of EXTRA_CARE_NAMES) assert.ok(guidance.includes(name), name);
 });
 
 test('own entries: identifiers are OWN- and two digits, once each, and an entry needs a title', () => {
@@ -1399,6 +1451,8 @@ test('the cafe fixture: two own entries, one additional with a sourced limit, on
   assert.ok(additional.limit && additional.limitSource);
   assert.equal(special.kind, 'special-process');
   assert.match(special.title, /sous vide/i);
+  assert.equal(special.process, 'sous vide');
+  assert.equal(additional.process, '');
   assert.ok(special.suppliedText);
   assert.equal(special.ehReview, 'pending');
 });

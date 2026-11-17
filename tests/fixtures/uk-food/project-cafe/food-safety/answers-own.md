@@ -6,6 +6,9 @@
 Add an entry for each food safety control of your own that the pack does not cover, and for each
 special process you use, such as sous vide. Copy the lines from "## OWN-01" down, paste them below
 this comment, and number the entries OWN-01, OWN-02 and so on. Kind is additional or special-process.
+An entry of kind special-process names in Process the special process or food it covers, as the
+profile asks about it; any other entry leaves Process empty. Process is one of these:
+Vacuum packing; sous vide; low temperature cooking; fermenting; smoking or curing meat/fish; Kebabs; sushi/sashimi; liver parfait; fish/meat carpaccio and tartare; less than thoroughly cooked burgers.
 A Limit needs a Limit-source: where the figure comes from. EH-review is pending, or the date and
 outcome of the council's review, such as 2026-12-01 accepted. To carry a value on to more lines,
 start each extra line with two spaces. State is unanswered, proposed (suggested but not yet agreed)
@@ -15,6 +18,7 @@ Only a confirmed entry goes into your documents.
 ## OWN-01 Name of the control
 
 Kind:
+Process:
 Hazard:
 Control:
 Limit:
@@ -31,6 +35,7 @@ On:
 ## OWN-01 Opened milk for coffee
 
 Kind: additional
+Process:
 Hazard: Milk going off once the carton has been opened.
 Control: Write the date on each carton when it is opened, and keep open cartons in the drinks fridge.
 Limit: Use by the end of the day after the carton is opened.
@@ -46,6 +51,7 @@ On: 2026-11-20
 ## OWN-02 Sous vide eggs
 
 Kind: special-process
+Process: sous vide
 Hazard: Sous vide eggs are cooked at a low temperature, so harmful bacteria could survive if they are not cooked exactly as the method says.
 Control: We cook sous vide eggs only by our written method, below.
 Limit:
