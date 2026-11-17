@@ -44,7 +44,7 @@ In Claude Code the commands carry the overlay's name:
 
 Start with the profile, then work through the five sections in any order, then add your own methods. Run the check whenever you want to see where things stand. The commands ask their questions in conversation and record only what you tell them, with your name and the date; an answer nobody has given shows in the documents as not yet answered. The commands run the overlay's helper script, which needs Node.
 
-The other tools ArcKit supports name the commands their own way: for example `$arckit-uk-food-profile` in Codex and `/arckit-uk-food:uk-food-profile` in Gemini and OpenCode.
+The other tools ArcKit supports name the commands their own way: for example `$arckit-uk-food-profile` in Codex and `/arckit-uk-food-profile` in GitHub Copilot.
 
 ## What it does not do
 
