@@ -37,14 +37,17 @@ def apply_joins(tokens: list[str], joins: list[dict]) -> list[str]:
     Each join {"parts": [...], "as": "...", "count": n} replaces n contiguous runs
     of the raw tokens `parts` (n defaults to 1) with the single token `as`, which
     must be the parts run together: a join can only undo a split, never add a
-    word. A join that is not found raises ValueError, so a stale one cannot pass.
+    word. A join that is not found, or whose count is below 1 (so it would apply
+    nothing), raises ValueError, so a stale one cannot pass.
     """
     result = list(tokens)
     for join in joins:
-        parts, whole = join["parts"], join["as"]
+        parts, whole, count = join["parts"], join["as"], join.get("count", 1)
         if whole != "".join(parts):
             raise ValueError(f"join {parts} -> {whole!r}: not the parts run together")
-        for _ in range(join.get("count", 1)):
+        if count < 1:
+            raise ValueError(f"join {parts} -> {whole!r}: count {count} is below 1")
+        for _ in range(count):
             for i in range(len(result) - len(parts) + 1):
                 if result[i:i + len(parts)] == parts:
                     result[i:i + len(parts)] = [whole]

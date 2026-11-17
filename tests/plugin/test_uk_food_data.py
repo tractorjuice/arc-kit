@@ -207,6 +207,22 @@ def test_joins_apply_count_times_and_refuse_stale_or_invented_words():
         apply_joins(tokens, [{"parts": ["a-", "b"], "as": "a-c"}])
 
 
+def test_joins_refuse_a_count_below_one():
+    # A count of 0 or less would apply nothing and so pass silently, like a stale join.
+    for count in (0, -1):
+        with pytest.raises(ValueError, match="count"):
+            apply_joins(["a-", "b"], [{"parts": ["a-", "b"], "as": "a-b", "count": count}])
+
+
+def test_every_exception_and_join_gives_a_reason():
+    exceptions = _load(EXCEPTIONS)
+    entries = [(page, entry) for page, items in exceptions.get("pages", {}).items() for entry in items]
+    entries += [(page, join) for page, items in exceptions.get("joins", {}).items() for join in items]
+    unexplained = [(page, entry) for page, entry in entries
+                   if not isinstance(entry.get("reason"), str) or not entry["reason"].strip()]
+    assert not unexplained, unexplained
+
+
 def test_from_image_elements_are_left_out(tmp_path):
     data = {"section": {"intro": [{"text": "Wash your hands", "page": 1},
                                   {"text": "unreadable picture words", "page": 1, "fromImage": True}]}}
