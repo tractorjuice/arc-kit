@@ -231,6 +231,19 @@ def test_a_soft_hyphen_is_kept_outside_a_declared_join(tmp_path):
     assert diff[1]["extra"] == Counter({"ready-to-eat": 1})
 
 
+def test_joins_read_only_a_line_end_soft_hyphen_as_a_printed_hyphen():
+    # A soft hyphen ending a part that another part follows is a line-end hyphen, and may be read as "-".
+    parts = ["ready\u00ad", "to\u00ad", "eat"]
+    assert apply_joins(parts, [{"parts": parts, "as": "ready-to-eat"}]) == ["ready-to-eat"]
+    # Anywhere else it is not a printed hyphen, so an `as` that reads it as "-" is refused.
+    for parts in (["re\u00adady-to", "eat"],         # inside a part
+                  ["ready-to", "\u00adeat"],         # at the start of a part
+                  ["ready-to", "eat\u00ad"],         # at the end of the last part
+                  ["re\u00adady-to\u00ad", "eat"]):  # inside a part, beside a line-end one
+        with pytest.raises(ValueError, match="not the parts run together"):
+            apply_joins(list(parts), [{"parts": parts, "as": "".join(parts).replace("\u00ad", "-")}])
+
+
 def test_joins_refuse_a_count_below_one():
     # A count of 0 or less would apply nothing and so pass silently, like a stale join.
     for count in (0, -1):

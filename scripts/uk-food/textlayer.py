@@ -34,22 +34,29 @@ def normalise(word: str) -> str:
 SOFT_HYPHEN = "\u00ad"
 
 
+def _as_printed(parts: list[str]) -> str:
+    """The parts run together, each soft hyphen that ends a part another part follows read as "-"."""
+    last = len(parts) - 1
+    return "".join(part[:-1] + "-" if i < last and part.endswith(SOFT_HYPHEN) else part
+                   for i, part in enumerate(parts))
+
+
 def apply_joins(tokens: list[str], joins: list[dict]) -> list[str]:
     """Rejoin a printed word the text layer split in two at a line break.
 
     Each join {"parts": [...], "as": "...", "count": n} replaces n contiguous runs
     of the raw tokens `parts` (n defaults to 1) with the single token `as`, which
     must be the parts run together: a join can only undo a split, never add a
-    word. A soft hyphen (U+00AD) in a part may be read as the "-" the page prints
-    there, and only inside a declared join. A join that is not found, or whose
-    count is below 1 (so it would apply nothing), raises ValueError, so a stale
-    one cannot pass.
+    word. A soft hyphen (U+00AD) at the end of a part that is not the last part
+    is a line-end hyphen, and may be read as the "-" the page prints there, only
+    inside a declared join; a soft hyphen anywhere else is never read as "-". A
+    join that is not found, or whose count is below 1 (so it would apply
+    nothing), raises ValueError, so a stale one cannot pass.
     """
     result = list(tokens)
     for join in joins:
         parts, whole, count = join["parts"], join["as"], join.get("count", 1)
-        run_together = "".join(parts)
-        if whole not in (run_together, run_together.replace(SOFT_HYPHEN, "-")):
+        if whole not in ("".join(parts), _as_printed(parts)):
             raise ValueError(f"join {parts} -> {whole!r}: not the parts run together")
         if count < 1:
             raise ValueError(f"join {parts} -> {whole!r}: count {count} is below 1")
