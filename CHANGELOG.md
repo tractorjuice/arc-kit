@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Section links in a published documentation site no longer show "Document not found".** A link to a heading inside a document, such as a contents list written in the document's own Markdown, was treated as the name of a file to open. It now scrolls to the heading. A link to another document can also name a section (`ARC-001-REQ-v1.0.md#executive-summary`) and the site goes to it. Run `/arckit:pages` again to pick up the fix on an existing site.
 - **The core plugin's marketplace listing said 75 commands.** It has 76.
 - **The research handoff check no longer repeats a reader's own words in its errors.** When a reader's reply failed the check, the error lines named the offending key or value, so text a web page had planted could reach the main session inside ArcKit's own message. Errors now name positions in the schema only: unknown keys are one line that lists the keys the schema allows, and no value is quoted. The validator script used by the non-Claude extensions reports errors the same way. Follow-up to #1020.
 - **Only Claude Code's own details of a reader's result keep their text** when the check replaces the reply, so a field the check does not know cannot carry reader text past it.
