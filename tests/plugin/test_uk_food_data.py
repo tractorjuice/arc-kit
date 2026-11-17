@@ -576,6 +576,32 @@ def test_limit_text_is_quoted():
     assert not unquoted_limits(_limits())
 
 
+# The order the check sheet relies on: the front matter, the five sections in pack order, then the diary,
+# by page within each, numbered L-01 onwards with no gap.
+LIMIT_GROUPS = ["front", *METHOD_COUNTS, "diary"]
+
+
+def limits_out_of_order(limits: list[dict]) -> list[str]:
+    """Identifiers not numbered by their position, then identifiers that come before the entry above them."""
+    problems = [limit["id"] for i, limit in enumerate(limits, 1) if limit["id"] != f"L-{i:02d}"]
+    keys = [(LIMIT_GROUPS.index(_file_of(limit["method"])), limit["page"]) for limit in limits]
+    return problems + [limits[i]["id"] for i in range(1, len(keys)) if keys[i] < keys[i - 1]]
+
+
+def test_limits_are_in_check_sheet_order():
+    assert limits_out_of_order(_limits()) == []
+
+
+def test_limits_out_of_order_are_reported():
+    limits = json.loads(json.dumps(_limits()))
+    limits.append(limits.pop(0))  # the front matter's entry moved after the diary's
+    for i, limit in enumerate(limits, 1):
+        limit["id"] = f"L-{i:02d}"
+    assert limits_out_of_order(limits) == [limits[-1]["id"]]
+    limits[0]["id"] = "L-99"
+    assert limits_out_of_order(limits)[0] == "L-99"
+
+
 def _limit(limits: list[dict], value: str, page: int) -> dict:
     return next(limit for limit in limits if (limit["value"], limit["page"]) == (value, page))
 
@@ -591,7 +617,7 @@ def test_a_limit_not_quoted_from_its_page_is_reported():
 
 def test_a_figure_with_no_limit_is_reported():
     limits = [limit for limit in _limits() if limit["value"] != "90°C"]
-    _, unaccounted, _ = figure_accounts(limits)
+    unaccounted = figure_accounts(limits).unaccounted
     assert [(name, page, figure) for name, page, _, figure, _ in unaccounted] == [("XC", 15, "90°C")]
 
 
@@ -618,9 +644,16 @@ EXPECTED_LIMITS = [
     ("1 day", "CK-07", 63, "Cooked rice"),
     ("four hours", "CH-01", 41, "\u20184 hour rule\u2019"),  # the four-hour rule
     ("two hours", "CK-06", 60, "up to two hours, but you can only do this once"),  # the two-hour rule
+    # Each display rule may be used only once: its own entry, as reheating's "only once" has.
+    ("once", "CH-01", 41, "for up to four hours, but you can only do this once"),
+    ("once", "CK-06", 60, "for up to two hours, but you can only do this once"),
     ("between 0°C and 4°C", "CK-02", 53, None),
     ("60 days", "CK-02", 52, None),
     ("28 days", "front", 2, None),
+    # The review's cadence is printed only in its name, so it is a limit where the pack tells the business to
+    # do the review; the name elsewhere is in NOT_LIMITS.
+    ("4-weekly", "front", 5, "There is also a 4-weekly review"),
+    ("4-weekly", "MG-05", 73, "You should still complete the 4-weekly review yourself."),
     ("120\u2070C", "CK-04", 56, "Acrylamide"),
     ("175\u2070C", "CK-04", 57, "oil temperature"),
     ("30\u2013180 mins", "CK-04", 56, "Soak"),
@@ -665,8 +698,9 @@ NOT_LIMITS = [
               "the food hygiene rating scale an inspector awards, not a figure the business works to"),
     NotALimit({"front": (10,), "CL": (29,)}, r"^Step [1-6]:", "the number of a handwashing step"),
     NotALimit({"CL": (31, 37), "CH": (44, 45), "MG": (75,)}, r"^[1-7]\. ", "the number of an item in a numbered list"),
-    NotALimit({"front": (5,), "MG": (73,)}, r"\b4-weekly review\b",
-              "the name of the diary's 4-weekly review, a form, not a figure"),
+    NotALimit({"MG": (73,)}, r"\bUse the 4-weekly review in the diary\b",
+              "the 4-weekly review named as a place to find problems; its cadence is a limit where the pack tells"
+              " the business to do it (front page 5, MG-05 page 73)"),
     NotALimit({"XC": (20,)}, r"\bring 999\b", "the emergency telephone number in the allergic reaction box"),
     NotALimit({"MG": (70,)}, r"\bSince October 2021\b", "the date a labelling law came in; a date, not a limit"),
     NotALimit({"XC": (17, 18), "CL": (31, 32, 33)},
@@ -723,36 +757,58 @@ def _inside(pattern: re.Pattern, part: str, start: int, end: int) -> bool:
     return any(m.start() <= start and end <= m.end() for m in pattern.finditer(part))
 
 
-def figure_accounts(limits: list[dict]) -> tuple[Counter, list, set[int]]:
-    """Each figure's account: "limit" or the reason of the pattern that matched it. Returns the count per
-    account, the figures with none, and the indices of the patterns used."""
+class FigureAccounts(NamedTuple):
+    counts: Counter      # figures per account: "limit", or the reason of the pattern that matched
+    unaccounted: list    # figures inside no limit's text and matched by no pattern
+    both: list           # figures inside a limit's text and also matched by a pattern
+    used: set            # indices of the patterns that accounted for a figure
+
+
+def figure_accounts(limits: list[dict]) -> FigureAccounts:
+    """Account for each figure: inside a limit's text, or matched by a pattern in NOT_LIMITS, never both."""
     patterns = [re.compile(entry.pattern) for entry in NOT_LIMITS]
-    accounts: Counter = Counter()
-    unaccounted, used = [], set()
+    result = FigureAccounts(Counter(), [], [], set())
     for name in ["front", *METHOD_COUNTS]:
         for page, method, part in _parts(name):
             owner = "front" if name == "front" else method
             texts = [re.compile(re.escape(limit["text"])) for limit in limits
                      if limit["page"] == page and limit["method"] == owner]
             for start, end in _figures(part):
-                if any(_inside(text, part, start, end) for text in texts):
-                    accounts["limit"] += 1
-                    continue
+                figure = (name, page, method, part[start:end], part)
+                in_limit = any(_inside(text, part, start, end) for text in texts)
                 matched = [i for i, entry in enumerate(NOT_LIMITS)
                            if page in entry.where.get(name, ()) and _inside(patterns[i], part, start, end)]
-                if matched:
-                    used.update(matched)
-                    accounts[NOT_LIMITS[matched[0]].reason] += 1
+                if in_limit:
+                    result.counts["limit"] += 1
+                    if matched:
+                        result.both.append(figure)
+                elif matched:
+                    result.used.update(matched)
+                    result.counts[NOT_LIMITS[matched[0]].reason] += 1
                 else:
-                    unaccounted.append((name, page, method, part[start:end], part))
-    return accounts, unaccounted, used
+                    result.unaccounted.append(figure)
+    return result
 
 
 def test_no_figure_is_unaccounted_for():
-    accounts, unaccounted, used = figure_accounts(_limits())
-    assert not unaccounted, unaccounted
-    assert used == set(range(len(NOT_LIMITS))), [NOT_LIMITS[i].pattern for i in set(range(len(NOT_LIMITS))) - used]
-    assert accounts["limit"] > 0
+    accounts = figure_accounts(_limits())
+    assert not accounts.unaccounted, accounts.unaccounted
+    unused = set(range(len(NOT_LIMITS))) - accounts.used
+    assert not unused, [NOT_LIMITS[i].pattern for i in sorted(unused)]
+    assert accounts.counts["limit"] > 0
+
+
+def test_no_figure_is_both_a_limit_and_not_a_limit():
+    # A pattern in NOT_LIMITS must not also match a figure the table holds as a limit.
+    accounts = figure_accounts(_limits())
+    assert not accounts.both, accounts.both
+
+
+def test_a_figure_both_a_limit_and_not_a_limit_is_reported():
+    extra = {"id": "L-99", "value": "4-weekly", "text": "Use the 4-weekly review in the diary", "method": "MG-05",
+             "page": 73}
+    both = figure_accounts([*_limits(), extra]).both
+    assert [(name, page, figure) for name, page, _, figure, _ in both] == [("MG", 73, "4-weekly")]
 
 
 # render-limits-check.py renders limits.json as a table for reading against the PDF page by page.
