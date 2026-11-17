@@ -134,6 +134,7 @@ Source:
 
 ### XC-01-Q12
 
+> FITNESS FOR WORK
 > Staff who have had diarrhoea and/or vomiting should not return to work until they have had no symptoms for 48 hours.
 > Do you check food handlers have been free of symptoms for 48 hours before returning to work?  (yes / no)
 Answer: yes
@@ -155,6 +156,7 @@ Source:
 
 ### XC-01-Q15
 
+> MANAGE IT
 > It is good practice to keep a clean set of work clothes or disposable aprons for visitors.
 > Where do you keep clean uniforms/disposable aprons?  (write your answer)
 Answer: In the cupboard by the back door.
@@ -276,6 +278,7 @@ Source:
 
 ### XC-02-Q10
 
+> MANAGE IT
 > Always keep a good supply of disposable/clean cloths in your kitchen.
 > Where do you keep new/clean cloths?  (write your answer)
 Answer: On the shelf above the hand wash basin.
@@ -629,6 +632,7 @@ Source:
 
 ### XC-07-Q02
 
+> MANAGE IT
 > • Check your premises regularly for any structural damage or problems with equipment.
 > • Put problems right as soon as possible, before they get worse or affect food safety. Make a note in your diary of what you do.
 > • Put reminders in your diary of maintenance checks and make a note of any repairs you make.

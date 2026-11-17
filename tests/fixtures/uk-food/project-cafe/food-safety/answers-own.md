@@ -13,6 +13,7 @@ or confirmed (agreed by the business: put who agreed it in By and the date, as Y
 Only a confirmed entry goes into your documents.
 
 ## OWN-01 Name of the control
+
 Kind:
 Hazard:
 Control:

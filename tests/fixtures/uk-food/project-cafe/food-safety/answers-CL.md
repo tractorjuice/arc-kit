@@ -35,6 +35,9 @@ Source:
 
 ### CL-01-Q02
 
+> CHECK IT
+> For hands to be washed properly, you need warm running water, liquid soap and preferably disposable towels.
+> Ideally, antibacterial soap should meet standard BS EN 1499 for extra protection against harmful bacteria and contamination.
 > Do you frequently check and replenish consumables?  (yes / no)
 Answer:
 State: unanswered
@@ -44,6 +47,9 @@ Source:
 
 ### CL-01-Q03
 
+> CHECK IT
+> For hands to be washed properly, you need warm running water, liquid soap and preferably disposable towels.
+> Ideally, antibacterial soap should meet standard BS EN 1499 for extra protection against harmful bacteria and contamination.
 > Do you check staff frequently wash their hands?  (yes / no)
 Answer:
 State: unanswered
@@ -53,6 +59,9 @@ Source:
 
 ### CL-01-Q04
 
+> CHECK IT
+> For hands to be washed properly, you need warm running water, liquid soap and preferably disposable towels.
+> Ideally, antibacterial soap should meet standard BS EN 1499 for extra protection against harmful bacteria and contamination.
 > Do you use disposable towels?  (yes, or say what you do instead) If no, what do you use?
 Answer:
 State: unanswered
@@ -62,6 +71,9 @@ Source:
 
 ### CL-01-Q05
 
+> CHECK IT
+> For hands to be washed properly, you need warm running water, liquid soap and preferably disposable towels.
+> Ideally, antibacterial soap should meet standard BS EN 1499 for extra protection against harmful bacteria and contamination.
 > Do you use antibacterial soap which meets standard BS EN 1499? (check the product label)  (yes, or say what you do instead) If no, what do you use?
 Answer:
 State: unanswered
@@ -127,6 +139,7 @@ Source:
 
 ### CL-02-Q05
 
+> HIGH PRIORITY CLEANING
 > Clean and disinfect fridges regularly at a time when they do not contain much food. Transfer food to another fridge or a safe cold area and keep it covered.
 > How often do you clean and disinfect fridges?  (write your answer)
 Answer:
@@ -137,6 +150,7 @@ Source:
 
 ### CL-02-Q06
 
+> HIGH PRIORITY CLEANING
 > Ideally use a dishwasher. Do not overload the dishwasher and make sure it is maintained and serviced regularly.
 > If you do not have a dishwasher, wash plates, equipment, etc, in hot soapy water using bactericidal detergent.
 > Ideally, separate sinks should be used for washing up equipment used for raw foods and equipment used for ready to eat foods.
@@ -150,6 +164,7 @@ Source:
 
 ### CL-02-Q07
 
+> HIGH PRIORITY CLEANING
 > Ideally use a dishwasher. Do not overload the dishwasher and make sure it is maintained and serviced regularly.
 > If you do not have a dishwasher, wash plates, equipment, etc, in hot soapy water using bactericidal detergent.
 > Ideally, separate sinks should be used for washing up equipment used for raw foods and equipment used for ready to eat foods.
@@ -163,6 +178,7 @@ Source:
 
 ### CL-02-Q08
 
+> HIGH PRIORITY CLEANING
 > Ideally use a dishwasher. Do not overload the dishwasher and make sure it is maintained and serviced regularly.
 > If you do not have a dishwasher, wash plates, equipment, etc, in hot soapy water using bactericidal detergent.
 > Ideally, separate sinks should be used for washing up equipment used for raw foods and equipment used for ready to eat foods.
@@ -187,6 +203,7 @@ Source:
 
 ### CL-02-Q10
 
+> MANAGE IT
 > Fill out the cleaning schedule in the diary to show how you manage cleaning in your business. (See the ‘Your cleaning schedule’ safe method.)
 > If no, are you using another cleaning schedule?  (yes / no)
 Answer:
@@ -197,6 +214,7 @@ Source:
 
 ### CL-02-Q11
 
+> MANAGE IT
 > Make sure you always have a good supply of cleaning chemicals, materials and equipment. It can be helpful to put a reminder in your diary of when you should buy more.
 > Do you make sure you have a good supply of cleaning products?  (yes / no)
 Answer:

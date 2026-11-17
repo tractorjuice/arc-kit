@@ -421,9 +421,14 @@ const HINTS = {
   text: '(write your answer)', list: '(one item per line)', nation: '(England / Wales / Scotland / Northern Ireland / other)'
 };
 const NATIONS = ['England', 'Wales', 'Scotland', 'Northern Ireland', 'other'];
-// Only yes is yes. An answer to a yes-no-else question that is nothing but one of these words says
-// neither yes nor what the business does instead, so it is reported and not used.
-const YES_OR_NO_WORD = /^(no|n|nope|nah|not|never|y|ye|yea|yeah|yep|yup|yes|yess|yse|ys|yrs|ues|ok|okay|true|false)[.!]?$/i;
+// Only yes (or yes.) is yes. An answer to a yes-no-else question that is nothing but one of these
+// words, or a non-answer (n/a, none, a dash, a question mark), followed by any run of marks (. ! ?
+// an ellipsis, and also , ; : - and spaces), says neither yes nor what the business does instead,
+// so it is reported and not used. So is an answer made only of such marks.
+const NOT_AN_INSTEAD = new RegExp('^(?:(?:no|n|nope|nah|not|never|none|nil|na|n/a|y|ye|yea|yeah|yep|yup|yes|yess|yse|ys|yrs|' +
+  'ues|ok|okay|true|false)[\\s.!?\u2026,;:-]*|[\\s.!?\u2026,;:-]+)$', 'i');
+// The bracketed hints, lower-cased: an answer line that is one of them was copied from the prompt.
+const HINT_TEXTS = Object.values(HINTS).map((hint) => hint.toLowerCase());
 // The special processes and foods the pack names in CK-02's box "Other foods that need extra care"
 // (page 53), spelt as printed there. A test checks that each is in that box's text.
 export const EXTRA_CARE = {
@@ -470,6 +475,7 @@ const OWN_GUIDANCE = [
   'Only a confirmed entry goes into your documents.',
   '',
   '## OWN-01 Name of the control',
+  '',
   ...OWN_FIELDS.map((field) => (field === 'State' ? 'State: unanswered' : `${field}:`))
 ];
 
@@ -516,45 +522,52 @@ function columnsFor(questions, columns) {
 
 // The questions of a method a business answers, in the data's order, each with what the
 // worksheet prints above it so that it is not read out of context, in this order:
-// - the box's heading, with the box's first question and with any question that prints no text;
-// - a CHECK IT box's text, with its first question, as the point the box's questions are about;
-// - a lead-in: a row that asks nothing and whose point ends with a colon ("Use disposable cloths
-//   or paper towels for the following jobs:") is shown with every question of the rows after it
-//   in its box, up to the next row that asks nothing;
+// - its box's heading, when the box has one;
+// - a CHECK IT box's text, when the question has no row point of its own;
+// - a lead-in row: a row that asks nothing and whose point ends with a colon ("Use disposable
+//   cloths or paper towels for the following jobs:") is shown with every question of the rows
+//   after it in its box, up to the next row that asks nothing;
 // - the row's safety point, whole. A row with no point continues the spanning cell above it when
 //   its question prints no text of its own (MG-02's "Maintenance" spans two rows on page 67), so
 //   it is shown the nearest point above it in its box. A row with no point whose question prints
 //   its own text is a prompt of its own (CH-02 page 43, CH-03 page 45: "If you have another
 //   method ..."), and the row above is a different method, so it is shown nothing;
-// - the notes printed before the question in its row or box since the question before;
+// - a lead-in within the row or box: the latest note or question before it whose text ends with
+//   a colon ("Fridge:", "7. If you have another method of defrosting, write the details here:"),
+//   until the next one;
+// - the notes printed before it in its row or box since the question before, in printed order;
 // - for a question that prints no text, the column headings it sits under.
 // A note asks nothing, so it is never listed itself.
 function methodQuestions(method) {
   const listed = [];
+  const endsWithColon = (text) => /:\s*$/.test(text ?? '');
   for (const block of method.blocks) {
-    let firstInBlock = true;
-    let leadIn = null;
+    let leadInRow = null;
     let cell = null; // the nearest point above, in this box
     for (const { questions, row } of holdersOf(block)) {
       const asked = questions.filter((q) => q.type !== 'note');
-      if (row && asked.length === 0) leadIn = /:\s*$/.test(row.point ?? '') ? row.point : null;
+      if (row && asked.length === 0) leadInRow = endsWithColon(row.point) ? row.point : null;
       const point = row?.point ?? (row && asked.some((q) => q.text === '') ? cell : null);
       if (row?.point) cell = row.point;
       const columns = columnsFor(questions, block.columns ?? []);
       let notes = [];
+      let leadIn = null;
       questions.forEach((question, i) => {
         if (question.type === 'note') {
-          notes.push(question.text);
+          notes.push(question);
+          if (endsWithColon(question.text)) leadIn = question;
           return;
         }
         const context = [];
-        if (block.heading && (firstInBlock || question.text === '')) context.push(block.heading);
-        if (!row && block.kind === 'check-it' && block.text && firstInBlock) context.push(block.text);
-        if (row && leadIn) context.push(leadIn);
+        if (block.heading) context.push(block.heading);
+        if (block.kind === 'check-it' && block.text && !row?.point) context.push(block.text);
+        if (row && leadInRow) context.push(leadInRow);
         if (point) context.push(point);
-        listed.push({ question, context: [...context, ...notes], columns: question.text === '' ? columns[i] : [] });
+        if (leadIn && !notes.includes(leadIn)) context.push(leadIn.text);
+        context.push(...notes.map((note) => note.text));
+        listed.push({ question, context, columns: question.text === '' ? columns[i] : [] });
         notes = [];
-        firstInBlock = false;
+        if (endsWithColon(question.text)) leadIn = question;
       });
     }
   }
@@ -650,9 +663,11 @@ const MARKER = /^<!--\s*uk-food-answers\s+(\S+)\s+data=(\S+)\s+section=(\S+)\s*-
 // A field line: a name, then the value after a colon. Hand-edited slips, each read as meant:
 // the name may be in any letter case (answer:), and may have spaces or tabs before the colon
 // (Answer :); spaces and tabs at the ends of lines, Windows line endings and a byte order mark
-// at the start of the file are ignored. A value continues on any later line that starts with a
-// space or a tab (a tab is read as the indent it looks like), even after a blank line; a later
-// line that is not indented and is not a field is reported, never added to the value unseen.
+// at the start of the file are ignored. A value continues on a line that starts with a space or a
+// tab (a tab is read as the indent it looks like) and follows its field's line, or another such
+// line, directly. A blank line ends the value, so an indented line after one is reported and
+// credited to no question; so is an indented line that is itself a field or a heading, and a later
+// line that is not indented and is not a field. Nothing is added to a value unseen.
 const FIELD = /^([A-Za-z][A-Za-z-]*)[ \t]*:(.*)$/;
 const FIELD_NAMES = new Map([...METHOD_FIELDS, ...ANSWER_FIELDS, ...OWN_FIELDS].map((f) => [f.toLowerCase(), f]));
 const FIELDS_OF = { method: METHOD_FIELDS, question: ANSWER_FIELDS, entry: OWN_FIELDS };
@@ -665,7 +680,7 @@ function readValue(question, answer) {
       return /^(yes|no)\.?$/i.test(answer) ? { value: answer.replace(/\.$/, '').toLowerCase() } : { error: 'is not yes or no' };
     case 'yes-no-else':
       if (/^yes\.?$/i.test(answer)) return { value: 'yes' };
-      if (YES_OR_NO_WORD.test(answer)) return { error: 'does not say what you do instead: write yes, or say what you do instead' };
+      if (NOT_AN_INSTEAD.test(answer)) return { error: 'does not say what you do instead: write yes, or say what you do instead' };
       return { value: answer };
     case 'nation': {
       const nation = standard(answer.replace(/\s+/g, ' '), NATIONS);
@@ -759,21 +774,47 @@ export function parseWorksheet(text, data) {
   let field = null; // the field an indented line continues
   let comment = null; // the lines, { at, text }, of a comment not yet closed
   let provenance = false; // inside a "## Build Provenance" section another tool appended: not read
+  // A line that the worksheet would read if it were not in a comment: a heading or a field.
+  const worksheetLine = (text) => {
+    const match = FIELD.exec(text.trim());
+    return /^#{2,3}[ \t]+\S/.test(text.trim()) || Boolean(match && FIELD_NAMES.has(match[1].toLowerCase()));
+  };
   // Nothing in a comment is read. Text after a comment's end on the same line is reported, never
   // dropped. The first comment over several lines is the helper's guidance; if it differs from what
-  // the helper writes, someone may have written an answer or an own entry inside it.
+  // the helper writes, someone may have written an answer or an own entry inside it. Any other
+  // comment, except the lint comments, that holds a line of the worksheet is reported too: a
+  // plain remark is allowed, a commented-out answer or entry is not lost without a word.
   const closeComment = (lines) => {
     const last = lines.at(-1);
-    if (last.text.slice(last.text.indexOf('-->', lines.length === 1 ? 4 : 0) + 3).trim()) {
-      report(last.at, 'text after the end of a comment ("-->") is not read', block);
+    const end = last.text.indexOf('-->', lines.length === 1 ? 4 : 0);
+    if (last.text.slice(end + 3).trim()) report(last.at, 'text after the end of a comment ("-->") is not read', block);
+    if (lines.length > 1 && !guidanceChecked) {
+      guidanceChecked = true;
+      const differs = lines.findIndex((line, i) => line.text !== guidance[i]);
+      if (differs >= 0) {
+        report(lines[differs].at, 'this comment differs from the helper\'s guidance, and nothing inside a comment is read: ' +
+          (section === 'own' ? 'copy the entry below the comment' : 'write answers below the comment, after Answer:'));
+      }
+      return;
     }
-    if (lines.length === 1 || guidanceChecked) return;
-    guidanceChecked = true;
-    const differs = lines.findIndex((line, i) => line.text !== guidance[i]);
-    if (differs >= 0) {
-      report(lines[differs].at, 'this comment differs from the helper\'s guidance, and nothing inside a comment is read: ' +
-        (section === 'own' ? 'copy the entry below the comment' : 'write answers below the comment, after Answer:'));
+    const inner = lines.map(({ at, text }, i) => {
+      const upTo = i === lines.length - 1 ? end : text.length;
+      return { at, text: text.slice(i === 0 ? 4 : 0, upTo) };
+    });
+    if (/^\s*markdownlint-/.test(inner[0].text)) return;
+    const held = inner.find((line) => worksheetLine(line.text));
+    if (held) {
+      report(held.at, 'nothing inside a comment is read, and this comment holds a line of the worksheet: take the comment marks away for it to be read, or delete it', block);
     }
+  };
+  // Inside a "## Build Provenance" section another tool appended, only a heading of this worksheet
+  // is read again: a method or own-entry heading, or a question heading. Everything else is not.
+  const resumesAfterProvenance = (line) => {
+    const heading = /^(#{2,3})[ \t]+(\S+)/.exec(line);
+    if (!heading) return false;
+    const id = heading[2].toUpperCase();
+    if (heading[1].length === 3) return asked.has(id);
+    return methodIds.has(id) || (section === 'own' && /^OWN-\d{2}$/.test(id));
   };
   // Adds a line to a field's value. A comment in a value would be hidden once a document is
   // rendered, so the document would say something no reader could see: reported, value not used.
@@ -794,11 +835,25 @@ export function parseWorksheet(text, data) {
       }
       continue;
     }
-    if (line === '') continue;
+    if (line === '') {
+      field = null; // a blank line ends a field: a continued line follows its field directly
+      continue;
+    }
+    if (provenance) {
+      if (!resumesAfterProvenance(line)) continue;
+      provenance = false;
+    }
     if (/^[ \t]/.test(line)) {
-      if (provenance) continue;
-      if (field) take(field, line.trim(), at);
-      else report(at, 'this indented line does not continue a field: start a field with its name, such as Answer:', block);
+      const text = line.trim();
+      const looks = FIELD.exec(text);
+      if ((looks && FIELD_NAMES.has(looks[1].toLowerCase())) || /^#{1,6}[ \t]/.test(text)) {
+        report(at, `a ${looks ? 'field' : 'heading'} must start at the beginning of the line: this indented line is not read`, block);
+        field = { lines: [] };
+      } else if (field) {
+        take(field, text, at);
+      } else {
+        report(at, 'this indented line does not continue a field: a continued line follows its field\'s line directly, with no blank line between, and starts with two spaces', block);
+      }
       continue;
     }
     field = null;
@@ -846,7 +901,6 @@ export function parseWorksheet(text, data) {
       method = block = open('set-aside', id, at);
       continue;
     }
-    if (provenance) continue;
     if (heading && heading[1].length === 3) {
       const [first, ...after] = heading[2].trim().split(/\s+/);
       const id = first.toUpperCase();
@@ -920,7 +974,9 @@ export function parseWorksheet(text, data) {
       if (on && !isIsoDate(on)) report(lineOf(b, 'On'), `${id}: On "${on}" is not a date written YYYY-MM-DD`, b);
     }
   };
-  const readAnswer = (b, question, ignored) => {
+  // Reads a question's block. `methodFaulty` is true when its method's status has a problem: no
+  // answer under a method whose status cannot be read is used.
+  const readAnswer = (b, question, ignored, methodFaulty = false) => {
     const record = {
       id: question.id, type: question.type, line: b?.line ?? null, answer: get(b, 'Answer'),
       state: b ? standard(get(b, 'State'), STATES) : 'unanswered', by: get(b, 'By'), on: get(b, 'On'),
@@ -932,11 +988,15 @@ export function parseWorksheet(text, data) {
       needs(b, question.id, record.state === 'proposed' ? ['Answer', 'Source'] : ['Answer'], record.state);
     }
     if (record.answer && record.state !== 'unanswered') {
-      const read = readValue(question, record.answer);
+      // A hint copied from the prompt into the answer, alone on a line, is not an answer.
+      const hints = [...HINT_TEXTS, ...(question.elseText ? [`${HINTS['yes-no-else']} ${question.elseText}`.toLowerCase()] : [])];
+      const read = record.answer.split('\n').some((line) => hints.includes(line.trim().replace(/\s+/g, ' ').toLowerCase()))
+        ? { error: 'is the hint printed after the question, not an answer: write the business\'s own answer' }
+        : readValue(question, record.answer);
       if (read.error) report(lineOf(b, 'Answer'), `${question.id}: Answer "${record.answer}" ${read.error}`, b);
       else record.value = read.value;
     }
-    record.answered = record.state === 'confirmed' && !b.faulty;
+    record.answered = record.state === 'confirmed' && !b.faulty && !methodFaulty;
     return record;
   };
 
@@ -962,7 +1022,7 @@ export function parseWorksheet(text, data) {
     for (const { question } of methodQuestions(methodData)) {
       const qb = seen.question.get(question.id);
       if (!qb) report(b?.line ?? markerLine, `${question.id} is missing from ${methodData.id}`);
-      const answer = readAnswer(qb, question, ignored);
+      const answer = readAnswer(qb, question, ignored, Boolean(b?.faulty));
       if (ignored && qb && !reported && (answer.answer || !['', 'unanswered'].includes(answer.state))) {
         report(lineOf(qb, answer.answer ? 'Answer' : 'State'), `${methodData.id}: answers given for a method marked not relevant are not read`);
         reported = true;

@@ -135,9 +135,9 @@ Source:
 
 ### CK-03-Q02
 
+> If you use a different check, you will need to prove that it is safe. See the ‘Prove it’ safe method in the Management section. Give details of your check here:
 > TYPES OF DISH  (one item per line)
-Answer: Baked beans
-  Quiche, bought in and reheated to order
+Answer: None: we do not use a different check.
 State: confirmed
 By: Sam Okafor
 On: 2026-11-20

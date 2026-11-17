@@ -61,6 +61,7 @@ Source:
 ### CH-01-Q05
 
 > Follow the manufacturer’s instructions on how to use fridges and chilled display equipment.
+> Do you follow the manufacturer’s instructions for using your:
 > Chilled display unit?  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -71,6 +72,7 @@ Source:
 ### CH-01-Q06
 
 > Follow the manufacturer’s instructions on how to use fridges and chilled display equipment.
+> Do you follow the manufacturer’s instructions for using your:
 > If not, what do you do?  (write your answer)
 Answer:
 State: unanswered
@@ -113,6 +115,12 @@ Source:
 
 ### CH-01-Q12
 
+> CHECK IT
+> It is recommended that fridges and chilled display equipment should be set at 5°C or below.
+> This is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.
+> You should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).
+> To make sure equipment is working properly, check temperatures in-between packs of chilled food using a clean, disinfected probe thermometer.
+> Fridge:
 > Dial thermometer  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -122,6 +130,12 @@ Source:
 
 ### CH-01-Q13
 
+> CHECK IT
+> It is recommended that fridges and chilled display equipment should be set at 5°C or below.
+> This is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.
+> You should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).
+> To make sure equipment is working properly, check temperatures in-between packs of chilled food using a clean, disinfected probe thermometer.
+> Fridge:
 > Fridge thermometer  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -131,6 +145,12 @@ Source:
 
 ### CH-01-Q14
 
+> CHECK IT
+> It is recommended that fridges and chilled display equipment should be set at 5°C or below.
+> This is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.
+> You should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).
+> To make sure equipment is working properly, check temperatures in-between packs of chilled food using a clean, disinfected probe thermometer.
+> Fridge:
 > Between chilled foods using probe thermometer  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -140,6 +160,11 @@ Source:
 
 ### CH-01-Q16
 
+> CHECK IT
+> It is recommended that fridges and chilled display equipment should be set at 5°C or below.
+> This is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.
+> You should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).
+> To make sure equipment is working properly, check temperatures in-between packs of chilled food using a clean, disinfected probe thermometer.
 > Chilled display unit:
 > Digital display  (yes if you do this / no)
 Answer:
@@ -150,6 +175,12 @@ Source:
 
 ### CH-01-Q17
 
+> CHECK IT
+> It is recommended that fridges and chilled display equipment should be set at 5°C or below.
+> This is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.
+> You should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).
+> To make sure equipment is working properly, check temperatures in-between packs of chilled food using a clean, disinfected probe thermometer.
+> Chilled display unit:
 > Dial thermometer  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -159,6 +190,12 @@ Source:
 
 ### CH-01-Q18
 
+> CHECK IT
+> It is recommended that fridges and chilled display equipment should be set at 5°C or below.
+> This is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.
+> You should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).
+> To make sure equipment is working properly, check temperatures in-between packs of chilled food using a clean, disinfected probe thermometer.
+> Chilled display unit:
 > Fridge thermometer  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -168,6 +205,12 @@ Source:
 
 ### CH-01-Q19
 
+> CHECK IT
+> It is recommended that fridges and chilled display equipment should be set at 5°C or below.
+> This is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.
+> You should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).
+> To make sure equipment is working properly, check temperatures in-between packs of chilled food using a clean, disinfected probe thermometer.
+> Chilled display unit:
 > Between chilled foods using probe thermometer  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -177,6 +220,12 @@ Source:
 
 ### CH-01-Q20
 
+> CHECK IT
+> It is recommended that fridges and chilled display equipment should be set at 5°C or below.
+> This is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.
+> You should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).
+> To make sure equipment is working properly, check temperatures in-between packs of chilled food using a clean, disinfected probe thermometer.
+> Chilled display unit:
 > If you do not do this, what do you do?  (write your answer)
 Answer:
 State: unanswered
@@ -304,6 +353,8 @@ Source:
 
 ### CH-03-Q03
 
+> OPTIONS FOR DEFROSTING FOOD
+>
 > 1. Ideally, plan ahead to leave enough time and space to defrost small amounts of food in the fridge.
 > How much time do you allow for defrosting?  (write your answer)
 Answer:
@@ -314,6 +365,8 @@ Source:
 
 ### CH-03-Q04
 
+> OPTIONS FOR DEFROSTING FOOD
+>
 > 2. If you cannot defrost food in the fridge, you could put it in a container and then place it under cold running water.
 > Do you use this method?  (yes if you do this / no)
 Answer:
@@ -324,6 +377,8 @@ Source:
 
 ### CH-03-Q05
 
+> OPTIONS FOR DEFROSTING FOOD
+>
 > 2. If you cannot defrost food in the fridge, you could put it in a container and then place it under cold running water.
 > Which foods do you defrost in this way?  (write your answer)
 Answer:
@@ -334,6 +389,8 @@ Source:
 
 ### CH-03-Q06
 
+> OPTIONS FOR DEFROSTING FOOD
+>
 > 3. Raw meat and poultry (including large joints and whole birds), should not be defrosted under cold running water unless they are in a sealed container. For more information visit the FSA website.
 > How do you defrost raw meat and poultry?  (write your answer)
 Answer:
@@ -344,6 +401,8 @@ Source:
 
 ### CH-03-Q07
 
+> OPTIONS FOR DEFROSTING FOOD
+>
 > 4. If you use the sink to defrost some foods, make sure the sink is clean and empty. The sink should be cleaned and then disinfected after being used for defrosting.
 > Do you use this method?  (yes if you do this / no)
 Answer:
@@ -354,6 +413,8 @@ Source:
 
 ### CH-03-Q08
 
+> OPTIONS FOR DEFROSTING FOOD
+>
 > 4. If you use the sink to defrost some foods, make sure the sink is clean and empty. The sink should be cleaned and then disinfected after being used for defrosting.
 > Which foods do you defrost in this way?  (write your answer)
 Answer:
@@ -413,6 +474,7 @@ Source:
 
 ### CH-03-Q14
 
+> 7. If you have another method of defrosting, write the details here:
 > Which foods do you defrost in this way?  (write your answer)
 Answer:
 State: unanswered
@@ -434,6 +496,7 @@ Source:
 
 ### CH-03-Q18
 
+> CHECK IT
 > When you think food has defrosted, it is important to check to make sure.
 > With birds, check the joints are flexible.
 > Do you use this check?  (yes if you do this / no)
@@ -445,6 +508,7 @@ Source:
 
 ### CH-03-Q19
 
+> CHECK IT
 > When you think food has defrosted, it is important to check to make sure.
 > If you use another check, write the details here:  (write your answer)
 Answer:

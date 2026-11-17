@@ -33,6 +33,7 @@ Source:
 
 ### MG-01-Q02
 
+> OPENING CHECKS
 > Your other equipment (e.g. oven) is working properly.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -42,6 +43,7 @@ Source:
 
 ### MG-01-Q03
 
+> OPENING CHECKS
 > Staff are fit for work and wearing clean work clothes.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -51,6 +53,7 @@ Source:
 
 ### MG-01-Q04
 
+> OPENING CHECKS
 > Food preparation areas are clean and disinfected (work surfaces, equipment, utensils, etc.).  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -60,6 +63,7 @@ Source:
 
 ### MG-01-Q05
 
+> OPENING CHECKS
 > All areas are free from evidence of pest activity.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -69,6 +73,7 @@ Source:
 
 ### MG-01-Q06
 
+> OPENING CHECKS
 > There are plenty of handwashing and cleaning materials (soap, paper towels, sanitiser, etc.).  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -78,6 +83,7 @@ Source:
 
 ### MG-01-Q07
 
+> OPENING CHECKS
 > Hot running water is available at all sinks and hand wash basins.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -87,6 +93,7 @@ Source:
 
 ### MG-01-Q08
 
+> OPENING CHECKS
 > Probe thermometer is working and probe wipes are available.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -96,6 +103,7 @@ Source:
 
 ### MG-01-Q09
 
+> OPENING CHECKS
 > Allergen information is accurate for all items on sale.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -105,6 +113,7 @@ Source:
 
 ### MG-01-Q10
 
+> OPENING CHECKS
 > Has cleaning been carried out according to the cleaning schedule  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -134,6 +143,7 @@ Source:
 
 ### MG-01-Q13
 
+> CLOSING CHECKS
 > Food on its Use By date has been thrown away.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -143,6 +153,7 @@ Source:
 
 ### MG-01-Q14
 
+> CLOSING CHECKS
 > Dirty cleaning equipment has been cleaned or thrown away.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -152,6 +163,7 @@ Source:
 
 ### MG-01-Q15
 
+> CLOSING CHECKS
 > Waste has been removed and new bags put into the bins.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -161,6 +173,7 @@ Source:
 
 ### MG-01-Q16
 
+> CLOSING CHECKS
 > Food preparation areas are clean and disinfected (work surfaces, equipment, utensils etc.).  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -170,6 +183,7 @@ Source:
 
 ### MG-01-Q17
 
+> CLOSING CHECKS
 > All washing up has been finished.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -179,6 +193,7 @@ Source:
 
 ### MG-01-Q18
 
+> CLOSING CHECKS
 > Floors are swept and clean.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -188,6 +203,7 @@ Source:
 
 ### MG-01-Q19
 
+> CLOSING CHECKS
 > ‘Prove it’ checks have been recorded.  (yes if you do this / no)
 Answer:
 State: unanswered
@@ -197,6 +213,7 @@ Source:
 
 ### MG-01-Q20
 
+> CLOSING CHECKS
 > Has cleaning been carried out according to the cleaning schedule  (yes if you do this / no)
 Answer:
 State: unanswered
