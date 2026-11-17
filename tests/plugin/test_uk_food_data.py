@@ -118,7 +118,7 @@ METHOD_TITLES = {
            "Product withdrawal and recall"],
 }
 # Sections whose data file must exist. Each transcription task adds its own section.
-REQUIRED_SECTIONS = ["XC", "CL"]
+REQUIRED_SECTIONS = ["XC", "CL", "CH"]
 
 
 def _title_key(title: str) -> str:
@@ -205,6 +205,30 @@ def test_joins_apply_count_times_and_refuse_stale_or_invented_words():
         apply_joins(tokens, [{"parts": ["a-", "b"], "as": "a-b", "count": 3}])
     with pytest.raises(ValueError, match="not the parts run together"):
         apply_joins(tokens, [{"parts": ["a-", "b"], "as": "a-c"}])
+
+
+def test_joins_read_a_soft_hyphen_as_the_hyphen_it_prints(tmp_path):
+    # Page 40 prints "ready-to-" at a line end and "eat" below; the text layer gives a soft hyphen.
+    tokens = ["other", "ready-to\u00ad", "eat", "food"]
+    join = {"parts": ["ready-to\u00ad", "eat"], "as": "ready-to-eat", "reason": "test"}
+    assert apply_joins(tokens, [join]) == ["other", "ready-to-eat", "food"]
+    fixture = {"pages": {"1": tokens}}
+    exceptions = {"furniture": [], "pages": {}, "joins": {"1": [join]}}
+    assert page_differences(_fake_dir(tmp_path, "other ready-to-eat food"), fixture, exceptions) == {}
+    # Inside a join the soft hyphen is read as "-", never dropped.
+    with pytest.raises(ValueError, match="not the parts run together"):
+        apply_joins(tokens, [{"parts": ["ready-to\u00ad", "eat"], "as": "ready-toeat"}])
+
+
+def test_a_soft_hyphen_is_kept_outside_a_declared_join(tmp_path):
+    tokens = ["other", "ready-to\u00ad", "eat", "food"]
+    assert apply_joins(tokens, []) == tokens
+    assert apply_joins(tokens, [{"parts": ["eat", "food"], "as": "eatfood"}]) == ["other", "ready-to\u00ad", "eatfood"]
+    assert normalise("a\u00adb") == "a\u00adb"  # normalise neither converts nor drops it inside a word
+    diff = page_differences(_fake_dir(tmp_path, "other ready-to-eat food"), {"pages": {"1": tokens}},
+                            {"furniture": [], "pages": {}})
+    assert diff[1]["missing"] == Counter({"ready-to": 1, "eat": 1})
+    assert diff[1]["extra"] == Counter({"ready-to-eat": 1})
 
 
 def test_joins_refuse_a_count_below_one():

@@ -31,19 +31,25 @@ def normalise(word: str) -> str:
     return _EDGE.sub("", word.lower().translate(_TRANSLATE))
 
 
+SOFT_HYPHEN = "\u00ad"
+
+
 def apply_joins(tokens: list[str], joins: list[dict]) -> list[str]:
     """Rejoin a printed word the text layer split in two at a line break.
 
     Each join {"parts": [...], "as": "...", "count": n} replaces n contiguous runs
     of the raw tokens `parts` (n defaults to 1) with the single token `as`, which
     must be the parts run together: a join can only undo a split, never add a
-    word. A join that is not found, or whose count is below 1 (so it would apply
-    nothing), raises ValueError, so a stale one cannot pass.
+    word. A soft hyphen (U+00AD) in a part may be read as the "-" the page prints
+    there, and only inside a declared join. A join that is not found, or whose
+    count is below 1 (so it would apply nothing), raises ValueError, so a stale
+    one cannot pass.
     """
     result = list(tokens)
     for join in joins:
         parts, whole, count = join["parts"], join["as"], join.get("count", 1)
-        if whole != "".join(parts):
+        run_together = "".join(parts)
+        if whole not in (run_together, run_together.replace(SOFT_HYPHEN, "-")):
             raise ValueError(f"join {parts} -> {whole!r}: not the parts run together")
         if count < 1:
             raise ValueError(f"join {parts} -> {whole!r}: count {count} is below 1")

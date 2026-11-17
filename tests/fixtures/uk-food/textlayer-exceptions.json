@@ -23,6 +23,18 @@
     ],
     "32": [
       {"parts": ["taps/", "other"], "as": "taps/other", "reason": "CL-02 'clean and disinfect it (including taps/other fittings)': the word breaks after the slash at a line end (the same row prints 'taps/fittings' whole)"}
+    ],
+    "40": [
+      {"parts": ["ready-to\u00ad", "eat"], "as": "ready-to-eat", "reason": "CH-01 WHY cell 'and other ready-to-eat food have a limited shelf life': the image prints 'ready-to-' at a line end and 'eat' on the next line; the text layer gives 'ready-to' ending in a soft hyphen (U+00AD) and 'eat', and the soft hyphen is the printed '-'"},
+      {"parts": ["cook/", "opening"], "as": "cook/opening", "reason": "CH-01 '(day of cook/opening + 2)': the word breaks after the slash at a line end; the raw line ends 'cook/ ' with the same trailing space as the slash breaks joined on pages 14, 31 and 32"}
+    ],
+    "44": [
+      {"parts": ["Ideally", ","], "as": "Ideally,", "reason": "CH-03 option 1 '1. Ideally, plan ahead': the text layer gives 'Ideally' and ',' as two tokens (a font-span break mid-line); the image prints 'Ideally,' unbroken, the comma touching the word"},
+      {"parts": ["defr", "ost"], "as": "defrost", "reason": "CH-03 option 2 '2. If you cannot defrost food in': the text layer gives 'defr' and 'ost' as two tokens (a font-span break mid-line); the image prints 'defrost' as one unbroken word"},
+      {"parts": ["mea", "t"], "as": "meat", "reason": "CH-03 option 3 '3. Raw meat and poultry': the text layer gives 'mea' and 't' as two tokens (a font-span break mid-line); the image prints 'meat' as one unbroken word"}
+    ],
+    "46": [
+      {"parts": ["cross-", "contamination."], "as": "cross-contamination.", "reason": "CH-04 WHY cell 'Using containers and freezer bags prevents cross-contamination.': the word breaks after the hyphen at a line end"}
     ]
   }
 }
