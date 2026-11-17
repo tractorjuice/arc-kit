@@ -118,7 +118,7 @@ METHOD_TITLES = {
            "Product withdrawal and recall"],
 }
 # Sections whose data file must exist. Each transcription task adds its own section.
-REQUIRED_SECTIONS = ["XC"]
+REQUIRED_SECTIONS = ["XC", "CL"]
 
 
 def _title_key(title: str) -> str:

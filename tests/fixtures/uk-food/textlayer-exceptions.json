@@ -16,6 +16,13 @@
     ],
     "19": [
       {"parts": ["allergen-", "free."], "as": "allergen-free.", "reason": "XC-04 'no longer allergen-free.': the word breaks after the hyphen at a line end"}
+    ],
+    "31": [
+      {"parts": ["surfaces/", "equipment"], "as": "surfaces/equipment", "reason": "CL-02 '1. Clean: ... debris from surfaces/equipment and wipe off': the word breaks after the slash at a line end (the same cell prints 'surfaces/equipment' whole on one line)"},
+      {"parts": ["surface/", "equipment"], "as": "surface/equipment", "reason": "CL-02 'leave the product on the surface/equipment for harmful bacteria': the word breaks after the slash at a line end"}
+    ],
+    "32": [
+      {"parts": ["taps/", "other"], "as": "taps/other", "reason": "CL-02 'clean and disinfect it (including taps/other fittings)': the word breaks after the slash at a line end (the same row prints 'taps/fittings' whole)"}
     ]
   }
 }
