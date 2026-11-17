@@ -390,10 +390,534 @@ export function validateData(data) {
   return errors;
 }
 
+// ---------------------------------------------------------------------------------------------
+// Worksheets: a business's answers to the pack's questions, one Markdown file per section, that
+// a person types into and the helper reads. Its only FSA words are those read from the data.
+// ---------------------------------------------------------------------------------------------
+
+export const WORKSHEET_VERSION = '1.0';
+export const WORKSHEET_SECTIONS = [...SECTION_IDS, 'profile', 'own'];
+export const STATES = ['unanswered', 'proposed', 'confirmed'];
+export const STATUSES = ['applies', 'adapted', 'not-relevant'];
+export const OWN_KINDS = ['additional', 'special-process'];
+const METHOD_FIELDS = ['Status', 'Reason', 'Decided-by', 'Variation', 'Proved-safe'];
+const ANSWER_FIELDS = ['Answer', 'State', 'By', 'On', 'Source'];
+const OWN_FIELDS = [
+  'Kind', 'Hazard', 'Control', 'Limit', 'Limit-source', 'Check', 'If-it-fails', 'Supplied-text', 'EH-review',
+  'State', 'By', 'On'
+];
+// The status fields each status uses. A field the status does not use, filled in, is reported:
+// no document would show it, and nothing a person writes is dropped without saying so.
+const STATUS_USES = {
+  applies: [], adapted: ['Variation', 'Reason', 'Proved-safe'], 'not-relevant': ['Reason', 'Decided-by']
+};
+// What an own entry of each kind must fill in before it can be proposed or confirmed.
+const KIND_NEEDS = {
+  additional: ['Hazard', 'Control', 'Check', 'If-it-fails'], 'special-process': ['Supplied-text', 'EH-review']
+};
+// Printed after each question: the form of answer the helper reads. The helper's words, not the pack's.
+const HINTS = {
+  'yes-no': '(yes / no)', 'yes-no-else': '(yes, or say what you do instead)', tick: '(yes if you do this / no)',
+  text: '(write your answer)', list: '(one item per line)', nation: '(England / Wales / other)'
+};
+// The special processes and foods the pack names in CK-02's box "Other foods that need extra care"
+// (page 53), spelt as printed there. A test checks that each is in that box's text.
+export const EXTRA_CARE = {
+  processes: ['Vacuum packing', 'sous vide', 'low temperature cooking', 'fermenting', 'smoking or curing meat/fish'],
+  foods: ['Kebabs', 'sushi/sashimi', 'liver parfait', 'fish/meat carpaccio and tartare', 'less than thoroughly cooked burgers']
+};
+// The profile's questions. The pack asks none of them, so the words are the helper's own.
+export const PROFILE_QUESTIONS = [
+  ['text', 'What is the business called?'],
+  ['text', 'Who is the food business operator: the person or company legally responsible for the business?'],
+  ['text', 'What is the address of the premises? If the business has none, write "no premises".'],
+  ['text', 'Which council is the business registered with?'],
+  ['text', 'On what date was the business registered with the council?'],
+  ['nation', 'Which nation is the business in?'],
+  ['text', 'Who is in charge of keeping this pack up to date?'],
+  ['text', 'What food and drink does the business sell?'],
+  ['list', 'What equipment do you use to store, prepare, cook and serve food?'],
+  ['list', 'Who works with food, and what is each person\'s role?'],
+  ...EXTRA_CARE.processes.map((name) => ['yes-no', `Do you use this process, which needs extra care: ${name}?`]),
+  ...EXTRA_CARE.foods.map((name) => ['yes-no', `Do you make or serve this food, which needs extra care: ${name}?`])
+].map(([type, text], i) => ({ id: `PR-Q${String(i + 1).padStart(2, '0')}`, type, text, elseText: null }));
+
+const WORKSHEET_TITLES = { profile: 'Business profile', own: 'Your own controls and special processes' };
+const ANSWER_GUIDANCE = [
+  'How to fill this in. Write each answer after "Answer:". To carry an answer on to more lines, start',
+  'each extra line with two spaces. State says where an answer stands: unanswered; proposed (suggested',
+  'but not yet agreed: say where it came from in Source); or confirmed (agreed by the business: put who',
+  'agreed it in By and the date, as YYYY-MM-DD, in On). Only confirmed answers go into your documents.',
+  'Lines that start with > show what is asked. They are rewritten each time, so anything typed on them',
+  'is not read.'
+];
+const STATUS_GUIDANCE = [
+  'Status says whether a safe method applies to the business: applies; adapted (you do it differently:',
+  'fill in Variation, Reason and Proved-safe); or not-relevant (fill in Reason and Decided-by).'
+];
+const OWN_GUIDANCE = [
+  'Add an entry for each food safety control of your own that the pack does not cover, and for each',
+  'special process you use, such as sous vide. Copy the lines from "## OWN-01" down, paste them below',
+  'this comment, and number the entries OWN-01, OWN-02 and so on. Kind is additional or special-process.',
+  'A Limit needs a Limit-source: where the figure comes from. EH-review is pending, or the date and',
+  'outcome of the council\'s review, such as 2026-12-01 accepted. To carry a value on to more lines,',
+  'start each extra line with two spaces. State is unanswered, proposed (suggested but not yet agreed)',
+  'or confirmed (agreed by the business: put who agreed it in By and the date, as YYYY-MM-DD, in On).',
+  'Only a confirmed entry goes into your documents.',
+  '',
+  '## OWN-01 Name of the control',
+  ...OWN_FIELDS.map((field) => (field === 'State' ? 'State: unanswered' : `${field}:`))
+];
+
+// A field's name as a property of a parsed record: Decided-by is decidedBy, EH-review ehReview.
+const key = (field) => field.toLowerCase().replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+const sentenceCase = (title) => title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
+const worksheetTitle = (section, data) =>
+  `${WORKSHEET_TITLES[section] ?? sentenceCase(data.sections.get(section).section.title)} (${section})`;
+// A word as kept: a valid word in its standard spelling, anything else exactly as typed.
+const standard = (value, words) => words.find((word) => word.toLowerCase() === value.toLowerCase()) ?? value;
+const isIsoDate = (value) => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+};
+
+// Where a method's questions sit: on a block, and on each row of any block but a table.
+const holdersOf = (block) => [
+  ...(Array.isArray(block.questions) ? [{ questions: block.questions, row: null }] : []),
+  ...(block.kind !== 'table' && Array.isArray(block.rows) ? block.rows.map((row) => ({ questions: row.questions ?? [], row })) : [])
+];
+
+// The printed column headings each question of a row or box sits under. The questions fill the
+// rightmost columns in order, after the point and its reason; a yes-no-else question with no
+// printed follow-up takes two, its tick column and the "if not" column beside it. Questions that
+// outnumber the columns are stacked in one column, so each sits under the last.
+function columnsFor(questions, columns) {
+  const widths = questions.map((q) => (q.type === 'yes-no-else' && !q.elseText ? 2 : 1));
+  const total = widths.reduce((sum, width) => sum + width, 0);
+  if (total > columns.length) return widths.map((width) => columns.slice(-width));
+  let at = columns.length - total;
+  return widths.map((width) => columns.slice(at, (at += width)));
+}
+
+// The questions of a method a business answers, in the data's order, each with what the
+// worksheet prints above it so that it is not read out of context: the box's heading (with the
+// box's first question, and with any question that prints no text of its own); a CHECK IT box's
+// text (with its first question, as the point the box's questions are about); the row's safety
+// point, whole; the notes printed before it in its row or box since the question before; and,
+// for a question that prints no text, the column headings it sits under. A note asks nothing,
+// so it is never listed itself.
+function methodQuestions(method) {
+  const listed = [];
+  for (const block of method.blocks) {
+    let firstInBlock = true;
+    for (const { questions, row } of holdersOf(block)) {
+      const columns = columnsFor(questions, block.columns ?? []);
+      let notes = [];
+      questions.forEach((question, i) => {
+        if (question.type === 'note') {
+          notes.push(question.text);
+          return;
+        }
+        const context = [];
+        if (block.heading && (firstInBlock || question.text === '')) context.push(block.heading);
+        if (!row && block.kind === 'check-it' && block.text && firstInBlock) context.push(block.text);
+        if (row?.point) context.push(row.point);
+        listed.push({ question, context: [...context, ...notes], columns: question.text === '' ? columns[i] : [] });
+        notes = [];
+        firstInBlock = false;
+      });
+    }
+  }
+  return listed;
+}
+const everyQuestion = (method) => method.blocks.flatMap(holdersOf).flatMap((holder) => holder.questions);
+
+// The lines printed after ">" above a question: its context, then its own text (or, when it has
+// none, its column headings), ending with the form of answer the helper reads. Every paragraph of
+// the pack's text is printed whole on a line of its own: a cut-off FSA sentence is a misquote.
+function promptLines({ question, context, columns }) {
+  const asked = question.text !== '' ? question.text.split('\n') : [columns.join(' / ')];
+  let hint = HINTS[question.type];
+  if (question.type === 'yes-no-else' && question.elseText) hint += ` ${question.elseText}`;
+  const last = asked.length - 1;
+  asked[last] = asked[last] === '' ? hint : `${asked[last]}  ${hint}`;
+  return [...context.flatMap((text) => text.split('\n')), ...asked].map((line) => line.trimEnd());
+}
+const profilePrompt = (question) => promptLines({ question, context: [], columns: [] });
+
+// Writes a field: its first line after the name, every further line indented by two spaces.
+const fieldLines = (name, value = '') => {
+  const [first, ...rest] = String(value).split('\n');
+  return [first === '' ? `${name}:` : `${name}: ${first}`, ...rest.map((line) => `  ${line}`)];
+};
+
+// Writes a worksheet from a parsed one, in the data's order, with every `>` line written afresh
+// from the data and every field kept as it was read. A method or question the parsed worksheet
+// lacks is written blank. `parseWorksheet` reads back what this writes, unchanged.
+export function emitWorksheet(parsed, data) {
+  const { section } = parsed;
+  if (!WORKSHEET_SECTIONS.includes(section)) throw new Error(`no worksheet for section ${section}`);
+  if (parsed.data !== DATA_ID) throw new Error(`the worksheet answers data ${parsed.data}, not ${DATA_ID}`);
+  const comment = (lines) => ['<!--', ...lines, '-->'];
+  const answerBlock = (question, prompt, record = { state: 'unanswered' }) => [
+    `### ${question.id}`,
+    ...prompt.map((line) => (line === '' ? '>' : `> ${line}`)),
+    ...ANSWER_FIELDS.flatMap((field) => fieldLines(field, record[key(field)]))
+  ];
+  const blocks = [[
+    `# Answers: ${worksheetTitle(section, data)}`,
+    `<!-- uk-food-answers ${WORKSHEET_VERSION} data=${DATA_ID} section=${section} -->`
+  ]];
+  if (section === 'own') {
+    blocks.push(comment(OWN_GUIDANCE));
+    for (const entry of parsed.entries.values()) {
+      blocks.push([`## ${entry.id}${entry.title ? ` ${entry.title}` : ''}`,
+        ...OWN_FIELDS.flatMap((field) => fieldLines(field, entry[key(field)]))]);
+    }
+  } else if (section === 'profile') {
+    blocks.push(comment(ANSWER_GUIDANCE));
+    for (const question of PROFILE_QUESTIONS) {
+      blocks.push(answerBlock(question, profilePrompt(question), parsed.answers.get(question.id)));
+    }
+  } else {
+    blocks.push(comment([...ANSWER_GUIDANCE, ...STATUS_GUIDANCE]));
+    for (const method of data.sections.get(section).methods) {
+      const record = parsed.methods.get(method.id) ?? { status: 'applies' };
+      blocks.push([`## ${method.id} ${sentenceCase(method.title)}`,
+        ...METHOD_FIELDS.flatMap((field) => fieldLines(field, record[key(field)]))]);
+      for (const asked of methodQuestions(method)) {
+        blocks.push(answerBlock(asked.question, promptLines(asked), parsed.answers.get(asked.question.id)));
+      }
+    }
+  }
+  return `${blocks.map((block) => block.join('\n')).join('\n\n')}\n`;
+}
+
+export function blankWorksheet(section, data) {
+  return emitWorksheet(
+    { data: DATA_ID, section, methods: new Map(), answers: new Map(), entries: new Map(), problems: [] }, data
+  );
+}
+
+const MARKER = /^<!--\s*uk-food-answers\s+(\S+)\s+data=(\S+)\s+section=(\S+)\s*-->$/;
+// A field line: a name, then the value after a colon. Hand-edited slips, each read as meant:
+// the name may be in any letter case (answer:), and may have spaces or tabs before the colon
+// (Answer :); spaces and tabs at the ends of lines, Windows line endings and a byte order mark
+// at the start of the file are ignored. A value continues on any later line that starts with a
+// space or a tab (a tab is read as the indent it looks like), even after a blank line; a later
+// line that is not indented and is not a field is reported, never added to the value unseen.
+const FIELD = /^([A-Za-z][A-Za-z-]*)[ \t]*:(.*)$/;
+const FIELD_NAMES = new Map([...METHOD_FIELDS, ...ANSWER_FIELDS, ...OWN_FIELDS].map((f) => [f.toLowerCase(), f]));
+const FIELDS_OF = { method: METHOD_FIELDS, question: ANSWER_FIELDS, entry: OWN_FIELDS };
+
+// Reads an answer as its question's type. Returns the value a document may print, or an error.
+function readValue(question, answer) {
+  switch (question.type) {
+    case 'yes-no':
+    case 'tick':
+      return /^(yes|no)$/i.test(answer) ? { value: answer.toLowerCase() } : { error: 'is not yes or no' };
+    case 'yes-no-else':
+      return { value: /^yes$/i.test(answer) ? 'yes' : answer };
+    case 'nation':
+      return { value: standard(answer, ['England', 'Wales']) };
+    case 'list':
+      return { value: answer.split('\n') };
+    default:
+      return { value: answer };
+  }
+}
+
+// Reads a worksheet against the data (what loadData returns). Never throws on what a person or
+// tool has written: every fault is a { line, message } problem, and an answer with a problem in
+// its block is not used. `answered` is true only for a confirmed answer with no problem, under a
+// method that is not marked not-relevant: nothing else counts as answered anywhere.
+export function parseWorksheet(text, data) {
+  const problems = [];
+  const parsed = { data: null, section: null, methods: new Map(), answers: new Map(), entries: new Map(), problems };
+  const report = (line, message, block = null) => {
+    problems.push({ line, message });
+    if (block) block.faulty = true;
+  };
+  const finish = () => {
+    problems.sort((a, b) => a.line - b.line);
+    return parsed;
+  };
+  const lines = String(text).replace(/^\uFEFF/, '').split(/\r\n|\n|\r/);
+
+  const markerAt = lines.findIndex((line) => /^<!--.*uk-food-answers/.test(line.trim()));
+  if (markerAt < 0) {
+    report(1, 'there is no uk-food-answers marker line, so this is not a worksheet the helper can read');
+    return finish();
+  }
+  for (let i = 0; i < markerAt; i++) {
+    const line = lines[i].trim();
+    if (line !== '' && !line.startsWith('# ')) report(i + 1, 'text before the uk-food-answers marker line is not read');
+  }
+  const markerLine = markerAt + 1;
+  const marker = MARKER.exec(lines[markerAt].trim());
+  if (!marker) {
+    report(markerLine, 'the marker line is not understood: it reads <!-- uk-food-answers 1.0 data=... section=... -->');
+    return finish();
+  }
+  const [, version, dataId, section] = marker;
+  parsed.data = dataId;
+  if (version !== WORKSHEET_VERSION) {
+    report(markerLine, `this worksheet is version ${version}; the helper reads version ${WORKSHEET_VERSION}`);
+    return finish();
+  }
+  if (dataId !== DATA_ID) {
+    report(markerLine, `this worksheet answers data ${dataId}, but the helper's data is ${DATA_ID}`);
+    return finish();
+  }
+  if (!WORKSHEET_SECTIONS.includes(section)) {
+    report(markerLine, `section ${section} is not one of ${WORKSHEET_SECTIONS.join(', ')}`);
+    return finish();
+  }
+  const methods = SECTION_IDS.includes(section) ? data.sections.get(section)?.methods : null;
+  if (SECTION_IDS.includes(section) && !Array.isArray(methods)) {
+    report(markerLine, `there is no ${section}.json in the data, so this ${section} worksheet cannot be read`);
+    return finish();
+  }
+  parsed.section = section;
+
+  // Every question this worksheet asks, with its method and its prompt; and the pack's notes.
+  const asked = new Map();
+  const notes = new Set();
+  for (const method of methods ?? []) {
+    for (const entry of methodQuestions(method)) {
+      asked.set(entry.question.id, { owner: method.id, question: entry.question, prompt: promptLines(entry) });
+    }
+    for (const question of everyQuestion(method)) if (question.type === 'note') notes.add(question.id);
+  }
+  if (section === 'profile') {
+    for (const question of PROFILE_QUESTIONS) asked.set(question.id, { owner: null, question, prompt: profilePrompt(question) });
+  }
+  const methodIds = new Set((methods ?? []).map((method) => method.id));
+
+  // Pass 1: lines into blocks. A block is a method's status, a question or an own entry; a block
+  // that is reported as it opens (an unknown or repeated heading) is read and set aside, so its
+  // lines are not reported again.
+  const seen = { method: new Map(), question: new Map(), entry: new Map() };
+  const open = (kind, id, line, extra = {}) => ({ kind, id, line, fields: new Map(), faulty: false, ...extra });
+  let method = null;
+  let block = null;
+  let field = null; // the field an indented line continues
+  let commentFrom = 0; // the line an unclosed comment opened on
+  let provenance = false; // inside a "## Build Provenance" section another tool appended: not read
+  for (let i = markerAt + 1; i < lines.length; i++) {
+    const at = i + 1;
+    const line = lines[i].trimEnd();
+    if (commentFrom) {
+      if (line.includes('-->')) commentFrom = 0;
+      continue;
+    }
+    if (line === '') continue;
+    if (/^[ \t]/.test(line)) {
+      if (provenance) continue;
+      if (field) field.lines.push(line.trim());
+      else report(at, 'this indented line does not continue a field: start a field with its name, such as Answer:', block);
+      continue;
+    }
+    field = null;
+    if (line.startsWith('<!--')) {
+      if (!line.includes('-->', 4)) commentFrom = at;
+      continue;
+    }
+    const heading = /^(#+)[ \t]+(\S.*)$/.exec(line);
+    if (heading && heading[1].length === 2) {
+      const title = heading[2].trim();
+      provenance = /^build provenance$/i.test(title);
+      method = block = null;
+      if (provenance) continue;
+      const id = title.split(/\s+/)[0].toUpperCase();
+      if (section === 'own') {
+        if (!/^OWN-\d{2}$/.test(id)) report(at, `${id} is not an own entry: number entries OWN-01, OWN-02 and so on`);
+        else if (seen.entry.has(id)) report(at, `${id} appears more than once; only the first is read`);
+        else {
+          block = open('entry', id, at, { title: title.slice(title.split(/\s+/)[0].length).trim() });
+          seen.entry.set(id, block);
+          continue;
+        }
+      } else if (methodIds.has(id)) {
+        if (seen.method.has(id)) report(at, `${id} appears more than once; only the first is read`);
+        else {
+          method = block = open('method', id, at);
+          seen.method.set(id, block);
+          continue;
+        }
+      } else {
+        report(at, section === 'profile'
+          ? `the profile worksheet has no ## headings: "## ${title}" is not read`
+          : `"## ${title}" is not a safe method of ${section}`);
+      }
+      method = block = open('set-aside', id, at);
+      continue;
+    }
+    if (provenance) continue;
+    if (heading && heading[1].length === 3) {
+      const id = heading[2].trim().split(/\s+/)[0].toUpperCase();
+      const known = asked.get(id);
+      if (!known) {
+        report(at, notes.has(id) ? `${id} is a note in the pack, not a question to answer` : `${id} is not a question in this worksheet`);
+        block = open('set-aside', id, at);
+      } else if (seen.question.has(id)) {
+        report(at, `${id} appears more than once; only the first is read`);
+        block = open('set-aside', id, at);
+      } else {
+        block = open('question', id, at, { prompt: known.prompt });
+        seen.question.set(id, block);
+        if (known.owner && method?.id !== known.owner) {
+          report(at, `${id} belongs to ${known.owner}, but is not under ${known.owner}'s heading`, block);
+        }
+      }
+      continue;
+    }
+    if (line.startsWith('>')) {
+      if (block?.kind === 'question') {
+        // Only a changed or added line is a problem: someone may have typed an answer on it.
+        // A deleted question line loses nothing.
+        if (!block.prompt.includes(line.replace(/^>[ \t]?/, ''))) {
+          report(at, 'this line starting > is not what the pack asks, and lines starting > are not read: put any answer after Answer:', block);
+        }
+      } else if (block?.kind !== 'set-aside') {
+        report(at, 'a line starting > outside a question is not read', block);
+      }
+      continue;
+    }
+    const match = FIELD.exec(line);
+    if (match && block?.kind === 'set-aside') {
+      field = { lines: [] };
+    } else if (match) {
+      const name = FIELD_NAMES.get(match[1].toLowerCase());
+      const allowed = FIELDS_OF[block?.kind];
+      field = { line: at, lines: match[2].trim() === '' ? [] : [match[2].trim()] };
+      if (!allowed) report(at, `${match[1]} is not read: a field belongs under a heading`);
+      else if (!allowed.includes(name)) report(at, `${match[1]} is not a field of ${block.kind === 'entry' ? 'an own entry' : `a ${block.kind}`}: the fields are ${allowed.join(', ')}`, block);
+      else if (block.fields.has(name)) report(at, `${name} is given twice in ${block.id}; only the first is read`, block);
+      else block.fields.set(name, field);
+    } else {
+      report(at, 'line not understood: a field starts with its name and a colon, and a value carries on to a line that starts with two spaces', block);
+    }
+  }
+  if (commentFrom) report(commentFrom, 'a comment that starts here is never closed, so nothing after it is read');
+
+  // Pass 2: blocks into records, checked field by field.
+  const get = (b, name) => b?.fields.get(name)?.lines.join('\n') ?? '';
+  const lineOf = (b, name) => b.fields.get(name)?.line ?? b.line;
+  const needs = (b, id, fields, why) => {
+    for (const name of fields) if (!get(b, name)) report(lineOf(b, name), `${id} is ${why}, so it needs ${name}`, b);
+  };
+  const checkState = (b, id, state, words) => {
+    if (state === '') report(lineOf(b, 'State'), `${id}: State is empty: write unanswered, proposed or confirmed`, b);
+    else if (!STATES.includes(state)) report(lineOf(b, 'State'), `${id}: State "${state}" is not unanswered, proposed or confirmed`, b);
+    else if (state === 'unanswered') {
+      const given = words.filter((name) => get(b, name));
+      if (given.length) report(lineOf(b, given[0]), `${id}: ${given.join(', ')} given, but State is unanswered: set State to proposed or confirmed, or clear ${given.length > 1 ? 'them' : 'it'}`, b);
+    } else {
+      if (state === 'confirmed') needs(b, id, ['By', 'On'], 'confirmed');
+      const on = get(b, 'On');
+      if (on && !isIsoDate(on)) report(lineOf(b, 'On'), `${id}: On "${on}" is not a date written YYYY-MM-DD`, b);
+    }
+  };
+  const readAnswer = (b, question, ignored) => {
+    const record = {
+      id: question.id, type: question.type, line: b?.line ?? null, answer: get(b, 'Answer'),
+      state: b ? standard(get(b, 'State'), STATES) : 'unanswered', by: get(b, 'By'), on: get(b, 'On'),
+      source: get(b, 'Source'), value: null, answered: false
+    };
+    if (!b || ignored) return record;
+    checkState(b, question.id, record.state, ['Answer', 'By', 'On', 'Source']);
+    if (record.state === 'proposed' || record.state === 'confirmed') {
+      needs(b, question.id, record.state === 'proposed' ? ['Answer', 'Source'] : ['Answer'], record.state);
+    }
+    if (record.answer && record.state !== 'unanswered') {
+      const read = readValue(question, record.answer);
+      if (read.error) report(lineOf(b, 'Answer'), `${question.id}: Answer "${record.answer}" ${read.error}`, b);
+      else record.value = read.value;
+    }
+    record.answered = record.state === 'confirmed' && !b.faulty;
+    return record;
+  };
+
+  for (const methodData of methods ?? []) {
+    const b = seen.method.get(methodData.id);
+    if (!b) report(markerLine, `${methodData.id} (${sentenceCase(methodData.title)}) is missing: every safe method needs its heading and Status`);
+    const record = { id: methodData.id, line: b?.line ?? null, answers: new Map() };
+    for (const name of METHOD_FIELDS) record[key(name)] = get(b, name);
+    record.status = b ? standard(record.status, STATUSES) : 'applies';
+    if (b && record.status === '') report(lineOf(b, 'Status'), `${methodData.id}: Status is empty: write applies, adapted or not-relevant`, b);
+    else if (b && !STATUSES.includes(record.status)) report(lineOf(b, 'Status'), `${methodData.id}: Status "${record.status}" is not applies, adapted or not-relevant`, b);
+    else if (b) {
+      const uses = STATUS_USES[record.status];
+      needs(b, methodData.id, uses, record.status);
+      for (const name of METHOD_FIELDS.slice(1)) {
+        if (!uses.includes(name) && get(b, name)) {
+          report(lineOf(b, name), `${methodData.id}: ${name} is filled in, but Status is ${record.status}, which does not use it: change Status or clear ${name}`, b);
+        }
+      }
+    }
+    const ignored = record.status === 'not-relevant';
+    let reported = false;
+    for (const { question } of methodQuestions(methodData)) {
+      const qb = seen.question.get(question.id);
+      if (!qb) report(b?.line ?? markerLine, `${question.id} is missing from ${methodData.id}`);
+      const answer = readAnswer(qb, question, ignored);
+      if (ignored && qb && !reported && (answer.answer || !['', 'unanswered'].includes(answer.state))) {
+        report(lineOf(qb, answer.answer ? 'Answer' : 'State'), `${methodData.id}: answers given for a method marked not relevant are not read`);
+        reported = true;
+      }
+      record.answers.set(question.id, answer);
+      parsed.answers.set(question.id, answer);
+    }
+    parsed.methods.set(methodData.id, record);
+  }
+
+  if (section === 'profile') {
+    for (const question of PROFILE_QUESTIONS) {
+      const b = seen.question.get(question.id);
+      if (!b) report(markerLine, `${question.id} is missing`);
+      parsed.answers.set(question.id, readAnswer(b, question, false));
+    }
+  }
+
+  for (const b of seen.entry.values()) {
+    const record = { id: b.id, title: b.title, line: b.line };
+    for (const name of OWN_FIELDS) record[key(name)] = get(b, name);
+    record.kind = standard(record.kind, OWN_KINDS);
+    record.state = standard(record.state, STATES);
+    record.ehReview = standard(record.ehReview, ['pending']);
+    if (!record.title) report(b.line, `${b.id} has no title: write one after ${b.id} on its heading`, b);
+    if (record.kind && !OWN_KINDS.includes(record.kind)) report(lineOf(b, 'Kind'), `${b.id}: Kind "${record.kind}" is not additional or special-process`, b);
+    if (record.limit && !record.limitSource) report(lineOf(b, 'Limit-source'), `${b.id} has a Limit, so it needs a Limit-source saying where the figure comes from`, b);
+    const review = /^(\d{4}-\d{2}-\d{2})\s+\S/.exec(record.ehReview);
+    if (record.ehReview && record.ehReview !== 'pending' && !(review && isIsoDate(review[1]))) {
+      report(lineOf(b, 'EH-review'), `${b.id}: EH-review is pending, or a date written YYYY-MM-DD and the outcome`, b);
+    }
+    checkState(b, b.id, record.state, OWN_FIELDS.filter((name) => name !== 'State'));
+    if (record.state === 'proposed' || record.state === 'confirmed') {
+      needs(b, b.id, ['Kind'], record.state);
+      if (OWN_KINDS.includes(record.kind)) needs(b, b.id, KIND_NEEDS[record.kind], `${record.state} and ${record.kind}`);
+    }
+    record.answered = record.state === 'confirmed' && !b.faulty;
+    parsed.entries.set(b.id, record);
+  }
+  return finish();
+}
+
+// A parsed worksheet as JSON: each Map becomes an object in the same order.
+export const worksheetJson = (parsed) =>
+  JSON.stringify(parsed, (_, value) => (value instanceof Map ? Object.fromEntries(value) : value), 2);
+
 const USAGE = `usage: uk-food.mjs <command> [options]
 
 commands:
-  validate-data [--data DIR]   check the data files; exit 0 when valid, 1 when not
+  validate-data [--data DIR]                         check the data files; exit 0 when valid, 1 when not
+  worksheet --section SECTION [--data DIR]           print a blank answer worksheet; SECTION is one of
+                                                     XC, CL, CH, CK, MG, profile, own
+  parse-worksheet --file FILE [--data DIR] [--json]  check a worksheet: print its problems (or, with
+                                                     --json, what was read); exit 0 with no problems,
+                                                     1 with problems
 `;
 
 export function validateDataCommand(args, io = { out: console.log, err: console.error }) {
@@ -421,8 +945,66 @@ function usageError(io, message) {
   return 2;
 }
 
-// Later tasks add worksheet, render, check, reference, status and sign-off here.
-export const COMMANDS = { 'validate-data': validateDataCommand };
+// Reads `--name value` options and bare `--flag`s; anything else is an error.
+function readOptions(args, valued, flags = []) {
+  const options = {};
+  for (let i = 0; i < args.length; i++) {
+    const name = args[i].startsWith('--') ? args[i].slice(2) : null;
+    if (valued.includes(name) && args[i + 1] !== undefined) options[name] = args[++i];
+    else if (flags.includes(name)) options[name] = true;
+    else return { error: `unexpected argument: ${args[i]}` };
+  }
+  return { options };
+}
+
+// Loads the data and checks it. Data that will not load or is not valid is an input error.
+function loadValidData(dir) {
+  try {
+    const data = loadData(dir);
+    const errors = validateData(data);
+    return errors.length ? { error: errors.join('\n') } : { data };
+  } catch (error) {
+    return { error: error.message };
+  }
+}
+
+export function worksheetCommand(args, io = { out: console.log, err: console.error }) {
+  const { options, error } = readOptions(args, ['section', 'data']);
+  if (error) return usageError(io, error);
+  if (!WORKSHEET_SECTIONS.includes(options.section)) {
+    return usageError(io, `--section is one of ${WORKSHEET_SECTIONS.join(', ')}`);
+  }
+  const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
+  if (dataError) return usageError(io, dataError);
+  io.out(blankWorksheet(options.section, data).replace(/\n$/, ''));
+  return 0;
+}
+
+export function parseWorksheetCommand(args, io = { out: console.log, err: console.error }) {
+  const { options, error } = readOptions(args, ['file', 'data'], ['json']);
+  if (error) return usageError(io, error);
+  if (!options.file) return usageError(io, 'parse-worksheet needs --file');
+  let text;
+  try {
+    text = readFileSync(options.file, 'utf8');
+  } catch (readError) {
+    return usageError(io, `cannot read ${options.file}: ${readError.message}`);
+  }
+  const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
+  if (dataError) return usageError(io, dataError);
+  const parsed = parseWorksheet(text, data);
+  if (options.json) io.out(worksheetJson(parsed));
+  else if (parsed.problems.length === 0) io.out(`${options.file}: no problems`);
+  else for (const { line, message } of parsed.problems) io.out(`${options.file}:${line}: ${message}`);
+  return parsed.problems.length ? 1 : 0;
+}
+
+// Later tasks add render, check, reference, status and sign-off here.
+export const COMMANDS = {
+  'validate-data': validateDataCommand,
+  worksheet: worksheetCommand,
+  'parse-worksheet': parseWorksheetCommand
+};
 
 export function main(argv, io = { out: console.log, err: console.error }) {
   const [name, ...rest] = argv;

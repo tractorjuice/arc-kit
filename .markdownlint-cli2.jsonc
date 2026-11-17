@@ -101,6 +101,11 @@
     "tests/mermaid-wardley/output/**",
     "research/**",
     ".pytest_cache/**",
-    ".arckit/memory/**"
+    ".arckit/memory/**",
+    // uk-food answer worksheets are data that a person types into and the
+    // helper parses, not documents. Their grammar puts each field straight
+    // under its heading, and their `>` lines quote the FSA pack verbatim,
+    // numbered paragraphs included, so they cannot meet MD001, MD022 or MD032.
+    "tests/fixtures/uk-food/**/answers-*.md"
   ]
 }
