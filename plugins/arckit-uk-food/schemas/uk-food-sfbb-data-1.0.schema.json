@@ -2,13 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://arckit.org/schemas/uk-food-sfbb-data-1.0.schema.json",
   "title": "UK food overlay: SFBB caterers pack data, version 1.0",
-  "description": "Shape of every file in plugins/arckit-uk-food/data/<data id>/. Each file validates against one entry of the oneOf below; the front matter, diary and limits files are added to it later.",
+  "description": "Shape of every file in plugins/arckit-uk-food/data/<data id>/. Each file validates against one entry of the oneOf below; the limits file is added to it later.",
   "oneOf": [
     {
       "$ref": "#/$defs/source"
     },
     {
       "$ref": "#/$defs/sectionFile"
+    },
+    {
+      "$ref": "#/$defs/pagesFile"
     }
   ],
   "$defs": {
@@ -197,6 +200,93 @@
         "blocks": {
           "type": "array",
           "items": {
+            "$ref": "#/$defs/sectionBlock"
+          }
+        }
+      }
+    },
+    "sectionBlock": {
+      "$ref": "#/$defs/block",
+      "not": {
+        "required": [
+          "form"
+        ]
+      },
+      "$comment": "A block in a section file: any block but one carrying form, which only front.json and diary.json use."
+    },
+    "form": {
+      "enum": [
+        "openingChecks",
+        "closingChecks",
+        "extraChecks",
+        "trainingRecord",
+        "suppliersList",
+        "contactsList",
+        "cleaningSchedule",
+        "proveItRecords",
+        "weekPage",
+        "fourWeeklyReview",
+        "completionRecord",
+        "workingWithFood",
+        "reviewLog",
+        "packCompletion"
+      ],
+      "$comment": "Marks a block that later work renders a business's own form from. It is not page text, and is allowed only on blocks in front.json and diary.json."
+    },
+    "pagesFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "data",
+        "part",
+        "pages"
+      ],
+      "properties": {
+        "schema": {
+          "const": "uk-food-sfbb-data-1.0"
+        },
+        "data": {
+          "const": "sfbb-caterers-2026-11-17"
+        },
+        "part": {
+          "enum": [
+            "front",
+            "diary"
+          ]
+        },
+        "pages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/pageObject"
+          }
+        }
+      },
+      "$comment": "front.json (part front) and diary.json (part diary): the pack's pages that are not safe methods, one page object per printed page. validateData also checks what the schema cannot express: part names its own file, pages are in order and each appears once, every block's and row's page is its page object's page, and row and question identifiers are FR-<page>-Pnn and FR-<page>-Qnn in front.json, DY-<page>-Pnn and DY-<page>-Qnn in diary.json, with the page as two digits (three for page 100)."
+    },
+    "pageObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "page",
+        "title",
+        "blocks"
+      ],
+      "properties": {
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$comment": "The page's printed title, or null when it prints none. Page text on this page."
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
             "$ref": "#/$defs/block"
           }
         }
@@ -361,6 +451,9 @@
               "items": {
                 "$ref": "#/$defs/row"
               }
+            },
+            "form": {
+              "$ref": "#/$defs/form"
             }
           }
         },
@@ -396,6 +489,9 @@
               "items": {
                 "$ref": "#/$defs/row"
               }
+            },
+            "form": {
+              "$ref": "#/$defs/form"
             }
           }
         },
@@ -440,6 +536,9 @@
             },
             "questions": {
               "$ref": "#/$defs/questions"
+            },
+            "form": {
+              "$ref": "#/$defs/form"
             }
           }
         },
@@ -466,6 +565,9 @@
             },
             "text": {
               "type": "string"
+            },
+            "form": {
+              "$ref": "#/$defs/form"
             }
           }
         },
@@ -492,6 +594,9 @@
             },
             "text": {
               "type": "string"
+            },
+            "form": {
+              "$ref": "#/$defs/form"
             }
           }
         },
@@ -522,6 +627,9 @@
             "fromImage": {
               "type": "boolean",
               "default": false
+            },
+            "form": {
+              "$ref": "#/$defs/form"
             }
           }
         },
@@ -576,6 +684,9 @@
                 "string",
                 "null"
               ]
+            },
+            "form": {
+              "$ref": "#/$defs/form"
             }
           }
         },
@@ -624,6 +735,9 @@
             },
             "questions": {
               "$ref": "#/$defs/questions"
+            },
+            "form": {
+              "$ref": "#/$defs/form"
             }
           }
         }

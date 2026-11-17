@@ -350,17 +350,51 @@ def test_section_title_counts_on_its_first_page():
     assert (3, "Cross-contamination") in found and (4, "Keep apart") in found
 
 
+def test_page_object_title_and_blocks_count_on_its_page(tmp_path):
+    # front.json and diary.json hold one page object per printed page. The page's printed title is page
+    # text on that page; `part` and a block's `form` are not.
+    data = {"schema": "x", "data": DATA_ID, "part": "front", "pages": [
+        {"page": 1, "title": "WASH", "blocks": [
+            {"kind": "text", "heading": "your", "text": "Hands.", "page": 1, "form": "workingWithFood"}]}]}
+    assert declared_pages(data) == {1}
+    (tmp_path / "front.json").write_text(json.dumps(data), encoding="utf-8")
+    assert page_differences(tmp_path, FAKE_FIXTURE, FAKE_EXCEPTIONS, ["front"]) == {}
+    data["pages"][0]["title"] = None
+    (tmp_path / "front.json").write_text(json.dumps(data), encoding="utf-8")
+    diff = page_differences(tmp_path, FAKE_FIXTURE, FAKE_EXCEPTIONS, ["front"])
+    assert diff[1]["missing"] == Counter({"wash": 1}) and not diff[1]["extra"]
+
+
+# front.json and diary.json hold one page object for every page the page map gives them, in page order,
+# so that the coverage test, which compares only the pages a file declares, cannot skip a page.
+PART_PAGES = {"front": list(range(1, 11)), "diary": list(range(78, 101))}
+REQUIRED_PARTS: list[str] = []
+
+
+@pytest.mark.parametrize("part", list(PART_PAGES))
+def test_part_pages(part):
+    path = DATA_DIR / f"{part}.json"
+    if not path.is_file():
+        assert part not in REQUIRED_PARTS, f"{part}.json is required but missing"
+        pytest.skip(f"{part}.json not transcribed yet")
+    data = _load(path)
+    assert data["part"] == part
+    assert [page["page"] for page in data["pages"]] == PART_PAGES[part]
+
+
 # The JSON schema, checked against the same files the helper validates by hand.
 
 SCHEMA = _load(ROOT / "plugins" / "arckit-uk-food" / "schemas" / "uk-food-sfbb-data-1.0.schema.json")
 VALIDATOR = Draft202012Validator(SCHEMA, format_checker=FormatChecker())
 SHARED = ROOT / "tests" / "fixtures" / "uk-food"
 EVERY_FIELD = _load(SHARED / "data-every-field.json")["section"]
+EVERY_FIELD_FRONT = _load(SHARED / "data-every-field.json")["front"]
 
 
 def test_schema_is_valid_and_accepts_every_documented_field():
     Draft202012Validator.check_schema(SCHEMA)
     VALIDATOR.validate(EVERY_FIELD)
+    VALIDATOR.validate(EVERY_FIELD_FRONT)
 
 
 def test_schema_rejects_unknown_keys_and_bad_pages():
@@ -375,7 +409,7 @@ def test_schema_rejects_unknown_keys_and_bad_pages():
 def test_data_files_match_schema():
     for name in ["source", *DATA_FILES]:
         path = DATA_DIR / f"{name}.json"
-        if path.is_file() and name not in ("front", "diary"):
+        if path.is_file():
             VALIDATOR.validate(_load(path))
 
 
@@ -421,7 +455,7 @@ MUTATIONS = [m for m in _load(SHARED / "data-mutations.json") if "schema" in m.g
 
 
 def _schema_ok(doc):
-    return VALIDATOR.is_valid(doc["source"]) and VALIDATOR.is_valid(doc["section"])
+    return all(VALIDATOR.is_valid(doc[part]) for part in ("source", "section", "front"))
 
 
 def test_shared_fixture_validates():

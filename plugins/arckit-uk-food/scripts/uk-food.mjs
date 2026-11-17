@@ -8,6 +8,14 @@ import { fileURLToPath } from 'node:url';
 export const DATA_ID = 'sfbb-caterers-2026-11-17';
 export const SCHEMA_ID = 'uk-food-sfbb-data-1.0';
 export const SECTION_IDS = ['XC', 'CL', 'CH', 'CK', 'MG'];
+// The two files that hold the pack's pages that are not safe methods, with their identifier prefixes.
+export const PARTS = { front: 'FR', diary: 'DY' };
+// A block of front.json or diary.json may carry `form`: later work renders a business's own form from it.
+export const FORMS = [
+  'openingChecks', 'closingChecks', 'extraChecks', 'trainingRecord', 'suppliersList', 'contactsList',
+  'cleaningSchedule', 'proveItRecords', 'weekPage', 'fourWeeklyReview', 'completionRecord',
+  'workingWithFood', 'reviewLog', 'packCompletion'
+];
 // `note` is FSA text printed in an answer column that asks nothing: never asked, never unanswered.
 export const QUESTION_TYPES = ['yes-no', 'yes-no-else', 'tick', 'text', 'list', 'note'];
 export const SOURCE_FIELDS = [
@@ -28,7 +36,8 @@ const readJson = (path) => {
 const readOptional = (dir, name) =>
   existsSync(join(dir, `${name}.json`)) ? readJson(join(dir, `${name}.json`)) : null;
 
-// Loads every data file that exists. front, diary and limits are null until they are transcribed.
+// Loads every data file that exists. front, diary and limits are null until they are transcribed;
+// front and diary are each { schema, data, part, pages: [{ page, title, blocks }] }.
 export function loadData(dataDir) {
   const sections = new Map();
   for (const id of SECTION_IDS) {
@@ -85,7 +94,8 @@ const BLOCK_KINDS = {
     fields: { columns: isStringArray, columnGroups: ROWS, rows: isRowsOfStrings, questions: ROWS }
   }
 };
-const BLOCK_COMMON = { kind: isString, heading: isStringOrNull, page: () => true };
+// `form` is checked here against FORMS; a section file's block is refused it separately.
+const BLOCK_COMMON = { kind: isString, heading: isStringOrNull, page: () => true, form: (v) => FORMS.includes(v) };
 
 // Returns a list of problems; an empty list means the data is valid.
 export function validateData(data) {
@@ -187,6 +197,79 @@ export function validateData(data) {
     }
   };
 
+  // Checks one block of any kind; returns true when it has a known kind and is an object.
+  const block = (value, owner) => {
+    const kind = value && value.kind;
+    const here = `${owner} ${kind} block`;
+    if (!Object.hasOwn(BLOCK_KINDS, kind)) {
+      errors.push(`${owner}: unknown block kind ${JSON.stringify(kind)}`);
+      return false;
+    }
+    const { required, fields } = BLOCK_KINDS[kind];
+    if (!shape(value, here, { ...BLOCK_COMMON, ...fields }, ['page', ...required])) return false;
+    needPage(value.page, here);
+    if (kind === 'points' || kind === 'manage-it' || (kind === 'check-it' && value.rows !== undefined)) {
+      rows(value.rows, here);
+    }
+    if (kind === 'table') columnGroups(value.columnGroups, value.columns, here);
+    questions(value.questions, here);
+    return true;
+  };
+  // A block's rows that carry identifiers (a table's rows are cells), and every question in it.
+  const rowsOf = (value) =>
+    value.kind !== 'table' && Array.isArray(value.rows) ? value.rows.filter(isObject) : [];
+  const questionsOf = (value) => [value, ...rowsOf(value)]
+    .flatMap((holder) => (Array.isArray(holder.questions) ? holder.questions : []))
+    .filter(isObject);
+
+  // front.json and diary.json: one page object per printed page, in page order. Everything on a
+  // page object is on its page, and row and question identifiers name the part and the page.
+  const PAGES_FILE = { schema: isString, data: isString, part: isString, pages: Array.isArray };
+  const PAGE_OBJECT = { page: () => true, title: isStringOrNull, blocks: Array.isArray };
+  const pagesFile = (name) => {
+    const file = data[name];
+    const where = `${name}.json`;
+    if (file === null || file === undefined) return;
+    if (!shape(file, where, PAGES_FILE, ['schema', 'data', 'part', 'pages'])) return;
+    if (file.schema !== SCHEMA_ID) errors.push(`${where}: schema is not ${SCHEMA_ID}`);
+    if (file.data !== DATA_ID) errors.push(`${where}: data is not ${DATA_ID}`);
+    if (file.part !== name) errors.push(`${where}: part ${JSON.stringify(file.part)} is not ${name}`);
+    if (!Array.isArray(file.pages)) return;
+    if (file.pages.length === 0) errors.push(`${where}: pages is empty`);
+    let previous = 0;
+    for (const pageObject of file.pages) {
+      const at = `${where} page ${pageObject && pageObject.page}`;
+      if (!shape(pageObject, at, PAGE_OBJECT, ['page', 'title', 'blocks'])) continue;
+      needPage(pageObject.page, at);
+      const page = pageObject.page;
+      if (!isPage(page)) continue;
+      if (page === previous) errors.push(`${at}: printed twice`);
+      else if (page < previous) errors.push(`${at}: out of order, after page ${previous}`);
+      previous = Math.max(previous, page);
+      const tag = `${PARTS[name]}-${String(page).padStart(2, '0')}`;
+      for (const value of Array.isArray(pageObject.blocks) ? pageObject.blocks : []) {
+        if (!block(value, at)) continue;
+        const here = `${at} ${value.kind} block`;
+        if (isPage(value.page) && value.page !== page) {
+          errors.push(`${here}: page ${value.page} is not its page object's page ${page}`);
+        }
+        for (const row of rowsOf(value)) {
+          if (isString(row.id) && !new RegExp(`^${tag}-P[0-9]{2}$`).test(row.id)) {
+            errors.push(`${here} row ${row.id}: identifier is not ${tag}-P and two digits`);
+          }
+          if (isPage(row.page) && row.page !== page) {
+            errors.push(`${here} row ${row.id}: page ${row.page} is not its page object's page ${page}`);
+          }
+        }
+        for (const question of questionsOf(value)) {
+          if (isString(question.id) && !new RegExp(`^${tag}-Q[0-9]{2}$`).test(question.id)) {
+            errors.push(`${here} question ${question.id}: identifier is not ${tag}-Q and two digits`);
+          }
+        }
+      }
+    }
+  };
+
   const FILE = { schema: isString, data: isString, section: isObject, methods: Array.isArray };
   const SECTION = {
     id: isString, code: isString, title: isString, pages: Array.isArray, intro: Array.isArray
@@ -194,6 +277,7 @@ export function validateData(data) {
   const METHOD = {
     id: isString, title: isString, summary: isStringOrNull, pages: Array.isArray, blocks: Array.isArray
   };
+  pagesFile('front');
   for (const [key, file] of data.sections) {
     if (!shape(file, `${key}.json`, FILE, ['schema', 'data', 'section', 'methods'])) continue;
     const section = file.section;
@@ -225,24 +309,14 @@ export function validateData(data) {
         for (const page of method.pages) needPage(page, `${at} pages`);
       }
       if (!Array.isArray(method.blocks)) continue;
-      for (const block of method.blocks) {
-        const kind = block && block.kind;
-        const here = `${at} ${kind} block`;
-        if (!Object.hasOwn(BLOCK_KINDS, kind)) {
-          errors.push(`${at}: unknown block kind ${JSON.stringify(kind)}`);
-          continue;
+      for (const value of method.blocks) {
+        if (block(value, at) && Object.hasOwn(value, 'form')) {
+          errors.push(`${at} ${value.kind} block: form is allowed only in front.json and diary.json`);
         }
-        const { required, fields } = BLOCK_KINDS[kind];
-        if (!shape(block, here, { ...BLOCK_COMMON, ...fields }, ['page', ...required])) continue;
-        needPage(block.page, here);
-        if (kind === 'points' || kind === 'manage-it' || (kind === 'check-it' && block.rows !== undefined)) {
-          rows(block.rows, here);
-        }
-        if (kind === 'table') columnGroups(block.columnGroups, block.columns, here);
-        questions(block.questions, here);
       }
     }
   }
+  pagesFile('diary');
   return errors;
 }
 

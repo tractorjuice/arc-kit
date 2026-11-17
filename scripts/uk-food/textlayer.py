@@ -9,13 +9,17 @@ from typing import Iterator
 # Keys whose values are identifiers or structure, never words printed on a page.
 # Every other string anywhere inside an element is page text. `section` is
 # excluded only when it is an identifier string (a section file's own `section`
-# is an object whose intro items are page text).
-NOT_PAGE_TEXT = {"id", "kind", "type", "schema", "data", "code", "section", "page", "pages", "fromImage"}
+# is an object whose intro items are page text). `pages` is excluded only when
+# it lists page numbers (front.json and diary.json hold page objects there).
+NOT_PAGE_TEXT = {"id", "kind", "type", "schema", "data", "code", "section", "page", "pages", "fromImage",
+                 "part", "form"}
 
 
 def _is_page_text_key(key: str, value) -> bool:
     if key == "section":
         return not isinstance(value, str)
+    if key == "pages":
+        return isinstance(value, list) and any(isinstance(item, dict) for item in value)
     return key not in NOT_PAGE_TEXT
 
 _EDGE = re.compile(r"^[^\w°]+|[^\w°]+$")
@@ -78,7 +82,8 @@ def words_of(text: str) -> list[str]:
 def strings_of(node, page=None, method=None) -> Iterator[tuple[int | None, str, str | None]]:
     """Yield (page, string, method id) for every page-text string in a data file.
 
-    A dict's own `page` applies to its strings; a dict with `pages` and no
+    A dict's own `page` applies to its strings, so a page object's `title`
+    counts on its page; a dict with a list of page numbers in `pages` and no
     `page` (a method or a section) uses its first page, so its `title` and
     `summary` count on `pages[0]`; anything else inherits the page of its
     parent. Strings with no page in context are not yielded. Elements with
@@ -95,7 +100,7 @@ def strings_of(node, page=None, method=None) -> Iterator[tuple[int | None, str, 
             return
         if isinstance(node.get("page"), int):
             page = node["page"]
-        elif isinstance(node.get("pages"), list) and node["pages"]:
+        elif isinstance(node.get("pages"), list) and node["pages"] and isinstance(node["pages"][0], int):
             page = node["pages"][0]
         if ("methods" not in node and "intro" not in node
                 and isinstance(node.get("id"), str) and "pages" in node):

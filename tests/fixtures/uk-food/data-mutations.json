@@ -632,5 +632,171 @@
     "value": 1
    }
   ]
+ },
+ {
+  "name": "pages file with an unknown part",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/part",
+    "value": "back"
+   }
+  ]
+ },
+ {
+  "name": "pages file with no pages",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages",
+    "value": []
+   }
+  ]
+ },
+ {
+  "name": "pages file with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "page object with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "page object without title",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/front/pages/0/title"
+   }
+  ]
+ },
+ {
+  "name": "page title not a string",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/title",
+    "value": 3
+   }
+  ]
+ },
+ {
+  "name": "form not in the list",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/blocks/1/form",
+    "value": "reviewSheet"
+   }
+  ]
+ },
+ {
+  "name": "form on a block in a section file",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/2/form",
+    "value": "reviewLog"
+   }
+  ]
+ },
+ {
+  "name": "block page differs from its page object's",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/blocks/1/page",
+    "value": 4
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "row page differs from its page object's",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/blocks/0/rows/0/page",
+    "value": 4
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "page printed twice",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1",
+    "value": {
+     "page": 2,
+     "title": null,
+     "blocks": []
+    }
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "pages out of order",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/0/page",
+    "value": 4
+   },
+   {
+    "op": "set",
+    "path": "/front/pages/0/blocks/0/page",
+    "value": 4
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "row identifier with the wrong prefix",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/blocks/0/rows/0/id",
+    "value": "DY-03-P01"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "question identifier naming another page",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/blocks/1/questions/0/id",
+    "value": "FR-04-Q02"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
  }
 ]

@@ -78,7 +78,7 @@ test('the CLI exits 1 on invalid data and 2 on usage errors', () => {
 // keep validateData and the JSON schema accepting and rejecting the same files.
 const shared = (name) => JSON.parse(readFileSync(`tests/fixtures/uk-food/${name}`, 'utf8'));
 const asData = (doc) => ({
-  source: doc.source, front: null, diary: null, limits: null,
+  source: doc.source, front: doc.front ?? null, diary: null, limits: null,
   sections: new Map([[doc.section.section.id, doc.section]])
 });
 const apply = (doc, ops) => {
@@ -95,6 +95,19 @@ const apply = (doc, ops) => {
 
 test('the shared all-fields fixture validates', () => {
   assert.deepEqual(validateData(asData(shared('data-every-field.json'))), []);
+});
+
+test('loadData returns front.json as its page objects, and validateData checks them', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'uk-food-'));
+  const { front } = shared('data-every-field.json');
+  writeFileSync(join(dir, 'source.json'), JSON.stringify(source()));
+  writeFileSync(join(dir, 'front.json'), JSON.stringify(front));
+  const d = loadData(dir);
+  assert.deepEqual(d.front, front);
+  assert.equal(d.diary, null);
+  assert.deepEqual(validateData(d), []);
+  d.front.part = 'diary';
+  assert.match(validateData(d).join('\n'), /front\.json: part "diary" is not front/);
 });
 
 for (const mutation of shared('data-mutations.json')) {
