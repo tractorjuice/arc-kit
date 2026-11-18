@@ -1,0 +1,108 @@
+# ArcKit build recipe: UK food safety (Safer food, better business for caterers)
+#
+# Scope: a small catering business in England or Wales, building its food
+# safety documents from the Food Standards Agency's Safer food, better business
+# for caterers pack with the arckit-uk-food overlay. No ArcKit architecture
+# documents: the overlay needs none.
+#
+# What a build can and cannot do. A build has nobody to answer, and the
+# overlay's commands record only what a named person at the business says. So
+# a build confirms nothing: it makes the worksheets that are missing and writes
+# each document from the answers already confirmed. On a new project every
+# answer reads NOT YET ANSWERED. The answers come from running the commands
+# with the person; the build then brings every document into step with them.
+# A build never signs anything off: /arckit-uk-food:uk-food-sign-off is not a
+# target.
+#
+# The project must exist before a build. Running
+# /arckit-uk-food:uk-food-profile once creates it.
+#
+# Every target writes `output:` on one line: check-doc-type-registry.py reads
+# only the inline form, so a block-style `output:` would escape its check.
+
+recipe: uk-food-sfbb
+schema_version: 1
+description: >
+  UK food safety for a small catering business in England or Wales, from
+  the Food Standards Agency's Safer food, better business for caterers pack:
+  the business profile, the five sections of safe methods (cross-contamination,
+  cleaning, chilling, cooking, management) and the completion record. A build
+  has nobody to answer, so it confirms nothing: it makes the blank worksheets
+  and writes draft documents from the answers a named person has already
+  confirmed. On a new project every answer reads NOT YET ANSWERED. It does not
+  sign anything off.
+
+defaults:
+  version: "1.0"
+
+# Optional targets. default: true = built unless excluded with --exclude.
+# default: false = built only with --enable.
+optional_targets:
+  OWN:
+    description: >
+      The business's own methods. Off by default: the build's worker check
+      wants a document of more than 100 lines, and an own methods document
+      with no confirmed entries is shorter, so building it stops the build.
+      Record the business's own methods with /arckit-uk-food:uk-food-own-methods;
+      a build reads an own methods document that already exists.
+    default: false
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+
+targets:
+
+  # --- The profile first: the section documents take the business's name
+  # from it, and each section command makes the profile worksheet if it is
+  # missing, so it must exist before they run side by side.
+  - id: PROFILE
+    skill: arckit-uk-food:uk-food-profile
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FOODPROF }
+    deps: []
+
+  # --- The five sections of safe methods, side by side.
+  - id: XC
+    skill: arckit-uk-food:uk-food-safe-methods
+    args: "XC {P}"
+    output: { project: "{P}-{NAME}", type: FOODXC }
+    deps: [PROFILE]
+
+  - id: CL
+    skill: arckit-uk-food:uk-food-safe-methods
+    args: "CL {P}"
+    output: { project: "{P}-{NAME}", type: FOODCLN }
+    deps: [PROFILE]
+
+  - id: CH
+    skill: arckit-uk-food:uk-food-safe-methods
+    args: "CH {P}"
+    output: { project: "{P}-{NAME}", type: FOODCHL }
+    deps: [PROFILE]
+
+  - id: CK
+    skill: arckit-uk-food:uk-food-safe-methods
+    args: "CK {P}"
+    output: { project: "{P}-{NAME}", type: FOODCOOK }
+    deps: [PROFILE]
+
+  - id: MG
+    skill: arckit-uk-food:uk-food-safe-methods
+    args: "MG {P}"
+    output: { project: "{P}-{NAME}", type: FOODMGT }
+    deps: [PROFILE]
+
+  # --- The business's own methods, after the sections (optional, see above).
+  - id: OWN
+    skill: arckit-uk-food:uk-food-own-methods
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FOODOWN }
+    deps: [XC, CL, CH, CK, MG]
+
+  # --- The completion record, last: it reports on every other document.
+  - id: CHECK
+    skill: arckit-uk-food:uk-food-check
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FOODCMP }
+    deps: [PROFILE, XC, CL, CH, CK, MG, OWN]
