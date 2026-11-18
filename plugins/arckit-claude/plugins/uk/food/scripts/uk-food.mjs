@@ -468,6 +468,11 @@ const PROFILE_IDS = {
   'food:sushi/sashimi': 'PR-Q17', 'food:liver parfait': 'PR-Q18', 'food:fish/meat carpaccio and tartare': 'PR-Q19',
   'food:less than thoroughly cooked burgers': 'PR-Q20'
 };
+// A profile question the tool words itself is known by that wording (identifiedBy), so a worksheet filled in
+// before one was reworded holds words this version no longer prints. Each wording a release has printed and
+// this version has since changed is kept here under the question's key, and an upgrade takes lines that hold
+// one as that question's. A test holds every wording released, so one dropped from here shows.
+const PROFILE_WAS = {};
 export const PROFILE_QUESTIONS = [
   ['business-name', 'text', 'What is the business called?'],
   ['operator', 'text', 'Who is the food business operator: the person or company legally responsible for the business?'],
@@ -481,7 +486,7 @@ export const PROFILE_QUESTIONS = [
   ['staff', 'list', 'Who works with food, and what is each person\'s role?'],
   ...EXTRA_CARE.processes.map((name) => [`process:${name}`, 'yes-no', `Do you use this process, which needs extra care: ${name}?`]),
   ...EXTRA_CARE.foods.map((name) => [`food:${name}`, 'yes-no', `Do you make or serve this food, which needs extra care: ${name}?`])
-].map(([key, type, text]) => ({ id: PROFILE_IDS[key], key, type, text, elseText: null }));
+].map(([key, type, text]) => ({ id: PROFILE_IDS[key], key, type, text, elseText: null, was: PROFILE_WAS[key] ?? [] }));
 const profileQuestion = (key) => PROFILE_QUESTIONS.find((question) => question.key === key);
 
 const WORKSHEET_TITLES = { profile: 'Business profile', own: 'Your own controls and special processes' };
@@ -1321,7 +1326,8 @@ const identifying = (section) => (section === 'profile' ? 'the words that identi
 // prints), so a question is known by the pack's words for it: its text, or the column headings it sits under, and
 // where another question's wording holds those too, the one string of its context, nearest first, that tells it
 // apart. `own` is what its own line holds. In the profile, a question about a special process or food is known by
-// the pack's name for it, any other by the tool's own question. Worked out once for each worksheet.
+// the pack's name for it, any other by the tool's own question, or by an earlier wording of it (`was`, from
+// PROFILE_WAS). Worked out once for each worksheet.
 const KNOWN = new WeakMap();
 export function identifiedBy(section, data) {
   const done = KNOWN.get(data) ?? KNOWN.set(data, new Map()).get(data);
@@ -1329,12 +1335,13 @@ export function identifiedBy(section, data) {
   const parts = (how, text) => text.split('\n').map(plainWords).filter(Boolean).map((words) => [how, words]);
   const asked = section === 'profile' ? PROFILE_QUESTIONS.map((question) => {
     const name = /^(?:process|food):(.+)$/.exec(question.key)?.[1];
-    return { id: question.id, prompt: profilePrompt(question), own: name ? [['within', plainWords(name)]] : parts('start', question.text), context: [] };
+    return { id: question.id, prompt: profilePrompt(question), own: name ? [['within', plainWords(name)]] : parts('start', question.text),
+      was: name ? [] : question.was.map((text) => parts('start', text)), context: [] };
   }) : (data.sections.get(section)?.methods ?? []).flatMap(methodQuestions).map((entry) => ({ id: entry.question.id, prompt: promptLines(entry),
     own: parts('start', entry.question.text || entry.columns.join(' / ')), context: entry.context.map((text) => parts('line', text)).reverse() }));
   const plain = new Map(asked.map(({ id, prompt }) => [id, prompt.map(plainWords).filter(Boolean)]));
   const alone = (id, held) => asked.every((other) => other.id === id || !holdsAll(plain.get(other.id), held));
-  const known = new Map(asked.map(({ id, own, context }) => [id, { plain: plain.get(id), own: own.at(-1),
+  const known = new Map(asked.map(({ id, own, was = [], context }) => [id, { plain: plain.get(id), own: own.at(-1), was,
     parts: [own, ...context.map((more) => [...own, ...more])].find((held) => alone(id, held)) ?? own }]));
   done.set(section, known);
   return known;
@@ -1343,7 +1350,7 @@ export function identifiedBy(section, data) {
 // only as a line of another such question's wording (a question that is the next one's lead-in).
 export function wordingOf(lines, known) {
   const plain = lines.map(plainWords).filter(Boolean);
-  const held = [...known].filter(([, { parts }]) => holdsAll(plain, parts));
+  const held = [...known].filter(([, { parts, was }]) => [parts, ...was].some((words) => holdsAll(plain, words)));
   return held.filter(([id, { parts }]) => !held.some(([other, theirs]) => other !== id && holdsAll(theirs.plain, parts))).map(([id]) => id);
 }
 
@@ -1426,8 +1433,8 @@ export function upgradeWorksheet(text, data) {
   const replace = (what, at, now) => {
     const old = at.map((line) => layout.lines[line - 1].trimEnd());
     // `own`: a question's own line, which holds its own words, as it stands and as this version prints it.
-    const mine = known.get(what)?.own;
-    const ownLine = (lines) => lines.find((line) => holdsPart([plainWords(line)], mine)) ?? lines.at(-1);
+    const { own: mine, was = [] } = known.get(what) ?? {};
+    const ownLine = (lines) => lines.find((line) => [[mine], ...was].some((words) => holdsAll([plainWords(line)], words))) ?? lines.at(-1);
     const change = { what, from: at[0], to: at.at(-1), out: [], put: [], own: mine ? [ownLine(old), ownLine(now)] : null };
     let waiting = [];
     for (const [step, k] of lineSteps(old, now)) {
@@ -3269,12 +3276,14 @@ export function signOffDocument(code, project, person, data) {
       'yes once that person has read them and says they are theirs', ...doc.otherText.map(({ line, text }) => `  line ${line}: ${text}`));
   }
   // The newest sign-off over again, while it stands, would be one statement recorded twice: it is refused,
-  // and only the header may still need marking, which is the command's to do. A printed copy signed since
-  // it was recorded is a new statement, and is recorded.
+  // and only the header may still need marking, which is the command's to do. The name and role are the
+  // same when their words are, however their capitals, spaces and punctuation are typed. A printed copy
+  // signed since it was recorded is a new statement, and is recorded.
   const newest = doc.signOff;
   const paper = newest?.paperSigned === 'no' && person.paperSigned === 'yes';
-  if (doc.signedOff && !paper && newest.name === person.name && newest.role === person.role) {
-    reasons.push(`- ${person.name}'s sign-off of ${doc.file} (version ${doc.version}) as ${person.role} is already recorded, on ` +
+  const same = (typed, recorded) => plainWords(typed) === plainWords(recorded);
+  if (doc.signedOff && !paper && same(person.name, newest.name) && same(person.role, newest.role)) {
+    reasons.push(`- ${newest.name}'s sign-off of ${doc.file} (version ${doc.version}) as ${newest.role} is already recorded, on ` +
       `${newest.date}, and the file has not changed since, so nothing more is recorded. ` +
       `${doc.headerShowsSignOff ? 'Its header shows it.' : `Its header is not yet marked to show it: ${MARK_HOW}.`}`);
   }
@@ -3438,8 +3447,8 @@ commands:
                                                      data, one with any other problem, or one whose
                                                      lines under a question's heading do not hold
                                                      the words that identify that question (a
-                                                     heading that has been moved, or lines typed
-                                                     over)
+                                                     heading that has been moved, lines typed
+                                                     over, or wording this version does not know)
   render --doc DOC --project DIR [--data DIR]        print a document's body, from the worksheets in
                                                      DIR/food-safety; DOC is one of FOODXC, FOODCLN,
                                                      FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN,

@@ -2909,3 +2909,27 @@ test('H9: a sign-off name or role that holds a refused character is told which o
   assert.match(empty.stderr, /--name is the name of the person signing off: some text, on one line, with no character that cannot be seen\n/);
   assert.ok(!existsSync(signOffsFile(dir)));
 });
+
+test('the same person asking again, with the name or role typed in other capitals or spacing, is not recorded a second time', () => {
+  const dir = cafe();
+  const file = fromItsTemplate(dir, 'FOODCOOK');
+  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  const record = readFileSync(signOffsFile(dir), 'utf8');
+  const marked = readFileSync(file, 'utf8');
+  for (const [name, role] of [['Sam Okafor', 'owner'], ['sam okafor', 'OWNER'], ['Sam  Okafor', ' Owner ']]) {
+    const again = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', name, '--role', role, '--version', '1.0', '--date', '2026-11-17');
+    assert.equal(again.status, 1, `${name}, ${role}: ${again.stdout}`);
+    // The refusal names the person as the record does, which is what the header shows.
+    assert.equal(FIRST_LINE(again.stderr), 'FOODCOOK is already signed off, by Sam Okafor, Owner, on 2026-11-17, and nothing more was written, because:');
+    assert.deepEqual(reasons(again.stderr), [`Sam Okafor's sign-off of ${basename(file)} (version 1.0) as Owner is already recorded, on 2026-11-17, and the ` +
+      'file has not changed since, so nothing more is recorded. Its header shows it.']);
+    assert.equal(readFileSync(signOffsFile(dir), 'utf8'), record);
+    assert.equal(readFileSync(file, 'utf8'), marked);
+  }
+  // Another person, or the same person in another role, is another statement and is recorded.
+  const manager = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Sam Okafor', '--role', 'Manager', '--version', '1.0', '--date', '2026-11-17');
+  assert.equal(manager.status, 0, manager.stderr);
+  assert.equal(JSON.parse(readFileSync(signOffsFile(dir), 'utf8')).signOffs.length, 2);
+});
+

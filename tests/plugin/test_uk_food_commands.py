@@ -1870,7 +1870,15 @@ def test_the_pages_say_what_this_round_changed_for_an_owner():
     for gone in ["It cannot always tell", "first line as it stands", "far closer to it than to their own"]:
         assert gone not in overview, f"V1: {gone}"
     assert "lines under each question's heading hold the words that identify that question" in readme, "V1"
-    assert "another question's (a heading that has been moved) or no question's (lines typed over)" in readme, "V1"
+    assert ("another question's (a heading that has been moved) or no question's (lines typed over, or wording this version does not "
+            "know)") in readme, "V1"
+    assert "the question itself, as this version words it or as an earlier version did" in readme
+    assert "the question itself, as this version words it or as an earlier version did.)" in overview
+    assert "That means a line has been typed over, or the worksheet holds wording that this version does not know." in overview
+    assert "Only the overlay's own words can differ" not in overview, "which lines of context are printed can differ too"
+    for page in [overview, readme]:
+        assert ("The assistant you run the commands in also keeps its own record of each session on the computer, outside the project "
+                "folder.") in page, "the session record holds the business's text outside the project"
     assert "the command says which two" not in overview, "T6"
     own_guide = (ROOT_GUIDES / "uk-food-own-methods.md").read_text(encoding="utf-8")
     assert "The entry's name is yours too, unchanged. If you give no name for a special process, the entry takes the pack's name for that process." in own_guide, "T2"
@@ -1901,9 +1909,14 @@ def test_the_pages_say_what_this_round_changed_for_an_owner():
     assert "nothing rewrites a signed file" not in overview and "only the sign-off command puts such a header back to `DRAFT`" in overview, "V3"
     assert "here is its header as it stands in the file, because your sign-off covers it" in sign_off, "T6"
     assert "(`otherTextRead`, which is `false` when there was none)" in sign_off, "T6"
-    assert ("The same sign-off is never recorded twice: if nothing in the file has changed, asking again only finishes the header, or, if the "
-            "header already shows it, says that the document is already signed off. A printed copy signed later is recorded, as a record of "
+    assert ("The newest sign-off is not recorded a second time: if nothing in the file has changed and nobody has signed it since you did, "
+            "asking again only finishes the header, or, if the header already shows it, says that the document is already signed off. Your "
+            "name and role count as the same however their capitals are typed. A printed copy signed later is recorded, as a record of "
             "its own.") in sign_off, "T5, V2"
+    assert "never recorded twice" not in sign_off, "one person, then another, then the first again is recorded again"
+    assert "shows you its reasons unchanged, and stops" not in sign_off, "after a refusal the command still sees to the header"
+    assert "If an earlier sign-off of the document still stands, the command goes on to make sure the header shows that one." in sign_off
+    assert "and running it once more marks them" in sign_off
     for gone in ["asks before it writes anything", "would replace first, and asks", "you are shown the added text first"]:
         assert all(gone not in text for text in [overview, check_guide, sign_off, readme]), f"J9: {gone}"
     assert "you have been shown it and have said you have read it" in sign_off, "H5"
@@ -2383,10 +2396,12 @@ def test_sign_off_recorded_is_graded_as_it_reads(tmp_path):
     other = Run("sign-off-recorded", tmp_path / "other")
     other.helper("sign-off", "--doc", "FOODCOOK", "--project", other.project, "--name", "Priya Nair", "--role", "Manager", "--version", "1.0")
     assert "record-names-the-file-version-and-person" in failed(other.scores())
-    # (The helper refuses the same sign-off over again, T5, so the second differs in how the role is written.)
+    # (The helper refuses the same sign-off over again, T5, however the name and role are typed, so the second is a
+    # printed copy signed since, which is a statement of its own.)
     twice = Run("sign-off-recorded", tmp_path / "twice")
-    for role in ["Owner", "owner"]:
-        assert twice.helper("sign-off", "--doc", "FOODCOOK", "--project", twice.project, "--name", "Sam Okafor", "--role", role, "--version", "1.0").returncode == 0
+    for more in [[], ["--paper-signed", "yes"]]:
+        assert twice.helper("sign-off", "--doc", "FOODCOOK", "--project", twice.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0",
+                            *more).returncode == 0
     assert "one-record-only" in failed(twice.scores())
     again = twice.helper("sign-off", "--doc", "FOODCOOK", "--project", twice.project, "--name", "Sam Okafor", "--role", "owner", "--version", "1.0")
     assert again.returncode == 1 and "is already recorded" in again.stderr
