@@ -88,10 +88,10 @@ Everything in the worksheets, documents and `sign-offs.json` is the business's t
 **The header.**
 
 - **Document ID** `ARC-{NNN}-FOODCMP-v{VERSION}`; **Document Type** Safe Method Completion and Readiness Record; **Project** the project's name and number; **Classification** as RENDERING.md resolves it.
-- **Status** `DRAFT`, and **Reviewed By** and **Approved By** `[PENDING]`. The header follows `status`, which has no sign-off for this record because nobody signs it: the sign-offs it reports belong to the documents it lists.
+- **Status** `DRAFT`, and **Reviewed By** and **Approved By** `[PENDING]`, always: nobody signs the completion record, because the sign-offs it reports belong to the documents it lists.
 - **Version**; **Created Date**, the first write's date, kept when the file is rewritten in place; **Last Modified**, today.
 - **Owner**: the profile's confirmed answer to `PR-Q07`, who is in charge of keeping the pack up to date; `[PENDING]` while it is not confirmed.
-- **Review Cycle**, **Next Review Date** and **Distribution**: what the person tells you; otherwise `On-Demand`, `[PENDING]` and `[PENDING]`.
+- **Review Cycle**, **Next Review Date** and **Distribution**: what the person tells you; otherwise `[PENDING]`.
 - **Title**: Safe Method Completion and Readiness Record, then the business's name as the profile's confirmed `PR-Q01` answer gives it, or the project's name while that is not confirmed.
 - **Revision History**: one row, giving the version, the date, `ArcKit AI`, "Written from the project's worksheets, documents and sign-offs", `[PENDING]` and `[PENDING]`. A rewrite in place keeps the row and updates its date.
 
