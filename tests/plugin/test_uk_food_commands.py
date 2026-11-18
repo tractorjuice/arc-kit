@@ -396,8 +396,11 @@ GATHERING_RULES = {
                                                                    "them holds anything else",
     "G1: no other word or mark in those cells": "write `DRAFT`, `[PENDING]` and the date in those cells with no other "
                                                 "word or mark",
-    "G1: a cell status names is put right": "If a line for this document in `unfinished` from `status --json` names such "
-                                            "a cell, write in it what the line says.",
+    "J8: the header bullet is about a draft this command writes": "This is about a draft this command writes.",
+    "J8: only a draft's values are written": "names such a cell and says to write `DRAFT`, `[PENDING]` or a date there, write that.",
+    "J8: a signer's text is never written by this command": "Never write a person's name or role, or `APPROVED`, into a header, "
+                                                            "whatever a line says: in a file that has a sign-off recorded, only "
+                                                            "`/arckit:uk-food-sign-off` writes those cells.",
     "G4: nothing written is said, with why": "or that nothing was written because the signed file is still in step, with "
                                              "the document's lines from `unfinished`, unchanged",
     "H1: a new folder is set up by the helper": "set-up-folder --project <project_dir>",
@@ -510,6 +513,20 @@ COMMAND_RULES = {
     ("uk-food-check", "J3: the record is still written"): "Then write the completion record as the project stands: it lists that "
                                                           "worksheet among what is unfinished.",
     ("uk-food-check", "J3: only what a person has seen"): "and a person has seen what would change (step 3)",
+    ("uk-food-check", "J7: the two fields are read"): "`inSync`, `bodyInStep`, `otherText`, `signedOff`, `headerShowsSignOff`",
+    ("uk-food-check", "J7: what the two fields say"): "`headerShowsSignOff` says whether the header of a document with a sign-off "
+                                                      "recorded has been marked to show it.",
+    ("uk-food-check", "J7: a header still to be marked is said"): "for each document whose `signedOff` is true and "
+                                                                  "`headerShowsSignOff` is false, say, as its line in the text "
+                                                                  "output does, that it is signed off and its header is not yet "
+                                                                  "marked to show it",
+    ("uk-food-check", "J7: it is not unfinished"): "finishes the marking with no new sign-off. It is not among what is unfinished",
+    ("uk-food-check", "J7: only a body out of step is written again"): "a document not written, or whose `bodyInStep` is false, with "
+                                                                       "the command that writes it, which writes it again",
+    ("uk-food-check", "J7: a fault outside the markers is not written away"): "has a fault outside its UK-FOOD markers, which no "
+                                                                              "command puts right by writing it again: its own line "
+                                                                              "says what to do, and never say that it needs writing "
+                                                                              "again",
     ("uk-food-own-methods", "H4: the document's name"): "whose document type is Food Business Own Methods",
     ("uk-food-own-methods", "H4: an own method is never called a safe method"): "A method of the business's own is an own "
                                                                                 "method, never a safe method",
@@ -534,6 +551,10 @@ def test_no_command_keeps_the_wording_the_review_found_wrong(name):
                  "must still be true",
                  # Rulings H4 and H7.
                  "Additional Safe Methods", "`inSync` is false: the file a person signed is out of step",
+                 # Rulings J3, J6, J7 and J8.
+                 "run it with `--write` straight after the dry run", "something other than those cells was changed: put that back",
+                 "names such a cell, write in it what the line says", "or out of step, with the same command, which writes it again",
+                 "your edit reached the body",
                  # H8: the clause that led a marking slip to a signed document whose header read DRAFT.
                  "your edit changed something other than those rows: put it back exactly as it was",
                  "must now be true",
@@ -828,9 +849,11 @@ SIGN_OFF_RULES = {
                                                             "and ends when any line of it changes",
     "F8: no date after today": "refuses a date after today",
     "I1: marking the header changes nothing else": "Change nothing else in the file, not even to tidy it",
-    "I1: the document is signed off after marking": "`check` exits 0, the document's `signedOff` is true",
-    "I1: a stray edit is put back": "something other than those cells was changed: put that back exactly as it was, and "
-                                    "leave the cells as step 2 says",
+    "I1, H8: marking ends when the header shows the sign-off": "Stop when `check` exits 0 and the document's `signedOff` and "
+                                                               "`headerShowsSignOff` are both true: the header shows the sign-off.",
+    "J6: anything else is reported, not repaired": "If `check` names anything else, stop: show its message and the document's "
+                                                   "lines from `unfinished`, unchanged, and change nothing more in the file.",
+    "J6: the marking is one loop": "Finish the marking with this loop.",
     "I2: what ends a sign-off, and what does not": "a change to something this document does not print leaves the sign-off "
                                                    "standing",
     "32: says the file and version and takes a yes": "take their yes before recording",
@@ -844,7 +867,8 @@ SIGN_OFF_RULES = {
     "G1: the exact text of the Revision History row": "set **Approved By** to exactly `<name>, <role>` and **Approval "
                                                       "Date** to the record's `date`",
     "G1: no word added": "Add no word to any of these cells",
-    "G1: a cell check names is written exactly": "that cell does not hold exactly what step 2 says: write it so",
+    "G1, J6: a cell check names is written as its message says": "write in that cell exactly what its message says to write, in "
+                                                                 "that cell and nowhere else, and go back to 1",
     "G6: the header shows the newest sign-off": "The header shows the newest sign-off the helper has recorded for the file",
     "G6: the header is marked when the record names this file": "If `signOff.file` is the document's `file`, edit the "
                                                                 "document's header",
@@ -857,23 +881,28 @@ SIGN_OFF_RULES = {
                                               "back to unfinished until that entry is recorded",
     "H5: the helper refuses until the text has been shown": "the person signing has been shown any text the file holds "
                                                             "outside its checked part",
-    "H5: every line is shown, unchanged": "show the person every line in it, unchanged, with its line number, and ask "
-                                          "whether they have read them and they are the business's own",
-    "H5: the option only when the person has said so": "Add `--other-text-read yes` to the command below only when the "
-                                                       "person has said so in this conversation.",
-    "H5: with nobody to ask, nothing is recorded": "With nobody to ask, stop without recording anything, and report those "
-                                                   "lines.",
+    "H5: every line is shown, unchanged": "every line of the document's `otherText` in `status --json`, with its line number",
+    "H5: the option only when the person has said so": "Add `--other-text-read yes` to the command below only when `otherText` is "
+                                                       "not empty and the person has said so in this conversation.",
+    "H5: with nobody to ask, nothing is recorded": "if `otherText` is not empty, stop without recording anything, and report those "
+                                                   "lines",
+    "J4: the two tables are shown before recording": "the Document Control table and the rows of the Revision History, as they "
+                                                     "stand in the file",
+    "J4: shown unchanged, from the file": "So read the file and show the person, unchanged:",
+    "J4: one yes covers all of it": "Ask whether they have read all of it and it is the business's own: their yes covers all of it.",
+    "J4: with nobody to ask and no other text": "if it is empty, the request's own naming of the file and version is enough",
+    "J7: an unmarked header is finished without a new sign-off": "their sign-off is already recorded and only the header is left to "
+                                                                 "mark: record nothing new, and go to step 5",
     "H7: a changed file is signed again, not written again": "is signed off again in just this way: the helper records the "
                                                              "file as it now reads",
     "H7: never by a new version": "is put right by taking the change out or by signing the document off again, never by a "
                                   "new version",
-    "H8: the last check is that the header shows the sign-off": "and its `headerShowsSignOff` is true",
-    "H8: a header that reads DRAFT is not the end": "a document can be signed off while its header still reads `DRAFT`, and "
-                                                    "that is not the end of this command",
-    "H8: the cell is put right, and nothing else": "write it so, in that cell and nowhere else",
-    "H8: a cell still pending is written": "If `check` exits 0 and `headerShowsSignOff` is false, a cell still reads `DRAFT` "
-                                           "or `[PENDING]`: write it as step 2 says.",
-    "H8: no cell is put back to make check pass": "Never put a cell back to `DRAFT` or `[PENDING]` to make `check` pass.",
+    "H8: a header that reads DRAFT is not the end": "A document can be signed off while its header still reads `DRAFT`, and "
+                                                    "that is not the end of this command.",
+    "H8: a cell still pending is written": "If `check` exits 0 and `headerShowsSignOff` is false, a cell of step 2 still reads "
+                                           "`DRAFT` or `[PENDING]`: write it as step 2 says, and go back to 1.",
+    "H8: no cell is put back to make check pass": "never put a cell back to `DRAFT` or `[PENDING]` to make `check` pass",
+    "J6: nor when a message offers it": "Where the message also offers `DRAFT` or `[PENDING]`, do not take that",
 }
 
 
@@ -983,7 +1012,15 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "you added no summary, note, heading or other text of your own, before the markers or after them",
                    "`signedOff` and `headerShowsSignOff` are both true: the header shows the sign-off, and nothing else in the "
                    "file was changed",
-                   "No cell was put back to `DRAFT` or `[PENDING]` to make `check` pass.",
+                   "The sign-off command put no cell back to `DRAFT` or `[PENDING]` to make `check` pass, and where `check` named "
+                   "anything but a cell of the header it stopped and reported it.",
+                   # J4 (b), J7 and J8: what the signer is shown, a header still to be marked, and whose check item 1's last clause is.
+                   "the person was shown the Document Control table and the Revision History rows as they stand in the file",
+                   "nothing was recorded for a document whose `otherText` was not empty",
+                   "is said to be signed off with its header still to be marked, and is not put among what is unfinished",
+                   "If the profile, safe methods, own methods or check command had just written the file and `check` exited 1 for a "
+                   "line of its header, that command put the header back to `DRAFT` and `[PENDING]`; the sign-off command never "
+                   "does that, and its own check is item 28.",
                    # G1, G4 and G6: the cells a sign-off rewrites, the version rule and the newest record.
                    "the helper records no sign-off while one holds anything else",
                    "with `bodyInStep` true or null and `signedOff` false nothing was written and the document's `unfinished` "
