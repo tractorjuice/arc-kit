@@ -332,8 +332,18 @@ GATHERING_RULES = {
     "P6: other documents out of step": "whose `rendered` is true and `inSync` is false",
     "33: inside a build, the version rule still decides": "For these documents the rule above still decides what is "
                                                           "written",
-    "33: report the existing file when nothing is written": "give the existing file's path (`file` in `status --json`) "
-                                                            "as the file written",
+    "33: report the existing file when nothing is written": "give the existing file's path, `PROJECT/` followed by "
+                                                            "`file` from `status --json`, as the file written",
+    "36: a date without its year is asked about": "or give a date without its year, such as \"3 March\", ask for the "
+                                                  "exact date; never work one out yourself, and never add a year",
+    "36: a withdrawn answer with no replacement is asked about": "If the person says something recorded is no longer "
+                                                                "true but does not give what replaces it, ask for the "
+                                                                "replacement.",
+    "36: with none, it is cleared": "clear an answer back to `unanswered`, with its `Answer`, `By`, `On` and `Source` "
+                                    "lines emptied, and a safe method back to `applies`",
+    "36: an own entry is not removed unasked": "ask whether to remove it, and otherwise leave it as it is and say so in "
+                                               "the summary",
+    "P3: the review's date is the council's": "the review's date is the council's date, exactly as the person gives it",
     "34: a change is recorded like a first answer": "Record the change the same way as a first answer",
     "34: nothing beyond what was asked": "never change an answer, a method or an entry beyond what the person asked",
 }
@@ -358,6 +368,7 @@ def test_the_own_methods_command_changes_an_existing_entry_when_asked():
     _, body = split(command("uk-food-own-methods"))
     assert "to record the council's reply in its `EH-review`" in body
     assert "edit only the fields the person changes" in body
+    assert "because whoever changes an entry confirms it as it now stands" in body, "P2: told before it is recorded"
 
 
 # The fields the helper requires before it accepts a state, as the commands state them. Each is

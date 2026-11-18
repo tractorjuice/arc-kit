@@ -83,11 +83,11 @@ Sam Okafor owns Bramble Cafe, an invented café, and has already filled in the p
 >
 > **Claude:** Recorded, with your name and today's date.
 >
-> *[Claude shows the next question, unchanged. It asks for a description in your own words.]*
+> *[Claude shows the next question, unchanged. It also asks for a yes or a no.]*
 >
-> **Sam:** *[answers in the café's own words]*
+> **Sam:** *[answers yes or no]*
 >
-> **Claude:** Recorded in your words.
+> **Claude:** Recorded.
 >
 > **Sam:** Could you fill in the rest with what a café normally says?
 >

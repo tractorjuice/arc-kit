@@ -59,11 +59,11 @@ Sam Okafor owns Bramble Cafe, an invented café.
 >
 > **Sam:** Bramble Cafe. The operator is Bramble Cafe Ltd, and I'm its director.
 >
-> **Claude:** I've recorded both in your words, with your name and today's date, and written the document again. Which council is the business registered with, and on what date was it registered?
+> **Claude:** I've recorded both in your words, with your name and today's date, and written the document again. What is the address of the premises? Which council is the business registered with, and on what date was it registered?
 >
-> **Sam:** Exampleton District Council. Some time last spring.
+> **Sam:** 4 Mill Lane, Exampleton. Exampleton District Council. Some time last spring.
 >
-> **Claude:** I've recorded the council. I can only record the date as you give it, so what was the exact date?
+> **Claude:** I've recorded the address and the council. I can only record the date as you give it, so what was the exact date?
 
 ## What you get
 

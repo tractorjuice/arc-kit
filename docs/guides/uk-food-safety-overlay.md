@@ -114,7 +114,7 @@ If the business does a special process:
 1. Contact your council's environmental health team about it.
 2. Write your own procedure for it.
 3. Record it with `/arckit-uk-food:uk-food-own-methods`, which keeps it word for word and notes that the council's review is pending.
-4. When the council replies, run `/arckit-uk-food:uk-food-own-methods` again and give it the date and what they said. It records them in that entry, in your words, and changes nothing else.
+4. When the council replies, run `/arckit-uk-food:uk-food-own-methods` again and give it the date and what they said. It records them in that entry, in your words, and changes no other field. The entry then carries the name of the person who recorded the reply and the date they recorded it, because whoever changes an entry is confirming it as it now stands, procedure included.
 
 The own methods document cannot be signed off until each special process the profile confirms has its entry.
 
