@@ -436,7 +436,6 @@
 </blockquote>
 <p>The Food Standards Agency's pack does not cover everything a business does. This command records the food safety controls that are your business's own, and your own written procedure for any special process the business does, word for word. It never writes a method or a procedure for you.</p>
 <p>This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.</p>
-<p>Other tools name the command their own way: <code>$arckit-uk-food-own-methods</code> in Codex and <code>/arckit-uk-food-own-methods</code> in GitHub Copilot.</p>
 <h2 id="what-it-is-for">What it is for</h2>
 <p>It records two kinds of entry.</p>
 <p><strong>A control of your own</strong> (the worksheet calls this kind &quot;additional&quot;): something your business does that the pack does not cover. You say:</p>
@@ -467,16 +466,18 @@
 <li><strong>It writes the own methods document as it stands</strong>, before asking anything.</li>
 <li><strong>It offers to record each special process that has no entry</strong>, then asks whether the business has any other controls of its own. It takes one entry at a time.</li>
 <li><strong>It adds an entry only once you have given every part that kind of entry needs.</strong> Until then, it keeps asking.</li>
-<li><strong>It records the entry in your words</strong>, with your name and today's date, writes the document again and checks it.</li>
+<li><strong>It records the entry in your words</strong>, with your name and today's date, writes the document again and runs the document check on it.</li>
 <li><strong>It shows a summary</strong>: the entries confirmed and waiting, each special process with its entry (or none) and its review, and what to do next.</li>
 </ol>
 <h3 id="recording-a-special-process">Recording a special process</h3>
 <ul>
 <li><strong>Which one.</strong> The command shows you the list of names exactly as the worksheet prints it, and asks which one your procedure covers. The entry uses that name exactly.</li>
 <li><strong>Your procedure, word for word.</strong> Paste it in, or point the command to the file it is in. The command keeps every line as you wrote it. It does not correct spelling, figures or order, and does not shorten, reword or add to it. One thing it cannot keep is a blank line inside the procedure: the worksheet cannot hold one, so paragraphs run on, with every word kept. It tells you this before you confirm the entry.</li>
-<li><strong>The council's review.</strong> The entry records the environmental health review as pending. If the council has already replied, give the date and what they said, and the command records them in your words. If you say &quot;last month&quot;, it asks for the exact date.</li>
+<li><strong>The council's review.</strong> The entry records the environmental health review as pending. If the council has already replied, or replies later, run the command and give the date and what they said: it records them in that entry, in your words, and changes nothing else in it. If you say &quot;last month&quot;, it asks for the exact date.</li>
 <li><strong>No procedure yet.</strong> The command records nothing. It tells you that the business needs to write its own, that your council's environmental health team is the one to ask about it, and that the command will record it word for word once it is written.</li>
 </ul>
+<h3 id="changing-an-entry-later">Changing an entry later</h3>
+<p>Run the command again and say what has changed. It records the change in your words, with your name and today's date, and changes nothing you did not ask it to.</p>
 <h3 id="recording-a-control-of-your-own">Recording a control of your own</h3>
 <p>The command records the hazard, the control, the check and what you do if it fails, all in your words. It records a limit only if you give one, and then it needs to know where the figure comes from. It never supplies a figure or a source itself, and never takes one from the pack.</p>
 <h2 id="an-example">An example</h2>
@@ -484,7 +485,7 @@
 <blockquote>
 <p><strong>Sam:</strong> <code>/arckit-uk-food:uk-food-own-methods 001</code> Sam Okafor, the owner.</p>
 <p><strong>Claude:</strong> Your profile says Bramble Cafe does two special processes, and neither has an entry yet. Shall we record your written procedure for the first? These are the names the worksheet allows, as it prints them: <em>[the list]</em>. Which one does your procedure cover?</p>
-<p><strong>Sam:</strong> Sous vide. Here's the method we wrote with our equipment supplier. <em>[Sam pastes the café's written procedure.]</em></p>
+<p><strong>Sam:</strong> <em>[names one of the listed special processes]</em>. Here's our written procedure. <em>[Sam pastes the café's own procedure.]</em></p>
 <p><strong>Claude:</strong> I've recorded it word for word. Your text had a blank line between two paragraphs. The worksheet cannot hold one, so those paragraphs now run on, with every word kept. I've recorded the council's review as pending. Do you confirm the entry?</p>
 <p><strong>Sam:</strong> Yes. Could you also tidy it up and add anything that's missing?</p>
 <p><strong>Claude:</strong> No. A procedure I wrote or changed would be a control nobody at Bramble Cafe has tested, presented as yours. If you are not sure it is complete, ask your council's environmental health team.</p>
@@ -502,10 +503,12 @@
 <li><strong>It will not judge whether a method or procedure is adequate</strong>, and gives no food safety advice. Your council's environmental health team is the authority.</li>
 <li><strong>It will not sign anything off.</strong> That is <code>/arckit-uk-food:uk-food-sign-off</code>.</li>
 </ul>
-<h2 id="if-the-check-fails">If the check fails</h2>
-<p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in the document, and the check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.</p>
+<h2 id="if-the-document-check-fails">If the document check fails</h2>
+<p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in the document, and the document check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Run <a href="uk-food-check.html"><code>/arckit-uk-food:uk-food-check</code></a> to see everything that is still waiting, including any special process whose environmental health review is still pending.</p>
+<h2 id="in-other-tools">In other tools</h2>
+<p>Other tools name the command their own way: <code>$arckit-uk-food-own-methods</code> in Codex and <code>/arckit-uk-food-own-methods</code> in GitHub Copilot.</p>
 </div>
         </div>
     </main>

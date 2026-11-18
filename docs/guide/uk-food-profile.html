@@ -436,7 +436,6 @@
 </blockquote>
 <p>The business profile is the first of your food safety documents. It records who runs the business, where it is, what it sells, its equipment and staff, and whether it does any of the special processes or foods that need extra care. Everything in it is in your own words.</p>
 <p>This overlay is for small catering businesses in England and Wales. It builds your documents from the Food Standards Agency's free pack, <em>Safer food, better business for caterers</em>. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.</p>
-<p>Other tools name the command their own way: <code>$arckit-uk-food-profile</code> in Codex and <code>/arckit-uk-food-profile</code> in GitHub Copilot.</p>
 <h2 id="what-it-is-for">What it is for</h2>
 <p>The profile has twenty questions. The first ten are about the business:</p>
 <ul>
@@ -450,9 +449,7 @@
 <p>Your other documents print the business's name from the profile, so it comes first.</p>
 <h2 id="before-you-start">Before you start</h2>
 <ul>
-<li><strong>Claude Code with ArcKit and this overlay.</strong> The <a href="uk-food-safety-overlay.html">overlay guide</a> says how to install them.</li>
-<li><strong>Node on your computer.</strong> The overlay's helper script needs it. The script runs on your computer and sends nothing anywhere.</li>
-<li><strong>A folder to keep your records in.</strong> The command makes a <code>projects</code> folder there if there is none.</li>
+<li><strong>ArcKit and this overlay, set up.</strong> The overlay guide's <a href="uk-food-safety-overlay.html#getting-started">Getting started</a> list says what is needed: Claude Code, Node, and a folder for the business's records, with Claude Code started in that folder. The overlay's helper script runs on your computer and sends nothing anywhere.</li>
 <li><strong>Your name and your role at the business.</strong> Only an answer from a named person counts.</li>
 <li><strong>Any files you want it to read</strong>, if you like, such as your menu or an old pack. An answer taken from a file is only proposed until you confirm it.</li>
 </ul>
@@ -464,16 +461,18 @@
 <li><strong>It writes the profile document as it stands</strong>, before asking anything. Every question nobody has answered reads <strong>NOT YET ANSWERED</strong>.</li>
 <li><strong>It asks the questions a few at a time</strong>: first the ten about the business, then the ten about special processes and foods. It shows each question as it is written, and asks for the answer in the form the question wants: a name, a date, yes or no, or a list.</li>
 <li><strong>It records each answer in your words</strong>, with your name and today's date, and writes the document again after each reply. You can stop at any time: everything you have confirmed is already in the document.</li>
-<li><strong>It checks the document</strong> each time it writes it. A script proves that the body of the document matches a fresh print from your worksheet.</li>
+<li><strong>It runs the document check</strong> each time it writes the document: a script proves that the body of the document matches a fresh print from your worksheet.</li>
 <li><strong>It shows a summary</strong>: how many questions are confirmed, how many are proposed and waiting for someone to confirm them, how many are not yet answered, and what to do next.</li>
 </ol>
 <p>Some answers lead somewhere else:</p>
 <ul>
 <li><strong>A special process or food.</strong> If you say the business does one, the command says plainly that it will not write a procedure for it. It tells you to contact your council's environmental health team about it, and that <code>/arckit-uk-food:uk-food-own-methods</code> can record your own written procedure for it, word for word.</li>
 <li><strong>A business outside England and Wales.</strong> The command says plainly that the pack and this overlay cover England and Wales only. It records your answer, and does not suggest any next step.</li>
-<li><strong>A safe method that does not apply to you.</strong> You can say so while you go through the profile. The command may point out which of the pack's safe methods that sounds like, but it records a decision only when you make it, with your reason and your name. The decision is kept in that section's worksheet, and that section's document is then written again by <code>/arckit-uk-food:uk-food-safe-methods</code>.</li>
+<li><strong>A safe method that does not apply to you.</strong> You can say so while you go through the profile. The command may point out which of the pack's safe methods that sounds like, but it records a decision only when you make it, with your reason and your name. The decision is kept in that section's worksheet. That section's document is then out of date until you run <code>/arckit-uk-food:uk-food-safe-methods</code> for the section, which writes it again.</li>
 </ul>
 <p>You can also give answers when you start the command. If you give your name in the same message, they count as yours. If you give no name, they are recorded as proposed, and the summary asks who gave them.</p>
+<h3 id="changing-an-answer-later">Changing an answer later</h3>
+<p>Run the command again and say what has changed. It records the change in your words, with your name and today's date, and changes nothing you did not ask it to.</p>
 <h2 id="an-example">An example</h2>
 <p>Sam Okafor owns Bramble Cafe, an invented café.</p>
 <blockquote>
@@ -502,10 +501,12 @@
 <li><strong>It will not sign the document off.</strong> That is a separate step, <code>/arckit-uk-food:uk-food-sign-off</code>, for when everything is finished.</li>
 </ul>
 <p>Most ArcKit commands fill a gap with a sensible default. This one never does. A question nobody answered stays unanswered, and you can answer it on a later run.</p>
-<h2 id="if-the-check-fails">If the check fails</h2>
-<p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in the document, and the check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.</p>
+<h2 id="if-the-document-check-fails">If the document check fails</h2>
+<p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in the document, and the document check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Run <code>/arckit-uk-food:uk-food-safe-methods</code> to work through the five sections of safe methods, starting with cross-contamination. If the business is outside England and Wales, this overlay has no next step for it.</p>
+<h2 id="in-other-tools">In other tools</h2>
+<p>Other tools name the command their own way: <code>$arckit-uk-food-profile</code> in Codex and <code>/arckit-uk-food-profile</code> in GitHub Copilot.</p>
 </div>
         </div>
     </main>

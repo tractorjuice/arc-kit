@@ -6,8 +6,6 @@ The Food Standards Agency's pack does not cover everything a business does. This
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
-Other tools name the command their own way: `$arckit-uk-food-own-methods` in Codex and `/arckit-uk-food-own-methods` in GitHub Copilot.
-
 ## What it is for
 
 It records two kinds of entry.
@@ -41,15 +39,19 @@ You can also give a limit you work to, but only together with where that figure 
 4. **It writes the own methods document as it stands**, before asking anything.
 5. **It offers to record each special process that has no entry**, then asks whether the business has any other controls of its own. It takes one entry at a time.
 6. **It adds an entry only once you have given every part that kind of entry needs.** Until then, it keeps asking.
-7. **It records the entry in your words**, with your name and today's date, writes the document again and checks it.
+7. **It records the entry in your words**, with your name and today's date, writes the document again and runs the document check on it.
 8. **It shows a summary**: the entries confirmed and waiting, each special process with its entry (or none) and its review, and what to do next.
 
 ### Recording a special process
 
 - **Which one.** The command shows you the list of names exactly as the worksheet prints it, and asks which one your procedure covers. The entry uses that name exactly.
 - **Your procedure, word for word.** Paste it in, or point the command to the file it is in. The command keeps every line as you wrote it. It does not correct spelling, figures or order, and does not shorten, reword or add to it. One thing it cannot keep is a blank line inside the procedure: the worksheet cannot hold one, so paragraphs run on, with every word kept. It tells you this before you confirm the entry.
-- **The council's review.** The entry records the environmental health review as pending. If the council has already replied, give the date and what they said, and the command records them in your words. If you say "last month", it asks for the exact date.
+- **The council's review.** The entry records the environmental health review as pending. If the council has already replied, or replies later, run the command and give the date and what they said: it records them in that entry, in your words, and changes nothing else in it. If you say "last month", it asks for the exact date.
 - **No procedure yet.** The command records nothing. It tells you that the business needs to write its own, that your council's environmental health team is the one to ask about it, and that the command will record it word for word once it is written.
+
+### Changing an entry later
+
+Run the command again and say what has changed. It records the change in your words, with your name and today's date, and changes nothing you did not ask it to.
 
 ### Recording a control of your own
 
@@ -63,7 +65,7 @@ Sam Okafor owns Bramble Cafe, an invented café. The profile says the café does
 >
 > **Claude:** Your profile says Bramble Cafe does two special processes, and neither has an entry yet. Shall we record your written procedure for the first? These are the names the worksheet allows, as it prints them: *[the list]*. Which one does your procedure cover?
 >
-> **Sam:** Sous vide. Here's the method we wrote with our equipment supplier. *[Sam pastes the café's written procedure.]*
+> **Sam:** *[names one of the listed special processes]*. Here's our written procedure. *[Sam pastes the café's own procedure.]*
 >
 > **Claude:** I've recorded it word for word. Your text had a blank line between two paragraphs. The worksheet cannot hold one, so those paragraphs now run on, with every word kept. I've recorded the council's review as pending. Do you confirm the entry?
 >
@@ -85,10 +87,14 @@ Once a document has been signed off, the command never writes over it. If nothin
 - **It will not judge whether a method or procedure is adequate**, and gives no food safety advice. Your council's environmental health team is the authority.
 - **It will not sign anything off.** That is `/arckit-uk-food:uk-food-sign-off`.
 
-## If the check fails
+## If the document check fails
 
-A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in the document, and the check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.
+A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in the document, and the document check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.
 
 ## What to do next
 
 Run [`/arckit-uk-food:uk-food-check`](uk-food-check.md) to see everything that is still waiting, including any special process whose environmental health review is still pending.
+
+## In other tools
+
+Other tools name the command their own way: `$arckit-uk-food-own-methods` in Codex and `/arckit-uk-food-own-methods` in GitHub Copilot.

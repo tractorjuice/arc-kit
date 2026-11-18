@@ -6,8 +6,6 @@ A sign-off records that a named person at the business has read one finished foo
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
-Other tools name the command their own way: `$arckit-uk-food-sign-off` in Codex and `/arckit-uk-food-sign-off` in GitHub Copilot.
-
 ## What it is for
 
 You can sign off these documents, each on its own: the business profile, the five sections of safe methods (cross-contamination, cleaning, chilling, cooking and management) and your own methods. The completion record is a report, and is not signed off.
@@ -16,7 +14,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 
 - every worksheet the document needs is there, with no problems;
 - every question in it is confirmed by a named person;
-- the document is written, at the version you are signing, and passes its check;
+- the document is written, at the version you are signing, and passes its document check;
 - for your own methods, every special process the profile confirms has its own entry.
 
 ## Before you start
@@ -24,7 +22,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 - **A finished document.** Run `/arckit-uk-food:uk-food-check` to see which documents are finished.
 - **Everything finished first, if you can.** Sign the documents off once all of them are finished, and sign the profile off last. A change to the profile puts every other document out of step, because each of them is built partly from it. A change to any section or to your own methods puts the profile out of step, because the profile lists them. A document that goes out of step after it was signed off is written again as a new version, and that version needs signing off again.
 - **Your name and your role**, in the message that runs the command. If either is missing, the command asks.
-- **Whether a printed copy has been signed**, if you keep one. Say so, and the record notes it.
+- **Whether a printed copy has been signed**, if you keep one. Say so, and the record notes it. The documents are plain text files (Markdown) that any text editor or Markdown viewer can open and print.
 
 ## What happens when you run it
 
@@ -34,7 +32,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 4. **It tells you the file and version it is about to record, and waits for your yes**, unless you named the version yourself. A sign-off says you read that version, so you need to know which one it is.
 5. **It asks the helper script to record the sign-off.** If the script refuses, the command shows you its reasons unchanged, and stops. Nothing is recorded, and the command never tries to work round a refusal.
 6. **If the sign-off is recorded**, the command marks the document's header: Status `APPROVED`, and Reviewed By and Approved By both set to the name, role and date, such as `Sam Okafor, Owner, 2026-11-18`. In this overlay, `APPROVED` means only that: signed off by the named person at the business. It also fills in that version's row in the Revision History.
-7. **It checks the document again**, to prove the header change left the body untouched.
+7. **It runs the document check again**, to prove the header change left the body untouched.
 8. **It shows a summary.**
 
 When the helper script refuses, its reasons look like this:
@@ -46,7 +44,7 @@ FOODXC is not signed off, and nothing was written, because:
 - document not written yet: write the document from its worksheet
 ```
 
-Each reason says what puts it right: here, answering the questions with `/arckit-uk-food:uk-food-safe-methods XC`, which then writes the document.
+Each reason says what is missing; here, the questions are answered with `/arckit-uk-food:uk-food-safe-methods XC`, which then writes the document.
 
 ## An example
 
@@ -79,10 +77,14 @@ And if someone asks on another person's behalf:
 - **It will not keep the diary.** The diary and its daily signature stay with the business. A sign-off here covers one version of one document, nothing more.
 - **It is not a check by anyone outside the business.** Neither the Food Standards Agency nor your council has reviewed or endorsed the documents or the sign-off.
 
-## If the check fails
+## If the document check fails
 
-A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in the document, and the check will then fail. Write the document again with its own command. Do not edit those lines by hand.
+A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in the document, and the document check will then fail. Write the document again with its own command. Do not edit those lines by hand.
 
 ## What to do next
 
 Run [`/arckit-uk-food:uk-food-check`](uk-food-check.md) to bring the completion record up to date, so it shows the sign-off and what is still waiting.
+
+## In other tools
+
+Other tools name the command their own way: `$arckit-uk-food-sign-off` in Codex and `/arckit-uk-food-sign-off` in GitHub Copilot.

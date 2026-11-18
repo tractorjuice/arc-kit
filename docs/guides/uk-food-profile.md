@@ -6,8 +6,6 @@ The business profile is the first of your food safety documents. It records who 
 
 This overlay is for small catering businesses in England and Wales. It builds your documents from the Food Standards Agency's free pack, *Safer food, better business for caterers*. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
-Other tools name the command their own way: `$arckit-uk-food-profile` in Codex and `/arckit-uk-food-profile` in GitHub Copilot.
-
 ## What it is for
 
 The profile has twenty questions. The first ten are about the business:
@@ -24,9 +22,7 @@ Your other documents print the business's name from the profile, so it comes fir
 
 ## Before you start
 
-- **Claude Code with ArcKit and this overlay.** The [overlay guide](https://arckit.org/guide/uk-food-safety-overlay.html) says how to install them.
-- **Node on your computer.** The overlay's helper script needs it. The script runs on your computer and sends nothing anywhere.
-- **A folder to keep your records in.** The command makes a `projects` folder there if there is none.
+- **ArcKit and this overlay, set up.** The overlay guide's [Getting started](https://arckit.org/guide/uk-food-safety-overlay.html#getting-started) list says what is needed: Claude Code, Node, and a folder for the business's records, with Claude Code started in that folder. The overlay's helper script runs on your computer and sends nothing anywhere.
 - **Your name and your role at the business.** Only an answer from a named person counts.
 - **Any files you want it to read**, if you like, such as your menu or an old pack. An answer taken from a file is only proposed until you confirm it.
 
@@ -38,16 +34,20 @@ Your other documents print the business's name from the profile, so it comes fir
 4. **It writes the profile document as it stands**, before asking anything. Every question nobody has answered reads **NOT YET ANSWERED**.
 5. **It asks the questions a few at a time**: first the ten about the business, then the ten about special processes and foods. It shows each question as it is written, and asks for the answer in the form the question wants: a name, a date, yes or no, or a list.
 6. **It records each answer in your words**, with your name and today's date, and writes the document again after each reply. You can stop at any time: everything you have confirmed is already in the document.
-7. **It checks the document** each time it writes it. A script proves that the body of the document matches a fresh print from your worksheet.
+7. **It runs the document check** each time it writes the document: a script proves that the body of the document matches a fresh print from your worksheet.
 8. **It shows a summary**: how many questions are confirmed, how many are proposed and waiting for someone to confirm them, how many are not yet answered, and what to do next.
 
 Some answers lead somewhere else:
 
 - **A special process or food.** If you say the business does one, the command says plainly that it will not write a procedure for it. It tells you to contact your council's environmental health team about it, and that `/arckit-uk-food:uk-food-own-methods` can record your own written procedure for it, word for word.
 - **A business outside England and Wales.** The command says plainly that the pack and this overlay cover England and Wales only. It records your answer, and does not suggest any next step.
-- **A safe method that does not apply to you.** You can say so while you go through the profile. The command may point out which of the pack's safe methods that sounds like, but it records a decision only when you make it, with your reason and your name. The decision is kept in that section's worksheet, and that section's document is then written again by `/arckit-uk-food:uk-food-safe-methods`.
+- **A safe method that does not apply to you.** You can say so while you go through the profile. The command may point out which of the pack's safe methods that sounds like, but it records a decision only when you make it, with your reason and your name. The decision is kept in that section's worksheet. That section's document is then out of date until you run `/arckit-uk-food:uk-food-safe-methods` for the section, which writes it again.
 
 You can also give answers when you start the command. If you give your name in the same message, they count as yours. If you give no name, they are recorded as proposed, and the summary asks who gave them.
+
+### Changing an answer later
+
+Run the command again and say what has changed. It records the change in your words, with your name and today's date, and changes nothing you did not ask it to.
 
 ## An example
 
@@ -86,10 +86,14 @@ Once a document has been signed off, the command never writes over it. If nothin
 
 Most ArcKit commands fill a gap with a sensible default. This one never does. A question nobody answered stays unanswered, and you can answer it on a later run.
 
-## If the check fails
+## If the document check fails
 
-A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in the document, and the check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.
+A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in the document, and the document check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.
 
 ## What to do next
 
 Run `/arckit-uk-food:uk-food-safe-methods` to work through the five sections of safe methods, starting with cross-contamination. If the business is outside England and Wales, this overlay has no next step for it.
+
+## In other tools
+
+Other tools name the command their own way: `$arckit-uk-food-profile` in Codex and `/arckit-uk-food-profile` in GitHub Copilot.

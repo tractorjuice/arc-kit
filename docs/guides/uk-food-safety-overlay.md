@@ -4,7 +4,7 @@
 
 The UK Food Safety Overlay helps a small catering business in England or Wales build its food safety documents from the Food Standards Agency's free pack, *Safer food, better business for caterers*. You answer the pack's questions in ordinary conversation. The overlay puts the pack's own wording, unchanged, beside your answers, and a named person at the business signs each document off.
 
-It is for cafés, takeaways, restaurants, pubs, mobile caterers and similar small food businesses, and for the people who help them. You do not need to be technical: you type to an assistant, and it asks the questions.
+It is for cafés, takeaways, restaurants, pubs, mobile caterers and similar small food businesses, and for the people who help them. Setting it up is a one-off job for someone comfortable installing software and typing a command in a terminal: see [Getting started](#getting-started). After that, you type to an assistant in ordinary words, and it asks the questions.
 
 ## Not legal advice
 
@@ -27,6 +27,8 @@ The pack's wording is bundled with the overlay, so the documents are built on yo
 
 ## How it works
 
+**A few words first.** The pack is in five sections, and each section is made of *safe methods*: each covers one topic, sets out the pack's safety points, and asks what your business does. ArcKit keeps each business's records in a *project*: a numbered folder such as `projects/001-bramble-cafe/`. Your documents are *Markdown* files: plain text with a little formatting, which any text editor or Markdown viewer can open and print.
+
 **Worksheets hold your answers.** Each section of the pack, the business profile and your own methods has a worksheet in your project's `food-safety` folder. It lists every question, and under each one the answer, its state, who gave it and when.
 
 **An answer counts only when a named person gives it.** Each answer is in one of three states:
@@ -37,22 +39,30 @@ The pack's wording is bundled with the overlay, so the documents are built on yo
 
 Only confirmed answers reach your documents. Everywhere else, the document reads **NOT YET ANSWERED**. Nothing ever takes a default, and the assistant never suggests an answer: a document built from the worksheets is the business's own statement of what it does.
 
-**A script builds each document, and checks it.** The overlay's helper script prints the body of each document from the pack's wording and your confirmed answers. Nobody types the pack's text, so a word or a figure cannot be changed on the way in. After every write, the script checks that the document still matches a fresh print. The script runs on your computer, needs only Node, and sends nothing anywhere.
+**A script builds each document, and checks it.** The overlay's helper script prints the body of each document from the pack's wording and your confirmed answers. The pack's wording was typed into the overlay once, from the pack, and checked against it. After every write, the script runs the *document check*: it proves that the document still matches a fresh print from that bundled copy, so any change on the way into a document is caught. The script runs on your computer, needs only Node, and sends nothing anywhere.
 
 **A named person signs each document off.** When a document is finished, a named person at the business reads it and signs it off. The sign-off records their name, their role and the version they read. Until then, every document's status is `DRAFT`. After it, the status is `APPROVED`, which here means only that a named person at the business signed it off.
 
+**You can change what you have recorded.** Run the command again and say what has changed: an answer, a safe method you now do differently, or one of your own methods. The change is recorded in your words, with your name and the date, and nothing else is changed.
+
 **The completion record shows where things stand.** It is the pack's own record of which safe methods have been worked through, filled in from your documents and sign-offs, followed by a list of everything still unfinished.
 
-## Installing it
+## Getting started
 
-The overlay needs the ArcKit core plugin and Claude Code 2.1.319 or later. It is switched off when it is installed, so switch it on as well:
+Setting up is done once, by someone comfortable installing software and typing commands in a terminal. After that, you type to the assistant in ordinary words.
 
-```bash
-claude plugin install arckit-uk-food --marketplace tractorjuice/arckit-claude
-claude plugin enable arckit-uk-food
-```
+1. **Install Claude Code, and Node.** ArcKit's [getting-started page](https://arckit.org/getting-started.html) shows how to install Claude Code. This overlay needs Claude Code 2.1.319 or later, and Claude Code needs a Claude account to sign in with. Node is the free program the overlay's helper script runs on, from [nodejs.org](https://nodejs.org/).
+2. **Make a folder for the business's records**, such as `bramble-cafe-food-safety`. The commands keep everything in a `projects` folder inside it.
+3. **Install the overlay and switch it on.** In a terminal, run:
 
-The first line also installs ArcKit core if you have not installed it.
+   ```bash
+   claude plugin install arckit-uk-food --marketplace tractorjuice/arckit-claude
+   claude plugin enable arckit-uk-food
+   ```
+
+   The first line adds ArcKit's marketplace if it is not there yet, and installs ArcKit core with the overlay. The overlay is switched off when it is installed, so the second line switches it on.
+4. **Start Claude Code in the records folder.** In the terminal, go to that folder and type `claude`. The commands keep your records in the folder Claude Code was started in, so always start it there.
+5. **Run the first command.** Type `/arckit-uk-food:uk-food-profile` followed by the business's name, and say who you are and your role. The assistant takes it from there.
 
 ## The order to work in
 
@@ -104,7 +114,7 @@ If the business does a special process:
 1. Contact your council's environmental health team about it.
 2. Write your own procedure for it.
 3. Record it with `/arckit-uk-food:uk-food-own-methods`, which keeps it word for word and notes that the council's review is pending.
-4. When the council replies, run the command again to record the date and what they said.
+4. When the council replies, run `/arckit-uk-food:uk-food-own-methods` again and give it the date and what they said. It records them in that entry, in your words, and changes nothing else.
 
 The own methods document cannot be signed off until each special process the profile confirms has its entry.
 
@@ -112,13 +122,17 @@ The own methods document cannot be signed off until each special process the pro
 
 The overlay ships a build recipe, `uk-food-sfbb`, for ArcKit's build command in Claude Code. A build has nobody to answer, and only an answer a named person gives can be confirmed, so **a build confirms nothing**. It makes the worksheets that are missing and writes the draft documents from the answers already confirmed. On a new project, every answer in them reads NOT YET ANSWERED. A build never signs anything off. Do not expect a finished pack from it: the answers come from running the commands above with the person who knows the business.
 
-The recipe builds the profile, the five sections and the completion record. Your own methods are left out by default: with no entries, that document is too short for the build's checks, so record your own methods with the command instead.
+The recipe builds the profile, the five sections and the completion record. Your own methods are left out by default: that document is usually too short for the build's checks, unless the business has many entries, so record your own methods with the command instead.
 
-Run the profile command once first, so the project exists. Then, for project `001`:
+Run the profile command once first, so the project exists. The build saves its work with a git commit after each wave of documents; a records folder is rarely a git repository, so add `--no-commit` unless yours is one. For project `001`:
 
 ```text
-/arckit:build 001 --recipe uk-food-sfbb
+/arckit:build 001 --recipe uk-food-sfbb --no-commit
 ```
+
+The recipe passes ArcKit's recipe checks, but nobody has yet run it end to end through the build.
+
+ArcKit's general health check, and its notices about drafts that have not changed for a while, are written for architecture documents and may suggest moving an old draft on to review or approval; for these documents, only the sign-off command changes a document's status.
 
 ## What it does not cover
 
@@ -128,21 +142,24 @@ Run the profile command once first, so the project exists. Then, for project `00
 - **Procedures for special processes.** See above.
 - **The pack's formatting.** Bold and underlining in the pack are not carried into the documents. The words are.
 - **One layout detail.** On two pages, the pack prints its line about noting a problem in your diary after a later box. The documents print that line with the box about what to do when things go wrong.
-- **Places where the pack disagrees with itself.** In two places the pack says the same thing in two different ways. The documents print each place exactly as the pack prints it, and the overlay does not choose between them. If one of these matters to you, read both places in the pack and ask your council's environmental health team. Maintainers can find both places in the limits check sheet that [`scripts/uk-food/render-limits-check.py`](../../scripts/uk-food/render-limits-check.py) prints, and in the [differences note](../../plugins/arckit-uk-food/data/sfbb-caterers-2026-11-17/differences.md) bundled with the data.
+- **Places where the pack disagrees with itself.** In two places the pack words the same limit in two different ways. In CK-06 HOT HOLDING, one limit is worded two slightly different ways on the same page. CH-01 CHILLED STORAGE AND DISPLAYING CHILLED FOOD and CK-07 READY-TO-EAT FOOD describe differently which ready-to-eat foods one of their limits covers. The documents print each place exactly as the pack prints it, and the overlay does not choose between them. If one of these matters to you, read both places in your documents and ask your council's environmental health team. Maintainers can find both places, with their pages, in the limits check sheet that [`scripts/uk-food/render-limits-check.py`](../../scripts/uk-food/render-limits-check.py) prints.
 
-## What is planned
+## What is there now, and what is planned
 
-These are planned. They are not in the overlay yet, and there are no dates.
+Every safe method in the pack is in the five section documents now, including those on allergens (XC-04 FOOD HYPERSENSITIVITY and MG-04 MANAGING FOOD ALLERGEN INFORMATION), the cleaning schedule (CL-04 YOUR CLEANING SCHEDULE), training (MG-05 TRAINING AND SUPERVISION) and suppliers (MG-07 SUPPLIERS AND CONTRACTORS).
 
-- Allergens.
-- The cleaning schedule.
-- Blank diary and record sheets.
-- Training records.
+What is planned is the rest of the pack: its separate sheets and records, filled in for the business. There are no dates.
+
+- The business's allergen information for each dish. The pack has no separate sheet for this.
+- The pack's CLEANING SCHEDULE sheet.
+- Blank copies of the pack's diary pages, its OPENING CHECKS, CLOSING CHECKS and EXTRA CHECKS sheet, and its PROVE IT: RECORDS sheet, to print and fill in.
+- The pack's SUPPLIERS' LIST and CONTACTS LIST.
+- The pack's STAFF TRAINING RECORD, with training material.
 - The pack's regular review of the diary.
 
-## If a check fails
+## If the document check fails
 
-A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in a document, and the check will then fail. The fix is to run the document's command again, not to edit those lines by hand: changes belong in the worksheet.
+A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in a document, and the document check will then fail. The fix is to run the document's command again, not to edit those lines by hand: changes belong in the worksheet.
 
 ## Other tools
 

@@ -6,8 +6,6 @@ The Food Standards Agency's pack, *Safer food, better business for caterers*, se
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
-Other tools name the command their own way: `$arckit-uk-food-safe-methods` in Codex and `/arckit-uk-food-safe-methods` in GitHub Copilot.
-
 ## What it is for
 
 There is one document for each section:
@@ -47,7 +45,7 @@ You can work through the sections in any order.
    - it names the safe method, and tells you that if it does not apply to your business, or you do it differently, you can say so;
    - it shows each question that is not yet confirmed, word for word as the pack prints it, and asks for your answer in the form the question wants: yes or no, a list, or a description;
    - it records your reply in your words, with your name and today's date, and writes the document again.
-6. **It checks the document** each time it writes it. A script proves that the body of the document matches a fresh print from the pack and your worksheet.
+6. **It runs the document check** each time it writes the document: a script proves that the body of the document matches a fresh print from the pack and your worksheet.
 7. **It shows a summary**: how many questions are confirmed, proposed and not yet answered, any safe methods marked not relevant or done differently and who decided, and what to do next.
 
 The command does not explain, summarise or reword what the pack says, and gives no food safety advice of its own. If you ask for advice, it points you to the pack's wording in the question and to your council's environmental health team.
@@ -62,6 +60,10 @@ Every safe method starts as applying to your business. You decide otherwise, not
 ### Answering several questions at once
 
 A reply such as "yes to all of those" counts only for the questions the command has just shown you, and only where "yes" answers each of them. For any other question, it asks.
+
+### Changing an answer later
+
+Run the command again and say what has changed. It records the change in your words, with your name and today's date, and changes nothing you did not ask it to.
 
 ### Answers from a file
 
@@ -81,9 +83,9 @@ Sam Okafor owns Bramble Cafe, an invented café, and has already filled in the p
 >
 > **Claude:** Recorded, with your name and today's date.
 >
-> *[Claude shows the next question, unchanged. It asks what your staff wear for work.]*
+> *[Claude shows the next question, unchanged. It asks for a description in your own words.]*
 >
-> **Sam:** A clean cafe T-shirt and a fresh cloth apron for each shift.
+> **Sam:** *[answers in the café's own words]*
 >
 > **Claude:** Recorded in your words.
 >
@@ -109,12 +111,16 @@ Once a document has been signed off, the command never writes over it. If nothin
 
 Most ArcKit commands fill a gap with a sensible default. This one never does. A question nobody answered stays unanswered, and you can answer it on a later run.
 
-## If the check fails
+## If the document check fails
 
-A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in the document, and the check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.
+A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in the document, and the document check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.
 
 ## What to do next
 
 - Run the command again for the next section that needs work.
 - Run [`/arckit-uk-food:uk-food-own-methods`](uk-food-own-methods.md) to record controls of your own that the pack does not cover, and the written procedure for any special process.
 - Run [`/arckit-uk-food:uk-food-check`](uk-food-check.md) to see everything that is still waiting.
+
+## In other tools
+
+Other tools name the command their own way: `$arckit-uk-food-safe-methods` in Codex and `/arckit-uk-food-safe-methods` in GitHub Copilot.

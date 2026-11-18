@@ -180,8 +180,18 @@ def test_the_overview_guide_names_the_source_the_licence_and_who_is_responsible(
     assert source["attribution"] in text, "the licence line, exactly"
     for words in ["not legal advice", "environmental health team", "England and Wales",
                   "has not reviewed or endorsed", "co-maintainer", "NOT YET ANSWERED",
-                  "sign the profile off last"]:
+                  "sign the profile off last",
+                  # G3: a build commits after each wave; a records folder is rarely a git repository.
+                  "--no-commit",
+                  # Ruling 35: ArcKit's general health scan and draft notices do not change a status.
+                  "only the sign-off command changes a document's status",
+                  # I3: the places the pack words differently, by identifier and title, with no figure.
+                  "CK-06 HOT HOLDING", "CH-01 CHILLED STORAGE AND DISPLAYING CHILLED FOOD", "CK-07 READY-TO-EAT FOOD",
+                  # I2: where to start, and the honest word on who sets it up.
+                  "https://arckit.org/getting-started.html", "## Getting started"]:
         assert words in text, words
+    assert "You do not need to be technical" not in text, "I2: setting up does need someone technical"
+    assert "differences note" not in text, "I3: only the limits check sheet lists both places"
 
 
 RECIPE = OVERLAY / "recipes" / "uk-food-sfbb.yaml"

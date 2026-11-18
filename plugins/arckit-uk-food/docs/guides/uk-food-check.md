@@ -6,8 +6,6 @@ This command shows you what is finished and what is still waiting across all you
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
-Other tools name the command their own way: `$arckit-uk-food-check` in Codex and `/arckit-uk-food-check` in GitHub Copilot.
-
 ## What it is for
 
 It tells you, for each document:
@@ -20,7 +18,7 @@ It also lists the special processes and foods the profile confirms, with the own
 
 Then it gives the list of everything still unfinished, exactly as the overlay's helper script prints it, and says which command moves each item on.
 
-It writes all of this into the **completion record**: the pack's own record of which safe methods have been worked through, filled in from your documents and sign-offs, followed by the list of everything still unfinished.
+It also writes the **completion record**: the pack's own record of which safe methods have been worked through, filled in from your documents and sign-offs, followed by the list of everything still unfinished. The per-document counts and the summary of special processes are shown to you, not written into the record.
 
 ## Before you start
 
@@ -32,7 +30,7 @@ It writes all of this into the **completion record**: the pack's own record of w
 1. **It finds the project.**
 2. **It reads where things stand** from the helper script. Whether something is finished is what the script says, not the command's view of your answers.
 3. **It writes the completion record.** It rewrites the same file each time, at the same version: the record describes the project as it is now, so it never collects versions.
-4. **It checks the record** against a fresh print.
+4. **It runs the document check** on the record, against a fresh print.
 5. **It shows a summary.**
 
 It changes no worksheet and no other document. Anything that needs putting right is put right with the other commands.
@@ -43,7 +41,7 @@ Sam Okafor owns Bramble Cafe, an invented café. Part of the way through, Sam ru
 
 > **Sam:** `/arckit-uk-food:uk-food-check 001`
 >
-> **Claude:** I've written the completion record, `ARC-001-FOODCMP-v1.0.md`, and its check passed. Here is where each document stands, followed by everything still unfinished and the command that moves each item on.
+> **Claude:** I've written the completion record, `ARC-001-FOODCMP-v1.0.md`, and its document check passed. Here is where each document stands, followed by everything still unfinished and the command that moves each item on.
 
 The lines for each document look like these, from a copy of the example project the overlay is tested against, with its cooking document written and signed off:
 
@@ -83,10 +81,14 @@ What moves each item on:
 - **It will not judge your answers.** It reports what the helper script says.
 - **It will not cover the daily diary.** The diary stays with you, on paper or however the business keeps it today.
 
-## If the check fails
+## If the document check fails
 
-A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in the record, and the check will then fail. Run the command again to write the record afresh. Do not edit those lines by hand.
+A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in the record, and the document check will then fail. Run the command again to write the record afresh. Do not edit those lines by hand.
 
 ## What to do next
 
 For each finished document that has not been signed off, run [`/arckit-uk-food:uk-food-sign-off`](uk-food-sign-off.md). Sign the profile off last.
+
+## In other tools
+
+Other tools name the command their own way: `$arckit-uk-food-check` in Codex and `/arckit-uk-food-check` in GitHub Copilot.

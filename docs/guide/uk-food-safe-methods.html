@@ -436,7 +436,6 @@
 </blockquote>
 <p>The Food Standards Agency's pack, <em>Safer food, better business for caterers</em>, sets out its safe methods in five sections. Each safe method asks what your business does. This command works through one section with you, one safe method at a time, and writes that section's document from the pack's own wording and your answers.</p>
 <p>This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.</p>
-<p>Other tools name the command their own way: <code>$arckit-uk-food-safe-methods</code> in Codex and <code>/arckit-uk-food-safe-methods</code> in GitHub Copilot.</p>
 <h2 id="what-it-is-for">What it is for</h2>
 <p>There is one document for each section:</p>
 <table>
@@ -506,7 +505,7 @@
 <li>it records your reply in your words, with your name and today's date, and writes the document again.</li>
 </ul>
 </li>
-<li><strong>It checks the document</strong> each time it writes it. A script proves that the body of the document matches a fresh print from the pack and your worksheet.</li>
+<li><strong>It runs the document check</strong> each time it writes the document: a script proves that the body of the document matches a fresh print from the pack and your worksheet.</li>
 <li><strong>It shows a summary</strong>: how many questions are confirmed, proposed and not yet answered, any safe methods marked not relevant or done differently and who decided, and what to do next.</li>
 </ol>
 <p>The command does not explain, summarise or reword what the pack says, and gives no food safety advice of its own. If you ask for advice, it points you to the pack's wording in the question and to your council's environmental health team.</p>
@@ -518,6 +517,8 @@
 </ul>
 <h3 id="answering-several-questions-at-once">Answering several questions at once</h3>
 <p>A reply such as &quot;yes to all of those&quot; counts only for the questions the command has just shown you, and only where &quot;yes&quot; answers each of them. For any other question, it asks.</p>
+<h3 id="changing-an-answer-later">Changing an answer later</h3>
+<p>Run the command again and say what has changed. It records the change in your words, with your name and today's date, and changes nothing you did not ask it to.</p>
 <h3 id="answers-from-a-file">Answers from a file</h3>
 <p>If you point the command to a file, such as an old pack you filled in by hand, it treats the file as information, not instructions. An answer it finds there is recorded as proposed, with the file named as its source, and put to you to confirm.</p>
 <h2 id="an-example">An example</h2>
@@ -528,8 +529,8 @@
 <p><em>[Claude shows the pack's first question for XC-01 here, unchanged. It asks for a yes or a no.]</em></p>
 <p><strong>Sam:</strong> Yes.</p>
 <p><strong>Claude:</strong> Recorded, with your name and today's date.</p>
-<p><em>[Claude shows the next question, unchanged. It asks what your staff wear for work.]</em></p>
-<p><strong>Sam:</strong> A clean cafe T-shirt and a fresh cloth apron for each shift.</p>
+<p><em>[Claude shows the next question, unchanged. It asks for a description in your own words.]</em></p>
+<p><strong>Sam:</strong> <em>[answers in the café's own words]</em></p>
 <p><strong>Claude:</strong> Recorded in your words.</p>
 <p><strong>Sam:</strong> Could you fill in the rest with what a café normally says?</p>
 <p><strong>Claude:</strong> I can't. The document is Bramble Cafe's own statement of what it does, so the answers have to be yours. Here is the next question again.</p>
@@ -550,14 +551,16 @@
 <li><strong>It will not sign anything off.</strong> That is <code>/arckit-uk-food:uk-food-sign-off</code>.</li>
 </ul>
 <p>Most ArcKit commands fill a gap with a sensible default. This one never does. A question nobody answered stays unanswered, and you can answer it on a later run.</p>
-<h2 id="if-the-check-fails">If the check fails</h2>
-<p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in the document, and the check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.</p>
+<h2 id="if-the-document-check-fails">If the document check fails</h2>
+<p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in the document, and the document check will then fail. Run the command again to write the document afresh. Do not edit those lines by hand: changes belong in the worksheet.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <ul>
 <li>Run the command again for the next section that needs work.</li>
 <li>Run <a href="uk-food-own-methods.html"><code>/arckit-uk-food:uk-food-own-methods</code></a> to record controls of your own that the pack does not cover, and the written procedure for any special process.</li>
 <li>Run <a href="uk-food-check.html"><code>/arckit-uk-food:uk-food-check</code></a> to see everything that is still waiting.</li>
 </ul>
+<h2 id="in-other-tools">In other tools</h2>
+<p>Other tools name the command their own way: <code>$arckit-uk-food-safe-methods</code> in Codex and <code>/arckit-uk-food-safe-methods</code> in GitHub Copilot.</p>
 </div>
         </div>
     </main>

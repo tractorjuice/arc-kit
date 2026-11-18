@@ -436,7 +436,6 @@
 </blockquote>
 <p>This command shows you what is finished and what is still waiting across all your food safety documents, and writes the completion record. It asks nothing about the business and changes nothing but the completion record, so you can run it whenever you want to see where things stand.</p>
 <p>This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.</p>
-<p>Other tools name the command their own way: <code>$arckit-uk-food-check</code> in Codex and <code>/arckit-uk-food-check</code> in GitHub Copilot.</p>
 <h2 id="what-it-is-for">What it is for</h2>
 <p>It tells you, for each document:</p>
 <ul>
@@ -446,7 +445,7 @@
 </ul>
 <p>It also lists the special processes and foods the profile confirms, with the own entry that covers each one (or none), and any entry still waiting for your council's environmental health review.</p>
 <p>Then it gives the list of everything still unfinished, exactly as the overlay's helper script prints it, and says which command moves each item on.</p>
-<p>It writes all of this into the <strong>completion record</strong>: the pack's own record of which safe methods have been worked through, filled in from your documents and sign-offs, followed by the list of everything still unfinished.</p>
+<p>It also writes the <strong>completion record</strong>: the pack's own record of which safe methods have been worked through, filled in from your documents and sign-offs, followed by the list of everything still unfinished. The per-document counts and the summary of special processes are shown to you, not written into the record.</p>
 <h2 id="before-you-start">Before you start</h2>
 <ul>
 <li><strong>A business project.</strong> If there is none, the command tells you that <code>/arckit-uk-food:uk-food-profile</code> starts a business's documents, and writes nothing. It never makes a project itself.</li>
@@ -457,7 +456,7 @@
 <li><strong>It finds the project.</strong></li>
 <li><strong>It reads where things stand</strong> from the helper script. Whether something is finished is what the script says, not the command's view of your answers.</li>
 <li><strong>It writes the completion record.</strong> It rewrites the same file each time, at the same version: the record describes the project as it is now, so it never collects versions.</li>
-<li><strong>It checks the record</strong> against a fresh print.</li>
+<li><strong>It runs the document check</strong> on the record, against a fresh print.</li>
 <li><strong>It shows a summary.</strong></li>
 </ol>
 <p>It changes no worksheet and no other document. Anything that needs putting right is put right with the other commands.</p>
@@ -465,7 +464,7 @@
 <p>Sam Okafor owns Bramble Cafe, an invented café. Part of the way through, Sam runs the check.</p>
 <blockquote>
 <p><strong>Sam:</strong> <code>/arckit-uk-food:uk-food-check 001</code></p>
-<p><strong>Claude:</strong> I've written the completion record, <code>ARC-001-FOODCMP-v1.0.md</code>, and its check passed. Here is where each document stands, followed by everything still unfinished and the command that moves each item on.</p>
+<p><strong>Claude:</strong> I've written the completion record, <code>ARC-001-FOODCMP-v1.0.md</code>, and its document check passed. Here is where each document stands, followed by everything still unfinished and the command that moves each item on.</p>
 </blockquote>
 <p>The lines for each document look like these, from a copy of the example project the overlay is tested against, with its cooking document written and signed off:</p>
 <pre><code class="language-text">FOODPROF (Business profile): 20 of 20 questions confirmed; not written; not signed off
@@ -518,10 +517,12 @@ FOODOWN (Own methods): 2 of 2 own entries confirmed; not written; not signed off
 <li><strong>It will not judge your answers.</strong> It reports what the helper script says.</li>
 <li><strong>It will not cover the daily diary.</strong> The diary stays with you, on paper or however the business keeps it today.</li>
 </ul>
-<h2 id="if-the-check-fails">If the check fails</h2>
-<p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in the record, and the check will then fail. Run the command again to write the record afresh. Do not edit those lines by hand.</p>
+<h2 id="if-the-document-check-fails">If the document check fails</h2>
+<p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in the record, and the document check will then fail. Run the command again to write the record afresh. Do not edit those lines by hand.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>For each finished document that has not been signed off, run <a href="uk-food-sign-off.html"><code>/arckit-uk-food:uk-food-sign-off</code></a>. Sign the profile off last.</p>
+<h2 id="in-other-tools">In other tools</h2>
+<p>Other tools name the command their own way: <code>$arckit-uk-food-check</code> in Codex and <code>/arckit-uk-food-check</code> in GitHub Copilot.</p>
 </div>
         </div>
     </main>
