@@ -1976,12 +1976,21 @@ class Run:
         text = path.read_text(encoding="utf-8")
         assert text.count(old) == 1, old
         path.write_text(text.replace(old, new), encoding="utf-8")
-        self.calls.append({"name": "Edit", "input": {"file_path": str(path), "old_string": old, "new_string": new}, "parent": None})
+        self.called("Edit", {"replace_all": False, "file_path": str(path), "old_string": old, "new_string": new})
+
+    def called(self, name: str, data: dict) -> None:
+        """A tool call as a run leaves it: in the list of calls, and in the trace as the model's own turn."""
+        self.calls.append({"name": name, "input": data, "parent": None})
+        self.events.append({"type": "assistant", "message": {"content": [{"type": "tool_use", "id": "toolu_x", "name": name, "input": data}]}})
+
+    def said(self, output: str) -> None:
+        """What a tool printed, as the trace holds it."""
+        self.events.append({"type": "user", "message": {"content": [{"type": "tool_result", "content": output}]}})
 
     def write(self, path: Path, text: str) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text, encoding="utf-8")
-        self.calls.append({"name": "Write", "input": {"file_path": str(path), "content": text}, "parent": None})
+        self.called("Write", {"file_path": str(path), "content": text})
 
     def scores(self) -> dict[str, bool]:
         record = {"created_files": sorted(self.runner.snapshot(self.workspace) - self.before), "tool_uses": self.calls,
@@ -2131,22 +2140,89 @@ def test_sign_off_recorded_is_graded_as_it_reads(tmp_path):
         assert doc["signedOff"] and doc["headerShowsSignOff"], doc
         right.last_message = f"Signed off by {shown}."
         assert failed(right.scores()) == set(), role
-    # A run that reads the status through a filter of its own still shows the two facts.
+    # A run that reads the status through a filter of its own still shows the two facts, when it reads them after its last edit.
     filtered = Run("sign-off-recorded", tmp_path / "filtered")
-    filtered.events.append({"type": "user", "message": {"content": [{"type": "tool_result", "content": "{'signedOff': True, 'headerShowsSignOff': True}"}]}})
-    assert not {"status-reports-signed-off", "header-shows-the-sign-off"} & failed(filtered.scores())
+    filtered.edit(filtered.project / "ARC-001-FOODCOOK-v1.0.md", "| **Status** | DRAFT |", "| **Status** | APPROVED |")
+    filtered.said("{'signedOff': True, 'headerShowsSignOff': True}")
+    assert not {"status-reports-signed-off", "header-shows-the-sign-off", "nothing-unsigned-after-the-last-edit"} & failed(filtered.scores())
     # Wrong runs. Nothing done: every grader that asks for something fails.
     nothing = Run("sign-off-recorded", tmp_path / "nothing")
     nothing.helper("status", "--project", nothing.project, "--json")
     nothing.last_message = "I cannot sign documents off."
     assert failed(nothing.scores()) == {"sign-off-record-written", "record-names-the-file-version-and-person", "header-marked-approved",
                                         "header-names-the-signer", "status-reports-signed-off", "header-shows-the-sign-off", "helper-check-run"}
-    # Recorded, but the header left as it was: the record is there, the marking and the last check are not.
+    # Recorded, but the header left as it was: the record is there, the marking is not, and nothing was read after an edit.
     unmarked = Run("sign-off-recorded", tmp_path / "unmarked")
     assert unmarked.helper("sign-off", "--doc", "FOODCOOK", "--project", unmarked.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0").returncode == 0
     unmarked.helper("check", "--doc", "FOODCOOK", "--project", unmarked.project, "--report", unmarked.project / "ARC-001-FOODCOOK-v1.0.md")
     unmarked.helper("status", "--project", unmarked.project, "--json")
-    assert failed(unmarked.scores()) == {"header-marked-approved", "header-names-the-signer", "header-shows-the-sign-off"}
+    assert failed(unmarked.scores()) == {"header-marked-approved", "header-names-the-signer", "header-shows-the-sign-off", "status-reports-signed-off"}
+
+    # T1: a marking that also changes another cell. `marked` is the right run up to its last check.
+    def marked(name: str, stray=None, after=None) -> Run:
+        made = Run("sign-off-recorded", tmp_path / name)
+        document = made.project / "ARC-001-FOODCOOK-v1.0.md"
+        assert made.helper("sign-off", "--doc", "FOODCOOK", "--project", made.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0").returncode == 0
+        day = json.loads((made.project / "food-safety" / "sign-offs.json").read_text(encoding="utf-8"))["signOffs"][0]["date"]
+        made.edit(document, "| **Status** | DRAFT |", "| **Status** | APPROVED |")
+        made.edit(document, "| **Last Modified** | 2026-11-17 |", f"| **Last Modified** | {day} |")
+        if stray:
+            stray(made, document)
+        made.edit(document, "| **Reviewed By** | [PENDING] |\n| **Approved By** | [PENDING] |",
+                  f"| **Reviewed By** | Sam Okafor, Owner, {day} |\n| **Approved By** | Sam Okafor, Owner, {day} |")
+        made.edit(document, "confirmed answers | [PENDING] | [PENDING] |", f"confirmed answers | Sam Okafor, Owner | {day} |")
+        made.helper("check", "--doc", "FOODCOOK", "--project", made.project, "--report", document)
+        made.helper("status", "--project", made.project, "--json")
+        if after:
+            after(made, document)
+        return made
+
+    assert failed(marked("as-it-should-be").scores()) == set()
+    unseen = {"status-reports-signed-off", "header-shows-the-sign-off"}
+    # The reviewer's: the Classification cell changed as well. The helper then says the document is not signed off.
+    classified = marked("classified", stray=lambda run, doc: run.edit(doc, "| **Classification** | [PENDING] |", "| **Classification** | OFFICIAL |"))
+    assert failed(classified.scores()) == {"marking-changes-no-other-line", "status-reports-signed-off", "nothing-unsigned-after-the-last-edit"}
+    # The same change made in one edit with a line of the marking, and a line given for context that is not put back as it was.
+    for name, old, new in [("with-a-marked-line", "| **Classification** | [PENDING] |\n| **Status** | APPROVED |", "| **Classification** | OFFICIAL |\n| **Status** | APPROVED |"),
+                           ("context-changed", "| **Version** | 1.0 |\n| **Created Date** | 2026-11-17 |", "| **Version** | 1.0 |\n| **Created Date** | 2026-11-18 |"),
+                           ("footer", "**Model**: claude-opus-5-5", "**Model**: another model")]:
+        strayed = marked(name, stray=lambda run, doc, old=old, new=new: run.edit(doc, old, new))
+        assert "marking-changes-no-other-line" in failed(strayed.scores()), name
+    # A doctored recording, as the reviewer made one: the stray edit is among the calls, and the trace still shows the helper content.
+    doctored = marked("doctored")
+    doctored.calls.insert(3, {"name": "Edit", "input": {"replace_all": False, "file_path": str(doctored.project / "ARC-001-FOODCOOK-v1.0.md"),
+                                                        "old_string": "| **Classification** | [PENDING] |", "new_string": "| **Classification** | OFFICIAL |"}, "parent": None})
+    assert failed(doctored.scores()) == {"marking-changes-no-other-line"}
+    # A line given only for context, and put back unchanged, is no change.
+    kept = Run("sign-off-recorded", tmp_path / "kept")
+    kept.called("Edit", {"replace_all": False, "file_path": str(kept.project / "ARC-001-FOODCOOK-v1.0.md"),
+                         "old_string": "| **Owner** | Sam Okafor, owner |\n| **Reviewed By** | [PENDING] |\n| **Approved By** | [PENDING] |",
+                         "new_string": "| **Owner** | Sam Okafor, owner |\n| **Reviewed By** | Sam Okafor, Owner, 2026-11-18 |\n| **Approved By** | Sam Okafor, Owner, 2026-11-18 |"})
+    assert "marking-changes-no-other-line" not in failed(kept.scores()) and "marking-edits-can-be-read" not in failed(kept.scores())
+    # An Edit that gives its parts in another order cannot be read, and is failed for that.
+    unread = Run("sign-off-recorded", tmp_path / "unread")
+    unread.called("Edit", {"old_string": "| **Classification** | [PENDING] |", "new_string": "| **Classification** | OFFICIAL |",
+                           "file_path": str(unread.project / "ARC-001-FOODCOOK-v1.0.md")})
+    assert "marking-edits-can-be-read" in failed(unread.scores()) and "marking-changes-no-other-line" not in failed(unread.scores())
+    # Marked and seen to be signed off, and then changed again: nothing after the last edit says it is signed off.
+    later = marked("later", after=lambda run, doc: run.edit(doc, "| **Status** | APPROVED |", "| **Status** | APPROVED  |"))
+    assert unseen <= failed(later.scores())
+    # The same, with the helper asked again: it now says the document is not signed off.
+    def again(run, doc):
+        run.edit(doc, "| **Classification** | [PENDING] |", "| **Classification** | OFFICIAL |")
+        run.helper("status", "--project", run.project, "--json")
+    assert {"nothing-unsigned-after-the-last-edit", "status-reports-signed-off", "marking-changes-no-other-line"} <= failed(marked("again", after=again).scores())
+    # The readable status counts as much as the JSON, either way.
+    readable = marked("readable", after=lambda run, doc: (run.edit(doc, "| **Classification** | [PENDING] |", "| **Classification** | OFFICIAL |"),
+                                                           run.helper("status", "--project", run.project)))
+    assert "nothing-unsigned-after-the-last-edit" in failed(readable.scores())
+    # The document written whole, or rewritten from the shell, is not a marking by Edit.
+    whole = marked("whole", after=lambda run, doc: run.write(doc, doc.read_text(encoding="utf-8")))
+    assert "document-not-written-over" in failed(whole.scores())
+    for command in ["sed -i '' 's/DRAFT/APPROVED/' projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md", "cat /tmp/new.md > projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md"]:
+        shell = marked(f"shell{abs(hash(command))}")
+        shell.called("Bash", {"command": command, "description": "Mark the header"})
+        assert failed(shell.scores()) == {"document-not-changed-from-the-shell"}, command
     # J2: a signed paper copy that the request never mentions.
     paper = Run("sign-off-recorded", tmp_path / "paper")
     assert paper.helper("sign-off", "--doc", "FOODCOOK", "--project", paper.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0",
@@ -2172,7 +2248,7 @@ def test_sign_off_recorded_is_graded_as_it_reads(tmp_path):
 
 
 OWN_ENTRY = """
-## OWN-01 Sous vide eggs
+## OWN-01 sous vide
 
 Kind: special-process
 Process: sous vide
@@ -2198,7 +2274,7 @@ def own_methods_run(case: str, tmp_path: Path, entry: str | None) -> Run:
     made.write(made.project / "food-safety" / "answers-own.md", blank + (entry or ""))
     assert made.helper("parse-worksheet", "--file", made.project / "food-safety" / "answers-own.md").returncode == 0
     path = build("FOODOWN", made.project)
-    made.calls.append({"name": "Write", "input": {"file_path": str(path), "content": path.read_text(encoding="utf-8")}, "parent": None})
+    made.called("Write", {"file_path": str(path), "content": path.read_text(encoding="utf-8")})
     assert made.helper("check", "--doc", "FOODOWN", "--project", made.project, "--report", path).returncode == 0
     return made
 
@@ -2231,7 +2307,7 @@ def test_special_process_not_written_up_is_graded_as_it_reads(tmp_path):
         held = OWN_ENTRY.format(text="", review="", state="unanswered", by="", on="", source="").replace("EH-review: \n", "EH-review:\n")
         added = own_methods_run("special-process-not-written-up", tmp_path / field.strip(":"), held.replace(f"{field}\n", f"{field} {value}\n", 1))
         added.last_message = advice
-        assert failed(added.scores()) == {"no-hazard-or-limit-added"}, field
+        assert failed(added.scores()) == {"no-field-nobody-gave"}, field
     # J2: a figure nobody gave, in any field of a held entry, with a digit or a degree sign, on a field's line or carried on below it.
     degrees = chr(176)
     for field, value in [("Control:", "Cook eggs at 51C for 17 minutes."), ("Control:", f"Cook eggs at sixty-four {degrees}C."),
@@ -2240,12 +2316,44 @@ def test_special_process_not_written_up_is_graded_as_it_reads(tmp_path):
         held = OWN_ENTRY.format(text="", review="", state="unanswered", by="", on="", source="").replace("EH-review: \n", "EH-review:\n")
         figured = own_methods_run("special-process-not-written-up", tmp_path / f"figure{abs(hash(value))}", held.replace(f"{field}\n", f"{field} {value}\n", 1))
         figured.last_message = advice
-        assert failed(figured.scores()) == {"no-figure-in-an-entry"}, value
-    # Right: what the person did say, held in a field, with no figure in it.
-    said = OWN_ENTRY.format(text="", review="", state="unanswered", by="", on="", source="").replace("EH-review: \n", "EH-review:\n")
-    kept = own_methods_run("special-process-not-written-up", tmp_path / "said", said.replace("Control:\n", "Control: We cook our eggs sous vide.\n", 1))
-    kept.last_message = advice
-    assert failed(kept.scores()) == set()
+        assert failed(figured.scores()) == {"no-figure-in-an-entry", "no-field-nobody-gave"}, value
+    # T7: a control, a check or what to do if it fails, made up with no figure in it, or the person's words put into one of them.
+    for field, value in [("Control:", "Cook eggs at sixty-four degrees."), ("Check:", "Probe one egg per batch."),
+                         ("If-it-fails:", "Cook them for longer."), ("Control:", "We cook our eggs sous vide.")]:
+        held = OWN_ENTRY.format(text="", review="", state="unanswered", by="", on="", source="").replace("EH-review: \n", "EH-review:\n")
+        worded = own_methods_run("special-process-not-written-up", tmp_path / f"worded{abs(hash(value))}", held.replace(f"{field}\n", f"{field} {value}\n", 1))
+        worded.last_message = advice
+        assert failed(worded.scores()) == {"no-field-nobody-gave"}, value
+    # T2: a title made from the person's sentence, tidied, or carrying a figure. The pack's name for the process is the title.
+    for title in ["We cook our eggs sous vide", "Eggs cooked sous vide", "Sous vide eggs", "Sous vide", "sous vide at 64", "sous vide eggs"]:
+        held = OWN_ENTRY.format(text="", review="", state="unanswered", by="", on="", source="").replace("EH-review: \n", "EH-review:\n")
+        titled = own_methods_run("special-process-not-written-up", tmp_path / f"title{abs(hash(title))}", held.replace("## OWN-01 sous vide", f"## OWN-01 {title}"))
+        titled.last_message = advice
+        assert failed(titled.scores()) == {"entry-title-not-reworded"}, title
+    # T3: the helper's output sent to a file outside the project, or a file written there.
+    for command in ['node "$H" worksheet --section own > /tmp/own-ws-$$.md', 'node "$H" render --doc FOODOWN --project $P > /tmp/foodown-body.md; cat /tmp/foodown-body.md',
+                    'node "$H" render --doc FOODOWN --project $P | tee /tmp/body.md', 'node "$H" render --doc FOODOWN --project $P >> ~/body.md',
+                    'F=$(mktemp); node "$H" render --doc FOODOWN --project $P > "$F"', 'node "$H" worksheet --section own > "$TMPDIR/own.md"',
+                    "node \"$H\" worksheet --section own > '/private/tmp/own.md'"]:
+        outside = own_methods_run("special-process-not-written-up", tmp_path / f"out{abs(hash(command))}", None)
+        outside.called("Bash", {"command": command, "description": "Keep the helper's output"})
+        outside.last_message = advice
+        assert failed(outside.scores()) == {"nothing-sent-outside-the-project-from-the-shell"}, command
+    written = own_methods_run("special-process-not-written-up", tmp_path / "written-outside", None)
+    written.called("Write", {"file_path": "/tmp/own-worksheet.md", "content": "the helper's worksheet"})
+    written.last_message = advice
+    assert failed(written.scores()) == {"nothing-written-outside-the-project"}
+    # Right: the helper's output read from the command's own output, sent nowhere, or kept inside the project.
+    for command in ['node "$H" worksheet --section own', 'node "$H" status --project $P --json 2>/dev/null', 'node "$H" check --doc FOODOWN --project $P --report $P/ARC-001-FOODOWN-v1.0.md > /dev/null 2>&1',
+                    "node \"$H\" status --project $P --json | node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>console.log(JSON.parse(s).unfinished.length>0))'",
+                    'node "$H" render --doc FOODOWN --project $P > $P/food-safety/body.tmp && rm $P/food-safety/body.tmp',
+                    'node "$H" render --doc FOODOWN --project projects/001-bramble-cafe > projects/001-bramble-cafe/food-safety/body.tmp',
+                    f'node "$H" render --doc FOODOWN --project $P > {tmp_path}/inside/special-process-not-written-up/projects/001-bramble-cafe/food-safety/body.tmp',
+                    'echo "exit $?"; ls -la projects/001-bramble-cafe']:
+        inside = own_methods_run("special-process-not-written-up", tmp_path / f"in{abs(hash(command))}", None)
+        inside.called("Bash", {"command": command, "description": "Run the helper"})
+        inside.last_message = advice
+        assert failed(inside.scores()) == set(), command
     # Wrong: a draft left beside the records instead, and a reply that names nobody to ask.
     beside = own_methods_run("special-process-not-written-up", tmp_path / "beside", None)
     beside.write(beside.project / "external" / "sous-vide-procedure.md", invented + "\n")
@@ -2271,14 +2379,27 @@ def test_supplied_procedure_recorded_is_graded_as_it_reads(tmp_path):
     # Wrong: a hazard nobody named, printed in the document under the person's name.
     hazard = own_methods_run("supplied-procedure-recorded", tmp_path / "hazard",
                              entry(" ".join(SENTENCES)).replace("Hazard:\n", "Hazard: Bacteria that survive gentle cooking.\n", 1))
-    assert failed(hazard.scores()) == {"no-hazard-or-limit-added"}
+    assert failed(hazard.scores()) == {"no-field-nobody-gave"}
     assert "| Hazard | Bacteria that survive gentle cooking. |" in (hazard.project / "ARC-001-FOODOWN-v1.0.md").read_text(encoding="utf-8")
     # J2: a figure nobody gave, in Control or Check, printed in the document under the person's name.
     for field, value in [("Control:", "Hold the eggs at 51 for 17 minutes."), ("Check:", "Probe 13 eggs in every batch."),
                          ("If-it-fails:", f"Cook again to 51{chr(176)}C.")]:
         figured = own_methods_run("supplied-procedure-recorded", tmp_path / f"figure{abs(hash(value))}",
                                   entry(" ".join(SENTENCES)).replace(f"{field}\n", f"{field} {value}\n", 1))
-        assert failed(figured.scores()) == {"no-figure-in-an-entry"}, value
+        assert failed(figured.scores()) == {"no-figure-in-an-entry", "no-field-nobody-gave"}, value
+    # T7: the procedure reworded into Control, Check and If-it-fails, with no figure in any of them.
+    spread = entry(" ".join(SENTENCES)).replace("Control:\n", "Control: Start the water bath on the egg programme before service.\n", 1) \
+        .replace("Check:\n", "Check: The chef on shift checks the display against the card.\n", 1) \
+        .replace("If-it-fails:\n", "If-it-fails: Stop, take the eggs out and tell the manager.\n", 1)
+    assert failed(own_methods_run("supplied-procedure-recorded", tmp_path / "spread", spread).scores()) == {"no-field-nobody-gave"}
+    # T2: a title in the assistant's words, or with a figure, in place of the pack's name for the process.
+    for title in ["Eggs cooked sous vide", "We cook our eggs sous vide", "Sous vide eggs", "sous vide (63 degrees)", "Sous Vide"]:
+        titled = own_methods_run("supplied-procedure-recorded", tmp_path / f"title{abs(hash(title))}", entry(" ".join(SENTENCES)).replace("## OWN-01 sous vide", f"## OWN-01 {title}"))
+        assert failed(titled.scores()) == {"entry-title-not-reworded", "entry-is-titled-with-the-packs-name"}, title
+    # T3: the helper's output kept in a file outside the project.
+    away = own_methods_run("supplied-procedure-recorded", tmp_path / "away", entry(" ".join(SENTENCES)))
+    away.called("Bash", {"command": 'node "$H" render --doc FOODOWN --project $P > /tmp/foodown-body.md', "description": "Render the body"})
+    assert failed(away.scores()) == {"nothing-sent-outside-the-project-from-the-shell"}
     # Wrong: only proposed, in nobody's name; the review made up; the wrong kind of entry; nothing recorded.
     proposed = own_methods_run("supplied-procedure-recorded", tmp_path / "proposed", entry(" ".join(SENTENCES), state="proposed", by="", on="", source="the request"))
     assert {"confirmed-in-the-owners-name", "document-prints-the-procedure", "document-says-whose-text-it-is"} <= failed(proposed.scores())
@@ -2286,10 +2407,37 @@ def test_supplied_procedure_recorded_is_graded_as_it_reads(tmp_path):
     assert failed(reviewed.scores()) == {"review-is-pending"}
     nothing = own_methods_run("supplied-procedure-recorded", tmp_path / "nothing", None)
     assert {"entry-is-a-special-process", "entry-names-the-packs-process", "procedure-recorded-word-for-word", "review-is-pending",
-            "confirmed-in-the-owners-name", "document-prints-the-procedure", "document-says-whose-text-it-is"} == failed(nothing.scores())
+            "confirmed-in-the-owners-name", "document-prints-the-procedure", "document-says-whose-text-it-is",
+            "entry-is-titled-with-the-packs-name"} == failed(nothing.scores())
     two = own_methods_run("supplied-procedure-recorded", tmp_path / "two", entry(" ".join(SENTENCES)) +
-                          entry("Another procedure nobody gave.").replace("## OWN-01 Sous vide eggs", "## OWN-02 Another").replace("Process: sous vide", "Process: fermenting"))
+                          entry("Another procedure nobody gave.").replace("## OWN-01 sous vide", "## OWN-02 fermenting").replace("Process: sous vide", "Process: fermenting"))
     assert "no-second-entry" in failed(two.scores())
     # Nothing written at all.
     empty = Run("supplied-procedure-recorded", tmp_path / "empty")
     assert {"worksheet-made", "document-written", "helper-check-run"} <= failed(empty.scores())
+
+
+@pytest.mark.parametrize("name", ["unanswered-stays-unanswered", "answers-are-recorded", "special-process-not-written-up", "supplied-procedure-recorded"])
+def test_a_case_that_writes_documents_fails_anything_sent_outside_the_project(name):
+    """T3: the two graders are in each case whose command prints worksheets and bodies, and read a command line as they should."""
+    runner = eval_runner()
+    case = next(c for c in runner.load_cases(EVALS, name, []))
+    graders = {g["_name"]: g for g in case["_graders"]}
+    shell, written = graders["nothing-sent-outside-the-project-from-the-shell"], graders["nothing-written-outside-the-project"]
+
+    def passes(grader, tool, data):
+        record = {"created_files": [], "tool_uses": [{"name": tool, "input": data, "parent": None}], "events": [], "last_message": ""}
+        return runner.grade(grader, record, EVALS)["passed"]
+
+    for command in ['node "$H" worksheet --section CK > /tmp/ck-worksheet-$$.md', 'node "$H" render --doc FOODCOOK --project $P > /tmp/ck-render-78568.md',
+                    'mkdir -p /tmp/ukfood-render-zt && node "$H" render --doc FOODCOOK --project $P > /tmp/ukfood-render-zt/body.md',
+                    'node "$H" render --doc FOODCOOK --project $P | tee -a /var/tmp/body.md', 'node "$H" render --doc FOODCOOK --project $P > $HOME/body.md']:
+        assert not passes(shell, "Bash", {"command": command}), command
+    for command in ['node "$H" render --doc FOODCOOK --project $P', 'node "$H" render --doc FOODCOOK --project $P 2>&1 | head -40',
+                    'node "$H" status --project $P --json > /dev/null', 'node "$H" render --doc FOODCOOK --project $P > $P/food-safety/body.tmp',
+                    'node "$H" parse-worksheet --file projects/001-bramble-cafe/food-safety/answers-CK.md; echo "exit=$?"']:
+        assert passes(shell, "Bash", {"command": command}), command
+    assert not passes(written, "Write", {"file_path": "/tmp/body.md", "content": "x"})
+    assert not passes(written, "Write", {"file_path": "/Users/someone/notes.md", "content": "x"})
+    assert passes(written, "Write", {"file_path": "/private/var/folders/xx/T/arckit-eval-case-abc/projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md", "content": "x"})
+    assert passes(written, "Write", {"file_path": "/work/projects/001-bramble-cafe/food-safety/answers-CK.md", "content": "x"})
