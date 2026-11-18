@@ -409,6 +409,10 @@ GATHERING_RULES = {
     "H1: a refusal does not stop the work": "If it refuses, show its message and carry on",
     "H3: an answer that was taken out is recorded afterwards": "If a line it took out was an answer or an entry of theirs, "
                                                                "record it afterwards as **The person's own words** says.",
+    "J3: nothing is recorded in a worksheet not brought up to date": "Record nothing in a worksheet that has not been brought up to "
+                                                                     "date, and write no document from it",
+    "J3: what is left unrecorded is said": "say which of the request's answers that leaves unrecorded, and carry on with whatever "
+                                           "does not need that worksheet",
 }
 
 # What every command that writes a document says about its header and about the rest of the file
@@ -433,8 +437,12 @@ WRITING_RULES = {
     "H3: what is typed there is not carried over": "a line someone typed there cannot be told from old wording, and is not "
                                                    "carried over",
     "H3: written when the person agrees": "When the person agrees, run it again with `--write`",
-    "H3: with nobody to ask": "With nobody to ask, run it with `--write` straight after the dry run and give every line it "
-                              "took out in the summary",
+    "J3: with nobody to ask, no upgrade is written": "With nobody to ask, never run it with `--write`: an upgrade is written only "
+                                                     "after a person has seen what it takes out.",
+    "J3: what the summary then says": "Say in the summary that the worksheet was made by another version of the overlay and that a "
+                                      "person needs to read the dry run, and give the dry run's output unchanged.",
+    "J3: a moved heading is the person's to put back": "a heading it says has been moved is for the person to put back, never for you",
+    "J3: a missing guidance comment is another version's wording": "or its guidance comment is missing, and none of its answers counts",
     "H3: a refusal is shown": "If it refuses (exit 1), show its message unchanged",
     "H5: the summary says when a document holds text outside its checked part": "for each document in `status --json` whose "
                                                                                 "`otherText` is not empty, its file and "
@@ -498,7 +506,10 @@ COMMAND_RULES = {
                                                                     "own line ends with",
     ("uk-food-check", "H3: the one change it makes to a worksheet"): "This is the one change this command makes to a "
                                                                      "worksheet, and it changes no answer in it.",
-    ("uk-food-check", "H3: status is read again afterwards"): "Then run both `status` commands again.",
+    ("uk-food-check", "H3: status is read again afterwards"): "After an upgrade has been written, run both `status` commands again.",
+    ("uk-food-check", "J3: the record is still written"): "Then write the completion record as the project stands: it lists that "
+                                                          "worksheet among what is unfinished.",
+    ("uk-food-check", "J3: only what a person has seen"): "and a person has seen what would change (step 3)",
     ("uk-food-own-methods", "H4: the document's name"): "whose document type is Food Business Own Methods",
     ("uk-food-own-methods", "H4: an own method is never called a safe method"): "A method of the business's own is an own "
                                                                                 "method, never a safe method",
@@ -981,6 +992,8 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    # H1, H3 and H5.
                    "`set-up-folder` was run only for a project created in this run",
                    "`upgrade-worksheet` was run without `--write` first",
+                   "With nobody to ask it was not written: the summary says the worksheet was made by another version of the overlay "
+                   "and gives the dry run.",
                    "said in this conversation that they had read them, before `--other-text-read yes` was given",
                    "A worksheet was changed only by `upgrade-worksheet --write`, and only in the tool's own wording.",
                    "It says when a document holds text outside its checked part",

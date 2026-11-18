@@ -3,7 +3,7 @@
 // Commands are entries in COMMANDS; each is one exported function returning an exit code.
 import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync, realpathSync, renameSync, rmdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { basename, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const DATA_ID = 'sfbb-caterers-2026-11-17';
@@ -850,7 +850,7 @@ function readWorksheet(text, data) {
     if (block) block.faulty = true;
   };
   const lines = String(text).replace(/^\uFEFF/, '').split(/\r\n|\n|\r/);
-  const layout = { lines, guidance: null, prompts: new Map(), wording: [] };
+  const layout = { lines, guidance: null, noGuidance: false, marker: 0, prompts: new Map(), wording: [] };
   const finish = () => {
     problems.sort((a, b) => a.line - b.line);
     return { parsed, layout };
@@ -866,6 +866,7 @@ function readWorksheet(text, data) {
     if (line !== '' && !line.startsWith('# ')) report(i + 1, 'text before the uk-food-answers marker line is not read');
   }
   const markerLine = markerAt + 1;
+  layout.marker = markerLine;
   const marker = MARKER.exec(lines[markerAt].trim());
   if (!marker) {
     report(markerLine, 'the marker line is not understood: it reads <!-- uk-food-answers 1.0 data=... section=... -->');
@@ -926,17 +927,19 @@ function readWorksheet(text, data) {
     return /^#{2,3}[ \t]+\S/.test(text.trim()) || Boolean(match && FIELD_NAMES.has(match[1].toLowerCase()));
   };
   // Nothing in a comment is read. Text after a comment's end on the same line is reported, never
-  // dropped. The first comment over several lines is the helper's guidance; where it differs from
-  // what the helper writes, each line of it that the helper does not print is noted in the layout
-  // (or its first line, when lines are only missing), since someone may have written an answer or
-  // an own entry inside it. Any other comment, except the lint comments, that holds a line of the
+  // dropped. The first comment over several lines, when it stands above every heading, is the
+  // helper's guidance; where it differs from what the helper writes, each line of it that the helper
+  // does not print is noted in the layout (or its first line, when lines are only missing or there
+  // twice), since someone may have written an answer or an own entry inside it. A worksheet with no
+  // such comment has lost its guidance (noGuidance), which upgrade-worksheet puts back; a comment
+  // further down is a remark, wherever the guidance is. Any other comment, except the lint comments, that holds a line of the
   // worksheet is reported: a plain remark is allowed, a commented-out answer or entry is not lost
   // without a word.
   const closeComment = (lines) => {
     const last = lines.at(-1);
     const end = last.text.indexOf('-->', lines.length === 1 ? 4 : 0);
     if (last.text.slice(end + 3).trim()) report(last.at, 'text after the end of a comment ("-->") is not read', block);
-    if (lines.length > 1 && !guidanceChecked) {
+    if (lines.length > 1 && !guidanceChecked && !block && !method) {
       guidanceChecked = true;
       layout.guidance = { from: lines[0].at, to: last.at };
       if (lines.length !== guidance.length || lines.some((line, i) => line.text !== guidance[i])) {
@@ -1142,6 +1145,7 @@ function readWorksheet(text, data) {
     }
   }
   if (comment) report(comment[0].at, 'a comment that starts here is never closed, so nothing after it is read');
+  layout.noGuidance = !guidanceChecked && !comment;
 
   // Pass 2: blocks into records, checked field by field.
   const get = (b, name) => b?.fields.get(name)?.lines.join('\n') ?? '';
@@ -1268,25 +1272,34 @@ function readWorksheet(text, data) {
   return finish();
 }
 
+// What is not this helper's in a worksheet's own wording, in a few words: how many lines differ, and
+// whether its guidance comment is missing altogether. '' when nothing is.
+const otherWording = ({ wording, noGuidance }, where = false) => {
+  const n = wording.length;
+  const lines = n ? `${counted(n, 'line', 'lines')} of its ${noGuidance ? '' : 'guidance or '}question wording ${isAre(n)} not what this ` +
+    `version prints${where ? `, the first at line ${Math.min(...wording)}` : ''}` : '';
+  return noGuidance ? `its guidance comment is missing${n ? `, and ${lines}` : ''}` : lines;
+};
 // What the strict parser says, once for the whole worksheet, of wording that is not this helper's.
-const wordingProblem = (lines) => `this worksheet was made by a different version of the overlay: ${counted(lines.length, 'line', 'lines')} ` +
-  `of its guidance or question wording ${isAre(lines.length)} not what this version prints, the first at line ${Math.min(...lines)}. ` +
-  'Nothing typed on such lines is read. Run upgrade-worksheet --file on this worksheet: it shows each line it would replace and ' +
-  'writes nothing, and with --write it brings the worksheet up to date, keeping a copy of it as it is. Anything a person typed on ' +
-  'those lines cannot be told from old wording, so read what it shows before writing. An answer belongs after Answer:, and an own ' +
-  'entry below the opening comment.';
+const wordingProblem = (layout) => `this worksheet was made by a different version of the overlay: ${otherWording(layout, true)}. ` +
+  `${layout.wording.length ? 'Nothing typed on such lines is read. ' : ''}Run upgrade-worksheet --file on this worksheet: it shows each ` +
+  'line it would take out or put in and writes nothing, and with --write it brings the worksheet up to date, keeping a copy of it as it ' +
+  'is. Anything a person typed on a line it takes out cannot be told from old wording, so a person reads what it shows before it is ' +
+  'written. An answer belongs after Answer:, and an own entry below the opening comment.';
 
 // Reads a worksheet strictly: readWorksheet's `parsed`, with one more problem when any of the tool's own
 // wording in it is not what this helper prints. A worksheet with a problem counts nowhere, so no answer
 // of one made by another version is used until it has been brought up to date.
-// `strictWorksheet` gives, beside it, how many such lines there are.
+// `strictWorksheet` gives, beside it, what differs in a few words (`otherVersion`, '' when nothing does).
+// A worksheet that could not be read as far as its section has no wording to compare.
 function strictWorksheet(text, data) {
   const { parsed, layout } = readWorksheet(text, data);
-  if (layout.wording.length) {
-    parsed.problems.push({ line: Math.min(...layout.wording), message: wordingProblem(layout.wording) });
+  const otherVersion = parsed.section === null ? '' : otherWording(layout);
+  if (otherVersion) {
+    parsed.problems.push({ line: Math.min(...layout.wording, ...(layout.noGuidance ? [layout.marker] : [])), message: wordingProblem(layout) });
     parsed.problems.sort((a, b) => a.line - b.line);
   }
-  return { parsed, otherVersion: layout.wording.length };
+  return { parsed, otherVersion };
 }
 export const parseWorksheet = (text, data) => strictWorksheet(text, data).parsed;
 
@@ -1295,16 +1308,41 @@ export const parseWorksheet = (text, data) => strictWorksheet(text, data).parsed
 const typedIn = (parsed) => JSON.stringify([[...parsed.methods], [...parsed.answers], [...parsed.entries]],
   (name, value) => (name === 'line' ? undefined : value instanceof Map ? [...value] : value));
 
+// The steps that turn the lines `old` into the lines `now`, keeping every line the two share, in order
+// (a longest common subsequence): ['keep', i] and ['out', i] for a line of `old`, ['put', j] for one of `now`.
+function lineSteps(old, now) {
+  const [m, n] = [old.length, now.length];
+  const longest = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = m - 1; i >= 0; i--) {
+    for (let j = n - 1; j >= 0; j--) longest[i][j] = old[i] === now[j] ? longest[i + 1][j + 1] + 1 : Math.max(longest[i + 1][j], longest[i][j + 1]);
+  }
+  const steps = [];
+  for (let i = 0, j = 0; i < m || j < n;) {
+    if (i < m && j < n && old[i] === now[j]) steps.push(['keep', (j++, i++)]);
+    else if (j < n && (i === m || longest[i][j + 1] >= longest[i + 1][j])) steps.push(['put', j++]);
+    else steps.push(['out', i++]);
+  }
+  return steps;
+}
+
 // Brings a worksheet made by a different version of the overlay up to date, for the same data: the
 // guidance comment and the > lines above each question, where they are not what this helper prints,
-// are replaced by what it prints, and no other line is touched, so everything a person typed stays
-// exactly as it is. Returns { exit: 0, text, changes }, `changes` empty when there is nothing to do,
-// each a { what, from, to, out, put }: the place, its first and last line numbers, the lines taken out
-// as { line, text } and the lines put in; or { exit: 1, messages } when it will not, which is for:
+// are made what it prints, and no other line is touched, so everything a person typed stays exactly
+// as it is. Within the comment and under each question only the lines that differ are taken out or
+// put in: a line that is already right stays as it stands, byte for byte. A guidance comment that is
+// missing is put back where the helper prints it: below the marker and the one-line comments that
+// follow it, above the first line of anything else. Returns { exit: 0, text, changes },
+// `changes` empty when there is nothing to do, each a { what, from, to, out, put }: the place, its
+// first and last line numbers, the lines taken out as { line, text } and the lines put in, which are
+// every line the new text differs by; or { exit: 1, messages } when it will not, which is for:
 // - a worksheet for other data (a new edition of the pack is another job), or one that is not a
 //   worksheet this helper reads;
 // - any problem besides the wording, an identifier the data does not have among them: those are put
 //   right first, so that nothing a person typed is in a place this cannot carry;
+// - > lines under one question's heading that are this version's wording of another question: that
+//   is a heading that has been moved, not old wording, and to put each question's own wording back
+//   under it would leave each answer under the wrong question, which reading the answers back cannot
+//   show, since each is still under the heading it was under;
 // - a result that would not read the same: the new text is read back, and must have no problem and
 //   hold every answer, state, name, date and entry as before (typedIn).
 // A line a person typed inside the guidance or on a > line cannot be told from old wording, so it is
@@ -1323,32 +1361,67 @@ export function upgradeWorksheet(text, data) {
       : `the worksheet has ${counted(n, 'problem', 'problems')} besides its wording, which ${isAre(n)} put right first:`;
     return { exit: 1, messages: [first, ...listed, leave] };
   }
+  const typedUnder = (prompt) => prompt.at.map((line) => layout.lines[line - 1].trimEnd().replace(/^>[ \t]?/, '')).join('\n');
+  const moved = [...layout.prompts].filter(([, prompt]) => prompt.foreign.length).flatMap(([id, prompt]) => {
+    const other = [...layout.prompts].find(([otherId, { now }]) => otherId !== id && now.join('\n') === typedUnder(prompt));
+    return other ? [[id, other[0]]] : [];
+  });
+  if (moved.length) {
+    const said = moved.map(([id, other], i) => `${i ? 'those' : 'the lines starting >'} under ${id} are this version's wording of ${other}`);
+    return { exit: 1, messages: [`a question's heading is not over its own question: ${andList(said)}. That is a heading that has been ` +
+      'moved, not wording from another version, and bringing the worksheet up to date would leave an answer under the wrong question. ' +
+      `Put each heading back over its own question first. ${leave}`] };
+  }
   const bom = String(text).startsWith('\uFEFF') ? '\uFEFF' : '';
   const pieces = String(text).slice(bom.length).split(/(\r\n|\n|\r)/);
-  const ending = (index) => pieces[2 * index + 1] ?? pieces[1] ?? '\n';
+  const ending = (index) => pieces[2 * index + 1] || pieces[1] || '\n';
   const gone = new Set();
-  const put = new Map();
+  const before = new Map(); // the lines to put in above the line at an index, in order
+  const putIn = (index, added) => before.set(index, [...(before.get(index) ?? []), ...added]);
   const changes = [];
   const replace = (what, at, now) => {
-    const old = at.map((line) => ({ line, text: layout.lines[line - 1].trimEnd() }));
-    for (const { line } of old) gone.add(line - 1);
-    put.set(at[0] - 1, now);
-    changes.push({ what, from: at[0], to: at.at(-1), out: old.filter(({ text: was }) => !now.includes(was)),
-      put: now.filter((line) => !old.some(({ text: was }) => was === line)) });
+    const old = at.map((line) => layout.lines[line - 1].trimEnd());
+    const change = { what, from: at[0], to: at.at(-1), out: [], put: [] };
+    let waiting = [];
+    for (const [step, k] of lineSteps(old, now)) {
+      if (step === 'put') {
+        waiting.push(now[k]);
+        continue;
+      }
+      putIn(at[k] - 1, waiting);
+      change.put.push(...waiting);
+      waiting = [];
+      if (step === 'out') {
+        gone.add(at[k] - 1);
+        change.out.push({ line: at[k], text: old[k] });
+      }
+    }
+    putIn(at.at(-1), waiting);
+    change.put.push(...waiting);
+    changes.push(change);
   };
   const { guidance } = layout;
   const now = ['<!--', ...guidanceFor(parsed.section, data), '-->'];
   if (guidance && layout.lines.slice(guidance.from - 1, guidance.to).map((line) => line.trimEnd()).join('\n') !== now.join('\n')) {
     replace('The guidance comment', Array.from({ length: guidance.to - guidance.from + 1 }, (_, i) => guidance.from + i), now);
   }
+  if (layout.noGuidance) {
+    let next = layout.marker;
+    while (next < layout.lines.length && /^(?:<!--.*-->)?$/.test(layout.lines[next].trim())) next++;
+    const added = [...(layout.lines[next - 1].trim() === '' ? [] : ['']), ...now, ''];
+    putIn(next, added);
+    changes.push({ what: `The guidance comment, which is missing, goes back before line ${next + 1}`, from: next + 1, to: next + 1, out: [], put: added, back: true });
+  }
   for (const [id, prompt] of layout.prompts) {
     if (prompt.foreign.length) replace(id, prompt.at, prompt.now.map((line) => (line === '' ? '>' : `> ${line}`)));
   }
   if (!changes.length) return { exit: 0, text: String(text), changes };
-  const upgraded = bom + layout.lines.flatMap((line, i) => [
-    ...(put.get(i) ?? []).map((added) => added + ending(i)), ...(gone.has(i) ? [] : [line + (pieces[2 * i + 1] ?? '')])]).join('');
+  const last = layout.lines.length;
+  const upgraded = bom + [...layout.lines.flatMap((line, i) => [
+    ...(before.get(i) ?? []).map((added) => added + ending(i)), ...(gone.has(i) ? [] : [line + (pieces[2 * i + 1] ?? '')])]),
+  ...(before.get(last) ?? []).map((added) => ending(last - 1) + added)].join('');
   const after = readWorksheet(upgraded, data);
-  if (after.parsed.problems.length || after.layout.wording.length || typedIn(after.parsed) !== typedIn(parsed)) {
+  if (after.parsed.problems.length || otherWording(after.layout) || typedIn(after.parsed) !== typedIn(parsed)) {
     return { exit: 1, messages: ['brought up to date, the worksheet would not read the same as it does now, so it is not ' +
       `written: ${after.parsed.problems[0]?.message ?? 'an answer, state, name, date or entry would differ'}. ${leave}`] };
   }
@@ -1771,8 +1844,8 @@ function readWorksheets(project, data, sections = SHEET_ORDER) {
       sheets.set(section, { ...sheet, readError: `cannot read ${file}: ${error.message}` });
       continue;
     }
-    // `otherVersion`: how many lines of the tool's own wording are not this helper's, so that the
-    // worksheet is another version's.
+    // `otherVersion`: what of the tool's own wording is not this helper's, in a few words, so that the
+    // worksheet is another version's; '' when nothing is.
     Object.assign(sheet, strictWorksheet(sheet.text, data));
     sheet.problems = sheet.parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`);
     sheet.wrongData = sheet.parsed.data !== null && sheet.parsed.data !== DATA_ID;
@@ -2728,11 +2801,10 @@ const problemsLine = (section, n) => `worksheet ${sheetPath(section)} has ${coun
   `its answers counts until ${n === 1 ? 'it is' : 'they are'} fixed: parse-worksheet --file ${sheetPath(section)} lists ` +
   `${n === 1 ? 'it' : 'them'}`;
 // A worksheet whose only problem is that its wording is another version's: what to run, by its path.
-const otherWordingLine = (section, n) => `worksheet ${sheetPath(section)} was made by a different version of the overlay ` +
-  `(${counted(n, 'line', 'lines')} of its guidance or question wording ${isAre(n)} not what this version prints), so none of its ` +
-  `answers counts until it is brought up to date: upgrade-worksheet --file ${sheetPath(section)} shows each line it would ` +
-  'replace, and with --write replaces them and keeps a copy. Anything a person typed on those lines cannot be told from old ' +
-  'wording, so read what it shows first';
+const otherWordingLine = (section, what) => `worksheet ${sheetPath(section)} was made by a different version of the overlay ` +
+  `(${what}), so none of its answers counts until it is brought up to date: upgrade-worksheet --file ${sheetPath(section)} shows ` +
+  'each line it would take out or put in, and with --write does so and keeps a copy. Anything a person typed on a line it takes out ' +
+  'cannot be told from old wording, so a person reads what it shows first';
 // A written document that fails check: check's own first reason, with its next step.
 const checkLine = (file, check) => `document ${file} ${check.reason ?? `does not pass check: ${check.messages?.[0] ?? check.message}`}`;
 // What the unfinished list says of a document that has a sign-off record and is not signed off. Each
@@ -3351,11 +3423,12 @@ export function parseWorksheetCommand(args, io = { out: console.log, err: consol
 }
 
 // The name a worksheet is kept under before it is brought up to date: beside it, saying what it is, and
-// never one that is already there, so an earlier kept copy is not written over.
+// never one that is already there, so an earlier kept copy is not written over. The name starts with
+// what the file is, not with the worksheet's own name, so that no pattern for worksheets (answers-*.md)
+// takes a kept copy for one. Nothing already in the folder is renamed.
 function keptName(file) {
-  const [stem, ext] = /\.md$/i.test(file) ? [file.slice(0, -3), file.slice(-3)] : [file, ''];
   for (let n = 1; ; n++) {
-    const name = `${stem}.before-upgrade${n === 1 ? '' : `-${n}`}${ext}`;
+    const name = join(dirname(file), `before-upgrade-${n === 1 ? '' : `${n}-`}${basename(file)}`);
     if (!existsSync(name)) return name;
   }
 }
@@ -3380,11 +3453,11 @@ export function upgradeWorksheetCommand(args, io = { out: console.log, err: cons
   }
   const kept = keptName(options.file);
   const [out, put] = [result.changes.flatMap((change) => change.out), result.changes.flatMap((change) => change.put)];
-  const lines = [`${options.file} was made by a different version of the overlay. Bringing it up to date replaces these lines of its ` +
-    'guidance and question wording, and nothing else:'];
+  const lines = [`${options.file} was made by a different version of the overlay. Bringing it up to date takes out and puts in these lines ` +
+    'of its guidance and question wording, and changes no other line:'];
   for (const change of result.changes) {
-    lines.push(`${change.what}, ${change.from === change.to ? `line ${change.from}` : `lines ${change.from} to ${change.to}`}:`,
-      ...change.out.map(({ line, text }) => `  takes out, line ${line}: ${text}`), ...change.put.map((text) => `  puts in: ${text}`));
+    lines.push(`${change.what}${change.back ? '' : `, ${change.from === change.to ? `line ${change.from}` : `lines ${change.from} to ${change.to}`}`}:`,
+      ...change.out.map(({ line, text }) => `  takes out, line ${line}: ${text}`), ...change.put.map((text) => `  puts in: ${text === '' ? '(a blank line)' : text}`));
   }
   lines.push(`${counted(out.length, 'line', 'lines')} taken out and ${put.length} put in. Every answer, state, name, date and entry reads ` +
     'the same as before.');

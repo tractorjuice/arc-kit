@@ -1616,7 +1616,9 @@ const asOlder = (text) => {
   }
   return { text: lines.join('\n'), prompts: changed };
 };
-const upgradeProblem = /^this worksheet was made by a different version of the overlay: (\d+) (?:line|lines) of its guidance or question wording (?:is|are) not what this version prints, the first at line (\d+)\. Nothing typed on such lines is read\. Run upgrade-worksheet --file on this worksheet: it shows each line it would replace and writes nothing, and with --write it brings the worksheet up to date, keeping a copy of it as it is\. Anything a person typed on those lines cannot be told from old wording, so read what it shows before writing\. An answer belongs after Answer:, and an own entry below the opening comment\.$/;
+const upgradeProblem = /^this worksheet was made by a different version of the overlay: (\d+) (?:line|lines) of its guidance or question wording (?:is|are) not what this version prints, the first at line (\d+)\. Nothing typed on such lines is read\. Run upgrade-worksheet --file on this worksheet: it shows each line it would take out or put in and writes nothing, and with --write it brings the worksheet up to date, keeping a copy of it as it is\. Anything a person typed on a line it takes out cannot be told from old wording, so a person reads what it shows before it is written\. An answer belongs after Answer:, and an own entry below the opening comment\.$/;
+// The name a worksheet is kept under before it is brought up to date (ruling J3): no pattern for worksheets matches it.
+const keptAs = (section, n = 1) => `before-upgrade-${n === 1 ? '' : `${n}-`}answers-${section}.md`;
 const sheetIn = (section, text) => {
   const dir = mkdtempSync(join(tmpdir(), 'uk-food-upgrade-'));
   const file = join(dir, `answers-${section}.md`);
@@ -1658,7 +1660,7 @@ test('H3: upgrade-worksheet shows each line it would replace and writes nothing;
     const original = fixture(section);
     const older = asOlder(original);
     const { dir, file } = sheetIn(section, older.text);
-    const kept = join(dir, `answers-${section}.before-upgrade.md`);
+    const kept = join(dir, keptAs(section));
     // The dry run: every line that would be taken out and put in, and nothing written.
     const dry = run('upgrade-worksheet', '--file', file);
     assert.equal(dry.status, 0, dry.stderr);
@@ -1671,7 +1673,7 @@ test('H3: upgrade-worksheet shows each line it would replace and writes nothing;
     assert.equal(dry.stdout.split('\n').filter((line) => line.startsWith('  puts in: ')).length, 1 + older.prompts, dry.stdout);
     assert.match(dry.stdout, /Nothing has been written\. Run it again with --write to write it/);
     assert.match(dry.stdout, /Anything a person typed on a line that is taken out is not carried over/);
-    assert.ok(dry.stdout.includes(`answers-${section}.before-upgrade.md`), dry.stdout);
+    assert.ok(dry.stdout.includes(keptAs(section)), dry.stdout);
     // Written: the worksheet is what this version prints, with every answer as it was; the old one is kept.
     const written = run('upgrade-worksheet', '--file', file, '--write');
     assert.equal(written.status, 0, written.stderr);
@@ -1685,7 +1687,7 @@ test('H3: upgrade-worksheet shows each line it would replace and writes nothing;
     const again = run('upgrade-worksheet', '--file', file, '--write');
     assert.equal(again.status, 0, again.stderr);
     assert.match(again.stdout, /is already what this version of the overlay prints: there is nothing to bring up to date/);
-    assert.deepEqual(readdirSync(dir).sort(), [`answers-${section}.before-upgrade.md`, `answers-${section}.md`], section);
+    assert.deepEqual(readdirSync(dir).sort(), [`answers-${section}.md`, keptAs(section)], section);
   }
 });
 
@@ -1757,12 +1759,188 @@ test('H3: a second upgrade never writes over the copy an earlier one kept', () =
   const second = asOlder(readFileSync(file, 'utf8')).text.replace('(as an older version said it)', '(as another version said it)');
   writeFileSync(file, second);
   const dry = run('upgrade-worksheet', '--file', file);
-  assert.ok(dry.stdout.includes('answers-CK.before-upgrade-2.md'), dry.stdout);
+  assert.ok(dry.stdout.includes(keptAs('CK', 2)), dry.stdout);
   assert.equal(run('upgrade-worksheet', '--file', file, '--write').status, 0);
-  assert.deepEqual(readdirSync(dir).sort(), ['answers-CK.before-upgrade-2.md', 'answers-CK.before-upgrade.md', 'answers-CK.md']);
-  assert.equal(readFileSync(join(dir, 'answers-CK.before-upgrade.md'), 'utf8'), first);
-  assert.equal(readFileSync(join(dir, 'answers-CK.before-upgrade-2.md'), 'utf8'), second);
+  assert.deepEqual(readdirSync(dir).sort(), ['answers-CK.md', keptAs('CK', 2), keptAs('CK')]);
+  assert.equal(readFileSync(join(dir, keptAs('CK')), 'utf8'), first);
+  assert.equal(readFileSync(join(dir, keptAs('CK', 2)), 'utf8'), second);
   assert.equal(readFileSync(file, 'utf8'), fixture('CK'));
+});
+
+// ---- What the review of the overlay round found in the upgrade (ruling J3) ----
+
+const listedOut = (stdout) => stdout.split('\n').filter((line) => line.startsWith('  takes out, line '));
+const listedIn = (stdout) => stdout.split('\n').filter((line) => line.startsWith('  puts in: '));
+const countsSaid = (stdout) => {
+  const found = /\n(\d+) lines? taken out and (\d+) put in\. /.exec(stdout);
+  assert.ok(found, stdout);
+  return [Number(found[1]), Number(found[2])];
+};
+const swapHeadings = (text, a, b) => {
+  assert.ok(text.includes(`### ${a}\n`) && text.includes(`### ${b}\n`));
+  return text.replace(`### ${a}\n`, '### @@\n').replace(`### ${b}\n`, `### ${a}\n`).replace('### @@\n', `### ${b}\n`);
+};
+
+test('J3: a heading moved over another question\'s wording is not old wording: the upgrade refuses, naming the two, and writes nothing', () => {
+  for (const [section, first, second] of [['CK', 'CK-06-Q01', 'CK-06-Q03'], ['profile', 'PR-Q11', 'PR-Q12']]) {
+    const swapped = swapHeadings(fixture(section), first, second);
+    // To the parser it is wording that is not this version's, as before.
+    assert.equal(parse(swapped).problems.length, 1, section);
+    const { dir, file } = sheetIn(section, swapped);
+    for (const args of [[], ['--write']]) {
+      const result = run('upgrade-worksheet', '--file', file, ...args);
+      assert.equal(result.status, 1, `${section} ${args.join(' ')}: ${result.stdout}`);
+      assert.equal(result.stdout, '');
+      const said = result.stderr.replace(/\s+/g, ' ');
+      assert.ok(said.includes(`the lines starting > under ${second} are this version's wording of ${first}`), said);
+      assert.ok(said.includes(`those under ${first} are this version's wording of ${second}`), said);
+      assert.match(said, /a heading that has been moved, not wording from another version/);
+      assert.match(said, /Put each heading back over its own question first\. Nothing has been changed\./);
+      assert.equal(readFileSync(file, 'utf8'), swapped);
+      assert.deepEqual(readdirSync(dir), [`answers-${section}.md`]);
+    }
+  }
+  // One heading over another question's wording is enough, whatever else differs.
+  const lines = fixture('CK').split('\n');
+  const at = (id) => lines.indexOf(`### ${id}`);
+  const promptOf = (id) => {
+    const from = at(id) + 1;
+    let to = from;
+    while (lines[to] === '' || lines[to].startsWith('>')) to++;
+    return lines.slice(from, to).filter((line) => line.startsWith('>'));
+  };
+  const [own, other] = [promptOf('CK-06-Q01'), promptOf('CK-06-Q03')];
+  assert.notDeepEqual(own, other);
+  const from = at('CK-06-Q01') + 1;
+  const moved = [...lines.slice(0, from), '', ...other, ...lines.slice(from + 1 + own.length)].join('\n');
+  const one = run('upgrade-worksheet', '--file', sheetIn('CK', moved).file, '--write');
+  assert.equal(one.status, 1, one.stdout);
+  assert.ok(one.stderr.replace(/\s+/g, ' ').includes('the lines starting > under CK-06-Q01 are this version\'s wording of CK-06-Q03'), one.stderr);
+});
+
+test('J3: the dry run lists every line that --write takes out or puts in, so the count it gives is the count of what changes', () => {
+  const original = fixture('CK');
+  const lines = original.split('\n');
+  const opens = lines.indexOf('<!--');
+  // A question whose wording runs over three lines or more.
+  const long = lines.findIndex((line, i) => line.startsWith('>') && lines[i + 1].startsWith('>') && lines[i + 2].startsWith('>'));
+  assert.ok(opens > 0 && long > 0);
+  const edited = (edit) => {
+    const copy = [...lines];
+    edit(copy);
+    return copy.join('\n');
+  };
+  const cases = [
+    // The reviewer's: a guidance line that is there twice. Nothing else differs, and one line goes.
+    ['a guidance line twice', edited((l) => l.splice(opens + 2, 0, l[opens + 1])), 1, 0],
+    ['a guidance line gone', edited((l) => l.splice(opens + 2, 1)), 0, 1],
+    ['two guidance lines the other way round', edited((l) => { [l[opens + 1], l[opens + 2]] = [l[opens + 2], l[opens + 1]]; }), 1, 1],
+    ['a guidance line changed, and another twice', edited((l) => { l[opens + 1] += ' (older)'; l.splice(opens + 3, 0, l[opens + 2]); }), 2, 1],
+    ['a question line changed, and the one after it twice', edited((l) => { l[long] += ' yes'; l.splice(long + 2, 0, l[long + 1]); }), 2, 1],
+    ['a question line changed, and the one after it gone', edited((l) => { l[long] += ' yes'; l.splice(long + 1, 1); }), 1, 2]
+  ];
+  for (const [what, text, out, put] of cases) {
+    const before = text.split('\n');
+    assert.equal(parse(text).problems.length, 1, what);
+    const { dir, file } = sheetIn('CK', text);
+    const dry = run('upgrade-worksheet', '--file', file);
+    assert.equal(dry.status, 0, `${what}: ${dry.stderr}`);
+    assert.deepEqual([listedOut(dry.stdout).length, listedIn(dry.stdout).length], [out, put], `${what}: ${dry.stdout}`);
+    assert.deepEqual(countsSaid(dry.stdout), [out, put], what);
+    // Each line it says it takes out is that line of the file.
+    for (const line of listedOut(dry.stdout)) {
+      const [, number, said] = /^ {2}takes out, line (\d+): (.*)$/.exec(line);
+      assert.equal(before[Number(number) - 1].trimEnd(), said, what);
+    }
+    assert.equal(readFileSync(file, 'utf8'), text, what);
+    const written = run('upgrade-worksheet', '--file', file, '--write');
+    assert.equal(written.status, 0, `${what}: ${written.stderr}`);
+    assert.deepEqual([listedOut(written.stdout), listedIn(written.stdout)], [listedOut(dry.stdout), listedIn(dry.stdout)], what);
+    // What is written differs from what was there by exactly those lines: as many fewer, and as many more.
+    const after = readFileSync(file, 'utf8');
+    assert.equal(after, original, what);
+    assert.equal(after.split('\n').length, before.length - out + put, what);
+    assert.deepEqual(readdirSync(dir).sort(), ['answers-CK.md', keptAs('CK')], what);
+  }
+  // A line the upgrade keeps is kept as it stands: trailing spaces on a line of the guidance are not rewritten unseen.
+  const spaced = edited((l) => { l[opens + 1] += ' (older)'; l[opens + 2] += '   '; });
+  const { file } = sheetIn('CK', spaced);
+  assert.equal(run('upgrade-worksheet', '--file', file, '--write').status, 0);
+  assert.equal(readFileSync(file, 'utf8'), edited((l) => { l[opens + 2] += '   '; }));
+});
+
+test('J3: a worksheet whose guidance comment has been deleted is told once, as a worksheet from another version, and the upgrade puts the comment back', () => {
+  for (const section of WORKSHEET_SECTIONS) {
+    const original = fixture(section);
+    const lines = original.split('\n');
+    const [opens, closes] = [lines.indexOf('<!--'), lines.indexOf('-->')];
+    assert.ok(opens > 0 && closes > opens && lines[closes + 1] === '', section);
+    // Deleted with the blank line after it, as a block is; and deleted alone, leaving two blank lines.
+    for (const [what, kept, same] of [['with its blank line', [...lines.slice(0, opens), ...lines.slice(closes + 2)], true],
+      ['alone', [...lines.slice(0, opens), ...lines.slice(closes + 1)], false]]) {
+      const without = kept.join('\n');
+      const parsed = parse(without);
+      assert.equal(parsed.problems.length, 1, `${section} ${what}: ${messages(parsed)}`);
+      assert.match(parsed.problems[0].message, /^this worksheet was made by a different version of the overlay: its guidance comment is missing\. Run upgrade-worksheet --file on this worksheet: /);
+      assert.deepEqual(typed(parsed), typed(parse(original)), section);
+      const { dir, file } = sheetIn(section, without);
+      const dry = run('upgrade-worksheet', '--file', file);
+      assert.equal(dry.status, 0, dry.stderr);
+      assert.match(dry.stdout, /\nThe guidance comment, which is missing, goes back before line \d+:\n/);
+      assert.equal(listedOut(dry.stdout).length, 0, dry.stdout);
+      assert.equal(listedIn(dry.stdout).length, closes - opens + 2, dry.stdout);
+      assert.ok(dry.stdout.includes('  puts in: <!--\n') && dry.stdout.includes('  puts in: -->\n') && dry.stdout.includes('  puts in: (a blank line)\n'), dry.stdout);
+      assert.deepEqual(countsSaid(dry.stdout), [0, closes - opens + 2], section);
+      assert.equal(readFileSync(file, 'utf8'), without);
+      assert.equal(run('upgrade-worksheet', '--file', file, '--write').status, 0, section);
+      const after = readFileSync(file, 'utf8');
+      if (same) assert.equal(after, original, `${section}: the worksheet is what this version prints again`);
+      assert.deepEqual(parse(after).problems, [], section);
+      assert.deepEqual(typed(parse(after)), typed(parse(original)), section);
+      assert.equal(after.split('\n').length, kept.length + closes - opens + 2, section);
+      assert.deepEqual(readdirSync(dir).sort(), [`answers-${section}.md`, keptAs(section)], section);
+    }
+  }
+  // Missing, and a question's wording differs too: still one problem, which says both.
+  const lines = fixture('CK').split('\n');
+  const [opens, closes] = [lines.indexOf('<!--'), lines.indexOf('-->')];
+  const both = [...lines.slice(0, opens), ...lines.slice(closes + 2)].join('\n').replace(/^(> .*\(yes \/ no\))$/m, '$1 yes');
+  assert.equal(parse(both).problems.length, 1);
+  assert.match(parse(both).problems[0].message, /: its guidance comment is missing, and 1 line of its question wording is not what this version prints, the first at line \d+\. Nothing typed on such lines is read\. /);
+  // A remark over several lines further down is a remark, not the guidance: it stays, and the guidance goes back at the top.
+  const remark = ['<!--', 'ask Sam', 'about the eggs', '-->', ''];
+  const at = lines.indexOf('### CK-02-Q01');
+  const withRemark = [...lines.slice(0, at), ...remark, ...lines.slice(at)];
+  assert.deepEqual(parse(withRemark.join('\n')).problems, []);
+  const gone = [...withRemark.slice(0, opens), ...withRemark.slice(closes + 2)].join('\n');
+  assert.equal(parse(gone).problems.length, 1);
+  assert.match(parse(gone).problems[0].message, /its guidance comment is missing\. /);
+  const { file } = sheetIn('CK', gone);
+  assert.equal(run('upgrade-worksheet', '--file', file, '--write').status, 0);
+  assert.equal(readFileSync(file, 'utf8'), withRemark.join('\n'));
+});
+
+test('J3: the kept copy has a name that no pattern for worksheets matches, and nothing already in the folder is moved or written over', () => {
+  const older = asOlder(fixture('CK')).text;
+  const { dir, file } = sheetIn('CK', older);
+  // Copies kept earlier, one under the name an earlier version of the helper used.
+  writeFileSync(join(dir, 'answers-CK.before-upgrade.md'), 'kept by an earlier version\n');
+  writeFileSync(join(dir, keptAs('CK')), 'kept earlier\n');
+  const dry = run('upgrade-worksheet', '--file', file);
+  assert.ok(dry.stdout.includes(`kept beside it as ${keptAs('CK', 2)}.`), dry.stdout);
+  const written = run('upgrade-worksheet', '--file', file, '--write');
+  assert.equal(written.status, 0, written.stderr);
+  assert.ok(written.stdout.includes(join(dir, keptAs('CK', 2))), written.stdout);
+  assert.deepEqual(readdirSync(dir).sort(), ['answers-CK.before-upgrade.md', 'answers-CK.md', keptAs('CK', 2), keptAs('CK')]);
+  assert.equal(readFileSync(join(dir, 'answers-CK.before-upgrade.md'), 'utf8'), 'kept by an earlier version\n');
+  assert.equal(readFileSync(join(dir, keptAs('CK')), 'utf8'), 'kept earlier\n');
+  assert.equal(readFileSync(join(dir, keptAs('CK', 2)), 'utf8'), older);
+  for (const section of WORKSHEET_SECTIONS) {
+    for (const name of [keptAs(section), keptAs(section, 2), keptAs(section, 12)]) {
+      assert.doesNotMatch(name, /^answers-.*\.md$/, name);
+      assert.match(name, new RegExp(`answers-${section}\\.md$`), name);
+    }
+  }
 });
 
 // Ruling H3: each profile question has a key that says what it asks, and its printed identifier is tied

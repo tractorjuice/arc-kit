@@ -2016,8 +2016,8 @@ test('H3: status and the sign-off refusal give one line for a worksheet made by 
   setSheet(dir, 'CK', lines.join('\n'));
   const line = 'worksheet food-safety/answers-CK.md was made by a different version of the overlay (2 lines of its guidance or question ' +
     'wording are not what this version prints), so none of its answers counts until it is brought up to date: upgrade-worksheet --file ' +
-    'food-safety/answers-CK.md shows each line it would replace, and with --write replaces them and keeps a copy. Anything a person ' +
-    'typed on those lines cannot be told from old wording, so read what it shows first';
+    'food-safety/answers-CK.md shows each line it would take out or put in, and with --write does so and keeps a copy. Anything a person ' +
+    'typed on a line it takes out cannot be told from old wording, so a person reads what it shows first';
   assert.deepEqual(linesFor(dir, 'FOODCOOK'), [line, NOT_SIGNED]);
   const cook = docStatus(dir, 'FOODCOOK');
   assert.deepEqual([cook.problems, cook.confirmed, cook.inSync, cook.bodyInStep], [1, 0, false, null]);
@@ -2129,6 +2129,28 @@ test('H1: set-up-folder changes nothing in a project that already existed: one w
   assert.equal(run('set-up-folder').status, 2);
   assert.equal(run('set-up-folder', '--project', join(tmpdir(), 'no-such-project-folder')).status, 2);
   assert.match(run('set-up-folder').stderr.replace(/\s+/g, ' '), /set-up-folder --project DIR/);
+});
+
+// ---- A worksheet whose guidance comment is gone (J3) ----
+
+test('J3: status and the sign-off refusal say, in one line, that a worksheet\'s guidance comment is missing, and what puts it back', () => {
+  const dir = cafe();
+  templated(dir, 'FOODCOOK');
+  const lines = sheet(dir, 'CK').split('\n');
+  const [opens, closes] = [lines.indexOf('<!--'), lines.indexOf('-->')];
+  setSheet(dir, 'CK', [...lines.slice(0, opens), ...lines.slice(closes + 2)].join('\n'));
+  const line = 'worksheet food-safety/answers-CK.md was made by a different version of the overlay (its guidance comment is missing), ' +
+    'so none of its answers counts until it is brought up to date: upgrade-worksheet --file food-safety/answers-CK.md shows each line ' +
+    'it would take out or put in, and with --write does so and keeps a copy. Anything a person typed on a line it takes out cannot be ' +
+    'told from old wording, so a person reads what it shows first';
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [line, NOT_SIGNED]);
+  const refused = signOff(dir, 'FOODCOOK');
+  assert.equal(refused.status, 1);
+  assert.deepEqual(reasons(refused.stderr), [line]);
+  // Put back, the worksheet counts again.
+  assert.equal(run('upgrade-worksheet', '--file', sheetFile(dir, 'CK'), '--write').status, 0);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [NOT_SIGNED]);
+  assert.equal(sheet(dir, 'CK'), lines.join('\n'));
 });
 
 // ---- What the review of the overlay round found (J1) ----
