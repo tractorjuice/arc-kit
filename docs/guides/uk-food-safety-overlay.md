@@ -110,7 +110,7 @@ The own methods document cannot be signed off until each special process the pro
 
 ## Building the drafts in one go
 
-The overlay ships a build recipe, `uk-food-sfbb`, for ArcKit's build command in Claude Code. A build has nobody to answer, and the overlay records only what a named person says, so **a build confirms nothing**. It makes the worksheets that are missing and writes the draft documents from the answers already confirmed. On a new project, every answer in them reads NOT YET ANSWERED. A build never signs anything off. Do not expect a finished pack from it: the answers come from running the commands above with the person who knows the business.
+The overlay ships a build recipe, `uk-food-sfbb`, for ArcKit's build command in Claude Code. A build has nobody to answer, and only an answer a named person gives can be confirmed, so **a build confirms nothing**. It makes the worksheets that are missing and writes the draft documents from the answers already confirmed. On a new project, every answer in them reads NOT YET ANSWERED. A build never signs anything off. Do not expect a finished pack from it: the answers come from running the commands above with the person who knows the business.
 
 The recipe builds the profile, the five sections and the completion record. Your own methods are left out by default: with no entries, that document is too short for the build's checks, so record your own methods with the command instead.
 

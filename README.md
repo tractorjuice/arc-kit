@@ -539,7 +539,7 @@ The commands chain together in a canonical order from `principles → uae-classi
 
 > **EXPERIMENTAL sector overlay, England and Wales only.** The optional `arckit-uk-food` overlay helps a small catering business (a café, takeaway, restaurant, pub or mobile caterer) build its food safety documents from the Food Standards Agency's *Safer food, better business for caterers* pack. It is community-maintained, switched off until enabled, and has not been reviewed by a food safety professional. It is not legal advice: the food business operator is responsible for the food and the records, and the council's environmental health team is the authority. The Food Standards Agency has not reviewed or endorsed it.
 
-The pack's wording is bundled with the overlay and printed into each document unchanged by a helper script, which checks every document against a fresh print. The commands ask their questions in conversation and record only what a named person at the business says; anything nobody has confirmed reads NOT YET ANSWERED. A named person signs each finished document off. The overlay needs no ArcKit architecture documents.
+The pack's wording is bundled with the overlay and printed into each document unchanged by a helper script, which checks every document against a fresh print. The commands ask their questions in conversation, and only answers a named person at the business confirms reach the documents; anything else reads NOT YET ANSWERED. A named person signs each finished document off. The overlay needs no ArcKit architecture documents.
 
 ```bash
 claude plugin install arckit-uk-food --marketplace tractorjuice/arckit-claude

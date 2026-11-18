@@ -5,9 +5,9 @@
 # for caterers pack with the arckit-uk-food overlay. No ArcKit architecture
 # documents: the overlay needs none.
 #
-# What a build can and cannot do. A build has nobody to answer, and the
-# overlay's commands record only what a named person at the business says. So
-# a build confirms nothing: it makes the worksheets that are missing and writes
+# What a build can and cannot do. A build has nobody to answer, and only an
+# answer a named person at the business gives can be confirmed. So a build
+# confirms nothing: it makes the worksheets that are missing and writes
 # each document from the answers already confirmed. On a new project every
 # answer reads NOT YET ANSWERED. The answers come from running the commands
 # with the person; the build then brings every document into step with them.

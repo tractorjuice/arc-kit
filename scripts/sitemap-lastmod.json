@@ -989,7 +989,7 @@
   },
   "guide/uk-food-safety-overlay.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "087d7da8860d00ba2346b627cff2aa4f8ede69b35618331ac18b49b0f3aff4c4"
+    "text_sha256": "44d63e613ce71f81cec1c17327b9eaa2bf85dd7e523af28b467d64a149469afe"
   },
   "guide/uk-food-sign-off.html": {
     "lastmod": "2026-11-18",
@@ -1117,15 +1117,15 @@
   },
   "guides.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "e2740b27fc1e693f2a37abb06f02268c45640698bcdf5f26383aa9d86197c128"
+    "text_sha256": "7379616cdda59f6bc0d85a322c22f22bcfa0ea3299e0aa326f292fd7798680b4"
   },
   "index.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "8df756bc9def061c7e1960aa0337c991894b6e0ac15e24f7c785ccda1a5f5efc"
+    "text_sha256": "6bc839d0c65410aa1bb915e6c25884930f06090169ab7bbaf0579a75fa9dc1ea"
   },
   "llms.txt": {
     "lastmod": "2026-11-18",
-    "text_sha256": "4d46d284bc95f5a25739c7a004de94a7b6a714d4bfb0eb306ab15b4a4671aac8"
+    "text_sha256": "6ba22194f28b9e9c38180327e73ed4cfe0b58d250c2ef19063d63ec2295bc77f"
   },
   "on-github.html": {
     "lastmod": "2026-11-16",
