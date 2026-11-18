@@ -28,6 +28,7 @@ ArcKit maintains public test repos on GitHub (pattern: `arckit-test-project-v*`)
 | v50 | post-office-horizon | Post Office Horizon |
 | v51 | prs-database | UK PRS Database under Renters' Rights Act 2025 |
 | v52 | uae-caio-playbook | UAE CAIO Playbook for the 24-month agentic AI mandate |
+| v54 | uk-food-safety | UK food safety overlay: an invented café working through *Safer food, better business for caterers* |
 
 ## Plugin-Based Setup (since 2026-02-07)
 

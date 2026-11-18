@@ -36,8 +36,10 @@
 # draft. So the health scan and the session-start monitor leave their drafts
 # out of their stale-draft rules.
 #
-# This recipe passes the repository's recipe checks but has not yet been run
-# end to end through the build harness.
+# This recipe passes the repository's recipe checks, and the build harness has
+# planned it in a dry run (--plan, 18 November 2026): the profile, then the five
+# sections together, then own methods, then the completion record. It has not
+# yet been run end to end through the build harness.
 #
 # Every target writes `output:` on one line: check-doc-type-registry.py reads
 # only the inline form, so a block-style `output:` would escape its check.

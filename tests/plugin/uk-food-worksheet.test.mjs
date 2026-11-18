@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -2188,7 +2189,7 @@ test('V1: the dry run shows, for each question it changes, its own line as it st
   // The usage text says what the command refuses.
   const usage = run('upgrade-worksheet').stderr.replace(/\s+/g, ' ');
   assert.match(usage, /print each line of its guidance and question wording that would be taken out or put in, and with --write do so/);
-  assert.match(usage, /or one whose lines under a question's heading do not hold the words that identify that question \(a heading that has been moved, or lines typed over\)/);
+  assert.match(usage, /or one whose lines under a question's heading do not hold the words that identify that question \(a heading that has been moved, lines typed over, or wording this version does not know\)/);
   assert.doesNotMatch(usage, /would be replaced|replace them|another question's \(a heading/);
 });
 
@@ -2376,5 +2377,128 @@ test('I4: every worksheet in the behaviour cases\' fixture projects parses with 
     assert.deepEqual(parsed.problems, [], name);
     assert.equal(`answers-${parsed.section}.md`, name.split('/').at(-1));
     assert.equal(emitWorksheet(parsed, data), text, name);
+  }
+});
+
+// Every wording of the tool's own profile questions that a release has printed. A worksheet filled in with
+// that release holds it, so it stays here for good: when a question is reworded, its new wording is added
+// below and its earlier one goes into PROFILE_WAS in the helper, or the first assertion fails.
+const RELEASED_PROFILE_WORDINGS = {
+  'PR-Q01': ['What is the business called?'],
+  'PR-Q02': ['Who is the food business operator: the person or company legally responsible for the business?'],
+  'PR-Q03': ['What is the address of the premises? If the business has none, write "no premises".'],
+  'PR-Q04': ['Which council is the business registered with?'],
+  'PR-Q05': ['On what date was the business registered with the council?'],
+  'PR-Q06': ['Which nation is the business in?'],
+  'PR-Q07': ['Who is in charge of keeping this pack up to date?'],
+  'PR-Q08': ['What food and drink does the business sell?'],
+  'PR-Q09': ['What equipment do you use to store, prepare, cook and serve food?'],
+  'PR-Q10': ['Who works with food, and what is each person\'s role?']
+};
+
+test('every wording of a profile question that a release has printed is still taken as that question\'s, so its worksheets upgrade', () => {
+  const known = identifiedBy('profile', data);
+  const own = PROFILE_QUESTIONS.filter((question) => !/^(?:process|food):/.test(question.key));
+  assert.deepEqual(own.map((question) => question.id), Object.keys(RELEASED_PROFILE_WORDINGS));
+  for (const question of own) {
+    const released = RELEASED_PROFILE_WORDINGS[question.id];
+    assert.ok(released.includes(question.text), `${question.id}: add its present wording to RELEASED_PROFILE_WORDINGS`);
+    for (const text of released) {
+      assert.deepEqual(wordingOf([`> ${text} (a note on the form of answer)`], known), [question.id],
+        `${question.id}: a worksheet filled in when this question read ${JSON.stringify(text)} would be refused by upgrade-worksheet. ` +
+        'Keep that wording in PROFILE_WAS in uk-food.mjs, under the question\'s key.');
+    }
+  }
+});
+
+test('a profile question reworded since a worksheet was filled in upgrades when its earlier wording is kept, and is refused when it is not', () => {
+  const question = PROFILE_QUESTIONS.find(({ id }) => id === 'PR-Q01');
+  const earlier = 'What is the name of the business?';
+  const original = fixture('profile');
+  const own = ownLineOf(original, 'PR-Q01');
+  assert.ok(own.text.includes(question.text), own.text);
+  const lines = original.split('\n');
+  lines[own.at] = own.text.replace(question.text, earlier);
+  const older = lines.join('\n');
+  // Not kept: the lines are no question's words, and a person must look.
+  const refused = upgradeWorksheet(older, loadData(DEFAULT_DATA_DIR));
+  assert.equal(refused.exit, 1);
+  assert.match(refused.messages.join(' '), /the lines starting > under PR-Q01 are not the words that identify it or any other question of this worksheet/);
+  // Kept: the worksheet is brought up to date, every answer where it was, and the change shows both wordings.
+  // The words a question is known by are worked out once for each load of the data, so each case loads its own.
+  question.was.push(earlier);
+  try {
+    const result = upgradeWorksheet(older, loadData(DEFAULT_DATA_DIR));
+    assert.equal(result.exit, 0, result.messages?.join(' '));
+    assert.equal(result.text, original);
+    const change = result.changes.find(({ what }) => what === 'PR-Q01');
+    assert.deepEqual(change.own, [lines[own.at], own.text]);
+    // The two headings the wrong way round are still refused as moved, each named with the question whose lines it is over.
+    const moved = upgradeWorksheet(older.replace('### PR-Q01\n', '### PR-QXX\n').replace('### PR-Q02\n', '### PR-Q01\n').replace('### PR-QXX\n', '### PR-Q02\n'), loadData(DEFAULT_DATA_DIR));
+    assert.equal(moved.exit, 1);
+    const said = moved.messages.join(' ');
+    assert.match(said, /a heading that has been moved/);
+    assert.match(said, /under PR-Q02 hold the words that identify PR-Q01/);
+    assert.match(said, /under PR-Q01 hold the words that identify PR-Q02/);
+  } finally {
+    question.was.pop();
+  }
+  assert.equal(upgradeWorksheet(older, loadData(DEFAULT_DATA_DIR)).exit, 1);
+});
+
+test('an earlier wording decides only lines that hold no question\'s present words: it never takes another question\'s lines, and an empty one takes none', () => {
+  const first = PROFILE_QUESTIONS.find(({ id }) => id === 'PR-Q01');
+  const second = PROFILE_QUESTIONS.find(({ id }) => id === 'PR-Q02');
+  const original = fixture('profile');
+  // A worksheet from another version whose one difference is the note after PR-Q02's question.
+  const own = ownLineOf(original, 'PR-Q02');
+  const lines = original.split('\n');
+  lines[own.at] = `> ${second.text} (answer in a few words)`;
+  assert.notEqual(lines[own.at], own.text);
+  const older = lines.join('\n');
+  assert.equal(upgradeWorksheet(older, loadData(DEFAULT_DATA_DIR)).text, original);
+  // An earlier wording of PR-Q01 that is the start of PR-Q02's present wording, and an empty one.
+  for (const kept of [second.text.split(':')[0], '', '   ']) {
+    first.was.push(kept);
+    try {
+      const fresh = loadData(DEFAULT_DATA_DIR);
+      const result = upgradeWorksheet(older, fresh);
+      assert.equal(result.exit, 0, `${JSON.stringify(kept)}: ${result.messages?.join(' ')}`);
+      assert.equal(result.text, original, JSON.stringify(kept));
+      // Each question's own lines are still its own and nobody else's.
+      const known = identifiedBy('profile', fresh);
+      for (const [id, wording] of wordingsOf(original)) assert.deepEqual(wordingOf(wording.map(({ text }) => text), known), [id], `${JSON.stringify(kept)} ${id}`);
+    } finally {
+      first.was.pop();
+    }
+  }
+});
+
+// The words each question of a worksheet is known by, as a fingerprint: the words that tell it from every other
+// question, its own line's words, and any earlier wording kept for it. Within one edition of the pack they come
+// from the pack's own wording and from which lines of context the helper prints above a question. The whole
+// prompt is left out: the note on the form of answer is the helper's own, and a reworded note never refuses.
+const IDENTITY = {
+  'sfbb-caterers-2026-11-17': {
+    XC: '8651bf009a70105d37f4ff2ae6027d68af9056c2d4ee6a39259558184ae229a8',
+    CL: 'cf494d68f5294c22d5d9c981a241ca34a422dfdd62bc5a53cfa74aa9e12ccc02',
+    CH: '60e8cb5a6f8efb84068f252684b9e45be7915cb277b9e05b15d6981f3f2e657e',
+    CK: '0714a2feba4c32ffc4ad56a82a26728eddd41deb15c31e47d81bf253742985cf',
+    MG: '646b9887b41cc3730f30d05d0d368783f6551b2de73dcaf0938a2cf1bb0efaa9',
+    profile: '8be56eee2da356b57180796dcc3f47b2b2d8aeda1361b33d6b4ca1a4d9bba0ee'
+  }
+};
+
+test('the words each question is known by do not change within one edition of the pack without it showing here', () => {
+  const pinned = IDENTITY[DATA_ID];
+  assert.ok(pinned, `no fingerprints for data ${DATA_ID}: a new edition of the pack gets its own`);
+  for (const section of SECTIONS_ASKED) {
+    const known = identifiedBy(section, data);
+    const print = createHash('sha256').update(JSON.stringify([...known].map(([id, { parts, own, was }]) => [id, parts, own, was]))).digest('hex');
+    assert.equal(print, pinned[section], `${section}: the words a question of this worksheet is known by have changed. A worksheet ` +
+      'filled in with a released version holds the earlier words, and upgrade-worksheet refuses lines it does not know, so check that ' +
+      'such a worksheet still upgrades before changing this fingerprint. A reworded profile question keeps its earlier wording in ' +
+      'PROFILE_WAS. A change to which lines of context are printed above a question must leave every question known by lines that ' +
+      'earlier versions printed too.');
   }
 });
