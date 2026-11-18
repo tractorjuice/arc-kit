@@ -100,8 +100,24 @@ def command(name: str) -> Path:
     return OVERLAY / "commands" / f"{name}.md"
 
 
+ROOT_GUIDES = ROOT / "docs" / "guides"
+OVERLAY_GUIDES = OVERLAY / "docs" / "guides"
+# One guide per command, shipped in the overlay's own tree as well as the site's, and the
+# overview, which stays on the site only (ROOT_ONLY_BY_DESIGN in check-guide-parity.py).
+COMMAND_GUIDES = [f"{name}.md" for name in COMMANDS]
+OVERVIEW_GUIDE = "uk-food-safety-overlay.md"
+
+
+def guides() -> list[Path]:
+    """Every guide for the overlay, in both trees, named one by one so a missing one fails."""
+    files = [ROOT_GUIDES / name for name in [*COMMAND_GUIDES, OVERVIEW_GUIDE]]
+    files += [OVERLAY_GUIDES / name for name in COMMAND_GUIDES]
+    return files
+
+
 def hand_written() -> list[Path]:
-    """The overlay's own prose: commands, templates (both copies), its references, README and CHANGELOG.
+    """The overlay's own prose: commands, templates (both copies), its references, README, CHANGELOG
+    and guides (both trees).
 
     Not the generated references/sfbb-caterers-* files, which hold the pack's words and figures,
     and not the references, partials and scripts synced from core.
@@ -111,6 +127,7 @@ def hand_written() -> list[Path]:
     files += sorted(CLI_TEMPLATES.glob("uk-food-*.md"))
     files += sorted((OVERLAY / "references").glob("uk-food-*.md"))
     files += [OVERLAY / "README.md", OVERLAY / "CHANGELOG.md"]
+    files += guides()
     return files
 
 
@@ -141,6 +158,37 @@ def test_hand_written_files_are_found():
     assert set(TEMPLATES) <= names
     assert {"uk-food-quality-checklist.md", "README.md", "CHANGELOG.md"} <= names
     assert not any(name.startswith("sfbb-caterers-") for name in names)
+    missing = [str(p.relative_to(ROOT)) for p in guides() if not p.is_file()]
+    assert not missing, f"guides the scans expect: {missing}"
+    assert set(guides()) <= set(hand_written())
+
+
+def test_the_overview_guide_stays_on_the_site():
+    """The overview is root-only by design; the command guides ship in the overlay too."""
+    assert not (OVERLAY_GUIDES / OVERVIEW_GUIDE).exists()
+    parity = (ROOT / "scripts" / "check-guide-parity.py").read_text(encoding="utf-8")
+    assert f'"{OVERVIEW_GUIDE}"' in parity, "list the overview in ROOT_ONLY_BY_DESIGN"
+
+
+def test_the_overview_guide_names_the_source_the_licence_and_who_is_responsible():
+    source = json.loads((DATA / "source.json").read_text(encoding="utf-8"))
+    text = (ROOT_GUIDES / OVERVIEW_GUIDE).read_text(encoding="utf-8")
+    assert source["title"] in text
+    assert source["publisher"] in text
+    assert source["publication"] in text
+    assert "17 November 2026" in text, "the retrieval date in source.json, as a reader writes it"
+    assert source["attribution"] in text, "the licence line, exactly"
+    for words in ["not legal advice", "environmental health team", "England and Wales",
+                  "has not reviewed or endorsed", "co-maintainer", "NOT YET ANSWERED",
+                  "sign the profile off last"]:
+        assert words in text, words
+
+
+@pytest.mark.parametrize("name", COMMANDS)
+def test_each_command_guide_names_its_command_as_claude_code_does(name):
+    text = (ROOT_GUIDES / f"{name}.md").read_text(encoding="utf-8")
+    assert f"/arckit-uk-food:{name}" in text
+    assert f"/arckit:{name}" not in text, "the mirror would rewrite it, and the site shows the namespaced form"
 
 
 # --- frontmatter ---------------------------------------------------------------

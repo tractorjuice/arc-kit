@@ -73,6 +73,7 @@ ROOT_ONLY_BY_DESIGN = {
     "testing-plugin-branches.md",
     "uae-overlay-maintenance.md",
     "uae-overlay.md",
+    "uk-food-safety-overlay.md",
     "uk-fs-payments-overlay.md",
     "uk-nhs-clinical-safety-overlay.md",
     "us-federal-overlay.md",

@@ -48,6 +48,14 @@ Sign the documents off once all of them are finished, and sign the profile off l
 
 The other tools ArcKit supports name the commands their own way: for example `$arckit-uk-food-profile` in Codex and `/arckit-uk-food-profile` in GitHub Copilot.
 
+## Guides
+
+Each command has a guide written for the person running the business: [business profile](docs/guides/uk-food-profile.md), [safe methods](docs/guides/uk-food-safe-methods.md), [own methods and special processes](docs/guides/uk-food-own-methods.md), [where things stand](docs/guides/uk-food-check.md) and [sign-off](docs/guides/uk-food-sign-off.md). The [overlay guide](https://arckit.org/guide/uk-food-safety-overlay.html) explains how it all fits together, the order to work in and what the overlay does not cover.
+
+## Build recipe
+
+Recipe: `uk-food-sfbb` (the business profile, the five sections of safe methods and the completion record). A build has nobody to answer, so it confirms nothing: it makes the worksheets that are missing and writes draft documents from the answers a named person has already confirmed. On a new project every answer in them reads NOT YET ANSWERED, and a build never signs anything off. The own methods document is an optional target, off by default, because with no entries it is shorter than the build's checks allow. Run the profile command once before a build, so the project exists.
+
 ## What it does not do
 
 - It does not keep the daily diary. The diary stays with people, on paper or in whatever the business uses today.
@@ -64,9 +72,10 @@ This overlay is not legal advice. The food business operator is responsible for 
 
 ```bash
 claude plugin install arckit-uk-food --marketplace tractorjuice/arckit-claude
+claude plugin enable arckit-uk-food
 ```
 
-This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. It needs Claude Code 2.1.319 or later.
+This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. The overlay is switched off when it is installed, so the second line switches it on. It needs Claude Code 2.1.319 or later.
 
 Without `arckit` (core), the document codes (`FOODPROF`, `FOODXC`, `FOODCLN`, `FOODCHL`, `FOODCOOK`, `FOODMGT`, `FOODOWN`, `FOODCMP`) are not recognised by the file-name check.
 
