@@ -290,7 +290,7 @@ The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of wha
 
 1. Extract the Document Control `Status` field
 2. If status is `DRAFT`:
-   a. Skip the artifact if its type's entry in `${CLAUDE_PLUGIN_ROOT}/config/doc-types.mjs` has a `statusSetBy` field. That field names the one command that sets the type's Status, such as a sign-off command, so nobody promotes it by hand and the advice below would be wrong. The session-start monitor leaves these drafts out too.
+   a. Skip the artifact if its type's entry in ArcKit's document type registry (`config/doc-types.mjs`) has a `statusSetBy` field. That field names the one command that sets the type's Status, such as a sign-off command, so nobody promotes it by hand and the advice below would be wrong. The session-start monitor leaves these drafts out too.
    b. Extract `Last Modified` (or `Created Date` if missing)
    c. Calculate age = baseline date − that date
    d. If age > `STALE_DRAFT_DAYS` (default 30): **flag as MEDIUM severity**
