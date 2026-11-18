@@ -4,13 +4,21 @@
 
 <!--
 How to fill this in. Write each answer after "Answer:". To carry an answer on to more lines, start
-each extra line with two spaces. State says where an answer stands: unanswered; proposed (suggested
-but not yet agreed: say where it came from in Source); or confirmed (agreed by the business: put who
-agreed it in By and the date, as YYYY-MM-DD, in On). Only confirmed answers go into your documents.
-Lines that start with > show what is asked. They are rewritten each time, so anything typed on them
-is not read.
-Status says whether a safe method applies to the business: applies; adapted (you do it differently:
-fill in Variation, Reason, Proved-safe and Decided-by); or not-relevant (fill in Reason and Decided-by).
+each extra line with two spaces, straight after the line before it, with no blank line between.
+State says where an answer stands: unanswered (Answer, By, On and Source stay empty);
+proposed (taken from a file, or given without a name, and not yet agreed by a named person at the business: say where it came from in Source);
+or confirmed (given or agreed by a named person at the business: put their name in By and the date, as YYYY-MM-DD, in On).
+Only a confirmed answer is printed in your documents as the business's answer. Until then its question
+is printed as not yet answered, with a proposed answer shown beside that and where it came from.
+Lines that start with > show what is asked. The note in brackets on the last of them, such as
+"(write your answer)", is this tool's: it says what form the answer takes. Leave those lines as they
+are: nothing typed on them is read, and a changed one is reported as a problem.
+Status says whether a safe method applies to the business: applies (the four lines under it stay
+empty); adapted (you do it differently: fill in Variation, what you do instead; Reason, why;
+Proved-safe, how you have shown that your way works; and Decided-by, who decided); or not-relevant
+(fill in Reason and Decided-by, leave Variation and Proved-safe empty, and leave the method's
+questions unanswered: the document then says only that the method is not relevant, why, and who decided).
+Everything else on the lines that start with > is quoted from the Food Standards Agency's Safer food, better business for caterers, retrieved 17 November 2026. Contains public sector information licensed under the Open Government Licence v3.0.
 -->
 
 ## XC-01 Personal hygiene and fitness to work
@@ -28,7 +36,7 @@ Proved-safe:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q02
@@ -38,7 +46,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q03
@@ -48,7 +56,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q04
@@ -58,7 +66,7 @@ Source:
 Answer: A clean cafe T-shirt and a fresh cloth apron for each shift.
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q05
@@ -68,7 +76,7 @@ Source:
 Answer: Blue disposable aprons, and cloth aprons that are washed after every shift.
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q06
@@ -78,7 +86,7 @@ Source:
 Answer: Blue disposable aprons for handling raw bacon, sausages and eggs, and for cleaning. Cloth aprons for everything else.
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q07
@@ -88,7 +96,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q08
@@ -98,7 +106,7 @@ Source:
 Answer: no
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q09
@@ -108,7 +116,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q10
@@ -118,7 +126,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q11
@@ -129,7 +137,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q12
@@ -140,7 +148,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q14
@@ -151,7 +159,7 @@ Source:
 Answer: In the staff room behind the kitchen, which has a coat rail and lockers.
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-01-Q15
@@ -162,7 +170,7 @@ Source:
 Answer: In the cupboard by the back door.
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ## XC-02 Cloths
@@ -181,7 +189,7 @@ Answer: Re-usable cloths go in the washing machine on its hottest cycle at closi
 State: proposed
 By:
 On:
-Source: Notes from the kitchen walk-round with Priya Shah, 2026-11-19
+Source: Notes from the kitchen walk-round with Priya Shah, 2026-11-16
 
 ### XC-02-Q02
 
@@ -191,7 +199,7 @@ Source: Notes from the kitchen walk-round with Priya Shah, 2026-11-19
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-02-Q03
@@ -202,7 +210,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-02-Q04
@@ -214,7 +222,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-02-Q05
@@ -226,7 +234,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-02-Q06
@@ -238,7 +246,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-02-Q07
@@ -250,7 +258,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-02-Q08
@@ -262,7 +270,7 @@ Source:
 Answer: We never dry ingredients with a cloth: salad leaves go through a salad spinner.
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-02-Q09
@@ -273,7 +281,7 @@ Source:
 Answer: In the lidded tub under the sink, which goes in the washing machine at closing time.
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ### XC-02-Q10
@@ -284,7 +292,7 @@ Source:
 Answer: On the shelf above the hand wash basin.
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ## XC-03 Separating foods
@@ -586,7 +594,7 @@ Answer: yes
 State: proposed
 By:
 On:
-Source: Pest control contract in the office files, seen on 2026-11-19
+Source: Pest control contract in the office files, seen on 2026-11-16
 
 ### XC-06-Q03
 

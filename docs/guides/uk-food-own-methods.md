@@ -38,20 +38,22 @@ You can also give a limit you work to, but only together with where that figure 
 3. **It asks who is answering**, and your role, once, at the start.
 4. **It writes the own methods document as it stands**, before asking anything.
 5. **It offers to record each special process that has no entry**, then asks whether the business has any other controls of its own. It takes one entry at a time.
-6. **It adds an entry only once you have given every part that kind of entry needs.** Until then, it keeps asking.
+6. **It keeps what you give, and asks for the rest.** If you give only part of an entry and stop, it records that part in your words as not yet finished. A part-given entry is named in the document as not yet confirmed, with its contents left out, and the own methods document cannot be signed off until the entry is finished or you ask for it to be taken out.
 7. **It records the entry in your words**, with your name and today's date, writes the document again and runs the document check on it.
 8. **It shows a summary**: the entries confirmed and waiting, each special process with its entry (or none) and its review, and what to do next.
 
 ### Recording a special process
 
 - **Which one.** The command shows you the list of names exactly as the worksheet prints it, and asks which one your procedure covers. The entry uses that name exactly.
-- **Your procedure, word for word.** Paste it in, or point the command to the file it is in. The command keeps every line as you wrote it. It does not correct spelling, figures or order, and does not shorten, reword or add to it. One thing it cannot keep is a blank line inside the procedure: the worksheet cannot hold one, so paragraphs run on, with every word kept. It tells you this before you confirm the entry.
+- **Your procedure, word for word.** Paste it in, or point the command to the file it is in. The command keeps every line as you wrote it, with its blank lines and its indentation. It does not correct spelling, figures or order, and does not shorten, reword or add to it. The document prints it in a box of its own, exactly as written.
 - **The council's review.** The entry records the environmental health review as pending. If the council has already replied, or replies later, run the command and give the date and what they said: it records them in that entry, in your words, and changes no other field. The entry then carries the name of the person who recorded the reply and the date they recorded it, because whoever changes an entry is confirming it as it now stands, procedure included. The command tells you this before it records the change. If you say "last month", it asks for the exact date.
 - **No procedure yet.** The command records nothing. It tells you that the business needs to write its own, that your council's environmental health team is the one to ask about it, and that the command will record it word for word once it is written.
 
 ### Changing an entry later
 
 Run the command again and say what has changed. It records the change in your words, with your name and today's date, and changes nothing you did not ask it to.
+
+If you say an entry is no longer true, the command asks whether to take it out. If you do not say, it keeps the entry's words but stops counting it as confirmed, so it drops out of the document until someone at the business confirms it again.
 
 ### Recording a control of your own
 
@@ -67,7 +69,7 @@ Sam Okafor owns Bramble Cafe, an invented café. The profile says the café does
 >
 > **Sam:** *[names one of the listed special processes]*. Here's our written procedure. *[Sam pastes the café's own procedure.]*
 >
-> **Claude:** I've recorded it word for word. Your text had a blank line between two paragraphs. The worksheet cannot hold one, so those paragraphs now run on, with every word kept. I've recorded the council's review as pending. Do you confirm the entry?
+> **Claude:** I've recorded it word for word, every line as you wrote it, and I've recorded the council's review as pending. Do you confirm the entry?
 >
 > **Sam:** Yes. Could you also tidy it up and add anything that's missing?
 >

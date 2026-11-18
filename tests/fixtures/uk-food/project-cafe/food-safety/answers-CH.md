@@ -4,13 +4,21 @@
 
 <!--
 How to fill this in. Write each answer after "Answer:". To carry an answer on to more lines, start
-each extra line with two spaces. State says where an answer stands: unanswered; proposed (suggested
-but not yet agreed: say where it came from in Source); or confirmed (agreed by the business: put who
-agreed it in By and the date, as YYYY-MM-DD, in On). Only confirmed answers go into your documents.
-Lines that start with > show what is asked. They are rewritten each time, so anything typed on them
-is not read.
-Status says whether a safe method applies to the business: applies; adapted (you do it differently:
-fill in Variation, Reason, Proved-safe and Decided-by); or not-relevant (fill in Reason and Decided-by).
+each extra line with two spaces, straight after the line before it, with no blank line between.
+State says where an answer stands: unanswered (Answer, By, On and Source stay empty);
+proposed (taken from a file, or given without a name, and not yet agreed by a named person at the business: say where it came from in Source);
+or confirmed (given or agreed by a named person at the business: put their name in By and the date, as YYYY-MM-DD, in On).
+Only a confirmed answer is printed in your documents as the business's answer. Until then its question
+is printed as not yet answered, with a proposed answer shown beside that and where it came from.
+Lines that start with > show what is asked. The note in brackets on the last of them, such as
+"(write your answer)", is this tool's: it says what form the answer takes. Leave those lines as they
+are: nothing typed on them is read, and a changed one is reported as a problem.
+Status says whether a safe method applies to the business: applies (the four lines under it stay
+empty); adapted (you do it differently: fill in Variation, what you do instead; Reason, why;
+Proved-safe, how you have shown that your way works; and Decided-by, who decided); or not-relevant
+(fill in Reason and Decided-by, leave Variation and Proved-safe empty, and leave the method's
+questions unanswered: the document then says only that the method is not relevant, why, and who decided).
+Everything else on the lines that start with > is quoted from the Food Standards Agency's Safer food, better business for caterers, retrieved 17 November 2026. Contains public sector information licensed under the Open Government Licence v3.0.
 -->
 
 ## CH-01 Chilled storage and displaying chilled food
@@ -230,7 +238,7 @@ Source:
 Answer: We do this for all our chilling equipment: every morning we check both upright fridges, the sandwich fridge and the drinks fridge with the probe thermometer between packs of food, and write the readings in the diary. We have no chilled display unit.
 State: confirmed
 By: Priya Shah
-On: 2026-11-21
+On: 2026-11-17
 Source:
 
 ## CH-02 Chilling down hot food

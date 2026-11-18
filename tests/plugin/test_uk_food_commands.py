@@ -341,8 +341,14 @@ GATHERING_RULES = {
                                                                 "replacement.",
     "36: with none, it is cleared": "clear an answer back to `unanswered`, with its `Answer`, `By`, `On` and `Source` "
                                     "lines emptied, and a safe method back to `applies`",
-    "36: an own entry is not removed unasked": "ask whether to remove it, and otherwise leave it as it is and say so in "
-                                               "the summary",
+    "36: an own entry is taken out only when the person says so": "ask whether to take it out of the worksheet, and "
+                                                                  "take it out only if the person says so",
+    "I8: a withdrawn own entry does not stay confirmed": "step it back to `unanswered`, with its `By` and `On` lines "
+                                                         "emptied and its other lines kept as they are",
+    "I5: a half-given own entry is held, not dropped": "an own entry is held as `unanswered`, with exactly what the "
+                                                       "person has given so far",
+    "I5: an own entry steps back to proposed only with a source": "an own entry to `proposed` if it has a `Source` and "
+                                                                  "every field its kind needs, otherwise to `unanswered`",
     "P3: the review's date is the council's": "the review's date is the council's date, exactly as the person gives it",
     "34: a change is recorded like a first answer": "Record the change the same way as a first answer",
     "34: nothing beyond what was asked": "never change an answer, a method or an entry beyond what the person asked",
@@ -386,6 +392,7 @@ REQUIRED = {
         "additional": "`additional` needs `Hazard`, `Control`, `Check` and `If-it-fails`",
         "special-process": "`special-process` needs `Process`, `Supplied-text` and `EH-review`",
         "proposed too": "as much for a `proposed` entry as for a `confirmed` one",
+        "proposed source": "A `proposed` entry also needs `Source`",
     },
 }
 STATES_IN = {
@@ -417,7 +424,7 @@ def parses(text: str, tmp_path: Path) -> tuple[int, str]:
 BLANK_ANSWER = "Answer:\nState: unanswered\nBy:\nOn:\nSource:"
 BLANK_METHOD = "Status: applies\nReason:\nDecided-by:\nVariation:\nProved-safe:"
 OWN_FIELDS = ["Kind", "Process", "Hazard", "Control", "Limit", "Limit-source", "Check", "If-it-fails",
-              "Supplied-text", "EH-review", "State", "By", "On"]
+              "Supplied-text", "EH-review", "State", "By", "On", "Source"]
 
 
 def own_entry(fields: dict) -> str:
@@ -430,7 +437,7 @@ def test_the_fields_the_commands_name_are_the_ones_the_helper_requires(tmp_path)
     """Leaving out any one named field is refused, naming it; giving them all is accepted."""
     ck = worksheet("CK")
     answers = {
-        "confirmed": {"Answer": "Omelettes", "State": "confirmed", "By": "Sam Okafor", "On": "2026-11-18"},
+        "confirmed": {"Answer": "Omelettes", "State": "confirmed", "By": "Sam Okafor", "On": "2026-11-17"},
         "proposed": {"Answer": "Omelettes", "State": "proposed", "Source": "menu.pdf"},
     }
     for state, fields in answers.items():
@@ -456,11 +463,22 @@ def test_the_fields_the_commands_name_are_the_ones_the_helper_requires(tmp_path)
         full = {"Kind": kind, **{f: "given" for f in named}, **extra}
         if kind == "special-process":
             full["EH-review"] = "pending"
-        for state in [{"State": "proposed"}, {"State": "confirmed", "By": "Sam Okafor", "On": "2026-11-18"}]:
+        proposed = {"State": "proposed", "Source": "the old pack in the office"}
+        for state in [proposed, {"State": "confirmed", "By": "Sam Okafor", "On": "2026-11-17"}]:
             for missing in named:
                 code, out = parses(own_entry({k: v for k, v in {**full, **state}.items() if k != missing}), tmp_path)
                 assert code == 1 and f"needs {missing}" in out, (kind, state, missing, out)
             assert parses(own_entry({**full, **state}), tmp_path)[0] == 0, (kind, state)
+        # I5: a proposed entry says where it came from, as a proposed answer does.
+        code, out = parses(own_entry({**full, "State": "proposed"}), tmp_path)
+        assert code == 1 and "is proposed, so it needs Source" in out, (kind, out)
+        # I5: the same fields held as unanswered are accepted with any one of them missing, and with a
+        # name or a date are not: that is where a half-given entry is kept.
+        for missing in named:
+            held = {k: v for k, v in {**full, "State": "unanswered"}.items() if k != missing}
+            assert parses(own_entry(held), tmp_path)[0] == 0, (kind, missing)
+        code, out = parses(own_entry({**full, "State": "unanswered", "By": "Sam Okafor"}), tmp_path)
+        assert code == 1 and "By given, but State is unanswered" in out, (kind, out)
 
 
 def test_safe_methods_chooses_a_section_from_the_counts_not_the_wording():
@@ -536,6 +554,34 @@ def test_the_own_methods_command_records_a_special_process_word_for_word():
     assert "environmental health team" in body
 
 
+# The own methods command's own rules for what the worksheet now holds (I3, I5). One sentence each.
+OWN_METHODS_RULES = {
+    "I3: a blank line of a procedure is kept": "a blank line between paragraphs stays a blank line",
+    "I3: a line's own indent is kept": "a line that is already indented keeps its own indent after those two spaces",
+    "I3: the entry's other fields are not indented": "write the entry's other fields on lines of their own, not indented",
+    "I5: a half-given entry keeps the person's words": "add the entry with `State: unanswered`, holding exactly what "
+                                                       "they gave, with `By` and `On` empty",
+    "I5: it is asked about again": "Ask for the rest when the person is next there",
+    "I5: an entry has a Source line": "`State:`, `By:`, `On:` and `Source:`",
+    "I5: the summary names what is held": "each entry held as unanswered, with what it still needs",
+}
+
+
+@pytest.mark.parametrize("rule", OWN_METHODS_RULES)
+def test_the_own_methods_command_states_the_rule(rule):
+    _, body = split(command("uk-food-own-methods"))
+    assert OWN_METHODS_RULES[rule] in body, f"uk-food-own-methods lacks {rule}"
+
+
+def test_the_own_methods_command_no_longer_says_a_procedure_loses_its_blank_lines():
+    """I3: the worksheet now holds a procedure exactly, so nothing may tell the model to leave lines out."""
+    for path in [command("uk-food-own-methods"), CHECKLIST, ROOT_GUIDES / "uk-food-own-methods.md"]:
+        text = path.read_text(encoding="utf-8")
+        assert "cannot hold" not in text, path.name
+        assert "leave out any blank line" not in text, path.name
+        assert "has no `Source`" not in text, path.name
+
+
 # Blocks the three gathering commands share word for word, so one cannot be corrected without the others.
 SHARED_BLOCKS = ["Find or create the project", "Find out who is answering", "Record only what the person gives",
                  "Write the document as it stands"]
@@ -600,7 +646,7 @@ def test_the_figure_scan_catches_the_forms_a_figure_takes():
     for text in ["8°C", "8 °C", "75 degrees", "63-degree", "24 hours", "1 hour", "2hrs", "2 hr", "90 minutes",
                  "10 mins", "3 days", "3-day", "BS EN 1234"]:
         assert figures_in(text), text
-    for text in ["version 1.0", "2.1.319", "PR-Q07", "OWN-01", "2026-11-18"]:
+    for text in ["version 1.0", "2.1.319", "PR-Q07", "OWN-01", "2026-11-17"]:
         assert not figures_in(text), text
 
 

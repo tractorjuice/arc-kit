@@ -2,7 +2,12 @@
  "source": {
   "file": "01-sfbb-caterers-pack-fixed_0_3.pdf",
   "sha256": "35b2eea9a33741cca907e0902847ca003fabc792bb4149216987102441952838",
-  "pages": 100
+  "pages": 100,
+  "title": "Safer food, better business for caterers",
+  "publisher": "Food Standards Agency",
+  "url": "https://assets.publishing.service.gov.uk/media/69c5247ecdfd19de13d0f6ca/sfbb-caterers-pack-fixed_0_3.pdf",
+  "licence": "OGL-3.0",
+  "attribution": "Contains public sector information licensed under the Open Government Licence v3.0."
  },
  "pages": {
   "1": [

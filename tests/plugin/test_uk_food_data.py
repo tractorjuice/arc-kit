@@ -10,6 +10,7 @@ Per-page exceptions add tokens that sit in the text layer but are not words
 printed on the page; per-page joins rejoin a printed word the text layer split
 in two at a line break.
 """
+import hashlib
 import importlib.util
 import json
 import re
@@ -166,6 +167,83 @@ def test_page_claims_finds_a_page_two_files_declare(tmp_path):
 def test_fixture_matches_declared_source():
     source = _load(DATA_DIR / "source.json")
     assert _load(FIXTURE)["source"]["sha256"] == source["sha256"]
+
+
+# M1: the fixture holds the pack's whole text, so it says where that text comes from and under what
+# licence it is reused, in the words of the data's own source.json.
+ATTRIBUTED = ["title", "publisher", "url", "licence", "attribution"]
+
+
+def test_fixture_names_its_source_and_its_licence():
+    source = _load(DATA_DIR / "source.json")
+    held = _load(FIXTURE)["source"]
+    assert {key: held.get(key) for key in ATTRIBUTED} == {key: source[key] for key in ATTRIBUTED}
+    assert list(held) == ["file", "sha256", "pages", *ATTRIBUTED]
+    assert held["pages"] == source["pages"]
+
+
+def _extractor():
+    spec = importlib.util.spec_from_file_location("extract_textlayer", ROOT / "scripts" / "uk-food" / "extract-textlayer.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_the_extractor_writes_the_source_and_licence_into_a_new_fixture():
+    """A refresh of the pack keeps the attribution: the extractor copies it from the data's source.json."""
+    module = _extractor()
+    source = _load(DATA_DIR / "source.json")
+    described = module.describe_source("pack.pdf", "ab" * 32, 100, source)
+    assert described == {"file": "pack.pdf", "sha256": "ab" * 32, "pages": 100, **{key: source[key] for key in ATTRIBUTED}}
+    assert described == {**_load(FIXTURE)["source"], "file": "pack.pdf", "sha256": "ab" * 32}
+    with pytest.raises(ValueError, match="attribution"):
+        module.describe_source("pack.pdf", "ab" * 32, 100, {key: value for key, value in source.items() if key != "attribution"})
+
+
+# M6: the coverage test above compares each page's words as a multiset, so it cannot see two words that
+# have changed places on a page, and `normalise` strips a leading minus sign from a figure. Nothing else
+# in the suite would notice such an edit to the pack's wording. So each data file's bytes are pinned.
+# When one of these changes, the change was meant: re-read every page the changed file declares against
+# the PDF (scripts/uk-food/render-limits-check.py prints the figures to read), then put the new hash here.
+DATA_SHA256 = {
+    "source": "708f9b05efd65989e0ed262341f202ba118cb75752ea21b84d01471ca5a47d2b",
+    "front": "ffe5a53d73ea08f931457ff916613dfec0b2a7c4cd4380feaf0d7d92271daa37",
+    "XC": "55468559bdbe1f86dbb76cf183d8fd7183bc9caa3bdd898fb1473512ea4ced05",
+    "CL": "25c1641877bfba4bfd6fdec11f9fc4e086f9c6005bc516606cb366d10d8094a4",
+    "CH": "75fda252014c3efd22ebc6bde234c42308460df40bb18ec4cdb842d8a31981bc",
+    "CK": "4e3bf27b2c1c48cbb6b182baf2ae55522df29c5df9f22150d5d9ecd920e12120",
+    "MG": "dd079219df3dff0b761d83bee6cf7d7a09dd0a82146155461762d12cd63003f3",
+    "diary": "64562c73c9a8db79c69d01bc4fef427818d52a6be4e3956d91922486166f82c0",
+    "limits": "6f6f13ca181b80d6905b901e7c1144ce68616ce3d0480ec86294a2a58ce33dd6",
+}
+
+
+def test_every_data_file_is_pinned():
+    assert sorted(f"{name}.json" for name in DATA_SHA256) == sorted(path.name for path in DATA_DIR.glob("*.json"))
+
+
+@pytest.mark.parametrize("name", list(DATA_SHA256))
+def test_data_file_is_the_one_read_against_the_pack(name):
+    found = hashlib.sha256((DATA_DIR / f"{name}.json").read_bytes()).hexdigest()
+    assert found == DATA_SHA256[name], (
+        f"{name}.json has changed. If that was meant, re-read the pages it declares against the PDF, "
+        "then update DATA_SHA256 in this file.")
+
+
+def test_the_pin_catches_what_the_coverage_test_cannot(tmp_path):
+    """Two words changed places on one page: every page still holds the same words, but the bytes differ."""
+    data_dir = tmp_path / "data"
+    shutil.copytree(DATA_DIR, data_dir)
+    path = data_dir / "CK.json"
+    data = _load(path)
+    summary = data["methods"][0]["summary"]
+    words = summary.split(" ")
+    assert len(words) > 4 and words[1] != words[2]
+    words[1], words[2] = words[2], words[1]
+    data["methods"][0]["summary"] = " ".join(words)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    assert page_differences(data_dir, _load(FIXTURE), _load(EXCEPTIONS), ["CK"]) == {}
+    assert hashlib.sha256(path.read_bytes()).hexdigest() != DATA_SHA256["CK"]
 
 
 # Safe methods per section in full-pack page order, from the plan's identifier table.

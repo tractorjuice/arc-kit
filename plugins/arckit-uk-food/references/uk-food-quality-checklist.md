@@ -20,36 +20,37 @@ For this overlay's documents these checks take the place of the Common Checks in
 9. **`parse-worksheet --file` reports no problems** for every worksheet made or edited in this run, so no line starting `>` was changed and every field is where the helper reads it.
 10. **A worksheet the helper printed was saved unchanged**, and no worksheet that already existed was made again.
 11. **Each name you wrote is one the person gave.** Every `By` and `Decided-by` you wrote in this run is the name the person answering gave in this conversation, or the name given in the request, and its `On` is today's date. Compare each with the conversation.
-12. **Nothing was filled in that nobody gave.** Each question nobody answered is still `unanswered`, and the document prints it as **NOT YET ANSWERED**. Each answer taken from a file, or from a request that names nobody, is `proposed`, with `Source` saying where it came from (an own entry, which has no `Source`, says so in the summary).
+12. **Nothing was filled in that nobody gave.** Each question nobody answered is still `unanswered`, and the document prints it as **NOT YET ANSWERED**. Each answer taken from a file, or from a request that names nobody, is `proposed`, with `Source` saying where it came from; an own entry has a `Source` line too.
 13. **Nothing you suggested was recorded.** No answer, reason, variation, procedure or own method in this run's edits came from you, even as `proposed`; each came from the person, the request or a file the person pointed to. A reply such as "same for the rest" was recorded only for the questions just shown, and only where it answered each in its form.
-14. **A missing field stayed missing.** Where a state needs a field the person did not give, the state was left where it was (a method `applies`, an answer `proposed` or `unanswered`, an own entry `proposed` or not added) and the field was not filled in. Each problem `parse-worksheet` reported was put right by asking or by stepping the state back.
-15. **Dates are the person's.** Every date recorded as an answer or in `EH-review` is the date the person gave, not one worked out from "last month" or "recently".
-16. **A method's status is the person's decision.** A method is `not-relevant` or `adapted` only where the person decided it, with their reason and their name in `Decided-by`, and, for `adapted`, what they do instead and how they have proved it works, in their words.
-17. **The answers are the person's words.** The form may follow the question's hint (one item per line, `yes` or `no`), but no detail was added and nothing was dropped.
+14. **A missing field stayed missing.** Where a state needs a field the person did not give, the state was left where it was (a method `applies`, an answer `proposed` or `unanswered`, an own entry held as `unanswered` with exactly what the person gave) and the field was not filled in. Each problem `parse-worksheet` reported was put right by asking or by stepping the state back.
+15. **A withdrawn entry does not stay confirmed.** An own entry the person said is no longer true was taken out only if they said to; otherwise it was stepped back to `unanswered`, its `By` and `On` emptied and its words kept, and the summary says so.
+16. **Dates are the person's.** Every date recorded as an answer or in `EH-review` is the date the person gave, not one worked out from "last month" or "recently".
+17. **A method's status is the person's decision.** A method is `not-relevant` or `adapted` only where the person decided it, with their reason and their name in `Decided-by`, and, for `adapted`, what they do instead and how they have proved it works, in their words.
+18. **The answers are the person's words.** The form may follow the question's hint (one item per line, `yes` or `no`), but no detail was added and nothing was dropped.
 
 ## Own methods and special processes
 
-18. **Supplied text is word for word.** Each `Supplied-text` holds the business's written procedure with the same words, figures and order, with only the two-space indent that carries it on to more lines. Blank lines between paragraphs are the one thing left out, because the worksheet cannot hold them, and the person was told so.
-19. **No procedure was drafted, completed, corrected or improved**, even on request.
-20. **`Process` names a special process or food exactly as the worksheet's guidance comment spells it.**
-21. **`EH-review` is `pending`**, unless the person gave the date and outcome of the council's review.
-22. **A `Limit` has the `Limit-source` the person gave for it**, and no figure or source was supplied by the command.
+19. **Supplied text is word for word.** Each `Supplied-text` holds the business's written procedure with the same words, figures, order, blank lines and indentation. The only thing added is the two-space indent that carries each line after the first.
+20. **No procedure was drafted, completed, corrected or improved**, even on request.
+21. **`Process` names a special process or food exactly as the worksheet's guidance comment spells it.**
+22. **`EH-review` is `pending`**, unless the person gave the date and outcome of the council's review.
+23. **A `Limit` has the `Limit-source` the person gave for it**, and no figure or source was supplied by the command.
 
 ## Sign-off
 
-23. **The helper recorded it, for the person asking.** `sign-off` exited 0 before the header was changed, in the name of the person making the request, for a version they confirmed or named. On a refusal its messages were shown unchanged, and no worksheet, document or `sign-offs.json` was changed to work round it.
-24. **The header matches the record.** Status, Reviewed By, Approved By and the Revision History row match `signOff` in `status --json`, and `check` still exits 0 after the edit.
+24. **The helper recorded it, for the person asking.** `sign-off` exited 0 before the header was changed, in the name of the person making the request, for a version they confirmed or named. On a refusal its messages were shown unchanged, and no worksheet, document or `sign-offs.json` was changed to work round it.
+25. **The header matches the record.** Status, Reviewed By, Approved By and the Revision History row match `signOff` in `status --json`, and `check` still exits 0 after the edit.
 
 ## The completion record
 
-25. **The unfinished list is the helper's.** The summary shows `status`'s `unfinished` lines unchanged, in their order.
-26. **Nothing else changed.** No worksheet and no other document was changed by the check command.
+26. **The unfinished list is the helper's.** The summary shows `status`'s `unfinished` lines unchanged, in their order.
+27. **Nothing else changed.** No worksheet and no other document was changed by the check command.
 
 ## The summary
 
-27. **For a document a gathering command wrote, it gives the counts from `status --json`**: confirmed, proposed and not yet answered (for own methods, entries confirmed, proposed and unanswered), and each proposed answer, where it came from and who needs to confirm it.
-28. **It names every other document now out of step**: for a gathering command, the `unfinished` lines of each other document whose `rendered` is true and `inSync` is false, unchanged.
-29. **It says whether `check` passed**, with its message unchanged if it did not.
-30. **It gives a document's status in plain words**: `DRAFT`, or signed off by the named person at the business, with their role and date.
-31. **It carries the formatter note**: a program that reformats Markdown may rewrite the tables between the markers and make `check` fail, and the fix is to write the document again with its command, not to edit by hand.
-32. **It claims nothing for anyone.** It never calls the business, its food, a method or a document compliant, approved, safe or inspected, and never says or suggests that the Food Standards Agency or a council has reviewed, approved or endorsed anything.
+28. **For a document a gathering command wrote, it gives the counts from `status --json`**: confirmed, proposed and not yet answered (for own methods, entries confirmed, proposed and unanswered), and each proposed answer, where it came from and who needs to confirm it.
+29. **It names every other document now out of step**: for a gathering command, the `unfinished` lines of each other document whose `rendered` is true and `inSync` is false, unchanged.
+30. **It says whether `check` passed**, with its message unchanged if it did not.
+31. **It gives a document's status in plain words**: `DRAFT`, or signed off by the named person at the business, with their role and date.
+32. **It carries the formatter note**: a program that reformats Markdown may rewrite the tables between the markers and make `check` fail, and the fix is to write the document again with its command, not to edit by hand.
+33. **It claims nothing for anyone.** It never calls the business, its food, a method or a document compliant, approved, safe or inspected, and never says or suggests that the Food Standards Agency or a council has reviewed, approved or endorsed anything.

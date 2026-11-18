@@ -139,7 +139,7 @@ const reasons = (stderr) => stderr.split('\n').filter((line) => line.startsWith(
 // A confirmed own entry of kind special-process.
 const specialEntry = (id, title, process, review = 'pending') => [`## ${id} ${title}`, '', 'Kind: special-process', `Process: ${process}`,
   'Hazard:', 'Control:', 'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:', 'Supplied-text: Our written method', `EH-review: ${review}`,
-  'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20'].join('\n');
+  'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17'].join('\n');
 
 // ---- Status ----
 
@@ -242,7 +242,7 @@ test('the unfinished list says, for each document in order, what is outstanding 
   assert.deepEqual(linesFor(dir, 'FOODCOOK'), [notStarted('CK'), unansweredLine('CK', ck), NOT_WRITTEN, NOT_SIGNED]);
   // One question is "is", and names it.
   const one = cafe();
-  setSheet(one, 'CK', swap(sheet(one, 'CK'), 'Answer: We do not cook rice.\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-20',
+  setSheet(one, 'CK', swap(sheet(one, 'CK'), 'Answer: We do not cook rice.\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17',
     'Answer:\nState: unanswered\nBy:\nOn:'));
   assert.equal(linesFor(one, 'FOODCOOK')[0], `1 question in food-safety/answers-CK.md is not yet answered (CK-02-Q03): ${HOW}`);
 });
@@ -378,15 +378,15 @@ test('a special process is covered by the confirmed own entry whose Process name
   // title names low temperature cooking, but its Process is sous vide, so it does not cover it.
   setSheet(dir, 'profile', sheet(dir, 'profile').replace(/(### PR-Q15\n\n[^\n]*\nAnswer: )no/, '$1yes'));
   const entry = (id, title, process) => [`## ${id} ${title}`, '', 'Kind: special-process', `Process: ${process}`, 'Hazard:', 'Control:',
-    'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:', 'Supplied-text: Our written method', 'EH-review: 2026-12-01 accepted',
-    'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20'].join('\n');
+    'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:', 'Supplied-text: Our written method', 'EH-review: 2026-11-03 accepted',
+    'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17'].join('\n');
   setSheet(dir, 'own', `${sheet(dir, 'own')}\n${entry('OWN-03', 'Hot smoked salmon', 'smoking or curing meat/fish')}\n\n` +
     `${entry('OWN-04', 'Low temperature cooking of eggs', 'sous vide')}\n`);
   assert.deepEqual(parseWorksheet(sheet(dir, 'own'), data).problems, []);
   assert.deepEqual(status(dir).specialProcesses, [
     { name: 'sous vide', ownEntry: 'OWN-02', ehReview: 'pending' },
     { name: 'low temperature cooking', ownEntry: null, ehReview: null },
-    { name: 'smoking or curing meat/fish', ownEntry: 'OWN-03', ehReview: '2026-12-01 accepted' }
+    { name: 'smoking or curing meat/fish', ownEntry: 'OWN-03', ehReview: '2026-11-03 accepted' }
   ]);
 });
 
@@ -1156,4 +1156,31 @@ test('a signed document written again in place, with different answers, is not s
   assert.deepEqual(linesFor(dir, 'FOODCOOK'), [changedLine('Sam Okafor', '2026-11-17')]);
   assert.equal(signOff(dir, 'FOODCOOK').status, 0);
   assert.equal(docStatus(dir, 'FOODCOOK').signedOff, true);
+});
+
+test('I5: an own entry held as unanswered, or stepped back to it, counts as confirmed nowhere: status lists it, a special process it covered has no entry, and the own methods document is not signed off', () => {
+  const dir = cafe();
+  const half = ['## OWN-03 Carrying food to a customer', '', 'Kind: additional', 'Process:', 'Hazard: Food warming up on the way.', 'Control:', 'Limit:',
+    'Limit-source:', 'Check:', 'If-it-fails:', 'Supplied-text:', 'EH-review:', 'State: unanswered', 'By:', 'On:', 'Source: Sam Okafor, the rest to follow'].join('\n');
+  setSheet(dir, 'own', `${sheet(dir, 'own')}\n${half}\n`);
+  assert.deepEqual(parseWorksheet(sheet(dir, 'own'), data).problems, []);
+  const own = docStatus(dir, 'FOODOWN');
+  assert.deepEqual([own.questions, own.confirmed, own.proposed, own.unanswered, own.problems], [3, 2, 0, 1, 0]);
+  const waiting = '1 own entry in food-safety/answers-own.md is not yet confirmed (OWN-03): an entry counts when its State is confirmed and By and On are filled in';
+  assert.equal(linesFor(dir, 'FOODOWN')[0], waiting);
+  writeDocument(dir, 'FOODOWN');
+  const refused = signOff(dir, 'FOODOWN');
+  assert.equal(refused.status, 1);
+  assert.deepEqual(reasons(refused.stderr), [waiting, UNCOVERED]);
+  assert.ok(rendered('FOODCMP', dir).includes(`- Own methods (FOODOWN): ${waiting}\n`));
+  // The sous vide entry stepped back to unanswered, its words kept: the profile's sous vide then has no own entry.
+  const stepped = swap(sheet(dir, 'own'), 'EH-review: pending\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17', 'EH-review: pending\nState: unanswered\nBy:\nOn:');
+  setSheet(dir, 'own', stepped);
+  assert.deepEqual(parseWorksheet(stepped, data).problems, []);
+  assert.ok(parseWorksheet(stepped, data).entries.get('OWN-02').suppliedText.startsWith('Our sous vide egg method'));
+  assert.deepEqual(status(dir).specialProcesses.map((process) => process.ownEntry), [null, null]);
+  assert.deepEqual(status(dir).ownAwaitingReview, []);
+  assert.equal(docStatus(dir, 'FOODOWN').confirmed, 1);
+  assert.ok(rendered('FOODOWN', dir).includes('Not yet confirmed, so not shown: OWN-02 and OWN-03.'));
+  assert.ok(!rendered('FOODOWN', dir).includes('British Lion'));
 });

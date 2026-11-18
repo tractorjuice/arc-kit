@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -32,7 +32,7 @@ const fill = (text, qid, ...lines) => {
   const from = text.indexOf(BLANK_FIELDS, at);
   return text.slice(0, from) + lines.map((l) => `${l}\n`).join('') + text.slice(from + BLANK_FIELDS.length);
 };
-const confirmed = (answer) => [`Answer: ${answer}`, 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20', 'Source:'];
+const confirmed = (answer) => [`Answer: ${answer}`, 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17', 'Source:'];
 // The 1-based line of the first line holding `needle`, searching from the line holding `after`.
 const lineOf = (text, needle, after = '') => {
   const from = after ? text.indexOf(after) : 0;
@@ -349,7 +349,7 @@ test('generate, parse, emit, parse is stable for every section', () => {
 test('answers keep every field through parse and emit', () => {
   let text = blankWorksheet('CK', data);
   text = fill(text, 'CK-02-Q01', 'Answer: Egg mayonnaise sandwiches', '  Quiche', 'State: confirmed', 'By: Sam Okafor',
-    'On: 2026-11-20', 'Source: Menu, autumn 2026');
+    'On: 2026-11-17', 'Source: Menu, autumn 2026');
   text = fill(text, 'CK-02-Q03', 'Answer: We do not cook rice.', 'State: proposed', 'By: Kitchen assistant', 'On:',
     'Source: Kitchen walk-round notes');
   const parsed = parse(text);
@@ -360,7 +360,7 @@ test('answers keep every field through parse and emit', () => {
   assert.deepEqual(eggs.value, ['Egg mayonnaise sandwiches', 'Quiche']);
   assert.equal(eggs.state, 'confirmed');
   assert.equal(eggs.by, 'Sam Okafor');
-  assert.equal(eggs.on, '2026-11-20');
+  assert.equal(eggs.on, '2026-11-17');
   assert.equal(eggs.source, 'Menu, autumn 2026');
   assert.equal(eggs.answered, true);
   const rice = parsed.answers.get('CK-02-Q03');
@@ -392,7 +392,7 @@ test('slip: "answer: Yes" is read as yes', () => {
 
 test('slip: spaces and tabs at the ends of lines are ignored', () => {
   const text = fill(blankWorksheet('CK', data), 'CK-06-Q02', 'Answer: A bain-marie   ', 'State: confirmed  ',
-    'By: Sam Okafor \t', 'On: 2026-11-20 ', 'Source: ');
+    'By: Sam Okafor \t', 'On: 2026-11-17 ', 'Source: ');
   const parsed = parse(text);
   assert.deepEqual(parsed.problems, []);
   const answer = parsed.answers.get('CK-06-Q02');
@@ -402,7 +402,7 @@ test('slip: spaces and tabs at the ends of lines are ignored', () => {
 });
 
 test('slip: Windows line endings are read, and line numbers stay right', () => {
-  const unix = fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', 'State: confirmed', 'By:', 'On: 2026-11-20', 'Source:');
+  const unix = fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', 'State: confirmed', 'By:', 'On: 2026-11-17', 'Source:');
   const parsed = parse(unix.replace(/\n/g, '\r\n'));
   assert.equal(parsed.problems.length, 1);
   assert.equal(parsed.problems[0].line, lineOf(unix, 'By:', '### CK-06-Q01'));
@@ -432,7 +432,7 @@ test('an indented line after a blank line is credited to no question', () => {
   assert.equal(parsed.answers.get('CK-06-Q01').source, '');
   assert.equal(parsed.answers.get('CK-06-Q01').answered, false);
   // An indented field straight after another field is not taken as part of its value either.
-  const nested = parse(fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', '  state: confirmed', 'By: Sam Okafor', 'On: 2026-11-20', 'Source:'));
+  const nested = parse(fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', '  state: confirmed', 'By: Sam Okafor', 'On: 2026-11-17', 'Source:'));
   assert.match(messages(nested), /a field must start at the beginning of the line/);
   assert.equal(nested.answers.get('CK-06-Q01').answer, 'yes');
   // Plain text, indented, after a blank line.
@@ -454,7 +454,7 @@ test('slip: a tab instead of spaces before a continuation line is accepted', () 
 
 test('slip: a field name in a different letter case is accepted', () => {
   const text = fill(blankWorksheet('CK', data), 'CK-06-Q01', 'ANSWER: no', 'state: Confirmed', 'by: Sam Okafor',
-    'On: 2026-11-20', 'source:');
+    'On: 2026-11-17', 'source:');
   const parsed = parse(text);
   assert.deepEqual(parsed.problems, []);
   const answer = parsed.answers.get('CK-06-Q01');
@@ -465,7 +465,7 @@ test('slip: a field name in a different letter case is accepted', () => {
 
 test('slip: a space before the colon is accepted', () => {
   const text = fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer : yes', 'State :confirmed', 'By  : Sam Okafor',
-    'On: 2026-11-20', 'Source :');
+    'On: 2026-11-17', 'Source :');
   const parsed = parse(text);
   assert.deepEqual(parsed.problems, []);
   assert.equal(parsed.answers.get('CK-06-Q01').answered, true);
@@ -481,7 +481,7 @@ test('slip: a byte order mark at the start of the file is ignored', () => {
 test('slip: a Build Provenance section appended by another tool is neither a method nor a problem', () => {
   const text = fill(blankWorksheet('CK', data), 'CK-06-Q01', ...confirmed('yes'));
   const stamped = `${text}\n<!-- arckit-provenance:start -->\n\n## Build Provenance\n\n*Stamped automatically.*\n\n` +
-    '| Field | Value |\n|-------|-------|\n| Stamped at | 2026-11-20T10:00:00Z |\n\nAnswer: not mine\n\n' +
+    '| Field | Value |\n|-------|-------|\n| Stamped at | 2026-11-17T10:00:00Z |\n\nAnswer: not mine\n\n' +
     '<!-- arckit-provenance:end -->\n';
   const parsed = parse(stamped);
   assert.deepEqual(parsed.problems, []);
@@ -516,7 +516,7 @@ test('whatever follows a Build Provenance section is read or reported, never sil
   assert.equal(parsedNotes.problems[0].line, lineOf(notes, '## Notes'));
   // An own entry with a mistyped identifier after the section is reported, as it is without one.
   const entry = ['## OWN-3 Milk for coffee', '', 'Kind: additional', 'Hazard: h', 'Control: c', 'Check: k', 'If-it-fails: f',
-    'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20'];
+    'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17'];
   const own = `${blankWorksheet('own', data)}\n${section}\n${entry.join('\n')}\n`;
   const parsedOwn = parse(own);
   assert.equal(parsedOwn.problems.length, 1);
@@ -601,7 +601,7 @@ test('names and words that need a joiner, a direction mark or a soft hyphen are 
   assert.deepEqual(ALLOWED.filter((char) => !WRITTEN.some((word) => word.includes(char))), []);
   for (const word of WRITTEN) {
     const text = fill(blankWorksheet('CK', data), 'CK-06-Q02', `Answer: Kept hot by ${word}`, 'State: confirmed', `By: ${word}`,
-      'On: 2026-11-20', 'Source:');
+      'On: 2026-11-17', 'Source:');
     const parsed = parse(text);
     assert.deepEqual(parsed.problems, [], word);
     const answer = parsed.answers.get('CK-06-Q02');
@@ -616,7 +616,7 @@ test('an invisible or direction-changing character in an answer is reported with
   for (const char of HIDDEN) {
     for (const [at, lines] of [['Answer: A bain', confirmed(`A bain${char}marie`)],
       ['  then', ['Answer: A bain-marie', `  then ${char}kept hot`, ...confirmed('').slice(1)]],
-      ['By: Sam', ['Answer: A bain-marie', 'State: confirmed', `By: Sam${char} Okafor`, 'On: 2026-11-20', 'Source:']]]) {
+      ['By: Sam', ['Answer: A bain-marie', 'State: confirmed', `By: Sam${char} Okafor`, 'On: 2026-11-17', 'Source:']]]) {
       const text = fill(blankWorksheet('CK', data), 'CK-06-Q02', ...lines);
       const parsed = parse(text);
       assert.equal(parsed.problems.length, 1, `${codePoint(char)} ${at}: ${messages(parsed)}`);
@@ -680,7 +680,7 @@ test('any other comment holding a worksheet line, such as a filled own entry in 
   const own = blankWorksheet('own', data);
   const entry = ['## OWN-01 Milk for coffee', '', 'Kind: additional', 'Hazard: Milk going off', 'Control: Date cartons',
     'Limit:', 'Limit-source:', 'Check: Opening checks', 'If-it-fails: Throw away', 'Supplied-text:', 'EH-review:',
-    'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20'];
+    'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17'];
   const wrapped = `${own}\n<!--\n${entry.join('\n')}\n-->\n`;
   const parsed = parse(wrapped);
   assert.equal(parsed.entries.size, 0);
@@ -731,7 +731,7 @@ test('text after a question\'s identifier, or a method heading that is not the m
 // ---- State, Status and answer types ----
 
 test('a confirmed answer with no By is a problem, and is not used', () => {
-  const text = fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', 'State: confirmed', 'By:', 'On: 2026-11-20', 'Source:');
+  const text = fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', 'State: confirmed', 'By:', 'On: 2026-11-17', 'Source:');
   const parsed = parse(text);
   assert.equal(parsed.problems.length, 1);
   assert.match(parsed.problems[0].message, /CK-06-Q01.*By/);
@@ -739,7 +739,7 @@ test('a confirmed answer with no By is a problem, and is not used', () => {
 });
 
 test('a confirmed answer needs a real date, YYYY-MM-DD, in On', () => {
-  for (const on of ['', '20/11/2026', '2026-02-30', '2026-11-20 morning']) {
+  for (const on of ['', '20/11/2026', '2026-02-30', '2026-11-17 morning']) {
     const text = fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', 'State: confirmed', 'By: Sam Okafor', `On: ${on}`, 'Source:');
     const parsed = parse(text);
     assert.equal(parsed.problems.length, 1, on);
@@ -772,7 +772,7 @@ test('an answer left with State unanswered is a problem, and so is a By, On or S
 
 test('a State that is empty or not one of the three is a problem', () => {
   for (const state of ['', 'done', 'answered']) {
-    const parsed = parse(fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', `State: ${state}`, 'By: Sam Okafor', 'On: 2026-11-20', 'Source:'));
+    const parsed = parse(fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', `State: ${state}`, 'By: Sam Okafor', 'On: 2026-11-17', 'Source:'));
     assert.equal(parsed.problems.length, 1, state);
     assert.match(parsed.problems[0].message, /unanswered, proposed or confirmed/, state);
     assert.equal(parsed.answers.get('CK-06-Q01').answered, false, state);
@@ -938,11 +938,14 @@ test('an adapted method needs a Variation, a Reason, Proved-safe and who decided
   assert.equal(noDecider.problems[0].line, lineOf(text, 'Decided-by:', '## CL-04'));
 });
 
-test('the guidance names the fields each status needs, as the parser requires them', () => {
+test('the guidance names the fields each status needs, as the parser requires them, and says what each holds', () => {
   for (const section of SECTION_IDS) {
     const text = blankWorksheet(section, data);
-    assert.ok(text.includes('adapted (you do it differently:\nfill in Variation, Reason, Proved-safe and Decided-by); or not-relevant ' +
-      '(fill in Reason and Decided-by).'), section);
+    assert.ok(text.includes('adapted (you do it differently: fill in Variation, what you do instead; Reason, why;\n' +
+      'Proved-safe, how you have shown that your way works; and Decided-by, who decided); or not-relevant\n' +
+      '(fill in Reason and Decided-by, leave Variation and Proved-safe empty, and leave the method\'s\nquestions unanswered: ' +
+      'the document then says only that the method is not relevant, why, and who decided).'), section);
+    assert.ok(text.includes('applies (the four lines under it stay\nempty)'), section);
   }
   const blank = blankWorksheet('CL', data);
   const all = ['Status: adapted', 'Reason: r', 'Decided-by: d', 'Variation: v', 'Proved-safe: p'];
@@ -950,6 +953,59 @@ test('the guidance names the fields each status needs, as the parser requires th
     const lines = all.map((line) => (line.startsWith(`${field}:`) ? `${field}:` : line));
     assert.match(messages(parse(statusFields(blank, 'CL-04', lines))), new RegExp(`adapted, so it needs ${field}`), field);
   }
+});
+
+// The guidance comment of a worksheet: the first comment over several lines.
+const guidanceOf = (text) => text.slice(text.indexOf('<!--\n'), text.indexOf('\n-->\n') + 1);
+const oneLine = (text) => text.replace(/\s+/g, ' ');
+
+test('I4: the guidance says only what the commands and the parser do: nothing is suggested, and a changed > line is reported, not rewritten', () => {
+  for (const section of WORKSHEET_SECTIONS) {
+    const guidance = oneLine(guidanceOf(blankWorksheet(section, data)));
+    assert.doesNotMatch(guidance, /suggest/i, section);
+    assert.doesNotMatch(guidance, /rewritten/i, section);
+    // Proposed is something found, not something put forward by the tool; confirmed is a named person's.
+    assert.ok(guidance.includes('proposed (taken from a file, or given without a name, and not yet agreed by a named person at the ' +
+      'business: say where it came from in Source)'), section);
+    assert.ok(guidance.includes('confirmed (given or agreed by a named person at the business: put their name in By and the date, ' +
+      'as YYYY-MM-DD, in On)'), section);
+    assert.match(guidance, /with no blank line between/, section);
+  }
+  for (const section of [...SECTION_IDS, 'profile']) {
+    const guidance = oneLine(guidanceOf(blankWorksheet(section, data)));
+    assert.ok(guidance.includes('unanswered (Answer, By, On and Source stay empty)'), section);
+    assert.ok(guidance.includes('Only a confirmed answer is printed in your documents as the business\'s answer. Until then its question is ' +
+      'printed as not yet answered, with a proposed answer shown beside that and where it came from.'), section);
+    assert.ok(guidance.includes('The note in brackets on the last of them, such as "(write your answer)", is this tool\'s: it says what form ' +
+      'the answer takes. Leave those lines as they are: nothing typed on them is read, and a changed one is reported as a problem.'), section);
+  }
+  // The note the guidance names is one the worksheets print, on the last > line of a question.
+  assert.match(promptOf(blankWorksheet('CK', data), 'CK-02-Q03').at(-1), / {2}\(write your answer\)$/);
+  // What the guidance says of a > line is what the parser does.
+  const changed = blankWorksheet('CK', data).replace(/^(> .*\(yes \/ no\))$/m, '$1 yes');
+  assert.match(messages(parse(changed)), /this line starting > is not what the pack asks/);
+  const own = oneLine(guidanceOf(blankWorksheet('own', data)));
+  assert.ok(own.includes('unanswered (it may hold what has been given so far; By and On stay empty)'));
+  assert.ok(own.includes('Only a confirmed entry goes into your documents: any other is named there as not yet confirmed.'));
+  assert.ok(own.includes('Supplied-text is the business\'s own written procedure, kept exactly as it is written.'));
+  assert.ok(own.includes('An entry of kind additional needs Hazard, Control, Check and If-it-fails, and leaves Process empty.'));
+  assert.ok(own.includes('An entry of kind special-process needs Process, Supplied-text and EH-review.'));
+});
+
+test('M1: every worksheet\'s guidance says where the pack\'s words in it come from, with the licence line, taken from the data', () => {
+  const { source } = data;
+  const from = `the ${source.publisher}'s ${source.title}, retrieved 17 November 2026. ${source.attribution}`;
+  for (const section of SECTION_IDS) {
+    assert.ok(guidanceOf(blankWorksheet(section, data)).includes(`\nEverything else on the lines that start with > is quoted from ${from}\n`), section);
+  }
+  assert.ok(guidanceOf(blankWorksheet('profile', data)).includes(`\nThe questions are this tool's own. The special processes and foods they name are named as in ${from}\n`));
+  assert.ok(guidanceOf(blankWorksheet('own', data)).includes(`\nThe names of the special processes and foods are quoted from ${from}\n`));
+  // Other data names its own source: nothing about the pack is written into the helper.
+  const other = { ...data, source: { ...source, title: 'Another pack', retrieved: '2026-01-02' } };
+  const text = blankWorksheet('CK', other);
+  assert.ok(text.includes('Food Standards Agency\'s Another pack, retrieved 2 January 2026.'));
+  assert.deepEqual(parseWorksheet(text, other).problems, []);
+  assert.match(parseWorksheet(text, data).problems.map((p) => p.message).join('\n'), /differs from the helper's guidance/);
 });
 
 test('a status field that the method\'s status does not use is reported, not dropped', () => {
@@ -1198,13 +1254,13 @@ test('a profile with a method heading or a method question is a problem', () => 
 const OWN_ENTRY = [
   '## OWN-01 Milk for coffee', '', 'Kind: additional', 'Process:', 'Hazard: Milk going off once opened', 'Control: Date each carton when opened',
   'Limit: Use within three days of opening', 'Limit-source: Dairy supplier\'s label', 'Check: Opening checks', 'If-it-fails: Throw it away',
-  'Supplied-text:', 'EH-review:', 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20'
+  'Supplied-text:', 'EH-review:', 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17', 'Source:'
 ];
 const withEntry = (lines) => `${blankWorksheet('own', data)}\n${lines.join('\n')}\n`;
 
 test('a blank own worksheet holds no entries, only a commented template the parser ignores', () => {
   const text = blankWorksheet('own', data);
-  assert.match(text, /<!--[\s\S]*## OWN-01[\s\S]*Kind:[\s\S]*Limit-source:[\s\S]*EH-review:[\s\S]*-->/);
+  assert.match(text, /<!--[\s\S]*## OWN-01[\s\S]*Kind:[\s\S]*Limit-source:[\s\S]*EH-review:[\s\S]*State: unanswered\nBy:\nOn:\nSource:\n-->/);
   assert.doesNotMatch(text.replace(/<!--[\s\S]*?-->/g, ''), /OWN-01|Kind:/);
   // The template's heading has a blank line after it, as an entry written from it must.
   assert.match(text, /\n## OWN-01 Name of the control\n\nKind:\n/);
@@ -1240,10 +1296,10 @@ test('own entries: a Limit needs a Limit-source, and Kind must be one of the two
 test('own entries: a special process needs its supplied text and an EH-review of pending or a dated outcome', () => {
   const special = (review, supplied = 'Supplied-text: Our written sous vide method') => withEntry([
     '## OWN-02 Sous vide eggs', '', 'Kind: special-process', 'Process: sous vide', 'Hazard:', 'Control:', 'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:',
-    supplied, `EH-review: ${review}`, 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20']);
+    supplied, `EH-review: ${review}`, 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17']);
   assert.deepEqual(parse(special('pending')).problems, []);
   assert.equal(parse(special('Pending')).entries.get('OWN-02').ehReview, 'pending');
-  assert.deepEqual(parse(special('2026-12-01 accepted by the council')).problems, []);
+  assert.deepEqual(parse(special('2026-11-03 accepted by the council')).problems, []);
   assert.match(messages(parse(special(''))), /EH-review/);
   assert.match(messages(parse(special('next week'))), /EH-review/);
   assert.match(messages(parse(special('pending', 'Supplied-text:'))), /Supplied-text/);
@@ -1253,7 +1309,7 @@ test('own entries: a special process needs its supplied text and an EH-review of
 const specialEntry = (process, kind = 'special-process', state = 'confirmed') => withEntry([
   '## OWN-02 Hot smoked salmon', '', `Kind: ${kind}`, ...(process === null ? [] : [`Process: ${process}`]), 'Hazard:', 'Control:', 'Limit:',
   'Limit-source:', 'Check:', 'If-it-fails:', 'Supplied-text: Our smoking method', 'EH-review: pending', `State: ${state}`,
-  ...(state === 'confirmed' ? ['By: Sam Okafor', 'On: 2026-11-20'] : ['By:', 'On:'])]);
+  ...(state === 'confirmed' ? ['By: Sam Okafor', 'On: 2026-11-17', 'Source:'] : ['By:', 'On:', 'Source:'])]);
 const EXTRA_CARE_NAMES = [...EXTRA_CARE.processes, ...EXTRA_CARE.foods];
 
 test('own entries: a special process names in Process the pack\'s process or food it covers, in any letter case and spacing', () => {
@@ -1308,10 +1364,156 @@ test('own entries: identifiers are OWN- and two digits, once each, and an entry 
   assert.match(messages(parse(withEntry(OWN_ENTRY.map((l, i) => (i === 0 ? '## OWN-01 Milk\n### OWN-01-Q01' : l))))), /OWN-01-Q01/);
 });
 
-test('own entries: an entry filled in but left unanswered is a problem', () => {
-  const parsed = parse(withEntry(OWN_ENTRY.map((l) => (l.startsWith('State:') ? 'State: unanswered' : l))));
-  assert.match(messages(parsed), /unanswered/);
-  assert.equal(parsed.entries.get('OWN-01').answered, false);
+test('I5: an own entry may say where it came from in Source, and a proposed one must', () => {
+  const sourced = (state, source) => withEntry(OWN_ENTRY.map((l) => (l.startsWith('State:') ? `State: ${state}` : l === 'Source:' ? `Source: ${source}`.trimEnd() :
+    state !== 'confirmed' && /^(By|On):/.test(l) ? l.slice(0, l.indexOf(':') + 1) : l)));
+  const proposed = parse(sourced('proposed', 'the old pack in the office'));
+  assert.deepEqual(proposed.problems, []);
+  assert.equal(proposed.entries.get('OWN-01').source, 'the old pack in the office');
+  assert.equal(proposed.entries.get('OWN-01').answered, false);
+  assert.equal(emitWorksheet(proposed, data), sourced('proposed', 'the old pack in the office'));
+  const bare = parse(sourced('proposed', ''));
+  assert.equal(bare.problems.length, 1);
+  assert.match(bare.problems[0].message, /OWN-01 is proposed, so it needs Source/);
+  // Confirmed, with or without one.
+  assert.deepEqual(parse(sourced('confirmed', '')).problems, []);
+  const both = parse(sourced('confirmed', 'our written procedure, 3 November'));
+  assert.deepEqual(both.problems, []);
+  assert.equal(both.entries.get('OWN-01').answered, true);
+});
+
+test('I5: a half-given own entry is held as unanswered with exactly what was given; only By and On may not be filled in', () => {
+  const half = ['## OWN-01 Carrying chilled food to a customer\'s kitchen', '', 'Kind: additional', 'Process:', 'Hazard: Food warming up on the way',
+    'Control:', 'Limit: Out of the fridge for as short a time as we can manage', 'Limit-source:', 'Check:', 'If-it-fails:', 'Supplied-text:',
+    'EH-review:', 'State: unanswered', 'By:', 'On:', 'Source: Sam Okafor, by phone, the rest to follow'];
+  const text = withEntry(half);
+  const parsed = parse(text);
+  assert.deepEqual(parsed.problems, []);
+  const entry = parsed.entries.get('OWN-01');
+  assert.deepEqual([entry.state, entry.answered, entry.hazard, entry.limit, entry.limitSource, entry.source],
+    ['unanswered', false, 'Food warming up on the way', 'Out of the fridge for as short a time as we can manage', '', 'Sam Okafor, by phone, the rest to follow']);
+  assert.equal(emitWorksheet(parsed, data), text);
+  // Whatever it holds so far is kept as typed, and checked when it is proposed or confirmed.
+  const loose = parse(withEntry(half.map((l) => (l === 'Kind: additional' ? 'Kind: not sure yet' : l === 'Process:' ? 'Process: the water bath' : l))));
+  assert.deepEqual(loose.problems, []);
+  assert.equal(loose.entries.get('OWN-01').kind, 'not sure yet');
+  // A name or a date belongs to a confirmation, so an unanswered entry has neither.
+  for (const line of ['By: Sam Okafor', 'On: 2026-11-17']) {
+    const named = parse(withEntry(half.map((l) => (l === `${line.slice(0, line.indexOf(':'))}:` ? line : l))));
+    assert.equal(named.problems.length, 1, line);
+    assert.match(named.problems[0].message, /OWN-01: (By|On) given, but State is unanswered/, line);
+  }
+  // Proposed or confirmed as it stands, it lacks what its kind needs.
+  const early = parse(withEntry(half.map((l) => (l === 'State: unanswered' ? 'State: proposed' : l))));
+  assert.match(messages(early), /OWN-01 is proposed and additional, so it needs Control/);
+  assert.match(messages(early), /OWN-01 has a Limit, so it needs a Limit-source/);
+  // An entry that has only its heading and blank fields is as before.
+  assert.deepEqual(parse(withEntry(half.map((l) => (/^(Kind|Hazard|Limit|Source):/.test(l) ? l.slice(0, l.indexOf(':') + 1) : l)))).problems, []);
+  // A fully given entry stepped back to unanswered keeps its words and stops counting.
+  const stepped = parse(withEntry(OWN_ENTRY.map((l) => (l.startsWith('State:') ? 'State: unanswered' : /^(By|On):/.test(l) ? l.slice(0, 3).replace(/ $/, '') : l))));
+  assert.deepEqual(stepped.problems, []);
+  assert.equal(stepped.entries.get('OWN-01').answered, false);
+  assert.equal(stepped.entries.get('OWN-01').control, 'Date each carton when opened');
+});
+
+// A written procedure of the kind a business keeps: lines that start like the worksheet's own fields and
+// headings, a numbered list, a nested bullet, a table, blank lines between paragraphs and further indentation.
+const PROCEDURE = ['Our water bath procedure, kitchen copy.', '', '# Step 1: before service', 'Hazard: the bath not reaching its setting.',
+  'Control: nothing goes in until the display matches the card.', '1. Fill the bath to the line.', '2. Start the supplier\'s programme.',
+  '   - Check the display against the programme card.', '     - If they differ, stop and tell the manager.', 'Limit: as the supplier\'s programme card says.',
+  'Source: the supplier\'s manual, section 4.', 'By: the chef on shift', '', '| Check | Who |', '| --- | --- |', '| Display matches the card | Chef |', '', '',
+  '# Step 2: after service', 'Check: the bath is emptied and wiped out.', '    A note from the supplier, set in four spaces.', '\tAnd one set in with a tab.',
+  'State: confirmed', '> a line the supplier quoted', '## OWN-09 is not a new entry', 'Answer: nor is this an answer'];
+const procedureEntry = (lines = PROCEDURE) => withEntry(['## OWN-01 Water bath eggs', '', 'Kind: special-process', 'Process: sous vide', 'Hazard:', 'Control:',
+  'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:', `Supplied-text: ${lines[0]}`, ...lines.slice(1).map((line) => (line === '' ? '' : `  ${line}`)),
+  'EH-review: pending', 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17', 'Source:']);
+
+test('I3: a written procedure is kept word for word in Supplied-text, whatever its lines start with, with its blank lines and its indentation', () => {
+  const text = procedureEntry();
+  const parsed = parse(text);
+  assert.deepEqual(parsed.problems, []);
+  const entry = parsed.entries.get('OWN-01');
+  assert.equal(entry.suppliedText, PROCEDURE.join('\n'));
+  // Nothing in the procedure was read as a field of the entry.
+  assert.deepEqual([entry.hazard, entry.control, entry.limit, entry.check, entry.source, entry.by, entry.state, entry.answered],
+    ['', '', '', '', '', 'Sam Okafor', 'confirmed', true]);
+  assert.equal(parsed.entries.size, 1);
+  assert.equal(emitWorksheet(parsed, data), text);
+  // A tab carries a line on as two spaces do, and only that first tab is taken off.
+  const tabbed = parse(text.replace(/^ {2}(?=\S)/gm, '\t'));
+  assert.deepEqual(tabbed.problems, []);
+  assert.equal(tabbed.entries.get('OWN-01').suppliedText, PROCEDURE.join('\n'));
+  // Windows line endings and spaces at the ends of lines change nothing.
+  assert.equal(parse(text.replace(/\n/g, ' \r\n')).entries.get('OWN-01').suppliedText, PROCEDURE.join('\n'));
+});
+
+test('I3: the procedure ends at the first line that is not indented; a blank line is kept only when more of it follows', () => {
+  const text = procedureEntry(['First paragraph.', '', 'Second paragraph.']).replace('EH-review: pending', '\nEH-review: pending');
+  const parsed = parse(text);
+  assert.deepEqual(parsed.problems, []);
+  assert.equal(parsed.entries.get('OWN-01').suppliedText, 'First paragraph.\n\nSecond paragraph.');
+  assert.equal(parsed.entries.get('OWN-01').ehReview, 'pending');
+  // After the procedure has ended, an indented line is not added to it unseen.
+  const late = parse(procedureEntry(['First paragraph.']).replace('EH-review: pending', 'EH-review: pending\n\n  A line added later'));
+  assert.equal(late.problems.length, 1);
+  assert.match(late.problems[0].message, /does not continue a field/);
+  assert.equal(late.entries.get('OWN-01').suppliedText, 'First paragraph.');
+  // Any other field keeps the worksheet's rule: a blank line ends it, and a field's name must start its line.
+  const hazard = parse(withEntry(OWN_ENTRY.map((l) => (l.startsWith('Hazard:') ? 'Hazard: Milk going off\n\n  once opened' : l))));
+  assert.match(messages(hazard), /does not continue a field/);
+  const control = parse(withEntry(OWN_ENTRY.map((l) => (l.startsWith('Control:') ? 'Control: Date each carton\n  Check: every morning' : l))));
+  assert.match(messages(control), /a field must start at the beginning of the line/);
+});
+
+test('I3: a comment mark or an invisible character in a procedure is still refused, and the entry is not used', () => {
+  for (const [line, pattern] of [['Stir <!-- ask the supplier --> twice.', /comment inside a value/], [`Stir${String.fromCharCode(0x202e)} twice.`, /U\+202E/]]) {
+    const text = procedureEntry(['First line.', '', line]);
+    const parsed = parse(text);
+    assert.equal(parsed.problems.length, 1, line);
+    assert.equal(parsed.problems[0].line, text.split('\n').findIndex((l) => l === `  ${line}`) + 1);
+    assert.match(parsed.problems[0].message, pattern);
+    assert.equal(parsed.entries.get('OWN-01').answered, false);
+  }
+});
+
+// Characters that cannot be seen, written by their numbers so that none is in this file: escape,
+// backspace, form feed, null, delete, two of the second control block, the line and paragraph separators.
+const CONTROLS = [0x1b, 0x08, 0x0c, 0x00, 0x7f, 0x85, 0x9b, 0x2028, 0x2029].map((code) => String.fromCharCode(code));
+
+test('M3: a control character in a value is reported with its line and code point, and the value is not used; a tab inside a value is not one', () => {
+  for (const char of CONTROLS) {
+    const text = fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed(`A bain${char}marie`));
+    const parsed = parse(text);
+    assert.equal(parsed.problems.length, 1, codePoint(char));
+    assert.equal(parsed.problems[0].line, lineOf(text, 'Answer: A bain', '### CK-06-Q02'), codePoint(char));
+    assert.ok(parsed.problems[0].message.includes(codePoint(char)), parsed.problems[0].message);
+    assert.match(parsed.problems[0].message, /not used/);
+    assert.equal(parsed.answers.get('CK-06-Q02').answered, false, codePoint(char));
+  }
+  // An escape sequence that would clear a terminal screen is named by its first character.
+  const cleared = parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed(`A bain-marie${String.fromCharCode(0x1b)}[2J`)));
+  assert.match(cleared.problems[0].message, /U\+001B/);
+  const tab = parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed('A bain-marie,\tpreheated')));
+  assert.deepEqual(tab.problems, []);
+  assert.equal(tab.answers.get('CK-06-Q02').answer, 'A bain-marie,\tpreheated');
+});
+
+test('M3: one list of unseen characters: whatever a sign-off\'s name refuses, a worksheet value refuses, and the other way round', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'uk-food-'));
+  for (const char of [...CONTROLS, ...HIDDEN]) {
+    // A null cannot be passed on a command line at all, so the helper is never reached with one.
+    if (char !== String.fromCharCode(0)) {
+      const signed = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', `Sam${char}Okafor`, '--role', 'Owner', '--version', '1.0');
+      assert.equal(signed.status, 2, codePoint(char));
+      assert.match(signed.stderr, /--name is the name of the person signing off/, codePoint(char));
+    }
+    assert.equal(parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed(`Sam${char}Okafor`))).problems.length, 1, codePoint(char));
+  }
+  for (const char of ALLOWED) {
+    assert.deepEqual(parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed(`Sam${char}Okafor`))).problems, [], codePoint(char));
+    const signed = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', `Sam${char}Okafor`, '--role', 'Owner', '--version', '1.0');
+    assert.doesNotMatch(signed.stderr, /--name is the name/, codePoint(char));
+  }
 });
 
 // ---- Command line ----
@@ -1349,7 +1551,7 @@ test('parse-worksheet exits 0 with no problems, 1 with problems and 2 on a usage
   const ok = run('parse-worksheet', '--file', good);
   assert.equal(ok.status, 0, ok.stdout + ok.stderr);
   assert.match(ok.stdout, /no problems/);
-  const badText = fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', 'State: confirmed', 'By:', 'On: 2026-11-20', 'Source:');
+  const badText = fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: yes', 'State: confirmed', 'By:', 'On: 2026-11-17', 'Source:');
   const bad = join(dir, 'answers-bad.md');
   writeFileSync(bad, badText);
   const failed = run('parse-worksheet', '--file', bad);
@@ -1455,4 +1657,21 @@ test('the cafe fixture: two own entries, one additional with a sourced limit, on
   assert.equal(additional.process, '');
   assert.ok(special.suppliedText);
   assert.equal(special.ehReview, 'pending');
+});
+
+// ---- The behaviour cases' fixture projects ----
+
+const EVAL_FIXTURES = 'plugins/arckit-uk-food/evals/fixtures';
+const evalWorksheets = readdirSync(EVAL_FIXTURES, { recursive: true }).filter((name) => /food-safety\/answers-[A-Za-z]+\.md$/.test(name)).sort();
+
+test('I4: every worksheet in the behaviour cases\' fixture projects parses with no problems and is in the helper\'s own layout', () => {
+  assert.deepEqual(evalWorksheets.map((name) => name.split('/').slice(0, 1).concat(name.split('/').at(-1)).join(': ')), [
+    'cafe-cooking-nearly-done: answers-CK.md', 'cafe-cooking-nearly-done: answers-profile.md', 'cafe-no-cooking: answers-profile.md']);
+  for (const name of evalWorksheets) {
+    const text = readFileSync(join(EVAL_FIXTURES, name), 'utf8');
+    const parsed = parse(text);
+    assert.deepEqual(parsed.problems, [], name);
+    assert.equal(`answers-${parsed.section}.md`, name.split('/').at(-1));
+    assert.equal(emitWorksheet(parsed, data), text, name);
+  }
 });

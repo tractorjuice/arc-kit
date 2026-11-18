@@ -171,7 +171,7 @@ function generated(section) {
       if (state === 'unanswered') continue;
       answers.set(question.id, {
         answer: ANSWER_FOR[question.type](question.id), state,
-        by: state === 'confirmed' ? 'Tess Tester' : '', on: state === 'confirmed' ? '2026-11-20' : '',
+        by: state === 'confirmed' ? 'Tess Tester' : '', on: state === 'confirmed' ? '2026-11-17' : '',
         source: state === 'proposed' ? `the source for ${question.id}` : ''
       });
     }
@@ -231,7 +231,7 @@ test('a proposed answer renders as not yet answered, and is counted with the una
 test('a confirmed answer is printed with who answered it and when', () => {
   const text = rendered('FOODCOOK', CAFE);
   assert.ok(text.includes('<br>**Our answer:** Scrambled eggs on toast<br>Poached eggs<br>Sous vide eggs<br>Egg mayonnaise sandwiches, made ' +
-    'with bought mayonnaise [answered by Sam Okafor, 2026-11-20]'));
+    'with bought mayonnaise [answered by Sam Okafor, 2026-11-17]'));
 });
 
 test('Review Focus 2: an answer with a pipe, a code span and a second line keeps its row at three columns, and passes check', () => {
@@ -240,7 +240,7 @@ test('Review Focus 2: an answer with a pipe, a code span and a second line keeps
   const row = text.split('\n').find((line) => line.includes('a \\| b'));
   assert.ok(row, 'the answer is not in the render');
   assert.equal(cellsOf(row).length, 3, row);
-  assert.ok(row.includes('**Our answer:** a \\| b \\`c\\`<br>and a second line [answered by Sam Okafor, 2026-11-20]'), row);
+  assert.ok(row.includes('**Our answer:** a \\| b \\`c\\`<br>and a second line [answered by Sam Okafor, 2026-11-17]'), row);
   const report = writeReport(dir, text);
   assert.equal(checkDocument('FOODCOOK', dir, report, data).exit, 0);
 });
@@ -266,7 +266,7 @@ test('an answer holding a joiner, a direction mark or a soft hyphen is printed a
     '\u0645\u0631\u064a\u0645\u200e', 'sand\u00adwiches'];
   const dir = cafe({ CK: swap(cafeText('CK'), 'Answer: We do not cook rice.', `Answer: ${words.join(' ')}`) });
   const text = rendered('FOODCOOK', dir);
-  assert.ok(text.includes(`**Our answer:** ${words.join(' ')} [answered by Sam Okafor, 2026-11-20]`));
+  assert.ok(text.includes(`**Our answer:** ${words.join(' ')} [answered by Sam Okafor, 2026-11-17]`));
   assert.equal(checkDocument('FOODCOOK', dir, writeReport(dir, text), data).exit, 0);
 });
 
@@ -469,7 +469,7 @@ test('a profile in Scotland opens with the out-of-coverage sentence; one in Wale
 });
 
 test('a nation that is only proposed is not known, so the profile does not say the business is outside coverage', () => {
-  const profile = swap(cafeText('profile'), 'Answer: England\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-18\nSource:',
+  const profile = swap(cafeText('profile'), 'Answer: England\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17\nSource:',
     'Answer: Scotland\nState: proposed\nBy:\nOn:\nSource: the address');
   assert.ok(!rendered('FOODPROF', cafe({ profile })).includes(OUTSIDE));
 });
@@ -693,15 +693,52 @@ test('the own methods document shows each confirmed entry under its heading, and
   assert.ok(text.includes(`| Limit | ${own.get('OWN-01').limit} |`));
 });
 
-test('an own entry that is not confirmed is not shown: only its identifier is named', () => {
-  const own = `${cafeText('own')}\n## OWN-03 Raw oysters\n\nKind: additional\nHazard: Norovirus.\nControl: Shuck to order.\nLimit:\n` +
-    'Limit-source:\nCheck: Smell each one.\nIf-it-fails: Bin the batch.\nSupplied-text:\nEH-review:\nState: proposed\nBy:\nOn:\n';
+test('an own entry that is not confirmed is not shown: only its identifier is named, whether it is proposed or still being given', () => {
+  // OWN-03 is proposed, from a file; OWN-04 is half given and held as unanswered (I5).
+  const own = `${cafeText('own')}\n## OWN-03 Raw oysters\n\nKind: additional\nProcess:\nHazard: Norovirus.\nControl: Shuck to order.\nLimit:\n` +
+    'Limit-source:\nCheck: Smell each one.\nIf-it-fails: Bin the batch.\nSupplied-text:\nEH-review:\nState: proposed\nBy:\nOn:\nSource: The old pack in the office\n' +
+    '\n## OWN-04 Carrying food to a customer\n\nKind: additional\nProcess:\nHazard: Food warming up on the way.\nControl:\nLimit:\nLimit-source:\nCheck:\n' +
+    'If-it-fails:\nSupplied-text:\nEH-review:\nState: unanswered\nBy:\nOn:\nSource: Sam Okafor, the rest to follow\n';
   const dir = cafe({ own });
+  assert.deepEqual(parseWorksheet(own, data).problems, []);
   for (const doc of ['FOODOWN', 'FOODPROF']) {
     const text = rendered(doc, dir);
-    for (const word of ['Raw oysters', 'Norovirus', 'Shuck to order', 'Smell each one', 'Bin the batch']) assert.ok(!text.includes(word), `${doc}: ${word}`);
-    assert.ok(text.includes('Not yet confirmed, so not shown: OWN-03.'), doc);
+    for (const word of ['Raw oysters', 'Norovirus', 'Shuck to order', 'Smell each one', 'Bin the batch', 'old pack', 'Carrying food', 'warming up', 'the rest to follow']) {
+      assert.ok(!text.includes(word), `${doc}: ${word}`);
+    }
+    assert.ok(text.includes('Not yet confirmed, so not shown: OWN-03 and OWN-04.'), doc);
   }
+});
+
+// A written procedure with lines that start like the worksheet's own fields and headings, a numbered list,
+// a nested bullet, a table, blank lines between paragraphs and further indentation.
+const PROCEDURE = ['Our water bath procedure, kitchen copy.', '', '# Step 1: before service', 'Hazard: the bath not reaching its setting.',
+  'Control: nothing goes in until the display matches the card.', '1. Fill the bath to the line.', '2. Start the supplier\'s programme.',
+  '   - Check the display against the programme card.', '     - If they differ, stop and tell the manager.', 'Limit: as the supplier\'s programme card says.',
+  'Source: the supplier\'s manual, section 4.', 'By: the chef on shift', '', '| Check | Who |', '| --- | --- |', '| Display matches the card | Chef |', '', '',
+  '# Step 2: after service', 'Check: the bath is emptied and wiped out.', '    A note from the supplier, set in four spaces.',
+  '<b>bold</b> *stars* `ticks` [a link](http://example.com) are part of the text'];
+
+test('I3: a written procedure reaches the own methods document exactly as it was written, inside the fence, and the document passes check', () => {
+  const special = parseWorksheet(cafeText('own'), data).entries.get('OWN-02').suppliedText;
+  const [first, ...rest] = special.split('\n');
+  const before = [`Supplied-text: ${first}`, ...rest.map((line) => `  ${line}`)].join('\n');
+  const after = [`Supplied-text: ${PROCEDURE[0]}`, ...PROCEDURE.slice(1).map((line) => (line === '' ? '' : `  ${line}`))].join('\n');
+  const own = swap(cafeText('own'), before, after);
+  assert.deepEqual(parseWorksheet(own, data).problems, []);
+  const dir = cafe({ own });
+  const text = rendered('FOODOWN', dir);
+  assert.ok(text.includes(`\nThe text below is the business's own, and this tool did not write or check it.\n\n\`\`\`text\n${PROCEDURE.join('\n')}\n\`\`\`\n`), text);
+  // Nothing of the procedure was read as a field of the entry, so the entry's own table is as it was.
+  assert.equal(count(text, '| Hazard |'), 2);
+  assert.ok(!text.includes('| Hazard | the bath not reaching its setting. |'));
+  const report = writeReport(dir, text);
+  const result = checkDocument('FOODOWN', dir, report, data);
+  assert.equal(result.exit, 0, result.message);
+  // One character of the procedure changed in the file is caught like any other change.
+  const changed = checkDocument('FOODOWN', dir, writeReport(dir, swap(text, '2. Start the supplier', '2. Stop the supplier'), { name: 'changed.md' }), data);
+  assert.equal(changed.exit, 1);
+  assert.equal(changed.line, lineOf(`${HEADER}${text}`, '2. Start the supplier'));
 });
 
 // ---- Properties, for every section ----
@@ -841,7 +878,7 @@ function nastyCafe() {
       entry.title = NASTY_LINE;
       for (const field of ['hazard', 'control', 'limit', 'limitSource', 'check', 'ifItFails']) if (entry[field]) entry[field] = NASTY;
       if (entry.suppliedText) entry.suppliedText = `${NASTY}\n\`\`\`\`four backticks\`\`\`\``;
-      if (entry.ehReview === 'pending') entry.ehReview = `2026-12-01 ${NASTY_LINE}`;
+      if (entry.ehReview === 'pending') entry.ehReview = `2026-11-03 ${NASTY_LINE}`;
     }
     const text = emitWorksheet(parsed, data);
     assert.deepEqual(parseWorksheet(text, data).problems, [], section);

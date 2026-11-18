@@ -405,15 +405,19 @@ const METHOD_FIELDS = ['Status', 'Reason', 'Decided-by', 'Variation', 'Proved-sa
 const ANSWER_FIELDS = ['Answer', 'State', 'By', 'On', 'Source'];
 const OWN_FIELDS = [
   'Kind', 'Process', 'Hazard', 'Control', 'Limit', 'Limit-source', 'Check', 'If-it-fails', 'Supplied-text', 'EH-review',
-  'State', 'By', 'On'
+  'State', 'By', 'On', 'Source'
 ];
+// The field that holds a business's own written procedure, read as it is written: see the parser.
+const VERBATIM_FIELD = 'Supplied-text';
 // The status fields each status uses. A field the status does not use, filled in, is reported:
 // no document would show it, and nothing a person writes is dropped without saying so.
 const STATUS_USES = {
   applies: [], adapted: ['Variation', 'Reason', 'Proved-safe', 'Decided-by'], 'not-relevant': ['Reason', 'Decided-by']
 };
 // What an own entry of each kind must fill in before it can be proposed or confirmed. Only a special
-// process has a Process: the pack's special process or food that it covers.
+// process has a Process: the pack's special process or food that it covers. An entry whose State is
+// unanswered may hold any of its fields but By and On, unchecked: it is where a half-given entry, or
+// one nobody now stands by, keeps the person's words until it is proposed or confirmed.
 const KIND_NEEDS = {
   additional: ['Hazard', 'Control', 'Check', 'If-it-fails'], 'special-process': ['Process', 'Supplied-text', 'EH-review']
 };
@@ -468,35 +472,69 @@ export const PROFILE_QUESTIONS = [
 ].map(([type, text], i) => ({ id: `PR-Q${String(i + 1).padStart(2, '0')}`, type, text, elseText: null }));
 
 const WORKSHEET_TITLES = { profile: 'Business profile', own: 'Your own controls and special processes' };
+// The guidance each worksheet opens with. It is compared line by line when a worksheet is read (see
+// closeComment), so a change to a word of it makes every worksheet already filled in a problem: it
+// says only what the parser does, and a release changes it only together with WORKSHEET_VERSION.
+const STATE_WORDS = [
+  'proposed (taken from a file, or given without a name, and not yet agreed by a named person at the business: say where it came from in Source)',
+  'confirmed (given or agreed by a named person at the business: put their name in By and the date, as YYYY-MM-DD, in On)'
+];
 const ANSWER_GUIDANCE = [
   'How to fill this in. Write each answer after "Answer:". To carry an answer on to more lines, start',
-  'each extra line with two spaces. State says where an answer stands: unanswered; proposed (suggested',
-  'but not yet agreed: say where it came from in Source); or confirmed (agreed by the business: put who',
-  'agreed it in By and the date, as YYYY-MM-DD, in On). Only confirmed answers go into your documents.',
-  'Lines that start with > show what is asked. They are rewritten each time, so anything typed on them',
-  'is not read.'
+  'each extra line with two spaces, straight after the line before it, with no blank line between.',
+  'State says where an answer stands: unanswered (Answer, By, On and Source stay empty);',
+  `${STATE_WORDS[0]};`,
+  `or ${STATE_WORDS[1]}.`,
+  'Only a confirmed answer is printed in your documents as the business\'s answer. Until then its question',
+  'is printed as not yet answered, with a proposed answer shown beside that and where it came from.',
+  'Lines that start with > show what is asked. The note in brackets on the last of them, such as',
+  '"(write your answer)", is this tool\'s: it says what form the answer takes. Leave those lines as they',
+  'are: nothing typed on them is read, and a changed one is reported as a problem.'
 ];
 const STATUS_GUIDANCE = [
-  'Status says whether a safe method applies to the business: applies; adapted (you do it differently:',
-  'fill in Variation, Reason, Proved-safe and Decided-by); or not-relevant (fill in Reason and Decided-by).'
+  'Status says whether a safe method applies to the business: applies (the four lines under it stay',
+  'empty); adapted (you do it differently: fill in Variation, what you do instead; Reason, why;',
+  'Proved-safe, how you have shown that your way works; and Decided-by, who decided); or not-relevant',
+  '(fill in Reason and Decided-by, leave Variation and Proved-safe empty, and leave the method\'s',
+  'questions unanswered: the document then says only that the method is not relevant, why, and who decided).'
 ];
 const OWN_GUIDANCE = [
   'Add an entry for each food safety control of your own that the pack does not cover, and for each',
   'special process you use, such as sous vide. Copy the lines from "## OWN-01" down, paste them below',
-  'this comment, and number the entries OWN-01, OWN-02 and so on. Kind is additional or special-process.',
-  'An entry of kind special-process names in Process the special process or food it covers, as the',
-  'profile asks about it; any other entry leaves Process empty. Process is one of these:',
+  'this comment, number the entries OWN-01, OWN-02 and so on, and write each entry\'s name after its',
+  'number. Kind is additional or special-process.',
+  'An entry of kind additional needs Hazard, Control, Check and If-it-fails, and leaves Process empty.',
+  'A Limit needs a Limit-source: where the figure comes from.',
+  'An entry of kind special-process needs Process, Supplied-text and EH-review. Process names the',
+  'special process or food the entry covers, as the profile asks about it, and is one of these:',
   `${EXTRA_CARE_NAMES.join('; ')}.`,
-  'A Limit needs a Limit-source: where the figure comes from. EH-review is pending, or the date and',
-  'outcome of the council\'s review, such as 2026-12-01 accepted. To carry a value on to more lines,',
-  'start each extra line with two spaces. State is unanswered, proposed (suggested but not yet agreed)',
-  'or confirmed (agreed by the business: put who agreed it in By and the date, as YYYY-MM-DD, in On).',
-  'Only a confirmed entry goes into your documents.',
+  'Supplied-text is the business\'s own written procedure, kept exactly as it is written. Start each',
+  'line after the first with two spaces: whatever follows them is kept, further spaces included, and',
+  'so is a blank line between two such lines.',
+  'EH-review is pending, or the date and outcome of the council\'s review, such as 2026-11-03 accepted.',
+  'To carry any other value on to more lines, start each extra line with two spaces, straight after',
+  'the line before it, with no blank line between.',
+  'State says where an entry stands: unanswered (it may hold what has been given so far; By and On stay empty);',
+  `${STATE_WORDS[0]};`,
+  `or ${STATE_WORDS[1]}.`,
+  'Only a confirmed entry goes into your documents: any other is named there as not yet confirmed.'
+];
+const OWN_TEMPLATE = [
   '',
   '## OWN-01 Name of the control',
   '',
   ...OWN_FIELDS.map((field) => (field === 'State' ? 'State: unanswered' : `${field}:`))
 ];
+// Where the pack's words in a worksheet come from, with the licence line: read from the data's source.
+// The pack's words are the > lines of a section worksheet and the names of the special processes and
+// foods in the other two.
+const QUOTED = {
+  profile: 'The questions are this tool\'s own. The special processes and foods they name are named as in',
+  own: 'The names of the special processes and foods are quoted from'
+};
+const QUOTED_LINES = 'Everything else on the lines that start with > is quoted from';
+const quotedFrom = (section, source) => `${QUOTED[section] ?? QUOTED_LINES} the ${source.publisher}'s ${source.title}, ` +
+  `retrieved ${longDate(source.retrieved)}. ${source.attribution}`;
 
 // The Markdown lint rules a worksheet cannot meet without changing the pack's words or the
 // worksheet grammar, each turned off in that worksheet with its reason beside it.
@@ -504,9 +542,14 @@ const LINT_EXCEPTIONS = {
   profile: [['MD001', 'the profile has no methods, so its ### questions sit straight under the # title, as the worksheet grammar sets out']]
 };
 
-// The guidance comment each worksheet carries after its marker.
-const guidanceFor = (section) =>
-  ({ own: OWN_GUIDANCE, profile: ANSWER_GUIDANCE })[section] ?? [...ANSWER_GUIDANCE, ...STATUS_GUIDANCE];
+// The guidance comment each worksheet carries after its marker: how to fill it in, then where the
+// pack's words in it come from (left out only for data that names no source), then, in the own
+// worksheet, the entry to copy.
+const guidanceFor = (section, data) => [
+  ...(section === 'own' ? OWN_GUIDANCE : section === 'profile' ? ANSWER_GUIDANCE : [...ANSWER_GUIDANCE, ...STATUS_GUIDANCE]),
+  ...(isObject(data.source) ? [quotedFrom(section, data.source)] : []),
+  ...(section === 'own' ? OWN_TEMPLATE : [])
+];
 
 // A field's name as a property of a parsed record: Decided-by is decidedBy, EH-review ehReview.
 const key = (field) => field.toLowerCase().replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
@@ -523,15 +566,21 @@ const isIsoDate = (value) => {
 const andList = (items) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`);
 // A character as its code point, U+ and four or more hex digits, so that one that looks like another shows.
 const codePoint = (char) => `U+${char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`;
-// Characters that can hide text or reorder what a reader sees, so that a document could show something
-// other than what was written: the direction overrides and embeddings (U+202A to U+202E), the
-// direction isolates (U+2066 to U+2069), the zero-width space (U+200B), the word joiner (U+2060) and a
-// byte order mark inside the text (U+FEFF). Allowed, because writing needs them: the joiners that
-// Persian, Urdu, Hindi and other scripts and many emoji use (U+200C, U+200D), the direction marks
-// editors put around right-to-left text (U+200E, U+200F) and the soft hyphen (U+00AD).
-const HIDDEN = /[\u200B\u2060\uFEFF\u202A-\u202E\u2066-\u2069]/g;
-// The hidden characters in a line, each once, in the order they first appear: "U+202E and U+200B".
-const hiddenIn = (text) => andList([...new Set(text.match(HIDDEN) ?? [])].map(codePoint));
+// Characters no value may hold, because a reader cannot see them or because they change what a reader
+// sees, so that a document could show something other than what was written. This is the one list:
+// a worksheet value and a sign-off's name and role are held to it alike.
+// - The control characters, but for the tab and the line endings (U+0000 to U+001F without U+0009,
+//   U+000A and U+000D; U+007F to U+009F): an escape sequence, a backspace or a form feed changes what
+//   a terminal or a viewer shows.
+// - The line and paragraph separators (U+2028, U+2029), which break a line where none is written.
+// - The direction overrides and embeddings (U+202A to U+202E) and isolates (U+2066 to U+2069), the
+//   zero-width space (U+200B), the word joiner (U+2060) and a byte order mark inside the text (U+FEFF).
+// Allowed, because writing needs them: the joiners that Persian, Urdu, Hindi and other scripts and many
+// emoji use (U+200C, U+200D), the direction marks editors put around right-to-left text (U+200E,
+// U+200F) and the soft hyphen (U+00AD).
+const UNSEEN = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F\u200B\u2028\u2029\u2060\uFEFF\u202A-\u202E\u2066-\u2069]/g;
+// The unseen characters in a line, each once, in the order they first appear: "U+202E and U+200B".
+const unseenIn = (text) => andList([...new Set(text.match(UNSEEN) ?? [])].map(codePoint));
 
 // Where a method's questions sit: on a block, and on each row of any block but a table.
 const holdersOf = (block) => [
@@ -641,10 +690,11 @@ function promptLines({ question, context, columns }) {
 }
 const profilePrompt = (question) => promptLines({ question, context: [], columns: [] });
 
-// Writes a field: its first line after the name, every further line indented by two spaces.
+// Writes a field: its first line after the name, every further line indented by two spaces. A blank
+// line inside a value (only a written procedure has one) is written blank.
 const fieldLines = (name, value = '') => {
   const [first, ...rest] = String(value).split('\n');
-  return [first === '' ? `${name}:` : `${name}: ${first}`, ...rest.map((line) => `  ${line}`)];
+  return [first === '' ? `${name}:` : `${name}: ${first}`, ...rest.map((line) => (line === '' ? '' : `  ${line}`))];
 };
 
 // Writes a worksheet from a parsed one, in the data's order, with every `>` line written afresh
@@ -676,7 +726,7 @@ export function emitWorksheet(parsed, data) {
     ...(LINT_EXCEPTIONS[section] ?? []).flatMap(([rule, reason]) =>
       [`<!-- markdownlint-disable ${rule} -->`, `<!-- ${rule}: ${reason} -->`])
   ]];
-  blocks.push(comment(guidanceFor(section)));
+  blocks.push(comment(guidanceFor(section, data)));
   if (section === 'own') {
     for (const entry of parsed.entries.values()) {
       blocks.push([`## ${entry.id}${entry.title ? ` ${entry.title}` : ''}`, '',
@@ -714,7 +764,19 @@ const MARKER = /^<!--\s*uk-food-answers\s+(\S+)\s+data=(\S+)\s+section=(\S+)\s*-
 // line, directly. A blank line ends the value, so an indented line after one is reported and
 // credited to no question; so is an indented line that is itself a field or a heading, and a later
 // line that is not indented and is not a field. Nothing is added to a value unseen.
-const FIELD = /^([A-Za-z][A-Za-z-]*)[ \t]*:(.*)$/;
+//
+// One field is read differently, because it holds a business's own written procedure, which must
+// reach the document exactly as it was written: Supplied-text (VERBATIM_FIELD). While it is the open
+// field, every indented line is taken as written, whatever it starts with: a line that looks like a
+// field, a heading, a list item or a table row is part of the procedure. Only the indent that
+// carries the value on is taken off (two spaces, or a tab, or a single space), so any further
+// indentation is kept. A blank line is kept when more of the procedure follows it, which is when the
+// next line that is not blank is indented; otherwise it ends the value as for any field. Spaces at
+// the ends of lines are dropped as everywhere, and the first line, on the field's own line, is
+// trimmed. A comment mark or an unseen character in it is still refused.
+// (The s flag: a value is the rest of its line whatever it holds, a line separator included, so that
+// an unseen character in it is reported as one and the line is not read as something else.)
+const FIELD = /^([A-Za-z][A-Za-z-]*)[ \t]*:(.*)$/s;
 const FIELD_NAMES = new Map([...METHOD_FIELDS, ...ANSWER_FIELDS, ...OWN_FIELDS].map((f) => [f.toLowerCase(), f]));
 const FIELDS_OF = { method: METHOD_FIELDS, question: ANSWER_FIELDS, entry: OWN_FIELDS };
 
@@ -815,7 +877,7 @@ export function parseWorksheet(text, data) {
   const open = (kind, id, line, extra = {}) => ({ kind, id, line, fields: new Map(), faulty: false, ...extra });
   const titles = new Map((methods ?? []).map((m) => [m.id, m.title]));
   const sameTitle = (a, b) => a.replace(/\s+/g, ' ').toLowerCase() === b.replace(/\s+/g, ' ').toLowerCase();
-  const guidance = ['<!--', ...guidanceFor(section), '-->'];
+  const guidance = ['<!--', ...guidanceFor(section, data), '-->'];
   let guidanceChecked = false;
   let method = null;
   let block = null;
@@ -865,7 +927,7 @@ export function parseWorksheet(text, data) {
   };
   // Adds a line to a field's value. A comment in a value would be hidden once a document is
   // rendered, so the document would say something no reader could see: reported, value not used.
-  // So would a character that cannot be seen or that turns the text around (HIDDEN), looked for in
+  // So would a character that cannot be seen or that turns the text around (UNSEEN), looked for in
   // the whole line as written, `raw`, since trimming would drop one at either end unseen.
   const take = (target, text, at, raw) => {
     target.lines.push(text);
@@ -875,9 +937,9 @@ export function parseWorksheet(text, data) {
     }
     hidden(raw, at, target.block);
   };
-  // Reports any HIDDEN character in a line that holds a value: the value is not used.
+  // Reports any UNSEEN character in a line that holds a value: the value is not used.
   const hidden = (raw, at, owner) => {
-    const found = hiddenIn(raw);
+    const found = unseenIn(raw);
     if (!found) return;
     const one = !found.includes(' and ');
     report(at, `this line holds ${found}: ${one ? 'a character that cannot be seen or that changes' : 'characters that cannot be seen or that change'} ` +
@@ -896,13 +958,28 @@ export function parseWorksheet(text, data) {
       continue;
     }
     if (line === '') {
-      field = null; // a blank line ends a field: a continued line follows its field directly
+      // A blank line ends a field: a continued line follows its field directly. In a written procedure
+      // it is part of the text when more of the procedure follows.
+      if (field?.verbatim) {
+        let next = i + 1;
+        while (next < lines.length && lines[next].trim() === '') next++;
+        if (next < lines.length && /^[ \t]/.test(lines[next])) {
+          for (let blank = i; blank < next; blank++) field.lines.push('');
+          i = next - 1;
+          continue;
+        }
+      }
+      field = null;
       continue;
     }
     if (provenance) {
       if (!endsProvenance(line)) continue;
       provenance = false;
       if (line.trim().startsWith('<!--')) continue;
+    }
+    if (/^[ \t]/.test(line) && field?.verbatim) {
+      take(field, line.replace(/^(?: {2}|\t| )/, ''), at, lines[i]);
+      continue;
     }
     if (/^[ \t]/.test(line)) {
       const text = line.trim();
@@ -929,7 +1006,7 @@ export function parseWorksheet(text, data) {
       }
       continue;
     }
-    const heading = /^(#+)[ \t]+(\S.*)$/.exec(line);
+    const heading = /^(#+)[ \t]+(\S.*)$/s.exec(line);
     if (heading && heading[1].length === 2) {
       const title = heading[2].trim();
       provenance = /^build provenance$/i.test(title);
@@ -1013,6 +1090,8 @@ export function parseWorksheet(text, data) {
       else if (block.fields.has(name)) report(at, `${name} is given twice in ${block.id}; only the first is read`, block);
       else {
         field.block = block;
+        // A procedure starts on its field's own line like any value, and is then read as written.
+        field.verbatim = name === VERBATIM_FIELD && !field.empty;
         block.fields.set(name, field);
       }
       if (match[2].trim() !== '') take(field, match[2].trim(), at, lines[i]);
@@ -1116,23 +1195,30 @@ export function parseWorksheet(text, data) {
     record.state = standard(record.state, STATES);
     record.ehReview = standard(record.ehReview, ['pending']);
     if (!record.title) report(b.line, `${b.id} has no title: write one after ${b.id} on its heading`, b);
-    if (record.kind && !OWN_KINDS.includes(record.kind)) report(lineOf(b, 'Kind'), `${b.id}: Kind "${record.kind}" is not additional or special-process`, b);
-    // A special process names the pack's process or food it covers, kept in the pack's spelling.
-    if (record.process && record.kind !== 'special-process') {
-      report(lineOf(b, 'Process'), `${b.id}: Process is only for an entry of kind special-process: clear it, or set Kind to special-process`, b);
-    } else if (record.process && !extraCareName(record.process)) {
-      report(lineOf(b, 'Process'), `${b.id}: Process "${record.process}" is not one of the special processes and foods the pack ` +
-        `names, which are: ${EXTRA_CARE_NAMES.join('; ')}`, b);
-    } else if (record.process) record.process = extraCareName(record.process);
-    if (record.limit && !record.limitSource) report(lineOf(b, 'Limit-source'), `${b.id} has a Limit, so it needs a Limit-source saying where the figure comes from`, b);
-    const review = /^(\d{4}-\d{2}-\d{2})\s+\S/.exec(record.ehReview);
-    if (record.ehReview && record.ehReview !== 'pending' && !(review && isIsoDate(review[1]))) {
-      report(lineOf(b, 'EH-review'), `${b.id}: EH-review is pending, or a date written YYYY-MM-DD and the outcome`, b);
+    // An unanswered entry holds what has been given so far, as it was given: its fields are checked
+    // when it is proposed or confirmed. It is never shown in a document or counted as confirmed.
+    const held = record.state === 'unanswered';
+    if (!held) {
+      if (record.kind && !OWN_KINDS.includes(record.kind)) report(lineOf(b, 'Kind'), `${b.id}: Kind "${record.kind}" is not additional or special-process`, b);
+      // A special process names the pack's process or food it covers, kept in the pack's spelling.
+      if (record.process && record.kind !== 'special-process') {
+        report(lineOf(b, 'Process'), `${b.id}: Process is only for an entry of kind special-process: clear it, or set Kind to special-process`, b);
+      } else if (record.process && !extraCareName(record.process)) {
+        report(lineOf(b, 'Process'), `${b.id}: Process "${record.process}" is not one of the special processes and foods the pack ` +
+          `names, which are: ${EXTRA_CARE_NAMES.join('; ')}`, b);
+      } else if (record.process) record.process = extraCareName(record.process);
+      if (record.limit && !record.limitSource) report(lineOf(b, 'Limit-source'), `${b.id} has a Limit, so it needs a Limit-source saying where the figure comes from`, b);
+      const review = /^(\d{4}-\d{2}-\d{2})\s+\S/.exec(record.ehReview);
+      if (record.ehReview && record.ehReview !== 'pending' && !(review && isIsoDate(review[1]))) {
+        report(lineOf(b, 'EH-review'), `${b.id}: EH-review is pending, or a date written YYYY-MM-DD and the outcome`, b);
+      }
     }
-    checkState(b, b.id, record.state, OWN_FIELDS.filter((name) => name !== 'State'));
+    // A name and a date belong to a confirmation, so an unanswered entry has neither.
+    checkState(b, b.id, record.state, ['By', 'On']);
     if (record.state === 'proposed' || record.state === 'confirmed') {
       needs(b, b.id, ['Kind'], record.state);
       if (OWN_KINDS.includes(record.kind)) needs(b, b.id, KIND_NEEDS[record.kind], `${record.state} and ${record.kind}`);
+      if (record.state === 'proposed') needs(b, b.id, ['Source'], 'proposed');
     }
     record.answered = record.state === 'confirmed' && !b.faulty;
     parsed.entries.set(b.id, record);
@@ -2048,9 +2134,8 @@ const DOCUMENT_FILE = /^ARC-\d{3}-([A-Z]+)-v(\d+(?:\.\d+)*)\.md$/;
 const DOC_NAMES = { FOODPROF: 'Business profile', FOODOWN: 'Own methods' };
 const DOC_OF_SECTION = Object.fromEntries(Object.entries(SECTION_DOCS).map(([doc, section]) => [section, doc]));
 const docName = (code, data) => DOC_NAMES[code] ?? sentenceCase(data.sections.get(SECTION_DOCS[code]).section.title);
-// A sign-off's name or role: some text, on one line, with no control character and no character that
-// cannot be seen.
-const isPersonText = (value) => isString(value) && value.trim() !== '' && !/[\x00-\x1F\x7F]/.test(value) && !hiddenIn(value);
+// A sign-off's name or role: some text, on one line, with no tab and none of the UNSEEN characters.
+const isPersonText = (value) => isString(value) && value.trim() !== '' && !/[\t\n\r]/.test(value) && !unseenIn(value);
 const counted = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 const signOffsFile = (project) => join(project, 'food-safety', 'sign-offs.json');
 const localToday = () => {

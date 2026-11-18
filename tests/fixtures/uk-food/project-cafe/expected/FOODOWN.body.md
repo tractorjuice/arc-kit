@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODOWN data=sfbb-caterers-2026-11-17 body=0675de40bee84f0a2d5b947e806e4e7e1fa2df5bf7c0e142c172d3974e859886 -->
+<!-- UK-FOOD:BEGIN doc=FOODOWN data=sfbb-caterers-2026-11-17 body=c33ad7808323e42c577f31e906617275ffc0eb0fedf27adadf439a10cd0017b0 -->
 
 ## The business's own methods
 
@@ -13,7 +13,7 @@
 | Where the limit comes from | The dairy's label says to use opened milk within 2 days; our own rule is shorter. |
 | Check | Staff check the dates on open cartons during the opening checks. |
 | If it fails | Throw the milk away and write it in the diary. |
-| Agreed by | Priya Shah, 2026-11-20 |
+| Agreed by | Priya Shah, 2026-11-17 |
 
 ### OWN-02 Sous vide eggs (this business's own method, not Food Standards Agency wording)
 
@@ -26,7 +26,7 @@
 | Check | Each morning the water bath's own thermometer is checked against the probe thermometer. |
 | If it fails | Eggs not cooked by the method are thrown away, and the water bath is not used until it is checked. |
 | Environmental health review | pending |
-| Agreed by | Sam Okafor, 2026-11-20 |
+| Agreed by | Sam Okafor, 2026-11-17 |
 
 The text below is the business's own, and this tool did not write or check it.
 

@@ -6,11 +6,16 @@
 
 <!--
 How to fill this in. Write each answer after "Answer:". To carry an answer on to more lines, start
-each extra line with two spaces. State says where an answer stands: unanswered; proposed (suggested
-but not yet agreed: say where it came from in Source); or confirmed (agreed by the business: put who
-agreed it in By and the date, as YYYY-MM-DD, in On). Only confirmed answers go into your documents.
-Lines that start with > show what is asked. They are rewritten each time, so anything typed on them
-is not read.
+each extra line with two spaces, straight after the line before it, with no blank line between.
+State says where an answer stands: unanswered (Answer, By, On and Source stay empty);
+proposed (taken from a file, or given without a name, and not yet agreed by a named person at the business: say where it came from in Source);
+or confirmed (given or agreed by a named person at the business: put their name in By and the date, as YYYY-MM-DD, in On).
+Only a confirmed answer is printed in your documents as the business's answer. Until then its question
+is printed as not yet answered, with a proposed answer shown beside that and where it came from.
+Lines that start with > show what is asked. The note in brackets on the last of them, such as
+"(write your answer)", is this tool's: it says what form the answer takes. Leave those lines as they
+are: nothing typed on them is read, and a changed one is reported as a problem.
+The questions are this tool's own. The special processes and foods they name are named as in the Food Standards Agency's Safer food, better business for caterers, retrieved 17 November 2026. Contains public sector information licensed under the Open Government Licence v3.0.
 -->
 
 ### PR-Q01
@@ -19,7 +24,7 @@ is not read.
 Answer: Bramble Cafe
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q02
@@ -28,7 +33,7 @@ Source:
 Answer: Bramble Cafe Ltd, whose director is Sam Okafor
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q03
@@ -37,7 +42,7 @@ Source:
 Answer: 4 Mill Lane, Exampleton XX1 1XX
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q04
@@ -46,7 +51,7 @@ Source:
 Answer: Exampleton District Council
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q05
@@ -55,7 +60,7 @@ Source:
 Answer: 2025-03-14
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q06
@@ -64,7 +69,7 @@ Source:
 Answer: England
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q07
@@ -73,7 +78,7 @@ Source:
 Answer: Sam Okafor, owner
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q08
@@ -82,7 +87,7 @@ Source:
 Answer: Hot and cold drinks, cooked breakfasts, sandwiches, toasties, salads, quiche, and cakes and scones baked here. Our bread comes from a local bakery. We serve no chips or other potato dishes, and have no deep fat fryer.
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q09
@@ -105,7 +110,7 @@ Answer: Two upright fridges
   Coffee machine
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q10
@@ -116,7 +121,7 @@ Answer: Sam Okafor: owner; cooks, serves and runs the cafe
   Tom Reid: part-time; serves and washes up
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q11
@@ -125,7 +130,7 @@ Source:
 Answer: no
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q12
@@ -134,7 +139,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q13
@@ -143,7 +148,7 @@ Source:
 Answer: yes
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q14
@@ -152,7 +157,7 @@ Source:
 Answer: no
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q15
@@ -161,7 +166,7 @@ Source:
 Answer: no
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q16
@@ -170,7 +175,7 @@ Source:
 Answer: no
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q17
@@ -179,7 +184,7 @@ Source:
 Answer: no
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q18
@@ -188,7 +193,7 @@ Source:
 Answer: no
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q19
@@ -197,7 +202,7 @@ Source:
 Answer: no
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
 
 ### PR-Q20
@@ -206,5 +211,5 @@ Source:
 Answer: no
 State: confirmed
 By: Sam Okafor
-On: 2026-11-18
+On: 2026-11-17
 Source:
