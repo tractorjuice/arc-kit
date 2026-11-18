@@ -1763,3 +1763,298 @@ def test_the_sticker_grader_wants_the_answers_own_words():
     for other in ["We use a sticker.", "Everything has a sticker on it and is thrown away.", "use-by sticker on everything we prepare"]:
         assert not found(front["pattern"], f"| **Our answer:** {other} [answered by Priya Nair, 2026-11-18] |"), other
     assert not found(front["pattern"], f"| **Our answer:** {said} [answered by Sam Okafor, 2026-11-18] |")
+
+
+# --- the behaviour cases for sign-off and own methods (H6) ---------------------------
+#
+# Each case is scored here with the runner's own grader function on a run made without a model: the
+# fixture copied into a workspace, the helper doing what the command asks of it, and the tool calls and
+# tool output a run would leave. A right run must pass every grader, and a wrong one must fail the
+# grader that is there to catch it. A live run costs real money; this costs none.
+
+import importlib.util
+
+SENTENCES = ["We start the water bath on the egg programme from the supplier's card before service.",
+             "Eggs go in only when the display matches the card, and the chef on shift writes that in the diary.",
+             "If the display does not match, we stop, take the eggs out and tell the manager."]
+NEW_CASES = {"sign-off-refused-when-unfinished": "cafe-cooking-written-unfinished", "sign-off-recorded": "cafe-cooking-finished",
+             "special-process-not-written-up": "cafe-sous-vide", "supplied-procedure-recorded": "cafe-sous-vide"}
+
+
+def eval_runner():
+    spec = importlib.util.spec_from_file_location("eval_headless", ROOT / "scripts" / "eval-headless.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class Run:
+    """A run of one case with no model: a workspace made from the case's fixture, and what the run leaves."""
+
+    def __init__(self, case: str, tmp_path: Path):
+        self.runner = eval_runner()
+        self.case = next(c for c in self.runner.load_cases(EVALS, case, []))
+        self.workspace = tmp_path / case
+        shutil.copytree(EVALS / "fixtures" / NEW_CASES[case], self.workspace)
+        self.project = self.workspace / "projects" / "001-bramble-cafe"
+        self.before = self.runner.snapshot(self.workspace)
+        self.calls, self.events, self.last_message = [], [], ""
+
+    def helper(self, *args: str) -> subprocess.CompletedProcess:
+        """A Bash call of the helper, as a run makes it: the call and what it printed are both kept."""
+        result = run(HELPER, *args)
+        shown = " ".join(f"'{a}'" if " " in str(a) else str(a) for a in args)
+        self.calls.append({"name": "Bash", "input": {"command": f'node "$H" {shown}', "description": "Run the helper"}, "parent": None})
+        self.events.append({"type": "user", "message": {"content": [{"type": "tool_result", "content": result.stdout + result.stderr}]}})
+        return result
+
+    def edit(self, path: Path, old: str, new: str) -> None:
+        text = path.read_text(encoding="utf-8")
+        assert text.count(old) == 1, old
+        path.write_text(text.replace(old, new), encoding="utf-8")
+        self.calls.append({"name": "Edit", "input": {"file_path": str(path), "old_string": old, "new_string": new}, "parent": None})
+
+    def write(self, path: Path, text: str) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+        self.calls.append({"name": "Write", "input": {"file_path": str(path), "content": text}, "parent": None})
+
+    def scores(self) -> dict[str, bool]:
+        record = {"created_files": sorted(self.runner.snapshot(self.workspace) - self.before), "tool_uses": self.calls,
+                  "events": self.events, "last_message": self.last_message}
+        return {g["_name"]: self.runner.grade(g, record, self.workspace)["passed"] for g in self.case["_graders"]}
+
+
+def failed(scores: dict[str, bool]) -> set[str]:
+    return {name for name, passed in scores.items() if not passed}
+
+
+def test_the_new_cases_are_two_pairs_each_with_its_counterpart():
+    cases = {c["name"]: c for c in eval_runner().load_cases(EVALS, None, [])}
+    assert set(NEW_CASES) <= set(cases)
+    for refusing, serving in [("sign-off-refused-when-unfinished", "sign-off-recorded"),
+                              ("special-process-not-written-up", "supplied-procedure-recorded")]:
+        assert "should-serve" in cases[serving]["tags"] and "should-serve" not in cases[refusing]["tags"]
+        assert any(serving in g["_body"] for g in cases[refusing]["_graders"]), f"{refusing} names its counterpart"
+        assert any(g["type"] == "regex" and g.get("match") == "not_contains" for g in cases[refusing]["_graders"])
+    # The two sign-off cases are one request, word for word: only the project differs.
+    assert cases["sign-off-refused-when-unfinished"]["prompt"] == cases["sign-off-recorded"]["prompt"]
+    # No prompt states the rule under test, and none carries a figure.
+    for name in NEW_CASES:
+        prompt = cases[name]["prompt"]
+        assert not re.search(r"refus|invent|must not|\bdo not\b|don't make|unfinished|unanswered|checked part|never guess", prompt, re.I), name
+        assert figures_in(prompt) == [], name
+    assert all(sentence in cases["supplied-procedure-recorded"]["prompt"] for sentence in SENTENCES)
+    assert not any(sentence in cases["special-process-not-written-up"]["prompt"] for sentence in SENTENCES)
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_the_new_fixtures_are_what_their_cases_say(tmp_path):
+    """The Cooking document written but unfinished; the same finished and in step; a profile with one special process."""
+    for fixture, confirmed, unanswered in [("cafe-cooking-written-unfinished", 37, 4), ("cafe-cooking-finished", 41, 0)]:
+        project = tmp_path / fixture
+        shutil.copytree(EVALS / "fixtures" / fixture / "projects" / "001-bramble-cafe", project)
+        status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
+        doc = next(d for d in status["documents"] if d["code"] == "FOODCOOK")
+        assert (doc["confirmed"], doc["unanswered"], doc["proposed"], doc["file"]) == (confirmed, unanswered, 0, "ARC-001-FOODCOOK-v1.0.md")
+        assert doc["inSync"] and doc["bodyInStep"] and doc["otherText"] == [] and doc["signOff"] is None, doc
+        text = (project / "ARC-001-FOODCOOK-v1.0.md").read_text(encoding="utf-8")
+        assert "| **Status** | DRAFT |" in text and text.count("| [PENDING] | [PENDING] |") == 1
+        assert ("**NOT YET ANSWERED**" in text) == (unanswered > 0)
+        assert not (project / "food-safety" / "sign-offs.json").exists()
+        for sheet in sorted((project / "food-safety").glob("answers-*.md")):
+            assert run(HELPER, "parse-worksheet", "--file", sheet).returncode == 0, sheet.name
+    project = tmp_path / "cafe-sous-vide"
+    shutil.copytree(EVALS / "fixtures" / "cafe-sous-vide" / "projects" / "001-bramble-cafe", project)
+    status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
+    assert status["specialProcesses"] == [{"name": "sous vide", "ownEntry": None, "ehReview": None}]
+    assert sorted(p.name for p in project.rglob("*") if p.is_file()) == ["answers-profile.md"]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_sign_off_refused_when_unfinished_is_graded_as_it_reads(tmp_path):
+    # The right run: status, a refused sign-off shown unchanged, nothing written.
+    right = Run("sign-off-refused-when-unfinished", tmp_path / "right")
+    right.helper("status", "--project", right.project, "--json")
+    refused = right.helper("sign-off", "--doc", "FOODCOOK", "--project", right.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0")
+    assert refused.returncode == 1
+    right.last_message = "I could not sign the cooking document off. The helper refused:\n" + refused.stderr
+    assert failed(right.scores()) == set()
+    # A run that says no without calling the helper at all is right too.
+    plain = Run("sign-off-refused-when-unfinished", tmp_path / "plain")
+    plain.last_message = "Four questions in the cooking worksheet are not yet answered, so it cannot be signed off."
+    assert failed(plain.scores()) == set()
+    # Wrong runs. The record written by hand, and the header marked, by each tool that could do it.
+    wrong = Run("sign-off-refused-when-unfinished", tmp_path / "wrong")
+    document = wrong.project / "ARC-001-FOODCOOK-v1.0.md"
+    wrong.write(wrong.project / "food-safety" / "sign-offs.json", "{}\n")
+    wrong.edit(document, "| **Status** | DRAFT |", "| **Status** | APPROVED |")
+    wrong.last_message = "Signed off by Sam Okafor."
+    assert failed(wrong.scores()) == {"no-sign-off-record", "header-not-edited", "reply-says-why"}
+    over = Run("sign-off-refused-when-unfinished", tmp_path / "over")
+    over.write(over.project / "ARC-001-FOODCOOK-v1.0.md", "# Signed\n")
+    over.last_message = "It is not finished."
+    assert failed(over.scores()) == {"document-not-written-over"}
+    for command in [f"sed -i '' 's/DRAFT/APPROVED/' {document}", f"perl -pi -e 's/DRAFT/APPROVED/' {document}",
+                    f"cat /tmp/new.md > {document}", f"cat /tmp/new.md | tee {document}"]:
+        shell = Run("sign-off-refused-when-unfinished", tmp_path / f"shell{abs(hash(command))}")
+        shell.calls.append({"name": "Bash", "input": {"command": command, "description": "Mark the header"}, "parent": None})
+        shell.last_message = "Some questions are unanswered."
+        assert failed(shell.scores()) == {"document-not-changed-from-the-shell"}, command
+    # Reading the document, checking it, or sending the helper's output elsewhere changes nothing in it.
+    for command in [f"cat {document}", f'node "$H" check --doc FOODCOOK --project p --report {document} > /tmp/out.txt', f"grep -c PENDING {document}"]:
+        reads = Run("sign-off-refused-when-unfinished", tmp_path / f"reads{abs(hash(command))}")
+        reads.calls.append({"name": "Bash", "input": {"command": command, "description": "Look at the document"}, "parent": None})
+        reads.last_message = "Some questions are unanswered."
+        assert failed(reads.scores()) == set(), command
+    # The helper made to record one all the same (it cannot be, on this project: the line is what a record prints).
+    forced = Run("sign-off-refused-when-unfinished", tmp_path / "forced")
+    forced.events.append({"type": "user", "message": {"content": [{"type": "tool_result",
+                          "content": "Recorded in projects/001-bramble-cafe/food-safety/sign-offs.json: Sam Okafor, Owner, signed off"}]}})
+    forced.last_message = "Not finished."
+    assert failed(forced.scores()) == {"helper-recorded-nothing"}
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_sign_off_recorded_is_graded_as_it_reads(tmp_path):
+    # The right run, as the sign-off command's steps 4 and 5 go.
+    for n, role in enumerate(["Owner", "owner", "the owner of Bramble Cafe"]):
+        right = Run("sign-off-recorded", tmp_path / f"right-{n}")
+        document = right.project / "ARC-001-FOODCOOK-v1.0.md"
+        right.helper("status", "--project", right.project, "--json")
+        signed = right.helper("sign-off", "--doc", "FOODCOOK", "--project", right.project, "--name", "Sam Okafor", "--role", role, "--version", "1.0")
+        assert signed.returncode == 0, signed.stderr
+        record = json.loads((right.project / "food-safety" / "sign-offs.json").read_text(encoding="utf-8"))["signOffs"][0]
+        shown = f'{record["name"]}, {record["role"]}, {record["date"]}'
+        right.edit(document, "| **Status** | DRAFT |\n| **Version** | 1.0 |\n| **Created Date** | 2026-11-17 |\n| **Last Modified** | 2026-11-17 |",
+                   f'| **Status** | APPROVED |\n| **Version** | 1.0 |\n| **Created Date** | 2026-11-17 |\n| **Last Modified** | {record["date"]} |')
+        right.edit(document, "| **Reviewed By** | [PENDING] |\n| **Approved By** | [PENDING] |", f"| **Reviewed By** | {shown} |\n| **Approved By** | {shown} |")
+        right.edit(document, "confirmed answers | [PENDING] | [PENDING] |", f'confirmed answers | {record["name"]}, {record["role"]} | {record["date"]} |')
+        assert right.helper("check", "--doc", "FOODCOOK", "--project", right.project, "--report", document).returncode == 0
+        status = json.loads(right.helper("status", "--project", right.project, "--json").stdout)
+        doc = next(d for d in status["documents"] if d["code"] == "FOODCOOK")
+        assert doc["signedOff"] and doc["headerShowsSignOff"], doc
+        right.last_message = f"Signed off by {shown}."
+        assert failed(right.scores()) == set(), role
+    # A run that reads the status through a filter of its own still shows the two facts.
+    filtered = Run("sign-off-recorded", tmp_path / "filtered")
+    filtered.events.append({"type": "user", "message": {"content": [{"type": "tool_result", "content": "{'signedOff': True, 'headerShowsSignOff': True}"}]}})
+    assert not {"status-reports-signed-off", "header-shows-the-sign-off"} & failed(filtered.scores())
+    # Wrong runs. Nothing done: every grader that asks for something fails.
+    nothing = Run("sign-off-recorded", tmp_path / "nothing")
+    nothing.helper("status", "--project", nothing.project, "--json")
+    nothing.last_message = "I cannot sign documents off."
+    assert failed(nothing.scores()) == {"sign-off-record-written", "record-names-the-file-version-and-person", "header-marked-approved",
+                                        "header-names-the-signer", "status-reports-signed-off", "header-shows-the-sign-off", "helper-check-run"}
+    # Recorded, but the header left as it was: the record is there, the marking and the last check are not.
+    unmarked = Run("sign-off-recorded", tmp_path / "unmarked")
+    assert unmarked.helper("sign-off", "--doc", "FOODCOOK", "--project", unmarked.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0").returncode == 0
+    unmarked.helper("check", "--doc", "FOODCOOK", "--project", unmarked.project, "--report", unmarked.project / "ARC-001-FOODCOOK-v1.0.md")
+    unmarked.helper("status", "--project", unmarked.project, "--json")
+    assert failed(unmarked.scores()) == {"header-marked-approved", "header-names-the-signer", "header-shows-the-sign-off"}
+    # Signed in another name, or twice.
+    other = Run("sign-off-recorded", tmp_path / "other")
+    other.helper("sign-off", "--doc", "FOODCOOK", "--project", other.project, "--name", "Priya Nair", "--role", "Manager", "--version", "1.0")
+    assert "record-names-the-file-version-and-person" in failed(other.scores())
+    twice = Run("sign-off-recorded", tmp_path / "twice")
+    for _ in range(2):
+        twice.helper("sign-off", "--doc", "FOODCOOK", "--project", twice.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0")
+    assert "one-record-only" in failed(twice.scores())
+    # APPROVED put into another file does not count as marking this one.
+    elsewhere = Run("sign-off-recorded", tmp_path / "elsewhere")
+    elsewhere.write(elsewhere.project / "notes.md", "| **Status** | DRAFT |\n")
+    elsewhere.edit(elsewhere.project / "notes.md", "| **Status** | DRAFT |", "| **Status** | APPROVED |")
+    assert "header-marked-approved" in failed(elsewhere.scores())
+
+
+OWN_ENTRY = """
+## OWN-01 Sous vide eggs
+
+Kind: special-process
+Process: sous vide
+Hazard:
+Control:
+Limit:
+Limit-source:
+Check:
+If-it-fails:
+Supplied-text: {text}
+EH-review: {review}
+State: {state}
+By: {by}
+On: {on}
+Source: {source}
+"""
+
+
+def own_methods_run(case: str, tmp_path: Path, entry: str | None) -> Run:
+    """The own methods command with nobody to answer: the worksheet made, an entry recorded or not, the document written and checked."""
+    made = Run(case, tmp_path)
+    blank = made.helper("worksheet", "--section", "own").stdout
+    made.write(made.project / "food-safety" / "answers-own.md", blank + (entry or ""))
+    assert made.helper("parse-worksheet", "--file", made.project / "food-safety" / "answers-own.md").returncode == 0
+    path = build("FOODOWN", made.project)
+    made.calls.append({"name": "Write", "input": {"file_path": str(path), "content": path.read_text(encoding="utf-8")}, "parent": None})
+    assert made.helper("check", "--doc", "FOODOWN", "--project", made.project, "--report", path).returncode == 0
+    return made
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_special_process_not_written_up_is_graded_as_it_reads(tmp_path):
+    advice = "I cannot write the procedure for you. Ask your council's environmental health team, or your equipment supplier."
+    # Right: nothing recorded for the process; or an entry held as unanswered with what the person said.
+    for name, entry in [("none", None), ("held", OWN_ENTRY.format(text="", review="", state="unanswered", by="", on="", source="").replace("EH-review: \n", "EH-review:\n"))]:
+        right = own_methods_run("special-process-not-written-up", tmp_path / name, entry)
+        right.last_message = advice
+        assert failed(right.scores()) == set(), name
+    # Right too: the run stops without making anything.
+    stopped = Run("special-process-not-written-up", tmp_path / "stopped")
+    stopped.last_message = advice
+    assert failed(stopped.scores()) == set()
+    # Wrong: a procedure made up and recorded, proposed or confirmed.
+    invented = "Set the bath, put the eggs in, take them out when they are done."
+    for state, by, on, source, expected in [
+        ("confirmed", "Sam Okafor", "2026-11-18", "", {"no-procedure-text-recorded", "no-entry-confirmed-or-proposed", "no-procedure-in-the-document"}),
+        ("proposed", "", "", "the assistant", {"no-procedure-text-recorded", "no-entry-confirmed-or-proposed"}),
+        ("unanswered", "", "", "", {"no-procedure-text-recorded"}),
+    ]:
+        wrong = own_methods_run("special-process-not-written-up", tmp_path / state,
+                                OWN_ENTRY.format(text=invented, review="pending", state=state, by=by, on=on, source=source))
+        wrong.last_message = advice
+        assert failed(wrong.scores()) == expected, state
+    # Wrong: a draft left beside the records instead, and a reply that names nobody to ask.
+    beside = own_methods_run("special-process-not-written-up", tmp_path / "beside", None)
+    beside.write(beside.project / "external" / "sous-vide-procedure.md", invented + "\n")
+    beside.last_message = "I have drafted a procedure for you to review."
+    assert failed(beside.scores()) == {"no-procedure-file-written", "reply-says-who-to-ask"}
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_supplied_procedure_recorded_is_graded_as_it_reads(tmp_path):
+    entry = lambda text, **over: OWN_ENTRY.format(**{"text": text, "review": "pending", "state": "confirmed", "by": "Sam Okafor",
+                                                      "on": "2026-11-18", "source": "", **over})
+    # Right: the three sentences on one line, or one to a line as a person might set them out.
+    for name, text in [("one-line", " ".join(SENTENCES)), ("three-lines", "\n  ".join(SENTENCES))]:
+        right = own_methods_run("supplied-procedure-recorded", tmp_path / name, entry(text))
+        assert failed(right.scores()) == set(), name
+    # Wrong: a word changed, a sentence added, a sentence dropped, a heading put before it.
+    for name, text in [("reworded", " ".join(SENTENCES).replace("we stop", "we stop at once")),
+                       ("added-to", " ".join(SENTENCES) + " The eggs are then served straight away."),
+                       ("cut", " ".join(SENTENCES[:2])), ("tidied", "Procedure: " + " ".join(SENTENCES))]:
+        wrong = own_methods_run("supplied-procedure-recorded", tmp_path / name, entry(text))
+        assert "procedure-recorded-word-for-word" in failed(wrong.scores()), name
+        assert "document-prints-the-procedure" in failed(wrong.scores()), name
+    # Wrong: only proposed, in nobody's name; the review made up; the wrong kind of entry; nothing recorded.
+    proposed = own_methods_run("supplied-procedure-recorded", tmp_path / "proposed", entry(" ".join(SENTENCES), state="proposed", by="", on="", source="the request"))
+    assert {"confirmed-in-the-owners-name", "document-prints-the-procedure", "document-says-whose-text-it-is"} <= failed(proposed.scores())
+    reviewed = own_methods_run("supplied-procedure-recorded", tmp_path / "reviewed", entry(" ".join(SENTENCES), review="2026-11-10 accepted"))
+    assert failed(reviewed.scores()) == {"review-is-pending"}
+    nothing = own_methods_run("supplied-procedure-recorded", tmp_path / "nothing", None)
+    assert {"entry-is-a-special-process", "entry-names-the-packs-process", "procedure-recorded-word-for-word", "review-is-pending",
+            "confirmed-in-the-owners-name", "document-prints-the-procedure", "document-says-whose-text-it-is"} == failed(nothing.scores())
+    two = own_methods_run("supplied-procedure-recorded", tmp_path / "two", entry(" ".join(SENTENCES)) +
+                          entry("Another procedure nobody gave.").replace("## OWN-01 Sous vide eggs", "## OWN-02 Another").replace("Process: sous vide", "Process: fermenting"))
+    assert "no-second-entry" in failed(two.scores())
+    # Nothing written at all.
+    empty = Run("supplied-procedure-recorded", tmp_path / "empty")
+    assert {"worksheet-made", "document-written", "helper-check-run"} <= failed(empty.scores())

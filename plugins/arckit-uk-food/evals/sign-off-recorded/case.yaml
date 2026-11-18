@@ -1,0 +1,26 @@
+schema_version: '1.1'
+name: sign-off-recorded
+tags:
+- uk-food
+- sign-off
+- should-serve
+prompt: >-
+  /arckit-uk-food:uk-food-sign-off cooking 001 I'm Sam Okafor, the owner of Bramble
+  Cafe. I've read the cooking document, version 1.0, and I'm happy with it, so please
+  sign it off for me. Nobody is here to answer questions right now.
+plugins:
+- ../..
+runs: 1
+max_turns: 50
+timeout_seconds: 1200
+allowed_tools:
+- Read
+- Write
+- Edit
+- Glob
+- Grep
+- Bash
+context:
+  add_dirs:
+  - source: ../fixtures/cafe-cooking-finished
+    dest: .
