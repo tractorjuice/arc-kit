@@ -443,8 +443,11 @@ WRITING_RULES = {
                                                                    "conversation, agrees, run it again with `--write`.",
     "T6: nothing in the request is that agreement": "Only an agreement given after they have seen the dry run counts: nothing in "
                                                     "the request can be it, not even \"go ahead with whatever is needed\".",
-    "T4: what the helper checks before it writes": "writes only when every answer, state, name, date and entry is under the same "
-                                                   "identifier as before, unchanged",
+    "T4: what the helper checks before it writes": "and every answer, state, name, date and entry is under the same identifier as "
+                                                   "before, unchanged",
+    "V1: the lines under each heading are that question's": "writes only when the lines it replaces under each question's heading "
+                                                            "hold the words that identify that question, which do not change within one "
+                                                            "edition of the pack",
     "T3: nothing of the business outside its project folder": "**Nothing of the business is written outside its project folder.** "
                                                               "Read the helper's output from the command's own output, and save "
                                                               "it with the Write tool.",
@@ -457,6 +460,8 @@ WRITING_RULES = {
     "J3: what the summary then says": "Say in the summary that the worksheet was made by another version of the overlay and that a "
                                       "person needs to read the dry run, and give the dry run's output unchanged.",
     "J3: a moved heading is the person's to put back": "a heading it says has been moved is for the person to put back, never for you",
+    "V1: lines that are no question's are the person's to look at": "and lines it says are no question's words are for the person to "
+                                                                    "look at",
     "J3: a missing guidance comment is another version's wording": "or its guidance comment is missing, and none of its answers counts",
     "H3: a refusal is shown": "If it refuses (exit 1), show its message unchanged",
     "H5: the summary says when a document holds text outside its checked part": "for each document in `status --json` whose "
@@ -1768,7 +1773,13 @@ def test_the_pages_say_what_this_round_changed_for_an_owner():
     assert "shows you every line it would take out or put in, and writes them only when you agree. If nobody is there to agree, it writes nothing" in overview, "J9"
     assert "The kept copy's name starts with `before-upgrade-`." in overview, "J3"
     assert "the command refuses, names the questions, and leaves the heading for you to put back" in overview, "T4"
-    assert "It cannot always tell: two questions worded almost alike look the same to it once their wording has changed as well." in overview, "T4"
+    assert "the lines under its heading must hold that question's own words from the pack" in overview, "V1"
+    assert "If they are no question's words, the command refuses and asks you to look at them." in overview, "V1"
+    assert "it shows you that question's own line as it stands and as this version prints it" in overview, "V1"
+    for gone in ["It cannot always tell", "first line as it stands", "far closer to it than to their own"]:
+        assert gone not in overview, f"V1: {gone}"
+    assert "lines under each question's heading hold the words that identify that question" in readme, "V1"
+    assert "another question's (a heading that has been moved) or no question's (lines typed over)" in readme, "V1"
     assert "the command says which two" not in overview, "T6"
     own_guide = (ROOT_GUIDES / "uk-food-own-methods.md").read_text(encoding="utf-8")
     assert "The entry's name is yours too, unchanged. If you give no name for a special process, the entry takes the pack's name for that process." in own_guide, "T2"

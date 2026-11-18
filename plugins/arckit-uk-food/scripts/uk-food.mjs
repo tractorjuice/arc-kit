@@ -1308,36 +1308,43 @@ export const parseWorksheet = (text, data) => strictWorksheet(text, data).parsed
 const typedIn = (parsed) => JSON.stringify([[...parsed.methods], [...parsed.answers], [...parsed.entries]],
   (name, value) => (name === 'line' ? undefined : value instanceof Map ? [...value] : value));
 
-// How alike two wordings are: of all the words either holds, the share both hold (0 to 1). Letter case
-// and everything that is not a letter or a digit are left out, so a hint reworded from "(yes / no)" to
-// "[yes or no]" is one word of difference.
-const wordsOf = (lines) => new Set(lines.join(' ').toLowerCase().match(/[a-z0-9]+/g) ?? []);
-const alike = (a, b) => {
-  let both = 0;
-  for (const word of a) if (b.has(word)) both++;
-  return both / (a.size + b.size - both || 1);
-};
-// By how much the lines under a heading must be more like another question's wording than like their
-// own heading's before they are taken for that other question's (a heading that has been moved).
-// Chosen from the data: the most any question of the pack or the profile, with three of its own words
-// changed, comes nearer to another question than to itself is 0.097, so no rewording of up to three
-// words is taken for a move. What it leaves unseen: two questions of one safety method whose wordings
-// share nearly all their words, once the wording under them has been reworded as well; while the
-// wording is this version's, the exact comparison still tells them apart.
-const CLEARLY_CLOSER = 0.1;
-// The other question whose wording the lines under `id`'s heading are: [its identifier, whether exactly],
-// or null. `typed` is those lines, without their > marks.
-function movedTo(id, typed, prompts) {
-  const found = wordsOf(typed);
-  const own = alike(found, wordsOf(prompts.get(id).now));
-  let best = null;
-  for (const [other, { now }] of prompts) {
-    if (other === id) continue;
-    if (now.join('\n') === typed.join('\n')) return [other, true];
-    const near = alike(found, wordsOf(now));
-    if (near - own > CLEARLY_CLOSER && (!best || near > best[2])) best = [other, false, near];
-  }
-  return best;
+// A line's words as an upgrade compares them: small letters and digits, one space apart, nothing else.
+const plainWords = (text) => (String(text).toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []).join(' ');
+// Whether lines (plainWords) hold a part of what a question is known by: a line of context is a whole line; the
+// question's own words start one, since the note on the form of answer follows them; a name is within one.
+const holdsPart = (plain, [how, words]) => plain.some((line) => line === words ||
+  (how === 'start' && line.startsWith(`${words} `)) || (how === 'within' && ` ${line} `.includes(` ${words} `)));
+const holdsAll = (plain, parts) => parts.every((part) => holdsPart(plain, part));
+const identifying = (section) => (section === 'profile' ? 'the words that identify' : 'the pack\'s words for');
+// The words each question of a worksheet is known by: a Map from its identifier to { parts, own, plain }. Within
+// one edition only the tool's own words can change (the note on the form of answer, which lines of context it
+// prints), so a question is known by the pack's words for it: its text, or the column headings it sits under, and
+// where another question's wording holds those too, the one string of its context, nearest first, that tells it
+// apart. `own` is what its own line holds. In the profile, a question about a special process or food is known by
+// the pack's name for it, any other by the tool's own question. Worked out once for each worksheet.
+const KNOWN = new WeakMap();
+export function identifiedBy(section, data) {
+  const done = KNOWN.get(data) ?? KNOWN.set(data, new Map()).get(data);
+  if (done.has(section)) return done.get(section);
+  const parts = (how, text) => text.split('\n').map(plainWords).filter(Boolean).map((words) => [how, words]);
+  const asked = section === 'profile' ? PROFILE_QUESTIONS.map((question) => {
+    const name = /^(?:process|food):(.+)$/.exec(question.key)?.[1];
+    return { id: question.id, prompt: profilePrompt(question), own: name ? [['within', plainWords(name)]] : parts('start', question.text), context: [] };
+  }) : (data.sections.get(section)?.methods ?? []).flatMap(methodQuestions).map((entry) => ({ id: entry.question.id, prompt: promptLines(entry),
+    own: parts('start', entry.question.text || entry.columns.join(' / ')), context: entry.context.map((text) => parts('line', text)).reverse() }));
+  const plain = new Map(asked.map(({ id, prompt }) => [id, prompt.map(plainWords).filter(Boolean)]));
+  const alone = (id, held) => asked.every((other) => other.id === id || !holdsAll(plain.get(other.id), held));
+  const known = new Map(asked.map(({ id, own, context }) => [id, { plain: plain.get(id), own: own.at(-1),
+    parts: [own, ...context.map((more) => [...own, ...more])].find((held) => alone(id, held)) ?? own }]));
+  done.set(section, known);
+  return known;
+}
+// Whose wording lines under a heading are: the questions whose words they hold, less any whose words they hold
+// only as a line of another such question's wording (a question that is the next one's lead-in).
+export function wordingOf(lines, known) {
+  const plain = lines.map(plainWords).filter(Boolean);
+  const held = [...known].filter(([, { parts }]) => holdsAll(plain, parts));
+  return held.filter(([id, { parts }]) => !held.some(([other, theirs]) => other !== id && holdsAll(theirs.plain, parts))).map(([id]) => id);
 }
 
 // The steps that turn the lines `old` into the lines `now`, keeping every line the two share, in order
@@ -1371,14 +1378,11 @@ function lineSteps(old, now) {
 //   worksheet this helper reads;
 // - any problem besides the wording, an identifier the data does not have among them: those are put
 //   right first, so that nothing a person typed is in a place this cannot carry;
-// - > lines under one question's heading that are this version's wording of another question, or far
-//   closer to it than to their own heading's (movedTo): that is a heading that has been moved, not old
-//   wording, and to put each question's own wording back under it would leave each answer under the
-//   wrong question, which reading the answers back cannot show, since each is still under the heading
-//   it was under;
+// - > lines it would replace that are not their heading's question's (wordingOf): another question's are a
+//   heading that has been moved, and replacing them would leave an answer under the wrong question, which
+//   reading the answers back cannot show; no question's have been typed over, and a person must look;
 // - a result that would not read the same: the new text is read back, and must have no problem and
-//   hold every answer, state, name, date and entry under the same identifier as before (typedIn). That
-//   is all the comparison shows: whether a heading is over its own question is movedTo's to say.
+//   hold every answer, state, name, date and entry under the same identifier as before (typedIn).
 // A line a person typed inside the guidance or on a > line cannot be told from old wording, so it is
 // taken out with the rest: `changes` lists every line taken out, for a person to read before writing.
 export function upgradeWorksheet(text, data) {
@@ -1395,17 +1399,22 @@ export function upgradeWorksheet(text, data) {
       : `the worksheet has ${counted(n, 'problem', 'problems')} besides its wording, which ${isAre(n)} put right first:`;
     return { exit: 1, messages: [first, ...listed, leave] };
   }
-  const typedUnder = (prompt) => prompt.at.map((line) => layout.lines[line - 1].trimEnd().replace(/^>[ \t]?/, ''));
-  const moved = [...layout.prompts].filter(([, prompt]) => prompt.foreign.length).flatMap(([id, prompt]) => {
-    const other = movedTo(id, typedUnder(prompt), layout.prompts);
-    return other ? [[id, ...other]] : [];
-  });
-  if (moved.length) {
-    const said = moved.map(([id, other, exactly], i) => `${i ? 'those' : 'the lines starting >'} under ${id} are ` +
-      (exactly ? `this version's wording of ${other}` : `far closer to this version's wording of ${other} than to their own heading's`));
-    return { exit: 1, messages: [`a question's heading is not over its own question: ${andList(said)}. That is the mark of a heading that has been ` +
-      'moved, not wording from another version, and bringing the worksheet up to date would leave an answer under the wrong question. ' +
-      `Put each heading back over its own question first. ${leave}`] };
+  const { section } = parsed;
+  const known = identifiedBy(section, data);
+  const judged = [...layout.prompts].filter(([, prompt]) => prompt.foreign.length)
+    .map(([id, prompt]) => [id, wordingOf(prompt.at.map((line) => layout.lines[line - 1]), known)]).filter(([id, whose]) => whose.join() !== id);
+  const moved = judged.map(([id, whose]) => [id, whose.filter((other) => other !== id)]).filter(([, others]) => others.length);
+  const lost = judged.filter(([id, whose]) => !whose.some((other) => other !== id)).map(([id]) => id);
+  if (judged.length) {
+    const one = lost.length === 1;
+    return { exit: 1, messages: [[...(moved.length ? [`a question's heading is not over its own question: ${andList(moved.map(([id, others], i) =>
+      `${i ? 'those' : 'the lines starting >'} under ${id} hold ${identifying(section)} ${andList(others)}`))}. That is the mark of a ` +
+      'heading that has been moved, not wording from another version, and bringing the worksheet up to date would leave an answer under the ' +
+      'wrong question. Put each heading back over its own question first.'] : []),
+    ...(lost.length ? [`the lines starting > under ${andList(lost)} are not ${identifying(section)} ${one ? 'it' : 'them'} or ` +
+      `${section === 'profile' ? '' : 'for '}any other question of this worksheet, so a person must look at them: compare them with ` +
+      `what worksheet --section ${section} prints, then put each heading back over its own question, or its question's lines back as printed there.`] : []),
+    leave].join(' ')] };
   }
   const bom = String(text).startsWith('\uFEFF') ? '\uFEFF' : '';
   const pieces = String(text).slice(bom.length).split(/(\r\n|\n|\r)/);
@@ -1416,8 +1425,10 @@ export function upgradeWorksheet(text, data) {
   const changes = [];
   const replace = (what, at, now) => {
     const old = at.map((line) => layout.lines[line - 1].trimEnd());
-    // `first`: a question's first line as it stands and as this version prints it, for a person to see a mismatch.
-    const change = { what, from: at[0], to: at.at(-1), out: [], put: [], first: what.startsWith('The ') ? null : [old[0], now[0]] };
+    // `own`: a question's own line, which holds its own words, as it stands and as this version prints it.
+    const mine = known.get(what)?.own;
+    const ownLine = (lines) => lines.find((line) => holdsPart([plainWords(line)], mine)) ?? lines.at(-1);
+    const change = { what, from: at[0], to: at.at(-1), out: [], put: [], own: mine ? [ownLine(old), ownLine(now)] : null };
     let waiting = [];
     for (const [step, k] of lineSteps(old, now)) {
       if (step === 'put') {
@@ -1461,7 +1472,7 @@ export function upgradeWorksheet(text, data) {
     return { exit: 1, messages: ['brought up to date, the worksheet would not read the same as it does now, so it is not ' +
       `written: ${after.parsed.problems[0]?.message ?? 'an answer, state, name, date or entry would differ'}. ${leave}`] };
   }
-  return { exit: 0, text: upgraded, changes: changes.sort((a, b) => a.from - b.from) };
+  return { exit: 0, text: upgraded, section, changes: changes.sort((a, b) => a.from - b.from) };
 }
 
 // A parsed worksheet as JSON: each Map becomes an object in the same order.
@@ -3416,8 +3427,10 @@ commands:
                                                      keeping the worksheet as it was beside it; exit
                                                      1, changing nothing, for a worksheet for other
                                                      data, one with any other problem, or one whose
-                                                     wording under a question's heading is another
-                                                     question's (a heading that has been moved)
+                                                     lines under a question's heading do not hold
+                                                     the words that identify that question (a
+                                                     heading that has been moved, or lines typed
+                                                     over)
   render --doc DOC --project DIR [--data DIR]        print a document's body, from the worksheets in
                                                      DIR/food-safety; DOC is one of FOODXC, FOODCLN,
                                                      FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN,
@@ -3572,11 +3585,12 @@ export function upgradeWorksheetCommand(args, io = { out: console.log, err: cons
     'of its guidance and question wording, and changes no other line:'];
   for (const change of result.changes) {
     lines.push(`${change.what}${change.back ? '' : `, ${change.from === change.to ? `line ${change.from}` : `lines ${change.from} to ${change.to}`}`}:`,
-      ...(change.first ? [`  its first line as it stands: ${change.first[0]}`, `  its first line in this version: ${change.first[1]}`] : []),
+      ...(change.own ? [`  its own line as it stands: ${change.own[0]}`, `  its own line in this version: ${change.own[1]}`] : []),
       ...change.out.map(({ line, text }) => `  takes out, line ${line}: ${text}`), ...change.put.map((text) => `  puts in: ${text === '' ? '(a blank line)' : text}`));
   }
   lines.push(`${counted(out.length, 'line', 'lines')} taken out and ${put.length} put in. Every answer, state, name, date and entry is under ` +
-    'the same identifier as before, unchanged.');
+    `the same identifier as before, unchanged${result.changes.some((change) => change.own) ? `, and the lines under each question it changes ` +
+    `held ${identifying(result.section)} that question` : ''}.`);
   if (!options.write) {
     io.out([...lines, 'Anything a person typed on a line that is taken out is not carried over: read the lines above first.',
       `Nothing has been written. Run it again with --write to write it; the worksheet as it is now is then kept beside it as ${basename(kept)}.`]
