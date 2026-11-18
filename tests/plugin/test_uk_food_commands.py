@@ -650,6 +650,9 @@ OWN_METHODS_RULES = {
     "I5: a half-given entry keeps the person's words": "add the entry with `State: unanswered`, holding exactly what "
                                                        "they gave, with `By` and `On` empty",
     "I5: it is asked about again": "Ask for the rest when the person is next there",
+    "I5: with no procedure yet, what was said is still kept": "Whatever else the person has told you about the process is "
+                                                              "held as a half-given entry",
+    "6: a missing procedure is never written": "never write one for it, and leave `Supplied-text` empty",
     "I5: an entry has a Source line": "`State:`, `By:`, `On:` and `Source:`",
     "I5: the summary names what is held": "each entry held as unanswered, with what it still needs",
 }
