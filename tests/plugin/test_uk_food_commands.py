@@ -1860,6 +1860,17 @@ def test_the_pages_say_what_this_round_changed_for_an_owner():
         assert "and when anyone adds to the file or edits it by hand" not in text, f"H7: {path.name}"
 
 
+def test_the_provenance_note_says_when_core_stamps():
+    """V6: core's hook stamps only when it knows a command's effort or a build's context, so the note says no more."""
+    note = (ROOT / "plugins" / "arckit-claude" / "hooks" / "README.md").read_text(encoding="utf-8")
+    assert "goes on stamping any ArcKit document that is written or edited" not in note
+    assert ("core's hook goes on stamping an ArcKit document that the Write or Edit tool writes or edits whenever it knows the `effort:` of "
+            "the ArcKit command the document's footer names, or the context of the build that wrote it; any other write it leaves "
+            "unstamped.") in note
+    hook = (ROOT / "plugins" / "arckit-claude" / "hooks" / "provenance-stamp.mjs").read_text(encoding="utf-8")
+    assert "if (!effort_requested && !build) return null;" in hook, "the hook still skips a write with neither"
+
+
 def test_the_readme_guide_and_recipe_say_what_a_build_writes():
     """M7: the build harness takes an existing document as done, so a build writes only what is not there yet."""
     recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
