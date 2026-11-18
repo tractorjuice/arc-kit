@@ -383,8 +383,8 @@ AGENT_CONFIG = {
         "name": "Paperclip",
         "output_dir": "extensions/arckit-paperclip/src/data",
         "format": "json",
-        # Paperclip ships templates/, references/, schemas/ and data/ at its
-        # package root and replaces {arckit_package_root} in each prompt at
+        # Paperclip ships templates/, references/, schemas/, data/ and config/
+        # at its package root and replaces {arckit_package_root} in each prompt at
         # runtime (src/tools/command-tools.ts), so plugin-root assets resolve
         # there. Executable scripts keep script_path_prefix.
         "path_prefix": "{arckit_package_root}",

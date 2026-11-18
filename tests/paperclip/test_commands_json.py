@@ -140,6 +140,24 @@ def test_package_root_assets_exist_and_are_published(commands):
             )
 
 
+def test_published_modules_import_only_published_files():
+    """A published script or hook that imports a file the package does not publish fails at import once
+    installed from the npm tarball, which holds only package.json `files`. generate-document-id.mjs and
+    okf-frontmatter.mjs imported ../config/doc-types.mjs while config/ was not published."""
+    published = {entry.rstrip("/") for entry in json.loads((PAPERCLIP_DIR / "package.json").read_text())["files"]}
+    modules = sorted(p for folder in ("scripts", "hooks") for p in (PAPERCLIP_DIR / folder).rglob("*.mjs"))
+    if not modules:
+        pytest.skip("run scripts/converter.py first")
+    root = PAPERCLIP_DIR.resolve()
+    problems = []
+    for module in modules:
+        for spec in re.findall(r"""(?:from|import\()\s*['"](\.{1,2}/[^'"]+)['"]""", module.read_text(encoding="utf-8")):
+            target = (module.parent / spec).resolve()
+            if not target.is_file() or not target.is_relative_to(root) or target.relative_to(root).parts[0] not in published:
+                problems.append(f"{module.relative_to(PAPERCLIP_DIR)} imports {spec}")
+    assert not problems, f"not in package.json files: {problems}"
+
+
 def test_handoffs_structure(commands):
     for cmd in commands:
         assert isinstance(cmd["handoffs"], list), f"{cmd['name']} handoffs is not a list"
