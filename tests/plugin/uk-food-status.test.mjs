@@ -2910,26 +2910,26 @@ test('H9: a sign-off name or role that holds a refused character is told which o
   assert.ok(!existsSync(signOffsFile(dir)));
 });
 
-test('the same person asking again, with the name or role typed in other capitals or spacing, is not recorded a second time', () => {
+test('the same person giving the name or role another way makes a new record, which is how a slip in a recorded one is put right', () => {
   const dir = cafe();
   const file = fromItsTemplate(dir, 'FOODCOOK');
-  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  // Recorded with the role in small letters.
+  const first = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Sam Okafor', '--role', 'owner', '--version', '1.0', '--date', '2026-11-17');
+  assert.equal(first.status, 0, first.stderr);
+  // The same words over again are refused, as the newest sign-off recorded twice would be.
+  const again = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Sam Okafor', '--role', 'owner', '--version', '1.0', '--date', '2026-11-17');
+  assert.equal(again.status, 1, again.stdout);
+  assert.match(again.stderr, /is already recorded/);
+  // Given as the person wants it shown, it is a statement of its own: recorded, and the newest.
+  const put = signOffUnread(dir, 'FOODCOOK');
+  assert.equal(put.status, 0, put.stderr);
+  const records = JSON.parse(readFileSync(signOffsFile(dir), 'utf8')).signOffs;
+  assert.deepEqual(records.map(({ name, role }) => [name, role]), [['Sam Okafor', 'owner'], ['Sam Okafor', 'Owner']]);
+  const cook = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([cook.signOff.name, cook.signOff.role], ['Sam Okafor', 'Owner']);
+  // Marked to the newest record, the document is signed off and its header shows the corrected role.
   mark(file);
-  const record = readFileSync(signOffsFile(dir), 'utf8');
-  const marked = readFileSync(file, 'utf8');
-  for (const [name, role] of [['Sam Okafor', 'owner'], ['sam okafor', 'OWNER'], ['Sam  Okafor', ' Owner ']]) {
-    const again = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', name, '--role', role, '--version', '1.0', '--date', '2026-11-17');
-    assert.equal(again.status, 1, `${name}, ${role}: ${again.stdout}`);
-    // The refusal names the person as the record does, which is what the header shows.
-    assert.equal(FIRST_LINE(again.stderr), 'FOODCOOK is already signed off, by Sam Okafor, Owner, on 2026-11-17, and nothing more was written, because:');
-    assert.deepEqual(reasons(again.stderr), [`Sam Okafor's sign-off of ${basename(file)} (version 1.0) as Owner is already recorded, on 2026-11-17, and the ` +
-      'file has not changed since, so nothing more is recorded. Its header shows it.']);
-    assert.equal(readFileSync(signOffsFile(dir), 'utf8'), record);
-    assert.equal(readFileSync(file, 'utf8'), marked);
-  }
-  // Another person, or the same person in another role, is another statement and is recorded.
-  const manager = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Sam Okafor', '--role', 'Manager', '--version', '1.0', '--date', '2026-11-17');
-  assert.equal(manager.status, 0, manager.stderr);
-  assert.equal(JSON.parse(readFileSync(signOffsFile(dir), 'utf8')).signOffs.length, 2);
+  const marked = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([marked.signedOff, marked.headerShowsSignOff], [true, true]);
+  assert.match(readFileSync(file, 'utf8'), /\| \*\*Approved By\*\* \| Sam Okafor, Owner, 2026-11-17 \|/);
 });
-

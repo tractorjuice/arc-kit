@@ -1204,16 +1204,17 @@ def test_template_comment_does_not_point_a_note_outside_the_markers(name):
 def test_template_comment_says_truly_what_ends_a_sign_off(name):
     """The comment used to say a line added anywhere in the file ends a sign-off. A model read that in a live run,
     cut core's Build Provenance section off a signed document and told the owner the section would end the sign-off.
-    The helper leaves that section, and the header lines the sign-off command writes, out of what a sign-off covers."""
+    The helper leaves that section as ArcKit writes it, and the header as the sign-off command marks it, out of what a
+    sign-off covers; a change anyone else makes to either ends the sign-off, and the comment says that too."""
     text = (OVERLAY / "templates" / name).read_text(encoding="utf-8")
     comment = next(line for line in text.splitlines() if line.startswith("<!-- This file is written by"))
     assert "anywhere in the file" not in text, name
     if name == "uk-food-check-template.md":
         assert "sign-off covers" not in comment, "the completion record is a report and is not signed off"
         return
-    assert ("A sign-off covers every line here, so a line added or changed afterwards ends it. There are two exceptions: the header "
-            "lines the sign-off command writes to show the sign-off, and the Build Provenance section that ArcKit adds at the foot of "
-            "the file and rewrites itself. -->") in comment, name
+    assert ("A sign-off covers every line here, so a line added or changed afterwards ends it. Only two changes do not: the sign-off "
+            "command writing the sign-off into the header, and ArcKit rewriting its own Build Provenance section at the foot of the "
+            "file. A change anyone else makes to those lines ends it as well. -->") in comment, name
 
 
 @pytest.mark.parametrize("name", TEMPLATES)
@@ -1294,9 +1295,9 @@ def test_a_document_built_from_its_template_passes_check(code, project):
 
 
 EARLIER_NOTE_END = "A sign-off covers every line here, so a line added or changed afterwards, anywhere in the file, ends it. -->"
-NOTE_END = ("A sign-off covers every line here, so a line added or changed afterwards ends it. There are two exceptions: the header "
-            "lines the sign-off command writes to show the sign-off, and the Build Provenance section that ArcKit adds at the foot of "
-            "the file and rewrites itself. -->")
+NOTE_END = ("A sign-off covers every line here, so a line added or changed afterwards ends it. Only two changes do not: the sign-off "
+            "command writing the sign-off into the header, and ArcKit rewriting its own Build Provenance section at the foot of the "
+            "file. A change anyone else makes to those lines ends it as well. -->")
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
@@ -1828,8 +1829,9 @@ def test_the_pages_no_longer_overstate_what_the_review_named():
     overview = (ROOT_GUIDES / OVERVIEW_GUIDE).read_text(encoding="utf-8")
     profile = (ROOT_GUIDES / "uk-food-profile.md").read_text(encoding="utf-8")
     sign_off = (ROOT_GUIDES / "uk-food-sign-off.md").read_text(encoding="utf-8")
-    assert ("a line of that document added or changed afterwards ends it, apart from the header lines that show the sign-off and the "
-            "Build Provenance section ArcKit adds at the foot of the file. The paragraph on signing off, below, says what else does.") in readme
+    assert ("a line of that document added or changed afterwards ends it. Only two changes do not: the sign-off command writing the "
+            "sign-off into the header, and ArcKit rewriting its own Build Provenance section at the foot of the file. The paragraph on "
+            "signing off, below, says what else does.") in readme
     assert "and that the header now shows your sign-off. It does not stop while the header still reads `DRAFT`." in sign_off, "H8"
     assert "The earlier sign-off does not come back" in profile
     assert "as a new version if it had been signed off, and that is the one to sign" in profile
@@ -1911,8 +1913,9 @@ def test_the_pages_say_what_this_round_changed_for_an_owner():
     assert "(`otherTextRead`, which is `false` when there was none)" in sign_off, "T6"
     assert ("The newest sign-off is not recorded a second time: if nothing in the file has changed and nobody has signed it since you did, "
             "asking again only finishes the header, or, if the header already shows it, says that the document is already signed off. Your "
-            "name and role count as the same however their capitals are typed. A printed copy signed later is recorded, as a record of "
-            "its own.") in sign_off, "T5, V2"
+            "name and role are compared as you gave them: given another way, such as `owner` for `Owner`, they make a new record, and the "
+            "header then shows that one. That is also how a name or role recorded with a slip in it is put right. A printed copy signed "
+            "later is recorded, as a record of its own.") in sign_off, "T5, V2"
     assert "never recorded twice" not in sign_off, "one person, then another, then the first again is recorded again"
     assert "shows you its reasons unchanged, and stops" not in sign_off, "after a refusal the command still sees to the header"
     assert "If an earlier sign-off of the document still stands, the command goes on to make sure the header shows that one." in sign_off
@@ -2405,12 +2408,10 @@ def test_sign_off_recorded_is_graded_as_it_reads(tmp_path):
     other = Run("sign-off-recorded", tmp_path / "other")
     other.helper("sign-off", "--doc", "FOODCOOK", "--project", other.project, "--name", "Priya Nair", "--role", "Manager", "--version", "1.0")
     assert "record-names-the-file-version-and-person" in failed(other.scores())
-    # (The helper refuses the same sign-off over again, T5, however the name and role are typed, so the second is a
-    # printed copy signed since, which is a statement of its own.)
+    # (The helper refuses the same sign-off over again, T5, so the second differs in how the role is written.)
     twice = Run("sign-off-recorded", tmp_path / "twice")
-    for more in [[], ["--paper-signed", "yes"]]:
-        assert twice.helper("sign-off", "--doc", "FOODCOOK", "--project", twice.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0",
-                            *more).returncode == 0
+    for role in ["Owner", "owner"]:
+        assert twice.helper("sign-off", "--doc", "FOODCOOK", "--project", twice.project, "--name", "Sam Okafor", "--role", role, "--version", "1.0").returncode == 0
     assert "one-record-only" in failed(twice.scores())
     again = twice.helper("sign-off", "--doc", "FOODCOOK", "--project", twice.project, "--name", "Sam Okafor", "--role", "owner", "--version", "1.0")
     assert again.returncode == 1 and "is already recorded" in again.stderr
@@ -2622,7 +2623,26 @@ def test_a_case_that_writes_documents_fails_anything_sent_outside_the_project(na
                     "cat <<'EOF' > body.md\nsome text\nEOF", "cat <<EOF >> /tmp/x.md\nsome text\nEOF", "cat > body.md <<'EOF'\nsome text\nEOF",
                     "python3 - <<'EOF'\nprint(1)\nEOF\nnode \"$H\" render --doc FOODCOOK --project $P > body.md",
                     'if (( $(wc -l < x) > 3 )); then node "$H" render --doc FOODCOOK --project $P > body.md; fi',
-                    '((node "$H" render --doc FOODCOOK --project $P) > body.md)']:
+                    '((node "$H" render --doc FOODCOOK --project $P) > body.md)',
+                    # The review's: a second cd, or a command that copies or sends, at the start of a later line. The grader reads
+                    # the command as JSON, where a new line is written \\n and its letter hid the start of the word.
+                    'cd projects/001-bramble-cafe && node "$H" status --project . --json | head -5\ncd /tmp\nnode "$H" render --doc FOODCOOK --project "$OLDPWD" > body.md',
+                    'echo hi\ncp projects/001-bramble-cafe/food-safety/answers-CK.md /tmp/', 'node "$H" render --doc FOODCOOK --project $P |\ntee /tmp/body.md',
+                    'node "$H" render --doc FOODCOOK --project $P |\n\ttee body.md', 'x=1\nF=$(\nmktemp)',
+                    # tee on the line that opens a here-document.
+                    "node \"$H\" status --project $P --json | python3 - <<'EOF' | tee summary.txt\nimport sys\nEOF", "cat <<EOF | tee body.md\nsome text\nEOF",
+                    # A redirect after a here-document whose closing line has a hyphen, is set in with a tab, or is missing, and after a << that opens none.
+                    "python3 - <<'END-1'\nprint(1)\nEND-1\nnode \"$H\" render --doc FOODCOOK --project $P > body.md",
+                    "if true; then\n\tcat <<-EOF\n\ttext\n\tEOF\n\tnode x > body.md\nfi", 'x=$[1 << 3]; node "$H" render --doc FOODCOOK --project $P > body.md',
+                    "cat <<'E F'\ntext\nE F\nnode \"$H\" render --doc FOODCOOK --project $P > body.md", "cat <<EOF\ntext\nnode \"$H\" render --doc FOODCOOK --project $P > body.md",
+                    # A first cd that climbs back out, a bare cd, pushd, and a path that climbs from the root or from a variable.
+                    'cd projects/.. && node "$H" status --project projects/001-bramble-cafe --json > status.json',
+                    'cd projects/001-bramble-cafe/../.. && node "$H" status --project projects/001-bramble-cafe --json > status.json',
+                    'cd projects/001-bramble-cafe; cd; node "$H" status --project "$OLDPWD" --json > status.json',
+                    'cd projects/001-bramble-cafe && pushd /tmp && node "$H" status --project "$OLDPWD" --json > status.json',
+                    'cd projects/001-bramble-cafe && node "$H" status --project . --json > status.json\ncd\nnode "$H" status --project "$OLDPWD" --json > status.json',
+                    'node "$H" status --project $P --json > /work/projects/001-bramble-cafe/../../status.json', 'node "$H" status --project $P --json > $P/../../status.json',
+                    'node "$H" status --project $P --json | tee -a "projects/001-bramble-cafe/../../status.json"']:
         assert not passes(shell, "Bash", {"command": command}), command
     for command in ['node "$H" render --doc FOODCOOK --project $P', 'node "$H" render --doc FOODCOOK --project $P 2>&1 | head -40',
                     'node "$H" status --project $P --json > /dev/null', 'node "$H" render --doc FOODCOOK --project $P > $P/food-safety/body.tmp',
@@ -2644,7 +2664,11 @@ def test_a_case_that_writes_documents_fails_anything_sent_outside_the_project(na
                     "diff <(node \"$H\" render --doc FOODCOOK --project $P) - <<'EOF'\n> quoted line\nEOF",
                     'n=$(node "$H" status --project $P --json | grep -c unfinished); if (( n > 0 )); then echo some; fi',
                     'if (( $(grep -c PENDING $P/ARC-001-FOODCOOK-v1.0.md) > 3 )); then echo yes; fi; echo $(( 4 > 3 ))',
-                    '(node "$H" status --project $P --json) | head -3', 'x=$( (node "$H" status --project $P) 2>&1 ); echo "$x" | head']:
+                    '(node "$H" status --project $P --json) | head -3', 'x=$( (node "$H" status --project $P) 2>&1 ); echo "$x" | head',
+                    "python3 - <<'END-1'\nx = 3\nif x > 2: print('more')\nEND-1", "if true; then\n\tpython3 - <<-EOF\n\tprint(3 > 2)\n\tEOF\nfi",
+                    "node \"$H\" status --project $P --json | python3 - <<'EOF' | head -3\nimport sys\nprint(len(sys.stdin.read()) > 0)\nEOF",
+                    'cd projects/001-bramble-cafe && node "$H" status --project . --json > status.json && rm status.json; echo "abcd"',
+                    'echo "$(( 1 << 3 ))"; node "$H" status --project $P --json | head -2']:
         assert passes(shell, "Bash", {"command": command}), command
     assert not passes(written, "Write", {"file_path": "/tmp/body.md", "content": "x"})
     assert not passes(written, "Write", {"file_path": "/Users/someone/notes.md", "content": "x"})

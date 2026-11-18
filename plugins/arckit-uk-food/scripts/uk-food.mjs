@@ -1336,7 +1336,7 @@ export function identifiedBy(section, data) {
   const asked = section === 'profile' ? PROFILE_QUESTIONS.map((question) => {
     const name = /^(?:process|food):(.+)$/.exec(question.key)?.[1];
     return { id: question.id, prompt: profilePrompt(question), own: name ? [['within', plainWords(name)]] : parts('start', question.text),
-      was: name ? [] : question.was.map((text) => parts('start', text)), context: [] };
+      was: name ? [] : question.was.map((text) => parts('start', text)).filter((words) => words.length), context: [] };
   }) : (data.sections.get(section)?.methods ?? []).flatMap(methodQuestions).map((entry) => ({ id: entry.question.id, prompt: promptLines(entry),
     own: parts('start', entry.question.text || entry.columns.join(' / ')), context: entry.context.map((text) => parts('line', text)).reverse() }));
   const plain = new Map(asked.map(({ id, prompt }) => [id, prompt.map(plainWords).filter(Boolean)]));
@@ -1347,10 +1347,12 @@ export function identifiedBy(section, data) {
   return known;
 }
 // Whose wording lines under a heading are: the questions whose words they hold, less any whose words they hold
-// only as a line of another such question's wording (a question that is the next one's lead-in).
+// only as a line of another such question's wording (a question that is the next one's lead-in). An earlier
+// wording decides only lines that hold no question's present words, so it never takes another question's lines.
 export function wordingOf(lines, known) {
   const plain = lines.map(plainWords).filter(Boolean);
-  const held = [...known].filter(([, { parts, was }]) => [parts, ...was].some((words) => holdsAll(plain, words)));
+  const now = [...known].filter(([, { parts }]) => holdsAll(plain, parts));
+  const held = now.length ? now : [...known].filter(([, { was }]) => was.some((words) => holdsAll(plain, words)));
   return held.filter(([id, { parts }]) => !held.some(([other, theirs]) => other !== id && holdsAll(theirs.plain, parts))).map(([id]) => id);
 }
 
@@ -1434,7 +1436,7 @@ export function upgradeWorksheet(text, data) {
     const old = at.map((line) => layout.lines[line - 1].trimEnd());
     // `own`: a question's own line, which holds its own words, as it stands and as this version prints it.
     const { own: mine, was = [] } = known.get(what) ?? {};
-    const ownLine = (lines) => lines.find((line) => [[mine], ...was].some((words) => holdsAll([plainWords(line)], words))) ?? lines.at(-1);
+    const ownLine = (lines) => lines.find((line) => [mine, ...was.map((words) => words.at(-1))].some((part) => holdsPart([plainWords(line)], part))) ?? lines.at(-1);
     const change = { what, from: at[0], to: at.at(-1), out: [], put: [], own: mine ? [ownLine(old), ownLine(now)] : null };
     let waiting = [];
     for (const [step, k] of lineSteps(old, now)) {
@@ -2266,7 +2268,7 @@ const RULE_LINE = /^ {0,3}([-*_])(?:[ \t]*\1){2,}[ \t]*$/;
 // document written then keeps it, and it stays part of that document's frame.
 const FRAME_COMMENTS = ['<!-- DOC-CONTROL-HEADER -->', '<!-- Resolved at command-execution time per _partials/RENDERING.md. -->',
   '<!-- UK-FOOD-BODY -->', PROVENANCE.start, PROVENANCE.end];
-const FRAME_NOTES = ['69278b73629a044a54c4b8baf4fd6ba0d486befdb4352742273184b1ed3d16f4', 'a9b0cbc3f58b12aca743acb7e344f5b2a998e6231116b621ddd6cfa3d8e8d3d9',
+const FRAME_NOTES = ['6fe5a55718f40fbb5aeb1fc5e03f5caf629c07c15985ce122b9899ca8737f8d3', 'a9b0cbc3f58b12aca743acb7e344f5b2a998e6231116b621ddd6cfa3d8e8d3d9',
   '33f1bc78a00361c791b1a3651a9c23e5607d926a4ca07af57592625991e1908d'];
 function otherText(lines, body) {
   const stamp = stampedBlock(lines, body);
@@ -3276,14 +3278,14 @@ export function signOffDocument(code, project, person, data) {
       'yes once that person has read them and says they are theirs', ...doc.otherText.map(({ line, text }) => `  line ${line}: ${text}`));
   }
   // The newest sign-off over again, while it stands, would be one statement recorded twice: it is refused,
-  // and only the header may still need marking, which is the command's to do. The name and role are the
-  // same when their words are, however their capitals, spaces and punctuation are typed. A printed copy
-  // signed since it was recorded is a new statement, and is recorded.
+  // and only the header may still need marking, which is the command's to do. The name and role are
+  // compared as typed: the same person typed another way is a new statement, which is how a name or role
+  // recorded with a slip in it is put right. A printed copy signed since it was recorded is a new
+  // statement, and is recorded.
   const newest = doc.signOff;
   const paper = newest?.paperSigned === 'no' && person.paperSigned === 'yes';
-  const same = (typed, recorded) => plainWords(typed) === plainWords(recorded);
-  if (doc.signedOff && !paper && same(person.name, newest.name) && same(person.role, newest.role)) {
-    reasons.push(`- ${newest.name}'s sign-off of ${doc.file} (version ${doc.version}) as ${newest.role} is already recorded, on ` +
+  if (doc.signedOff && !paper && newest.name === person.name && newest.role === person.role) {
+    reasons.push(`- ${person.name}'s sign-off of ${doc.file} (version ${doc.version}) as ${person.role} is already recorded, on ` +
       `${newest.date}, and the file has not changed since, so nothing more is recorded. ` +
       `${doc.headerShowsSignOff ? 'Its header shows it.' : `Its header is not yet marked to show it: ${MARK_HOW}.`}`);
   }
@@ -3482,7 +3484,9 @@ commands:
                                                      after today. The sign-off covers the whole
                                                      file as it then reads: it ends when a line of
                                                      it changes, inside the UK-FOOD markers or
-                                                     outside them
+                                                     outside them, unless the change is the
+                                                     sign-off step marking the header or core's
+                                                     hook rewriting its Build Provenance section
 `;
 
 export function validateDataCommand(args, io = { out: console.log, err: console.error }) {

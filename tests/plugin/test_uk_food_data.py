@@ -940,6 +940,12 @@ def test_render_limits_check_introduction(tmp_path):
     note = next(line for line in intro.splitlines() if "printed differently in two places" in line.lower())
     assert "\"keep it above 63°C\" (page 60)" in note and "\"kept at 63°C or above\" (page 60)" in note
     assert "\"High risk ready to eat foods\" (page 40)" in note and "\"Ready-to-eat foods\" (page 63)" in note
+    # The two stage clean is listed where the pack prints it with a figure: the note takes that page from limits.json,
+    # and gives no page for the places that name it in words, which the data does not hold.
+    staged = sorted({limit["page"] for limit in _limits() if limit["value"].endswith(" stage")})
+    assert len(staged) == 1
+    assert (f"- A quantity is listed only where the pack prints it as a figure. The two stage clean, for one, is listed on page {staged[0]}, "
+            "where it is printed with a figure, and not on the pages that name it in words.") in intro
     other = tmp_path / "other.md"
     assert _run_render_limits_check("--pdf", "/elsewhere/pack.pdf", DATA_DIR, other).returncode == 0
     assert "`pack.pdf` in `/elsewhere/`" in _introduction(other.read_text(encoding="utf-8"))

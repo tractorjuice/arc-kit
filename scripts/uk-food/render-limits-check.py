@@ -66,6 +66,8 @@ def render(data_dir: Path, pdf: str = DEFAULT_PDF) -> str:
         groups[section_id] = (f"{section['section']['title']} ({section_id})", titles)
     groups["diary"] = (PARTS["diary"], {"diary": PARTS["diary"]})
     cooking = [limit for limit in limits if limit["method"] == "CK-01"]
+    # A quantity the pack also names in words elsewhere: listed here only where it is printed as a figure.
+    staged = [limit for limit in limits if limit["value"].endswith(" stage")]
     path = PurePosixPath(pdf)
 
     lines = [
@@ -78,8 +80,9 @@ def render(data_dir: Path, pdf: str = DEFAULT_PDF) -> str:
         "- It is not a list of every frequency the pack states in words, such as filling in the diary every day,"
         " doing the opening checks at the beginning of the day, or the daily and weekly columns of the cleaning"
         " schedule.",
-        "- A quantity is listed only where the pack prints it as a figure. The two stage clean is printed with a"
-        " figure once, on page 17, which is listed, and in words on pages 18, 31, 32 and 33, which are not.",
+        "- A quantity is listed only where the pack prints it as a figure."
+        + (f" The two stage clean, for one, is listed on {_pages(l['page'] for l in staged)}, where it is printed with a"
+           " figure, and not on the pages that name it in words." if staged else ""),
         "- Where several rows on one page show the same sentence, it is because that sentence holds more than one"
         " figure.",
         f"- The {len(cooking)} rows for CK-01, on {_pages(l['page'] for l in cooking)}, are the pack's examples of"
