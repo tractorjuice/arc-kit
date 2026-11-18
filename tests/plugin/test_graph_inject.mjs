@@ -468,6 +468,43 @@ Risk register content.
   }
 });
 
+test('graph-inject /arckit:health leaves out of STALE-DRAFT a type whose status only a command sets', async () => {
+  // A type with `statusSetBy` in config/doc-types.mjs is never promoted by hand, so health does not
+  // tell anyone to promote it. Every other type's long-running draft is still reported, and the
+  // overdue-review rule is the same for every type.
+  const root = mkdtempSync(join(tmpdir(), 'arckit-health-set-by-'));
+  const projectDir = join(root, 'projects', '001-fixture');
+  mkdirSync(projectDir, { recursive: true });
+  const doc = (code, status, review) => `# ${code}
+
+| Field | Value |
+|---|---|
+| **Document ID** | ARC-001-${code}-v1.0 |
+| **Document Type** | ${code} |
+| **Status** | ${status} |
+| **Created Date** | 2025-01-01 |
+| **Last Modified** | 2025-01-15 |
+| **Next Review Date** | ${review} |
+`;
+  writeFileSync(join(projectDir, 'ARC-001-REQ-v1.0.md'), doc('REQ', 'DRAFT', '2099-01-01'));
+  writeFileSync(join(projectDir, 'ARC-001-FOODXC-v1.0.md'), doc('FOODXC', 'DRAFT', '2099-01-01'));
+  writeFileSync(join(projectDir, 'ARC-001-FOODCMP-v1.0.md'), doc('FOODCMP', 'DRAFT', '2099-01-01'));
+  writeFileSync(join(projectDir, 'ARC-001-FOODCOOK-v1.0.md'), doc('FOODCOOK', 'APPROVED', '2025-09-01'));
+  try {
+    const { code, stdout, stderr } = await runHook('/arckit:health 001', root);
+    assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
+    const ctx = JSON.parse(stdout).hookSpecificOutput.additionalContext;
+    const findings = JSON.parse(readFileSync(join(root, 'docs', 'health.json'), 'utf8')).projects[0].findings;
+    const drafts = findings.filter(f => f.rule === 'STALE-DRAFT').map(f => f.file);
+    assert.deepEqual(drafts, ['ARC-001-REQ-v1.0.md'], JSON.stringify(drafts));
+    assert.ok(!/STALE-DRAFT: \S*FOOD/.test(ctx), 'no promote advice for a FOOD document');
+    const overdue = findings.filter(f => f.rule === 'REVIEW-OVERDUE').map(f => f.file);
+    assert.deepEqual(overdue, ['ARC-001-FOODCOOK-v1.0.md'], JSON.stringify(overdue));
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test('graph-inject responds to /arckit:analyze', async () => {
   // Build a richer fixture that has everything analyze cares about:
   // global PRIN, vendor with reviews, RISK doc, REQ.

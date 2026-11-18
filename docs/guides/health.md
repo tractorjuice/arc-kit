@@ -81,7 +81,7 @@ Outputs: Console report plus `docs/health.json` for dashboard integration. No pr
 | ORPHAN-REQ | Orphaned Requirements | MEDIUM | Requirements not referenced by any ADR in the same project |
 | MISSING-TRACE | Missing Traceability | MEDIUM | ADR documents that do not reference any requirement ID |
 | REVIEW-OVERDUE | Overdue Review | HIGH | Document Control Next Review Date is in the past, on an artifact that is not DRAFT, SUPERSEDED or ARCHIVED |
-| STALE-DRAFT | Long-running Draft | MEDIUM | DRAFT artifact unchanged for > 30 days (override with `STALE_DRAFT_DAYS=N`) |
+| STALE-DRAFT | Long-running Draft | MEDIUM | DRAFT artifact unchanged for > 30 days (override with `STALE_DRAFT_DAYS=N`). Not reported for a document whose status only its own command sets, such as the food safety overlay's documents, which only its sign-off command changes |
 | STALE-VIEW | Out-of-date Generated View | MEDIUM | An artifact with a Source Artefacts table (such as an arc42 description) cites a source, including the global architecture principles, that now has a newer version, or omits a later instance of a type it cites |
 | VERSION-DRIFT | Version Drift | LOW | Multiple versions of the same artifact type where the latest is > 3 months old |
 

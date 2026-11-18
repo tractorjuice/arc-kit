@@ -142,7 +142,7 @@ Run the profile command once first, so the project exists. The build saves its w
 
 The recipe passes ArcKit's recipe checks, but nobody has yet run it end to end through the build.
 
-ArcKit's general health check, and its notices about drafts that have not changed for a while, are written for architecture documents and may suggest moving an old draft on to review or approval; for these documents, only the sign-off command changes a document's status.
+ArcKit's notices about drafts that have not changed for a while leave these documents out, and so does its general health check: only the sign-off command changes a document's status, and the completion record always stays a draft. If you give a document a next review date, ArcKit still says when that date has passed. Its health check is written for architecture documents, so the next step it suggests then does not fit these documents: use the overlay's own commands instead.
 
 ## What it does not cover
 

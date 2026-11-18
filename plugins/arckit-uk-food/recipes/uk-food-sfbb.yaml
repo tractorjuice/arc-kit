@@ -28,9 +28,11 @@
 # The build harness makes a git commit after each wave. A business's records
 # folder is rarely a git repository: run the build with --no-commit then.
 #
-# No post-build step. ArcKit's health scan is written for architecture
-# documents and may suggest promoting an old DRAFT; for these documents only
-# /arckit-uk-food:uk-food-sign-off changes a document's status.
+# No post-build step: ArcKit's health scan is written for architecture
+# documents. For these documents only /arckit-uk-food:uk-food-sign-off changes a
+# document's status (statusSetBy in core's config/doc-types.mjs), so the health
+# scan and the session-start monitor leave their drafts out of their
+# stale-draft rules.
 #
 # This recipe passes the repository's recipe checks but has not yet been run
 # end to end through the build harness.

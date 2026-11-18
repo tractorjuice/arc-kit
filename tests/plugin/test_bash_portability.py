@@ -156,3 +156,49 @@ def test_stale_scan_reports_an_old_draft(tmp_path, bash):
     result = subprocess.run([bash, str(COPIES["plugin"] / "detect-stale-artifacts.sh")],
                             cwd=root, capture_output=True, text=True)
     assert "DRAFT unchanged since 2026-01-01" in result.stdout, result.stdout + result.stderr
+
+
+HEADER = ("| Field | Value |\n|---|---|\n| **Status** | {status} |\n"
+          "| **Last Modified** | 2026-01-01 |\n| **Next Review Date** | {review} |\n")
+
+
+@pytest.mark.parametrize("bash", BASHES)
+def test_stale_scan_leaves_out_a_draft_whose_status_only_a_command_sets(tmp_path, bash):
+    """A type with `statusSetBy` in the registry is never promoted by hand, so the monitor does not
+    tell anyone to: an old DRAFT of one is not reported. An old DRAFT of any other type still is,
+    a numbered one included, and an overdue review is reported for every type."""
+    root = repo(tmp_path)
+    project = root / "projects" / "001-demo"
+    (project / "decisions").mkdir(parents=True)
+    for name, status, review in [("ARC-001-REQ-v1.0.md", "DRAFT", "2099-01-01"),
+                                 ("decisions/ARC-001-ADR-002-v1.0.md", "DRAFT", "2099-01-01"),
+                                 ("ARC-001-FOODXC-v1.0.md", "DRAFT", "2099-01-01"),
+                                 ("ARC-001-FOODCMP-v1.1.md", "DRAFT", "2099-01-01"),
+                                 ("ARC-001-FOODCOOK-v1.0.md", "APPROVED", "2026-02-01")]:
+        (project / name).write_text("# Document\n\n" + HEADER.format(status=status, review=review), encoding="utf-8")
+    result = subprocess.run([bash, str(COPIES["plugin"] / "detect-stale-artifacts.sh")],
+                            cwd=root, capture_output=True, text=True)
+    out = result.stdout
+    assert result.returncode == 0 and result.stderr == "", result.stderr
+    assert "projects/001-demo/ARC-001-REQ-v1.0.md — DRAFT unchanged since 2026-01-01" in out, out
+    assert "projects/001-demo/decisions/ARC-001-ADR-002-v1.0.md — DRAFT unchanged since 2026-01-01" in out, out
+    assert "FOODXC" not in out and "FOODCMP" not in out, out
+    assert "projects/001-demo/ARC-001-FOODCOOK-v1.0.md — review overdue since 2026-02-01" in out, out
+    assert "Found 3 stale artifact(s)" in out, out
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_the_monitors_list_is_the_registrys():
+    """The monitor runs at every session start, so it reads no registry: it carries the list of types
+    with `statusSetBy` in config/doc-types.mjs, and this keeps the two the same."""
+    registry = REPO / "plugins" / "arckit-claude" / "config" / "doc-types.mjs"
+    codes = subprocess.run(
+        ["node", "--input-type=module", "-e",
+         f"const {{ DOC_TYPES }} = await import({json.dumps(registry.as_uri())});"
+         "console.log(Object.keys(DOC_TYPES).filter(c => DOC_TYPES[c].statusSetBy).join(' '))"],
+        capture_output=True, text=True, check=True).stdout.split()
+    assert codes, "no type sets statusSetBy, so the test would prove nothing"
+    expected = f'status_set_by_command=" {" ".join(codes)} "'
+    script = (COPIES["plugin"] / "detect-stale-artifacts.sh").read_text(encoding="utf-8")
+    written = [line for line in script.splitlines() if line.startswith("status_set_by_command=")]
+    assert written == [expected], f"write this line in detect-stale-artifacts.sh:\n{expected}"

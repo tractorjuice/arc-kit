@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **A build recipe can say how short a document may be.** `/arckit:build` failed any document of 100 lines or fewer, and a recipe could not change that. A recipe target can now set `min_lines`, the fewest lines its document may have; a target without it still needs more than 100, as before, so no existing recipe builds differently. The food overlay's `uk-food-sfbb` recipe sets one for each of its documents, so it now builds the business's own methods with the others.
+- **ArcKit no longer tells you to promote a draft that only its own command can change.** The session-start notice about drafts left unchanged for over a month, and `/arckit:health`'s long-running draft finding, both said to promote such a draft to review or approval. A document type can now name, in the registry, the command that sets its status (`statusSetBy`), and a draft of such a type is left out of both. The food overlay's eight document types are the first: only its sign-off command changes their status, and its completion record always stays a draft. An overdue review is still reported for every type.
 
 ## [6.22.1] — 2026-11-17
 
