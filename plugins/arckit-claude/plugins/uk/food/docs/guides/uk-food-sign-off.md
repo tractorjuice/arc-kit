@@ -6,6 +6,8 @@ A sign-off records that a named person at the business has read one finished foo
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
+Other tools name the command their own way: `$arckit-uk-food-sign-off` in Codex and `/arckit-uk-food-sign-off` in GitHub Copilot.
+
 ## What it is for
 
 You can sign off these documents, each on its own: the business profile, the five sections of safe methods (cross-contamination, cleaning, chilling, cooking and management) and your own methods. The completion record is a report, and is not signed off.

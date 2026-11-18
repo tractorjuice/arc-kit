@@ -6,6 +6,8 @@ This command shows you what is finished and what is still waiting across all you
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
+Other tools name the command their own way: `$arckit-uk-food-check` in Codex and `/arckit-uk-food-check` in GitHub Copilot.
+
 ## What it is for
 
 It tells you, for each document:

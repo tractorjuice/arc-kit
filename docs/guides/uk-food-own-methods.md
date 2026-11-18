@@ -6,6 +6,8 @@ The Food Standards Agency's pack does not cover everything a business does. This
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
+Other tools name the command their own way: `$arckit-uk-food-own-methods` in Codex and `/arckit-uk-food-own-methods` in GitHub Copilot.
+
 ## What it is for
 
 It records two kinds of entry.

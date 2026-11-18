@@ -6,6 +6,8 @@ The business profile is the first of your food safety documents. It records who 
 
 This overlay is for small catering businesses in England and Wales. It builds your documents from the Food Standards Agency's free pack, *Safer food, better business for caterers*. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
+Other tools name the command their own way: `$arckit-uk-food-profile` in Codex and `/arckit-uk-food-profile` in GitHub Copilot.
+
 ## What it is for
 
 The profile has twenty questions. The first ten are about the business:

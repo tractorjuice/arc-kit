@@ -6,6 +6,8 @@ The Food Standards Agency's pack, *Safer food, better business for caterers*, se
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
+Other tools name the command their own way: `$arckit-uk-food-safe-methods` in Codex and `/arckit-uk-food-safe-methods` in GitHub Copilot.
+
 ## What it is for
 
 There is one document for each section:
