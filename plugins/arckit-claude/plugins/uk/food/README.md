@@ -47,6 +47,10 @@ Start with the profile, then work through the five sections in any order, then a
 
 Sign each document off when it is finished, and sign the profile off last. A sign-off lasts until what that document says changes, and changing an answer changes only the documents that print it. The business's name is printed in every document, so a change to it changes them all, and so does a change of nation into or out of England and Wales. The profile also lists each safe method's status, and your own methods by name, kind and environmental health review, so it changes when any of those does; anything else you change in one of your own methods changes the own methods document only. There is one exception: your own methods document needs an entry for every special process or food the profile says you do, so answering yes to a new one in the profile puts own methods back to unfinished until that entry is recorded. A signed-off document that has changed is written again as a new version, and that version needs signing off again.
 
+The first command makes the business's project folder, with a short README in it that says what the folder is, where the worksheets and documents are and which command to run next. The project folder holds the names of the people who work in the business. Keep it somewhere private, and if it is a git repository that is pushed anywhere, keep that private too.
+
+If a later version of the overlay changes the wording of a worksheet's guidance or questions, a worksheet filled in earlier is reported as made by a different version. The commands then show each line that would be replaced and ask before writing; the helper's `upgrade-worksheet` does the work, changes no answer and keeps the worksheet as it was.
+
 The other tools ArcKit supports name the commands their own way: for example `$arckit-uk-food-profile` in Codex and `/arckit-uk-food-profile` in GitHub Copilot.
 
 ## Guides

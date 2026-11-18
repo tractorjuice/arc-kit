@@ -69,6 +69,7 @@ Sam Okafor owns Bramble Cafe, an invented café.
 
 - `projects/001-bramble-cafe/food-safety/answers-profile.md`: your worksheet. Each question has its answer, its state (unanswered, proposed or confirmed), who gave it and when.
 - `projects/001-bramble-cafe/ARC-001-FOODPROF-v1.0.md`: the business profile. Its status is `DRAFT` until a named person at the business signs it off.
+- `projects/001-bramble-cafe/README.md`, when the folder is first made: a short note for you that says what the folder is, where the worksheets and documents are, and which command to run next. It also asks you to keep the folder private, because it holds the names of the people who work in the business.
 
 The profile also lists every safe method from the five sections, showing any you have marked not relevant or done differently, with the reason and who decided. And it lists your own methods by name, with each one's kind and where its environmental health review stands. So it changes when you mark a safe method not relevant or done differently, or change that reason or who decided; and when you add, confirm or take out one of your own methods, or change its name, kind or review. That is why the profile is signed off last, once everything else is finished. An answer you change inside a section does not change the profile, and nor does anything else you change in one of your own methods: that changes the own methods document only.
 

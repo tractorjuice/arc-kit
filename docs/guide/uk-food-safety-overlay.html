@@ -552,6 +552,8 @@ claude plugin enable arckit-uk-food
 <p>Sign each document off when it is finished, and sign the profile off last. A sign-off lasts until what that document says changes, and changing an answer changes only the documents that print it. Two things are worth knowing. The business's name is printed in every document, so changing it changes them all; so does changing the nation to or from one outside England and Wales, because every document then says so. And the profile lists each safe method's status (whether it applies, is not relevant or is done differently, with the reason and who decided) and your own methods by name, kind and environmental health review, so it changes when any of those does. That is why the profile goes last. Anything else you change in one of your own methods changes the own methods document only. There is one exception to all this: your own methods document needs an entry for every special process or food the profile says you do. If you answer yes to one that has no entry yet, own methods goes back to unfinished, though nothing in it has changed. Record the entry, and the document is written again as a new version to sign off. A signed-off document that has changed is written again as a new version, and that version needs signing off again.</p>
 <p>The documents land in your project folder, for example:</p>
 <pre><code class="language-text">projects/001-bramble-cafe/
+  README.md                  what the folder is, and what to run next
+  external/                  documents of your own for the assistant to read
   food-safety/
     answers-profile.md  answers-XC.md  answers-CL.md  answers-CH.md
     answers-CK.md  answers-MG.md  answers-own.md  sign-offs.json
@@ -564,6 +566,8 @@ claude plugin enable arckit-uk-food
   ARC-001-FOODOWN-v1.0.md    your own methods
   ARC-001-FOODCMP-v1.0.md    the completion record
 </code></pre>
+<p>The first command makes this folder, with a short note in it for you: what the folder is, where the worksheets and documents are, and which command to run next. The project folder holds the names of the people who work in the business. Keep it somewhere private, and if it is a git repository that is pushed anywhere, keep that private too.</p>
+<p><strong>If a later version of the overlay words things differently.</strong> Each worksheet carries the overlay's own guidance at the top, and the wording of each question on lines that start with <code>&gt;</code>. When a newer version of the overlay changes that wording, a worksheet you filled in earlier is reported as made by a different version, and its answers stop counting until it is brought up to date. The command you are running then shows you every line it would replace, and asks before it writes anything. Your answers, names and dates are not touched, and the worksheet as it was is kept beside the new one. Anything you typed on one of those lines cannot be told from old wording, so it is shown to you before it is taken out: say so if it is an answer you want kept, and the assistant records it in its proper place.</p>
 <h2 id="when-the-pack-does-not-fit-your-business">When the pack does not fit your business</h2>
 <p>The pack is written for most small caterers. Where it does not fit yours, you decide, and the overlay records your decision in your words.</p>
 <ul>

@@ -16,7 +16,8 @@ A document can be signed off only when it is finished. The overlay's helper scri
 - every question in it is confirmed by a named person;
 - the document is written, at the version you are signing, and passes its document check;
 - the lines of its header that a sign-off rewrites hold only what the overlay's commands write there (`DRAFT` and `[PENDING]`, or an earlier sign-off, and a date), because signing off rewrites those lines and must change nothing else;
-- for your own methods, every special process the profile confirms has its own entry.
+- for your own methods, every special process the profile confirms has its own entry;
+- if the file holds anything outside the part the helper checks, such as a note or a section of your own, you have been shown it and have said you have read it.
 
 ## Before you start
 
@@ -31,10 +32,11 @@ A document can be signed off only when it is finished. The overlay's helper scri
 2. **It works out what is to be signed, and by whom.** Name one document, or several to sign each in turn. A general request such as "sign everything off" is not enough: the command lists each document not yet signed off, with its file and version and the name and role it would record, and asks which ones.
 3. **It signs only in the name of the person asking.** If you ask it to sign for someone else, it tells you that person has to do it themselves, and records nothing.
 4. **It tells you the file and version it is about to record, and waits for your yes**, unless you named the version yourself. A sign-off says you read that version, so you need to know which one it is.
-5. **It asks the helper script to record the sign-off.** If the script refuses, the command shows you its reasons unchanged, and stops. Nothing is recorded, and the command never tries to work round a refusal.
-6. **If the sign-off is recorded**, the command marks the document's header: Status `APPROVED`, and Reviewed By and Approved By both set to the name, role and date, such as `Sam Okafor, Owner, 2026-11-18`. In this overlay, `APPROVED` means only that: signed off by the named person at the business. It also fills in that version's row in the Revision History. If a second person signs the same document later, the header is rewritten to show their sign-off, as the newest.
-7. **It runs the document check again**, and looks at where the document stands, to prove that marking the header changed nothing else in the file.
-8. **It shows a summary.**
+5. **It shows you any text in the file that the helper has not checked.** A document written by the overlay's commands has none. If someone has added a note or a section of their own outside the checked part, the command shows you each of those lines and asks whether you have read them and they are yours, because your sign-off covers them too.
+6. **It asks the helper script to record the sign-off.** If the script refuses, the command shows you its reasons unchanged, and stops. Nothing is recorded, and the command never tries to work round a refusal.
+7. **If the sign-off is recorded**, the command marks the document's header: Status `APPROVED`, and Reviewed By and Approved By both set to the name, role and date, such as `Sam Okafor, Owner, 2026-11-18`. In this overlay, `APPROVED` means only that: signed off by the named person at the business. It also fills in that version's row in the Revision History. If a second person signs the same document later, the header is rewritten to show their sign-off, as the newest.
+8. **It runs the document check again**, and looks at where the document stands, to prove that marking the header changed nothing else in the file.
+9. **It shows a summary.**
 
 When the helper script refuses, its reasons look like this:
 
@@ -74,7 +76,8 @@ And if someone asks on another person's behalf:
 
 A sign-off covers the whole document, exactly as it reads when you sign it: the pack's wording, your answers, and everything else in the file.
 
-- **If something the document says changes**, the sign-off no longer counts. That happens when an answer it prints is changed, and when anyone adds to the file or edits it by hand. `/arckit-uk-food:uk-food-check` then says the document is no longer signed off, and why. The document's command writes it again as a new version, and that version needs signing off.
+- **If an answer the document prints changes**, the sign-off no longer counts. `/arckit-uk-food:uk-food-check` then says the document is no longer signed off, and why. The document's command writes it again as a new version, and that version needs signing off. The same happens if the text between the document's two `UK-FOOD` marker lines is changed by hand.
+- **If anyone adds to the file, or changes it, outside that checked part**, the sign-off no longer counts either, but no new version is needed, because what the document prints from your answers has not changed. Take the change out again, or sign the document off again as it now reads: you are shown the added text first.
 - **If something it does not say changes**, the sign-off stands, with one exception. Adding a member of staff to the profile, for example, changes the profile document and nothing else. The exception is your own methods document. It needs an entry for every special process or food the profile says you do, so answering yes to a new one in the profile puts own methods back to unfinished until that entry is recorded.
 - **The lines that show the sign-off are part of it.** Once a document is signed off, its Status reads `APPROVED`, and Reviewed By and Approved By read exactly the name, role and date that were recorded. A word added to any of them ends the sign-off, and the document check says which line. So does anything added to the Build Provenance table at the foot of the file, which ArcKit writes itself.
 - **If a worksheet cannot be read**, because a line in it was changed in a way the helper script does not understand, the documents built from it show as not checked, and not signed off, until that line is put right. Nothing is lost: once the worksheet reads again, a document that has not changed is signed off as before.

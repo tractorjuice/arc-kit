@@ -82,6 +82,8 @@ The documents land in your project folder, for example:
 
 ```text
 projects/001-bramble-cafe/
+  README.md                  what the folder is, and what to run next
+  external/                  documents of your own for the assistant to read
   food-safety/
     answers-profile.md  answers-XC.md  answers-CL.md  answers-CH.md
     answers-CK.md  answers-MG.md  answers-own.md  sign-offs.json
@@ -94,6 +96,10 @@ projects/001-bramble-cafe/
   ARC-001-FOODOWN-v1.0.md    your own methods
   ARC-001-FOODCMP-v1.0.md    the completion record
 ```
+
+The first command makes this folder, with a short note in it for you: what the folder is, where the worksheets and documents are, and which command to run next. The project folder holds the names of the people who work in the business. Keep it somewhere private, and if it is a git repository that is pushed anywhere, keep that private too.
+
+**If a later version of the overlay words things differently.** Each worksheet carries the overlay's own guidance at the top, and the wording of each question on lines that start with `>`. When a newer version of the overlay changes that wording, a worksheet you filled in earlier is reported as made by a different version, and its answers stop counting until it is brought up to date. The command you are running then shows you every line it would replace, and asks before it writes anything. Your answers, names and dates are not touched, and the worksheet as it was is kept beside the new one. Anything you typed on one of those lines cannot be told from old wording, so it is shown to you before it is taken out: say so if it is an answer you want kept, and the assistant records it in its proper place.
 
 ## When the pack does not fit your business
 

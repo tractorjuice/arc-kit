@@ -1545,6 +1545,31 @@ def test_the_pages_say_truly_what_a_document_shows_and_what_leaves_a_sign_off_st
     assert "because signing off rewrites those lines and must change nothing else" in sign_off
 
 
+def test_the_pages_say_what_this_round_changed_for_an_owner():
+    """H1, H2, H3, H5 and H7, as the person running the business reads them."""
+    readme = (OVERLAY / "README.md").read_text(encoding="utf-8")
+    overview = (ROOT_GUIDES / OVERVIEW_GUIDE).read_text(encoding="utf-8")
+    profile = (ROOT_GUIDES / "uk-food-profile.md").read_text(encoding="utf-8")
+    sign_off = (ROOT_GUIDES / "uk-food-sign-off.md").read_text(encoding="utf-8")
+    private = ("holds the names of the people who work in the business. Keep it somewhere private, and if it is a git "
+               "repository that is pushed anywhere, keep that private too.")
+    for name, text in [("README", readme), ("overview guide", overview)]:
+        assert f"The project folder {private}" in text, f"H2: {name}"
+        assert "made by a different version" in text, f"H3: {name}"
+    assert f"This folder {private}" in HELPER.read_text(encoding="utf-8").replace("' +\n  '", ""), "H2: the folder's own README"
+    assert "which command to run next" in overview and "which command to run next" in profile and "which command to run next" in readme, "H1"
+    assert "shows you every line it would replace, and asks before it writes anything" in overview, "H3"
+    assert "Your answers, names and dates are not touched, and the worksheet as it was is kept beside the new one." in overview, "H3"
+    assert "changes no answer and keeps the worksheet as it was" in readme, "H3"
+    assert "**It shows you any text in the file that the helper has not checked.**" in sign_off, "H5"
+    assert "you have been shown it and have said you have read it" in sign_off, "H5"
+    assert "but no new version is needed, because what the document prints from your answers has not changed" in sign_off, "H7"
+    assert "Take the change out again, or sign the document off again as it now reads" in sign_off, "H7"
+    for path in hand_written():
+        text = path.read_text(encoding="utf-8")
+        assert "and when anyone adds to the file or edits it by hand" not in text, f"H7: {path.name}"
+
+
 def test_the_readme_guide_and_recipe_say_what_a_build_writes():
     """M7: the build harness takes an existing document as done, so a build writes only what is not there yet."""
     recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
