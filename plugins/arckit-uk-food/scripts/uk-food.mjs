@@ -3425,20 +3425,37 @@ export function upgradeWorksheetCommand(args, io = { out: console.log, err: cons
 // ---------------------------------------------------------------------------------------------
 
 // What create-project.sh leaves in a new project, and nothing else: its README, and these folders, all
-// empty but for the note in external. A test runs the real script, so a change to it shows there.
+// empty but for the note in external. Each of the two files is compared whole, so a line added, taken
+// out or changed anywhere in either is someone's, and the folder is then left alone. The README is the
+// same for every project but for four things: the name the script was given (its title), the folder's
+// number, the folder's own name (once, in the tree it draws) and the day. With those taken out it has
+// one fingerprint; the note has no part that varies, so it has one as it stands. A test runs the real
+// script, so a change to it shows there.
 const SCRIPT_FOLDERS = ['data-contracts', 'decisions', 'diagrams', 'external', 'final', 'reviews', 'vendors', 'wardley-maps'];
-const SCRIPT_README = /^# ([^\n]+)\n\nProject ID: (\d{3})\nCreated: \d{4}-\d{2}-\d{2}\n\n## Overview\n\n\[Project description to be added\]\n\n## Workflow\n\nUse ArcKit commands to generate project artifacts/;
-const SCRIPT_NOTE = /^# External Documents\n\nPlace external reference documents here for ArcKit commands to read as context\.\n/;
+const SCRIPT_README = '0debd70286495d174af21d6d8b91227ffe9720c1f56995cd71f32f1d4485ec46';
+const SCRIPT_NOTE = '1c8dca3a4a8fc840cb64b2c4fd1fc27b1ace22e285394b80f59019835b2fa96d';
+// The name in the title of a README that is, whole, the one the script writes into `folder`; else null.
+function scriptReadme(text, folder) {
+  const lines = text.split('\n');
+  const number = /^\d{3}(?=-)/.exec(folder)?.[0];
+  const name = /^# (.+)$/.exec(lines[0])?.[1];
+  if (!number || !name || lines[2] !== `Project ID: ${number}` || !/^Created: \d{4}-\d{2}-\d{2}$/.test(lines[3] ?? '') || text.includes('\u0000')) return null;
+  const shape = ['# \u0000', lines[1], 'Project ID: \u0000', 'Created: \u0000', ...lines.slice(4).map((line) =>
+    (line === `${folder}/` ? '\u0000/' : line.replaceAll(`ARC-${number}-`, 'ARC-\u0000-')))].join('\n');
+  return sha256(shape) === SCRIPT_README ? name : null;
+}
+// The name the commands give a project when nobody has said what the business is called: no name at all.
+const named = (name) => (/^food safety$/i.test(name.trim()) ? '' : name);
 const KEEP_PRIVATE = 'This folder holds the names of the people who work in the business. Keep it somewhere private, and if it ' +
   'is a git repository that is pushed anywhere, keep that private too.';
-const folderReadme = (name, number) => `# ${name}: food safety records
+const folderReadme = (name, number) => `# ${name ? `${name}: food safety records` : 'Food safety records'}
 
-This folder holds ${name}'s food safety records. They are built with ArcKit's UK Food Safety Overlay from the Food Standards Agency's pack, Safer food, better business for caterers, and from the answers that people at the business give.
+This folder holds ${name ? `${name}'s` : 'a food business\'s'} food safety records. They are built with ArcKit's UK Food Safety Overlay from the Food Standards Agency's pack, Safer food, better business for caterers, and from the answers that people at the business give.
 
 ## What is here
 
 - \`food-safety/\`: the worksheets. There is one for the business profile, one for each of the pack's five sections and one for the business's own methods. Each holds the answers given, who gave each one and when. \`sign-offs.json\`, in the same folder, records who has signed each document off.
-- \`ARC-${number}-FOOD...md\`, in this folder: the documents themselves, written from the worksheets. Each is a draft until a named person at the business signs it off.
+- \`ARC-${number}-FOOD...md\`, in this folder: the documents themselves, written from the worksheets. Each is a draft until a named person at the business signs it off, except the completion record (\`ARC-${number}-FOODCMP-v1.0.md\`): it reports where the others stand, and nobody signs it.
 - \`external/\`: a place for documents of your own that you want the assistant to read, such as a written procedure for a special process. The note in that folder says more.
 
 ## What to do next
@@ -3473,9 +3490,11 @@ These documents may hold names and other details of the business, so keep them a
 // Turns a project folder that create-project.sh has just made into a food business's own: its README
 // and the note in external are replaced by the two texts above, and the empty folders for architecture
 // work are taken away, external kept. It changes a folder only when the folder is exactly as the script
-// leaves a new project, checked entry by entry before anything is written; a project that holds a file
-// of its own, work already started or a README someone has changed is refused, with nothing in it
-// changed (exit 1). A folder already set up is left as it is (exit 0).
+// leaves a new project, checked entry by entry and file by file before anything is written; a project
+// that holds a file of its own, work already started, or a README or note with a line added, taken out
+// or changed is refused, with nothing in it changed (exit 1). The refusal says only what the helper
+// knows: that the folder is not as this version expects a new one to be, which is also what a later
+// version of the script would bring about. A folder already set up is left as it is (exit 0).
 export function setUpFolderCommand(args, io = { out: console.log, err: console.error }) {
   const { options, error } = readOptions(args, ['project']);
   if (error) return usageError(io, error);
@@ -3487,19 +3506,21 @@ export function setUpFolderCommand(args, io = { out: console.log, err: console.e
   } catch (readError) {
     return usageError(io, `cannot read the project folder ${project}: ${readError.message}`);
   }
-  const refuse = (why) => failure(io, { exit: 1, messages: [`${project} ${why}, so it is not a project that has just been made. Nothing in it ` +
-    'has been changed: this command only sets up a new folder, and never touches a project that already existed.'] });
+  const refuse = (why) => failure(io, { exit: 1, messages: [`${project} ${why}, so it is not as this version of the overlay expects a new ` +
+    'project folder to be. Nothing in it has been changed: this command sets up only a folder that is exactly as ArcKit makes a new one.'] });
   const read = (...path) => readFileSync(join(project, ...path), 'utf8');
   const readme = entries.some((entry) => entry.isFile() && entry.name === 'README.md') ? read('README.md') : null;
   if (readme === null) return refuse('has no README.md');
+  const folder = basename(realpathSync(project));
+  const number = /^\d{3}/.exec(folder)?.[0] ?? '';
   const mine = /^# (.+): food safety records\n/.exec(readme);
-  const made = SCRIPT_README.exec(readme);
-  const number = /^\d{3}/.exec(basename(realpathSync(project)))?.[0] ?? made?.[2] ?? '';
-  if (mine && readme === folderReadme(mine[1], number)) {
+  if (readme === folderReadme('', number) || (mine && readme === folderReadme(mine[1], number))) {
     io.out(`${project} is already set up: nothing has been changed.`);
     return 0;
   }
-  if (!made) return refuse('holds a README.md that is not the one a new project is given');
+  const made = scriptReadme(readme, folder);
+  if (made === null) return refuse('holds a README.md that is not the one a new project is given');
+  const name = named(made);
   const kept = [];
   for (const entry of entries) {
     if (entry.name === 'README.md' && entry.isFile()) continue;
@@ -3508,17 +3529,17 @@ export function setUpFolderCommand(args, io = { out: console.log, err: console.e
     if (entry.name !== 'external' && inside.length) return refuse(`holds a folder, ${entry.name}, that is not empty`);
     const other = inside.find((name) => name !== 'README.md');
     if (other) return refuse(`holds, in ${entry.name}, ${other}, which a new project does not`);
-    if (inside.length && !SCRIPT_NOTE.test(read('external', 'README.md'))) return refuse('holds, in external, a README.md that is not the one a new project is given');
+    if (inside.length && sha256(read('external', 'README.md')) !== SCRIPT_NOTE) return refuse('holds, in external, a README.md that is not the one a new project is given');
     if (entry.name !== 'external') kept.push(entry.name);
   }
   try {
-    writeFileSync(join(project, 'README.md'), folderReadme(made[1], number));
+    writeFileSync(join(project, 'README.md'), folderReadme(name, number));
     if (entries.some((entry) => entry.name === 'external')) writeFileSync(join(project, 'external', 'README.md'), FOLDER_NOTE);
     for (const name of kept) rmdirSync(join(project, name));
   } catch (writeError) {
     return failure(io, { exit: 2, messages: [`cannot set up ${project}: ${writeError.message}`] });
   }
-  io.out([`${project} is now set up as ${made[1]}'s food safety records.`,
+  io.out([`${project} is now set up ${name ? `as ${name}'s` : 'for a food business\'s'} food safety records.`,
     '- README.md says what the folder is, where the worksheets and documents are, which command to run next, and to keep the folder private.',
     '- external/README.md says what that folder is for: documents of the business\'s own for the assistant to read.',
     ...(kept.length ? [`- The empty folders for ArcKit's architecture work were taken away: ${andList(kept)}.`] : [])].join('\n'));

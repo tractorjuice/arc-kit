@@ -2131,6 +2131,99 @@ test('H1: set-up-folder changes nothing in a project that already existed: one w
   assert.match(run('set-up-folder').stderr.replace(/\s+/g, ' '), /set-up-folder --project DIR/);
 });
 
+// ---- What the review of the overlay round found (J1) ----
+
+const NOT_AS_EXPECTED = /is not as this version of the overlay expects a new project folder to be\. Nothing in it has been changed/;
+const snapshot = (dir) => listing(dir).map((name) => (name.endsWith('/') ? name : `${name}:${readFileSync(join(dir, name), 'utf8')}`));
+
+test('J1: set-up-folder compares the whole of each file the script writes: a line added, taken out or changed anywhere in either leaves the folder as it is', () => {
+  const edits = {
+    'a line appended': (text) => `${text}\n## Our notes\n\nKeep the spare key under the mat.\n`,
+    'a line appended with no blank line before it': (text) => `${text}Our own note.\n`,
+    'a line taken out of the middle': (text) => {
+      const lines = text.split('\n');
+      const at = Math.floor(lines.length / 2);
+      assert.notEqual(lines[at], undefined);
+      return [...lines.slice(0, at), ...lines.slice(at + 1)].join('\n');
+    },
+    'the very last line changed': (text) => {
+      const lines = text.replace(/\n$/, '').split('\n');
+      return `${[...lines.slice(0, -1), `${lines.at(-1)} (and our own word)`].join('\n')}\n`;
+    },
+    'one character changed near the end': (text) => `${text.slice(0, -12)}X${text.slice(-11)}`,
+    'the line ending at the end taken off': (text) => text.replace(/\n$/, ''),
+    'Windows line endings': (text) => text.replace(/\n/g, '\r\n')
+  };
+  for (const file of [['README.md'], ['external', 'README.md']]) {
+    for (const [what, edit] of Object.entries(edits)) {
+      const dir = newProject();
+      const path = join(dir, ...file);
+      const text = readFileSync(path, 'utf8');
+      assert.notEqual(edit(text), text, what);
+      writeFileSync(path, edit(text));
+      const before = snapshot(dir);
+      const result = setUp(dir);
+      assert.equal(result.status, 1, `${file.join('/')}: ${what}: ${result.stdout}`);
+      assert.equal(result.stdout, '', what);
+      assert.match(result.stderr, NOT_AS_EXPECTED, `${file.join('/')}: ${what}`);
+      assert.deepEqual(snapshot(dir), before, `${file.join('/')}: ${what}`);
+    }
+  }
+  // The number and the folder's own name are the folder's: a README copied in from another project is not this one's.
+  const dir = newProject();
+  for (const [from, to] of [['Project ID: 001', 'Project ID: 002'], ['ARC-001-STKE', 'ARC-002-STKE'], ['001-bramble-cafe/', '001-another-cafe/']]) {
+    const text = readFileSync(join(dir, 'README.md'), 'utf8');
+    assert.ok(text.includes(from), from);
+    writeFileSync(join(dir, 'README.md'), text.replace(from, to));
+    const result = setUp(dir);
+    assert.equal(result.status, 1, from);
+    assert.match(result.stderr, NOT_AS_EXPECTED, from);
+    writeFileSync(join(dir, 'README.md'), text);
+  }
+  // Untouched, the same folder is set up; whatever day the script ran, and whatever the business is called.
+  const text = readFileSync(join(dir, 'README.md'), 'utf8');
+  writeFileSync(join(dir, 'README.md'), text.replace(/^Created: \d{4}-\d{2}-\d{2}$/m, 'Created: 2025-03-09'));
+  assert.equal(setUp(dir).status, 0);
+});
+
+test('J1: the refusal says what is true of the folder, and never that it was not just made', () => {
+  for (const change of [(dir) => writeFileSync(join(dir, 'notes.txt'), 'x\n'), (dir) => writeFileSync(join(dir, 'README.md'), '# Bramble Cafe\n\nOur own notes.\n'),
+    (dir) => rmSync(join(dir, 'README.md')), (dir) => writeFileSync(join(dir, 'decisions', 'a.md'), 'x\n')]) {
+    const dir = newProject();
+    change(dir);
+    const result = setUp(dir);
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, NOT_AS_EXPECTED);
+    assert.doesNotMatch(result.stderr, /not a project that has just been made|a project that already existed/);
+  }
+});
+
+test('J1: a folder made with no business name reads well, and the folder\'s text is true of the completion record', () => {
+  for (const name of ['Food safety', 'food safety', 'Food Safety']) {
+    const dir = newProject(name);
+    const done = setUp(dir);
+    assert.equal(done.status, 0, done.stderr);
+    const readme = readFileSync(join(dir, 'README.md'), 'utf8');
+    assert.ok(readme.startsWith('# Food safety records\n\nThis folder holds a food business\'s food safety records. '), readme.slice(0, 120));
+    assert.doesNotMatch(readme, /food safety: food safety|food safety's food safety/i);
+    assert.doesNotMatch(done.stdout, /food safety's food safety/i);
+    assert.match(done.stdout, /is now set up for a food business's food safety records\./);
+    // Run again, it is already set up.
+    const again = setUp(dir);
+    assert.equal(again.status, 0, again.stderr);
+    assert.match(again.stdout, /is already set up: nothing has been changed/);
+    assert.equal(readFileSync(join(dir, 'README.md'), 'utf8'), readme);
+  }
+  // A business whose name only holds those words keeps its name.
+  const named = newProject('Hartley Food Safety Kitchen');
+  assert.equal(setUp(named).status, 0);
+  assert.ok(readFileSync(join(named, 'README.md'), 'utf8').startsWith('# Hartley Food Safety Kitchen: food safety records\n'));
+  // The completion record is the one document nobody signs, and the folder's text says so.
+  const readme = readFileSync(join(named, 'README.md'), 'utf8');
+  assert.doesNotMatch(readme, /Each is a draft until a named person at the business signs it off\.\n/);
+  assert.match(readme, /Each is a draft until a named person at the business signs it off, except the completion record \(`ARC-001-FOODCMP-v1\.0\.md`\): it reports where the others stand, and nobody signs it\./);
+});
+
 // ---- What the re-review of the seven fixes found (H8, H9) ----
 
 const rewriteLine = (name, date) => `signed off by ${name} on ${date}, but what it prints has changed since: writing the document again ` +
