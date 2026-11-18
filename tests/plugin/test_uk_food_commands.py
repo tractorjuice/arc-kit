@@ -237,10 +237,151 @@ def test_a_gathering_command_never_invents_an_answer(name):
     assert "proposed" in body and "confirmed" in body
     # Ruling 2: this is a deliberate exception to ArcKit's interview pattern.
     assert "exception" in body and "interview pattern" in body
-    # Ruling 16: the name comes from the conversation, never from these.
-    for source in ["git", "organisation_name"]:
-        assert source in body, f"{name} says not to take a name from {source}"
+    # Ruling 16: the name comes from the conversation, never from git or the plugin's configuration.
+    assert "Never take a name from git, from the plugin's configuration (`organisation_name`" in body
     assert "parse-worksheet" in body
+
+
+# Each sentence below carries one rule. Deleting the rule from a command deletes its sentence, and
+# the test fails.
+GATHERING_RULES = {
+    "29: no suggested answers": "a suggested answer that the person agrees to is still your answer, not the business's",
+    "29: a blanket reply": "counts only for the questions you have just shown, and only where it answers each of them in "
+                           "the form that question asks for",
+    "30: a missing field is asked for": "If the person has not given a field a state needs, ask for it.",
+    "30: until then the state stays": "Until they give it, leave the state where it was",
+    "30: put right by asking or stepping back": "either ask the person for what is missing, or step the state back",
+    "30: never fill it in": "never fill the field in",
+    "31: dates as given": "Record a date only as the person gives it.",
+    "31: never work one out": "ask for the exact date; never work one out yourself",
+    "23: an unnamed request": "`Source: the request (no name given)`",
+    "I4: no projects folder, stop": "do not run `create-project.sh`",
+    "18: always DRAFT": "**Status** `DRAFT`, and **Reviewed By** and **Approved By** `[PENDING]`, always.",
+    "P6: other documents out of step": "whose `rendered` is true and `inSync` is false",
+}
+
+
+@pytest.mark.parametrize("rule", GATHERING_RULES)
+@pytest.mark.parametrize("name", GATHERING)
+def test_a_gathering_command_states_the_rule(name, rule):
+    _, body = split(command(name))
+    assert GATHERING_RULES[rule] in body, f"{name} lacks ruling {rule}"
+
+
+# The fields the helper requires before it accepts a state, as the commands state them. Each is
+# checked against parse-worksheet below, so the commands cannot name fields the helper does not need.
+REQUIRED = {
+    "question": {
+        "confirmed": "a `confirmed` answer needs `Answer`, `By` and `On`",
+        "proposed": "a `proposed` answer needs `Answer` and `Source`",
+    },
+    "method": {
+        "not-relevant": "`not-relevant` needs `Reason` and `Decided-by`",
+        "adapted": "`adapted` needs `Variation`, `Reason`, `Proved-safe` and `Decided-by`",
+    },
+    "own": {
+        "additional": "`additional` needs `Hazard`, `Control`, `Check` and `If-it-fails`",
+        "special-process": "`special-process` needs `Process`, `Supplied-text` and `EH-review`",
+        "proposed too": "as much for a `proposed` entry as for a `confirmed` one",
+    },
+}
+STATES_IN = {
+    "uk-food-profile": ["question", "method"],
+    "uk-food-safe-methods": ["question", "method"],
+    "uk-food-own-methods": ["own"],
+}
+
+
+@pytest.mark.parametrize("name", GATHERING)
+def test_a_gathering_command_says_what_each_state_needs(name):
+    _, body = split(command(name))
+    for kind in STATES_IN[name]:
+        for state, words in REQUIRED[kind].items():
+            assert words in body, f"{name} does not say what {kind} {state} needs"
+
+
+def worksheet(section: str) -> str:
+    return run(HELPER, "worksheet", "--section", section).stdout
+
+
+def parses(text: str, tmp_path: Path) -> tuple[int, str]:
+    path = tmp_path / "answers.md"
+    path.write_text(text, encoding="utf-8")
+    result = run(HELPER, "parse-worksheet", "--file", path)
+    return result.returncode, result.stdout + result.stderr
+
+
+BLANK_ANSWER = "Answer:\nState: unanswered\nBy:\nOn:\nSource:"
+BLANK_METHOD = "Status: applies\nReason:\nDecided-by:\nVariation:\nProved-safe:"
+OWN_FIELDS = ["Kind", "Process", "Hazard", "Control", "Limit", "Limit-source", "Check", "If-it-fails",
+              "Supplied-text", "EH-review", "State", "By", "On"]
+
+
+def own_entry(fields: dict) -> str:
+    lines = ["## OWN-01 Opened milk", ""] + [f"{f}: {fields[f]}" if fields.get(f) else f"{f}:" for f in OWN_FIELDS]
+    return worksheet("own") + "\n" + "\n".join(lines) + "\n"
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_the_fields_the_commands_name_are_the_ones_the_helper_requires(tmp_path):
+    """Leaving out any one named field is refused, naming it; giving them all is accepted."""
+    ck = worksheet("CK")
+    answers = {
+        "confirmed": {"Answer": "Omelettes", "State": "confirmed", "By": "Sam Okafor", "On": "2026-11-18"},
+        "proposed": {"Answer": "Omelettes", "State": "proposed", "Source": "menu.pdf"},
+    }
+    for state, fields in answers.items():
+        for words_field in re.findall(r"`(Answer|By|On|Source)`", REQUIRED["question"][state]):
+            given = {k: v for k, v in fields.items() if k != words_field}
+            block = "\n".join(f"{f}: {given[f]}" if f in given else f"{f}:" for f in ["Answer", "State", "By", "On", "Source"])
+            code, out = parses(ck.replace(BLANK_ANSWER, block, 1), tmp_path)
+            assert code == 1 and f"needs {words_field}" in out, (state, words_field, out)
+        block = "\n".join(f"{f}: {fields[f]}" if f in fields else f"{f}:" for f in ["Answer", "State", "By", "On", "Source"])
+        assert parses(ck.replace(BLANK_ANSWER, block, 1), tmp_path)[0] == 0, state
+    for state in ["not-relevant", "adapted"]:
+        named = re.findall(r"`(Reason|Decided-by|Variation|Proved-safe)`", REQUIRED["method"][state])
+        values = {f: "given" for f in named}
+        for missing in named:
+            lines = [f"Status: {state}"] + [f"{f}: {values[f]}" if f in values and f != missing else f"{f}:"
+                                            for f in ["Reason", "Decided-by", "Variation", "Proved-safe"]]
+            code, out = parses(ck.replace(BLANK_METHOD, "\n".join(lines), 1), tmp_path)
+            assert code == 1 and f"needs {missing}" in out, (state, missing, out)
+        lines = [f"Status: {state}"] + [f"{f}: given" if f in values else f"{f}:" for f in ["Reason", "Decided-by", "Variation", "Proved-safe"]]
+        assert parses(ck.replace(BLANK_METHOD, "\n".join(lines), 1), tmp_path)[0] == 0, state
+    for kind, extra in [("additional", {}), ("special-process", {"Process": "sous vide"})]:
+        named = re.findall(r"`([A-Z][A-Za-z-]+)`", REQUIRED["own"][kind])
+        full = {"Kind": kind, **{f: "given" for f in named}, **extra}
+        if kind == "special-process":
+            full["EH-review"] = "pending"
+        for state in [{"State": "proposed"}, {"State": "confirmed", "By": "Sam Okafor", "On": "2026-11-18"}]:
+            for missing in named:
+                code, out = parses(own_entry({k: v for k, v in {**full, **state}.items() if k != missing}), tmp_path)
+                assert code == 1 and f"needs {missing}" in out, (kind, state, missing, out)
+            assert parses(own_entry({**full, **state}), tmp_path)[0] == 0, (kind, state)
+
+
+def test_safe_methods_chooses_a_section_from_the_counts_not_the_wording():
+    _, body = split(command("uk-food-safe-methods"))
+    assert "has a line in `unfinished`" not in body, "P3: a sign-off-only line would pick a finished section forever"
+    for field in ["`missingWorksheets`", "`problems`", "`unanswered`", "`proposed`", "`rendered`", "`inSync`"]:
+        assert field in body, field
+    assert "/arckit:uk-food-sign-off" in body
+
+
+def section_needs_work(doc: dict, section: str) -> bool:
+    """The rule in uk-food-safe-methods' step "Choose the section", as code."""
+    return (f"answers-{section}.md" in doc["missingWorksheets"] or doc["problems"] > 0 or doc["unanswered"] > 0
+            or doc["proposed"] > 0 or not doc["rendered"] or not doc["inSync"])
+
+
+SECTION_CHOICE = ("the first section, in the pack's order, whose document in `documents` has the section's own worksheet "
+                  "in `missingWorksheets`, `problems` above 0, `unanswered` or `proposed` above 0, `rendered` false or "
+                  "`inSync` false")
+
+
+def test_the_section_choice_is_the_commands_words():
+    _, body = split(command("uk-food-safe-methods"))
+    assert SECTION_CHOICE in body
 
 
 @pytest.mark.parametrize("name", WRITING)
@@ -252,7 +393,9 @@ def test_a_writing_command_checks_what_it_wrote(name):
     assert check > write, f"{name} runs check after its Write"
     assert "<!-- UK-FOOD-BODY -->" in body and "unchanged" in body
     assert f"{HELPER_CALL} render --doc" in body
-    assert f"{HELPER_CALL} status --project" in body, f"{name}: the header follows status (ruling 18)"
+    assert f"{HELPER_CALL} status --project" in body, f"{name}: reads status before writing (ruling 19)"
+    assert "Confirm the header" not in body, "ruling 18: a writing command always writes DRAFT, so no header step"
+    assert "`APPROVED`, and Reviewed By" not in body, "ruling 18: only the sign-off command sets APPROVED"
     assert "${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md" in body
     assert 'node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs"' in body
 
@@ -290,6 +433,40 @@ def test_the_own_methods_command_records_a_special_process_word_for_word():
     assert "environmental health team" in body
 
 
+# Blocks the three gathering commands share word for word, so one cannot be corrected without the others.
+SHARED_BLOCKS = ["Find or create the project", "Find out who is answering", "Record only what the person gives",
+                 "Write the document as it stands"]
+
+
+def block(body: str, title: str) -> str:
+    found = re.search(rf"^### \d+\. {re.escape(title)}\n(.*?)(?=^### |\Z)", body, re.M | re.S)
+    assert found, f"no step {title!r}"
+    return found.group(1)
+
+
+@pytest.mark.parametrize("title", SHARED_BLOCKS)
+def test_the_shared_blocks_are_the_same_in_each_gathering_command(title):
+    texts = {name: block(split(command(name))[1], title) for name in GATHERING}
+    first = texts[GATHERING[0]]
+    assert len(first) > 300, f"{title} is too short to be the block"
+    for name, text in texts.items():
+        assert text == first, f"{name}'s step {title!r} differs from {GATHERING[0]}'s"
+
+
+SIGN_OFF_RULES = {
+    "32: says the file and version and takes a yes": "take their yes before recording",
+    "32: unless the request names the version": "unless the request itself names the version",
+    "32: only in the requester's name": "only in the name of the person making the request",
+    "32: not for someone else": "has to do it themselves",
+}
+
+
+@pytest.mark.parametrize("rule", SIGN_OFF_RULES)
+def test_the_sign_off_command_states_the_rule(rule):
+    _, body = split(command("uk-food-sign-off"))
+    assert SIGN_OFF_RULES[rule] in body, f"uk-food-sign-off lacks ruling {rule}"
+
+
 def test_the_sign_off_command_records_only_through_the_helper():
     _, body = split(command("uk-food-sign-off"))
     sign = body.find(f"{HELPER_CALL} sign-off --doc")
@@ -306,9 +483,22 @@ def test_the_sign_off_command_records_only_through_the_helper():
 
 FIGURES = [
     (re.compile(r"[°º]\s*C"), "a degree sign followed by C"),
-    (re.compile(r"\d[\s-]*(?:hours?|minutes?|mins?|days?)\b", re.I), "a time after a digit"),
+    (re.compile(r"\d[\s-]*degrees?\b", re.I), "degrees after a digit"),
+    (re.compile(r"\d[\s-]*(?:hours?|hrs?|minutes?|mins?|days?)\b", re.I), "a time after a digit"),
     (re.compile(r"\bBS EN\b"), "a British Standard"),
 ]
+
+
+def figures_in(text: str) -> list[str]:
+    return [what for pattern, what in FIGURES if pattern.search(text)]
+
+
+def test_the_figure_scan_catches_the_forms_a_figure_takes():
+    for text in ["8°C", "8 °C", "75 degrees", "63-degree", "24 hours", "1 hour", "2hrs", "2 hr", "90 minutes",
+                 "10 mins", "3 days", "3-day", "BS EN 1234"]:
+        assert figures_in(text), text
+    for text in ["version 1.0", "2.1.319", "PR-Q07", "OWN-01", "2026-11-18"]:
+        assert not figures_in(text), text
 
 
 @pytest.mark.parametrize("path", hand_written(), ids=lambda p: str(p.relative_to(ROOT)))
@@ -426,12 +616,13 @@ def test_template_holds_nothing_render_prints(name):
 PARTIAL = OVERLAY / "templates" / "_partials" / "document-control-uk.md"
 
 
-def build(code: str, project: Path) -> Path:
+def build(code: str, project: Path, version: str = "1.0") -> Path:
     """Write `code`'s document into `project` as its command tells the model to.
 
     The template's text; the DOC-CONTROL-HEADER marker and its comment replaced by the UK partial
-    (RENDERING.md, steps 3 and 4) with its placeholders left as they are; the render output placed
-    unchanged at the UK-FOOD-BODY line; saved under the name generate-document-id.mjs gives.
+    (RENDERING.md, steps 3 and 4) with its placeholders left as they are, so Status DRAFT and both
+    names [PENDING]; the render output placed unchanged at the UK-FOOD-BODY line; saved under the
+    name generate-document-id.mjs gives.
     """
     rendered = run(HELPER, "render", "--doc", code, "--project", project)
     assert rendered.returncode == 0, rendered.stderr
@@ -440,7 +631,7 @@ def build(code: str, project: Path) -> Path:
     header = PARTIAL.read_text(encoding="utf-8").rstrip("\n")
     document = template.replace(f"{MARKER}\n{MARKER_COMMENT}", header).replace(BODY, body)
     assert MARKER not in document and BODY not in document
-    named = run(DOC_ID, "001", code, "1.0", "--filename")
+    named = run(DOC_ID, "001", code, version, "--filename")
     assert named.returncode == 0, named.stderr
     path = project / named.stdout.strip()
     path.write_text(document, encoding="utf-8")
@@ -484,11 +675,9 @@ def test_a_body_changed_by_one_character_fails_check(code, project):
     assert result.returncode == 1, result.stdout + result.stderr
 
 
-@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
-def test_marking_the_header_after_sign_off_keeps_it_signed_off(project):
-    """The sign-off command edits the header outside the markers, after the helper records the sign-off."""
-    path = build("FOODCOOK", project)
-    signed = run(HELPER, "sign-off", "--doc", "FOODCOOK", "--project", project,
+def sign_and_mark(code: str, project: Path, path: Path) -> None:
+    """What uk-food-sign-off does: the helper records the sign-off, then the header is marked outside the markers."""
+    signed = run(HELPER, "sign-off", "--doc", code, "--project", project,
                  "--name", "Sam Okafor", "--role", "owner", "--version", "1.0", "--date", "2026-11-21")
     assert signed.returncode == 0, signed.stderr
     text = path.read_text(encoding="utf-8")
@@ -497,10 +686,121 @@ def test_marking_the_header_after_sign_off_keeps_it_signed_off(project):
         old = re.search(rf"^\| \*\*{field}\*\* \| .* \|$", text, re.M).group(0)
         text = text.replace(old, f"| **{field}** | {value} |")
     path.write_text(text, encoding="utf-8")
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_marking_the_header_after_sign_off_keeps_it_signed_off(project):
+    """The sign-off command edits the header outside the markers, after the helper records the sign-off."""
+    path = build("FOODCOOK", project)
+    sign_and_mark("FOODCOOK", project, path)
     assert check("FOODCOOK", project, path).returncode == 0
     status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
     doc = next(d for d in status["documents"] if d["code"] == "FOODCOOK")
     assert doc["signedOff"] and doc["signOff"]["file"] == path.name, doc
+
+
+# Rulings 18 and 19 (as replaced): what a writing command writes, in the commands' own words and as
+# code. The words are pinned to every gathering command; the code is run against the helper.
+VERSION_RULE = [
+    "`signedOff` is true: the document is signed off and nothing in it has changed since. Write nothing, and "
+    "say that it is signed off and up to date.",
+    "`signOff` is not null, `signedOff` is false, and `signOff.file` is `file`: the signed file no longer "
+    "matches its worksheets. Leave it exactly as it is, and write the next minor version as a new file",
+    "Otherwise: rewrite `file` in place, at its version, or write version 1.0 if `file` is null.",
+]
+
+
+def what_to_write(doc: dict) -> tuple[str, str] | None:
+    """None to write nothing; otherwise ("new" or "in place", version)."""
+    if doc["signedOff"]:
+        return None
+    if doc["signOff"] is not None and doc["signOff"]["file"] == doc["file"]:
+        major, minor = doc["version"].split(".")[:2]
+        return "new", f"{major}.{int(minor) + 1}"
+    if doc["file"] is None:
+        return "new", "1.0"
+    return "in place", doc["version"]
+
+
+@pytest.mark.parametrize("name", GATHERING)
+def test_the_version_rule_is_the_commands_words(name):
+    _, body = split(command(name))
+    for words in VERSION_RULE:
+        assert words in body, f"{name} lacks the version rule: {words[:60]}"
+
+
+def follow_the_rule(code: str, project: Path) -> tuple[str, str] | None:
+    doc = next(d for d in json.loads(run(HELPER, "status", "--project", project, "--json").stdout)["documents"]
+               if d["code"] == code)
+    choice = what_to_write(doc)
+    if choice:
+        path = build(code, project, choice[1])
+        assert check(code, project, path).returncode == 0
+    return choice
+
+
+def files_of(code: str, project: Path) -> dict[str, bytes]:
+    return {p.name: p.read_bytes() for p in sorted(project.glob(f"ARC-001-{code}-v*.md"))}
+
+
+def cooking(project: Path) -> dict:
+    status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
+    return next(d for d in status["documents"] if d["code"] == "FOODCOOK")
+
+
+def change_an_answer(project: Path) -> None:
+    sheet = project / "food-safety" / "answers-CK.md"
+    text = sheet.read_text(encoding="utf-8")
+    assert "Answer: yes\nState: confirmed" in text
+    sheet.write_text(text.replace("Answer: yes\nState: confirmed", "Answer: yes, always\nState: confirmed", 1),
+                     encoding="utf-8")
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_a_signed_unchanged_document_is_not_written_again(project):
+    path = build("FOODCOOK", project)
+    sign_and_mark("FOODCOOK", project, path)
+    before = files_of("FOODCOOK", project)
+    assert follow_the_rule("FOODCOOK", project) is None
+    assert files_of("FOODCOOK", project) == before
+    assert cooking(project)["signedOff"]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_a_signed_document_whose_answers_changed_gets_a_new_draft_version(project):
+    path = build("FOODCOOK", project)
+    sign_and_mark("FOODCOOK", project, path)
+    signed = path.read_bytes()
+    change_an_answer(project)
+    assert follow_the_rule("FOODCOOK", project) == ("new", "1.1")
+    assert path.read_bytes() == signed, "the signed file is left as it is"
+    new = (project / "ARC-001-FOODCOOK-v1.1.md").read_text(encoding="utf-8")
+    assert "| **Status** | DRAFT |" in new and "| **Approved By** | [PENDING] |" in new
+    doc = cooking(project)
+    assert doc["file"] == "ARC-001-FOODCOOK-v1.1.md" and not doc["signedOff"]
+    # Written again with no further change, the new version is rewritten in place.
+    assert follow_the_rule("FOODCOOK", project) == ("in place", "1.1")
+    assert set(files_of("FOODCOOK", project)) == {"ARC-001-FOODCOOK-v1.0.md", "ARC-001-FOODCOOK-v1.1.md"}
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_a_document_nobody_signed_is_rewritten_in_place(project):
+    build("FOODCOOK", project)
+    change_an_answer(project)
+    assert follow_the_rule("FOODCOOK", project) == ("in place", "1.0")
+    assert set(files_of("FOODCOOK", project)) == {"ARC-001-FOODCOOK-v1.0.md"}
+    assert cooking(project)["inSync"]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_a_finished_section_nobody_has_signed_is_not_chosen_again(project):
+    """P3: choosing by the counts skips a written, in-step section, though it is not signed off."""
+    build("FOODCOOK", project)
+    status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
+    docs = {d["code"]: d for d in status["documents"]}
+    assert any(u["code"] == "FOODCOOK" for u in status["unfinished"]), "it still has its not-signed-off line"
+    assert not section_needs_work(docs["FOODCOOK"], "CK")
+    assert section_needs_work(docs["FOODXC"], "XC")
 
 
 # --- the generated targets ---------------------------------------------------------
@@ -528,11 +828,21 @@ def test_the_readme_lists_each_command_as_claude_code_names_it():
     text = (OVERLAY / "README.md").read_text(encoding="utf-8")
     for name in COMMANDS:
         assert f"/arckit-uk-food:{name}" in text, name
-    assert "It needs Claude Code 2.1.275 or later." in text
+    floor = re.search(r"MIN_CLAUDE_CODE_VERSION = '([\d.]+)'",
+                      (ROOT / "plugins/arckit-claude/hooks/version-check.mjs").read_text(encoding="utf-8")).group(1)
+    assert f"It needs Claude Code {floor} or later." in text, "P9: core's current floor"
+
+
+def test_the_readme_says_to_sign_off_once_everything_is_finished():
+    """P6: a profile change puts every other document out of step, and any other change puts the profile out of step."""
+    text = (OVERLAY / "README.md").read_text(encoding="utf-8")
+    assert "sign the profile off last" in text
+    assert "puts every other document out of step" in text
 
 
 def test_the_changelog_names_the_commands():
     text = (OVERLAY / "CHANGELOG.md").read_text(encoding="utf-8")
     assert "arrive in a later change" not in text
+    assert "Each asks its questions in conversation" not in text, "P8: not true of check or sign-off"
     for name in COMMANDS:
         assert name in text, name
