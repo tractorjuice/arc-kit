@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.23.0] — 2026-11-19
+
 ### Added
 
 - **A new overlay helps a small catering business in England or Wales build its food safety documents** from the Food Standards Agency's *Safer food, better business for caterers* pack. `arckit-uk-food` is experimental, community-maintained and switched off until you enable it. Its five commands record the business profile, work through the pack's five sections of safe methods one safe method at a time, record the business's own methods and its written procedure for any special process word for word, show what is finished in a completion record, and record a named person's sign-off, which covers the document exactly as it reads when it is signed. Only an answer a named person at the business confirms is printed as the business's answer: anything else reads NOT YET ANSWERED, with any proposed answer and where it came from beside it, and the pack's wording reaches a document only through a script that prints it unchanged and checks it. A document whose header says it is signed off when no sign-off is recorded fails that check. It is not legal advice, and the Food Standards Agency has not reviewed or endorsed it. Each command has a guide written for the person running the business, and the overview guide is on arckit.org. The `uk-food-sfbb` build recipe writes the draft documents that are not there yet; a build has nobody to answer, so it confirms nothing and signs nothing off. Help wanted: a food safety co-maintainer.
@@ -19,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **Gemini CLI: a command that runs a bundled script by a quoted path finds the script.** The Gemini extension names its own folder `~/.gemini/extensions/arckit`, and a shell does not expand `~` inside quotes, so a command that quotes a script's path could not run it: the food and legacy IT overlays' commands, `/arckit:tenders`, `/arckit:competitors` and the Netherlands GEMMA and NORA commands. Such a path now starts `$HOME`. Gemini replaces `${extensionPath}` only in its manifest and hooks, not in a command's text, so the path is written out. No other extension changes.
+- **Paperclip: the document ID and knowledge-export scripts run from the published package.** The Paperclip package published its `scripts/` and `hooks/` folders but not `config/`, which two of those scripts read the document type registry from. Installed from the package, `generate-document-id.mjs` and `okf-frontmatter.mjs` stopped with a missing-module error. The package now includes `config/`, and a test holds every published script to folders the package ships.
 
 ## [6.22.1] — 2026-11-17
 
