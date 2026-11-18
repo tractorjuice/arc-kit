@@ -283,7 +283,7 @@ French government (apply on top of EU baseline):
 
 ### UK food safety (community-contributed, sector overlay)
 
-> ⚠️ EXPERIMENTAL sector overlay for small caterers in England and Wales, built on the Food Standards Agency's Safer food, better business for caterers pack. Only answers a named person at the business confirms reach its documents, and a named person at the business signs each document off. Not legal advice: the food business operator is responsible, and the council's environmental health team is the authority. The Food Standards Agency has not reviewed or endorsed it.
+> ⚠️ EXPERIMENTAL sector overlay for small caterers in England and Wales, built on the Food Standards Agency's Safer food, better business for caterers pack. Only an answer a named person at the business confirms is printed as the business's answer, and a named person at the business signs each document off. Not legal advice: the food business operator is responsible, and the council's environmental health team is the authority. The Food Standards Agency has not reviewed or endorsed it.
 
 - [UK Food Safety Overlay](https://arckit.org/guides/uk-food-safety-overlay.md): overview: the source pack and its licence, the order to work in, special processes, the `uk-food-sfbb` build recipe (which confirms nothing) and what the overlay does not cover.
 - [Business profile](https://arckit.org/guides/uk-food-profile.md): `/arckit-uk-food:uk-food-profile` who runs the business, where it is, what it sells, its equipment and staff, and any special process, in the business's own words.

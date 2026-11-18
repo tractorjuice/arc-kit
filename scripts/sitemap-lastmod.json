@@ -977,11 +977,11 @@
   },
   "guide/uk-food-own-methods.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "c7e136e7813fe5344727adeaa9159c793c8c1dc17b0dec9fa2f9bb74c7017ee7"
+    "text_sha256": "038d37b9879fc2670d113a4e0d60d8c8c6bc09431343bd15708398d2c1955b6e"
   },
   "guide/uk-food-profile.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "71823ecde911cf8f2878ab71fc26d808c76b78a3c4f7a32e725aa4f91d85e34d"
+    "text_sha256": "129175de1a0dbd3ae611d127035db8c250bd3fbb6e003f08c041c0f3fed8d267"
   },
   "guide/uk-food-safe-methods.html": {
     "lastmod": "2026-11-18",
@@ -989,11 +989,11 @@
   },
   "guide/uk-food-safety-overlay.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "296d7bc125ee023126a55783d8cee8461992cdaa58f3afff260fa1a1116e25ec"
+    "text_sha256": "3b1ce7ef25f3731a30ec4fcc16d04dd9c12562099f6370545617b8a40d66ffff"
   },
   "guide/uk-food-sign-off.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "32eb082a75c038aa9ebea0099f2c5811e864ae2bfe584bbda4d5588a411454c4"
+    "text_sha256": "ef098f290ed8a2fbb552132e29f0c5b50822d301147ae95a6de7fc591f48bc10"
   },
   "guide/uk-fs-consumer-duty.html": {
     "lastmod": "2026-10-27",
@@ -1117,15 +1117,15 @@
   },
   "guides.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "7379616cdda59f6bc0d85a322c22f22bcfa0ea3299e0aa326f292fd7798680b4"
+    "text_sha256": "c60bae5b47464e57abd4491ddf801290bbd191dd2bd1c4393f6dbc49c6ea55ca"
   },
   "index.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "6bc839d0c65410aa1bb915e6c25884930f06090169ab7bbaf0579a75fa9dc1ea"
+    "text_sha256": "1add22cac918f75fb633df8ee2a4261bb01bbe6918194a0b06a6e0ea2d18eb18"
   },
   "llms.txt": {
     "lastmod": "2026-11-18",
-    "text_sha256": "6ba22194f28b9e9c38180327e73ed4cfe0b58d250c2ef19063d63ec2295bc77f"
+    "text_sha256": "aeafa56fbc68992330d96ec0c12d5d8a5bddd8a1649dba8567216c22491f1fcd"
   },
   "on-github.html": {
     "lastmod": "2026-11-16",

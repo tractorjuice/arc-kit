@@ -15,12 +15,13 @@ A document can be signed off only when it is finished. The overlay's helper scri
 - every worksheet the document needs is there, with no problems;
 - every question in it is confirmed by a named person;
 - the document is written, at the version you are signing, and passes its document check;
+- the lines of its header that a sign-off rewrites hold only what the overlay's commands write there (`DRAFT` and `[PENDING]`, or an earlier sign-off, and a date), because signing off rewrites those lines and must change nothing else;
 - for your own methods, every special process the profile confirms has its own entry.
 
 ## Before you start
 
 - **A finished document.** Run `/arckit-uk-food:uk-food-check` to see which documents are finished.
-- **The profile last.** You can sign each document off as soon as it is finished. Sign the profile off last: it lists each safe method's status and your own methods, so it changes when one of those does.
+- **The profile last.** You can sign each document off as soon as it is finished. Sign the profile off last: it lists each safe method's status, and your own methods by name, kind and environmental health review, so it changes when any of those does.
 - **Your name and your role**, in the message that runs the command. If either is missing, the command asks.
 - **Whether a printed copy has been signed**, if you keep one. Say so, and the record notes it. The documents are plain text files (Markdown) that any text editor or Markdown viewer can open and print.
 
@@ -31,7 +32,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 3. **It signs only in the name of the person asking.** If you ask it to sign for someone else, it tells you that person has to do it themselves, and records nothing.
 4. **It tells you the file and version it is about to record, and waits for your yes**, unless you named the version yourself. A sign-off says you read that version, so you need to know which one it is.
 5. **It asks the helper script to record the sign-off.** If the script refuses, the command shows you its reasons unchanged, and stops. Nothing is recorded, and the command never tries to work round a refusal.
-6. **If the sign-off is recorded**, the command marks the document's header: Status `APPROVED`, and Reviewed By and Approved By both set to the name, role and date, such as `Sam Okafor, Owner, 2026-11-18`. In this overlay, `APPROVED` means only that: signed off by the named person at the business. It also fills in that version's row in the Revision History.
+6. **If the sign-off is recorded**, the command marks the document's header: Status `APPROVED`, and Reviewed By and Approved By both set to the name, role and date, such as `Sam Okafor, Owner, 2026-11-18`. In this overlay, `APPROVED` means only that: signed off by the named person at the business. It also fills in that version's row in the Revision History. If a second person signs the same document later, the header is rewritten to show their sign-off, as the newest.
 7. **It runs the document check again**, and looks at where the document stands, to prove that marking the header changed nothing else in the file.
 8. **It shows a summary.**
 
@@ -74,7 +75,9 @@ And if someone asks on another person's behalf:
 A sign-off covers the whole document, exactly as it reads when you sign it: the pack's wording, your answers, and everything else in the file.
 
 - **If something the document says changes**, the sign-off no longer counts. That happens when an answer it prints is changed, and when anyone adds to the file or edits it by hand. `/arckit-uk-food:uk-food-check` then says the document is no longer signed off, and why. The document's command writes it again as a new version, and that version needs signing off.
-- **If something it does not say changes**, the sign-off stands. Adding a member of staff to the profile, for example, changes the profile document and nothing else.
+- **If something it does not say changes**, the sign-off stands, with one exception. Adding a member of staff to the profile, for example, changes the profile document and nothing else. The exception is your own methods document. It needs an entry for every special process or food the profile says you do, so answering yes to a new one in the profile puts own methods back to unfinished until that entry is recorded.
+- **The lines that show the sign-off are part of it.** Once a document is signed off, its Status reads `APPROVED`, and Reviewed By and Approved By read exactly the name, role and date that were recorded. A word added to any of them ends the sign-off, and the document check says which line. So does anything added to the Build Provenance table at the foot of the file, which ArcKit writes itself.
+- **If a worksheet cannot be read**, because a line in it was changed in a way the helper script does not understand, the documents built from it show as not checked, and not signed off, until that line is put right. Nothing is lost: once the worksheet reads again, a document that has not changed is signed off as before.
 - **The business's name is printed in every document**, so changing it changes them all. So does changing the nation to or from one outside England and Wales, because every document then says so.
 - **The date is the day you sign.** A date that has not come yet is refused.
 

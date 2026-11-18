@@ -1369,6 +1369,40 @@ def test_the_readme_and_guides_say_truly_what_ends_a_sign_off():
             assert gone not in text, f"{path.name} still says {gone!r}"
 
 
+def test_the_pages_say_truly_what_a_document_shows_and_what_leaves_a_sign_off_standing():
+    """G3: only a confirmed answer is printed as the business's answer, and a proposed one is shown beside
+    NOT YET ANSWERED; a change to what a document does not print leaves its sign-off standing, with the one
+    exception for own methods."""
+    pages = [*hand_written(), ROOT / "README.md", ROOT / "CHANGELOG.md", ROOT / "docs" / "llms.txt",
+             ROOT / "docs" / "index.html", ROOT / "docs" / "guides.html"]
+    for path in pages:
+        text = path.read_text(encoding="utf-8")
+        for gone in ["confirms reach", "Only confirmed answers reach", "reaches the document.",
+                     "Everywhere else, the document reads", "leaves them, and their sign-offs, as they are",
+                     "so it changes when one of those does", "says so wherever its status is shown",
+                     "the sign-off stands. Adding", "add or change one of your own methods"]:
+            assert gone not in text, f"{path.name} still says {gone!r}"
+    readme = (OVERLAY / "README.md").read_text(encoding="utf-8")
+    overview = (ROOT_GUIDES / OVERVIEW_GUIDE).read_text(encoding="utf-8")
+    profile = (ROOT_GUIDES / "uk-food-profile.md").read_text(encoding="utf-8")
+    sign_off = (ROOT_GUIDES / "uk-food-sign-off.md").read_text(encoding="utf-8")
+    own = (ROOT_GUIDES / "uk-food-own-methods.md").read_text(encoding="utf-8")
+    assert "A proposed answer is shown beside **NOT YET ANSWERED**, with where it came from" in overview
+    assert "with what was proposed and where it came from beside it" in readme
+    for name, text in [("README", readme), ("overview guide", overview), ("profile guide", profile), ("sign-off guide", sign_off)]:
+        assert "needs an entry for every special process or food the profile says you do" in text, name
+    for name, text in [("README", readme), ("overview guide", overview), ("sign-off guide", sign_off)]:
+        assert "your own methods by name, kind and environmental health review, so it changes when any of those does" in text, name
+    assert "changes the own methods document only" in readme and "changes the own methods document only" in overview
+    assert "that changes the own methods document only" in profile
+    assert "go by the check and not by that header" in overview
+    assert "this document counts as unfinished although nothing in it has changed" in own
+    assert "the header is rewritten to show their sign-off, as the newest" in sign_off
+    assert "**The lines that show the sign-off are part of it.**" in sign_off
+    assert "**If a worksheet cannot be read**" in sign_off
+    assert "because signing off rewrites those lines and must change nothing else" in sign_off
+
+
 def test_the_readme_guide_and_recipe_say_what_a_build_writes():
     """M7: the build harness takes an existing document as done, so a build writes only what is not there yet."""
     recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
