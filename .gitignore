@@ -27,6 +27,10 @@ ENV/
 env/
 .venv
 
+# `uv run` in the repository root writes a lock file. Nothing uses a tracked
+# one: no workflow, script or document runs uv with --locked or --frozen.
+/uv.lock
+
 # Node
 node_modules/
 

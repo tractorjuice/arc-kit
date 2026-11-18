@@ -101,6 +101,11 @@
     "tests/mermaid-wardley/output/**",
     "research/**",
     ".pytest_cache/**",
-    ".arckit/memory/**"
+    ".arckit/memory/**",
+    // Behavioural eval recordings (scripts/eval-headless.py): the documents a
+    // run wrote, kept for --replay. Gitignored, and not ours to lint.
+    "plugins/*/evals/results/**",
+    // A local virtual environment (uv), gitignored like the folders above.
+    ".venv/**"
   ]
 }
