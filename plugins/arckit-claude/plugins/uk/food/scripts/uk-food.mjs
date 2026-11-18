@@ -3,7 +3,7 @@
 // Commands are entries in COMMANDS; each is one exported function returning an exit code.
 import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync, realpathSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const DATA_ID = 'sfbb-caterers-2026-11-17';
@@ -1187,7 +1187,8 @@ export const worksheetJson = (parsed) =>
 //   word for word in a fenced code block. The pack's text is never escaped beyond the cell escaping.
 // profileChunks and ownChunks describe the FOODPROF and FOODOWN bodies. Every body ends with the
 // closing notice and the source line (FOODOWN, which quotes nothing from the pack, with a line that
-// says so instead), between the UK-FOOD:BEGIN and UK-FOOD:END marker lines.
+// says so instead), between the UK-FOOD:BEGIN and UK-FOOD:END marker lines. The BEGIN marker names
+// the document, the data and the hash of the body (bodyHash).
 // A body is built as chunks, each a list of lines, joined by an empty line.
 // ---------------------------------------------------------------------------------------------
 
@@ -1201,14 +1202,15 @@ export const UNANSWERED = '**NOT YET ANSWERED**';
 // Printed before every answer in a business's document, and before the unanswered and proposed strings.
 export const OUR_ANSWER = '**Our answer:** ';
 const END_MARKER = '<!-- UK-FOOD:END -->';
-const BEGIN_MARKER = /^<!-- UK-FOOD:BEGIN doc=(\S+) data=(\S+) answers=(\S+) -->$/;
-const beginMarker = (doc, hash) => `<!-- UK-FOOD:BEGIN doc=${doc} data=${DATA_ID} answers=${hash} -->`;
-// The worksheets in the order the answers hash takes them.
-const HASH_ORDER = ['profile', ...SECTION_IDS, 'own'];
+// The BEGIN marker names the document, the data and the hash of the body: see bodyHash.
+const BEGIN_MARKER = /^<!-- UK-FOOD:BEGIN doc=(\S+) data=(\S+) body=(\S+) -->$/;
+const beginMarker = (doc, hash) => `<!-- UK-FOOD:BEGIN doc=${doc} data=${DATA_ID} body=${hash} -->`;
+// The worksheets in the order they are read.
+const SHEET_ORDER = ['profile', ...SECTION_IDS, 'own'];
 // The worksheets a document renders from, and those it cannot be rendered without. The profile
 // document says which section worksheets and own worksheet are missing; the others refuse.
 const sourcesOf = (doc) => {
-  if (doc === 'FOODPROF') return { uses: HASH_ORDER, needs: ['profile'] };
+  if (doc === 'FOODPROF') return { uses: SHEET_ORDER, needs: ['profile'] };
   const own = SECTION_DOCS[doc] ?? 'own';
   return { uses: ['profile', own], needs: ['profile', own] };
 };
@@ -1479,12 +1481,22 @@ function ownEntryChunks(entry) {
 
 const worksheetName = (section) => `answers-${section}.md`;
 const worksheetFile = (project, section) => join(project, 'food-safety', worksheetName(section));
-// A file's text as a hash takes it: what the parser does not read makes no difference. That is a byte
-// order mark at the start, Windows line endings, spaces and tabs at the ends of lines and blank lines
-// at the end. Every other character counts, blank lines inside included: one ends a value, and the
-// guidance comment is compared line by line.
+// Text as a hash takes it: what a reader cannot see makes no difference. That is a byte order mark at
+// the start, Windows line endings, spaces and tabs at the ends of lines and blank lines at the end.
+// Every other character counts.
 const normalised = (text) => text.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').replace(/[ \t]+$/gm, '')
   .replace(/\n*$/, '\n');
+const sha256 = (text) => createHash('sha256').update(text).digest('hex');
+// A document's identity is the text a person reads: the hash of the lines between its two marker
+// lines, normalised. render puts it in the BEGIN marker and sign-off records it, so a document, its
+// status and its sign-off always agree on it; a change to a worksheet that changes no line of a
+// document's body changes nothing about that document. This is the one place the hash is made.
+const bodyHash = (lines) => sha256(normalised(lines.join('\n')));
+// A rendered body: the BEGIN marker, the chunks an empty line apart, the END marker.
+const bodyText = (doc, chunks) => {
+  const inner = ['', ...chunks.map((chunk) => chunk.join('\n')).join('\n\n').split('\n'), ''];
+  return [beginMarker(doc, bodyHash(inner)), ...inner, END_MARKER].join('\n');
+};
 
 // What to do about `file`, which holds the `found` worksheet where the `wanted` one should be. Making
 // the wanted worksheet in its place would overwrite it, so it is moved or renamed first.
@@ -1496,15 +1508,15 @@ function misplaced(file, found, wanted, project) {
     `${makeWorksheet(wanted, file)}.`;
 }
 
-// Reads and parses a project's worksheets: those of `sections`, every one unless given, in HASH_ORDER.
+// Reads and parses a project's worksheets: those of `sections`, every one unless given, in SHEET_ORDER.
 // This is the one place a worksheet is read. Returns a Map from section to null when its file does not
 // exist; to { section, name, file, readError } when it cannot be read; or to { section, name, file,
 // text, parsed, problems, wrongData, belongsTo, clean }. `problems` are the parser's, exactly what
 // parse-worksheet lists, as file:line: message. A worksheet for other data has `wrongData`; one in the
 // wrong file has `belongsTo`, the section it is the worksheet of. Neither is clean.
-function readWorksheets(project, data, sections = HASH_ORDER) {
+function readWorksheets(project, data, sections = SHEET_ORDER) {
   const sheets = new Map();
-  for (const section of HASH_ORDER.filter((name) => sections.includes(name))) {
+  for (const section of SHEET_ORDER.filter((name) => sections.includes(name))) {
     const file = worksheetFile(project, section);
     if (!existsSync(file)) {
       sheets.set(section, null);
@@ -1528,21 +1540,9 @@ function readWorksheets(project, data, sections = HASH_ORDER) {
   return sheets;
 }
 
-// The answers hash render puts in a document's BEGIN marker: the sha256 of the worksheets of
-// `sections` that were read, each normalised, in HASH_ORDER, then of any further texts given. This is
-// the one place the hash is made, so a document, its status and its sign-off always agree on it.
-function answersHash(sheets, sections, more = []) {
-  const hash = createHash('sha256');
-  for (const [section, sheet] of sheets) {
-    if (sections.includes(section) && sheet?.text !== undefined) hash.update(normalised(sheet.text));
-  }
-  for (const text of more) hash.update(normalised(text));
-  return hash.digest('hex');
-}
-
-// Reads and parses the worksheets a document renders from, and hashes them. Returns { sources, hash },
-// sources holding only the worksheets that exist, or { exit, messages }: 2 for a missing, unreadable
-// or wrong worksheet, 1 for problems.
+// Reads and parses the worksheets a document renders from. Returns { sources }, holding only the
+// worksheets that exist, or { exit, messages }: 2 for a missing, unreadable or wrong worksheet, 1 for
+// problems.
 function readSources(doc, project, data) {
   const { uses, needs } = sourcesOf(doc);
   const sheets = readWorksheets(project, data, uses);
@@ -1565,7 +1565,7 @@ function readSources(doc, project, data) {
   }
   if (refused.length) return { exit: 2, messages: refused };
   if (problems.length) return { exit: 1, messages: problems };
-  return { sources: new Map([...sheets].filter(([, sheet]) => sheet)), hash: answersHash(sheets, uses) };
+  return { sources: new Map([...sheets].filter(([, sheet]) => sheet)) };
 }
 
 // Renders a document's body from the worksheets in `project`/food-safety. Returns { exit: 0, text }
@@ -1589,7 +1589,7 @@ export function renderDocument(doc, project, data) {
   const name = read.sources.get('profile').parsed.answers.get(NAME_QUESTION);
   const chunks = [...body, [closingNotice(name?.answered ? name.answer : null)],
     [doc === 'FOODOWN' ? OWN_SOURCE_LINE : sourceLine(data.source)]];
-  return { exit: 0, text: [beginMarker(doc, read.hash), ...chunks.map((chunk) => chunk.join('\n')), END_MARKER].join('\n\n') };
+  return { exit: 0, text: bodyText(doc, chunks) };
 }
 
 // Finds the one rendered body in a document's lines: { begin, end, marker } (1-based line numbers),
@@ -1622,22 +1622,221 @@ function findBody(lines, doc) {
   return { begin, end, marker };
 }
 
-// The first line outside the body that is a heading of the pack: a Markdown heading whose text is a
-// section's title, or starts with a safe method's identifier and title, as the data has them. A
-// heading's text is what Markdown reads: trimmed, without a closing run of #. The pack's text outside
-// the markers is not checked, so a document may not hold any; a heading of its own that only starts
-// with a section's title, such as "COOKING RECORD FOR BRAMBLE CAFE", is its own. -1 if none.
+// The first line outside the body that is a heading of the pack: a heading whose text is a section's
+// title, or starts with a safe method's identifier and title, as the data has them. A heading is read
+// in each of the three ways one can be written: a line of # marks and text (trimmed, without a closing
+// run of #); a line of text with a line of = or - under it; and an HTML heading on one line, h1 to h6,
+// whatever its attributes. The pack's text outside the markers is not checked, so a document may not
+// hold any; a heading of its own that only starts with a section's title, such as "COOKING RECORD FOR
+// BRAMBLE CAFE", is its own. -1 if none.
 function packHeadingOutside(lines, body, data) {
   const files = [...data.sections.values()];
   const sections = files.map((file) => file.section.title);
   const methods = files.flatMap((file) => file.methods.map((m) => `${m.id} ${m.title}`));
+  const isPack = (text) => sections.includes(text) || methods.some((title) => text.startsWith(title));
+  const inside = (i) => i >= body.begin - 1 && i < body.end;
+  const underlined = (i) => i + 1 < lines.length && !inside(i + 1) && /^ {0,3}(?:=+|-+)[ \t]*$/.test(lines[i + 1]);
   return lines.findIndex((line, i) => {
-    if (i >= body.begin - 1 && i < body.end) return false;
-    const heading = /^ {0,3}#{1,6}[ \t]+(.*)$/.exec(line);
-    if (!heading) return false;
-    const text = heading[1].replace(/[ \t]+#+[ \t]*$/, '').trim();
-    return sections.includes(text) || methods.some((title) => text.startsWith(title));
+    if (inside(i)) return false;
+    const marked = /^ {0,3}#{1,6}[ \t]+(.*)$/.exec(line);
+    if (marked) return isPack(marked[1].replace(/[ \t]+#+[ \t]*$/, '').trim());
+    const html = /<h([1-6])(?:\s[^>]*)?>(.*?)<\/h\1\s*>/i.exec(line);
+    if (html && isPack(html[2].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim())) return true;
+    return line.trim() !== '' && underlined(i) && isPack(line.trim());
   });
+}
+
+// ---------------------------------------------------------------------------------------------
+// What a document says outside its body. The helper never writes these lines, but it reads them: a
+// header may not say a document is signed off when no sign-off is recorded for it, and a sign-off
+// binds the whole file, not only the body.
+// ---------------------------------------------------------------------------------------------
+
+// The Document Control rows that say a document is signed off, and those the sign-off command edits.
+const CLAIM_FIELDS = ['Status', 'Reviewed By', 'Approved By'];
+const SIGNED_FIELDS = [...CLAIM_FIELDS, 'Last Modified'];
+// A Document Control row of one of SIGNED_FIELDS. Every regime's partial writes "| **Status** | DRAFT |";
+// the bold marks are not required, so that a header typed without them is read the same.
+const CONTROL_ROW = new RegExp(`^ {0,3}\\|[ \\t]*(?:\\*\\*)?[ \\t]*(${SIGNED_FIELDS.join('|')})[ \\t]*(?:\\*\\*)?[ \\t]*\\|(.*)\\|[ \\t]*$`);
+// The Build Provenance block a core hook appends to a document, and stamps again on each later edit.
+const PROVENANCE = { start: '<!-- arckit-provenance:start -->', end: '<!-- arckit-provenance:end -->' };
+// What stands for the body in the text outsideHash hashes: where the body is still counts.
+const BODY_PLACE = '<!-- UK-FOOD body -->';
+// A table cell's text without the marks Markdown reads round it.
+const plainCell = (text) => text.trim().replace(/^[*_`]+/, '').replace(/[*_`]+$/, '').trim();
+const cellsOfRow = (line) => line.trim().replace(/^\|/, '').replace(/\|$/, '').split(/(?<!\\)\|/).map(plainCell);
+const isDraft = (value) => /^draft$/i.test(value);
+const isPending = (value) => value === '' || /^\[?pending\]?$/i.test(value);
+// A file's text as lines. A byte order mark at the start is not part of its first line, and a file
+// saved with Windows line endings reads as the same text, which keeps every line number.
+const documentLines = (text) => text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').split('\n');
+
+// The rows of the Revision History table: of the first table between line indexes `from` and `to`,
+// each row as { line, version, approvedBy, approvalDate }, its cells found by the table's own column
+// headings. A cell under a heading the table lacks is empty.
+function revisionRows(lines, from, to) {
+  let at = from;
+  while (at < to && !lines[at].trim().startsWith('|')) {
+    if (/^ {0,3}#{1,6}[ \t]/.test(lines[at])) return [];
+    at++;
+  }
+  if (at >= to) return [];
+  const columns = cellsOfRow(lines[at]).map((name) => name.toLowerCase());
+  const [version, approvedBy, approvalDate] = ['version', 'approved by', 'approval date'].map((name) => columns.indexOf(name));
+  const rows = [];
+  for (at++; at < to && lines[at].trim().startsWith('|'); at++) {
+    if (/^[\s|:-]+$/.test(lines[at])) continue;
+    const cells = cellsOfRow(lines[at]);
+    // A version written "v1.0" is version 1.0.
+    rows.push({ line: at + 1, version: (cells[version] ?? '').replace(/^v/i, ''), approvedBy: cells[approvedBy] ?? '', approvalDate: cells[approvalDate] ?? '' });
+  }
+  return rows;
+}
+
+// What the lines above a document's body say about sign-off: `rows`, the first Document Control row of
+// each of SIGNED_FIELDS as { line, value }, and `history`, the rows of the Revision History table. A
+// document with no such table has none, and so claims nothing.
+function headerOf(lines, body) {
+  const rows = new Map();
+  let history = null;
+  for (let i = 0; i < body.begin - 1; i++) {
+    const row = CONTROL_ROW.exec(lines[i]);
+    if (row && !rows.has(row[1])) rows.set(row[1], { line: i + 1, value: plainCell(row[2]) });
+    if (!history && /^ {0,3}#{1,6}[ \t]+Revision History[ \t#]*$/i.test(lines[i])) history = revisionRows(lines, i + 1, body.begin - 1);
+  }
+  return { rows, history: history ?? [] };
+}
+
+// The hash of a document's text outside its markers, as a sign-off binds it: every line above the BEGIN
+// marker and below the END marker, less only what changes after a sign-off without changing what the
+// person signed. That is the value of each Document Control row the sign-off command edits (the row
+// itself still counts), the rows of the Revision History table, and each Build Provenance block, from
+// its start marker to its end marker. Anything else added, taken out or changed gives another hash.
+function outsideHash(lines, body, header) {
+  const values = new Map([...header.rows].map(([field, row]) => [row.line, `| **${field}** |`]));
+  const dropped = new Set(header.history.map((row) => row.line));
+  const side = (i) => (i < body.begin - 1 ? -1 : i >= body.end ? 1 : 0);
+  for (let i = 0; i < lines.length; i++) {
+    if (side(i) === 0 || lines[i].trim() !== PROVENANCE.start) continue;
+    const end = lines.findIndex((line, j) => j > i && line.trim() === PROVENANCE.end);
+    if (end < 0 || side(end) !== side(i)) continue;
+    for (let j = i; j <= end; j++) dropped.add(j + 1);
+    i = end;
+  }
+  const kept = [];
+  lines.forEach((line, i) => {
+    if (i === body.begin - 1) kept.push(BODY_PLACE);
+    if (side(i) !== 0 && !dropped.has(i + 1)) kept.push(values.get(i + 1) ?? line);
+  });
+  return sha256(normalised(kept.join('\n')));
+}
+
+// The two hashes a sign-off holds for a document's text: `body`, of the lines between its markers
+// (bodyHash), and `outside`, of the rest of the file (outsideHash). Null when the text holds no body of `doc`.
+export function documentHashes(text, doc) {
+  const lines = documentLines(text);
+  const body = findBody(lines, doc);
+  if (body.problem) return null;
+  return { body: bodyHash(lines.slice(body.begin, body.end - 1)), outside: outsideHash(lines, body, headerOf(lines, body)) };
+}
+
+const PUT_BACK = 'put Status back to DRAFT and Reviewed By and Approved By back to [PENDING]';
+const sentence = (text) => text.charAt(0).toUpperCase() + text.slice(1);
+
+// What a document's header says about sign-off, in the order it is written: each Document Control row
+// of CLAIM_FIELDS that does not read DRAFT or [PENDING], then each Revision History row whose Approved
+// By or Approval Date is filled in.
+function claimsOf(header) {
+  const rows = CLAIM_FIELDS.map((field) => ({ field, ...header.rows.get(field) }))
+    .filter((row) => row.line !== undefined && !(row.field === 'Status' ? isDraft(row.value) : isPending(row.value)));
+  const history = header.history.map((row) => ({ ...row, value: [row.approvedBy, row.approvalDate].find((value) => !isPending(value)) }))
+    .filter((row) => row.value !== undefined);
+  return { rows, history };
+}
+
+// The first thing a document's header says about sign-off that no sign-off record bears out, as
+// { line, message, reason }, or null. The file is `name`, a document of code `doc`.
+// - The completion record is a report that nobody signs, so it says nothing but DRAFT and [PENDING].
+// - With no sign-off recorded for this file and version, so does any other document. This is what
+//   stops a document reading as approved, with a name, when nobody signed it: a status promoted by
+//   hand, or a signed version's header copied into the next version.
+// - With one, a name given in Reviewed By or Approved By includes the name of the newest such record.
+// - A Revision History row that says a version was approved needs a sign-off recorded for that
+//   version of this document, and names the person in the newest of them.
+// A signed file whose header still says DRAFT claims nothing, and is not reported.
+function headerClaim(doc, name, header, records) {
+  const version = DOCUMENT_FILE.exec(name)?.[2] ?? null;
+  const signings = records.filter((record) => record.doc === doc);
+  const mine = signings.filter((record) => record.file === name && record.version === version).at(-1) ?? null;
+  const claims = claimsOf(header);
+  const report = doc === COMPLETION_RECORD;
+  const nobody = 'the completion record is a report that nobody signs';
+  for (const { field, line, value } of claims.rows) {
+    const says = `${field} is "${value}"`;
+    if (report) {
+      return { line, message: `this line says ${says}, but ${nobody}. ${sentence(PUT_BACK)}.`,
+        reason: `says in its header, at line ${line}, that ${says}, though ${nobody}: ${PUT_BACK}` };
+    }
+    if (!mine) {
+      return { line, message: `this line says ${says}, but no sign-off is recorded for this file. ${sentence(PUT_BACK)}: these ` +
+        'lines change only when a named person signs the document off with the sign-off command.',
+      reason: `says in its header, at line ${line}, that ${says}, though no sign-off is recorded for it: ${PUT_BACK}, and have a ` +
+        'named person sign the document off once it is finished' };
+    }
+    if (field !== 'Status' && !value.includes(mine.name)) {
+      const right = `"${mine.name}, ${mine.role}, ${mine.date}"`;
+      return { line, message: `this line says ${says}, which does not name ${mine.name}, who signed this file off on ${mine.date}. ` +
+        `Write ${right} there, or put it back to [PENDING].`,
+      reason: `says in its header, at line ${line}, that ${says}, which does not name ${mine.name}, who signed it off on ` +
+        `${mine.date}: write ${right} there, or put it back to [PENDING]` };
+    }
+  }
+  for (const row of claims.history) {
+    const { line } = row;
+    const which = row.version ? `version ${row.version}` : 'a version';
+    const signed = report ? null : signings.filter((record) => record.version === row.version).at(-1) ?? null;
+    const back = 'put that row\'s Approved By and Approval Date back to [PENDING]';
+    if (!signed) {
+      const why = report ? nobody : 'no sign-off is recorded for that version';
+      return { line, message: `this row of the Revision History says ${which} was approved ("${row.value}"), but ${why}. ` +
+        `${sentence(back)}.`,
+      reason: `says in its Revision History, at line ${line}, that ${which} was approved ("${row.value}"), though ${why}: ${back}` };
+    }
+    if (!isPending(row.approvedBy) && !row.approvedBy.includes(signed.name)) {
+      return { line, message: `this row of the Revision History says ${which} was approved by "${row.approvedBy}", which does ` +
+        `not name ${signed.name}, who signed that version off on ${signed.date}. Write "${signed.name}, ${signed.role}" there, ` +
+        'or put it back to [PENDING].',
+      reason: `says in its Revision History, at line ${line}, that ${which} was approved by "${row.approvedBy}", which does not ` +
+        `name ${signed.name}, who signed that version off on ${signed.date}: write "${signed.name}, ${signed.role}" there, or put ` +
+        'it back to [PENDING]' };
+    }
+  }
+  return null;
+}
+
+// A header that says a document is signed off when the file is no longer what was signed: the newest
+// sign-off for this file holds other hashes than the file has now. As { line, message, reason }, or null
+// when the header claims nothing or the file is as it was signed. `hashes` are the file's (documentHashes).
+function lapsedClaim(doc, name, header, hashes, records) {
+  const version = DOCUMENT_FILE.exec(name)?.[2] ?? null;
+  const mine = records.filter((record) => record.doc === doc && record.file === name && record.version === version).at(-1);
+  if (!mine || (mine.body === hashes.body && mine.outside === hashes.outside)) return null;
+  const claims = claimsOf(header);
+  const first = claims.rows[0] ?? claims.history.find((row) => row.version === version);
+  if (!first) return null;
+  const says = first.field ? `${first.field} is "${first.value}"` : `version ${version} was approved ("${first.value}")`;
+  const signed = `${mine.name} signed it off on ${mine.date}`;
+  if (mine.body === hashes.body) {
+    const next = 'take that change out again, or write the document again with its command, which makes a new version to sign off';
+    return { line: first.line, message: `this line says ${says}, but the file was changed outside its UK-FOOD markers after ` +
+      `${signed}, so that sign-off no longer covers it. ${sentence(next)}.`,
+    reason: `says in its header, at line ${first.line}, that it is signed off, but the file was changed outside its UK-FOOD ` +
+      `markers after ${signed}: ${next}` };
+  }
+  return { line: first.line, message: `this line says ${says}, but the document has been written again since ${signed}, so that ` +
+    `sign-off does not cover what it says now. ${sentence(PUT_BACK)}, and have it signed off again.`,
+  reason: `says in its header, at line ${first.line}, that it is signed off, but it has been written again since ${signed}: ` +
+    `${PUT_BACK}, and have it signed off again` };
 }
 
 // Where two lines first differ: the column, counted in characters from 1, and each line's character
@@ -1650,14 +1849,24 @@ function firstDifference(expected, found) {
   return { column: i + 1, expectedChar: point(a[i]), foundChar: point(b[i]) };
 }
 
-// Checks that the body between the markers of the document in `report` equals a fresh render, line
-// by line. Returns { exit, ok, line, column, expected, found, expectedChar, foundChar, message, reason },
-// or { exit, messages } when there is nothing to compare. `reason`, on a failure, is check's first
-// reason as one clause that follows "document <file>" and ends with the next step: status and
-// sign-off give it as it is. A file saved with Windows line endings reads
-// as the same text: each CRLF is read as LF before comparing, which keeps every line number. Text
-// outside the markers is not compared, but holding a heading of the pack there fails the check.
-export function checkDocument(doc, project, report, data) {
+// What check finds before it renders anything, so that it holds whatever state the worksheets are in.
+const BEFORE_RENDER = ['markers', 'pack-text', 'header'];
+
+// Checks the document in `report`, in this order, and stops at the first fault:
+// - `markers`: it holds one rendered body of `doc`, between its two marker lines;
+// - `pack-text`: no heading of the pack stands outside the markers (packHeadingOutside);
+// - `header`: its header says nothing about sign-off that no record bears out (headerClaim);
+// - `edited` or `stale`: the body equals a fresh render, line by line. A body that is not the one its
+//   own marker's hash names was changed by hand; one that is, and differs from a fresh render, is out
+//   of date, because its worksheets have changed since it was rendered;
+// - `not-as-signed`: a header that says it is signed off is true of the file as it now is (lapsedClaim).
+// Returns { exit, ok, kind, hashes, line, column, expected, found, expectedChar, foundChar, message, reason },
+// or { exit, messages } when there is nothing to compare. `reason`, on a failure, is the fault as one
+// clause that follows "document <file>" and ends with the next step: status and sign-off give it as it
+// is. `hashes` are the file's own (documentHashes), whenever its markers were found. `signOffs` is what
+// readSignOffs returns, read here unless given. Text outside the markers is not compared with anything:
+// until a document is signed off it is held only to the three checks above, and a sign-off then binds it.
+export function checkDocument(doc, project, report, data, signOffs = readSignOffs(project)) {
   let text;
   try {
     text = readFileSync(report, 'utf8');
@@ -1665,54 +1874,67 @@ export function checkDocument(doc, project, report, data) {
     return { exit: 2, messages: [`cannot read ${report}: ${error.message}`],
       reason: `cannot be read (${error.message}): check that the file is there and can be opened` };
   }
-  // A byte order mark at the start of the file is not part of its first line.
-  const lines = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').split('\n');
+  const lines = documentLines(text);
   const body = findBody(lines, doc);
   if (body.problem) {
-    return { exit: 1, ok: false, line: body.line, message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}`,
+    return { exit: 1, ok: false, kind: 'markers', line: body.line, message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}`,
       reason: `has its UK-FOOD markers missing or damaged (${body.problem}${body.line ? `, at line ${body.line}` : ''}): write the ` +
         'document again from its worksheet' };
   }
+  const header = headerOf(lines, body);
+  const hashes = { body: bodyHash(lines.slice(body.begin, body.end - 1)), outside: outsideHash(lines, body, header) };
+  const failed = (kind, line, message, reason, more = {}) =>
+    ({ exit: 1, ok: false, kind, hashes, line, ...more, message: `${report}:${line}: ${message}`, reason });
   const outside = packHeadingOutside(lines, body, data);
   if (outside >= 0) {
-    return { exit: 1, ok: false, line: outside + 1, message: `${report}:${outside + 1}: this heading is the pack's text, ` +
-      'outside the UK-FOOD markers, where it is not checked: write the document again from a fresh render, with the ' +
-      'pack\'s text only between the markers.',
-    reason: `holds the pack's text outside its UK-FOOD markers, at line ${outside + 1}, where it is not checked: write the ` +
-      'document again from its worksheet, with the pack\'s text only between the markers' };
+    return failed('pack-text', outside + 1, 'this heading is the pack\'s text, outside the UK-FOOD markers, where it is not ' +
+      'checked: write the document again from a fresh render, with the pack\'s text only between the markers.',
+    `holds the pack's text outside its UK-FOOD markers, at line ${outside + 1}, where it is not checked: write the ` +
+      'document again from its worksheet, with the pack\'s text only between the markers');
   }
+  if (signOffs.error) return { exit: 2, hashes, messages: [signOffs.error] };
+  const claim = headerClaim(doc, basename(report), header, signOffs.records);
+  if (claim) return failed('header', claim.line, claim.message, claim.reason);
   const fresh = renderDocument(doc, project, data);
-  if (fresh.exit) return fresh;
+  if (fresh.exit) return { ...fresh, hashes };
   const expected = fresh.text.split('\n');
   const region = lines.slice(body.begin - 1, body.end);
-  const index = expected.findIndex((line, i) => region[i] !== line);
-  if (index < 0 && region.length === expected.length) {
-    return { exit: 0, ok: true, message: `${report}: the rendered body of ${doc} matches a fresh render` };
+  let index = expected.findIndex((line, i) => region[i] !== line);
+  if (index >= 0 || region.length !== expected.length) {
+    // A body its own marker's hash names is as it was rendered: it differs because the project has
+    // moved on. Any other was changed by hand, and the line named is the first that differs below the
+    // marker line, which differs only because the worksheets have changed as well.
+    const intact = hashes.body === body.marker[3];
+    if (!intact && index === 0) {
+      const below = expected.findIndex((line, i) => i > 0 && region[i] !== line);
+      if (below > 0 || region.length !== expected.length) index = below;
+    }
+    const at = index < 0 ? Math.min(region.length, expected.length) : index;
+    const line = body.begin + at;
+    // The completion record also depends on which documents are written, in step and signed off, so
+    // any difference means it no longer matches the project.
+    let kind = 'edited';
+    let what = `this line is not what a fresh render of ${doc} gives.`;
+    let reason = `was changed between its UK-FOOD markers, at line ${line}: make the change in its worksheet instead, and write ` +
+      'the document again from its worksheet';
+    if (doc === COMPLETION_RECORD) {
+      kind = 'stale';
+      what = COMPLETION_STALE;
+      reason = 'is out of date, as it no longer matches the project: render it again';
+    } else if (intact) {
+      kind = 'stale';
+      what = 'the worksheets have changed since this body was rendered: render the document again.';
+      reason = 'is out of date, as its worksheets have changed since it was written: write the document again from its worksheet';
+    }
+    const [want, got] = [expected[at] ?? '', region[at] ?? ''];
+    const { column, expectedChar, foundChar } = firstDifference(want, got);
+    return failed(kind, line, `${what} The lines first differ at column ${column}, where the render has ${expectedChar} ` +
+      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}` + (doc === COMPLETION_RECORD ? '' : `\n${CHECK_ADVICE}`),
+    reason, { column, expected: want, found: got, expectedChar, foundChar });
   }
-  const at = index < 0 ? Math.min(region.length, expected.length) : index;
-  const line = body.begin + at;
-  const stale = at === 0 && body.marker[3] !== BEGIN_MARKER.exec(expected[0])[3];
-  // The completion record also depends on which documents are written, in step and signed off, so
-  // any difference means it no longer matches the project.
-  let what = `this line is not what a fresh render of ${doc} gives.`;
-  let reason = `was changed between its UK-FOOD markers, at line ${line}: make the change in its worksheet instead, and write ` +
-    'the document again from its worksheet';
-  if (doc === COMPLETION_RECORD) {
-    what = COMPLETION_STALE;
-    reason = 'is out of date, as it no longer matches the project: render it again';
-  } else if (stale) {
-    what = 'the worksheets have changed since this body was rendered: render the document again.';
-    reason = 'is out of date, as its worksheets have changed since it was written: write the document again from its worksheet';
-  }
-  const [want, got] = [expected[at] ?? '', region[at] ?? ''];
-  const { column, expectedChar, foundChar } = firstDifference(want, got);
-  return {
-    exit: 1, ok: false, line, column, expected: want, found: got, expectedChar, foundChar,
-    message: `${report}:${line}: ${what} The lines first differ at column ${column}, where the render has ${expectedChar} ` +
-      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}` +
-      (doc === COMPLETION_RECORD ? '' : `\n${CHECK_ADVICE}`),
-    reason
-  };
+  const lapsed = lapsedClaim(doc, basename(report), header, hashes, signOffs.records);
+  if (lapsed) return failed('not-as-signed', lapsed.line, lapsed.message, lapsed.reason);
+  return { exit: 0, ok: true, hashes, message: `${report}: the rendered body of ${doc} matches a fresh render` };
 }
 
 // A section's pack text as readable Markdown, opening with the source line: the section document's
@@ -1794,7 +2016,10 @@ export function referenceCommand(args, io = { out: console.log, err: console.err
 // version, compared part by part as numbers, so 1.10 comes after 1.9. Sign-offs are appended to
 // food-safety/sign-offs.json and never changed. A document is signed off only when it is finished
 // (nothing blocks it: see collectStatus) and the last sign-off recorded for its code names the current
-// file and version and carries the answers hash the document has now.
+// file and version and holds the two hashes the file has now: `body`, of the text between its markers,
+// and `outside`, of the rest of the file (documentHashes). So a sign-off covers the document as a
+// person reads it, whole: it ends when a line of the document changes, inside the markers or outside
+// them, and not when a worksheet changes in a way that changes no line of this document.
 //
 // Nothing counts as answered unless the parser marks it answered, and nothing in a worksheet with
 // problems is relied on: none of its answers counts as confirmed, no method's status is read from it,
@@ -1805,7 +2030,8 @@ export function referenceCommand(args, io = { out: console.log, err: console.err
 // The documents status lists, in its order. The completion record is not one: it reports on them.
 export const STATUS_ORDER = ['FOODPROF', ...Object.keys(SECTION_DOCS), 'FOODOWN'];
 export const SIGN_OFFS_SCHEMA = 'uk-food-sign-offs-1.0';
-const SIGN_OFF_FIELDS = ['doc', 'version', 'file', 'name', 'role', 'date', 'paperSigned', 'answers'];
+// `body` and `outside` are the two hashes of the file as it was signed: see documentHashes.
+const SIGN_OFF_FIELDS = ['doc', 'version', 'file', 'name', 'role', 'date', 'paperSigned', 'body', 'outside'];
 // What the completion record prints in the date and signature cells of a document not signed off.
 export const PENDING = '[PENDING]';
 const NOT_RELEVANT = 'Not relevant';
@@ -1912,7 +2138,8 @@ function signOffProblems(value) {
       [isPersonText(record.role), 'its role is empty, runs over more than one line or holds a character that cannot be seen'],
       [isIsoDate(record.date), `date ${JSON.stringify(record.date)} is not a real date written YYYY-MM-DD`],
       [['yes', 'no'].includes(record.paperSigned), `paperSigned ${JSON.stringify(record.paperSigned)} is not yes or no`],
-      [/^[0-9a-f]{64}$/.test(record.answers), 'answers is not a sha256 hash']
+      [/^[0-9a-f]{64}$/.test(record.body), 'body is not a sha256 hash'],
+      [/^[0-9a-f]{64}$/.test(record.outside), 'outside is not a sha256 hash']
     ];
     for (const [ok, message] of checks) if (!ok) problems.push(`${at}: ${message}`);
   });
@@ -1983,7 +2210,31 @@ const problemsLine = (section, n) => `worksheet ${sheetPath(section)} has ${coun
   `${n === 1 ? 'it' : 'them'}`;
 // A written document that fails check: check's own first reason, with its next step.
 const checkLine = (file, check) => `document ${file} ${check.reason ?? `does not pass check: ${check.messages?.[0] ?? check.message}`}`;
+// What the unfinished list says of a document that has a sign-off record and is not signed off. Each
+// names who signed and when, says truly what has happened since, and ends with what to do.
 const changedLine = (record) => `signed off by ${record.name} on ${record.date}, but changed since: sign off again`;
+const answersChangedLine = (record) => `signed off by ${record.name} on ${record.date}, but its answers have changed since: ` +
+  'the new version needs signing off';
+const outsideChangedLine = (record) => `signed off by ${record.name} on ${record.date}, but the file was changed outside its ` +
+  'UK-FOOD markers after that, so the sign-off no longer covers it: take that change out again, or write the document again ' +
+  'with its command, which makes a new version to sign off';
+const otherVersionLine = (record, current) => `this is version ${current.version}, and the newest sign-off is ${record.name}'s ` +
+  `of version ${record.version}, on ${record.date}: once this version is finished, a named person signs it off`;
+const goneLine = (record) => `${record.file}, which ${record.name} signed off on ${record.date}, is not in the project folder: ` +
+  'put it back, or sign the document off again once it is written';
+// The line for a document that is not signed off: null when the lines before it already say everything.
+// `asSigned` is true when the newest sign-off names the current file and holds the hashes it has now.
+function signLine(record, current, check, asSigned) {
+  if (!record) return NOT_SIGNED;
+  if (!current) return goneLine(record);
+  if (record.file !== current.file || record.version !== current.version) return otherVersionLine(record, current);
+  // check's own line says the header claims a sign-off the file has outlived.
+  if (check.kind === 'not-as-signed') return null;
+  // The file is what was signed. If a fresh render now differs, its answers have moved on; otherwise the
+  // lines before this one say what is unfinished, and nothing has changed since the sign-off.
+  if (asSigned) return check.kind === 'stale' ? answersChangedLine(record) : null;
+  return check.hashes?.body === record.body ? outsideChangedLine(record) : changedLine(record);
+}
 const uncoveredLine = (name) => `${name} has no own entry: add an own entry of kind special-process whose Process is ${name}, ` +
   'and confirm it';
 const awaitingLine = (entry) => `own entry ${entry.id} (${entry.title}) is awaiting environmental health review: once the ` +
@@ -2022,6 +2273,7 @@ function countLines(code, counts, section) {
 
 // Everything status reports, with what sign-off and the completion record need besides: { status,
 // sheets, hashes, blockers, signOffs }, or { exit: 2, messages } when the project cannot be read.
+// `hashes` holds each written document's own two hashes (documentHashes), which a sign-off records.
 // `blockers` holds, for each document, what keeps it from being finished: { what, sheet, after }, where
 // `sheet` is the worksheet a line is about (null for the document's own lines) and `after` marks a
 // line the unfinished list gives after the documents.
@@ -2052,13 +2304,12 @@ function collectStatus(project, data) {
   const uncovered = !own || own.clean ? specialProcesses.filter((process) => !process.ownEntry).map(({ name }) => uncoveredLine(name)) : [];
   const hashes = new Map();
   const blockers = new Map();
-  const matched = new Map();
+  const signLines = new Map();
   const documents = STATUS_ORDER.map((code) => {
     const { reads, needs } = worksheetsOf(code);
     const current = files.get(code) ?? null;
-    const check = current ? checkDocument(code, project, join(project, current.file), data) : null;
+    const check = current ? checkDocument(code, project, join(project, current.file), data, signOffs) : null;
     const inSync = check?.exit === 0;
-    const hash = answersHash(sheets, reads);
     const counts = countsOf(code, sheets.get(reads[0]), data);
     const missing = reads.filter((section) => needs.includes(section) && !sheets.get(section));
     // A worksheet for other data or in the wrong file is told by what to do about it; any other with
@@ -2084,9 +2335,10 @@ function collectStatus(project, data) {
       inSync
     };
     // A worksheet that is not clean gives one line and none from its counts. A document whose worksheets
-    // are missing, misplaced or have problems cannot be checked; any other that fails check is given
-    // check's own first reason.
-    const fileLines = !current ? [NOT_WRITTEN] : !inSync && !missing.length && !wrong.length && !troubled.length ? [checkLine(current.file, check)] : [];
+    // are missing, misplaced or have problems cannot be compared with a fresh render, but what check finds
+    // before it renders is told all the same; any other that fails check is given check's own first reason.
+    const comparable = !missing.length && !wrong.length && !troubled.length;
+    const fileLines = !current ? [NOT_WRITTEN] : !inSync && (comparable || BEFORE_RENDER.includes(check.kind)) ? [checkLine(current.file, check)] : [];
     const first = sheets.get(reads[0]);
     const docLines = [
       ...(first && !first.clean ? [] : countLines(code, counts, reads[0])),
@@ -2101,13 +2353,14 @@ function collectStatus(project, data) {
       ...(code === 'FOODOWN' ? uncovered : []).map((what) => ({ what, sheet: null, after: true }))
     ];
     const record = signOffs.records.filter((entry) => entry.doc === code).at(-1) ?? null;
-    // Signed off only when finished, and the newest sign-off for it names it as it is now.
-    const matches = Boolean(record && current && record.answers === hash && record.version === current.version &&
-      record.file === current.file);
-    doc.signedOff = held.length === 0 && matches;
+    // Signed off only when finished, and the newest sign-off for it names this file and holds the two
+    // hashes the file has now: what was signed is what is there, inside the markers and outside them.
+    const asSigned = Boolean(record && current && check.hashes && record.file === current.file &&
+      record.version === current.version && record.body === check.hashes.body && record.outside === check.hashes.outside);
+    doc.signedOff = held.length === 0 && asSigned;
     doc.signOff = record;
-    matched.set(code, matches);
-    hashes.set(code, hash);
+    signLines.set(code, doc.signedOff ? null : signLine(record, current, check, asSigned));
+    hashes.set(code, check?.hashes ?? null);
     blockers.set(code, held);
     return doc;
   });
@@ -2116,10 +2369,7 @@ function collectStatus(project, data) {
   const unfinished = documents.flatMap((doc) => {
     const [mine] = worksheetsOf(doc.code).reads;
     const lines = blockers.get(doc.code).filter(({ sheet, after }) => !after && (sheet === null || sheet === mine)).map(({ what }) => what);
-    // A newest sign-off that still names the document as it is now has not been changed since: the
-    // lines above say what is unfinished, and nothing more is said of it.
-    if (!doc.signedOff && !doc.signOff) lines.push(NOT_SIGNED);
-    else if (!doc.signedOff && !matched.get(doc.code)) lines.push(changedLine(doc.signOff));
+    if (signLines.get(doc.code)) lines.push(signLines.get(doc.code));
     return lines.map((what) => ({ code: doc.code, what }));
   });
   unfinished.push(...uncovered.map((what) => ({ code: 'FOODOWN', what })),
@@ -2188,15 +2438,14 @@ function completionRecordData(data) {
 // The completion record's body: the pack's title, text and table, each row's date and signature taken
 // from the sign-off of the section document it belongs to (a section's own row as well as its methods'),
 // or PENDING in both when that document is not signed off, and "Not relevant" beside a method marked
-// not relevant; then what is unfinished; then the closing notice and the source line. Its marker's
-// hash is of every worksheet, then of the sign-offs file; since the record also changes when a
-// document is written or edited, check simply compares it with a fresh render.
+// not relevant; then what is unfinished; then the closing notice and the source line. It changes
+// when a worksheet, a document or a sign-off does, so check simply compares it with a fresh render.
 function completionRecordDocument(project, data) {
   const record = completionRecordData(data);
   if (record.error) return { exit: 2, messages: [record.error] };
   const collected = collectStatus(project, data);
   if (collected.exit) return collected;
-  const { status, sheets, signOffs } = collected;
+  const { status, sheets } = collected;
   const documents = new Map(status.documents.map((doc) => [doc.code, doc]));
   const rows = record.rows.map(({ wording, section, method }) => {
     const doc = documents.get(DOC_OF_SECTION[section]);
@@ -2218,8 +2467,7 @@ function completionRecordDocument(project, data) {
     [closingNotice(name?.answered ? name.answer : null)],
     [sourceLine(data.source)]
   ];
-  const hash = answersHash(sheets, HASH_ORDER, signOffs.text === null ? [] : [signOffs.text]);
-  return { exit: 0, text: [beginMarker(COMPLETION_RECORD, hash), ...chunks.map((chunk) => chunk.join('\n')), END_MARKER].join('\n\n') };
+  return { exit: 0, text: bodyText(COMPLETION_RECORD, chunks) };
 }
 
 // Records that a named person has confirmed a document, when it is finished: its worksheets present
@@ -2240,7 +2488,7 @@ export function signOffDocument(code, project, person, data) {
   }
   if (reasons.length) return { exit: 1, messages: [`${code} is not signed off, and nothing was written, because:`, ...reasons.map((r) => `- ${r}`)] };
   const record = { doc: code, version: doc.version, file: doc.file, name: person.name, role: person.role, date: person.date,
-    paperSigned: person.paperSigned, answers: hashes.get(code) };
+    paperSigned: person.paperSigned, ...hashes.get(code) };
   const file = signOffsFile(project);
   // Written whole to a file beside it, then moved into place, so the record is never left half written.
   const next = `${file}.${process.pid}.tmp`;
@@ -2347,7 +2595,8 @@ commands:
                                                      printing nothing, when a worksheet a document
                                                      needs has problems
   check --doc DOC --project DIR --report FILE        exit 0 when the body between the UK-FOOD markers
-        [--data DIR] [--json]                        in FILE equals a fresh render, 1 when it does not
+        [--data DIR] [--json]                        in FILE equals a fresh render and its header claims
+                                                     no sign-off that is not recorded, 1 when not
   reference --section SECTION [--data DIR]           print a section's text from the pack, with no
                                                      answers; SECTION is one of XC, CL, CH, CK, MG
   status --project DIR [--data DIR] [--json]         say what is finished and what is not, for each

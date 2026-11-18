@@ -717,6 +717,8 @@ def test_template_holds_nothing_render_prints(name):
 # --- a document built as the commands say passes check ---------------------------------
 
 PARTIAL = OVERLAY / "templates" / "_partials" / "document-control-uk.md"
+# The one row every template's Revision History starts with.
+HISTORY_ROW = "| [VERSION] | [YYYY-MM-DD] | ArcKit AI | [CHANGES] | [PENDING] | [PENDING] |"
 
 
 def build(code: str, project: Path, version: str = "1.0") -> Path:
@@ -724,15 +726,17 @@ def build(code: str, project: Path, version: str = "1.0") -> Path:
 
     The template's text; the DOC-CONTROL-HEADER marker and its comment replaced by the UK partial
     (RENDERING.md, steps 3 and 4) with its placeholders left as they are, so Status DRAFT and both
-    names [PENDING]; the render output placed unchanged at the UK-FOOD-BODY line; saved under the
-    name generate-document-id.mjs gives.
+    names [PENDING]; the Revision History row given its version; the render output placed unchanged
+    at the UK-FOOD-BODY line; saved under the name generate-document-id.mjs gives.
     """
     rendered = run(HELPER, "render", "--doc", code, "--project", project)
     assert rendered.returncode == 0, rendered.stderr
     body = rendered.stdout[:-1] if rendered.stdout.endswith("\n") else rendered.stdout
     template = (OVERLAY / "templates" / TEMPLATE_OF[code]).read_text(encoding="utf-8")
     header = PARTIAL.read_text(encoding="utf-8").rstrip("\n")
-    document = template.replace(f"{MARKER}\n{MARKER_COMMENT}", header).replace(BODY, body)
+    assert HISTORY_ROW in template
+    document = (template.replace(f"{MARKER}\n{MARKER_COMMENT}", header)
+                .replace(HISTORY_ROW, HISTORY_ROW.replace("[VERSION]", version)).replace(BODY, body))
     assert MARKER not in document and BODY not in document
     named = run(DOC_ID, "001", code, version, "--filename")
     assert named.returncode == 0, named.stderr
@@ -778,17 +782,36 @@ def test_a_body_changed_by_one_character_fails_check(code, project):
     assert result.returncode == 1, result.stdout + result.stderr
 
 
-def sign_and_mark(code: str, project: Path, path: Path) -> None:
-    """What uk-food-sign-off does: the helper records the sign-off, then the header is marked outside the markers."""
-    signed = run(HELPER, "sign-off", "--doc", code, "--project", project,
-                 "--name", "Sam Okafor", "--role", "owner", "--version", "1.0", "--date", "2026-11-21")
-    assert signed.returncode == 0, signed.stderr
+SIGNED_HEADER = [("Status", "APPROVED"), ("Reviewed By", "Sam Okafor, owner, 2026-11-17"),
+                 ("Approved By", "Sam Okafor, owner, 2026-11-17"), ("Last Modified", "2026-11-17")]
+
+
+def set_header(path: Path, rows: list[tuple[str, str]]) -> None:
+    """Rewrite Document Control rows in place, as an edit to the header outside the markers does."""
     text = path.read_text(encoding="utf-8")
-    for field, value in [("Status", "APPROVED"), ("Reviewed By", "Sam Okafor, owner, 2026-11-21"),
-                         ("Approved By", "Sam Okafor, owner, 2026-11-21")]:
+    for field, value in rows:
         old = re.search(rf"^\| \*\*{field}\*\* \| .* \|$", text, re.M).group(0)
         text = text.replace(old, f"| **{field}** | {value} |")
     path.write_text(text, encoding="utf-8")
+
+
+def sign_and_mark(code: str, project: Path, path: Path) -> None:
+    """What uk-food-sign-off does: the helper records the sign-off, then the header is marked outside the
+    markers: Status, the two names, Last Modified, and the approval cells of the Revision History row."""
+    signed = run(HELPER, "sign-off", "--doc", code, "--project", project,
+                 "--name", "Sam Okafor", "--role", "owner", "--version", "1.0", "--date", "2026-11-17")
+    assert signed.returncode == 0, signed.stderr
+    set_header(path, SIGNED_HEADER)
+    text = path.read_text(encoding="utf-8")
+    row = HISTORY_ROW.replace("[VERSION]", "1.0")
+    assert row in text
+    path.write_text(text.replace(row, row.replace("[PENDING] | [PENDING]", "Sam Okafor, owner | 2026-11-17")),
+                    encoding="utf-8")
+
+
+def unfinished(code: str, project: Path) -> list[str]:
+    status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
+    return [line["what"] for line in status["unfinished"] if line["code"] == code]
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
@@ -877,13 +900,61 @@ def test_a_signed_document_whose_answers_changed_gets_a_new_draft_version(projec
     change_an_answer(project)
     assert follow_the_rule("FOODCOOK", project) == ("new", "1.1")
     assert path.read_bytes() == signed, "the signed file is left as it is"
-    new = (project / "ARC-001-FOODCOOK-v1.1.md").read_text(encoding="utf-8")
-    assert "| **Status** | DRAFT |" in new and "| **Approved By** | [PENDING] |" in new
+    new = project / "ARC-001-FOODCOOK-v1.1.md"
     doc = cooking(project)
-    assert doc["file"] == "ARC-001-FOODCOOK-v1.1.md" and not doc["signedOff"]
-    # Written again with no further change, the new version is rewritten in place.
+    assert doc["file"] == new.name and doc["inSync"] and not doc["signedOff"]
+    assert unfinished("FOODCOOK", project) == [
+        "this is version 1.1, and the newest sign-off is Sam Okafor's of version 1.0, on 2026-11-17: once this "
+        "version is finished, a named person signs it off"]
+    # C1, the slip the review found: the signed version's header carried into the new version. Nobody
+    # signed version 1.1, so the helper says so, whatever the file's header reads.
+    set_header(new, SIGNED_HEADER)
+    result = check("FOODCOOK", project, new)
+    assert result.returncode == 1, result.stdout
+    assert 'Status is "APPROVED", but no sign-off is recorded for this file' in result.stdout
+    doc = cooking(project)
+    assert not doc["inSync"] and not doc["signedOff"]
+    assert "though no sign-off is recorded for it" in unfinished("FOODCOOK", project)[0]
+    # Written again as the commands say, the new version is rewritten in place, a DRAFT that claims nothing.
     assert follow_the_rule("FOODCOOK", project) == ("in place", "1.1")
     assert set(files_of("FOODCOOK", project)) == {"ARC-001-FOODCOOK-v1.0.md", "ARC-001-FOODCOOK-v1.1.md"}
+    doc = cooking(project)
+    assert doc["inSync"] and not doc["signedOff"]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+@pytest.mark.parametrize("rows", [[("Status", "APPROVED")], [("Status", "IN_REVIEW")],
+                                  [("Reviewed By", "Sam Okafor, owner, 2026-11-17")],
+                                  [("Approved By", "Sam Okafor, owner, 2026-11-17")], SIGNED_HEADER],
+                         ids=["approved", "in-review", "reviewed-by", "approved-by", "all-three"])
+@pytest.mark.parametrize("code", ["FOODCOOK", "FOODPROF", "FOODCMP"])
+def test_a_header_that_claims_a_sign_off_nobody_recorded_fails_check(code, rows, project):
+    """C1: a document built from its template that reads as signed off, when nobody has signed it, fails check."""
+    path = build(code, project)
+    assert check(code, project, path).returncode == 0
+    set_header(path, rows)
+    result = check(code, project, path)
+    assert result.returncode == 1, result.stdout + result.stderr
+    line = next(i for i, text in enumerate(path.read_text(encoding="utf-8").split("\n"), 1)
+                if text.startswith(f"| **{rows[0][0]}** |"))
+    assert f"{path}:{line}: " in result.stdout, result.stdout
+    if code != "FOODCMP":
+        assert not next(d for d in json.loads(run(HELPER, "status", "--project", project, "--json").stdout)["documents"]
+                        if d["code"] == code)["signedOff"]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_text_added_to_a_signed_document_outside_its_markers_ends_the_sign_off(project):
+    """I1: a sign-off binds the whole file, so a note added after it was signed is not covered by it."""
+    path = build("FOODCOOK", project)
+    sign_and_mark("FOODCOOK", project, path)
+    assert cooking(project)["signedOff"]
+    path.write_text(path.read_text(encoding="utf-8") + "\n## Addendum\n\nA note nobody signed.\n", encoding="utf-8")
+    assert not cooking(project)["signedOff"]
+    assert check("FOODCOOK", project, path).returncode == 1
+    assert "changed outside its UK-FOOD markers after Sam Okafor signed it off on 2026-11-17" in unfinished("FOODCOOK", project)[0]
+    # The commands' rule then writes the next version from the template, and leaves the signed file as it is.
+    assert follow_the_rule("FOODCOOK", project) == ("new", "1.1")
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
