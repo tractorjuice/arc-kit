@@ -5,6 +5,9 @@ Checks:
 - parses as YAML
 - has the required top-level keys (recipe, schema_version, targets, defaults.version)
 - has unique target IDs within the recipe, none containing ':'
+- a target's optional `min_lines` (the fewest lines its document may have; the
+  build's checks want more than 100 when it is absent) is a whole number of 1
+  or more
 - every target's `deps:` entries resolve to other target IDs in the same recipe
   (glob patterns like "ADR-*" are accepted if at least one target matches)
 - the dependency graph is acyclic (a cycle makes the harness halt at runtime with
@@ -171,6 +174,14 @@ for path in paths:
     for t in targets:
         if not isinstance(t, dict):
             continue
+        if "min_lines" in t:
+            value = t["min_lines"]
+            # YAML reads `true` as a bool, which Python counts as an int.
+            if isinstance(value, bool) or not isinstance(value, int) or value < 1:
+                errors.append(
+                    f"{path}: target {t.get('id')}: min_lines must be a whole number of 1 "
+                    f"or more, not {value!r}"
+                )
         for dep in t.get("deps") or []:
             if "*" in dep:
                 if not any(fnmatch.fnmatch(tid, dep) for tid in target_id_set):
