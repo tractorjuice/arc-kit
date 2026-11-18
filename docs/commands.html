@@ -644,6 +644,7 @@
                     <option value="au-overlay">Australian Federal Overlay (Community)</option>
                     <option value="us-overlay">USA Federal Civilian Overlay (Community)</option>
                     <option value="uk-fs-overlay">UK Finance Payments Overlay (Community, Sector)</option>
+                    <option value="uk-food-overlay">UK Food Safety Overlay (Community, Sector)</option>
                     <option value="uk-legacy-overlay">UK Legacy IT Assessment Overlay (Community)</option>
                     <option value="uk-nhs-overlay">UK NHS Clinical Safety Overlay (Community, Sector)</option>
                 </select>
@@ -667,6 +668,7 @@
                     <option value="australia">Australia</option>
                     <option value="usa">USA</option>
                     <option value="uk-finance">UK Finance (sector)</option>
+                    <option value="uk-food">UK Food Safety (sector)</option>
                     <option value="uk-legacy">UK Legacy IT</option>
                     <option value="uk-nhs">UK NHS (sector)</option>
                     <option value="au-energy">Australian Energy (sector)</option>
@@ -2410,6 +2412,36 @@
                         <td>Community</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-food-overlay" data-jurisdiction="uk-food" data-tier="community">
+                        <td><code>/arckit-uk-food:uk-food-profile</code></td>
+                        <td class="description">[COMMUNITY] Record a small caterer's business profile for its Safer food, better business documents (England and Wales): who runs it, where it is, what it sells, its equipment and staff, and whether it does any special process, in the business's own words. Anything nobody has confirmed reads NOT YET ANSWERED. <a href="guide/uk-food-profile.html" class="govuk-link">Guide</a></td>
+                        <td>UK Food Safety Overlay</td><td>UK Food Safety</td><td>Community</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-food-overlay" data-jurisdiction="uk-food" data-tier="community">
+                        <td><code>/arckit-uk-food:uk-food-safe-methods</code></td>
+                        <td class="description">[COMMUNITY] Work through one of the pack's five sections of safe methods (cross-contamination, cleaning, chilling, cooking, management) one safe method at a time, and write that section's document from the pack's own wording and the business's confirmed answers. <a href="guide/uk-food-safe-methods.html" class="govuk-link">Guide</a></td>
+                        <td>UK Food Safety Overlay</td><td>UK Food Safety</td><td>Community</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-food-overlay" data-jurisdiction="uk-food" data-tier="community">
+                        <td><code>/arckit-uk-food:uk-food-own-methods</code></td>
+                        <td class="description">[COMMUNITY] Record the business's own food safety controls that the pack does not cover, and its own written procedure for any special process, word for word. It never drafts a procedure, and points to the council's environmental health team. <a href="guide/uk-food-own-methods.html" class="govuk-link">Guide</a></td>
+                        <td>UK Food Safety Overlay</td><td>UK Food Safety</td><td>Community</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-food-overlay" data-jurisdiction="uk-food" data-tier="community">
+                        <td><code>/arckit-uk-food:uk-food-check</code></td>
+                        <td class="description">[COMMUNITY] Show what is finished and what is still waiting across the business's food safety documents, and write the completion record. Changes no worksheet and no other document. <a href="guide/uk-food-check.html" class="govuk-link">Guide</a></td>
+                        <td>UK Food Safety Overlay</td><td>UK Food Safety</td><td>Community</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-food-overlay" data-jurisdiction="uk-food" data-tier="community">
+                        <td><code>/arckit-uk-food:uk-food-sign-off</code></td>
+                        <td class="description">[COMMUNITY] Record that a named person at the business has read a finished document and confirms it, with their name, role and the version they read, then mark the document's header as signed off. Refuses an unfinished document. <a href="guide/uk-food-sign-off.html" class="govuk-link">Guide</a></td>
+                        <td>UK Food Safety Overlay</td><td>UK Food Safety</td><td>Community</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
                     <tr data-status="experimental" data-category="uk-legacy-overlay" data-jurisdiction="uk-legacy" data-tier="community">
                         <td><code>/arckit-uk-legacy:uk-legacy-assessment</code><br><a href="https://youtu.be/YRvCL0wxkFo" class="govuk-link app-film-link" target="_blank" rel="noopener" aria-label="Watch the film for /arckit-uk-legacy:uk-legacy-assessment on YouTube (opens in a new tab)">&#9654; Film</a></td>
@@ -6214,6 +6246,22 @@
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-nhs:uk-nhs-dcb0160</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements, stakeholders, uk-nhs-dcb0129</td><td class="govuk-table__cell">operationalize</td></tr>
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-nhs:uk-nhs-dtac</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements, stakeholders</td><td class="govuk-table__cell">atrs, dld-review, dpia, hld-review, secure, uk-mdr-classification, uk-nhs-dcb0129, uk-nhs-dcb0160</td></tr>
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-nhs:uk-mdr-classification</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements, stakeholders</td><td class="govuk-table__cell">secure, uk-nhs-dcb0129</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">UK Food Safety Overlay (5 commands)</span></summary>
+            <div class="govuk-details__text">
+                <p class="govuk-body">The overlay reads no ArcKit core document. Its commands read each other's worksheets and documents; a missing profile is reported and the command carries on.</p>
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-profile</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-safe-methods</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-own-methods</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-check</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile, uk-food-safe-methods, uk-food-own-methods</td><td class="govuk-table__cell">uk-food-sign-off</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-sign-off</code></td><td class="govuk-table__cell">the document being signed: uk-food-profile, uk-food-safe-methods or uk-food-own-methods</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td></tr>
                     </tbody>
                 </table>
             </div>
