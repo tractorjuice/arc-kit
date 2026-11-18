@@ -78,7 +78,8 @@ def render(data_dir: Path, pdf: str = DEFAULT_PDF) -> str:
         "- It is not a list of every frequency the pack states in words, such as filling in the diary every day,"
         " doing the opening checks at the beginning of the day, or the daily and weekly columns of the cleaning"
         " schedule.",
-        "- Where several rows show the same sentence, it is because that sentence holds more than one figure.",
+        "- Where several rows on one page show the same sentence, it is because that sentence holds more than one"
+        " figure.",
         f"- The {len(cooking)} rows for CK-01, on {_pages(l['page'] for l in cooking)}, are the pack's examples of"
         " safe time and temperature combinations for cooking, printed together under that heading.",
         "- \"Page\" is the page of the PDF file, counting the cover as page 1: the pack prints no page numbers.",

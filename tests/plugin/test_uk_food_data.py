@@ -214,7 +214,7 @@ DATA_SHA256 = {
     "CK": "4e3bf27b2c1c48cbb6b182baf2ae55522df29c5df9f22150d5d9ecd920e12120",
     "MG": "dd079219df3dff0b761d83bee6cf7d7a09dd0a82146155461762d12cd63003f3",
     "diary": "64562c73c9a8db79c69d01bc4fef427818d52a6be4e3956d91922486166f82c0",
-    "limits": "6f6f13ca181b80d6905b901e7c1144ce68616ce3d0480ec86294a2a58ce33dd6",
+    "limits": "1f010908835a694e418519ef5a347bf5ef981d10177fb7c4b406052a9830b99b",
 }
 
 
@@ -728,10 +728,22 @@ EXPECTED_LIMITS = [
     ("between 0°C and 4°C", "CK-02", 53, None),
     ("60 days", "CK-02", 52, None),
     ("28 days", "front", 2, None),
-    # The review's cadence is printed only in its name, so it is a limit where the pack tells the business to
-    # do the review; the name elsewhere is in NOT_LIMITS.
+    ("between 0 and 5", "front", 8, "given a rating between 0 and 5"),  # the food hygiene rating scale
+    # The review's cadence is printed only in its name, so each place the name is printed is a limit: where
+    # the pack tells the business to do the review, where it describes it, and the review's own headings.
     ("4-weekly", "front", 5, "There is also a 4-weekly review"),
+    ("4-weekly", "MG-05", 73, "Use the 4-weekly review in the diary"),
     ("4-weekly", "MG-05", 73, "You should still complete the 4-weekly review yourself."),
+    ("4-weekly", "diary", 81, "4-weekly review"),  # the bullet in the list of what the diary contains
+    ("4-WEEKLY", "diary", 81, "4-WEEKLY REVIEW"),
+    ("4-weekly", "diary", 81, "The 4-weekly review gives you the opportunity"),
+    ("4-weekly", "diary", 81, "read the 4-weekly review before starting"),
+    ("4-WEEKLY", "diary", 99, "4-WEEKLY REVIEW"),
+    ("4-WEEKLY", "diary", 100, "4-WEEKLY REVIEW"),
+    ("2 stage", "XC-03", 17, "\u20182 stage clean\u2019"),
+    # A named scheme, as the BS EN numbers are named standards: the bullet that names it and the reason given.
+    ("British Lion code", "CK-02", 52, "British Lion code or equivalent assurance scheme"),
+    ("British Lion code", "CK-02", 52, "demonstrates eggs have been produced in a safe manner"),
     ("120\u2070C", "CK-04", 56, "Acrylamide"),
     ("175\u2070C", "CK-04", 57, "oil temperature"),
     ("30\u2013180 mins", "CK-04", 56, "Soak"),
@@ -747,9 +759,15 @@ EXPECTED_LIMITS = [
 @pytest.mark.parametrize("value, method, page, words", EXPECTED_LIMITS,
                          ids=[f"{v} {m} p{p}" for v, m, p, _ in EXPECTED_LIMITS])
 def test_limits_present(value, method, page, words):
-    found = [limit for limit in _limits() if (limit["value"], limit["method"], limit["page"]) == (value, method, page)
+    limits = _limits()
+    found = [limit for limit in limits if (limit["value"], limit["method"], limit["page"]) == (value, method, page)
              and (words is None or words in limit["text"])]
     assert found, (value, method, page, words)
+    # Where several expectations share a value, method and page, each needs an entry of its own: a bullet's
+    # words can sit inside a sentence on the same page, so one entry could otherwise meet them all.
+    expected = sum((v, m, p) == (value, method, page) for v, m, p, _ in EXPECTED_LIMITS)
+    held = sum((limit["value"], limit["method"], limit["page"]) == (value, method, page) for limit in limits)
+    assert held >= expected, (value, method, page, held, expected)
 
 
 # Completeness: every figure in the front matter and the five section files (not the diary's forms and
@@ -772,19 +790,18 @@ THINK_TWICE_PAGES = {"XC": (18, 20, 22, 24), "CL": (30, 33), "CH": (41, 45, 47),
                      "MG": (77,)}
 NOT_LIMITS = [
     NotALimit(THINK_TWICE_PAGES, r"^THINK TWICE!$", "the heading of a THINK TWICE! box"),
-    NotALimit({"front": (8,)}, r"\brating between 0 and 5\b|^[0-5] \u2013 ",
-              "the food hygiene rating scale an inspector awards, not a figure the business works to"),
+    NotALimit({"front": (8,)}, r"^[0-5] \u2013 ",
+              "the meaning of one score on the food hygiene rating scale an inspector awards; the scale itself,"
+              " the figures it runs between, is a limit (front page 8)"),
     NotALimit({"front": (10,), "CL": (29,)}, r"^Step [1-6]:", "the number of a handwashing step"),
     NotALimit({"CL": (31, 37), "CH": (44, 45), "MG": (75,)}, r"^[1-7]\. ", "the number of an item in a numbered list"),
-    NotALimit({"MG": (73,)}, r"\bUse the 4-weekly review in the diary\b",
-              "the 4-weekly review named as a place to find problems; its cadence is a limit where the pack tells"
-              " the business to do it (front page 5, MG-05 page 73)"),
     NotALimit({"XC": (20,)}, r"\bring 999\b", "the emergency telephone number in the allergic reaction box"),
     NotALimit({"MG": (70,)}, r"\bSince October 2021\b", "the date a labelling law came in; a date, not a limit"),
-    NotALimit({"XC": (17, 18), "CL": (31, 32, 33)},
-              r"\u20182 stage clean\u2019|\btwo stage clean(?:ing)?\b|\btwo stages\b",
-              "the name of the two stage clean, a procedure CL-02 sets out step by step: a count of stages,"
-              " not a figure to measure against"),
+    NotALimit({"XC": (18,), "CL": (31, 32, 33)},
+              r"\btwo stage clean(?:ing)?\b|\btwo stages\b",
+              "the name of the two stage clean in words, a procedure CL-02 sets out step by step: a count of"
+              " stages, not a figure to measure against; the one place the pack names it with a digit (XC-03"
+              " page 17) is a limit"),
     NotALimit({"CL": (37,)}, r"\bA two-in-one product\b", "the name of a kind of product (a sanitiser)"),
     NotALimit({"front": (4,), "XC": (11, 12, 13, 15), "CK": (52, 56)},
               r"\bone of (?:these symbols|the most common causes|the best ways|the top causes|the main sources"
@@ -883,10 +900,10 @@ def test_no_figure_is_both_a_limit_and_not_a_limit():
 
 
 def test_a_figure_both_a_limit_and_not_a_limit_is_reported():
-    extra = {"id": "L-99", "value": "4-weekly", "text": "Use the 4-weekly review in the diary", "method": "MG-05",
-             "page": 73}
+    extra = {"id": "L-99", "value": "5", "text": "5 \u2013 hygiene standards are very good", "method": "front",
+             "page": 8}
     both = figure_accounts([*_limits(), extra]).both
-    assert [(name, page, figure) for name, page, _, figure, _ in both] == [("MG", 73, "4-weekly")]
+    assert [(name, page, figure) for name, page, _, figure, _ in both] == [("front", 8, "5")]
 
 
 # render-limits-check.py renders limits.json as a table for reading against the PDF page by page.
@@ -915,7 +932,8 @@ def test_render_limits_check_introduction(tmp_path):
     # The PDF as it is on the owner's disk, by default; the FSA's own file name lacks the "01-" prefix.
     assert "`01-sfbb-caterers-pack-fixed_0_3.pdf` in `~/Documents/ArcKit/food-safety-overlay/sfbb-caterers/`" in intro
     for words in ("figures and named standards", "not a list of every frequency", "every day",
-                  "beginning of the day", "daily and weekly", "same sentence", "more than one figure",
+                  "beginning of the day", "daily and weekly", "several rows on one page show the same sentence",
+                  "more than one figure",
                   "safe time and temperature combinations", "page 51", "prints no page numbers"):
         assert words in intro, words
     # The two places the pack prints differently, with the pages taken from limits.json.
