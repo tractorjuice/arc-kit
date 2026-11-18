@@ -440,10 +440,10 @@
 <p>It tells you, for each document:</p>
 <ul>
 <li>how many of its questions are confirmed, out of how many, and how many are proposed and waiting for a named person to confirm them;</li>
-<li>whether the document has been written, and whether it is in step with its worksheet;</li>
+<li>whether the document has been written, and whether it is in step with its worksheet, or what is wrong with it;</li>
 <li>whether it has been signed off, and if so by whom, in what role and on what date.</li>
 </ul>
-<p>It also lists the special processes and foods the profile confirms, with the own entry that covers each one (or none), and any entry still waiting for your council's environmental health review.</p>
+<p>It also says whether the completion record already written is up to date, and lists the special processes and foods the profile confirms, with the own entry that covers each one (or none), and any entry still waiting for your council's environmental health review.</p>
 <p>Then it gives the list of everything still unfinished, exactly as the overlay's helper script prints it, and says which command moves each item on.</p>
 <p>It also writes the <strong>completion record</strong>: the pack's own record of which safe methods have been worked through, filled in from your documents and sign-offs, followed by the list of everything still unfinished. The per-document counts and the summary of special processes are shown to you, not written into the record.</p>
 <h2 id="before-you-start">Before you start</h2>
@@ -472,7 +472,9 @@ FOODXC (Cross-contamination): 23 of 50 questions confirmed, 2 proposed; not writ
 FOODCLN (Cleaning): 0 of 23 questions confirmed; adapted: CL-04; not written; not signed off
 FOODCOOK (Cooking): 41 of 41 questions confirmed; not relevant: CK-06; ARC-001-FOODCOOK-v1.0.md in step with its worksheets; signed off by Sam Okafor, Owner, on 2026-11-18
 FOODOWN (Own methods): 2 of 2 own entries confirmed; not written; not signed off
+FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date
 </code></pre>
+<p>The last of those lines is about the completion record itself. Once anything it reports on has changed, that line says the record is out of date, and running this command again brings it up to date. If a document was changed after it was signed off, its line says so in place of &quot;signed off by&quot;, and the unfinished list says what to do.</p>
 <p>Lines in the unfinished list look like these:</p>
 <pre><code class="language-text">- FOODPROF: document not written yet: write the document from its worksheet
 - FOODXC: 2 answers in food-safety/answers-XC.md are proposed but not confirmed (XC-02-Q01 and XC-06-Q02): an answer counts when its State is confirmed and By and On are filled in

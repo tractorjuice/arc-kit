@@ -15,7 +15,7 @@
 
 ---
 
-<!-- The text between the UK-FOOD markers below is printed by the overlay's helper from the business's worksheets, documents and sign-offs. Run the command again to bring it up to date: an edit between the markers makes the check fail. -->
+<!-- This file is written by the overlay's check command and is not edited by hand. The text between the UK-FOOD markers below is printed by the overlay's helper from the business's worksheets, documents and sign-offs: run the command again to bring it up to date. A note of the business's own belongs in its own methods, recorded with the own methods command, not in this file. -->
 
 <!-- UK-FOOD-BODY -->
 

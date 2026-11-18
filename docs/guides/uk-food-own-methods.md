@@ -80,7 +80,7 @@ Sam Okafor owns Bramble Cafe, an invented café. The profile says the café does
 - `projects/001-bramble-cafe/food-safety/answers-own.md`: your worksheet of own entries.
 - `projects/001-bramble-cafe/ARC-001-FOODOWN-v1.0.md`: the own methods document. It shows only confirmed entries. Any other entry is named as not yet confirmed, with its contents left out. A written procedure appears as the business's own text, marked as not written or checked by this tool. The document's status is `DRAFT` until a named person at the business signs it off.
 
-Once a document has been signed off, the command never writes over it. If nothing has changed, it writes nothing. If entries have changed, it leaves the signed file as it is and writes a new version, which needs signing off again.
+Once a document has been signed off, the command never writes over it. If nothing in it has changed, it writes nothing. If an entry it prints has changed, it leaves the signed file as it is and writes a new version, which needs signing off again.
 
 ## What it will not do, and why
 

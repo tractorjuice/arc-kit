@@ -46,7 +46,7 @@ $ARGUMENTS
 **Two things this command must never do, and why.**
 
 1. **Change the pack's wording or figures on the way into a document.** A wrong temperature or time in a food safety record can make someone ill. So the body of the document is the helper's `render` output, placed unchanged, and the helper's `check` proves it afterwards. You never type, paraphrase or tidy the pack's text yourself.
-2. **Say something about the business that nobody at the business said.** The document is the business's own statement of what it does, so an answer you supplied would be a statement nobody made. So never fill in an answer the person has not given. Only an answer a named person gave, in this conversation or in the request, is `confirmed`; anything else stays as it is, and the document prints it as **NOT YET ANSWERED**.
+2. **Say something about the business that nobody at the business said.** The document is the business's own statement of what it does, so an answer you supplied would be a statement nobody made. So never fill in an answer the person has not given. Only an answer a named person gave, in this conversation or in the request, is `confirmed`; a question with no such answer is left unanswered, or holds a proposed answer with its source, and the document prints it as **NOT YET ANSWERED**.
 
 **The helper** is `node "${CLAUDE_PLUGIN_ROOT}/scripts/uk-food.mjs"`. It needs only Node and sends nothing anywhere. Exit 0 is success, 1 means a check failed or it refused, and 2 means a usage or input error. Its messages say what to do next: follow them.
 
@@ -68,7 +68,7 @@ The pack's order is the order of this table. In what follows, SECTION is the cho
 
 ### 1. Read what this command needs
 
-- `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`, for the document header.
+- `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`, for how a document's header is put in place, and `${CLAUDE_PLUGIN_ROOT}/templates/_partials/document-control-uk.md`, the header these documents use.
 - The template: `.arckit/templates-custom/uk-food-safe-methods-template.md` if it exists, then `.arckit/templates/uk-food-safe-methods-template.md`, then `${CLAUDE_PLUGIN_ROOT}/templates/uk-food-safe-methods-template.md`.
 - `${CLAUDE_PLUGIN_ROOT}/references/uk-food-quality-checklist.md`, the checks to run before the summary.
 
@@ -134,27 +134,27 @@ Do this before asking anything, and again after each reply that changes a worksh
 
 1. **See whether there is anything to write.** Run `node "${CLAUDE_PLUGIN_ROOT}/scripts/uk-food.mjs" status --project PROJECT --json` and find DOC in `documents`:
    - `signedOff` is true: the document is signed off and nothing in it has changed since. Write nothing, and say that it is signed off and up to date.
-   - `signOff` is not null, `signedOff` is false, and `signOff.file` is `file`: the signed file no longer matches its worksheets. Leave it exactly as it is, and write the next minor version as a new file, following `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: carry its Revision History over and add a row.
+   - `signOff` is not null, `signedOff` is false, and `signOff.file` is `file`: the sign-off no longer covers the document, because an answer it prints has changed since or the file itself has been changed. Leave the signed file exactly as it is, and write the next minor version as a new file, following `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: carry its Revision History over and add a row for the new version.
    - Otherwise: rewrite `file` in place, at its version, or write version 1.0 if `file` is null.
 
    With nothing to write, skip the rest of this step. This overlay departs from version-detection.md in one way: a document nobody has signed off is rewritten in place while answers are gathered, so the business does not collect a new version after every answer.
 
-   **Inside a build.** ArcKit's build harness tells a worker whose target already has a document to write the next version beside it, never over it. For these documents the rule above still decides what is written: a signed-off document that is in step is left alone and nothing is written; a document nobody has signed off is rewritten in place; a new version is written only when a signed-off document's answers have changed. When nothing is written, give the existing file's path, `PROJECT/` followed by `file` from `status --json`, as the file written, so the build can find it.
+   **Inside a build.** ArcKit's build harness tells a worker whose target already has a document to write the next version beside it, never over it. For these documents the rule above still decides what is written: a signed-off document that is in step is left alone and nothing is written; a document nobody has signed off is rewritten in place; a new version is written only when a signed-off document's sign-off no longer covers it. When nothing is written, give the existing file's path, `PROJECT/` followed by `file` from `status --json`, as the file written, so the build can find it.
 2. **Render the body**: `node "${CLAUDE_PLUGIN_ROOT}/scripts/uk-food.mjs" render --doc DOC --project PROJECT`. On exit 0 its output is the body. On exit 1 or 2 it names the worksheet it could not use: run `parse-worksheet` on it and deal with each problem as **Record only what the person gives** says. If a problem is in a line you did not write in this run, show `parse-worksheet`'s message unchanged and ask the person how to put it right; with nobody to answer, stop there and report it.
 3. **Name the file**: `node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" <NNN> DOC <VERSION> --filename`. It goes in PROJECT itself.
-4. **Build the document from the template.** Resolve `<!-- DOC-CONTROL-HEADER -->` as RENDERING.md says, and fill the header as **The header** below says. Fill the title, the Revision History and the footer. Replace the line `<!-- UK-FOOD-BODY -->` with the render output exactly as printed: every line, both UK-FOOD marker lines included, with nothing added, removed, reflowed, re-escaped or tidied. Keep the comment above it. Put nothing from the pack anywhere else in the file.
+4. **Build the document from the template.** Replace the line `<!-- DOC-CONTROL-HEADER -->` and the comment line under it with the contents of `document-control-uk.md`, as steps 3 and 4 of RENDERING.md say, and fill the header as **The header** below says. Use that header whatever the plugin's configuration says, and take no value in it from the plugin's configuration or the machine's settings: this is a food business's own record, so everything in it comes from the business or from the helper. Fill the title, the Revision History and the footer. Replace the line `<!-- UK-FOOD-BODY -->` with the render output exactly as printed: every line, both UK-FOOD marker lines included, with nothing added, removed, reflowed, re-escaped or tidied. Keep the comment above it. Add nothing else to the file: no summary, note, heading or other text of your own or from the pack, before the markers or after them. A sign-off covers the whole file, so a line added outside the markers would be signed for along with the rest; anything the business wants to add about how it works belongs in its own methods, through `/arckit:uk-food-own-methods`.
 5. **Write** the file with the Write tool.
-6. **Check it**: `node "${CLAUDE_PLUGIN_ROOT}/scripts/uk-food.mjs" check --doc DOC --project PROJECT --report PROJECT/<file>`. Exit 0 means the body equals a fresh render. On exit 1, write the document again with a fresh render placed unchanged; never edit the body by hand to make `check` pass. If it fails a second time, show `check`'s message unchanged and stop.
+6. **Check it**: `node "${CLAUDE_PLUGIN_ROOT}/scripts/uk-food.mjs" check --doc DOC --project PROJECT --report PROJECT/<file>`. Exit 0 means the body equals a fresh render and the header claims no sign-off that is not recorded. On exit 1, read its message. If it names a line of the header or of the Revision History, put that line right as **The header** says. Otherwise write the document again with a fresh render placed unchanged; never edit the body by hand to make `check` pass. If it fails a second time, show `check`'s message unchanged and stop.
 
 **The header.**
 
-- **Document ID** `ARC-{NNN}-{DOC}-v{VERSION}`; **Document Type** as Context names it; **Project** the project's name and number; **Classification** as RENDERING.md resolves it.
-- **Status** `DRAFT`, and **Reviewed By** and **Approved By** `[PENDING]`, always. This command writes only a document that is not signed off; only `/arckit:uk-food-sign-off` sets `APPROVED` and the two names, on the file the helper has just recorded.
+- **Document ID** `ARC-{NNN}-{DOC}-v{VERSION}`; **Document Type** as Context names it; **Project** the project's name and number; **Classification** what the person tells you, and `[PENDING]` otherwise. Never take it from the plugin's configuration (`default_classification`), from the machine's settings or from a default, and do not look in the machine's configuration for it: a marking that nobody at the business chose would be a statement nobody made.
+- **Status** `DRAFT`, and **Reviewed By** and **Approved By** `[PENDING]`, always. This command writes only a document that is not signed off; only `/arckit:uk-food-sign-off` sets `APPROVED` and the two names, on the file the helper has just recorded. Never copy a signed-off version's header into a new version: the helper's `check` fails a document whose header says anything else when no sign-off is recorded for that file.
 - **Version**; **Created Date**, the first write's date, kept when the file is rewritten in place; **Last Modified**, today.
 - **Owner**: the profile's confirmed answer to `PR-Q07`, who is in charge of keeping the pack up to date; `[PENDING]` while it is not confirmed.
 - **Review Cycle**, **Next Review Date** and **Distribution**: what the person tells you; otherwise `[PENDING]`.
 - **Title**: the document type, then the business's name as the profile's confirmed `PR-Q01` answer gives it, or the project's name while that is not confirmed.
-- **Revision History**: one row for each version, giving the version, the date, `ArcKit AI`, "Written from the business's confirmed answers", `[PENDING]` and `[PENDING]`. A rewrite in place keeps the row and updates its date.
+- **Revision History**: one row for each version, giving the version, the date, `ArcKit AI`, "Written from the business's confirmed answers", `[PENDING]` and `[PENDING]`. A rewrite in place keeps the row and updates its date. A row carried over from a signed-off version stays as the sign-off command left it; the new version's own row ends `[PENDING]` and `[PENDING]`.
 
 ### 8. Work through the section, one safe method at a time
 
@@ -174,7 +174,7 @@ You may quote a question and its safety point from the `>` lines, unchanged. Do 
 
 **What each state needs.** The helper accepts an answer only in these shapes: a `confirmed` answer needs `Answer`, `By` and `On` (today's date, written YYYY-MM-DD); a `proposed` answer needs `Answer` and `Source`; an `unanswered` question has all four of those lines empty.
 
-**A safe method.** Every method starts as `applies`. You may point out that a method looks not relevant from what the person has said, but change its status only when the person decides it, with everything the new status needs, in their words. A safe method's `not-relevant` needs `Reason` and `Decided-by`; `adapted` needs `Variation`, `Reason`, `Proved-safe` and `Decided-by`; `applies` has all four of those lines empty.
+**A safe method.** Every method starts as `applies`. You may point out that a method looks not relevant from what the person has said, but change its status only when the person decides it, with everything the new status needs, in their words. A safe method's `not-relevant` needs `Reason` and `Decided-by`; `adapted` needs `Variation`, `Reason`, `Proved-safe` and `Decided-by`; `applies` has all four of those lines empty. `Variation` holds what the business does instead, `Reason` why, and `Proved-safe` how the business has shown that its way works, each in the person's words.
 
 ### 9. Check before the summary
 
@@ -189,7 +189,7 @@ Show only a summary:
 - whether `check` passed, with its message unchanged if it did not;
 - the header's status: `DRAFT`, or that the document is signed off and up to date, which is what `APPROVED` means here: signed off by the named person at the business;
 - each answer recorded as proposed, where it came from, and who needs to confirm it, and anything not recorded because a field it needs was not given;
-- every other document that is now out of step: for each other document in `status --json` whose `rendered` is true and `inSync` is false, its lines from `unfinished`, unchanged. A change to the profile puts every other document out of step, and a change to a section or an own method puts the profile out of step;
+- every other document that is now out of step: for each other document in `status --json` whose `rendered` is true and `inSync` is false, its lines from `unfinished`, unchanged. A document goes out of step only when something it prints changes. The business's name is printed in every document, and so is a sentence about coverage when the nation is outside England and Wales; the profile also prints each safe method's status, with its reason and who decided, and the list of the business's own methods;
 - this note: "A program that reformats Markdown (a formatter) may rewrite the tables between the UK-FOOD markers, and the check will then fail. The fix is to run this command again, not to edit those lines by hand: changes belong in the worksheet.";
 - the next step: the next section that needs work, `/arckit:uk-food-own-methods` for the business's own methods and special processes, or `/arckit:uk-food-check` for everything that is still waiting.
 
@@ -198,4 +198,4 @@ Show only a summary:
 - **A deliberate exception to ArcKit's interview pattern.** Other ArcKit commands ask everything in one round and take a default for anything left unanswered. Here nothing takes a default, because a default would be a statement about the business that nobody made. An unanswered question stays unanswered, and the person can answer it on a later run.
 - **A run with nobody to answer** never blocks and never invents. It makes the worksheets that are missing, records what the request says as **Record only what the person gives** allows, writes the document from what is confirmed, and reports the unanswered count.
 - **Never call the business, its food or a document "compliant", "approved", "safe" or "inspected"**, and never say or suggest that the Food Standards Agency or a council has reviewed, approved or endorsed anything. The documents are the business's own record.
-- **Coverage.** The pack is for small caterers in England and Wales. If the profile says the business is elsewhere, say so plainly; the helper prints the same in the document.
+- **Coverage.** The pack is for small caterers in England and Wales. If the profile says the business is elsewhere, say so plainly; the helper prints the same at the top of every document.

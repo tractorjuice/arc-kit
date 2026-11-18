@@ -40,7 +40,7 @@ Your other documents print the business's name from the profile, so it comes fir
 Some answers lead somewhere else:
 
 - **A special process or food.** If you say the business does one, the command says plainly that it will not write a procedure for it. It tells you to contact your council's environmental health team about it, and that `/arckit-uk-food:uk-food-own-methods` can record your own written procedure for it, word for word.
-- **A business outside England and Wales.** The command says plainly that the pack and this overlay cover England and Wales only. It records your answer, and does not suggest any next step.
+- **A business outside England and Wales.** The command says plainly that the pack and this overlay cover England and Wales only. It records your answer, and does not suggest any next step. Every document then opens by saying that the business is outside what the pack covers.
 - **A safe method that does not apply to you.** You can say so while you go through the profile. The command may point out which of the pack's safe methods that sounds like, but it records a decision only when you make it, with your reason and your name. The decision is kept in that section's worksheet. That section's document is then out of date until you run `/arckit-uk-food:uk-food-safe-methods` for the section, which writes it again.
 
 You can also give answers when you start the command. If you give your name in the same message, they count as yours. If you give no name, they are recorded as proposed, and the summary asks who gave them.
@@ -70,9 +70,11 @@ Sam Okafor owns Bramble Cafe, an invented café.
 - `projects/001-bramble-cafe/food-safety/answers-profile.md`: your worksheet. Each question has its answer, its state (unanswered, proposed or confirmed), who gave it and when.
 - `projects/001-bramble-cafe/ARC-001-FOODPROF-v1.0.md`: the business profile. Its status is `DRAFT` until a named person at the business signs it off.
 
-The profile also lists every safe method from the five sections, showing any you have marked not relevant or done differently, and your own methods. So it changes whenever they change. That is why the profile is signed off last, once everything else is finished.
+The profile also lists every safe method from the five sections, showing any you have marked not relevant or done differently, and your own methods. So it changes when you mark a safe method not relevant or done differently, or add or change one of your own methods. That is why the profile is signed off last, once everything else is finished. An answer you change inside a section does not change the profile.
 
-Once a document has been signed off, the command never writes over it. If nothing has changed, it writes nothing. If answers have changed, it leaves the signed file as it is and writes a new version, which needs signing off again.
+Your other documents print the business's name from the profile, and say so at the top if the profile puts the business outside England and Wales. Changing any other profile answer leaves them, and their sign-offs, as they are.
+
+Once a document has been signed off, the command never writes over it. If nothing in it has changed, it writes nothing. If something it prints has changed, it leaves the signed file as it is and writes a new version, which needs signing off again.
 
 ## What it will not do, and why
 

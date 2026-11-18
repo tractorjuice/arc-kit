@@ -11,10 +11,10 @@ This overlay is for small catering businesses in England and Wales. It is not le
 It tells you, for each document:
 
 - how many of its questions are confirmed, out of how many, and how many are proposed and waiting for a named person to confirm them;
-- whether the document has been written, and whether it is in step with its worksheet;
+- whether the document has been written, and whether it is in step with its worksheet, or what is wrong with it;
 - whether it has been signed off, and if so by whom, in what role and on what date.
 
-It also lists the special processes and foods the profile confirms, with the own entry that covers each one (or none), and any entry still waiting for your council's environmental health review.
+It also says whether the completion record already written is up to date, and lists the special processes and foods the profile confirms, with the own entry that covers each one (or none), and any entry still waiting for your council's environmental health review.
 
 Then it gives the list of everything still unfinished, exactly as the overlay's helper script prints it, and says which command moves each item on.
 
@@ -51,7 +51,10 @@ FOODXC (Cross-contamination): 23 of 50 questions confirmed, 2 proposed; not writ
 FOODCLN (Cleaning): 0 of 23 questions confirmed; adapted: CL-04; not written; not signed off
 FOODCOOK (Cooking): 41 of 41 questions confirmed; not relevant: CK-06; ARC-001-FOODCOOK-v1.0.md in step with its worksheets; signed off by Sam Okafor, Owner, on 2026-11-18
 FOODOWN (Own methods): 2 of 2 own entries confirmed; not written; not signed off
+FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date
 ```
+
+The last of those lines is about the completion record itself. Once anything it reports on has changed, that line says the record is out of date, and running this command again brings it up to date. If a document was changed after it was signed off, its line says so in place of "signed off by", and the unfinished list says what to do.
 
 Lines in the unfinished list look like these:
 

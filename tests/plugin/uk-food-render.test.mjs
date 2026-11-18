@@ -459,19 +459,25 @@ test('a reference opens with the source line and holds every string of the pack,
   }
 });
 
-test('a profile in Scotland opens with the out-of-coverage sentence; one in Wales or England does not', () => {
+test('I6: every document of a business in Scotland, Northern Ireland or elsewhere opens with the out-of-coverage sentence, the completion record too; none does in Wales or England', () => {
   for (const [nation, outside] of [['Scotland', true], ['Northern Ireland', true], ['other', true], ['Wales', false], ['England', false]]) {
     const dir = cafe({ profile: swap(cafeText('profile'), 'Answer: England', `Answer: ${nation}`) });
-    const lines = rendered('FOODPROF', dir).split('\n');
-    assert.equal(lines[2] === OUTSIDE, outside, nation);
-    assert.equal(lines.filter((line) => line === OUTSIDE).length, outside ? 1 : 0, nation);
+    for (const doc of [...DOC_CODES, 'FOODCMP']) {
+      const lines = rendered(doc, dir).split('\n');
+      assert.equal(lines[2] === OUTSIDE, outside, `${nation}: ${doc}`);
+      assert.equal(lines.filter((line) => line === OUTSIDE).length, outside ? 1 : 0, `${nation}: ${doc}`);
+      // Nothing else about the document changes: it is the same document with one sentence before it
+      // (the profile also prints the nation among its answers).
+      if (outside && doc !== 'FOODPROF') assert.equal(lines.slice(4).join('\n'), rendered(doc, CAFE).split('\n').slice(2).join('\n'), `${nation}: ${doc}`);
+    }
   }
 });
 
-test('a nation that is only proposed is not known, so the profile does not say the business is outside coverage', () => {
+test('a nation that is only proposed is not known, so no document says the business is outside coverage', () => {
   const profile = swap(cafeText('profile'), 'Answer: England\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17\nSource:',
     'Answer: Scotland\nState: proposed\nBy:\nOn:\nSource: the address');
-  assert.ok(!rendered('FOODPROF', cafe({ profile })).includes(OUTSIDE));
+  const dir = cafe({ profile });
+  for (const doc of [...DOC_CODES, 'FOODCMP']) assert.ok(!rendered(doc, dir).includes(OUTSIDE), doc);
 });
 
 // ---- The marker, and which worksheets each document reads ----

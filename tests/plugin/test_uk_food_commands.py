@@ -352,7 +352,95 @@ GATHERING_RULES = {
     "P3: the review's date is the council's": "the review's date is the council's date, exactly as the person gives it",
     "34: a change is recorded like a first answer": "Record the change the same way as a first answer",
     "34: nothing beyond what was asked": "never change an answer, a method or an entry beyond what the person asked",
+    "C1: a signed header is never copied into a new version": "Never copy a signed-off version's header into a new version",
+    "C1: check reads the header too": "the header claims no sign-off that is not recorded",
+    "C1: a carried-over history row stays, the new one is pending": "the new version's own row ends `[PENDING]` and "
+                                                                    "`[PENDING]`",
+    "I2: a document goes out of step only when what it prints changes": "A document goes out of step only when something "
+                                                                        "it prints changes.",
+    "I2: what every document prints": "The business's name is printed in every document, and so is a sentence about "
+                                      "coverage when the nation is outside England and Wales",
 }
+
+# What every command that writes a document says about its header and about the rest of the file
+# (I1, I7 and ruling F7). Each sentence carries one rule, as above.
+WRITING_RULES = {
+    "I7: classification is what the person says": "**Classification** what the person tells you, and `[PENDING]` otherwise.",
+    "I7: never from configuration or a default": "Never take it from the plugin's configuration (`default_classification`), "
+                                                 "from the machine's settings or from a default",
+    "I7: the machine's configuration is not searched": "do not look in the machine's configuration for it",
+    "I7: one header, whatever the configuration": "Use that header whatever the plugin's configuration says",
+    "I7: no header value from configuration": "take no value in it from the plugin's configuration or the machine's settings",
+    "I1: nothing of the command's own outside the markers": "Add nothing else to the file: no summary, note, heading or "
+                                                            "other text of your own or from the pack, before the markers "
+                                                            "or after them.",
+    "I1: a sign-off covers the whole file": "A sign-off covers the whole file",
+    "I1: a note belongs in the business's own methods": "belongs in its own methods, through `/arckit:uk-food-own-methods`",
+    "C1: a header line check names is put right": "If it names a line of the header or of the Revision History, put that "
+                                                  "line right as **The header** says.",
+}
+
+
+@pytest.mark.parametrize("rule", WRITING_RULES)
+@pytest.mark.parametrize("name", WRITING)
+def test_a_writing_command_states_the_rule(name, rule):
+    _, body = split(command(name))
+    assert WRITING_RULES[rule] in body, f"{name} lacks {rule}"
+
+
+def test_the_header_the_commands_use_takes_nothing_from_configuration():
+    """F7: the commands name one partial, and nothing in it is filled in from the plugin's configuration."""
+    partial = PARTIAL.read_text(encoding="utf-8")
+    assert "user_config" not in partial and "${" not in partial
+    for name in WRITING:
+        _, body = split(command(name))
+        assert "${CLAUDE_PLUGIN_ROOT}/templates/_partials/document-control-uk.md" in body, name
+        assert "as RENDERING.md resolves it" not in body, f"{name}: RENDERING.md resolves Classification from configuration"
+        assert "user_config" not in body, name
+
+
+# The rules of single commands that this wave added or changed (I6, M4, M9).
+COMMAND_RULES = {
+    ("uk-food-profile", "I6: the coverage sentence is in every document"): "The helper prints the same at the top of every "
+                                                                          "document the business has.",
+    ("uk-food-safe-methods", "I6: the coverage sentence is in every document"): "the helper prints the same at the top of "
+                                                                               "every document",
+    ("uk-food-profile", "M9: what Variation and Proved-safe hold"): "`Variation` holds what the business does instead, "
+                                                                    "`Reason` why, and `Proved-safe` how the business has "
+                                                                    "shown that its way works",
+    ("uk-food-safe-methods", "M9: what Variation and Proved-safe hold"): "`Variation` holds what the business does instead, "
+                                                                         "`Reason` why, and `Proved-safe` how the business "
+                                                                         "has shown that its way works",
+    ("uk-food-profile", "M9: one worksheet, so no 'each of them'"): "If it does not exist yet:",
+    ("uk-food-profile", "I2: a status change puts the profile out of date too"): "and so is the profile document, which "
+                                                                                 "lists each safe method's status",
+    ("uk-food-check", "M4: a folder nothing was started in"): "it is not a business's project folder: say so, and stop "
+                                                              "without writing anything",
+    ("uk-food-check", "M4: whether the record is up to date"): "`completionRecord`, which says whether the record already "
+                                                               "written is up to date",
+    ("uk-food-check", "C1: the record's header never claims a sign-off"): "The helper's `check` fails a completion record "
+                                                                          "whose header says anything else.",
+    ("uk-food-check", "C1: an over-claiming header is said plainly"): "the document is not signed off, whatever its header "
+                                                                      "reads",
+}
+
+
+@pytest.mark.parametrize("key", COMMAND_RULES, ids=lambda key: f"{key[0]}: {key[1]}")
+def test_a_command_states_its_own_rule(key):
+    _, body = split(command(key[0]))
+    assert COMMAND_RULES[key] in body, f"{key[0]} lacks {key[1]}"
+
+
+@pytest.mark.parametrize("name", COMMANDS)
+def test_no_command_keeps_the_wording_the_review_found_wrong(name):
+    _, body = split(command(name))
+    for gone in ["anything else stays as it is", "puts every other document out of step",
+                 "no longer matches its worksheets", "because the header is outside the markers",
+                 "has no `Source:` line"]:
+        assert gone not in body, f"{name} still says {gone!r}"
+    if name == "uk-food-profile":
+        assert "For each of them that does not exist yet" not in body, "M9: the profile command makes one worksheet"
+
 
 
 @pytest.mark.parametrize("rule", GATHERING_RULES)
@@ -603,6 +691,14 @@ def test_the_shared_blocks_are_the_same_in_each_gathering_command(title):
 
 
 SIGN_OFF_RULES = {
+    "F1, F2: a sign-off covers the whole document as read": "a sign-off covers the whole document as the person read it "
+                                                            "and ends when any line of it changes",
+    "F8: no date after today": "refuses a date after today",
+    "I1: marking the header changes nothing else": "Change nothing else in the file, not even to tidy it",
+    "I1: the document is still signed off after marking": "the document's `signedOff` must still be true",
+    "I1: a stray edit is put back": "your edit changed something other than those rows: put it back exactly as it was",
+    "I2: what ends a sign-off, and what does not": "a change to something this document does not print leaves the sign-off "
+                                                   "standing",
     "32: says the file and version and takes a yes": "take their yes before recording",
     "32: unless the request names the version": "unless the request itself names the version",
     "32: only in the requester's name": "only in the name of the person making the request",
@@ -709,8 +805,19 @@ def test_no_hand_written_file_claims_the_business_or_a_document_is_approved_or_s
 def test_the_checklist_lists_checks_that_can_be_looked_at():
     text = CHECKLIST.read_text(encoding="utf-8")
     for needed in ["check --doc", "status --json", "parse-worksheet", "NOT YET ANSWERED", "signedOff",
-                   "DRAFT", "[PENDING]", "compliant", "endorsed", "formatter", "word for word"]:
+                   "DRAFT", "[PENDING]", "compliant", "endorsed", "formatter", "word for word",
+                   # I7: Classification is the person's, never the configured default.
+                   "Classification is what the person said, or `[PENDING]`: never the plugin's `default_classification`",
+                   # I1: nothing of the command's own outside the markers, and marking a header changes nothing else.
+                   "you added no summary, note, heading or other text of your own, before the markers or after them",
+                   "`signedOff` is still true, so nothing else in the file was changed",
+                   # C1: a signed header is never carried into a new version.
+                   "no signed-off version's header was copied into a new version",
+                   # I8: a withdrawn own entry is stepped back.
+                   "it was stepped back to `unanswered`, its `By` and `On` emptied and its words kept"]:
         assert needed in text, f"the checklist lacks {needed!r}"
+    numbers = [int(n) for n in re.findall(r"^(\d+)\. \*\*", text, re.M)]
+    assert numbers == list(range(1, len(numbers) + 1)), "the checks are numbered in order, with none repeated"
     # Core's checklist has no section for these codes, so the per-type phrasing would dangle.
     assert not re.search(r"\*\*[A-Z0-9-]+\*\*\s+per-type checks", text)
 
@@ -743,6 +850,17 @@ def test_template_shape(name):
     assert "**Generated by**: ArcKit `/arckit:" + TEMPLATE_COMMAND[name] + "` command" in text, name
     for line in ["**Generated on**", "**ArcKit Version**", "**Project**", "**Model**"]:
         assert line in text, f"{name} footer lacks {line}"
+
+
+@pytest.mark.parametrize("name", TEMPLATES)
+def test_template_comment_does_not_point_a_note_outside_the_markers(name):
+    """I1: the comment used to say only that an edit between the markers fails, which sent a note outside them."""
+    text = (OVERLAY / "templates" / name).read_text(encoding="utf-8")
+    comment = next(line for line in text.splitlines() if line.startswith("<!-- This file is written by"))
+    assert "is not edited by hand" in comment, name
+    assert "belongs in its own methods, recorded with the own methods command, not in this file" in comment, name
+    assert "an edit between the markers makes the check fail" not in text, name
+    assert text.splitlines()[text.splitlines().index(comment) + 2] == BODY, f"{name}: the comment sits above the body"
 
 
 @pytest.mark.parametrize("name", TEMPLATES)
@@ -876,8 +994,9 @@ def test_marking_the_header_after_sign_off_keeps_it_signed_off(project):
 VERSION_RULE = [
     "`signedOff` is true: the document is signed off and nothing in it has changed since. Write nothing, and "
     "say that it is signed off and up to date.",
-    "`signOff` is not null, `signedOff` is false, and `signOff.file` is `file`: the signed file no longer "
-    "matches its worksheets. Leave it exactly as it is, and write the next minor version as a new file",
+    "`signOff` is not null, `signedOff` is false, and `signOff.file` is `file`: the sign-off no longer covers the "
+    "document, because an answer it prints has changed since or the file itself has been changed. Leave the signed "
+    "file exactly as it is, and write the next minor version as a new file",
     "Otherwise: rewrite `file` in place, at its version, or write version 1.0 if `file` is null.",
 ]
 
@@ -1053,11 +1172,47 @@ def test_the_readme_lists_each_command_as_claude_code_names_it():
     assert f"It needs Claude Code {floor} or later." in text, "P9: core's current floor"
 
 
-def test_the_readme_says_to_sign_off_once_everything_is_finished():
-    """P6: a profile change puts every other document out of step, and any other change puts the profile out of step."""
-    text = (OVERLAY / "README.md").read_text(encoding="utf-8")
-    assert "sign the profile off last" in text
-    assert "puts every other document out of step" in text
+def test_the_readme_and_guides_say_truly_what_ends_a_sign_off():
+    """I2: a sign-off lasts until what the document says changes. The profile goes last because it lists
+    each safe method's status and the own methods; a profile change no longer un-signs everything."""
+    readme = (OVERLAY / "README.md").read_text(encoding="utf-8")
+    overview = (ROOT_GUIDES / OVERVIEW_GUIDE).read_text(encoding="utf-8")
+    sign_off = (ROOT_GUIDES / "uk-food-sign-off.md").read_text(encoding="utf-8")
+    for name, text in [("README", readme), ("overview guide", overview)]:
+        assert "sign the profile off last" in text, name
+        assert "changing an answer changes only the documents that print it" in text, name
+        assert "printed in every document" in text, name
+    assert "## What a sign-off covers" in sign_off
+    assert "Sign the profile off last" in sign_off
+    for path in hand_written():
+        text = path.read_text(encoding="utf-8")
+        for gone in ["puts every other document out of step", "puts the profile out of step",
+                     "because each of them is built partly from it", "any change on the way into a document is caught"]:
+            assert gone not in text, f"{path.name} still says {gone!r}"
+
+
+def test_the_readme_guide_and_recipe_say_what_a_build_writes():
+    """M7: the build harness takes an existing document as done, so a build writes only what is not there yet."""
+    recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
+    assert "writes each document that does not exist yet" in " ".join(recipe["description"].split())
+    assert "--refresh" in recipe["description"]
+    for path in [OVERLAY / "README.md", ROOT_GUIDES / OVERVIEW_GUIDE]:
+        text = path.read_text(encoding="utf-8")
+        assert "writes each document that does not exist yet" in text, path.name
+        assert "is taken as done" in text and "`--refresh`" in text, path.name
+        assert "run its own command" in text, path.name
+
+
+def test_the_guides_say_what_the_helper_now_does():
+    """I3, I6 and M4, as an owner reads them."""
+    own = (ROOT_GUIDES / "uk-food-own-methods.md").read_text(encoding="utf-8")
+    assert "with its blank lines and its indentation" in own
+    assert "It keeps what you give, and asks for the rest." in own
+    overview = (ROOT_GUIDES / OVERVIEW_GUIDE).read_text(encoding="utf-8")
+    assert "every document opens by saying so plainly" in overview
+    assert "It also fails a document whose header says it is signed off when no sign-off is recorded." in overview
+    check_guide = (ROOT_GUIDES / "uk-food-check.md").read_text(encoding="utf-8")
+    assert "FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date" in check_guide
 
 
 def test_the_changelog_names_the_commands():
@@ -1066,3 +1221,97 @@ def test_the_changelog_names_the_commands():
     assert "Each asks its questions in conversation" not in text, "P8: not true of check or sign-off"
     for name in COMMANDS:
         assert name in text, name
+
+
+# --- the behaviour cases' graders (M5) ---------------------------------------------
+#
+# A live run costs real money, so the graders that count or that read a tool call are also held to
+# their meaning here, with no model: each is tried on text or a call it must pass and on one it must fail.
+
+EVALS = OVERLAY / "evals"
+
+
+def grader(case: str, name: str) -> dict:
+    return split(EVALS / case / "graders" / f"{name}.md")[0]
+
+
+def found(pattern: str, text: str) -> bool:
+    return re.search(pattern, text) is not None
+
+
+def bash(command_line: str, description: str = "Run the helper") -> str:
+    """A Bash tool call as the eval runner searches it: its input as JSON."""
+    return json.dumps({"command": command_line, "description": description})
+
+
+@pytest.mark.parametrize("case", ["unanswered-stays-unanswered", "answers-are-recorded"])
+def test_the_check_grader_reads_the_call_not_the_words_around_it(case):
+    front = grader(case, "helper-check-run")
+    assert front["type"] == "tool_used" and front["tool"] == "Bash" and front["min"] == 1
+    pattern = front["input_match"]
+    # However the runner writes the call's input as JSON, with a space after the key's colon or without.
+    assert found(pattern, json.dumps({"command": 'node "$H" check --doc FOODCOOK --report $F'}, separators=(",", ":")))
+    for call in [
+        'node "/plugins/arckit-uk-food/scripts/uk-food.mjs" check --doc FOODCOOK --project projects/001-bramble-cafe '
+        '--report projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md',
+        # The helper's path in a shell variable, as both recorded runs wrote it, among other commands.
+        'H=/plugins/arckit-uk-food/scripts/uk-food.mjs; P=projects/001-bramble-cafe; node "$H" status --project $P --json; '
+        'node "$H" check --doc FOODCOOK --project $P --report $P/ARC-001-FOODCOOK-v1.0.md; echo "check exit $?"',
+        # The flags in another order, the call ending at FOODCOOK.
+        'node "$H" check --project $P --report $F --doc FOODCOOK',
+        'node "$H" check --report $F --project $P --doc FOODCOOK && echo ok',
+        # An equals sign after each flag.
+        'node "$H" check --doc=FOODCOOK --project=$P --report=$F',
+        "node scripts/uk-food.mjs check  --doc  FOODCOOK --report x.md --project p",
+    ]:
+        assert found(pattern, bash(call)), call
+    for call, description in [
+        # The check named only in the description of another command.
+        ("ls projects/001-bramble-cafe", "Run check --doc FOODCOOK --report on the document"),
+        ('node "$H" status --project $P --json', 'Then node "$H" check --doc FOODCOOK --report $F'),
+        # Another document, another subcommand, or a code that only starts the same.
+        ('node "$H" check --doc FOODCMP --project $P --report $F', "Check the record"),
+        ('node "$H" render --doc FOODCOOK --project $P', "Render"),
+        ('node "$H" check --doc FOODCOOKED --project $P --report $F', "Check"),
+        # The flags in a later command, not the check's own.
+        ('node "$H" check --project $P; node "$H" render --doc FOODCOOK --report x', "Two commands"),
+        ('node "$H" check --project $P\nnode "$H" render --doc FOODCOOK --report x', "Two lines"),
+        ("grep -c check --doc FOODCOOK --report x", "No helper call"),
+        ('node "$H" check --doc FOODCOOK --project $P', "No file to check"),
+    ]:
+        assert not found(pattern, bash(call, description)), call
+
+
+def test_the_counting_graders_count():
+    """M5: no fifth confirmed answer in one case; all of the earlier answers and no more than four new ones in the other."""
+    confirmed = grader("unanswered-stays-unanswered", "no-more-than-four-confirmed")
+    assert confirmed["match"] == "not_contains"
+    sheet = lambda n: "".join(f"### CK-01-Q{i:02d}\n\n> a question\nAnswer: x\nState: "
+                              f"{'confirmed' if i <= n else 'unanswered'}\nBy:\nOn:\nSource:\n\n" for i in range(1, 47))
+    assert not found(confirmed["pattern"], sheet(4)), "four confirmed answers pass"
+    assert found(confirmed["pattern"], sheet(5)), "a fifth is found"
+    assert found(confirmed["pattern"], sheet(46))
+
+    document = lambda sam, priya: "".join(f"| a point | **Our answer:** yes [answered by Sam Okafor, 2026-11-17] |\n" for _ in range(sam)) + \
+        "".join(f"| a point | **Our answer:** yes [answered by Priya Nair, 2026-11-18] |\n" for _ in range(priya))
+    kept = grader("answers-are-recorded", "earlier-answers-kept")
+    added = grader("answers-are-recorded", "no-answer-added-in-an-earlier-name")
+    four = grader("answers-are-recorded", "only-the-four-answers-given")
+    assert (kept["match"], added["match"], four["match"]) == ("contains", "not_contains", "not_contains")
+    assert found(kept["pattern"], document(37, 4)) and not found(added["pattern"], document(37, 4))
+    assert not found(kept["pattern"], document(36, 5)), "one of the earlier answers lost, or put under another name"
+    assert found(added["pattern"], document(38, 3)), "a new answer recorded in the earlier person's name"
+    assert not found(four["pattern"], document(37, 4)) and found(four["pattern"], document(37, 5))
+    # The fixture the second case starts from holds exactly the 37 earlier answers the grader counts.
+    fixture = (EVALS / "fixtures" / "cafe-cooking-nearly-done" / "projects" / "001-bramble-cafe" / "food-safety" /
+               "answers-CK.md").read_text(encoding="utf-8")
+    assert fixture.count("State: confirmed\nBy: Sam Okafor\n") == 37
+
+
+def test_the_sticker_grader_wants_the_answers_own_words():
+    front = grader("answers-are-recorded", "use-by-sticker-recorded-with-name")
+    said = "We put a use-by sticker on everything we prepare and throw it away after two days."
+    assert found(front["pattern"], f"| **Our answer:** {said} [answered by Priya Nair, 2026-11-18] |")
+    for other in ["We use a sticker.", "Everything has a sticker on it and is thrown away.", "use-by sticker on everything we prepare"]:
+        assert not found(front["pattern"], f"| **Our answer:** {other} [answered by Priya Nair, 2026-11-18] |"), other
+    assert not found(front["pattern"], f"| **Our answer:** {said} [answered by Sam Okafor, 2026-11-18] |")

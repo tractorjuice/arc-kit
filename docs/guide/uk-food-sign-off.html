@@ -448,7 +448,7 @@
 <h2 id="before-you-start">Before you start</h2>
 <ul>
 <li><strong>A finished document.</strong> Run <code>/arckit-uk-food:uk-food-check</code> to see which documents are finished.</li>
-<li><strong>Everything finished first, if you can.</strong> Sign the documents off once all of them are finished, and sign the profile off last. A change to the profile puts every other document out of step, because each of them is built partly from it. A change to any section or to your own methods puts the profile out of step, because the profile lists them. A document that goes out of step after it was signed off is written again as a new version, and that version needs signing off again.</li>
+<li><strong>The profile last.</strong> You can sign each document off as soon as it is finished. Sign the profile off last: it lists each safe method's status and your own methods, so it changes when one of those does.</li>
 <li><strong>Your name and your role</strong>, in the message that runs the command. If either is missing, the command asks.</li>
 <li><strong>Whether a printed copy has been signed</strong>, if you keep one. Say so, and the record notes it. The documents are plain text files (Markdown) that any text editor or Markdown viewer can open and print.</li>
 </ul>
@@ -460,7 +460,7 @@
 <li><strong>It tells you the file and version it is about to record, and waits for your yes</strong>, unless you named the version yourself. A sign-off says you read that version, so you need to know which one it is.</li>
 <li><strong>It asks the helper script to record the sign-off.</strong> If the script refuses, the command shows you its reasons unchanged, and stops. Nothing is recorded, and the command never tries to work round a refusal.</li>
 <li><strong>If the sign-off is recorded</strong>, the command marks the document's header: Status <code>APPROVED</code>, and Reviewed By and Approved By both set to the name, role and date, such as <code>Sam Okafor, Owner, 2026-11-18</code>. In this overlay, <code>APPROVED</code> means only that: signed off by the named person at the business. It also fills in that version's row in the Revision History.</li>
-<li><strong>It runs the document check again</strong>, to prove the header change left the body untouched.</li>
+<li><strong>It runs the document check again</strong>, and looks at where the document stands, to prove that marking the header changed nothing else in the file.</li>
 <li><strong>It shows a summary.</strong></li>
 </ol>
 <p>When the helper script refuses, its reasons look like this:</p>
@@ -485,9 +485,18 @@
 </blockquote>
 <h2 id="what-you-get">What you get</h2>
 <ul>
-<li>A record in <code>projects/001-bramble-cafe/food-safety/sign-offs.json</code>: the document, its version and file, the name, role and date, and whether a printed copy was signed.</li>
+<li>A record in <code>projects/001-bramble-cafe/food-safety/sign-offs.json</code>: the document, its version and file, the name, role and date, whether a printed copy was signed, and a fingerprint of the file as you signed it, so that any later change to it shows.</li>
 <li>The document's header marked as signed off, as above.</li>
 </ul>
+<h2 id="what-a-sign-off-covers">What a sign-off covers</h2>
+<p>A sign-off covers the whole document, exactly as it reads when you sign it: the pack's wording, your answers, and everything else in the file.</p>
+<ul>
+<li><strong>If something the document says changes</strong>, the sign-off no longer counts. That happens when an answer it prints is changed, and when anyone adds to the file or edits it by hand. <code>/arckit-uk-food:uk-food-check</code> then says the document is no longer signed off, and why. The document's command writes it again as a new version, and that version needs signing off.</li>
+<li><strong>If something it does not say changes</strong>, the sign-off stands. Adding a member of staff to the profile, for example, changes the profile document and nothing else.</li>
+<li><strong>The business's name is printed in every document</strong>, so changing it changes them all. So does changing the nation to or from one outside England and Wales, because every document then says so.</li>
+<li><strong>The date is the day you sign.</strong> A date that has not come yet is refused.</li>
+</ul>
+<p>A document whose header says it is signed off, when no sign-off is recorded for it, fails the document check: only this command marks a header.</p>
 <h2 id="what-it-will-not-do-and-why">What it will not do, and why</h2>
 <ul>
 <li><strong>It will not sign a document that is not finished.</strong> The helper script refuses, and the command shows you why.</li>

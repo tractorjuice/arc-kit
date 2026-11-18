@@ -55,7 +55,7 @@ The command does not explain, summarise or reword what the pack says, and gives 
 Every safe method starts as applying to your business. You decide otherwise, not the command. It may point out that a safe method sounds not relevant from what you have told it, but it changes nothing until you decide.
 
 - **Not relevant.** Tell it why. It records your reason, and your name as the person who decided.
-- **Done differently** (the worksheet calls this "adapted"). It needs four things from you: what the business does instead, why, how you know your way works, and who decided. Until you have given all four, the safe method stays as applying.
+- **Done differently** (the worksheet calls this "adapted"). It needs four things from you: what the business does instead (the worksheet's `Variation`), why (`Reason`), how you have shown that your way works (`Proved-safe`), and who decided (`Decided-by`). Until you have given all four, the safe method stays as applying.
 
 ### Answering several questions at once
 
@@ -98,7 +98,7 @@ Sam Okafor owns Bramble Cafe, an invented café, and has already filled in the p
 - The section's worksheet, such as `projects/001-bramble-cafe/food-safety/answers-XC.md`, holding your answers, who gave each one and when, and the status of each safe method.
 - The section's document, such as `projects/001-bramble-cafe/ARC-001-FOODXC-v1.0.md`. It holds the pack's wording for each safe method, unchanged, with your answers beside its questions, and **NOT YET ANSWERED** wherever an answer is not confirmed. Its status is `DRAFT` until a named person at the business signs it off.
 
-Once a document has been signed off, the command never writes over it. If nothing has changed, it writes nothing. If answers have changed, it leaves the signed file as it is and writes a new version, which needs signing off again.
+Once a document has been signed off, the command never writes over it. If nothing in it has changed, it writes nothing. If something it prints has changed, it leaves the signed file as it is and writes a new version, which needs signing off again. A change to another section, or to a profile answer this document does not print, leaves it and its sign-off as they are.
 
 ## What it will not do, and why
 

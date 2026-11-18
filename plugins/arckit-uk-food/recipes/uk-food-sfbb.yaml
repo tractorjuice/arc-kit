@@ -8,12 +8,19 @@
 # What a build can and cannot do. A build has nobody to answer, and only an
 # answer a named person at the business gives can be confirmed. So a build
 # confirms nothing: it makes the worksheets that are missing and writes
-# each document from the answers already confirmed. On a new project every
-# answer reads NOT YET ANSWERED. The answers come from running the commands
-# with the person; the build writes each document from the answers confirmed
-# so far. A build never signs anything off: /arckit-uk-food:uk-food-sign-off is
-# not a target. For a document that is signed off and in step, the commands
-# write nothing, inside a build too.
+# each document that does not exist yet, from the answers already confirmed.
+# On a new project every answer reads NOT YET ANSWERED. The answers come from
+# running the commands with the person.
+#
+# A document that already exists is taken as done. The harness dispatches a
+# target again only when it is named with --refresh (PROFILE, XC, CL, CH, CK,
+# MG or CHECK), or when a document it is built after has changed since the
+# last build. So a build does not bring an existing document up to date with
+# answers confirmed since: its own command does that.
+#
+# A build never signs anything off: /arckit-uk-food:uk-food-sign-off is not a
+# target. For a document that is signed off and in step, the commands write
+# nothing, inside a build too.
 #
 # The project must exist before a build. Running
 # /arckit-uk-food:uk-food-profile once creates it.
@@ -39,9 +46,11 @@ description: >
   the business profile, the five sections of safe methods (cross-contamination,
   cleaning, chilling, cooking, management) and the completion record. A build
   has nobody to answer, so it confirms nothing: it makes the worksheets that
-  are missing and writes draft documents from the answers a named person has
-  already confirmed. On a new project every answer reads NOT YET ANSWERED. It does not
-  sign anything off.
+  are missing and writes each document that does not exist yet as a draft,
+  from the answers a named person has already confirmed. A document that is
+  already there is taken as done and left as it is, unless its target is named
+  with --refresh. On a new project every answer reads NOT YET ANSWERED. It does
+  not sign anything off.
 
 defaults:
   version: "1.0"

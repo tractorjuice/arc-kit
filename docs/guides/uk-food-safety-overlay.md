@@ -39,9 +39,9 @@ The pack's wording is bundled with the overlay, so the documents are built on yo
 
 Only confirmed answers reach your documents. Everywhere else, the document reads **NOT YET ANSWERED**. Nothing ever takes a default, and the assistant never suggests an answer: a document built from the worksheets is the business's own statement of what it does.
 
-**A script builds each document, and checks it.** The overlay's helper script prints the body of each document from the pack's wording and your confirmed answers. The pack's wording was typed into the overlay once, from the pack, and checked against it. After every write, the script runs the *document check*: it proves that the document still matches a fresh print from that bundled copy, so any change on the way into a document is caught. The script runs on your computer, needs only Node, and sends nothing anywhere.
+**A script builds each document, and checks it.** The overlay's helper script prints the body of each document from the pack's wording and your confirmed answers. The pack's wording was typed into the overlay once, from the pack, and checked against it. After every write, the script runs the *document check*. It proves that the body of the document, the part between its two `UK-FOOD` marker lines, still matches a fresh print from that bundled copy and your worksheets, so a change to the pack's wording or to your answers on the way into the document is caught. It also fails a document whose header says it is signed off when no sign-off is recorded. The rest of the file (its title, header and footer) is not compared with anything until the document is signed off; from then on, the sign-off covers the whole file. The script runs on your computer, needs only Node, and sends nothing anywhere.
 
-**A named person signs each document off.** When a document is finished, a named person at the business reads it and signs it off. The sign-off records their name, their role and the version they read. Until then, every document's status is `DRAFT`. After it, the status is `APPROVED`, which here means only that a named person at the business signed it off.
+**A named person signs each document off.** When a document is finished, a named person at the business reads it and signs it off. The sign-off records their name, their role and the version they read. Until then, every document's status is `DRAFT`. After it, the status is `APPROVED`, which here means only that a named person at the business signed it off. A sign-off covers the document exactly as it reads when it is signed. If a line of it changes afterwards, in the body or anywhere else in the file, the sign-off no longer counts, and the document says so wherever its status is shown.
 
 **You can change what you have recorded.** Run the command again and say what has changed: an answer, a safe method you now do differently, or one of your own methods. The change is recorded in your words, with your name and the date, and nothing else is changed.
 
@@ -76,7 +76,7 @@ Setting up is done once, by someone comfortable installing software and typing c
 
 Start with the profile, then work through the five sections (cross-contamination, cleaning, chilling, cooking and management) in any order, then add your own methods. You can stop at any point and carry on later: nothing confirmed is lost.
 
-Sign the documents off once all of them are finished, and sign the profile off last. A change to the profile puts every other document out of step, because each of them is built partly from it. A change to any section or to your own methods puts the profile out of step, because the profile lists the safe methods and your own methods. A document that goes out of step after it was signed off is written again as a new version, and that version needs signing off again.
+Sign each document off when it is finished, and sign the profile off last. A sign-off lasts until what that document says changes, and changing an answer changes only the documents that print it. Two things are worth knowing. The business's name is printed in every document, so changing it changes them all; so does changing the nation to or from one outside England and Wales, because every document then says so. And the profile lists each safe method's status (whether it applies, is not relevant or is done differently, with the reason and who decided) and your own methods, so it changes when one of those does. That is why the profile goes last. A signed-off document that has changed is written again as a new version, and that version needs signing off again.
 
 The documents land in your project folder, for example:
 
@@ -120,7 +120,11 @@ The own methods document cannot be signed off until each special process the pro
 
 ## Building the drafts in one go
 
-The overlay ships a build recipe, `uk-food-sfbb`, for ArcKit's build command in Claude Code. A build has nobody to answer, and only an answer a named person gives can be confirmed, so **a build confirms nothing**. It makes the worksheets that are missing and writes the draft documents from the answers already confirmed. On a new project, every answer in them reads NOT YET ANSWERED. A build never signs anything off. Do not expect a finished pack from it: the answers come from running the commands above with the person who knows the business.
+The overlay ships a build recipe, `uk-food-sfbb`, for ArcKit's build command in Claude Code. A build has nobody to answer, and only an answer a named person gives can be confirmed, so **a build confirms nothing**. It makes the worksheets that are missing and writes each document that does not exist yet as a draft, from the answers already confirmed. On a new project, every answer in them reads NOT YET ANSWERED. A build never signs anything off.
+
+A document that is already there is taken as done, whatever has been answered since. The build writes it again only if you name its target with `--refresh` (`PROFILE`, `XC`, `CL`, `CH`, `CK`, `MG` or `CHECK`), or if a document it is built after has changed since the last build. To bring one document up to date, run its own command.
+
+Do not expect a finished pack from a build: the answers come from running the commands above with the person who knows the business.
 
 The recipe builds the profile, the five sections and the completion record. Your own methods are left out by default: that document is usually too short for the build's checks, unless the business has many entries, so record your own methods with the command instead.
 
@@ -136,7 +140,7 @@ ArcKit's general health check, and its notices about drafts that have not change
 
 ## What it does not cover
 
-- **Scotland and Northern Ireland.** The pack, and this overlay, cover England and Wales only. If the profile says the business is anywhere else, the documents say so plainly.
+- **Scotland and Northern Ireland.** The pack, and this overlay, cover England and Wales only. If the profile says the business is anywhere else, every document opens by saying so plainly.
 - **Other kinds of food business.** The overlay uses the pack for caterers only. The Food Standards Agency's other packs, for retailers, childminders, care homes and other cuisines, are not covered.
 - **The daily diary.** The diary stays with you, on paper or however the business keeps it today. The overlay does not keep it.
 - **Procedures for special processes.** See above.
@@ -160,6 +164,8 @@ What is planned is the rest of the pack: its separate sheets and records, filled
 ## If the document check fails
 
 A program that tidies Markdown files (a formatter) may rewrite the tables between the `UK-FOOD` markers in a document, and the document check will then fail. The fix is to run the document's command again, not to edit those lines by hand: changes belong in the worksheet.
+
+The documents are not edited by hand anywhere else either. A note added to a signed-off document ends its sign-off, because nobody signed the note. Something the business wants to say about how it works belongs in its own methods, recorded with `/arckit-uk-food:uk-food-own-methods`.
 
 ## Other tools
 

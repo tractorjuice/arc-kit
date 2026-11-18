@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, join } from 'node:path';
 import {
@@ -180,7 +180,9 @@ test('status counts each document\'s questions from its worksheet, and the cafe\
 test('the status JSON has the documented shape: the seven documents in order, then the special processes, the own entries awaiting review and what is unfinished', () => {
   const dir = cafe();
   const result = status(dir);
-  assert.deepEqual(Object.keys(result), ['data', 'documents', 'specialProcesses', 'ownAwaitingReview', 'unfinished']);
+  assert.deepEqual(Object.keys(result), ['data', 'documents', 'specialProcesses', 'ownAwaitingReview', 'unfinished', 'completionRecord',
+    'foodSafetyFolder']);
+  assert.deepEqual([result.completionRecord, result.foodSafetyFolder], [null, true]);
   assert.equal(result.data, DATA_ID);
   assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN']);
   assert.deepEqual(STATUS_ORDER, result.documents.map((d) => d.code));
@@ -235,11 +237,14 @@ test('the unfinished list says, for each document in order, what is outstanding 
   ]);
   // Up to five identifiers are named, then how many more.
   assert.match(linesFor(dir, 'FOODXC')[0], /^25 questions in food-safety\/answers-XC\.md are not yet answered \((XC-\d\d-Q\d\d, ){4}XC-\d\d-Q\d\d and 20 more\): /);
-  // A worksheet not started comes first, and its questions are all unanswered.
+  // A worksheet not started is told once, by how to make it. Its questions are all unanswered, and are
+  // counted, but no line names questions "in" a file that is not there (M4).
   rmSync(sheetFile(dir, 'CK'));
   const ck = data.sections.get('CK').methods.flatMap(askedOf).map((q) => q.id);
-  assert.deepEqual(docStatus(dir, 'FOODCOOK').missingWorksheets, ['answers-CK.md']);
-  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [notStarted('CK'), unansweredLine('CK', ck), NOT_WRITTEN, NOT_SIGNED]);
+  const cook = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([cook.missingWorksheets, cook.questions, cook.unanswered], [['answers-CK.md'], ck.length, ck.length]);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [notStarted('CK'), NOT_WRITTEN, NOT_SIGNED]);
+  assert.ok(!status(dir).unfinished.some((line) => line.what.includes('in food-safety/answers-CK.md')));
   // One question is "is", and names it.
   const one = cafe();
   setSheet(one, 'CK', swap(sheet(one, 'CK'), 'Answer: We do not cook rice.\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17',
@@ -1183,4 +1188,119 @@ test('I5: an own entry held as unanswered, or stepped back to it, counts as conf
   assert.equal(docStatus(dir, 'FOODOWN').confirmed, 1);
   assert.ok(rendered('FOODOWN', dir).includes('Not yet confirmed, so not shown: OWN-02 and OWN-03.'));
   assert.ok(!rendered('FOODOWN', dir).includes('British Lion'));
+});
+
+// ---- What status says of a document, the completion record and the folder (M4) ----
+
+test('M4: the readable status says what is wrong with a written document, not "out of date" for every failed check', () => {
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  const text = readFileSync(file, 'utf8');
+  const line = () => run('status', '--project', dir).stdout.split('\n').find((l) => l.startsWith('FOODCOOK'));
+  const says = (words) => `FOODCOOK (Cooking): 41 of 41 questions confirmed; not relevant: CK-06; ARC-001-FOODCOOK-v1.0.md ${words}; not signed off`;
+  assert.equal(line(), says('in step with its worksheets'));
+  for (const [from, to, words] of [
+    ['Poached eggs', 'Boiled eggs', 'changed by hand between its markers'],
+    ['<!-- UK-FOOD:END -->', '', 'with its markers missing or damaged'],
+    ['## Revision History', '## COOKING\n\n## Revision History', 'with the pack\'s text outside its markers'],
+    ['| **Status** | DRAFT |', '| **Status** | APPROVED |', 'with a header that claims a sign-off nobody recorded']
+  ]) {
+    writeFileSync(file, swap(text, from, to));
+    assert.equal(line(), says(words), words);
+  }
+  writeFileSync(file, text);
+  // A file that cannot be opened is said to be so (a user who can read every file cannot test this).
+  chmodSync(file, 0o000);
+  if (run('check', '--doc', 'FOODCOOK', '--project', dir, '--report', file).status === 2) {
+    assert.equal(line(), says('that cannot be read'));
+    assert.match(linesFor(dir, 'FOODCOOK')[0], /^document ARC-001-FOODCOOK-v1\.0\.md cannot be read \(/);
+  }
+  chmodSync(file, 0o644);
+  setSheet(dir, 'CK', swap(sheet(dir, 'CK'), 'Answer: Baked beans', 'Answer: Baked beans and soup'));
+  assert.equal(line(), says('out of date'));
+  // A document whose worksheet has problems cannot be compared with a fresh print, and is not called out of date.
+  setSheet(dir, 'CK', `${sheet(dir, 'CK')}a stray line\n`);
+  assert.equal(line(), 'FOODCOOK (Cooking): 1 worksheet problem; 0 of 46 questions confirmed; ARC-001-FOODCOOK-v1.0.md not checked, as a ' +
+    'worksheet it needs is missing or has problems; not signed off');
+  // Signed, marked, then added to: the file is no longer the one signed.
+  const other = cafe();
+  const signed = templated(other, 'FOODCOOK');
+  assert.equal(signOff(other, 'FOODCOOK').status, 0);
+  mark(signed);
+  writeFileSync(signed, `${readFileSync(signed, 'utf8')}\nA note nobody signed.\n`);
+  assert.ok(run('status', '--project', other).stdout.includes('ARC-001-FOODCOOK-v1.0.md changed since it was signed off; not signed off'));
+});
+
+test('M4: status says where the completion record stands, in its own place: not written, up to date, or out of date and what to do', () => {
+  const dir = cafe();
+  const recordLine = () => run('status', '--project', dir).stdout.split('\n').find((l) => l.startsWith('FOODCMP'));
+  assert.equal(recordLine(), 'FOODCMP (Completion record): not written');
+  assert.equal(status(dir).completionRecord, null);
+  const record = writeDocument(dir, 'FOODCMP');
+  assert.equal(recordLine(), 'FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date');
+  assert.deepEqual(status(dir).completionRecord, { file: 'ARC-001-FOODCMP-v1.0.md', version: '1.0', inSync: true, problem: null });
+  // A document is written: the record no longer matches the project.
+  writeDocument(dir, 'FOODCOOK');
+  const stale = 'document ARC-001-FOODCMP-v1.0.md is out of date, as it no longer matches the project: render it again';
+  assert.equal(recordLine(), `FOODCMP (Completion record): ${stale}`);
+  assert.deepEqual(status(dir).completionRecord, { file: 'ARC-001-FOODCMP-v1.0.md', version: '1.0', inSync: false, problem: stale });
+  // It is not one of the documents, and is never in the unfinished list: the record prints that list,
+  // so a line about the record there could never be true of the record that holds it.
+  assert.ok(!status(dir).documents.some((d) => d.code === 'FOODCMP'));
+  assert.ok(!status(dir).unfinished.some((line) => line.code === 'FOODCMP' || line.what.includes('FOODCMP')));
+  assert.deepEqual(JSON.parse(run('status', '--project', dir, '--json').stdout), status(dir));
+  // Written again, it is up to date, and still passes its own check.
+  writeFileSync(record, readFileSync(writeDocument(dir, 'FOODCMP'), 'utf8'));
+  assert.equal(recordLine(), 'FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date');
+  assert.equal(checkDocument('FOODCMP', dir, record, data).exit, 0);
+  // A header that claims a sign-off is told the same way.
+  const claimed = templated(dir, 'FOODCMP', { status: 'APPROVED' });
+  assert.match(recordLine(), /^FOODCMP \(Completion record\): document ARC-001-FOODCMP-v1\.0\.md says in its header, at line \d+, that Status is "APPROVED", though the completion record is a report that nobody signs/);
+  assert.equal(status(dir).completionRecord.inSync, false);
+  assert.ok(claimed);
+});
+
+test('M4: status on a folder that holds no food-safety folder says in its first line that nothing has been started there, and still exits 0', () => {
+  const empty = mkdtempSync(join(tmpdir(), 'uk-food-empty-'));
+  const result = run('status', '--project', empty);
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout.split('\n')[0], `Food safety status, data ${DATA_ID}: nothing has been started in this folder, which holds no ` +
+    'food-safety folder. Check that it is the business\'s project folder');
+  assert.equal(JSON.parse(run('status', '--project', empty, '--json').stdout).foodSafetyFolder, false);
+  // An empty food-safety folder is a project just begun.
+  mkdirSync(join(empty, 'food-safety'));
+  assert.equal(run('status', '--project', empty).stdout.split('\n')[0], `Food safety status, data ${DATA_ID}`);
+  assert.equal(status(empty).foodSafetyFolder, true);
+  assert.equal(run('status', '--project', cafe()).stdout.split('\n')[0], `Food safety status, data ${DATA_ID}`);
+});
+
+// ---- The date of a sign-off (M2) ----
+
+const dayFrom = (offset) => {
+  const day = new Date();
+  day.setDate(day.getDate() + offset);
+  return `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, '0')}-${String(day.getDate()).padStart(2, '0')}`;
+};
+
+test('M2: sign-off refuses a date after today, writing nothing, and takes today or any earlier day', () => {
+  const dir = cafe();
+  writeDocument(dir, 'FOODCOOK');
+  for (const date of [dayFrom(1), dayFrom(30), '2999-01-01']) {
+    const refused = signOff(dir, 'FOODCOOK', '--date', date);
+    assert.equal(refused.status, 2, date);
+    assert.equal(refused.stdout, '', date);
+    assert.ok(refused.stderr.includes(`--date is the day the document was signed off, which cannot be after today, ${today()}: ${date} is`), refused.stderr);
+    assert.match(refused.stderr, /usage: uk-food\.mjs/);
+    assert.ok(!existsSync(signOffsFile(dir)), date);
+  }
+  assert.match(run('sign-off').stderr.replace(/\s+/g, ' '), /DATE is YYYY-MM-DD, today when not given, and never after today/);
+  assert.equal(signOff(dir, 'FOODCOOK', '--date', today()).status, 0);
+  assert.equal(signOff(dir, 'FOODCOOK', '--date', dayFrom(-1)).status, 0);
+  assert.equal(signOff(dir, 'FOODCOOK', '--date', '2026-11-17').status, 0);
+  assert.deepEqual(JSON.parse(readFileSync(signOffsFile(dir), 'utf8')).signOffs.map((record) => record.date), [today(), dayFrom(-1), '2026-11-17']);
+  // A record read back is not held to today's date: the day it was made, it was not in the future.
+  const records = JSON.parse(readFileSync(signOffsFile(dir), 'utf8'));
+  records.signOffs.at(-1).date = '2999-01-01';
+  writeFileSync(signOffsFile(dir), `${JSON.stringify(records, null, 2)}\n`);
+  assert.equal(run('status', '--project', dir).status, 0);
 });

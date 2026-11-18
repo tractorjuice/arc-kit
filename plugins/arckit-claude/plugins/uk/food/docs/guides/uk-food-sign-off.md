@@ -20,7 +20,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 ## Before you start
 
 - **A finished document.** Run `/arckit-uk-food:uk-food-check` to see which documents are finished.
-- **Everything finished first, if you can.** Sign the documents off once all of them are finished, and sign the profile off last. A change to the profile puts every other document out of step, because each of them is built partly from it. A change to any section or to your own methods puts the profile out of step, because the profile lists them. A document that goes out of step after it was signed off is written again as a new version, and that version needs signing off again.
+- **The profile last.** You can sign each document off as soon as it is finished. Sign the profile off last: it lists each safe method's status and your own methods, so it changes when one of those does.
 - **Your name and your role**, in the message that runs the command. If either is missing, the command asks.
 - **Whether a printed copy has been signed**, if you keep one. Say so, and the record notes it. The documents are plain text files (Markdown) that any text editor or Markdown viewer can open and print.
 
@@ -32,7 +32,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 4. **It tells you the file and version it is about to record, and waits for your yes**, unless you named the version yourself. A sign-off says you read that version, so you need to know which one it is.
 5. **It asks the helper script to record the sign-off.** If the script refuses, the command shows you its reasons unchanged, and stops. Nothing is recorded, and the command never tries to work round a refusal.
 6. **If the sign-off is recorded**, the command marks the document's header: Status `APPROVED`, and Reviewed By and Approved By both set to the name, role and date, such as `Sam Okafor, Owner, 2026-11-18`. In this overlay, `APPROVED` means only that: signed off by the named person at the business. It also fills in that version's row in the Revision History.
-7. **It runs the document check again**, to prove the header change left the body untouched.
+7. **It runs the document check again**, and looks at where the document stands, to prove that marking the header changed nothing else in the file.
 8. **It shows a summary.**
 
 When the helper script refuses, its reasons look like this:
@@ -66,8 +66,19 @@ And if someone asks on another person's behalf:
 
 ## What you get
 
-- A record in `projects/001-bramble-cafe/food-safety/sign-offs.json`: the document, its version and file, the name, role and date, and whether a printed copy was signed.
+- A record in `projects/001-bramble-cafe/food-safety/sign-offs.json`: the document, its version and file, the name, role and date, whether a printed copy was signed, and a fingerprint of the file as you signed it, so that any later change to it shows.
 - The document's header marked as signed off, as above.
+
+## What a sign-off covers
+
+A sign-off covers the whole document, exactly as it reads when you sign it: the pack's wording, your answers, and everything else in the file.
+
+- **If something the document says changes**, the sign-off no longer counts. That happens when an answer it prints is changed, and when anyone adds to the file or edits it by hand. `/arckit-uk-food:uk-food-check` then says the document is no longer signed off, and why. The document's command writes it again as a new version, and that version needs signing off.
+- **If something it does not say changes**, the sign-off stands. Adding a member of staff to the profile, for example, changes the profile document and nothing else.
+- **The business's name is printed in every document**, so changing it changes them all. So does changing the nation to or from one outside England and Wales, because every document then says so.
+- **The date is the day you sign.** A date that has not come yet is refused.
+
+A document whose header says it is signed off, when no sign-off is recorded for it, fails the document check: only this command marks a header.
 
 ## What it will not do, and why
 
