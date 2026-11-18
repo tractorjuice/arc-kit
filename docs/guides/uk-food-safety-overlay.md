@@ -64,7 +64,7 @@ The first line also installs ArcKit core if you have not installed it.
 | Any time | `/arckit-uk-food:uk-food-check` | Shows what is finished and what is still waiting, and writes the completion record | [Where things stand](uk-food-check.md) |
 | Last | `/arckit-uk-food:uk-food-sign-off` | Records that a named person has read a finished document and confirms it | [Sign-off](uk-food-sign-off.md) |
 
-Start with the profile, then work through the five sections (cross-contamination, cleaning, chilling, cooking and management) in any order, then add your own methods. Each command can stop at any point and carry on later.
+Start with the profile, then work through the five sections (cross-contamination, cleaning, chilling, cooking and management) in any order, then add your own methods. You can stop at any point and carry on later: nothing confirmed is lost.
 
 Sign the documents off once all of them are finished, and sign the profile off last. A change to the profile puts every other document out of step, because each of them is built partly from it. A change to any section or to your own methods puts the profile out of step, because the profile lists the safe methods and your own methods. A document that goes out of step after it was signed off is written again as a new version, and that version needs signing off again.
 
@@ -114,7 +114,11 @@ The overlay ships a build recipe, `uk-food-sfbb`, for ArcKit's build command in 
 
 The recipe builds the profile, the five sections and the completion record. Your own methods are left out by default: with no entries, that document is too short for the build's checks, so record your own methods with the command instead.
 
-Run the profile command once first, so the project exists.
+Run the profile command once first, so the project exists. Then, for project `001`:
+
+```text
+/arckit:build 001 --recipe uk-food-sfbb
+```
 
 ## What it does not cover
 

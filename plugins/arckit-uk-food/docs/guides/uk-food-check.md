@@ -2,7 +2,7 @@
 
 > **Command**: `/arckit-uk-food:uk-food-check` | **Overlay**: [UK Food Safety Overlay](https://arckit.org/guide/uk-food-safety-overlay.html) | **Status**: Experimental, community-maintained
 
-This command shows you what is finished and what is still waiting across all your food safety documents, and writes the completion record. It asks you nothing and changes nothing else, so you can run it whenever you want to see where things stand.
+This command shows you what is finished and what is still waiting across all your food safety documents, and writes the completion record. It asks nothing about the business and changes nothing but the completion record, so you can run it whenever you want to see where things stand.
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
