@@ -1764,8 +1764,10 @@ const isPending = (value) => value === '' || /^\[?pending\]?$/i.test(value);
 const documentLines = (text) => text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').split('\n');
 
 // The rows of the Revision History table: of the first table between line indexes `from` and `to`,
-// each row as { line, version, approvedBy, approvalDate }, its cells found by the table's own column
-// headings. A cell under a heading the table lacks is empty.
+// each row as { line, version, approvedBy, approvalDate, unsigned }, its cells found by the table's own
+// column headings. A cell under a heading the table lacks is empty. `unsigned` is the row as written
+// with its Approved By and Approval Date cells emptied: what a sign-off binds of it, since those two
+// cells are the sign-off command's to fill in.
 function revisionRows(lines, from, to) {
   let at = from;
   while (at < to && !lines[at].trim().startsWith('|')) {
@@ -1779,34 +1781,48 @@ function revisionRows(lines, from, to) {
   for (at++; at < to && lines[at].trim().startsWith('|'); at++) {
     if (/^[\s|:-]+$/.test(lines[at])) continue;
     const cells = cellsOfRow(lines[at]);
+    // As written, split at each pipe that is not escaped: the piece before the first pipe is the indent,
+    // and the piece after a closing pipe is not a cell.
+    const pieces = lines[at].split(/(?<!\\)\|/);
+    const lastCell = pieces.length - (/(?<!\\)\|[ \t]*$/.test(lines[at]) ? 2 : 1);
+    for (const column of [approvedBy, approvalDate]) if (column >= 0 && column + 1 <= lastCell) pieces[column + 1] = '';
     // A version written "v1.0" is version 1.0.
-    rows.push({ line: at + 1, version: (cells[version] ?? '').replace(/^v/i, ''), approvedBy: cells[approvedBy] ?? '', approvalDate: cells[approvalDate] ?? '' });
+    rows.push({ line: at + 1, version: (cells[version] ?? '').replace(/^v/i, ''), approvedBy: cells[approvedBy] ?? '',
+      approvalDate: cells[approvalDate] ?? '', unsigned: pieces.join('|') });
   }
   return rows;
 }
 
 // What the lines above a document's body say about sign-off: `rows`, the first Document Control row of
-// each of SIGNED_FIELDS as { line, value }, and `history`, the rows of the Revision History table. A
-// document with no such table has none, and so claims nothing.
+// each of SIGNED_FIELDS as { line, value }; `all`, every such row in the order written, as { field,
+// line, value }, since a second row of a name is read by a person as much as the first; and `history`,
+// the rows of the Revision History table. A document with no such table has none, and so claims nothing.
 function headerOf(lines, body) {
   const rows = new Map();
+  const all = [];
   let history = null;
   for (let i = 0; i < body.begin - 1; i++) {
     const row = CONTROL_ROW.exec(lines[i]);
-    if (row && !rows.has(row[1])) rows.set(row[1], { line: i + 1, value: plainCell(row[2]) });
+    if (row) all.push({ field: row[1], line: i + 1, value: plainCell(row[2]) });
+    if (row && !rows.has(row[1])) rows.set(row[1], all.at(-1));
     if (!history && /^ {0,3}#{1,6}[ \t]+Revision History[ \t#]*$/i.test(lines[i])) history = revisionRows(lines, i + 1, body.begin - 1);
   }
-  return { rows, history: history ?? [] };
+  return { rows, all, history: history ?? [] };
 }
 
 // The hash of a document's text outside its markers, as a sign-off binds it: every line above the BEGIN
 // marker and below the END marker, less only what changes after a sign-off without changing what the
-// person signed. That is the value of each Document Control row the sign-off command edits (the row
-// itself still counts), the rows of the Revision History table, and each Build Provenance block, from
-// its start marker to its end marker. Anything else added, taken out or changed gives another hash.
+// person signed. That is what the sign-off command itself writes and what a core hook stamps:
+// - the value of each Document Control row of SIGNED_FIELDS (the first row of each name: the row itself
+//   still counts, and a second row of a name counts whole);
+// - the Approved By and Approval Date cells of each Revision History row (the rest of each row counts,
+//   and so does a row added or taken out);
+// - each Build Provenance block, from its start marker to its end marker.
+// Anything else added, taken out or changed gives another hash.
 function outsideHash(lines, body, header) {
-  const values = new Map([...header.rows].map(([field, row]) => [row.line, `| **${field}** |`]));
-  const dropped = new Set(header.history.map((row) => row.line));
+  const values = new Map([...[...header.rows].map(([field, row]) => [row.line, `| **${field}** |`]),
+    ...header.history.map((row) => [row.line, row.unsigned])]);
+  const dropped = new Set();
   const side = (i) => (i < body.begin - 1 ? -1 : i >= body.end ? 1 : 0);
   for (let i = 0; i < lines.length; i++) {
     if (side(i) === 0 || lines[i].trim() !== PROVENANCE.start) continue;
@@ -1839,8 +1855,8 @@ const sentence = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 // of CLAIM_FIELDS that does not read DRAFT or [PENDING], then each Revision History row whose Approved
 // By or Approval Date is filled in.
 function claimsOf(header) {
-  const rows = CLAIM_FIELDS.map((field) => ({ field, ...header.rows.get(field) }))
-    .filter((row) => row.line !== undefined && !(row.field === 'Status' ? isDraft(row.value) : isPending(row.value)));
+  const rows = header.all.filter((row) => CLAIM_FIELDS.includes(row.field) &&
+    !(row.field === 'Status' ? isDraft(row.value) : isPending(row.value)));
   const history = header.history.map((row) => ({ ...row, value: [row.approvedBy, row.approvalDate].find((value) => !isPending(value)) }))
     .filter((row) => row.value !== undefined);
   return { rows, history };
@@ -2474,8 +2490,8 @@ function collectStatus(project, data) {
   } catch {
     started = false;
   }
-  // `completionRecord` is filled in by projectStatus: the record is rendered from this status, so its
-  // own state cannot be part of what it is rendered from.
+  // `completionRecord` is filled in by fullStatus: the record is rendered from this status, so its own
+  // state cannot be part of what it is rendered from.
   const status = { data: DATA_ID, documents, specialProcesses, ownAwaitingReview: awaiting.map((entry) => entry.id), unfinished,
     completionRecord: null, foodSafetyFolder: started };
   return { status, sheets, hashes, blockers, signOffs, checks, record: files.get(COMPLETION_RECORD) ?? null };
