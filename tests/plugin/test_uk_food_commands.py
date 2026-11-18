@@ -1563,9 +1563,9 @@ def test_the_readme_lists_each_command_as_claude_code_names_it():
     text = (OVERLAY / "README.md").read_text(encoding="utf-8")
     for name in COMMANDS:
         assert f"/arckit-uk-food:{name}" in text, name
-    floor = re.search(r"MIN_CLAUDE_CODE_VERSION = '([\d.]+)'",
-                      (ROOT / "plugins/arckit-claude/hooks/version-check.mjs").read_text(encoding="utf-8")).group(1)
-    assert f"It needs Claude Code {floor} or later." in text, "P9: core's current floor"
+    # P9: that the README states core's current floor is held, for every plugin README that states
+    # one, by tests/plugin/test_readme_claude_code_floor.py.
+    assert "It needs Claude Code " in text
 
 
 def test_the_readme_and_guides_say_truly_what_ends_a_sign_off():

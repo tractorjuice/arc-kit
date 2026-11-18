@@ -12,7 +12,7 @@ Requires the `arckit` core plugin. Install both from the ArcKit marketplace:
 claude plugin install arckit-uk-legacy --marketplace tractorjuice/arckit-claude
 ```
 
-This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. It needs Claude Code 2.1.275 or later.
+This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. It needs Claude Code 2.1.319 or later.
 
 In Claude Code:
 
