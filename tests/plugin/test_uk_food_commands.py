@@ -938,6 +938,10 @@ SIGN_OFF_RULES = {
     "V2: a printed copy signed since is recorded": "if the person says a printed copy has now been signed and `signOff.paperSigned` is "
                                                    "`no`, that is new: record it as below, with `--paper-signed yes`, and say in the "
                                                    "summary that a printed copy is now recorded as signed",
+    "V3 (live run): what a sign-off covers is said only at the marked end": "if marked, that the sign-off covers this file exactly as it "
+                                                                            "now reads (if not marked, say nothing of versions beyond what "
+                                                                            "the lines from `status` say: a document nobody has signed off "
+                                                                            "is written again in place, at its version)",
     "V2: the summary says what is true of an earlier sign-off": "If it was already signed off by the person asking, with its header "
                                                                 "showing it, say so and that nothing was recorded; if a printed copy is "
                                                                 "now recorded as signed, say so.",
