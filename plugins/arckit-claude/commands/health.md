@@ -45,7 +45,7 @@ $ARGUMENTS
 
 Scans the `projects/` directory for all `ARC-*` artifacts and applies ten detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action. The hook also writes `docs/health.json` on every run for dashboard integration (consumed by `/arckit:pages`).
 
-The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of what the session-start `stale-artifact-scan` monitor surfaces, so the on-demand command and the background notification agree on the same set of artifacts.
+At its default threshold, the `STALE-DRAFT` rule reports every draft the session-start `stale-artifact-scan` monitor reports as unchanged, and it also falls back to the `Created Date` when `Last Modified` is missing. Overdue reviews differ: the monitor reports a past `Next Review Date` whatever the artifact's status, while `REVIEW-OVERDUE` skips `DRAFT`, `SUPERSEDED` and `ARCHIVED` artifacts, so a draft or a retired artifact with a past review date appears in the monitor's notice but not here.
 
 **This command does NOT modify any project files.** It is a diagnostic tool. The only file written is `docs/health.json`.
 
