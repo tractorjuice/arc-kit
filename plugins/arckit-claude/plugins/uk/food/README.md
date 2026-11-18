@@ -49,7 +49,7 @@ Sign each document off when it is finished, and sign the profile off last. A sig
 
 The first command makes the business's project folder, with a short README in it that says what the folder is, where the worksheets and documents are and which command to run next. The project folder holds the names of the people who work in the business. Keep it somewhere private, and if it is a git repository that is pushed anywhere, keep that private too.
 
-If a later version of the overlay changes the wording of a worksheet's guidance or questions, a worksheet filled in earlier is reported as made by a different version. The commands then show each line that would be replaced and ask before writing; the helper's `upgrade-worksheet` does the work, changes no answer and keeps the worksheet as it was.
+If a later version of the overlay changes the wording of a worksheet's guidance or questions, a worksheet filled in earlier is reported as made by a different version. The commands then show each line that would be taken out or put in, and write them only when a person agrees: with nobody to ask, nothing is written. The helper's `upgrade-worksheet` does the work, changes no answer and keeps the worksheet as it was.
 
 The other tools ArcKit supports name the commands their own way: for example `$arckit-uk-food-profile` in Codex and `/arckit-uk-food-profile` in GitHub Copilot.
 

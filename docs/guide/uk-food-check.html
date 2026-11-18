@@ -459,7 +459,7 @@
 <li><strong>It runs the document check</strong> on the record, against a fresh print.</li>
 <li><strong>It shows a summary.</strong></li>
 </ol>
-<p>It changes none of your answers and no other document. The one thing it may do to a worksheet is bring the overlay's own wording in it up to date, when a later version of the overlay words it differently: it shows you each line it would replace first, and asks. Anything else that needs putting right is put right with the other commands.</p>
+<p>It changes none of your answers and no other document. The one thing it may do to a worksheet is bring the overlay's own wording in it up to date, when a later version of the overlay words it differently: it shows you each line it would take out or put in, and writes them only when you agree. With nobody there to agree, it writes nothing to the worksheet, and says so. Anything else that needs putting right is put right with the other commands.</p>
 <h2 id="an-example">An example</h2>
 <p>Sam Okafor owns Bramble Cafe, an invented café. Part of the way through, Sam runs the check.</p>
 <blockquote>
@@ -474,7 +474,7 @@ FOODCOOK (Cooking): 41 of 41 questions confirmed; not relevant: CK-06; ARC-001-F
 FOODOWN (Own methods): 2 of 2 own entries confirmed; not written; not signed off
 FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date
 </code></pre>
-<p>The last of those lines is about the completion record itself. Once anything it reports on has changed, that line says the record is out of date, and running this command again brings it up to date. If a document was changed after it was signed off, its line says so in place of &quot;signed off by&quot;, and the unfinished list says what to do.</p>
+<p>The last of those lines is about the completion record itself. Once anything it reports on has changed, that line says the record is out of date, and running this command again brings it up to date. If a document was changed after it was signed off, its line says so in place of &quot;signed off by&quot;, and the unfinished list says what to do. If a document is signed off but its header has not yet been marked to show it, its line says that too: running <code>/arckit-uk-food:uk-food-sign-off</code> for that document finishes the marking, and no new sign-off is needed.</p>
 <p>Lines in the unfinished list look like these:</p>
 <pre><code class="language-text">- FOODPROF: document not written yet: write the document from its worksheet
 - FOODXC: 2 answers in food-safety/answers-XC.md are proposed but not confirmed (XC-02-Q01 and XC-06-Q02): an answer counts when its State is confirmed and By and On are filled in

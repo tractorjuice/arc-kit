@@ -33,7 +33,7 @@ It also writes the **completion record**: the pack's own record of which safe me
 4. **It runs the document check** on the record, against a fresh print.
 5. **It shows a summary.**
 
-It changes none of your answers and no other document. The one thing it may do to a worksheet is bring the overlay's own wording in it up to date, when a later version of the overlay words it differently: it shows you each line it would replace first, and asks. Anything else that needs putting right is put right with the other commands.
+It changes none of your answers and no other document. The one thing it may do to a worksheet is bring the overlay's own wording in it up to date, when a later version of the overlay words it differently: it shows you each line it would take out or put in, and writes them only when you agree. With nobody there to agree, it writes nothing to the worksheet, and says so. Anything else that needs putting right is put right with the other commands.
 
 ## An example
 
@@ -54,7 +54,7 @@ FOODOWN (Own methods): 2 of 2 own entries confirmed; not written; not signed off
 FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date
 ```
 
-The last of those lines is about the completion record itself. Once anything it reports on has changed, that line says the record is out of date, and running this command again brings it up to date. If a document was changed after it was signed off, its line says so in place of "signed off by", and the unfinished list says what to do.
+The last of those lines is about the completion record itself. Once anything it reports on has changed, that line says the record is out of date, and running this command again brings it up to date. If a document was changed after it was signed off, its line says so in place of "signed off by", and the unfinished list says what to do. If a document is signed off but its header has not yet been marked to show it, its line says that too: running `/arckit-uk-food:uk-food-sign-off` for that document finishes the marking, and no new sign-off is needed.
 
 Lines in the unfinished list look like these:
 
