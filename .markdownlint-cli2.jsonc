@@ -103,8 +103,9 @@
     ".pytest_cache/**",
     ".arckit/memory/**",
     // Behavioural eval recordings (scripts/eval-headless.py): the documents a
-    // run wrote, kept for --replay. Gitignored, and not ours to lint.
-    "plugins/*/evals/results/**",
+    // run wrote, kept for --replay. Gitignored, and not ours to lint. `**`
+    // also covers the overlay mirrors under plugins/arckit-claude/plugins/.
+    "plugins/**/evals/results/**",
     // A local virtual environment (uv), gitignored like the folders above.
     ".venv/**"
   ]
