@@ -285,7 +285,7 @@ export const DOC_TYPES = {
   'FOODCHL':   { name: 'Chilling Safe Methods',                           category: 'Compliance', regime: 'UK' },
   'FOODCOOK':  { name: 'Cooking Safe Methods',                            category: 'Compliance', regime: 'UK' },
   'FOODMGT':   { name: 'Management Safe Methods',                         category: 'Compliance', regime: 'UK' },
-  'FOODOWN':   { name: 'Additional Safe Methods',                         category: 'Compliance', regime: 'UK' },
+  'FOODOWN':   { name: 'Food Business Own Methods',                       category: 'Compliance', regime: 'UK' },
   'FOODCMP':   { name: 'Safe Method Completion and Readiness Record',     category: 'Compliance', regime: 'UK' },
   'MMOD':      { name: 'Maturity Model Assessment',       category: 'Governance', severity: 'HIGH' },
 };

@@ -232,7 +232,7 @@ DOC_TYPES = {
     "FOODCHL":   {"name": "Chilling Safe Methods", "category": "Compliance"},
     "FOODCOOK":  {"name": "Cooking Safe Methods", "category": "Compliance"},
     "FOODMGT":   {"name": "Management Safe Methods", "category": "Compliance"},
-    "FOODOWN":   {"name": "Additional Safe Methods", "category": "Compliance"},
+    "FOODOWN":   {"name": "Food Business Own Methods", "category": "Compliance"},
     "FOODCMP":   {"name": "Safe Method Completion and Readiness Record", "category": "Compliance"},
     "MMOD":       {"name": "Maturity Model Assessment",                                     "category": "Governance"},
 }

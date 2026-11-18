@@ -368,6 +368,15 @@ GATHERING_RULES = {
                                             "a cell, write in it what the line says.",
     "G4: nothing written is said, with why": "or that nothing was written because the signed file is still in step, with "
                                              "the document's lines from `unfinished`, unchanged",
+    "H1: a new folder is set up by the helper": "set-up-folder --project <project_dir>",
+    "H1: only for a project just created": "Run it only for a project you have just created in this run, never for one "
+                                           "that already existed",
+    "H1: the README's wording is the helper's": "Never write or reword that README yourself: its wording is the helper's.",
+    "H1: what the explanation says": "what the folder is, where its worksheets and documents are, which command to run "
+                                     "next, and that the folder holds the names of its staff and is kept private",
+    "H1: a refusal does not stop the work": "If it refuses, show its message and carry on",
+    "H3: an answer that was taken out is recorded afterwards": "If a line it took out was an answer or an entry of theirs, "
+                                                               "record it afterwards as **The person's own words** says.",
 }
 
 # What every command that writes a document says about its header and about the rest of the file
@@ -387,6 +396,17 @@ WRITING_RULES = {
     "C1: a header line check names is put right": "If it names a line of the header or of the Revision History, put that "
                                                   "line right as **The header** says.",
     "G1: the header's dates are written one way": "**Last Modified**, today, both written `YYYY-MM-DD`.",
+    "H3: the dry run first": "upgrade-worksheet --file <worksheet>`, which writes nothing, and show the person every line "
+                             "it would take out and put in, unchanged",
+    "H3: what is typed there is not carried over": "a line someone typed there cannot be told from old wording, and is not "
+                                                   "carried over",
+    "H3: written when the person agrees": "When the person agrees, run it again with `--write`",
+    "H3: with nobody to ask": "With nobody to ask, run it with `--write` straight after the dry run and give every line it "
+                              "took out in the summary",
+    "H3: a refusal is shown": "If it refuses (exit 1), show its message unchanged",
+    "H5: the summary says when a document holds text outside its checked part": "for each document in `status --json` whose "
+                                                                                "`otherText` is not empty, its file and "
+                                                                                "those lines with their numbers, unchanged",
 }
 
 
@@ -444,6 +464,12 @@ COMMAND_RULES = {
                                                                                "what to write there, give it as it is",
     ("uk-food-check", "G4: each line ends with its own next step"): "what moves each unfinished item on, which is what its "
                                                                     "own line ends with",
+    ("uk-food-check", "H3: the one change it makes to a worksheet"): "This is the one change this command makes to a "
+                                                                     "worksheet, and it changes no answer in it.",
+    ("uk-food-check", "H3: status is read again afterwards"): "Then run both `status` commands again.",
+    ("uk-food-own-methods", "H4: the document's name"): "whose document type is Food Business Own Methods",
+    ("uk-food-own-methods", "H4: an own method is never called a safe method"): "A method of the business's own is an own "
+                                                                                "method, never a safe method",
 }
 
 
@@ -462,7 +488,10 @@ def test_no_command_keeps_the_wording_the_review_found_wrong(name):
                  # Rulings G3, G4 and G6.
                  "reaches the document", "the sign-off no longer covers the document, because",
                  "a signed-off document's sign-off no longer covers it", "leave the header as it is (`DRAFT`)",
-                 "must still be true"]:
+                 "must still be true",
+                 # Rulings H4 and H7.
+                 "Additional Safe Methods", "`inSync` is false: the file a person signed is out of step",
+                 "a new version is written only when a file a person signed is out of step"]:
         assert gone not in body, f"{name} still says {gone!r}"
     if name == "uk-food-profile":
         assert "For each of them that does not exist yet" not in body, "M9: the profile command makes one worksheet"
@@ -474,6 +503,34 @@ def test_no_command_keeps_the_wording_the_review_found_wrong(name):
 def test_a_gathering_command_states_the_rule(name, rule):
     _, body = split(command(name))
     assert GATHERING_RULES[rule] in body, f"{name} lacks ruling {rule}"
+
+
+def test_the_new_folders_explanation_is_the_helpers_alone():
+    """H1 and H2: the README a business gets is printed by the helper, so no command restates it."""
+    helper = HELPER.read_text(encoding="utf-8")
+    private = ("This folder holds the names of the people who work in the business. Keep it somewhere private, and if it "
+               "is a git repository that is pushed anywhere, keep that private too.")
+    assert "".join(part.strip("'") for part in re.findall(r"'[^']*'", helper[helper.index("const KEEP_PRIVATE"):helper.index("const folderReadme")])) == private
+    for name in COMMANDS:
+        _, body = split(command(name))
+        assert "food safety records" not in body and "Keep this folder private" not in body, name
+        assert ("set-up-folder" in body) == (name in GATHERING), name
+    # The step sits where a project is made, in all three gathering commands alike (the shared-block test holds them equal).
+    step = block(split(command("uk-food-profile"))[1], "Find or create the project")
+    assert step.index("create-project.sh --json --force") < step.index("set-up-folder --project <project_dir>")
+
+
+def test_the_own_methods_document_has_one_name_everywhere():
+    """H4: FOODOWN is Food Business Own Methods in the registry, the pages table and the Gemini hook's list."""
+    registry = (ROOT / "plugins/arckit-claude/config/doc-types.mjs").read_text(encoding="utf-8")
+    assert re.search(r"'FOODOWN':\s+\{ name: 'Food Business Own Methods',", registry)
+    assert "| | FOODOWN | `ARC-*-FOODOWN-*.md` | Food Business Own Methods |" in (ROOT / "plugins/arckit-claude/commands/pages.md").read_text(encoding="utf-8")
+    assert '"FOODOWN":   {"name": "Food Business Own Methods", "category": "Compliance"},' in (
+        ROOT / "extensions/arckit-gemini/hooks/scripts/hook_utils.py").read_text(encoding="utf-8")
+    for path in [*hand_written(), HELPER, ROOT / "README.md", ROOT / "docs" / "llms.txt", ROOT / "docs" / "commands.html",
+                 ROOT / "docs" / "DEPENDENCY-MATRIX.md", OVERLAY / "recipes" / "uk-food-sfbb.yaml"]:
+        text = path.read_text(encoding="utf-8")
+        assert not re.search(r"additional safe[ -]methods?|own additional methods?", text, re.I), path.name
 
 
 def test_the_check_command_rewrites_the_record_in_place_even_inside_a_build():
@@ -647,7 +704,8 @@ def test_a_writing_command_reads_its_own_template_with_overrides(name):
 
 def test_the_check_command_changes_nothing_but_the_completion_record():
     _, body = split(command("uk-food-check"))
-    assert "changes no worksheet" in body
+    assert "changes no answer and no other document" in body
+    assert "The one thing it may change in a worksheet is wording that is the tool's own" in body, "H3"
     assert "unfinished" in body and "unchanged" in body
     assert "in place" in body, "ruling 19: the completion record is always rewritten in place"
 
@@ -750,6 +808,18 @@ SIGN_OFF_RULES = {
     "G3: the one exception, for own methods": "the own methods document also needs an entry for every special process the "
                                               "profile confirms, so confirming a new one in the profile puts own methods "
                                               "back to unfinished until that entry is recorded",
+    "H5: the helper refuses until the text has been shown": "the person signing has been shown any text the file holds "
+                                                            "outside its checked part",
+    "H5: every line is shown, unchanged": "show the person every line in it, unchanged, with its line number, and ask "
+                                          "whether they have read them and they are the business's own",
+    "H5: the option only when the person has said so": "Add `--other-text-read yes` to the command below only when the "
+                                                       "person has said so in this conversation.",
+    "H5: with nobody to ask, nothing is recorded": "With nobody to ask, stop without recording anything, and report those "
+                                                   "lines.",
+    "H7: a changed file is signed again, not written again": "is signed off again in just this way: the helper records the "
+                                                             "file as it now reads",
+    "H7: never by a new version": "is put right by taking the change out or by signing the document off again, never by a "
+                                  "new version",
 }
 
 
@@ -860,7 +930,15 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "`signedOff` is true, so nothing else in the file was changed",
                    # G1, G4 and G6: the cells a sign-off rewrites, the version rule and the newest record.
                    "the helper records no sign-off while one holds anything else",
-                   "with `inSync` true and `signedOff` false nothing was written and the document's `unfinished` lines were shown",
+                   "with `bodyInStep` true or null and `signedOff` false nothing was written and the document's `unfinished` "
+                   "lines were shown",
+                   "A fault in a header was never answered with a new version.",
+                   # H1, H3 and H5.
+                   "`set-up-folder` was run only for a project created in this run",
+                   "`upgrade-worksheet` was run without `--write` first",
+                   "said in this conversation that they had read them, before `--other-text-read yes` was given",
+                   "A worksheet was changed only by `upgrade-worksheet --write`, and only in the tool's own wording.",
+                   "It says when a document holds text outside its checked part",
                    "with no word added to any of them",
                    "the rows were rewritten to their record",
                    # C1: a signed header is never carried into a new version.
@@ -982,10 +1060,14 @@ def test_a_document_built_from_its_template_passes_check(code, project):
     path = build(code, project)
     result = check(code, project, path)
     assert result.returncode == 0, result.stdout + result.stderr
+    # H5: nothing in it is outside its checked part and outside its frame, so no signer needs showing anything.
+    checked = json.loads(run(HELPER, "check", "--doc", code, "--project", project, "--report", path, "--json").stdout)
+    assert checked["otherText"] == [] and checked["bodyInStep"] is True, checked
     if code != "FOODCMP":
         status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
         doc = next(d for d in status["documents"] if d["code"] == code)
         assert doc["file"] == path.name and doc["rendered"] and doc["inSync"], doc
+        assert doc["otherText"] == [] and doc["bodyInStep"] is True, doc
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
@@ -1050,25 +1132,31 @@ def test_marking_the_header_after_sign_off_keeps_it_signed_off(project):
 VERSION_RULE = [
     "`signedOff` is true: the document is signed off and nothing in it has changed since. Write nothing, and "
     "say that it is signed off and up to date.",
-    "`signOff` is not null, `signOff.file` is `file`, and `inSync` is false: the file a person signed is out of "
-    "step, because an answer it prints has changed since or the file itself has been changed. Leave the signed "
-    "file exactly as it is, and write the next minor version as a new file",
-    "`signOff` is not null, `signOff.file` is `file`, `inSync` is true and `signedOff` is false: the file is in "
-    "step, so nothing it prints has changed and there is no new version to write. Write nothing, and show the "
-    "document's lines from `unfinished`, unchanged",
+    "`signOff` is not null, `signOff.file` is `file`, and `bodyInStep` is false: what the signed file prints is no "
+    "longer what would be printed now, because an answer it prints has changed since or the text between its "
+    "markers has been changed. Leave the signed file exactly as it is, and write the next minor version as a new file",
+    "`signOff` is not null, `signOff.file` is `file`, `bodyInStep` is true and `signedOff` is false: the file prints "
+    "exactly what would be printed now, so there is no new version to write. Write nothing, and show the document's "
+    "lines from `unfinished`, unchanged",
+    "A fault in its header, or anywhere else outside its markers, is never put right by a new version",
     "the new version is written when that entry is recorded, because the entry changes what the document prints",
+    "`signOff` is not null, `signOff.file` is `file`, and `bodyInStep` is null: the helper could not compare the file "
+    "with a fresh print",
+    "Write nothing yet: put right what the document's lines in `unfinished` say, then run `status` again.",
     "Otherwise: rewrite `file` in place, at its version, or write version 1.0 if `file` is null.",
-    "a new version is written only when a file a person signed is out of step",
+    "a new version is written only when what a signed file prints has changed",
 ]
 
 
 def what_to_write(doc: dict) -> tuple[str, str] | None:
-    """None to write nothing; otherwise ("new" or "in place", version). Ruling G4: a file a person
-    signed gets a new version only when it is out of step; in step, there is nothing new to write."""
+    """None to write nothing; otherwise ("new" or "in place", version). Rulings G4 and H7: a file a
+    person signed gets a new version only when what it prints has changed (`bodyInStep` false). When
+    its body is in step, or could not be compared, there is nothing new to write, whatever is wrong
+    with its header or elsewhere outside its markers."""
     if doc["signedOff"]:
         return None
     if doc["signOff"] is not None and doc["signOff"]["file"] == doc["file"]:
-        if doc["inSync"]:
+        if doc["bodyInStep"] is not False:
             return None
         major, minor = doc["version"].split(".")[:2]
         return "new", f"{major}.{int(minor) + 1}"
@@ -1178,12 +1266,32 @@ def test_text_added_to_a_signed_document_outside_its_markers_ends_the_sign_off(p
     path = build("FOODCOOK", project)
     sign_and_mark("FOODCOOK", project, path)
     assert cooking(project)["signedOff"]
-    path.write_text(path.read_text(encoding="utf-8") + "\n## Addendum\n\nA note nobody signed.\n", encoding="utf-8")
-    assert not cooking(project)["signedOff"]
+    signed = path.read_text(encoding="utf-8")
+    path.write_text(signed + "\n## Addendum\n\nA note nobody signed.\n", encoding="utf-8")
+    doc = cooking(project)
+    assert (doc["signedOff"], doc["inSync"], doc["bodyInStep"]) == (False, False, True), doc
     assert check("FOODCOOK", project, path).returncode == 1
-    assert "changed outside its UK-FOOD markers after Sam Okafor signed it off on 2026-11-17" in unfinished("FOODCOOK", project)[0]
-    # The commands' rule then writes the next version from the template, and leaves the signed file as it is.
-    assert follow_the_rule("FOODCOOK", project) == ("new", "1.1")
+    assert unfinished("FOODCOOK", project) == [
+        f"document {path.name} says in its header, at line 13, that it is signed off, but the file was changed outside its "
+        "UK-FOOD markers after Sam Okafor signed it off on 2026-11-17: take that change out again, or have a named person "
+        "sign the document off again as it now reads"]
+    # H7: what the file prints has not changed, so the commands' rule writes no new version.
+    before = files_of("FOODCOOK", project)
+    assert follow_the_rule("FOODCOOK", project) is None
+    assert files_of("FOODCOOK", project) == before
+    # H5: signing again is refused until the person signing has been shown the added lines, which are listed.
+    again = ["sign-off", "--doc", "FOODCOOK", "--project", project, "--name", "Sam Okafor", "--role", "owner",
+             "--version", "1.0", "--date", "2026-11-17"]
+    refused = run(HELPER, *again)
+    assert refused.returncode == 1 and "## Addendum" in refused.stderr and "A note nobody signed." in refused.stderr
+    assert [entry["text"] for entry in doc["otherText"]] == ["## Addendum", "A note nobody signed."]
+    assert run(HELPER, *again, "--other-text-read", "yes").returncode == 0
+    assert check("FOODCOOK", project, path).returncode == 0
+    assert cooking(project)["signedOff"]
+    # The newest sign-off is now of the file with its note, so taking the note out afterwards is itself a change to it.
+    path.write_text(signed, encoding="utf-8")
+    doc = cooking(project)
+    assert (doc["signedOff"], doc["inSync"], doc["bodyInStep"]) == (False, False, True), doc
 
 
 def document(code: str, project: Path) -> dict:
@@ -1262,10 +1370,11 @@ def test_a_signed_file_changed_outside_its_markers_before_it_is_marked_gets_no_n
     assert unfinished("FOODCOOK", project) == [
         "signed off by Sam Okafor on 2026-11-17, but the file was changed outside its UK-FOOD markers after that, so the "
         "sign-off no longer covers it: take that change out again, or have a named person sign it off again as it now reads"]
-    # Signed off again as it now reads, it is signed off.
-    again = run(HELPER, "sign-off", "--doc", "FOODCOOK", "--project", project,
-                "--name", "Sam Okafor", "--role", "owner", "--version", "1.0", "--date", "2026-11-17")
-    assert again.returncode == 0, again.stderr
+    # Signed off again as it now reads, once the added line has been shown, it is signed off.
+    again = ["sign-off", "--doc", "FOODCOOK", "--project", project, "--name", "Sam Okafor", "--role", "owner",
+             "--version", "1.0", "--date", "2026-11-17"]
+    assert run(HELPER, *again).returncode == 1, "H5: not until the person has been shown the line"
+    assert run(HELPER, *again, "--other-text-read", "yes").returncode == 0
     assert cooking(project)["signedOff"]
 
 
@@ -1283,6 +1392,9 @@ def test_a_second_signer_is_shown_once_the_header_is_rewritten_as_the_command_sa
     assert doc["signOff"]["file"] == doc["file"] == path.name and doc["signOff"]["name"] == "Priya Shah"
     assert not doc["signedOff"]
     assert check("FOODCOOK", project, path).returncode == 1
+    # H7: the fault is in the header, so what the file prints is in step, and the commands' rule writes no new version.
+    assert (doc["inSync"], doc["bodyInStep"]) == (False, True), doc
+    assert follow_the_rule("FOODCOOK", project) is None
     record = doc["signOff"]
     text = f'{record["name"]}, {record["role"]}, {record["date"]}'
     set_header(path, [("Status", "APPROVED"), ("Reviewed By", text), ("Approved By", text), ("Last Modified", "2026-11-18")])
@@ -1298,6 +1410,36 @@ def test_a_second_signer_is_shown_once_the_header_is_rewritten_as_the_command_sa
     assert doc["signedOff"] and doc["signOff"]["name"] == "Priya Shah" and doc["signOff"]["date"] == "2026-11-18", doc
     rendered = run(HELPER, "render", "--doc", "FOODCMP", "--project", project).stdout
     assert "| 2026-11-18 | Priya Shah |" in rendered and "Sam Okafor |" not in rendered
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+@pytest.mark.parametrize("rows", [[("Approved By", "Sam Okafor (owner), 2026-11-17")], [("Status", "APPROVED by the owner")],
+                                  [("Reviewed By", "Dana Okafor, owner, 2026-11-17")]],
+                         ids=["a-name-typed-another-way", "words-after-the-status", "another-name"])
+def test_a_header_fault_on_a_signed_file_never_gets_a_new_version(rows, project):
+    """H7: the body is what would be printed now, so nothing is written; the fault is put right in the header."""
+    path = build("FOODCOOK", project)
+    sign_and_mark("FOODCOOK", project, path)
+    set_header(path, rows)
+    doc = cooking(project)
+    assert (doc["signedOff"], doc["inSync"], doc["bodyInStep"]) == (False, False, True), doc
+    before = files_of("FOODCOOK", project)
+    assert follow_the_rule("FOODCOOK", project) is None
+    assert files_of("FOODCOOK", project) == before
+    # Written as the sign-off command writes it, the document is signed off again, with no new sign-off.
+    set_header(path, SIGNED_HEADER)
+    assert cooking(project)["signedOff"]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_a_signed_file_whose_worksheet_cannot_be_read_is_left_until_it_can(project):
+    """H7: with no fresh print to compare, the rule writes nothing yet."""
+    path = build("FOODCOOK", project)
+    sign_and_mark("FOODCOOK", project, path)
+    sheet = project / "food-safety" / "answers-CK.md"
+    sheet.write_text(sheet.read_text(encoding="utf-8") + "a stray line\n", encoding="utf-8")
+    assert cooking(project)["bodyInStep"] is None
+    assert what_to_write(cooking(project)) is None
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")

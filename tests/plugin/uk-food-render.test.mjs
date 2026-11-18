@@ -971,7 +971,10 @@ test('check fails when a safe method or section heading of the pack is outside t
       const at = report.endsWith('after.md') ? text.lastIndexOf(`\n${heading}\n`) + 1 : text.indexOf(`\n${heading}\n`) + 1;
       assert.equal(result.line, text.slice(0, at).split('\n').length, extra);
       assert.match(result.message, /outside the UK-FOOD markers/);
-      assert.match(result.message, /fresh render/);
+      // H7: the heading is taken out. Writing the document again would be a new version of a signed file,
+      // and what the file prints has not changed.
+      assert.match(result.message, /take it out, so that the pack's text stands only between the markers/);
+      assert.equal(result.bodyInStep, true);
     }
   }
 });

@@ -2,7 +2,7 @@
 // UK food overlay helper. Standard library only.
 // Commands are entries in COMMANDS; each is one exported function returning an exit code.
 import { createHash } from 'node:crypto';
-import { existsSync, readdirSync, readFileSync, realpathSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, realpathSync, renameSync, rmdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -455,26 +455,40 @@ const extraCareName = (text) => {
   const plain = (name) => name.replace(/\s+/g, ' ').trim().toLowerCase();
   return EXTRA_CARE_NAMES.find((name) => plain(name) === plain(text)) ?? null;
 };
-// The profile's questions. The pack asks none of them, so the words are the helper's own.
+// The profile's questions. The pack asks none of them, so the words are the helper's own. Each has a
+// key that says what it asks, and the identifier a worksheet prints for it is written out here against
+// that key, never worked out from its place in the list. Code that needs one question finds it by its
+// key (profileQuestion). So a question added later, anywhere in the list, takes a new identifier, and
+// no answer already in a worksheet changes its meaning. A test pins each identifier to its key.
+const PROFILE_IDS = {
+  'business-name': 'PR-Q01', operator: 'PR-Q02', premises: 'PR-Q03', council: 'PR-Q04', 'registered-on': 'PR-Q05', nation: 'PR-Q06',
+  'pack-keeper': 'PR-Q07', sells: 'PR-Q08', equipment: 'PR-Q09', staff: 'PR-Q10',
+  'process:Vacuum packing': 'PR-Q11', 'process:sous vide': 'PR-Q12', 'process:low temperature cooking': 'PR-Q13',
+  'process:fermenting': 'PR-Q14', 'process:smoking or curing meat/fish': 'PR-Q15', 'food:Kebabs': 'PR-Q16',
+  'food:sushi/sashimi': 'PR-Q17', 'food:liver parfait': 'PR-Q18', 'food:fish/meat carpaccio and tartare': 'PR-Q19',
+  'food:less than thoroughly cooked burgers': 'PR-Q20'
+};
 export const PROFILE_QUESTIONS = [
-  ['text', 'What is the business called?'],
-  ['text', 'Who is the food business operator: the person or company legally responsible for the business?'],
-  ['text', 'What is the address of the premises? If the business has none, write "no premises".'],
-  ['text', 'Which council is the business registered with?'],
-  ['text', 'On what date was the business registered with the council?'],
-  ['nation', 'Which nation is the business in?'],
-  ['text', 'Who is in charge of keeping this pack up to date?'],
-  ['text', 'What food and drink does the business sell?'],
-  ['list', 'What equipment do you use to store, prepare, cook and serve food?'],
-  ['list', 'Who works with food, and what is each person\'s role?'],
-  ...EXTRA_CARE.processes.map((name) => ['yes-no', `Do you use this process, which needs extra care: ${name}?`]),
-  ...EXTRA_CARE.foods.map((name) => ['yes-no', `Do you make or serve this food, which needs extra care: ${name}?`])
-].map(([type, text], i) => ({ id: `PR-Q${String(i + 1).padStart(2, '0')}`, type, text, elseText: null }));
+  ['business-name', 'text', 'What is the business called?'],
+  ['operator', 'text', 'Who is the food business operator: the person or company legally responsible for the business?'],
+  ['premises', 'text', 'What is the address of the premises? If the business has none, write "no premises".'],
+  ['council', 'text', 'Which council is the business registered with?'],
+  ['registered-on', 'text', 'On what date was the business registered with the council?'],
+  ['nation', 'nation', 'Which nation is the business in?'],
+  ['pack-keeper', 'text', 'Who is in charge of keeping this pack up to date?'],
+  ['sells', 'text', 'What food and drink does the business sell?'],
+  ['equipment', 'list', 'What equipment do you use to store, prepare, cook and serve food?'],
+  ['staff', 'list', 'Who works with food, and what is each person\'s role?'],
+  ...EXTRA_CARE.processes.map((name) => [`process:${name}`, 'yes-no', `Do you use this process, which needs extra care: ${name}?`]),
+  ...EXTRA_CARE.foods.map((name) => [`food:${name}`, 'yes-no', `Do you make or serve this food, which needs extra care: ${name}?`])
+].map(([key, type, text]) => ({ id: PROFILE_IDS[key], key, type, text, elseText: null }));
+const profileQuestion = (key) => PROFILE_QUESTIONS.find((question) => question.key === key);
 
 const WORKSHEET_TITLES = { profile: 'Business profile', own: 'Your own controls and special processes' };
 // The guidance each worksheet opens with. It is compared line by line when a worksheet is read (see
-// closeComment), so a change to a word of it makes every worksheet already filled in a problem: it
-// says only what the parser does, and a release changes it only together with WORKSHEET_VERSION.
+// closeComment), so a change to a word of it makes every worksheet already filled in one that was made
+// by a different version: it says only what the parser does, and a worksheet that holds an earlier
+// wording is brought up to date with upgrade-worksheet, which replaces the tool's own lines and nothing else.
 const STATE_WORDS = [
   'proposed (taken from a file, or given without a name, and not yet agreed by a named person at the business: say where it came from in Source)',
   'confirmed (given or agreed by a named person at the business: put their name in By and the date, as YYYY-MM-DD, in On)'
@@ -814,22 +828,32 @@ function readValue(question, answer) {
   }
 }
 
-// Reads a worksheet against the data (what loadData returns). Never throws on what a person or
-// tool has written: every fault is a { line, message } problem, and an answer with a problem in
-// its block is not used. `answered` is true only for a confirmed answer with no problem, under a
-// method that is not marked not-relevant: nothing else counts as answered anywhere.
-export function parseWorksheet(text, data) {
+// Reads a worksheet against the data (what loadData returns), as { parsed, layout }. Never throws on
+// what a person or tool has written: every fault is a { line, message } problem, and an answer with a
+// problem in its block is not used. `answered` is true only for a confirmed answer with no problem,
+// under a method that is not marked not-relevant: nothing else counts as answered anywhere.
+// Two kinds of line are the tool's own, printed by emitWorksheet and never read: the guidance comment
+// and the lines starting > above a question. Where one of them is not what this helper prints, the
+// worksheet was made by a different version of the overlay, or someone typed there; the two cannot be
+// told apart. That is not reported here line by line: `layout` holds where those lines are, for
+// parseWorksheet to report once and upgradeWorksheet to replace. It is { lines, guidance, prompts,
+// wording }: the worksheet's lines; the guidance comment's first and last line numbers, or null; for
+// each question read, the line numbers of its > lines (`at`), those of them this helper does not
+// print (`foreign`) and what it does print (`now`); and the line number of every line of either kind
+// that is not this helper's wording.
+function readWorksheet(text, data) {
   const problems = [];
   const parsed = { data: null, section: null, methods: new Map(), answers: new Map(), entries: new Map(), problems };
   const report = (line, message, block = null) => {
     problems.push({ line, message });
     if (block) block.faulty = true;
   };
+  const lines = String(text).replace(/^\uFEFF/, '').split(/\r\n|\n|\r/);
+  const layout = { lines, guidance: null, prompts: new Map(), wording: [] };
   const finish = () => {
     problems.sort((a, b) => a.line - b.line);
-    return parsed;
+    return { parsed, layout };
   };
-  const lines = String(text).replace(/^\uFEFF/, '').split(/\r\n|\n|\r/);
 
   const markerAt = lines.findIndex((line) => /^<!--.*uk-food-answers/.test(line.trim()));
   if (markerAt < 0) {
@@ -901,20 +925,22 @@ export function parseWorksheet(text, data) {
     return /^#{2,3}[ \t]+\S/.test(text.trim()) || Boolean(match && FIELD_NAMES.has(match[1].toLowerCase()));
   };
   // Nothing in a comment is read. Text after a comment's end on the same line is reported, never
-  // dropped. The first comment over several lines is the helper's guidance; if it differs from what
-  // the helper writes, someone may have written an answer or an own entry inside it. Any other
-  // comment, except the lint comments, that holds a line of the worksheet is reported too: a
-  // plain remark is allowed, a commented-out answer or entry is not lost without a word.
+  // dropped. The first comment over several lines is the helper's guidance; where it differs from
+  // what the helper writes, each line of it that the helper does not print is noted in the layout
+  // (or its first line, when lines are only missing), since someone may have written an answer or
+  // an own entry inside it. Any other comment, except the lint comments, that holds a line of the
+  // worksheet is reported: a plain remark is allowed, a commented-out answer or entry is not lost
+  // without a word.
   const closeComment = (lines) => {
     const last = lines.at(-1);
     const end = last.text.indexOf('-->', lines.length === 1 ? 4 : 0);
     if (last.text.slice(end + 3).trim()) report(last.at, 'text after the end of a comment ("-->") is not read', block);
     if (lines.length > 1 && !guidanceChecked) {
       guidanceChecked = true;
-      const differs = lines.findIndex((line, i) => line.text !== guidance[i]);
-      if (differs >= 0) {
-        report(lines[differs].at, 'this comment differs from the helper\'s guidance, and nothing inside a comment is read: ' +
-          (section === 'own' ? 'copy the entry below the comment' : 'write answers below the comment, after Answer:'));
+      layout.guidance = { from: lines[0].at, to: last.at };
+      if (lines.length !== guidance.length || lines.some((line, i) => line.text !== guidance[i])) {
+        const foreign = lines.filter((line) => !guidance.includes(line.text)).map((line) => line.at);
+        layout.wording.push(...(foreign.length ? foreign : [lines[0].at]));
       }
       return;
     }
@@ -1068,6 +1094,7 @@ export function parseWorksheet(text, data) {
       } else {
         block = open('question', id, at, { prompt: known.prompt });
         seen.question.set(id, block);
+        layout.prompts.set(id, { at: [], foreign: [], now: known.prompt });
         if (after.length) {
           report(at, `text after ${id} on its heading is not read: "${after.join(' ')}". Put any answer after Answer:`, block);
         }
@@ -1079,10 +1106,13 @@ export function parseWorksheet(text, data) {
     }
     if (line.startsWith('>')) {
       if (block?.kind === 'question') {
-        // Only a changed or added line is a problem: someone may have typed an answer on it.
-        // A deleted question line loses nothing.
+        // Only a changed or added line is noted: someone may have typed an answer on it. A deleted
+        // question line loses nothing.
+        const prompt = layout.prompts.get(block.id);
+        prompt.at.push(at);
         if (!block.prompt.includes(line.replace(/^>[ \t]?/, ''))) {
-          report(at, 'this line starting > is not what the pack asks, and lines starting > are not read: put any answer after Answer:', block);
+          prompt.foreign.push(at);
+          layout.wording.push(at);
         }
       } else if (block?.kind !== 'set-aside') {
         report(at, 'a line starting > outside a question is not read', block);
@@ -1237,6 +1267,93 @@ export function parseWorksheet(text, data) {
   return finish();
 }
 
+// What the strict parser says, once for the whole worksheet, of wording that is not this helper's.
+const wordingProblem = (lines) => `this worksheet was made by a different version of the overlay: ${counted(lines.length, 'line', 'lines')} ` +
+  `of its guidance or question wording ${isAre(lines.length)} not what this version prints, the first at line ${Math.min(...lines)}. ` +
+  'Nothing typed on such lines is read. Run upgrade-worksheet --file on this worksheet: it shows each line it would replace and ' +
+  'writes nothing, and with --write it brings the worksheet up to date, keeping a copy of it as it is. Anything a person typed on ' +
+  'those lines cannot be told from old wording, so read what it shows before writing. An answer belongs after Answer:, and an own ' +
+  'entry below the opening comment.';
+
+// Reads a worksheet strictly: readWorksheet's `parsed`, with one more problem when any of the tool's own
+// wording in it is not what this helper prints. A worksheet with a problem counts nowhere, so no answer
+// of one made by another version is used until it has been brought up to date.
+// `strictWorksheet` gives, beside it, how many such lines there are.
+function strictWorksheet(text, data) {
+  const { parsed, layout } = readWorksheet(text, data);
+  if (layout.wording.length) {
+    parsed.problems.push({ line: Math.min(...layout.wording), message: wordingProblem(layout.wording) });
+    parsed.problems.sort((a, b) => a.line - b.line);
+  }
+  return { parsed, otherVersion: layout.wording.length };
+}
+export const parseWorksheet = (text, data) => strictWorksheet(text, data).parsed;
+
+// What a person typed in a worksheet, as readWorksheet read it, without the line numbers it was read
+// from: two worksheets that give the same text here say the same.
+const typedIn = (parsed) => JSON.stringify([[...parsed.methods], [...parsed.answers], [...parsed.entries]],
+  (name, value) => (name === 'line' ? undefined : value instanceof Map ? [...value] : value));
+
+// Brings a worksheet made by a different version of the overlay up to date, for the same data: the
+// guidance comment and the > lines above each question, where they are not what this helper prints,
+// are replaced by what it prints, and no other line is touched, so everything a person typed stays
+// exactly as it is. Returns { exit: 0, text, changes }, `changes` empty when there is nothing to do,
+// each a { what, from, to, out, put }: the place, its first and last line numbers, the lines taken out
+// as { line, text } and the lines put in; or { exit: 1, messages } when it will not, which is for:
+// - a worksheet for other data (a new edition of the pack is another job), or one that is not a
+//   worksheet this helper reads;
+// - any problem besides the wording, an identifier the data does not have among them: those are put
+//   right first, so that nothing a person typed is in a place this cannot carry;
+// - a result that would not read the same: the new text is read back, and must have no problem and
+//   hold every answer, state, name, date and entry as before (typedIn).
+// A line a person typed inside the guidance or on a > line cannot be told from old wording, so it is
+// taken out with the rest: `changes` lists every line taken out, for a person to read before writing.
+export function upgradeWorksheet(text, data) {
+  const leave = 'Nothing has been changed.';
+  const { parsed, layout } = readWorksheet(text, data);
+  if (parsed.data !== null && parsed.data !== DATA_ID) {
+    return { exit: 1, messages: [`this worksheet answers data ${parsed.data}, not this helper's data ${DATA_ID}: a new edition of ` +
+      `the pack is another job, which this command does not do. ${leave}`] };
+  }
+  if (parsed.problems.length) {
+    const n = parsed.problems.length;
+    const listed = parsed.problems.map(({ line, message }) => `  line ${line}: ${message}`);
+    const first = parsed.section === null ? 'this is not a worksheet this helper can bring up to date:'
+      : `the worksheet has ${counted(n, 'problem', 'problems')} besides its wording, which ${isAre(n)} put right first:`;
+    return { exit: 1, messages: [first, ...listed, leave] };
+  }
+  const bom = String(text).startsWith('\uFEFF') ? '\uFEFF' : '';
+  const pieces = String(text).slice(bom.length).split(/(\r\n|\n|\r)/);
+  const ending = (index) => pieces[2 * index + 1] ?? pieces[1] ?? '\n';
+  const gone = new Set();
+  const put = new Map();
+  const changes = [];
+  const replace = (what, at, now) => {
+    const old = at.map((line) => ({ line, text: layout.lines[line - 1].trimEnd() }));
+    for (const { line } of old) gone.add(line - 1);
+    put.set(at[0] - 1, now);
+    changes.push({ what, from: at[0], to: at.at(-1), out: old.filter(({ text: was }) => !now.includes(was)),
+      put: now.filter((line) => !old.some(({ text: was }) => was === line)) });
+  };
+  const { guidance } = layout;
+  const now = ['<!--', ...guidanceFor(parsed.section, data), '-->'];
+  if (guidance && layout.lines.slice(guidance.from - 1, guidance.to).map((line) => line.trimEnd()).join('\n') !== now.join('\n')) {
+    replace('The guidance comment', Array.from({ length: guidance.to - guidance.from + 1 }, (_, i) => guidance.from + i), now);
+  }
+  for (const [id, prompt] of layout.prompts) {
+    if (prompt.foreign.length) replace(id, prompt.at, prompt.now.map((line) => (line === '' ? '>' : `> ${line}`)));
+  }
+  if (!changes.length) return { exit: 0, text: String(text), changes };
+  const upgraded = bom + layout.lines.flatMap((line, i) => [
+    ...(put.get(i) ?? []).map((added) => added + ending(i)), ...(gone.has(i) ? [] : [line + (pieces[2 * i + 1] ?? '')])]).join('');
+  const after = readWorksheet(upgraded, data);
+  if (after.parsed.problems.length || after.layout.wording.length || typedIn(after.parsed) !== typedIn(parsed)) {
+    return { exit: 1, messages: ['brought up to date, the worksheet would not read the same as it does now, so it is not ' +
+      `written: ${after.parsed.problems[0]?.message ?? 'an answer, state, name, date or entry would differ'}. ${leave}`] };
+  }
+  return { exit: 0, text: upgraded, changes: changes.sort((a, b) => a.from - b.from) };
+}
+
 // A parsed worksheet as JSON: each Map becomes an object in the same order.
 export const worksheetJson = (parsed) =>
   JSON.stringify(parsed, (_, value) => (value instanceof Map ? Object.fromEntries(value) : value), 2);
@@ -1322,10 +1439,11 @@ const coverageChunks = (profile) => {
   const nation = profile?.answers.get(NATION_QUESTION);
   return nation?.answered && !COVERED_NATIONS.includes(nation.value) ? [[OUTSIDE_COVERAGE]] : [];
 };
-const NAME_QUESTION = PROFILE_QUESTIONS[0].id;
-const NATION_QUESTION = PROFILE_QUESTIONS.find((q) => q.type === 'nation').id;
+const NAME_QUESTION = profileQuestion('business-name').id;
+const NATION_QUESTION = profileQuestion('nation').id;
 // The profile's last questions ask about the special processes and foods, in EXTRA_CARE's order.
-const EXTRA_CARE_ASKED = PROFILE_QUESTIONS.slice(-EXTRA_CARE_NAMES.length).map((q, i) => ({ id: q.id, name: EXTRA_CARE_NAMES[i] }));
+const EXTRA_CARE_ASKED = [...EXTRA_CARE.processes.map((name) => [`process:${name}`, name]), ...EXTRA_CARE.foods.map((name) => [`food:${name}`, name])]
+  .map(([key, name]) => ({ id: profileQuestion(key).id, name }));
 // The text box that names them; its first paragraph says what a business that does them must do.
 export const EXTRA_CARE_BOX = { method: 'CK-02', page: 53 };
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
@@ -1652,7 +1770,9 @@ function readWorksheets(project, data, sections = SHEET_ORDER) {
       sheets.set(section, { ...sheet, readError: `cannot read ${file}: ${error.message}` });
       continue;
     }
-    sheet.parsed = parseWorksheet(sheet.text, data);
+    // `otherVersion`: how many lines of the tool's own wording are not this helper's, so that the
+    // worksheet is another version's.
+    Object.assign(sheet, strictWorksheet(sheet.text, data));
     sheet.problems = sheet.parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`);
     sheet.wrongData = sheet.parsed.data !== null && sheet.parsed.data !== DATA_ID;
     const found = sheet.parsed.section;
@@ -1959,6 +2079,59 @@ function stampedBlock(lines, body) {
   return { from, to, kept: new Set(rows.flatMap((row, i) => (BUILD_TOPIC.test(row) ? [from + PROVENANCE_OPENS.length + i] : []))) };
 }
 
+// The lines of a document outside its markers that are not its ordinary frame, each as { line, text }.
+// check compares nothing outside the markers with anything, and a sign-off covers the whole file, so
+// these are the lines a person signing must be shown: sign-off refuses a document that holds any until
+// it is told they have been read. The frame is what a template gives and a command fills in:
+// - blank lines, horizontal rules, and comments, on one line or over several (a comment line with
+//   words after its end is not one: a reader sees those words);
+// - above the body, each once: the title (the first level-one heading), the template line under it,
+//   and the Document Control and Revision History headings, each with the table that follows it;
+// - below the body, once each: the footer's five labelled lines;
+// - the one Build Provenance block core's hook wrote (stampedBlock).
+// Everything else is other text: a section of the business's own, a note, a second table, a quotation.
+// A custom template that adds sections therefore has other text, and is signed once it has been shown.
+// What a frame line says is not judged here: a table's cells and a footer's values are the header
+// checks' business (headerClaim) or nobody's.
+const FOOTER_LABELS = ['Generated by', 'Generated on', 'ArcKit Version', 'Project', 'Model'];
+const FRAME_ABOVE = [['title', /^# \S/], ['template', /^> \*\*Template Origin\*\*: /],
+  ['control', /^ {0,3}#{1,6}\s+Document\s+Control[\s#]*$/i], ['history', REVISION_HEADING]];
+const RULE_LINE = /^ {0,3}([-*_])(?:[ \t]*\1){2,}[ \t]*$/;
+function otherText(lines, body) {
+  const stamp = stampedBlock(lines, body);
+  const once = new Set();
+  const first = (name) => !once.has(name) && Boolean(once.add(name));
+  const other = [];
+  let comment = false; // inside a comment that runs over several lines
+  let table = null; // 'awaited' after one of the two headings, 'open' while its rows run
+  lines.forEach((raw, i) => {
+    if (i >= body.begin - 1 && i < body.end) return;
+    const line = raw.replace(/[ \t]+$/, '');
+    const above = i < body.begin - 1;
+    let framed;
+    if (comment || line.trim().startsWith('<!--')) {
+      const end = line.indexOf('-->', comment ? 0 : line.indexOf('<!--') + 4);
+      framed = end < 0 || line.slice(end + 3).trim() === '';
+      comment = end < 0;
+    } else if (line === '' || (stamp && i >= stamp.from && i <= stamp.to)) framed = true;
+    else if (table && line.trim().startsWith('|')) {
+      table = 'open';
+      framed = true;
+    } else {
+      table = null;
+      const named = above ? FRAME_ABOVE.find(([, form]) => form.test(line)) : null;
+      const label = above ? null : FOOTER_LABELS.find((name) => line.startsWith(`**${name}**: `));
+      if (named) {
+        framed = first(named[0]);
+        if (framed && (named[0] === 'control' || named[0] === 'history')) table = 'awaited';
+      } else framed = RULE_LINE.test(line) || Boolean(label && first(label));
+    }
+    if (table === 'open' && !line.trim().startsWith('|')) table = null;
+    if (!framed) other.push({ line: i + 1, text: line });
+  });
+  return other;
+}
+
 // The hash of a document's text outside its markers, as a sign-off binds it: every line above the BEGIN
 // marker and below the END marker, less only what changes after a sign-off without changing what the
 // person signed. That is what the sign-off command itself writes and what core's hook stamps, and
@@ -2127,17 +2300,19 @@ function lapsedClaim(doc, name, header, hashes, records) {
   if (!first) return null;
   const says = first.field ? `${first.field} is "${first.value}"` : `version ${version} was approved ("${first.value}")`;
   const signed = `${mine.name} signed it off on ${mine.date}`;
+  // Neither is put right by a new version: what the file prints is what would be printed now. A named
+  // person signs it again as it reads, which sign-off allows for this fault alone (collectStatus).
   if (mine.body === hashes.body) {
-    const next = 'take that change out again, or write the document again with its command, which makes a new version to sign off';
+    const next = 'take that change out again, or have a named person sign the document off again as it now reads';
     return { line: first.line, message: `this line says ${says}, but the file was changed outside its UK-FOOD markers after ` +
       `${signed}, so that sign-off no longer covers it. ${sentence(next)}.`,
     reason: `says in its header, at line ${first.line}, that it is signed off, but the file was changed outside its UK-FOOD ` +
       `markers after ${signed}: ${next}` };
   }
+  const next = 'have a named person sign it off again';
   return { line: first.line, message: `this line says ${says}, but the document has been written again since ${signed}, so that ` +
-    `sign-off does not cover what it says now. ${sentence(PUT_BACK)}, and have it signed off again.`,
-  reason: `says in its header, at line ${first.line}, that it is signed off, but it has been written again since ${signed}: ` +
-    `${PUT_BACK}, and have it signed off again` };
+    `sign-off does not cover what it says now. ${sentence(next)}.`,
+  reason: `says in its header, at line ${first.line}, that it is signed off, but it has been written again since ${signed}: ${next}` };
 }
 
 // Where two lines first differ: the column, counted in characters from 1, and each line's character
@@ -2166,12 +2341,15 @@ const BEFORE_RENDER = ['unreadable', 'markers', 'pack-text', 'header'];
 //   A body that is not the one its own marker's hash names was changed by hand; one that is, and
 //   differs from a fresh render, is out of date, because its worksheets have changed since it was rendered;
 // - `not-as-signed`: a header that says it is signed off is true of the file as it now is (lapsedClaim).
-// Returns { exit, ok, kind, hashes, unwritten, unfinished, line, column, expected, found, expectedChar,
-// foundChar, message, reason }, or { exit, messages } when there is nothing to compare. `reason`, on a
-// failure, is the fault as one clause that follows "document <file>" and ends with the next step: status
-// and sign-off give it as it is. `hashes` are the file's own (documentHashes), `unwritten` the cells
-// sign-off rewrites that hold something else (unwrittenCells) and `unfinished` whether its body shows
-// something not yet answered (showsUnfinished), whenever its markers were found. `signOffs` is what
+// Returns { exit, ok, kind, hashes, unwritten, unfinished, otherText, bodyInStep, line, column, expected,
+// found, expectedChar, foundChar, message, reason }, or { exit, messages } when there is nothing to
+// compare. `reason`, on a failure, is the fault as one clause that follows "document <file>" and ends
+// with the next step: status and sign-off give it as it is. Whenever the markers were found: `hashes`
+// are the file's own (documentHashes), `unwritten` the cells sign-off rewrites that hold something else
+// (unwrittenCells), `unfinished` whether its body shows something not yet answered (showsUnfinished),
+// `otherText` the lines outside the markers that are not its frame (otherText), and `bodyInStep`
+// whether the body equals a fresh render, whatever else is wrong with the file: true or false, or null
+// when no fresh render could be made. A fault outside the body leaves it true. `signOffs` is what
 // readSignOffs returns, read here unless given. Text outside the markers is not compared with anything:
 // until a document is signed off it is held only to the three checks above, and a sign-off then binds it.
 export function checkDocument(doc, project, report, data, signOffs = readSignOffs(project)) {
@@ -2193,28 +2371,32 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
   const inner = lines.slice(body.begin, body.end - 1);
   const written = writtenCells(doc, basename(report), header, signOffs.records ?? []);
   const hashes = { body: bodyHash(inner), outside: outsideHash(lines, body, header, written) };
-  const facts = { hashes, unwritten: unwrittenCells(header, written), unfinished: showsUnfinished(doc, inner) };
+  const facts = { hashes, unwritten: unwrittenCells(header, written), unfinished: showsUnfinished(doc, inner),
+    otherText: otherText(lines, body), bodyInStep: null };
   const failed = (kind, line, message, reason, more = {}) =>
     ({ exit: 1, ok: false, kind, ...facts, line, ...more, message: `${report}:${line}: ${message}`, reason });
+  // The body is compared first, though a fault outside it is told first: whether the body is in step is a
+  // fact of its own, which says whether a signed document needs a new version (only when it is not).
+  // Each body is read as its hash reads it, between its marker line and the END marker.
+  const fresh = renderDocument(doc, project, data);
+  const read = (between) => normalised(between.join('\n')).split('\n').slice(0, -1);
+  const printed = fresh.exit ? [] : fresh.text.split('\n');
+  const expected = fresh.exit ? [] : [printed[0], ...read(printed.slice(1, -1)), END_MARKER];
+  const region = [lines[body.begin - 1].replace(/[ \t]+$/, ''), ...read(inner), END_MARKER];
+  let index = expected.findIndex((line, i) => region[i] !== line);
+  if (!fresh.exit) facts.bodyInStep = index < 0 && region.length === expected.length;
   const outside = packHeadingOutside(lines, body, data);
   if (outside >= 0) {
     return failed('pack-text', outside + 1, 'this heading is the pack\'s text, outside the UK-FOOD markers, where it is not ' +
-      'checked: write the document again from a fresh render, with the pack\'s text only between the markers.',
-    `holds the pack's text outside its UK-FOOD markers, at line ${outside + 1}, where it is not checked: write the ` +
-      'document again from its worksheet, with the pack\'s text only between the markers');
+      'checked: take it out, so that the pack\'s text stands only between the markers.',
+    `holds the pack's text outside its UK-FOOD markers, at line ${outside + 1}, where it is not checked: take that heading ` +
+      'out, so that the pack\'s text stands only between the markers');
   }
   if (signOffs.error) return { exit: 2, ...facts, messages: [signOffs.error] };
   const claim = headerClaim(doc, basename(report), header, signOffs.records, facts.unfinished);
   if (claim) return failed('header', claim.line, claim.message, claim.reason);
-  const fresh = renderDocument(doc, project, data);
   if (fresh.exit) return { ...fresh, ...facts };
-  // Each body as its hash reads it, between its marker line and the END marker.
-  const read = (between) => normalised(between.join('\n')).split('\n').slice(0, -1);
-  const printed = fresh.text.split('\n');
-  const expected = [printed[0], ...read(printed.slice(1, -1)), END_MARKER];
-  const region = [lines[body.begin - 1].replace(/[ \t]+$/, ''), ...read(inner), END_MARKER];
-  let index = expected.findIndex((line, i) => region[i] !== line);
-  if (index >= 0 || region.length !== expected.length) {
+  if (!facts.bodyInStep) {
     // A body its own marker's hash names is as it was rendered: it differs because the project has
     // moved on. Any other was changed by hand, and the line named is the first that differs below the
     // marker line, which differs only because the worksheets have changed as well.
@@ -2521,6 +2703,12 @@ const notStartedLine = (section) => `worksheet ${sheetPath(section)} is not star
 const problemsLine = (section, n) => `worksheet ${sheetPath(section)} has ${counted(n, 'problem', 'problems')}, so none of ` +
   `its answers counts until ${n === 1 ? 'it is' : 'they are'} fixed: parse-worksheet --file ${sheetPath(section)} lists ` +
   `${n === 1 ? 'it' : 'them'}`;
+// A worksheet whose only problem is that its wording is another version's: what to run, by its path.
+const otherWordingLine = (section, n) => `worksheet ${sheetPath(section)} was made by a different version of the overlay ` +
+  `(${counted(n, 'line', 'lines')} of its guidance or question wording ${isAre(n)} not what this version prints), so none of its ` +
+  `answers counts until it is brought up to date: upgrade-worksheet --file ${sheetPath(section)} shows each line it would ` +
+  'replace, and with --write replaces them and keeps a copy. Anything a person typed on those lines cannot be told from old ' +
+  'wording, so read what it shows first';
 // A written document that fails check: check's own first reason, with its next step.
 const checkLine = (file, check) => `document ${file} ${check.reason ?? `does not pass check: ${check.messages?.[0] ?? check.message}`}`;
 // What the unfinished list says of a document that has a sign-off record and is not signed off. Each
@@ -2657,7 +2845,11 @@ function collectStatus(project, data) {
       file: current?.file ?? null,
       version: current?.version ?? null,
       rendered: Boolean(current),
-      inSync
+      inSync,
+      // Whether the body between the markers equals a fresh print, whatever else is wrong with the file:
+      // null with no file, or when it could not be compared. A body that cannot be found is not in step.
+      bodyInStep: !current ? null : check.kind === 'markers' ? false : check.bodyInStep ?? null,
+      otherText: check?.otherText ?? []
     };
     // A worksheet that is not clean gives one line and none from its counts. A document whose worksheets
     // are missing, misplaced or have problems cannot be compared with a fresh render, but what check finds
@@ -2672,12 +2864,19 @@ function collectStatus(project, data) {
       ...fileLines,
       ...(check?.unwritten ?? []).map((cell) => cellLine(current.file, cell))
     ];
-    const lineFor = (section) => (!sheets.get(section) ? notStartedLine(section) : advice.get(section) ??
-      problemsLine(section, sheets.get(section).problems.length));
+    const lineFor = (section) => {
+      const sheet = sheets.get(section);
+      if (!sheet) return notStartedLine(section);
+      if (advice.get(section)) return advice.get(section);
+      return sheet.otherVersion && sheet.problems.length === 1 ? otherWordingLine(section, sheet.otherVersion)
+        : problemsLine(section, sheet.problems.length);
+    };
     const held = [
       ...reads.filter((section) => missing.includes(section) || wrong.includes(section) || troubled.includes(section))
         .map((section) => ({ what: lineFor(section), sheet: section })),
-      ...docLines.map((what) => ({ what, sheet: null })),
+      // A file that is no longer the one signed is put right by signing it again, so that line is
+      // told, and keeps the document from counting as signed off, but does not stop a new sign-off.
+      ...docLines.map((what) => ({ what, sheet: null, resign: check?.kind === 'not-as-signed' && what === fileLines[0] })),
       ...(code === 'FOODOWN' ? uncovered : []).map((what) => ({ what, sheet: null, after: true }))
     ];
     const record = signOffs.records.filter((entry) => entry.doc === code).at(-1) ?? null;
@@ -2833,7 +3032,9 @@ function completionRecordDocument(project, data) {
 // and free of problems, every question confirmed, its current file of the version given and in step,
 // each cell of its header that the sign-off step rewrites holding what the commands write there,
 // and, for the own methods document, an own entry for each special process the profile confirms.
-// `person` is { name, role, version, date, paperSigned }. Returns { exit: 0, record, message }, or
+// A document that holds text outside its checked part (otherText) is recorded only when `person.otherTextRead`
+// is 'yes': the person signing has been shown those lines. The refusal lists them.
+// `person` is { name, role, version, date, paperSigned, otherTextRead }. Returns { exit: 0, record, message }, or
 // { exit, messages }: 1 for a refusal, which writes nothing and gives every reason with what to do
 // next, and 2 when the project cannot be read.
 export function signOffDocument(code, project, person, data) {
@@ -2841,12 +3042,18 @@ export function signOffDocument(code, project, person, data) {
   if (collected.exit) return collected;
   const { status, hashes, blockers, signOffs } = collected;
   const doc = status.documents.find((d) => d.code === code);
-  const reasons = blockers.get(code).map(({ what }) => what);
+  const reasons = blockers.get(code).filter(({ resign }) => !resign).map(({ what }) => `- ${what}`);
   if (doc.rendered && doc.version !== person.version) {
-    reasons.push(`the current ${code} document is ${doc.file}, version ${doc.version}, not version ${person.version}: give ` +
+    reasons.push(`- the current ${code} document is ${doc.file}, version ${doc.version}, not version ${person.version}: give ` +
       `--version ${doc.version} to sign off the current document`);
   }
-  if (reasons.length) return { exit: 1, messages: [`${code} is not signed off, and nothing was written, because:`, ...reasons.map((r) => `- ${r}`)] };
+  if (doc.otherText.length && person.otherTextRead !== 'yes') {
+    const n = doc.otherText.length;
+    reasons.push(`- document ${doc.file} holds ${counted(n, 'line', 'lines')} outside its checked part that ${isAre(n)} not part of ` +
+      'its ordinary frame, and a sign-off covers the whole file: show them to the person signing, and give --other-text-read ' +
+      'yes once that person has read them and says they are theirs', ...doc.otherText.map(({ line, text }) => `  line ${line}: ${text}`));
+  }
+  if (reasons.length) return { exit: 1, messages: [`${code} is not signed off, and nothing was written, because:`, ...reasons] };
   const record = { doc: code, version: doc.version, file: doc.file, name: person.name, role: person.role, date: person.date,
     paperSigned: person.paperSigned, ...hashes.get(code) };
   const file = signOffsFile(project);
@@ -2891,6 +3098,7 @@ function statusLines(status, data, sheets, checks) {
       ...(doc.notRelevantMethods.length ? [`not relevant: ${doc.notRelevantMethods.join(', ')}`] : []),
       ...(doc.adaptedMethods.length ? [`adapted: ${doc.adaptedMethods.join(', ')}`] : []),
       doc.rendered ? `${doc.file} ${doc.inSync ? 'in step with its worksheets' : FAULT_WORDS[checks.get(doc.code)?.kind] ?? NOT_CHECKED}` : 'not written',
+      ...(doc.otherText.length ? [`${counted(doc.otherText.length, 'line', 'lines')} outside its checked part`] : []),
       doc.signedOff ? `signed off by ${doc.signOff.name}, ${doc.signOff.role}, on ${doc.signOff.date}` : 'not signed off'
     ];
     lines.push(`${doc.code} (${docName(doc.code, data)}): ${parts.join('; ')}`);
@@ -2923,7 +3131,7 @@ export function statusCommand(args, io = { out: console.log, err: console.error 
 }
 
 export function signOffCommand(args, io = { out: console.log, err: console.error }) {
-  const { options, error } = readOptions(args, ['doc', 'project', 'name', 'role', 'version', 'paper-signed', 'date', 'data']);
+  const { options, error } = readOptions(args, ['doc', 'project', 'name', 'role', 'version', 'paper-signed', 'other-text-read', 'date', 'data']);
   if (error) return usageError(io, error);
   if (options.doc === COMPLETION_RECORD) {
     return usageError(io, `${COMPLETION_RECORD}, the completion record, is not signed off: it is a report, signed through the ` +
@@ -2941,6 +3149,10 @@ export function signOffCommand(args, io = { out: console.log, err: console.error
   }
   const paperSigned = options['paper-signed'] ?? 'no';
   if (!['yes', 'no'].includes(paperSigned)) return usageError(io, '--paper-signed is yes, when a signed paper copy is kept, or no');
+  const otherTextRead = options['other-text-read'] ?? 'no';
+  if (!['yes', 'no'].includes(otherTextRead)) {
+    return usageError(io, '--other-text-read is yes, when the person signing has read the lines outside the document\'s checked part, or no');
+  }
   const today = localToday();
   const date = options.date ?? today;
   if (!isIsoDate(date)) return usageError(io, `--date is a real date written YYYY-MM-DD, not ${JSON.stringify(date)}`);
@@ -2951,7 +3163,7 @@ export function signOffCommand(args, io = { out: console.log, err: console.error
   }
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
   if (dataError) return failure(io, { exit: 2, messages: [dataError] });
-  const person = { name: options.name.trim(), role: options.role.trim(), version: options.version, date, paperSigned };
+  const person = { name: options.name.trim(), role: options.role.trim(), version: options.version, date, paperSigned, otherTextRead };
   const result = signOffDocument(options.doc, options.project, person, data);
   if (result.exit) return failure(io, result);
   io.out(result.message);
@@ -2961,12 +3173,26 @@ export function signOffCommand(args, io = { out: console.log, err: console.error
 const USAGE = `usage: uk-food.mjs <command> [options]
 
 commands:
+  set-up-folder --project DIR                        turn a project folder that has just been made
+                                                     into a food business's own: an explanation of
+                                                     the folder in place of ArcKit's architecture
+                                                     README, and no empty architecture folders;
+                                                     exit 1, changing nothing, for a folder that is
+                                                     not exactly as a new project is made
   validate-data [--data DIR]                         check the data files; exit 0 when valid, 1 when not
   worksheet --section SECTION [--data DIR]           print a blank answer worksheet; SECTION is one of
                                                      XC, CL, CH, CK, MG, profile, own
   parse-worksheet --file FILE [--data DIR] [--json]  check a worksheet: print its problems (or, with
                                                      --json, what was read); exit 0 with no problems,
                                                      1 with problems
+  upgrade-worksheet --file FILE [--data DIR] [--write]
+                                                     bring a worksheet made by a different version of
+                                                     the overlay up to date: print each line of its
+                                                     guidance and question wording that would be
+                                                     replaced, and with --write replace them, keeping
+                                                     the worksheet as it was beside it; exit 1,
+                                                     changing nothing, for a worksheet for other
+                                                     data or one with any other problem
   render --doc DOC --project DIR [--data DIR]        print a document's body, from the worksheets in
                                                      DIR/food-safety; DOC is one of FOODXC, FOODCLN,
                                                      FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN,
@@ -2985,13 +3211,15 @@ commands:
   sign-off --doc DOC --project DIR --name NAME       record that a named person has confirmed a
            --role ROLE --version VERSION             finished document, in DIR/food-safety/
            [--paper-signed yes|no] [--date DATE]     sign-offs.json; exit 1, writing nothing, when
-           [--data DIR]                              a worksheet it needs is missing or has
+           [--other-text-read yes|no] [--data DIR]   a worksheet it needs is missing or has
                                                      problems, an answer is not confirmed, it is
                                                      not written, is not that version or does not
                                                      pass check, a cell of its header that the
                                                      sign-off step rewrites holds something else,
-                                                     or (for FOODOWN) a special process the
-                                                     profile confirms has no own entry. DATE is
+                                                     it holds text outside its checked part and
+                                                     --other-text-read yes is not given, or (for
+                                                     FOODOWN) a special process the profile
+                                                     confirms has no own entry. DATE is
                                                      YYYY-MM-DD, today when not given, and never
                                                      after today. The sign-off covers the whole
                                                      file as it then reads: it ends when a line of
@@ -3082,10 +3310,187 @@ export function parseWorksheetCommand(args, io = { out: console.log, err: consol
   return parsed.problems.length ? 1 : 0;
 }
 
+// The name a worksheet is kept under before it is brought up to date: beside it, saying what it is, and
+// never one that is already there, so an earlier kept copy is not written over.
+function keptName(file) {
+  const [stem, ext] = /\.md$/i.test(file) ? [file.slice(0, -3), file.slice(-3)] : [file, ''];
+  for (let n = 1; ; n++) {
+    const name = `${stem}.before-upgrade${n === 1 ? '' : `-${n}`}${ext}`;
+    if (!existsSync(name)) return name;
+  }
+}
+
+export function upgradeWorksheetCommand(args, io = { out: console.log, err: console.error }) {
+  const { options, error } = readOptions(args, ['file', 'data'], ['write']);
+  if (error) return usageError(io, error);
+  if (!options.file) return usageError(io, 'upgrade-worksheet needs --file: the worksheet to bring up to date');
+  let bytes;
+  try {
+    bytes = readFileSync(options.file);
+  } catch (readError) {
+    return usageError(io, `cannot read ${options.file}: ${readError.message}`);
+  }
+  const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
+  if (dataError) return usageError(io, dataError);
+  const result = upgradeWorksheet(bytes.toString('utf8'), data);
+  if (result.exit) return failure(io, { exit: 1, messages: [`${options.file}: ${result.messages[0]}`, ...result.messages.slice(1)] });
+  if (!result.changes.length) {
+    io.out(`${options.file} is already what this version of the overlay prints: there is nothing to bring up to date.`);
+    return 0;
+  }
+  const kept = keptName(options.file);
+  const [out, put] = [result.changes.flatMap((change) => change.out), result.changes.flatMap((change) => change.put)];
+  const lines = [`${options.file} was made by a different version of the overlay. Bringing it up to date replaces these lines of its ` +
+    'guidance and question wording, and nothing else:'];
+  for (const change of result.changes) {
+    lines.push(`${change.what}, ${change.from === change.to ? `line ${change.from}` : `lines ${change.from} to ${change.to}`}:`,
+      ...change.out.map(({ line, text }) => `  takes out, line ${line}: ${text}`), ...change.put.map((text) => `  puts in: ${text}`));
+  }
+  lines.push(`${counted(out.length, 'line', 'lines')} taken out and ${put.length} put in. Every answer, state, name, date and entry reads ` +
+    'the same as before.');
+  if (!options.write) {
+    io.out([...lines, 'Anything a person typed on a line that is taken out is not carried over: read the lines above first.',
+      `Nothing has been written. Run it again with --write to write it; the worksheet as it is now is then kept beside it as ${basename(kept)}.`]
+      .join('\n'));
+    return 0;
+  }
+  // The old worksheet is kept first, byte for byte, under a name nothing has. The new one is written
+  // beside it, read back from the disk and compared once more, and only then moved into place.
+  const next = `${options.file}.${process.pid}.tmp`;
+  try {
+    writeFileSync(kept, bytes, { flag: 'wx' });
+    writeFileSync(next, result.text);
+    const written = upgradeWorksheet(readFileSync(next, 'utf8'), data);
+    const before = readWorksheet(bytes.toString('utf8'), data).parsed;
+    if (written.exit || written.changes.length || typedIn(readWorksheet(readFileSync(next, 'utf8'), data).parsed) !== typedIn(before)) {
+      rmSync(next, { force: true });
+      rmSync(kept, { force: true });
+      return failure(io, { exit: 1, messages: [`${options.file}: the worksheet as written would not read the same, so it is left as it was. Nothing has been changed.`] });
+    }
+    renameSync(next, options.file);
+  } catch (writeError) {
+    rmSync(next, { force: true });
+    return failure(io, { exit: 2, messages: [`cannot write ${options.file}: ${writeError.message}`] });
+  }
+  io.out([...lines, `Written. The worksheet as it was is kept as ${kept}.`].join('\n'));
+  return 0;
+}
+
+// ---------------------------------------------------------------------------------------------
+// The project folder a business gets. ArcKit's shared create-project.sh makes every project the same
+// way, for architecture work: a README that lists architecture commands, a note about external
+// documents, and folders for decisions, diagrams and the like. None of that means anything to a food
+// business, so the command that has just made a project has this helper turn the folder into the
+// business's own. The wording below is the one copy of what the business is told.
+// ---------------------------------------------------------------------------------------------
+
+// What create-project.sh leaves in a new project, and nothing else: its README, and these folders, all
+// empty but for the note in external. A test runs the real script, so a change to it shows there.
+const SCRIPT_FOLDERS = ['data-contracts', 'decisions', 'diagrams', 'external', 'final', 'reviews', 'vendors', 'wardley-maps'];
+const SCRIPT_README = /^# ([^\n]+)\n\nProject ID: (\d{3})\nCreated: \d{4}-\d{2}-\d{2}\n\n## Overview\n\n\[Project description to be added\]\n\n## Workflow\n\nUse ArcKit commands to generate project artifacts/;
+const SCRIPT_NOTE = /^# External Documents\n\nPlace external reference documents here for ArcKit commands to read as context\.\n/;
+const KEEP_PRIVATE = 'This folder holds the names of the people who work in the business. Keep it somewhere private, and if it ' +
+  'is a git repository that is pushed anywhere, keep that private too.';
+const folderReadme = (name, number) => `# ${name}: food safety records
+
+This folder holds ${name}'s food safety records. They are built with ArcKit's UK Food Safety Overlay from the Food Standards Agency's pack, Safer food, better business for caterers, and from the answers that people at the business give.
+
+## What is here
+
+- \`food-safety/\`: the worksheets. There is one for the business profile, one for each of the pack's five sections and one for the business's own methods. Each holds the answers given, who gave each one and when. \`sign-offs.json\`, in the same folder, records who has signed each document off.
+- \`ARC-${number}-FOOD...md\`, in this folder: the documents themselves, written from the worksheets. Each is a draft until a named person at the business signs it off.
+- \`external/\`: a place for documents of your own that you want the assistant to read, such as a written procedure for a special process. The note in that folder says more.
+
+## What to do next
+
+Run the overlay's commands in this order. Each can be run as often as you like, and picks up where the last run stopped.
+
+1. \`uk-food-profile\`: the business profile.
+2. \`uk-food-safe-methods\`: the pack's five sections of safe methods, one section at a time.
+3. \`uk-food-own-methods\`: your own methods, and your written procedure for any special process.
+4. \`uk-food-check\`: what is finished and what is still waiting. Run it at any time.
+5. \`uk-food-sign-off\`: a named person signs each finished document off, the profile last.
+
+In Claude Code these are typed \`/arckit-uk-food:uk-food-profile\` and so on. Other tools write the names their own way.
+
+## Keep this folder private
+
+${KEEP_PRIVATE}
+
+## What these records are
+
+They are the business's own record. They are not legal advice. The food business operator is responsible for the business's food safety and for these records, and the local council's environmental health team is the authority on whether they are adequate. The Food Standards Agency has not reviewed or endorsed the overlay or anything made with it.
+`;
+const FOLDER_NOTE = `# Documents of your own
+
+Put here any document of your own that you want the assistant to read while it helps with these records: a written procedure for a special process, for example, or a supplier's instructions for a piece of equipment.
+
+The assistant reads a document here when you point it to one. Nothing in a document is taken as the business's answer until a named person at the business confirms it, and a written procedure is recorded word for word, never rewritten.
+
+These documents may hold names and other details of the business, so keep them as private as the rest of this folder.
+`;
+
+// Turns a project folder that create-project.sh has just made into a food business's own: its README
+// and the note in external are replaced by the two texts above, and the empty folders for architecture
+// work are taken away, external kept. It changes a folder only when the folder is exactly as the script
+// leaves a new project, checked entry by entry before anything is written; a project that holds a file
+// of its own, work already started or a README someone has changed is refused, with nothing in it
+// changed (exit 1). A folder already set up is left as it is (exit 0).
+export function setUpFolderCommand(args, io = { out: console.log, err: console.error }) {
+  const { options, error } = readOptions(args, ['project']);
+  if (error) return usageError(io, error);
+  if (!options.project) return usageError(io, '--project names the project folder that has just been made');
+  const project = options.project;
+  let entries;
+  try {
+    entries = readdirSync(project, { withFileTypes: true });
+  } catch (readError) {
+    return usageError(io, `cannot read the project folder ${project}: ${readError.message}`);
+  }
+  const refuse = (why) => failure(io, { exit: 1, messages: [`${project} ${why}, so it is not a project that has just been made. Nothing in it ` +
+    'has been changed: this command only sets up a new folder, and never touches a project that already existed.'] });
+  const read = (...path) => readFileSync(join(project, ...path), 'utf8');
+  const readme = entries.some((entry) => entry.isFile() && entry.name === 'README.md') ? read('README.md') : null;
+  if (readme === null) return refuse('has no README.md');
+  const mine = /^# (.+): food safety records\n/.exec(readme);
+  const made = SCRIPT_README.exec(readme);
+  const number = /^\d{3}/.exec(basename(realpathSync(project)))?.[0] ?? made?.[2] ?? '';
+  if (mine && readme === folderReadme(mine[1], number)) {
+    io.out(`${project} is already set up: nothing has been changed.`);
+    return 0;
+  }
+  if (!made) return refuse('holds a README.md that is not the one a new project is given');
+  const kept = [];
+  for (const entry of entries) {
+    if (entry.name === 'README.md' && entry.isFile()) continue;
+    if (!entry.isDirectory() || !SCRIPT_FOLDERS.includes(entry.name)) return refuse(`holds ${entry.name}, which a new project does not`);
+    const inside = readdirSync(join(project, entry.name));
+    if (entry.name !== 'external' && inside.length) return refuse(`holds a folder, ${entry.name}, that is not empty`);
+    const other = inside.find((name) => name !== 'README.md');
+    if (other) return refuse(`holds, in ${entry.name}, ${other}, which a new project does not`);
+    if (inside.length && !SCRIPT_NOTE.test(read('external', 'README.md'))) return refuse('holds, in external, a README.md that is not the one a new project is given');
+    if (entry.name !== 'external') kept.push(entry.name);
+  }
+  try {
+    writeFileSync(join(project, 'README.md'), folderReadme(made[1], number));
+    if (entries.some((entry) => entry.name === 'external')) writeFileSync(join(project, 'external', 'README.md'), FOLDER_NOTE);
+    for (const name of kept) rmdirSync(join(project, name));
+  } catch (writeError) {
+    return failure(io, { exit: 2, messages: [`cannot set up ${project}: ${writeError.message}`] });
+  }
+  io.out([`${project} is now set up as ${made[1]}'s food safety records.`,
+    '- README.md says what the folder is, where the worksheets and documents are, which command to run next, and to keep the folder private.',
+    '- external/README.md says what that folder is for: documents of the business\'s own for the assistant to read.',
+    ...(kept.length ? [`- The empty folders for ArcKit's architecture work were taken away: ${andList(kept)}.`] : [])].join('\n'));
+  return 0;
+}
+
 export const COMMANDS = {
+  'set-up-folder': setUpFolderCommand,
   'validate-data': validateDataCommand,
   worksheet: worksheetCommand,
   'parse-worksheet': parseWorksheetCommand,
+  'upgrade-worksheet': upgradeWorksheetCommand,
   render: renderCommand,
   check: checkCommand,
   reference: referenceCommand,

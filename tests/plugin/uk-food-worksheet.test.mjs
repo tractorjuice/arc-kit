@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
   DATA_ID, DEFAULT_DATA_DIR, EXTRA_CARE, PROFILE_QUESTIONS, SECTION_IDS, WORKSHEET_SECTIONS,
-  blankWorksheet, emitWorksheet, loadData, parseWorksheet
+  blankWorksheet, emitWorksheet, loadData, parseWorksheet, upgradeWorksheet
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
 const helper = 'plugins/arckit-uk-food/scripts/uk-food.mjs';
@@ -562,7 +562,9 @@ test('an answer typed onto a question line is reported, not dropped', () => {
   const parsed = parse(text);
   assert.equal(parsed.problems.length, 1);
   assert.equal(parsed.problems[0].line, lineOf(text, '(yes / no) yes'));
-  assert.match(parsed.problems[0].message, /Answer:/);
+  // H3: the line is the tool's own, so what is typed there cannot be told from another version's wording.
+  assert.match(parsed.problems[0].message, upgradeProblem);
+  assert.match(parsed.problems[0].message, /An answer belongs after Answer:/);
   // Deleting a question line loses nothing, so it is not a problem.
   assert.deepEqual(parse(blankWorksheet('CK', data).replace('> Do you hot hold?  (yes / no)\n', '')).problems, []);
 });
@@ -668,12 +670,17 @@ test('an own entry filled in inside the commented template is reported, not drop
   assert.equal(parsed.entries.size, 0);
   assert.equal(parsed.problems.length, 1);
   assert.equal(parsed.problems[0].line, lineOf(text, 'Kind: additional'));
-  assert.match(parsed.problems[0].message, /nothing inside a comment is read: copy the entry below the comment/);
+  // H3: one problem for the worksheet, which says what to run; the dry run shows both lines the person typed.
+  assert.match(parsed.problems[0].message, upgradeProblem);
+  assert.match(parsed.problems[0].message, /: 2 lines of its guidance or question wording are not what this version prints/);
+  assert.match(parsed.problems[0].message, /an own entry below the opening comment\.$/);
+  const typedInside = upgradeWorksheet(text, data);
+  assert.deepEqual(typedInside.changes.flatMap((change) => change.out.map((line) => line.text)), ['Kind: additional', 'State: confirmed']);
   // The same check guards each worksheet's guidance; a comment of a person's own elsewhere is not read and not a problem.
   const noted = blankWorksheet('CK', data).replace('Proved-safe:\n', 'Proved-safe:\n<!-- Sam to check -->\n<!--\nAnd this.\n-->\n');
   assert.deepEqual(parse(noted).problems, []);
   const changed = blankWorksheet('CK', data).replace('How to fill this in.', 'Answer: yes. How to fill this in.');
-  assert.match(messages(parse(changed)), /nothing inside a comment is read/);
+  assert.match(messages(parse(changed)), upgradeProblem);
 });
 
 test('any other comment holding a worksheet line, such as a filled own entry in a comment of its own, is reported', () => {
@@ -983,7 +990,8 @@ test('I4: the guidance says only what the commands and the parser do: nothing is
   assert.match(promptOf(blankWorksheet('CK', data), 'CK-02-Q03').at(-1), / {2}\(write your answer\)$/);
   // What the guidance says of a > line is what the parser does.
   const changed = blankWorksheet('CK', data).replace(/^(> .*\(yes \/ no\))$/m, '$1 yes');
-  assert.match(messages(parse(changed)), /this line starting > is not what the pack asks/);
+  assert.match(messages(parse(changed)), upgradeProblem);
+  assert.equal(parse(changed).problems.length, 1);
   const own = oneLine(guidanceOf(blankWorksheet('own', data)));
   assert.ok(own.includes('unanswered (it may hold what has been given so far; By and On stay empty)'));
   assert.ok(own.includes('Only a confirmed entry goes into your documents: any other is named there as not yet confirmed.'));
@@ -1005,7 +1013,7 @@ test('M1: every worksheet\'s guidance says where the pack\'s words in it come fr
   const text = blankWorksheet('CK', other);
   assert.ok(text.includes('Food Standards Agency\'s Another pack, retrieved 2 January 2026.'));
   assert.deepEqual(parseWorksheet(text, other).problems, []);
-  assert.match(parseWorksheet(text, data).problems.map((p) => p.message).join('\n'), /differs from the helper's guidance/);
+  assert.match(parseWorksheet(text, data).problems.map((p) => p.message).join('\n'), upgradeProblem);
 });
 
 test('a status field that the method\'s status does not use is reported, not dropped', () => {
@@ -1586,6 +1594,199 @@ test('G7: each character the list names is refused in an answer, a name, a writt
   const named = parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', 'Answer: A bain-marie', 'State: confirmed', `By: ${maryam}`, 'On: 2026-11-17', 'Source:'));
   assert.deepEqual(named.problems, []);
   assert.equal(named.answers.get('CK-06-Q02').by, maryam);
+});
+
+// ---- A worksheet made by another version of the overlay (ruling H3) ----
+
+// A worksheet as an earlier version might have printed it: one sentence of its guidance and the wording
+// of two of its questions differ from what this helper prints. Everything a person typed is the same.
+// The own worksheet asks nothing, so only its guidance differs.
+const asOlder = (text) => {
+  const lines = text.split('\n');
+  const opens = lines.indexOf('<!--');
+  assert.ok(opens >= 0 && lines[opens + 1].length > 20);
+  lines[opens + 1] = `${lines[opens + 1]} (as an older version said it)`;
+  let changed = 0;
+  for (let i = 0; i < lines.length && changed < 2; i++) {
+    if (lines[i].startsWith('> ') && /\)$/.test(lines[i]) && lines[i - 1] !== undefined) {
+      lines[i] = lines[i].replace(/\(([^()]*)\)$/, '[$1]');
+      changed++;
+      i += 40;
+    }
+  }
+  return { text: lines.join('\n'), prompts: changed };
+};
+const upgradeProblem = /^this worksheet was made by a different version of the overlay: (\d+) (?:line|lines) of its guidance or question wording (?:is|are) not what this version prints, the first at line (\d+)\. Nothing typed on such lines is read\. Run upgrade-worksheet --file on this worksheet: it shows each line it would replace and writes nothing, and with --write it brings the worksheet up to date, keeping a copy of it as it is\. Anything a person typed on those lines cannot be told from old wording, so read what it shows before writing\. An answer belongs after Answer:, and an own entry below the opening comment\.$/;
+const sheetIn = (section, text) => {
+  const dir = mkdtempSync(join(tmpdir(), 'uk-food-upgrade-'));
+  const file = join(dir, `answers-${section}.md`);
+  writeFileSync(file, text);
+  return { dir, file };
+};
+// What a person typed, as the parser reads it, without the line numbers it was read from.
+const typed = (parsed) => JSON.parse(JSON.stringify({ methods: [...parsed.methods], answers: [...parsed.answers], entries: [...parsed.entries] },
+  (name, value) => (name === 'line' ? undefined : value instanceof Map ? [...value] : value)));
+
+test('H3: wording that is another version\'s gives one problem for the whole worksheet, which names upgrade-worksheet, whichever worksheet it is', () => {
+  for (const section of WORKSHEET_SECTIONS) {
+    const original = fixture(section);
+    assert.deepEqual(parse(original).problems, [], section);
+    const older = asOlder(original);
+    assert.equal(older.prompts, section === 'own' ? 0 : 2, section);
+    const parsed = parse(older.text);
+    assert.equal(parsed.problems.length, 1, `${section}: ${messages(parsed)}`);
+    const found = upgradeProblem.exec(parsed.problems[0].message);
+    assert.ok(found, parsed.problems[0].message);
+    assert.equal(Number(found[1]), 1 + older.prompts, section);
+    assert.equal(parsed.problems[0].line, older.text.split('\n').indexOf('<!--') + 2, section);
+    assert.equal(Number(found[2]), parsed.problems[0].line, section);
+    // Everything a person typed is still read, as it was.
+    assert.deepEqual(typed(parsed), typed(parse(original)), section);
+  }
+  // One changed line is one line, said in the singular.
+  const one = parse(blankWorksheet('CK', data).replace(/^(> .*\(yes \/ no\))$/m, '$1 yes'));
+  assert.equal(one.problems.length, 1);
+  assert.match(one.problems[0].message, /: 1 line of its guidance or question wording is not what this version prints/);
+  // A problem of another kind is still told on its own line, beside the one about wording.
+  const both = parse(`${asOlder(fixture('CK')).text}a stray line\n`);
+  assert.equal(both.problems.length, 2);
+  assert.match(both.problems[1].message, /line not understood/);
+});
+
+test('H3: upgrade-worksheet shows each line it would replace and writes nothing; with --write it brings the worksheet up to date, keeps the old one, and every answer reads the same', () => {
+  for (const section of WORKSHEET_SECTIONS) {
+    const original = fixture(section);
+    const older = asOlder(original);
+    const { dir, file } = sheetIn(section, older.text);
+    const kept = join(dir, `answers-${section}.before-upgrade.md`);
+    // The dry run: every line that would be taken out and put in, and nothing written.
+    const dry = run('upgrade-worksheet', '--file', file);
+    assert.equal(dry.status, 0, dry.stderr);
+    assert.equal(readFileSync(file, 'utf8'), older.text, section);
+    assert.deepEqual(readdirSync(dir), [`answers-${section}.md`], section);
+    const guidanceLine = older.text.split('\n').indexOf('<!--') + 2;
+    assert.ok(dry.stdout.includes(`  takes out, line ${guidanceLine}: ${older.text.split('\n')[guidanceLine - 1]}\n`), dry.stdout);
+    assert.ok(dry.stdout.includes(`  puts in: ${original.split('\n')[guidanceLine - 1]}\n`), dry.stdout);
+    assert.equal(dry.stdout.split('\n').filter((line) => line.startsWith('  takes out, line ')).length, 1 + older.prompts, dry.stdout);
+    assert.equal(dry.stdout.split('\n').filter((line) => line.startsWith('  puts in: ')).length, 1 + older.prompts, dry.stdout);
+    assert.match(dry.stdout, /Nothing has been written\. Run it again with --write to write it/);
+    assert.match(dry.stdout, /Anything a person typed on a line that is taken out is not carried over/);
+    assert.ok(dry.stdout.includes(`answers-${section}.before-upgrade.md`), dry.stdout);
+    // Written: the worksheet is what this version prints, with every answer as it was; the old one is kept.
+    const written = run('upgrade-worksheet', '--file', file, '--write');
+    assert.equal(written.status, 0, written.stderr);
+    assert.equal(readFileSync(file, 'utf8'), original, `${section}: only the tool's own lines differed, so the upgrade gives the fixture back`);
+    assert.equal(readFileSync(kept, 'utf8'), older.text, section);
+    assert.deepEqual(parse(readFileSync(file, 'utf8')).problems, [], section);
+    assert.deepEqual(typed(parse(readFileSync(file, 'utf8'))), typed(parse(older.text)), section);
+    assert.match(written.stdout, /Every answer, state, name, date and entry reads the same as before/);
+    assert.ok(written.stdout.includes(kept), written.stdout);
+    // Nothing more to do: said so, and nothing written or kept again.
+    const again = run('upgrade-worksheet', '--file', file, '--write');
+    assert.equal(again.status, 0, again.stderr);
+    assert.match(again.stdout, /is already what this version of the overlay prints: there is nothing to bring up to date/);
+    assert.deepEqual(readdirSync(dir).sort(), [`answers-${section}.before-upgrade.md`, `answers-${section}.md`], section);
+  }
+});
+
+test('H3: the upgrade changes nothing but the tool\'s own lines: a remark, odd spacing, Windows line endings and a byte order mark are kept as they are', () => {
+  const original = fixture('CK').replace('### CK-02-Q01', '<!-- ask Sam about the eggs -->\n\n### CK-02-Q01').replace('State: confirmed', 'state :  confirmed');
+  assert.deepEqual(parse(original).problems, []);
+  const older = asOlder(original).text;
+  const bom = String.fromCodePoint(0xfeff);
+  for (const [what, before, after] of [['as it is', older, original],
+    ['with Windows line endings and a byte order mark', `${bom}${older.replace(/\n/g, '\r\n')}`, `${bom}${original.replace(/\n/g, '\r\n')}`]]) {
+    const { file } = sheetIn('CK', before);
+    assert.equal(run('upgrade-worksheet', '--file', file, '--write').status, 0, what);
+    assert.equal(readFileSync(file, 'utf8'), after, what);
+  }
+});
+
+test('H3: a line a person typed inside the guidance, or on a line starting >, is shown in the dry run as a line that would be taken out', () => {
+  const lines = fixture('own').split('\n');
+  const closes = lines.indexOf('-->');
+  lines.splice(closes, 0, 'We also chill our rice in an ice bath.');
+  const { file } = sheetIn('own', lines.join('\n'));
+  const dry = run('upgrade-worksheet', '--file', file);
+  assert.equal(dry.status, 0, dry.stderr);
+  assert.ok(dry.stdout.includes(`  takes out, line ${closes + 1}: We also chill our rice in an ice bath.\n`), dry.stdout);
+  assert.equal(dry.stdout.split('\n').filter((line) => line.startsWith('  puts in: ')).length, 0);
+  assert.equal(readFileSync(file, 'utf8'), lines.join('\n'));
+  // An answer typed on a line starting >: shown too, with the question it stands under.
+  const answered = blankWorksheet('CK', data).replace(/^(> .*\(yes \/ no\))$/m, '$1 yes, every day');
+  const ck = sheetIn('CK', answered);
+  const shown = run('upgrade-worksheet', '--file', ck.file);
+  assert.equal(shown.status, 0, shown.stderr);
+  assert.match(shown.stdout, /\n[A-Z]{2}-\d{2}-Q\d{2}, lines? \d+/);
+  assert.match(shown.stdout, / {2}takes out, line \d+: > .*\(yes \/ no\) yes, every day\n/);
+  assert.match(shown.stdout, / {2}puts in: > .*\(yes \/ no\)\n/);
+});
+
+test('H3: upgrade-worksheet refuses, changing nothing, a worksheet for other data, one with another problem, and an identifier the data does not have', () => {
+  const refused = (section, text, pattern) => {
+    const { dir, file } = sheetIn(section, text);
+    for (const args of [[], ['--write']]) {
+      const result = run('upgrade-worksheet', '--file', file, ...args);
+      assert.equal(result.status, 1, `${args.join(' ')}: ${result.stdout}${result.stderr}`);
+      assert.equal(result.stdout, '');
+      assert.match(result.stderr, pattern);
+      assert.match(result.stderr, /Nothing has been changed/);
+      assert.equal(readFileSync(file, 'utf8'), text);
+      assert.deepEqual(readdirSync(dir), [`answers-${section}.md`]);
+    }
+  };
+  const older = asOlder(fixture('CK')).text;
+  refused('CK', older.replace(`data=${DATA_ID}`, 'data=sfbb-caterers-2031-01-01'),
+    /answers data sfbb-caterers-2031-01-01, not this helper's data sfbb-caterers-2026-11-17: a new edition of the pack is another job, which this command does not do/);
+  refused('CK', `${older}a stray line\n`, /has 1 problem besides its wording, which is put right first:\n.*line not understood/s);
+  refused('CK', `${older}\n### CK-99-Q01\n\nAnswer:\nState: unanswered\nBy:\nOn:\nSource:\n`, /CK-99-Q01 is not a question in this worksheet/);
+  refused('CK', older.replace('uk-food-answers 1.0', 'uk-food-answers 0.9'), /this worksheet is version 0\.9/);
+  refused('CK', 'Not a worksheet at all.\n', /there is no uk-food-answers marker line/);
+  // Usage and input errors.
+  assert.equal(run('upgrade-worksheet').status, 2);
+  assert.equal(run('upgrade-worksheet', '--file', join(tmpdir(), 'no-such-worksheet.md')).status, 2);
+  assert.equal(run('upgrade-worksheet', '--file', sheetIn('CK', older).file, '--bogus').status, 2);
+  assert.match(run('upgrade-worksheet').stderr.replace(/\s+/g, ' '), /upgrade-worksheet --file FILE \[--data DIR\] \[--write\]/);
+});
+
+test('H3: a second upgrade never writes over the copy an earlier one kept', () => {
+  const { dir, file } = sheetIn('CK', asOlder(fixture('CK')).text);
+  const first = readFileSync(file, 'utf8');
+  assert.equal(run('upgrade-worksheet', '--file', file, '--write').status, 0);
+  // Later the wording differs again, as after another change to the overlay.
+  const second = asOlder(readFileSync(file, 'utf8')).text.replace('(as an older version said it)', '(as another version said it)');
+  writeFileSync(file, second);
+  const dry = run('upgrade-worksheet', '--file', file);
+  assert.ok(dry.stdout.includes('answers-CK.before-upgrade-2.md'), dry.stdout);
+  assert.equal(run('upgrade-worksheet', '--file', file, '--write').status, 0);
+  assert.deepEqual(readdirSync(dir).sort(), ['answers-CK.before-upgrade-2.md', 'answers-CK.before-upgrade.md', 'answers-CK.md']);
+  assert.equal(readFileSync(join(dir, 'answers-CK.before-upgrade.md'), 'utf8'), first);
+  assert.equal(readFileSync(join(dir, 'answers-CK.before-upgrade-2.md'), 'utf8'), second);
+  assert.equal(readFileSync(file, 'utf8'), fixture('CK'));
+});
+
+// Ruling H3: each profile question has a key that says what it asks, and its printed identifier is tied
+// to that key here, so a question added later cannot take the identifier, or the meaning, of another.
+const PROFILE_KEYS = {
+  'PR-Q01': 'business-name', 'PR-Q02': 'operator', 'PR-Q03': 'premises', 'PR-Q04': 'council', 'PR-Q05': 'registered-on',
+  'PR-Q06': 'nation', 'PR-Q07': 'pack-keeper', 'PR-Q08': 'sells', 'PR-Q09': 'equipment', 'PR-Q10': 'staff',
+  'PR-Q11': 'process:Vacuum packing', 'PR-Q12': 'process:sous vide', 'PR-Q13': 'process:low temperature cooking',
+  'PR-Q14': 'process:fermenting', 'PR-Q15': 'process:smoking or curing meat/fish', 'PR-Q16': 'food:Kebabs',
+  'PR-Q17': 'food:sushi/sashimi', 'PR-Q18': 'food:liver parfait', 'PR-Q19': 'food:fish/meat carpaccio and tartare',
+  'PR-Q20': 'food:less than thoroughly cooked burgers'
+};
+
+test('H3: every profile question has a key of its own, and its printed identifier is the one pinned to that key', () => {
+  assert.deepEqual(Object.fromEntries(PROFILE_QUESTIONS.map((q) => [q.id, q.key])), PROFILE_KEYS);
+  assert.equal(new Set(PROFILE_QUESTIONS.map((q) => q.key)).size, PROFILE_QUESTIONS.length);
+  // A special process or food is asked about by the question whose key names it, wherever that question stands.
+  for (const [kind, names] of [['process', EXTRA_CARE.processes], ['food', EXTRA_CARE.foods]]) {
+    for (const name of names) {
+      const question = PROFILE_QUESTIONS.find((q) => q.key === `${kind}:${name}`);
+      assert.ok(question && question.type === 'yes-no' && question.text.endsWith(`: ${name}?`), name);
+    }
+  }
+  assert.deepEqual(PROFILE_QUESTIONS.map((q) => q.id), fixture('profile').split('\n').filter((line) => line.startsWith('### ')).map((line) => line.slice(4)));
 });
 
 // ---- Command line ----
