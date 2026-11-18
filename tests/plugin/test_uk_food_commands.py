@@ -184,6 +184,20 @@ def test_the_overview_guide_names_the_source_the_licence_and_who_is_responsible(
         assert words in text, words
 
 
+RECIPE = OVERLAY / "recipes" / "uk-food-sfbb.yaml"
+
+
+def test_the_recipe_builds_the_drafts_and_has_no_health_step():
+    """Ruling 35 (no health step), concern M5 (OWN off by default), and no sign-off target."""
+    recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
+    assert "post_build_hooks" not in recipe, "ruling 35: /arckit:health may suggest promoting a DRAFT"
+    assert recipe["optional_targets"]["OWN"]["default"] is False
+    skills = {t["skill"] for t in recipe["targets"]}
+    assert "arckit:uk-food-sign-off" not in skills
+    assert "confirms nothing" in recipe["description"]
+    assert "worksheets that are missing" in recipe["description"]
+
+
 @pytest.mark.parametrize("name", COMMANDS)
 def test_each_command_guide_names_its_command_as_claude_code_does(name):
     text = (ROOT_GUIDES / f"{name}.md").read_text(encoding="utf-8")
@@ -306,6 +320,12 @@ GATHERING_RULES = {
     "I4: no projects folder, stop": "do not run `create-project.sh`",
     "18: always DRAFT": "**Status** `DRAFT`, and **Reviewed By** and **Approved By** `[PENDING]`, always.",
     "P6: other documents out of step": "whose `rendered` is true and `inSync` is false",
+    "33: inside a build, the version rule still decides": "For these documents the rule above still decides what is "
+                                                          "written",
+    "33: report the existing file when nothing is written": "give the existing file's path (`file` in `status --json`) "
+                                                            "as the file written",
+    "34: a change is recorded like a first answer": "Record the change the same way as a first answer",
+    "34: nothing beyond what was asked": "never change an answer, a method or an entry beyond what the person asked",
 }
 
 
@@ -314,6 +334,20 @@ GATHERING_RULES = {
 def test_a_gathering_command_states_the_rule(name, rule):
     _, body = split(command(name))
     assert GATHERING_RULES[rule] in body, f"{name} lacks ruling {rule}"
+
+
+def test_the_check_command_rewrites_the_record_in_place_even_inside_a_build():
+    """Ruling 33: the build harness asks for a new version beside an existing file; the record never gets one."""
+    _, body = split(command("uk-food-check"))
+    assert "The same holds inside a build" in body
+    assert "rewrite the completion record in place, at its version, all the same" in body
+
+
+def test_the_own_methods_command_changes_an_existing_entry_when_asked():
+    """Ruling 34: an entry's EH-review is updated when the council replies, and nothing else is touched."""
+    _, body = split(command("uk-food-own-methods"))
+    assert "to record the council's reply in its `EH-review`" in body
+    assert "edit only the fields the person changes" in body
 
 
 # The fields the helper requires before it accepts a state, as the commands state them. Each is

@@ -10,12 +10,23 @@
 # confirms nothing: it makes the worksheets that are missing and writes
 # each document from the answers already confirmed. On a new project every
 # answer reads NOT YET ANSWERED. The answers come from running the commands
-# with the person; the build then brings every document into step with them.
-# A build never signs anything off: /arckit-uk-food:uk-food-sign-off is not a
-# target.
+# with the person; the build writes each document from the answers confirmed
+# so far. A build never signs anything off: /arckit-uk-food:uk-food-sign-off is
+# not a target. For a document that is signed off and in step, the commands
+# write nothing, inside a build too.
 #
 # The project must exist before a build. Running
 # /arckit-uk-food:uk-food-profile once creates it.
+#
+# The build harness makes a git commit after each wave. A business's records
+# folder is rarely a git repository: run the build with --no-commit then.
+#
+# No post-build step. ArcKit's health scan is written for architecture
+# documents and may suggest promoting an old DRAFT; for these documents only
+# /arckit-uk-food:uk-food-sign-off changes a document's status.
+#
+# This recipe passes the repository's recipe checks but has not yet been run
+# end to end through the build harness.
 #
 # Every target writes `output:` on one line: check-doc-type-registry.py reads
 # only the inline form, so a block-style `output:` would escape its check.
@@ -27,9 +38,9 @@ description: >
   the Food Standards Agency's Safer food, better business for caterers pack:
   the business profile, the five sections of safe methods (cross-contamination,
   cleaning, chilling, cooking, management) and the completion record. A build
-  has nobody to answer, so it confirms nothing: it makes the blank worksheets
-  and writes draft documents from the answers a named person has already
-  confirmed. On a new project every answer reads NOT YET ANSWERED. It does not
+  has nobody to answer, so it confirms nothing: it makes the worksheets that
+  are missing and writes draft documents from the answers a named person has
+  already confirmed. On a new project every answer reads NOT YET ANSWERED. It does not
   sign anything off.
 
 defaults:
@@ -41,15 +52,12 @@ optional_targets:
   OWN:
     description: >
       The business's own methods. Off by default: the build's worker check
-      wants a document of more than 100 lines, and an own methods document
-      with no confirmed entries is shorter, so building it stops the build.
+      wants a document of more than 100 lines, and an own methods document is
+      usually shorter, unless the business has many entries, so building it
+      usually stops the build.
       Record the business's own methods with /arckit-uk-food:uk-food-own-methods;
       a build reads an own methods document that already exists.
     default: false
-
-post_build_hooks:
-  - skill: arckit:health
-    args: ""
 
 targets:
 
