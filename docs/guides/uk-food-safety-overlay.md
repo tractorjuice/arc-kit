@@ -128,11 +128,11 @@ The own methods document cannot be signed off until each special process the pro
 
 The overlay ships a build recipe, `uk-food-sfbb`, for ArcKit's build command in Claude Code. A build has nobody to answer, and only an answer a named person gives can be confirmed, so **a build confirms nothing**. It makes the worksheets that are missing and writes each document that does not exist yet as a draft, from the answers already confirmed. On a new project, every answer in them reads NOT YET ANSWERED. A build never signs anything off.
 
-A document that is already there is taken as done, whatever has been answered since. The build writes it again only if you name its target with `--refresh` (`PROFILE`, `XC`, `CL`, `CH`, `CK`, `MG` or `CHECK`), or if a document it is built after has changed since the last build. To bring one document up to date, run its own command.
+A document that is already there is taken as done, whatever has been answered since. The build writes it again only if you name its target with `--refresh` (`PROFILE`, `XC`, `CL`, `CH`, `CK`, `MG`, `OWN` or `CHECK`), or if a document it is built after has changed since the last build. To bring one document up to date, run its own command.
 
 Do not expect a finished pack from a build: the answers come from running the commands above with the person who knows the business.
 
-The recipe builds the profile, the five sections and the completion record. Your own methods are left out by default: that document is usually too short for the build's checks, unless the business has many entries, so record your own methods with the command instead.
+The recipe builds the profile, the five sections, your own methods and the completion record.
 
 Run the profile command once first, so the project exists. The build saves its work with a git commit after each wave of documents; a records folder is rarely a git repository, so add `--no-commit` unless yours is one. For project `001`:
 

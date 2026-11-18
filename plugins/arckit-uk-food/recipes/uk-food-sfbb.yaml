@@ -14,7 +14,7 @@
 #
 # A document that already exists is taken as done. The harness dispatches a
 # target again only when it is named with --refresh (PROFILE, XC, CL, CH, CK,
-# MG or CHECK), or when a document it is built after has changed since the
+# MG, OWN or CHECK), or when a document it is built after has changed since the
 # last build. So a build does not bring an existing document up to date with
 # answers confirmed since: its own command does that.
 #
@@ -37,6 +37,15 @@
 #
 # Every target writes `output:` on one line: check-doc-type-registry.py reads
 # only the inline form, so a block-style `output:` would escape its check.
+#
+# Every target sets min_lines, the fewest lines the build accepts in the
+# document it writes (without it the build wants more than 100). Each is about
+# a fifth below the smallest the document can be, measured on 18 November 2026
+# without the provenance block the hook adds: the profile 117 lines, blank;
+# each section with every safe method in it marked not relevant, XC 100, CL 70,
+# CH 70, CK 86 and MG 92; own methods 52, with no entries; the completion
+# record 97, with nothing outstanding. tests/plugin/test_uk_food_commands.py
+# builds those documents and fails if one is shorter than its min_lines.
 
 recipe: uk-food-sfbb
 schema_version: 1
@@ -44,29 +53,16 @@ description: >
   UK food safety for a small catering business in England or Wales, from
   the Food Standards Agency's Safer food, better business for caterers pack:
   the business profile, the five sections of safe methods (cross-contamination,
-  cleaning, chilling, cooking, management) and the completion record. A build
-  has nobody to answer, so it confirms nothing: it makes the worksheets that
-  are missing and writes each document that does not exist yet as a draft,
-  from the answers a named person has already confirmed. A document that is
-  already there is taken as done and left as it is, unless its target is named
-  with --refresh. On a new project every answer reads NOT YET ANSWERED. It does
-  not sign anything off.
+  cleaning, chilling, cooking, management), the business's own methods and the
+  completion record. A build has nobody to answer, so it confirms nothing: it
+  makes the worksheets that are missing and writes each document that does not
+  exist yet as a draft, from the answers a named person has already confirmed.
+  A document that is already there is taken as done and left as it is, unless
+  its target is named with --refresh. On a new project every answer reads NOT
+  YET ANSWERED. It does not sign anything off.
 
 defaults:
   version: "1.0"
-
-# Optional targets. default: true = built unless excluded with --exclude.
-# default: false = built only with --enable.
-optional_targets:
-  OWN:
-    description: >
-      The business's own methods. Off by default: the build's worker check
-      wants a document of more than 100 lines, and an own methods document is
-      usually shorter, unless the business has many entries, so building it
-      usually stops the build.
-      Record the business's own methods with /arckit-uk-food:uk-food-own-methods;
-      a build reads an own methods document that already exists.
-    default: false
 
 targets:
 
@@ -77,6 +73,7 @@ targets:
     skill: arckit:uk-food-profile
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FOODPROF }
+    min_lines: 90
     deps: []
 
   # --- The five sections of safe methods, side by side.
@@ -84,37 +81,43 @@ targets:
     skill: arckit:uk-food-safe-methods
     args: "XC {P}"
     output: { project: "{P}-{NAME}", type: FOODXC }
+    min_lines: 80
     deps: [PROFILE]
 
   - id: CL
     skill: arckit:uk-food-safe-methods
     args: "CL {P}"
     output: { project: "{P}-{NAME}", type: FOODCLN }
+    min_lines: 55
     deps: [PROFILE]
 
   - id: CH
     skill: arckit:uk-food-safe-methods
     args: "CH {P}"
     output: { project: "{P}-{NAME}", type: FOODCHL }
+    min_lines: 55
     deps: [PROFILE]
 
   - id: CK
     skill: arckit:uk-food-safe-methods
     args: "CK {P}"
     output: { project: "{P}-{NAME}", type: FOODCOOK }
+    min_lines: 65
     deps: [PROFILE]
 
   - id: MG
     skill: arckit:uk-food-safe-methods
     args: "MG {P}"
     output: { project: "{P}-{NAME}", type: FOODMGT }
+    min_lines: 70
     deps: [PROFILE]
 
-  # --- The business's own methods, after the sections (optional, see above).
+  # --- The business's own methods, after the sections.
   - id: OWN
     skill: arckit:uk-food-own-methods
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FOODOWN }
+    min_lines: 40
     deps: [XC, CL, CH, CK, MG]
 
   # --- The completion record, last: it reports on every other document.
@@ -122,4 +125,5 @@ targets:
     skill: arckit:uk-food-check
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FOODCMP }
+    min_lines: 75
     deps: [PROFILE, XC, CL, CH, CK, MG, OWN]

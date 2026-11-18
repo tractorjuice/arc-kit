@@ -198,14 +198,46 @@ RECIPE = OVERLAY / "recipes" / "uk-food-sfbb.yaml"
 
 
 def test_the_recipe_builds_the_drafts_and_has_no_health_step():
-    """Ruling 35 (no health step), concern M5 (OWN off by default), and no sign-off target."""
+    """Ruling 35 (no health step), every document built by default, own methods included, and no sign-off target."""
     recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
-    assert "post_build_hooks" not in recipe, "ruling 35: /arckit:health may suggest promoting a DRAFT"
-    assert recipe["optional_targets"]["OWN"]["default"] is False
+    assert "post_build_hooks" not in recipe, "ruling 35: /arckit:health is written for architecture documents"
+    assert "optional_targets" not in recipe, "the own methods document is built like the others"
+    assert sorted(t["output"]["type"] for t in recipe["targets"]) == sorted(TEMPLATE_OF)
     skills = {t["skill"] for t in recipe["targets"]}
     assert "arckit:uk-food-sign-off" not in skills
     assert "confirms nothing" in recipe["description"]
     assert "worksheets that are missing" in recipe["description"]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_each_targets_min_lines_is_below_the_smallest_its_document_can_be(tmp_path):
+    """The build accepts a document of at least its target's min_lines. Each document is built at its
+    smallest: every safe method in a section marked not relevant, no own entries, every profile answer a
+    plain no, and the completion record once every other document is signed off, so nothing is outstanding."""
+    recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
+    min_lines = {t["output"]["type"]: t["min_lines"] for t in recipe["targets"]}
+    project = tmp_path / "smallest"
+    (project / "food-safety").mkdir(parents=True)
+    for section in ["profile", "own", "XC", "CL", "CH", "CK", "MG"]:
+        sheet = run(HELPER, "worksheet", "--section", section).stdout
+        sheet = sheet.replace("Status: applies\nReason:\nDecided-by:", "Status: not-relevant\nReason: we do not do this\nDecided-by: Sam Okafor")
+        if section == "profile":
+            sheet = sheet.replace("Answer:\nState: unanswered\nBy:\nOn:\nSource:", "Answer: no\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17\nSource:")
+            head, nation = sheet.split("### PR-Q06", 1)
+            sheet = f"{head}### PR-Q06{nation.replace('Answer: no', 'Answer: England', 1)}"
+        (project / "food-safety" / f"answers-{section}.md").write_text(sheet, encoding="utf-8")
+    lines = {}
+    for code in ["FOODXC", "FOODCLN", "FOODCHL", "FOODCOOK", "FOODMGT", "FOODOWN", "FOODPROF"]:
+        path = build(code, project)
+        lines[code] = path.read_text(encoding="utf-8").count("\n")
+        sign_and_mark(code, project, path)
+    record = build("FOODCMP", project).read_text(encoding="utf-8")
+    assert "Nothing is outstanding." in record
+    lines["FOODCMP"] = record.count("\n")
+    for code, smallest in lines.items():
+        assert min_lines[code] <= smallest, f"{code}: min_lines {min_lines[code]} but the document can be {smallest} lines"
+        # Not so far below that a document cut short would still pass.
+        assert min_lines[code] >= smallest * 0.7, f"{code}: min_lines {min_lines[code]} is far below {smallest}"
 
 
 @pytest.mark.parametrize("name", COMMANDS)

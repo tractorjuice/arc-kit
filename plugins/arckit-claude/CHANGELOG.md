@@ -13,6 +13,10 @@ Releases before 6.15.0 are in the [changelog archive](https://github.com/tractor
 
 - **`arckit-uk-food`, a new optional overlay.** It helps a small catering business in England or Wales build its food safety documents from the Food Standards Agency's *Safer food, better business for caterers* pack, with five commands from `/arckit-uk-food:uk-food-profile` to `/arckit-uk-food:uk-food-sign-off`. Core now knows the overlay's eight document types (`FOODPROF`, `FOODXC`, `FOODCLN`, `FOODCHL`, `FOODCOOK`, `FOODMGT`, `FOODOWN` and `FOODCMP`), so the file-name check accepts them, `/arckit:pages` lists them with the overlay's guides, and `/arckit:arckit-build` lists the overlay's `uk-food-sfbb` recipe. The overlay is experimental and off by default.
 
+### Changed
+
+- **A build recipe can say how short a document may be.** `/arckit:build` failed any document of 100 lines or fewer, and a recipe could not change that. A recipe target can now set `min_lines`, the fewest lines its document may have; a target without it still needs more than 100, as before, so no existing recipe builds differently. The food overlay's `uk-food-sfbb` recipe sets one for each of its documents, so it now builds the business's own methods with the others.
+
 ## [6.22.1] — 2026-11-17
 
 ### Changed
