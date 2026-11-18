@@ -881,6 +881,12 @@ SIGN_OFF_RULES = {
                                                             "and ends when any line of it changes",
     "F8: no date after today": "refuses a date after today",
     "I1: marking the header changes nothing else": "Change nothing else in the file, not even to tidy it",
+    "V3 (live run): only the Edit tool changes the file": "Change the file only with the Edit tool, never with a shell command or a "
+                                                          "program you run.",
+    "V3 (live run): the hook's section is not the command's to touch": "that section is the hook's, not a change of yours, and the "
+                                                                       "helper leaves it out of what a sign-off covers. Leave it "
+                                                                       "exactly as the hook wrote it, and never say that it ends the "
+                                                                       "sign-off",
     "T1: two ends, and the summary says which": "This command ends in exactly one of two states, and its summary says which:",
     "T1: marked": "If `check`'s `ok` is true and the document's `signedOff` and `headerShowsSignOff` are both true, it is "
                   "**marked**: stop.",
@@ -1103,6 +1109,8 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "This holds however the command stopped: a refusal, a stop before recording or marking, or the marking loop.",
                    "Only the current version's file was touched, and a change the marking made to any other line, between the markers "
                    "or outside them, was put back before the end was judged.",
+                   "The document was changed only with the Edit tool, and the Build Provenance section core's hook writes was left as "
+                   "the hook wrote it.",
                    "Not marked: Status reads `DRAFT`, and Reviewed By, Approved By and the Revision History row's two approval cells "
                    "read `[PENDING]`; nothing else in the file was changed by this run; and the summary gives the document's lines "
                    "from `status`, unchanged.",
@@ -2140,7 +2148,8 @@ def test_sign_off_refused_when_unfinished_is_graded_as_it_reads(tmp_path):
                     f"cat projects/new.md > {document}", f"cat projects/new.md | tee {document}",
                     # V5: an expression with a table row's | in it, an option before -i, and a file put over the document.
                     f"sed -i '' 's/| **Status** | DRAFT |/| **Status** | APPROVED |/' {document}", f'sed -i "s/|x|/|y|/" {document}',
-                    f"sed -E -i '' 's/DRAFT/APPROVED/' {document}", f"cp projects/new.md {document}"]:
+                    f"sed -E -i '' 's/DRAFT/APPROVED/' {document}", f"cp projects/new.md {document}",
+                    f'node -e \'require("fs").writeFileSync(process.argv[1], "x")\' {document}', f"python3 -c \"open('{document}', 'w').write('x')\""]:
         shell = Run("sign-off-refused-when-unfinished", tmp_path / f"shell{abs(hash(command))}")
         shell.calls.append({"name": "Bash", "input": {"command": command, "description": "Mark the header"}, "parent": None})
         shell.last_message = "Some questions are unanswered."
@@ -2167,7 +2176,8 @@ def test_sign_off_refused_when_unfinished_is_graded_as_it_reads(tmp_path):
                     f"cat projects/new.md > {sheet}", f"cat projects/new.md | tee -a {sheet}",
                     f'node "$H" upgrade-worksheet --file {sheet} --write',
                     # V5: an expression holding a |, an option before -i, and a file put over the worksheet.
-                    f"sed -i '' 's/unanswered|proposed/confirmed/' {sheet}", f"sed -E -i '' 's/unanswered/confirmed/' {sheet}", f"cp projects/new.md {sheet}"]:
+                    f"sed -i '' 's/unanswered|proposed/confirmed/' {sheet}", f"sed -E -i '' 's/unanswered/confirmed/' {sheet}", f"cp projects/new.md {sheet}",
+                    f'node -e \'require("fs").writeFileSync(process.argv[1], "x")\' {sheet}']:
         shell = Run("sign-off-refused-when-unfinished", tmp_path / f"sheet{abs(hash(command))}")
         shell.calls.append({"name": "Bash", "input": {"command": command, "description": "Change the worksheet"}, "parent": None})
         shell.last_message = "Some questions are unanswered."
@@ -2295,10 +2305,28 @@ def test_sign_off_recorded_is_graded_as_it_reads(tmp_path):
     assert "document-not-written-over" in failed(whole.scores())
     for command in ["sed -i '' 's/DRAFT/APPROVED/' projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md", "cat projects/new.md > projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md",
                     # V5: the row edited as a table row is, with its | marks.
-                    "sed -i '' 's/| **Status** | DRAFT |/| **Status** | APPROVED |/' projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md"]:
+                    "sed -i '' 's/| **Status** | DRAFT |/| **Status** | APPROVED |/' projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md",
+                    # The live run on Opus 5.5: the hook's Build Provenance section cut off by a program that rewrites the file.
+                    'f=projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md; node -e \'const fs=require("fs");const f=process.argv[1];let s=fs.readFileSync(f,"utf8");'
+                    'const i=s.indexOf("\\n<!-- arckit-provenance:start -->");if(i<0)process.exit(3);s=s.slice(0,i);fs.writeFileSync(f,s)\' "$f"']:
         shell = marked(f"shell{abs(hash(command))}")
         shell.called("Bash", {"command": command, "description": "Mark the header"})
         assert failed(shell.scores()) == {"document-not-changed-from-the-shell"}, command
+    # The live run on Opus 5.5: the history row marked by an Edit that gives only the row's last cells. That is the marking.
+    fragment = Run("sign-off-recorded", tmp_path / "fragment")
+    fragment_doc = fragment.project / "ARC-001-FOODCOOK-v1.0.md"
+    assert fragment.helper("sign-off", "--doc", "FOODCOOK", "--project", fragment.project, "--name", "Sam Okafor", "--role", "owner", "--version", "1.0").returncode == 0
+    day = json.loads((fragment.project / "food-safety" / "sign-offs.json").read_text(encoding="utf-8"))["signOffs"][0]["date"]
+    fragment.edit(fragment_doc, "| **Status** | DRAFT |", "| **Status** | APPROVED |")
+    fragment.edit(fragment_doc, "| **Last Modified** | 2026-11-17 |", f"| **Last Modified** | {day} |")
+    fragment.edit(fragment_doc, "| **Reviewed By** | [PENDING] |\n| **Approved By** | [PENDING] |",
+                  f"| **Reviewed By** | Sam Okafor, owner, {day} |\n| **Approved By** | Sam Okafor, owner, {day} |")
+    fragment.edit(fragment_doc, "| Written from the business's confirmed answers | [PENDING] | [PENDING] |",
+                  f"| Written from the business's confirmed answers | Sam Okafor, owner | {day} |")
+    fragment.helper("check", "--doc", "FOODCOOK", "--project", fragment.project, "--report", fragment_doc)
+    fragment.helper("status", "--project", fragment.project, "--json")
+    fragment.last_message = "Marked."
+    assert failed(fragment.scores()) == set()
     # J2: a signed paper copy that the request never mentions.
     paper = Run("sign-off-recorded", tmp_path / "paper")
     assert paper.helper("sign-off", "--doc", "FOODCOOK", "--project", paper.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0",
