@@ -35,7 +35,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 5. **It shows you any text in the file that the helper has not checked.** A document written by the overlay's commands has none. If someone has added a note or a section of their own outside the checked part, the command shows you each of those lines and asks whether you have read them and they are yours, because your sign-off covers them too.
 6. **It asks the helper script to record the sign-off.** If the script refuses, the command shows you its reasons unchanged, and stops. Nothing is recorded, and the command never tries to work round a refusal.
 7. **If the sign-off is recorded**, the command marks the document's header: Status `APPROVED`, and Reviewed By and Approved By both set to the name, role and date, such as `Sam Okafor, Owner, 2026-11-18`. In this overlay, `APPROVED` means only that: signed off by the named person at the business. It also fills in that version's row in the Revision History. If a second person signs the same document later, the header is rewritten to show their sign-off, as the newest.
-8. **It runs the document check again**, and looks at where the document stands, to prove that marking the header changed nothing else in the file.
+8. **It runs the document check again**, and looks at where the document stands, to prove that marking the header changed nothing else in the file and that the header now shows your sign-off. It does not stop while the header still reads `DRAFT`.
 9. **It shows a summary.**
 
 When the helper script refuses, its reasons look like this:

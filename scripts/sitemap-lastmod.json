@@ -21,7 +21,7 @@
   },
   "commands.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "64c7661ed3dc0fb9392f4778b621757062b9478e748c96288d45f5321d6f17cc"
+    "text_sha256": "bc44c1b73d3f762436a116f749ff7812e3ea941453514aec6c6ec32079228bca"
   },
   "contributors.html": {
     "lastmod": "2026-10-28",
@@ -973,7 +973,7 @@
   },
   "guide/uk-food-check.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "b8ef536d94689cd8a8ab697e3c333f415937de076587c566113c00bd7a6a737d"
+    "text_sha256": "676cbed87ec29174f55fe84154e444459c59e38d16e62fa6921233d7c20991c1"
   },
   "guide/uk-food-own-methods.html": {
     "lastmod": "2026-11-18",
@@ -993,7 +993,7 @@
   },
   "guide/uk-food-sign-off.html": {
     "lastmod": "2026-11-18",
-    "text_sha256": "95568b46a56e74fa86f79ff88b29d4999d821e7913396ac5ff7e425a3959352e"
+    "text_sha256": "3d3a6a15da6ad6901980a342015bf7c7670d9ef5cec33f94f2b498b9cf95f77e"
   },
   "guide/uk-fs-consumer-duty.html": {
     "lastmod": "2026-10-27",

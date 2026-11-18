@@ -2,7 +2,7 @@
 
 > **Command**: `/arckit-uk-food:uk-food-check` | **Overlay**: [UK Food Safety Overlay](https://arckit.org/guide/uk-food-safety-overlay.html) | **Status**: Experimental, community-maintained
 
-This command shows you what is finished and what is still waiting across all your food safety documents, and writes the completion record. It asks nothing about the business and changes nothing but the completion record, so you can run it whenever you want to see where things stand.
+This command shows you what is finished and what is still waiting across all your food safety documents, and writes the completion record. It asks nothing about the business and changes none of your answers, so you can run it whenever you want to see where things stand.
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it.
 
@@ -33,7 +33,7 @@ It also writes the **completion record**: the pack's own record of which safe me
 4. **It runs the document check** on the record, against a fresh print.
 5. **It shows a summary.**
 
-It changes no worksheet and no other document. Anything that needs putting right is put right with the other commands.
+It changes none of your answers and no other document. The one thing it may do to a worksheet is bring the overlay's own wording in it up to date, when a later version of the overlay words it differently: it shows you each line it would replace first, and asks. Anything else that needs putting right is put right with the other commands.
 
 ## An example
 
@@ -80,7 +80,7 @@ What moves each item on:
 
 ## What it will not do, and why
 
-- **It will not change your worksheets or other documents.** The record is only as true as what it reads, so anything wrong is put right at its source, with the command that owns it.
+- **It will not change your answers or other documents.** The record is only as true as what it reads, so anything wrong is put right at its source, with the command that owns it.
 - **It will not judge your answers.** It reports what the helper script says.
 - **It will not cover the daily diary.** The diary stays with you, on paper or however the business keeps it today.
 

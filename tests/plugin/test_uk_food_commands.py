@@ -1597,6 +1597,7 @@ def test_the_pages_no_longer_overstate_what_the_review_named():
     profile = (ROOT_GUIDES / "uk-food-profile.md").read_text(encoding="utf-8")
     sign_off = (ROOT_GUIDES / "uk-food-sign-off.md").read_text(encoding="utf-8")
     assert "a line of that document changed afterwards ends it. The paragraph on signing off, below, says what else does." in readme
+    assert "and that the header now shows your sign-off. It does not stop while the header still reads `DRAFT`." in sign_off, "H8"
     assert "The earlier sign-off does not come back" in profile
     assert "as a new version if it had been signed off, and that is the one to sign" in profile
     assert "outside what you sign for only while each line of it is in the form ArcKit writes" in sign_off
@@ -1630,6 +1631,13 @@ def test_the_pages_say_what_this_round_changed_for_an_owner():
     assert "shows you every line it would replace, and asks before it writes anything" in overview, "H3"
     assert "Your answers, names and dates are not touched, and the worksheet as it was is kept beside the new one." in overview, "H3"
     assert "changes no answer and keeps the worksheet as it was" in readme, "H3"
+    check_guide = (ROOT_GUIDES / "uk-food-check.md").read_text(encoding="utf-8")
+    assert "It changes none of your answers and no other document." in check_guide, "H3"
+    assert "it shows you each line it would replace first, and asks" in check_guide, "H3"
+    assert "changes nothing but the completion record" not in check_guide and "It changes no worksheet" not in check_guide, "H3"
+    assert "It will not change your answers or other documents." in check_guide and "will not change your worksheets" not in check_guide, "H3"
+    commands_page = (ROOT / "docs" / "commands.html").read_text(encoding="utf-8")
+    assert "Changes no answer and no other document." in commands_page and "Changes no worksheet" not in commands_page, "H3"
     assert "**It shows you any text in the file that the helper has not checked.**" in sign_off, "H5"
     assert "you have been shown it and have said you have read it" in sign_off, "H5"
     assert "but no new version is needed, because what the document prints from your answers has not changed" in sign_off, "H7"
