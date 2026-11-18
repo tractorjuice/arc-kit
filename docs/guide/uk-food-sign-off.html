@@ -463,7 +463,7 @@
 <li><strong>It shows you the document's header, and any text in the file that the helper has not checked.</strong> It shows the Document Control table and the Revision History rows as they stand in the file, because your sign-off covers them. A document written by the overlay's commands has nothing else outside its checked part. If someone has added a note, a section, a comment or a row of their own, the command shows you each of those lines too, and asks whether you have read all of it and it is yours.</li>
 <li><strong>It asks the helper script to record the sign-off.</strong> If the script refuses, the command shows you its reasons unchanged, and stops. Nothing is recorded, and the command never tries to work round a refusal.</li>
 <li><strong>If the sign-off is recorded</strong>, the command marks the document's header: Status <code>APPROVED</code>, and Reviewed By and Approved By both set to the name, role and date, such as <code>Sam Okafor, Owner, 2026-11-18</code>. In this overlay, <code>APPROVED</code> means only that: signed off by the named person at the business. It also fills in that version's row in the Revision History. If a second person signs the same document later, the header is rewritten to show their sign-off, as the newest. If an earlier run recorded your sign-off but did not finish marking the header, the command finishes the marking and records nothing new.</li>
-<li><strong>It runs the document check again</strong>, and looks at where the document stands, to prove that marking the header changed nothing else in the file and that the header now shows your sign-off. It does not stop while the header still reads <code>DRAFT</code>. If the check finds anything wrong other than a cell of the header, the command stops, tells you, and changes nothing more in the file.</li>
+<li><strong>It runs the document check again</strong>, and looks at where the document stands, to prove that marking the header changed nothing else in the file and that the header now shows your sign-off. It does not stop while the header still reads <code>DRAFT</code>. The command ends in one of two ways and tells you which. Either the document is signed off and its header shows it; or the header reads <code>DRAFT</code> and <code>[PENDING]</code> again, and the command gives you the helper's own words for what is wrong and what to do. It never leaves a header reading <code>APPROVED</code> on a document that is not signed off.</li>
 <li><strong>It shows a summary.</strong></li>
 </ol>
 <p>When the helper script refuses, its reasons look like this:</p>
@@ -477,7 +477,7 @@
 <p>Sam Okafor owns Bramble Cafe, an invented café. Every document is finished, and Sam is signing them off, leaving the profile until last.</p>
 <blockquote>
 <p><strong>Sam:</strong> <code>/arckit-uk-food:uk-food-sign-off cooking 001</code> Sam Okafor, Owner.</p>
-<p><strong>Claude:</strong> The cooking document is <code>ARC-001-FOODCOOK-v1.0.md</code>, version 1.0. Shall I record that you, Sam Okafor, Owner, have read version 1.0 and confirm it?</p>
+<p><strong>Claude:</strong> The cooking document is <code>ARC-001-FOODCOOK-v1.0.md</code>, version 1.0. Before I record anything, here is its header as it stands in the file, because your sign-off covers it: <em>[the Document Control table and the Revision History rows]</em>. Nobody has added anything else to the file. Have you read version 1.0 and this header, and shall I record that you, Sam Okafor, Owner, confirm it?</p>
 <p><strong>Sam:</strong> Yes.</p>
 <p><strong>Claude:</strong> Recorded: signed off by Sam Okafor, Owner, on 2026-11-18. The header now shows <code>APPROVED</code>, which here means signed off by you, the named person at the business, and nothing more. The diary and its daily signature stay with you: this overlay does not keep the diary. If the answers change, the document is written again as a new version, which needs signing off again.</p>
 </blockquote>
@@ -488,7 +488,7 @@
 </blockquote>
 <h2 id="what-you-get">What you get</h2>
 <ul>
-<li>A record in <code>projects/001-bramble-cafe/food-safety/sign-offs.json</code>: the document, its version and file, the name, role and date, whether a printed copy was signed, and a fingerprint of the file as you signed it, so that any later change to it shows.</li>
+<li>A record in <code>projects/001-bramble-cafe/food-safety/sign-offs.json</code>: the document, its version and file, the name, role and date, whether a printed copy was signed, whether you were shown text that someone had added outside the checked part (<code>otherTextRead</code>, which is <code>false</code> when there was none), and a fingerprint of the file as you signed it, so that any later change to it shows. The same sign-off is never recorded twice: if nothing in the file has changed, asking again only finishes the header.</li>
 <li>The document's header marked as signed off, as above.</li>
 </ul>
 <h2 id="what-a-sign-off-covers">What a sign-off covers</h2>

@@ -2345,6 +2345,59 @@ test('J7: a document that is signed off while its header still reads DRAFT is sa
 
 // ---- The last touch-up (T5, T6) ----
 
+// What the sign-off command's marking loop goes by (T1): the kind of fault check reports, and the two ends it may reach.
+const unmark = (file) => {
+  edit(file, '| **Status** | APPROVED |', '| **Status** | DRAFT |');
+  edit(file, `| **Reviewed By** | ${SAM} |`, '| **Reviewed By** | [PENDING] |');
+  edit(file, `| **Approved By** | ${SAM} |`, '| **Approved By** | [PENDING] |');
+  edit(file, 'confirmed answers | Sam Okafor, Owner | 2026-11-17 |', 'confirmed answers | [PENDING] | [PENDING] |');
+};
+
+test('T1: a marking that also changes another cell is told by its kind, not by its line, and each way out ends truly: marked, or with the header reading as unsigned', () => {
+  const dir = cafe();
+  const file = fromItsTemplate(dir, 'FOODCOOK');
+  const name = basename(file);
+  const json = () => JSON.parse(run('check', '--doc', 'FOODCOOK', '--project', dir, '--report', file, '--json').stdout);
+  const facts = () => { const d = docStatus(dir, 'FOODCOOK'); return [d.signedOff, d.headerShowsSignOff, d.bodyInStep]; };
+  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  assert.deepEqual([json().ok, ...facts()], [true, true, true, true]);
+  // The slip: while marking, the Classification cell is changed as well.
+  const classification = /^\| \*\*Classification\*\* \| .*\|$/m.exec(readFileSync(file, 'utf8'))[0];
+  edit(file, classification, '| **Classification** | OFFICIAL |');
+  const fault = json();
+  // The fault is reported on the Status line, like a fault in a header cell: only its kind tells the two apart.
+  assert.deepEqual([fault.ok, fault.kind, fault.line, fault.cell ?? false], [false, 'not-as-signed', lineNumber(file, '| **Status** |'), false]);
+  assert.deepEqual(facts(), [false, true, true]);
+  assert.match(run('status', '--project', dir).stdout, /ARC-001-FOODCOOK-v1\.0\.md changed since it was signed off; not signed off\n/);
+  // A slip in one of the cells the marking writes is the other kind, on the same sort of line.
+  const slipped = readFileSync(file, 'utf8');
+  edit(file, '| **Classification** | OFFICIAL |', classification);
+  edit(file, `| **Approved By** | ${SAM} |`, '| **Approved By** | Sam Okafor (Owner), 2026-11-17 |');
+  assert.deepEqual([json().kind, json().line], ['header', lineNumber(file, '| **Approved By** |')]);
+  // Way out one: the stray change is put back exactly, and the document is marked.
+  edit(file, '| **Approved By** | Sam Okafor (Owner), 2026-11-17 |', `| **Approved By** | ${SAM} |`);
+  assert.deepEqual([json().ok, ...facts()], [true, true, true, true]);
+  // Way out two: the stray change stays, and the header is put back to an unsigned document's. check passes, the header
+  // claims nothing, and status says in its own words that the file is not the one that was signed.
+  writeFileSync(file, slipped);
+  unmark(file);
+  assert.deepEqual([json().ok, ...facts()], [true, false, false, true]);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [outsideChangedLine('Sam Okafor', '2026-11-17')]);
+  const readable = run('status', '--project', dir).stdout;
+  assert.ok(readable.includes(`${name} in step with its worksheets; not signed off\n`), readable);
+  assert.doesNotMatch(readFileSync(file, 'utf8'), /APPROVED/);
+  // The header put back with nothing else changed is the other not-marked state: the sign-off stands, and status says the header is still to be marked.
+  const clean = cafe();
+  const other = fromItsTemplate(clean, 'FOODCOOK');
+  assert.equal(signOffUnread(clean, 'FOODCOOK').status, 0);
+  mark(other);
+  unmark(other);
+  const d = docStatus(clean, 'FOODCOOK');
+  assert.deepEqual([d.signedOff, d.headerShowsSignOff], [true, false]);
+  assert.match(run('status', '--project', clean).stdout, /signed off by Sam Okafor, Owner, on 2026-11-17, with its header not yet marked to show it/);
+});
+
 test('T5: the helper refuses a sign-off that is the newest one over again: the same person, role, file and version, with nothing in the file changed', () => {
   const dir = cafe();
   const file = fromItsTemplate(dir, 'FOODCOOK');

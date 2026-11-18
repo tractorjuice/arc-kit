@@ -35,7 +35,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 5. **It shows you the document's header, and any text in the file that the helper has not checked.** It shows the Document Control table and the Revision History rows as they stand in the file, because your sign-off covers them. A document written by the overlay's commands has nothing else outside its checked part. If someone has added a note, a section, a comment or a row of their own, the command shows you each of those lines too, and asks whether you have read all of it and it is yours.
 6. **It asks the helper script to record the sign-off.** If the script refuses, the command shows you its reasons unchanged, and stops. Nothing is recorded, and the command never tries to work round a refusal.
 7. **If the sign-off is recorded**, the command marks the document's header: Status `APPROVED`, and Reviewed By and Approved By both set to the name, role and date, such as `Sam Okafor, Owner, 2026-11-18`. In this overlay, `APPROVED` means only that: signed off by the named person at the business. It also fills in that version's row in the Revision History. If a second person signs the same document later, the header is rewritten to show their sign-off, as the newest. If an earlier run recorded your sign-off but did not finish marking the header, the command finishes the marking and records nothing new.
-8. **It runs the document check again**, and looks at where the document stands, to prove that marking the header changed nothing else in the file and that the header now shows your sign-off. It does not stop while the header still reads `DRAFT`. If the check finds anything wrong other than a cell of the header, the command stops, tells you, and changes nothing more in the file.
+8. **It runs the document check again**, and looks at where the document stands, to prove that marking the header changed nothing else in the file and that the header now shows your sign-off. It does not stop while the header still reads `DRAFT`. The command ends in one of two ways and tells you which. Either the document is signed off and its header shows it; or the header reads `DRAFT` and `[PENDING]` again, and the command gives you the helper's own words for what is wrong and what to do. It never leaves a header reading `APPROVED` on a document that is not signed off.
 9. **It shows a summary.**
 
 When the helper script refuses, its reasons look like this:
@@ -55,7 +55,7 @@ Sam Okafor owns Bramble Cafe, an invented café. Every document is finished, and
 
 > **Sam:** `/arckit-uk-food:uk-food-sign-off cooking 001` Sam Okafor, Owner.
 >
-> **Claude:** The cooking document is `ARC-001-FOODCOOK-v1.0.md`, version 1.0. Shall I record that you, Sam Okafor, Owner, have read version 1.0 and confirm it?
+> **Claude:** The cooking document is `ARC-001-FOODCOOK-v1.0.md`, version 1.0. Before I record anything, here is its header as it stands in the file, because your sign-off covers it: *[the Document Control table and the Revision History rows]*. Nobody has added anything else to the file. Have you read version 1.0 and this header, and shall I record that you, Sam Okafor, Owner, confirm it?
 >
 > **Sam:** Yes.
 >
@@ -69,7 +69,7 @@ And if someone asks on another person's behalf:
 
 ## What you get
 
-- A record in `projects/001-bramble-cafe/food-safety/sign-offs.json`: the document, its version and file, the name, role and date, whether a printed copy was signed, and a fingerprint of the file as you signed it, so that any later change to it shows.
+- A record in `projects/001-bramble-cafe/food-safety/sign-offs.json`: the document, its version and file, the name, role and date, whether a printed copy was signed, whether you were shown text that someone had added outside the checked part (`otherTextRead`, which is `false` when there was none), and a fingerprint of the file as you signed it, so that any later change to it shows. The same sign-off is never recorded twice: if nothing in the file has changed, asking again only finishes the header.
 - The document's header marked as signed off, as above.
 
 ## What a sign-off covers
