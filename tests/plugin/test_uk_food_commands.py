@@ -360,6 +360,14 @@ GATHERING_RULES = {
                                                                         "it prints changes.",
     "I2: what every document prints": "The business's name is printed in every document, and so is a sentence about "
                                       "coverage when the nation is outside England and Wales",
+    "G1: the cells a sign-off rewrites hold what is written here": "the helper will not record a sign-off while one of "
+                                                                   "them holds anything else",
+    "G1: no other word or mark in those cells": "write `DRAFT`, `[PENDING]` and the date in those cells with no other "
+                                                "word or mark",
+    "G1: a cell status names is put right": "If a line for this document in `unfinished` from `status --json` names such "
+                                            "a cell, write in it what the line says.",
+    "G4: nothing written is said, with why": "or that nothing was written because the signed file is still in step, with "
+                                             "the document's lines from `unfinished`, unchanged",
 }
 
 # What every command that writes a document says about its header and about the rest of the file
@@ -378,6 +386,7 @@ WRITING_RULES = {
     "I1: a note belongs in the business's own methods": "belongs in its own methods, through `/arckit:uk-food-own-methods`",
     "C1: a header line check names is put right": "If it names a line of the header or of the Revision History, put that "
                                                   "line right as **The header** says.",
+    "G1: the header's dates are written one way": "**Last Modified**, today, both written `YYYY-MM-DD`.",
 }
 
 
@@ -399,8 +408,16 @@ def test_the_header_the_commands_use_takes_nothing_from_configuration():
         assert "user_config" not in body, name
 
 
-# The rules of single commands that this wave added or changed (I6, M4, M9).
+# The rules of single commands that this wave added or changed (I6, M4, M9), and ruling G3's true sentences.
+SHOWN = ("Only a confirmed answer is printed in the document as the business's answer; a proposed answer is shown beside "
+         "**NOT YET ANSWERED** with where it came from")
 COMMAND_RULES = {
+    ("uk-food-profile", "G3: what a document shows of a proposed answer"): SHOWN,
+    ("uk-food-safe-methods", "G3: what a document shows of a proposed answer"): SHOWN,
+    ("uk-food-own-methods", "G3: what a document shows of an entry not confirmed"): "Only a confirmed entry is printed in "
+                                                                                    "the document; any other is named there "
+                                                                                    "as not yet confirmed, with its contents "
+                                                                                    "left out.",
     ("uk-food-profile", "I6: the coverage sentence is in every document"): "The helper prints the same at the top of every "
                                                                           "document the business has.",
     ("uk-food-safe-methods", "I6: the coverage sentence is in every document"): "the helper prints the same at the top of "
@@ -422,6 +439,11 @@ COMMAND_RULES = {
                                                                           "whose header says anything else.",
     ("uk-food-check", "C1: an over-claiming header is said plainly"): "the document is not signed off, whatever its header "
                                                                       "reads",
+    ("uk-food-check", "G8: a record that cannot be right is said plainly"): "or that a recorded sign-off cannot be right",
+    ("uk-food-check", "G1: a header cell the helper names is given as it is"): "Where a line names a cell of a header and "
+                                                                               "what to write there, give it as it is",
+    ("uk-food-check", "G4: each line ends with its own next step"): "what moves each unfinished item on, which is what its "
+                                                                    "own line ends with",
 }
 
 
@@ -436,7 +458,11 @@ def test_no_command_keeps_the_wording_the_review_found_wrong(name):
     _, body = split(command(name))
     for gone in ["anything else stays as it is", "puts every other document out of step",
                  "no longer matches its worksheets", "because the header is outside the markers",
-                 "has no `Source:` line"]:
+                 "has no `Source:` line",
+                 # Rulings G3, G4 and G6.
+                 "reaches the document", "the sign-off no longer covers the document, because",
+                 "a signed-off document's sign-off no longer covers it", "leave the header as it is (`DRAFT`)",
+                 "must still be true"]:
         assert gone not in body, f"{name} still says {gone!r}"
     if name == "uk-food-profile":
         assert "For each of them that does not exist yet" not in body, "M9: the profile command makes one worksheet"
@@ -698,7 +724,7 @@ SIGN_OFF_RULES = {
                                                             "and ends when any line of it changes",
     "F8: no date after today": "refuses a date after today",
     "I1: marking the header changes nothing else": "Change nothing else in the file, not even to tidy it",
-    "I1: the document is still signed off after marking": "the document's `signedOff` must still be true",
+    "I1: the document is signed off after marking": "the document's `signedOff` must now be true",
     "I1: a stray edit is put back": "your edit changed something other than those rows: put it back exactly as it was",
     "I2: what ends a sign-off, and what does not": "a change to something this document does not print leaves the sign-off "
                                                    "standing",
@@ -706,6 +732,24 @@ SIGN_OFF_RULES = {
     "32: unless the request names the version": "unless the request itself names the version",
     "32: only in the requester's name": "only in the name of the person making the request",
     "32: not for someone else": "has to do it themselves",
+    "G1: the cells hold only what the commands write": "the cells of its header that this command fills in hold only "
+                                                       "what the overlay's commands write there",
+    "G1: the exact text of the two names": "both exactly `<name>, <role>, <YYYY-MM-DD>`, the `name`, `role` and `date` in "
+                                           "`signOff` as they stand there",
+    "G1: the exact text of the Revision History row": "set **Approved By** to exactly `<name>, <role>` and **Approval "
+                                                      "Date** to the record's `date`",
+    "G1: no word added": "Add no word to any of these cells",
+    "G1: a cell check names is written exactly": "that cell does not hold exactly what step 2 says: write it so",
+    "G6: the header shows the newest sign-off": "The header shows the newest sign-off the helper has recorded for the file",
+    "G6: the header is marked when the record names this file": "If `signOff.file` is the document's `file`, edit the "
+                                                                "document's header",
+    "G6: a second signer's rows are rewritten": "so `signedOff` is false until these rows are rewritten to the newest "
+                                                "record",
+    "G6: nothing recorded for this file, nothing marked": "If `signOff` is null or names another file, the helper recorded "
+                                                          "nothing for this file: leave the header exactly as it is",
+    "G3: the one exception, for own methods": "the own methods document also needs an entry for every special process the "
+                                              "profile confirms, so confirming a new one in the profile puts own methods "
+                                              "back to unfinished until that entry is recorded",
 }
 
 
@@ -813,7 +857,12 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "Classification is what the person said, or `[PENDING]`: never the plugin's `default_classification`",
                    # I1: nothing of the command's own outside the markers, and marking a header changes nothing else.
                    "you added no summary, note, heading or other text of your own, before the markers or after them",
-                   "`signedOff` is still true, so nothing else in the file was changed",
+                   "`signedOff` is true, so nothing else in the file was changed",
+                   # G1, G4 and G6: the cells a sign-off rewrites, the version rule and the newest record.
+                   "the helper records no sign-off while one holds anything else",
+                   "with `inSync` true and `signedOff` false nothing was written and the document's `unfinished` lines were shown",
+                   "with no word added to any of them",
+                   "the rows were rewritten to their record",
                    # C1: a signed header is never carried into a new version.
                    "no signed-off version's header was copied into a new version",
                    # I8: a withdrawn own entry is stepped back.
@@ -1001,18 +1050,26 @@ def test_marking_the_header_after_sign_off_keeps_it_signed_off(project):
 VERSION_RULE = [
     "`signedOff` is true: the document is signed off and nothing in it has changed since. Write nothing, and "
     "say that it is signed off and up to date.",
-    "`signOff` is not null, `signedOff` is false, and `signOff.file` is `file`: the sign-off no longer covers the "
-    "document, because an answer it prints has changed since or the file itself has been changed. Leave the signed "
+    "`signOff` is not null, `signOff.file` is `file`, and `inSync` is false: the file a person signed is out of "
+    "step, because an answer it prints has changed since or the file itself has been changed. Leave the signed "
     "file exactly as it is, and write the next minor version as a new file",
+    "`signOff` is not null, `signOff.file` is `file`, `inSync` is true and `signedOff` is false: the file is in "
+    "step, so nothing it prints has changed and there is no new version to write. Write nothing, and show the "
+    "document's lines from `unfinished`, unchanged",
+    "the new version is written when that entry is recorded, because the entry changes what the document prints",
     "Otherwise: rewrite `file` in place, at its version, or write version 1.0 if `file` is null.",
+    "a new version is written only when a file a person signed is out of step",
 ]
 
 
 def what_to_write(doc: dict) -> tuple[str, str] | None:
-    """None to write nothing; otherwise ("new" or "in place", version)."""
+    """None to write nothing; otherwise ("new" or "in place", version). Ruling G4: a file a person
+    signed gets a new version only when it is out of step; in step, there is nothing new to write."""
     if doc["signedOff"]:
         return None
     if doc["signOff"] is not None and doc["signOff"]["file"] == doc["file"]:
+        if doc["inSync"]:
+            return None
         major, minor = doc["version"].split(".")[:2]
         return "new", f"{major}.{int(minor) + 1}"
     if doc["file"] is None:
@@ -1127,6 +1184,120 @@ def test_text_added_to_a_signed_document_outside_its_markers_ends_the_sign_off(p
     assert "changed outside its UK-FOOD markers after Sam Okafor signed it off on 2026-11-17" in unfinished("FOODCOOK", project)[0]
     # The commands' rule then writes the next version from the template, and leaves the signed file as it is.
     assert follow_the_rule("FOODCOOK", project) == ("new", "1.1")
+
+
+def document(code: str, project: Path) -> dict:
+    status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
+    return next(d for d in status["documents"] if d["code"] == code)
+
+
+SLOW_EGGS = """
+## OWN-03 Slow-cooked eggs
+
+Kind: special-process
+Process: low temperature cooking
+Hazard:
+Control:
+Limit:
+Limit-source:
+Check:
+If-it-fails:
+Supplied-text: Our written method
+EH-review: pending
+State: confirmed
+By: Sam Okafor
+On: 2026-11-17
+Source:
+"""
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_a_signed_own_methods_document_gets_no_new_version_until_what_it_prints_changes(project):
+    """G4: the profile confirms a special process with no own entry. The own methods document is in step,
+    so the rule writes nothing and status says what is unfinished; the new version comes with the entry."""
+    own = project / "food-safety" / "answers-own.md"
+    profile = project / "food-safety" / "answers-profile.md"
+    own.write_text(own.read_text(encoding="utf-8") + SLOW_EGGS, encoding="utf-8")
+    path = build("FOODOWN", project)
+    sign_and_mark("FOODOWN", project, path)
+    assert document("FOODOWN", project)["signedOff"]
+    # One more special process confirmed in the profile, with no own entry for it yet.
+    text = profile.read_text(encoding="utf-8")
+    asked = re.search(r"### PR-Q11\n\n> ([^\n]*)\nAnswer: no\n", text)
+    assert asked, "the fixture's profile answers no to the first special process"
+    profile.write_text(text.replace(asked.group(0), asked.group(0).replace("Answer: no", "Answer: yes")), encoding="utf-8")
+    before = files_of("FOODOWN", project)
+    doc = document("FOODOWN", project)
+    assert (doc["inSync"], doc["signedOff"], doc["signOff"]["file"]) == (True, False, path.name), doc
+    assert check("FOODOWN", project, path).returncode == 0
+    lines = unfinished("FOODOWN", project)
+    assert " has no own entry: add an own entry of kind special-process whose Process is " in lines[0], lines
+    assert len(lines) == 3 and all("awaiting environmental health review" in line for line in lines[1:]), lines
+    assert not any("changed" in line for line in lines), "nothing in the document has changed, and no line says it has"
+    assert follow_the_rule("FOODOWN", project) is None
+    assert files_of("FOODOWN", project) == before, "no new version, and the signed file is left as it is"
+    # The entry recorded: the document now prints it, so the signed file is out of step and the rule writes 1.1.
+    process = lines[0].split(" has no own entry")[0]
+    own.write_text(own.read_text(encoding="utf-8") + SLOW_EGGS.replace("OWN-03 Slow-cooked eggs", "OWN-04 The new process")
+                   .replace("Process: low temperature cooking", f"Process: {process}"), encoding="utf-8")
+    doc = document("FOODOWN", project)
+    assert (doc["inSync"], doc["signedOff"]) == (False, False), doc
+    assert follow_the_rule("FOODOWN", project) == ("new", "1.1")
+    assert files_of("FOODOWN", project)[path.name] == before[path.name]
+    doc = document("FOODOWN", project)
+    assert doc["file"] == "ARC-001-FOODOWN-v1.1.md" and doc["inSync"] and not doc["signedOff"]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_a_signed_file_changed_outside_its_markers_before_it_is_marked_gets_no_new_version(project):
+    """G4: the header claims nothing, so the file is in step: the rule writes nothing, and the line says what to do."""
+    path = build("FOODCOOK", project)
+    signed = run(HELPER, "sign-off", "--doc", "FOODCOOK", "--project", project,
+                 "--name", "Sam Okafor", "--role", "owner", "--version", "1.0", "--date", "2026-11-17")
+    assert signed.returncode == 0, signed.stderr
+    path.write_text(path.read_text(encoding="utf-8") + "\nA note nobody signed.\n", encoding="utf-8")
+    doc = cooking(project)
+    assert (doc["inSync"], doc["signedOff"]) == (True, False), doc
+    assert follow_the_rule("FOODCOOK", project) is None
+    assert unfinished("FOODCOOK", project) == [
+        "signed off by Sam Okafor on 2026-11-17, but the file was changed outside its UK-FOOD markers after that, so the "
+        "sign-off no longer covers it: take that change out again, or have a named person sign it off again as it now reads"]
+    # Signed off again as it now reads, it is signed off.
+    again = run(HELPER, "sign-off", "--doc", "FOODCOOK", "--project", project,
+                "--name", "Sam Okafor", "--role", "owner", "--version", "1.0", "--date", "2026-11-17")
+    assert again.returncode == 0, again.stderr
+    assert cooking(project)["signedOff"]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_a_second_signer_is_shown_once_the_header_is_rewritten_as_the_command_says(project):
+    """G6: step 5 of the sign-off command, followed for a second person who signs the same file."""
+    path = build("FOODCOOK", project)
+    sign_and_mark("FOODCOOK", project, path)
+    assert cooking(project)["signedOff"]
+    second = run(HELPER, "sign-off", "--doc", "FOODCOOK", "--project", project,
+                 "--name", "Priya Shah", "--role", "manager", "--version", "1.0", "--date", "2026-11-18")
+    assert second.returncode == 0, second.stderr
+    doc = cooking(project)
+    # Step 5.2: signOff.file is the document's file, though signedOff is false while the header names Sam.
+    assert doc["signOff"]["file"] == doc["file"] == path.name and doc["signOff"]["name"] == "Priya Shah"
+    assert not doc["signedOff"]
+    assert check("FOODCOOK", project, path).returncode == 1
+    record = doc["signOff"]
+    text = f'{record["name"]}, {record["role"]}, {record["date"]}'
+    set_header(path, [("Status", "APPROVED"), ("Reviewed By", text), ("Approved By", text), ("Last Modified", "2026-11-18")])
+    row = HISTORY_ROW.replace("[VERSION]", "1.0")
+    body = path.read_text(encoding="utf-8")
+    old = row.replace("[PENDING] | [PENDING]", "Sam Okafor, owner | 2026-11-17")
+    assert old in body
+    path.write_text(body.replace(old, row.replace("[PENDING] | [PENDING]", f'{record["name"]}, {record["role"]} | {record["date"]}')),
+                    encoding="utf-8")
+    # Step 5.4: check exits 0 and the document is signed off, by the second person.
+    assert check("FOODCOOK", project, path).returncode == 0
+    doc = cooking(project)
+    assert doc["signedOff"] and doc["signOff"]["name"] == "Priya Shah" and doc["signOff"]["date"] == "2026-11-18", doc
+    rendered = run(HELPER, "render", "--doc", "FOODCMP", "--project", project).stdout
+    assert "| 2026-11-18 | Priya Shah |" in rendered and "Sam Okafor |" not in rendered
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
