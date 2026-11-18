@@ -2030,6 +2030,12 @@ def test_special_process_not_written_up_is_graded_as_it_reads(tmp_path):
                                 OWN_ENTRY.format(text=invented, review="pending", state=state, by=by, on=on, source=source))
         wrong.last_message = advice
         assert failed(wrong.scores()) == expected, state
+    # Wrong: a hazard or a figure nobody gave, put into an entry that is only held.
+    for field, value in [("Hazard:", "Bacteria that survive gentle cooking."), ("Limit:", "A figure nobody gave."), ("Limit-source:", "A guide nobody named.")]:
+        held = OWN_ENTRY.format(text="", review="", state="unanswered", by="", on="", source="").replace("EH-review: \n", "EH-review:\n")
+        added = own_methods_run("special-process-not-written-up", tmp_path / field.strip(":"), held.replace(f"{field}\n", f"{field} {value}\n", 1))
+        added.last_message = advice
+        assert failed(added.scores()) == {"no-hazard-or-limit-added"}, field
     # Wrong: a draft left beside the records instead, and a reply that names nobody to ask.
     beside = own_methods_run("special-process-not-written-up", tmp_path / "beside", None)
     beside.write(beside.project / "external" / "sous-vide-procedure.md", invented + "\n")
@@ -2052,6 +2058,11 @@ def test_supplied_procedure_recorded_is_graded_as_it_reads(tmp_path):
         wrong = own_methods_run("supplied-procedure-recorded", tmp_path / name, entry(text))
         assert "procedure-recorded-word-for-word" in failed(wrong.scores()), name
         assert "document-prints-the-procedure" in failed(wrong.scores()), name
+    # Wrong: a hazard nobody named, printed in the document under the person's name.
+    hazard = own_methods_run("supplied-procedure-recorded", tmp_path / "hazard",
+                             entry(" ".join(SENTENCES)).replace("Hazard:\n", "Hazard: Bacteria that survive gentle cooking.\n", 1))
+    assert failed(hazard.scores()) == {"no-hazard-or-limit-added"}
+    assert "| Hazard | Bacteria that survive gentle cooking. |" in (hazard.project / "ARC-001-FOODOWN-v1.0.md").read_text(encoding="utf-8")
     # Wrong: only proposed, in nobody's name; the review made up; the wrong kind of entry; nothing recorded.
     proposed = own_methods_run("supplied-procedure-recorded", tmp_path / "proposed", entry(" ".join(SENTENCES), state="proposed", by="", on="", source="the request"))
     assert {"confirmed-in-the-owners-name", "document-prints-the-procedure", "document-says-whose-text-it-is"} <= failed(proposed.scores())
