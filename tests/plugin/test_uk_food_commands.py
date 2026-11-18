@@ -2386,6 +2386,15 @@ def test_sign_off_recorded_is_graded_as_it_reads(tmp_path):
     fragment.helper("status", "--project", fragment.project, "--json")
     fragment.last_message = "Marked."
     assert failed(fragment.scores()) == set()
+    # The same part of the row, or the whole row, with its Changes cell reworded as well. The helper's verdict would
+    # catch this in a live run; a recording doctored after the fact has only this grader to show it.
+    for taken, put in [("| Written from the business's confirmed answers | [PENDING] | [PENDING] |", "| Rewritten | Sam Okafor, owner | 2026-11-18 |"),
+                       ("| 1.0 | 2026-11-17 | ArcKit AI | Written from the business's confirmed answers | [PENDING] | [PENDING] |",
+                        "| 1.0 | 2026-11-17 | ArcKit AI | Rewritten | Sam Okafor, owner | 2026-11-18 |")]:
+        reworded = marked(f"reworded{len(taken)}")
+        reworded.calls.insert(3, {"name": "Edit", "input": {"replace_all": False, "file_path": str(reworded.project / "ARC-001-FOODCOOK-v1.0.md"),
+                                                            "old_string": taken, "new_string": put}, "parent": None})
+        assert failed(reworded.scores()) == {"marking-changes-no-other-line"}, taken
     # J2: a signed paper copy that the request never mentions.
     paper = Run("sign-off-recorded", tmp_path / "paper")
     assert paper.helper("sign-off", "--doc", "FOODCOOK", "--project", paper.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0",
@@ -2602,7 +2611,18 @@ def test_a_case_that_writes_documents_fails_anything_sent_outside_the_project(na
                     'cp projects/001-bramble-cafe/food-safety/answers-CK.md /tmp/', 'cd /tmp && node "$H" render --doc FOODCOOK --project $P > body.md',
                     'node "$H" render --doc FOODCOOK --project projects/001-bramble-cafe > body.md', 'node "$H" render --doc FOODCOOK --project $P | tee body.md',
                     'cp -r projects/001-bramble-cafe ~/backup', "node \"$H\" render --doc FOODCOOK --project $P > 'body.md'",
-                    'node "$H" status --project $P --json >> ../status.json', 'node "$H" render --doc FOODCOOK --project $P 2> errors.log']:
+                    'node "$H" status --project $P --json >> ../status.json', 'node "$H" render --doc FOODCOOK --project $P 2> errors.log',
+                    # A path that climbs out, a second cd, a here-document sent to a file, and a redirect beside a comparison.
+                    'node "$H" status --project $P --json > projects/001-bramble-cafe/../../status.json',
+                    'cd projects/001-bramble-cafe && node "$H" status --project . --json > ../../status.json',
+                    'cd projects/001-bramble-cafe && node "$H" status --project . --json > /tmp/status.json',
+                    'cd projects/001-bramble-cafe; cd /tmp; node "$H" status --project "$OLDPWD" --json > status.json',
+                    'cd projects/001-bramble-cafe && cd .. && node "$H" status --project 001-bramble-cafe --json > status.json',
+                    'node "$H" status --project $P --json > status.json; cd projects/001-bramble-cafe',
+                    "cat <<'EOF' > body.md\nsome text\nEOF", "cat <<EOF >> /tmp/x.md\nsome text\nEOF", "cat > body.md <<'EOF'\nsome text\nEOF",
+                    "python3 - <<'EOF'\nprint(1)\nEOF\nnode \"$H\" render --doc FOODCOOK --project $P > body.md",
+                    'if (( $(wc -l < x) > 3 )); then node "$H" render --doc FOODCOOK --project $P > body.md; fi',
+                    '((node "$H" render --doc FOODCOOK --project $P) > body.md)']:
         assert not passes(shell, "Bash", {"command": command}), command
     for command in ['node "$H" render --doc FOODCOOK --project $P', 'node "$H" render --doc FOODCOOK --project $P 2>&1 | head -40',
                     'node "$H" status --project $P --json > /dev/null', 'node "$H" render --doc FOODCOOK --project $P > $P/food-safety/body.tmp',
@@ -2612,7 +2632,19 @@ def test_a_case_that_writes_documents_fails_anything_sent_outside_the_project(na
                     'cd projects/001-bramble-cafe && node "$H" render --doc FOODCOOK --project . > food-safety/body.tmp && rm food-safety/body.tmp',
                     'node "$H" render --doc FOODCOOK --project $P > "$P/food-safety/body.tmp"', 'node -e "console.log(1 > 0)"',
                     "node \"$H\" status --project $P --json | node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>console.log(s.length>0))'",
-                    'cd "$R"; node "$H" check --doc FOODCOOK --project projects/001-bramble-cafe --report projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md']:
+                    'cd "$R"; node "$H" check --doc FOODCOOK --project projects/001-bramble-cafe --report projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md',
+                    # Three forms a correct run may take, which were failed: a file in the project folder after a cd there,
+                    # a comparison in the body of a here-document, and one inside (( )).
+                    'cd projects/001-bramble-cafe && node "$H" status --project . --json > status.json',
+                    'cd ./projects/001-bramble-cafe; node "$H" render --doc FOODCOOK --project . | tee body.tmp',
+                    "cd 'projects/001-bramble-cafe' && node \"$H\" status --project . --json >> status.json && rm status.json",
+                    "node \"$H\" status --project $P --json | python3 - <<'EOF'\nimport json, sys\nd = json.load(sys.stdin)\nif len(d['unfinished']) > 0: print('unfinished')\nEOF",
+                    "node - <<EOF\nconst a = 1, b = 2;\nif (a > b) console.log('x'); else console.log(b >= a);\nEOF",
+                    "python3 - <<'PY' 2>&1\nx = 3\nprint(x > 2)\nPY\necho done",
+                    "diff <(node \"$H\" render --doc FOODCOOK --project $P) - <<'EOF'\n> quoted line\nEOF",
+                    'n=$(node "$H" status --project $P --json | grep -c unfinished); if (( n > 0 )); then echo some; fi',
+                    'if (( $(grep -c PENDING $P/ARC-001-FOODCOOK-v1.0.md) > 3 )); then echo yes; fi; echo $(( 4 > 3 ))',
+                    '(node "$H" status --project $P --json) | head -3', 'x=$( (node "$H" status --project $P) 2>&1 ); echo "$x" | head']:
         assert passes(shell, "Bash", {"command": command}), command
     assert not passes(written, "Write", {"file_path": "/tmp/body.md", "content": "x"})
     assert not passes(written, "Write", {"file_path": "/Users/someone/notes.md", "content": "x"})
