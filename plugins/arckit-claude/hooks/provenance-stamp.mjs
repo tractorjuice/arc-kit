@@ -200,6 +200,19 @@ function findBuildContext(filePath, repoRoot) {
 
 // ── Block construction ────────────────────────────────────────────────
 //
+// THE EXACT FORM OF THIS BLOCK IS RELIED ON. The UK food safety overlay's
+// helper (plugins/arckit-uk-food/scripts/uk-food.mjs, PROVENANCE_OPENS and
+// PROVENANCE_ROWS) recognises the block line for line, so that a stamp does
+// not end a signed food document's sign-off while any other text added to the
+// file does. A change to what buildProvenanceBlock writes (a marker, the
+// heading, the note, the table's heading rows, a row's label, order or value
+// form) must change that helper in the same pull request. The overlay's test
+// "G1: the real provenance hook, run on a document before and after it is
+// signed off and marked, leaves the sign-off standing each time it stamps"
+// (tests/plugin/uk-food-status.test.mjs) runs this hook and fails first. Core
+// and the overlay are installed and updated separately: see the note in
+// hooks/README.md.
+//
 // The block carries ONLY harness-derived fields that complement the existing
 // human-authored footer. We deliberately do NOT restamp Skill, Model,
 // Generated-on, ArcKit Version, or Project — those are already in the footer
