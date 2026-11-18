@@ -887,6 +887,9 @@ SIGN_OFF_RULES = {
                                                                        "helper leaves it out of what a sign-off covers. Leave it "
                                                                        "exactly as the hook wrote it, and never say that it ends the "
                                                                        "sign-off",
+    "Live runs, 18 Nov: the summary does not call the hook's section a change": "A change to the file outside its UK-FOOD markers ends "
+                                                                                "the sign-off too, other than the hook's Build "
+                                                                                "Provenance section",
     "T1: two ends, and the summary says which": "This command ends in exactly one of two states, and its summary says which:",
     "T1: marked": "If `check`'s `ok` is true and the document's `signedOff` and `headerShowsSignOff` are both true, it is "
                   "**marked**: stop.",
@@ -1198,6 +1201,22 @@ def test_template_comment_does_not_point_a_note_outside_the_markers(name):
 
 
 @pytest.mark.parametrize("name", TEMPLATES)
+def test_template_comment_says_truly_what_ends_a_sign_off(name):
+    """The comment used to say a line added anywhere in the file ends a sign-off. A model read that in a live run,
+    cut core's Build Provenance section off a signed document and told the owner the section would end the sign-off.
+    The helper leaves that section, and the header lines the sign-off command writes, out of what a sign-off covers."""
+    text = (OVERLAY / "templates" / name).read_text(encoding="utf-8")
+    comment = next(line for line in text.splitlines() if line.startswith("<!-- This file is written by"))
+    assert "anywhere in the file" not in text, name
+    if name == "uk-food-check-template.md":
+        assert "sign-off covers" not in comment, "the completion record is a report and is not signed off"
+        return
+    assert ("A sign-off covers every line here, so a line added or changed afterwards ends it. There are two exceptions: the header "
+            "lines the sign-off command writes to show the sign-off, and the Build Provenance section that ArcKit adds at the foot of "
+            "the file and rewrites itself. -->") in comment, name
+
+
+@pytest.mark.parametrize("name", TEMPLATES)
 def test_template_holds_nothing_render_prints(name):
     """Ruling 26: the closing notice, the source line and the pack's headings come from render."""
     text = (OVERLAY / "templates" / name).read_text(encoding="utf-8")
@@ -1272,6 +1291,28 @@ def test_a_document_built_from_its_template_passes_check(code, project):
         doc = next(d for d in status["documents"] if d["code"] == code)
         assert doc["file"] == path.name and doc["rendered"] and doc["inSync"], doc
         assert doc["otherText"] == [] and doc["bodyInStep"] is True, doc
+
+
+EARLIER_NOTE_END = "A sign-off covers every line here, so a line added or changed afterwards, anywhere in the file, ends it. -->"
+NOTE_END = ("A sign-off covers every line here, so a line added or changed afterwards ends it. There are two exceptions: the header "
+            "lines the sign-off command writes to show the sign-off, and the Build Provenance section that ArcKit adds at the foot of "
+            "the file and rewrites itself. -->")
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+@pytest.mark.parametrize("code", [c for c in TEMPLATE_OF if c != "FOODCMP"])
+def test_a_document_carrying_the_note_as_it_read_before_is_still_all_frame(code, project):
+    """A document written before the note said what a sign-off leaves out keeps the earlier note. It is still that
+    document's frame, so nobody signing it is shown the note as text someone added; a note in any other words is."""
+    path = build(code, project)
+    text = path.read_text(encoding="utf-8")
+    assert text.count(NOTE_END) == 1, code
+    path.write_text(text.replace(NOTE_END, EARLIER_NOTE_END), encoding="utf-8")
+    checked = json.loads(run(HELPER, "check", "--doc", code, "--project", project, "--report", path, "--json").stdout)
+    assert checked["otherText"] == [] and checked["bodyInStep"] is True, checked
+    path.write_text(text.replace(NOTE_END, EARLIER_NOTE_END.replace("ends it", "ends it for good")), encoding="utf-8")
+    checked = json.loads(run(HELPER, "check", "--doc", code, "--project", project, "--report", path, "--json").stdout)
+    assert [entry["text"][:28] for entry in checked["otherText"]] == ["<!-- This file is written by"], checked
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
@@ -1787,7 +1828,8 @@ def test_the_pages_no_longer_overstate_what_the_review_named():
     overview = (ROOT_GUIDES / OVERVIEW_GUIDE).read_text(encoding="utf-8")
     profile = (ROOT_GUIDES / "uk-food-profile.md").read_text(encoding="utf-8")
     sign_off = (ROOT_GUIDES / "uk-food-sign-off.md").read_text(encoding="utf-8")
-    assert "a line of that document changed afterwards ends it. The paragraph on signing off, below, says what else does." in readme
+    assert ("a line of that document added or changed afterwards ends it, apart from the header lines that show the sign-off and the "
+            "Build Provenance section ArcKit adds at the foot of the file. The paragraph on signing off, below, says what else does.") in readme
     assert "and that the header now shows your sign-off. It does not stop while the header still reads `DRAFT`." in sign_off, "H8"
     assert "The earlier sign-off does not come back" in profile
     assert "as a new version if it had been signed off, and that is the one to sign" in profile

@@ -29,7 +29,7 @@
 
 ---
 
-<!-- This file is written by the overlay's commands and is not edited by hand. The text between the UK-FOOD markers below is printed by the overlay's helper from the business's worksheets: to change it, change the worksheet and run the command again. A note of the business's own belongs in its own methods, recorded with the own methods command, not in this file. A sign-off covers every line here, so a line added or changed afterwards, anywhere in the file, ends it. -->
+<!-- This file is written by the overlay's commands and is not edited by hand. The text between the UK-FOOD markers below is printed by the overlay's helper from the business's worksheets: to change it, change the worksheet and run the command again. A note of the business's own belongs in its own methods, recorded with the own methods command, not in this file. A sign-off covers every line here, so a line added or changed afterwards ends it. There are two exceptions: the header lines the sign-off command writes to show the sign-off, and the Build Provenance section that ArcKit adds at the foot of the file and rewrites itself. -->
 
 <!-- UK-FOOD:BEGIN doc=FOODCOOK data=sfbb-caterers-2026-11-17 body=312226fc2e354e5bea2dd637cbf8e82caf43e868ccecb71142631fed16e92876 -->
 
