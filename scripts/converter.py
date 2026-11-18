@@ -433,6 +433,21 @@ AGENT_CONFIG = {
 }
 
 
+def expand_plugin_root(text, prefix):
+    """Replace ${CLAUDE_PLUGIN_ROOT} with `prefix`.
+
+    A shell expands `~` only at the start of an unquoted word, so where the
+    placeholder opens a double-quoted string (`node "${CLAUDE_PLUGIN_ROOT}/x.mjs"`)
+    a `~/` prefix is written `$HOME/`, which a shell does expand inside double
+    quotes. Gemini CLI substitutes `${extensionPath}` only in its manifest and
+    hooks.json, never in a command's prompt, so the prompt must carry a path the
+    shell can expand itself. Unquoted uses and every other prefix are unchanged.
+    """
+    if prefix.startswith("~/"):
+        text = text.replace('"${CLAUDE_PLUGIN_ROOT}', '"$HOME/' + prefix[2:])
+    return text.replace("${CLAUDE_PLUGIN_ROOT}", prefix)
+
+
 def rewrite_paths(prompt, config):
     """Rewrite ${CLAUDE_PLUGIN_ROOT} paths using agent config."""
     result = rewrite_user_config_placeholders(prompt)
@@ -457,7 +472,7 @@ def rewrite_paths(prompt, config):
             f"{config['script_path_prefix']}/",
         )
 
-    result = result.replace("${CLAUDE_PLUGIN_ROOT}", config["path_prefix"])
+    result = expand_plugin_root(result, config["path_prefix"])
 
     if config.get("rewrite_read_instructions"):
         result = re.sub(
@@ -2305,7 +2320,8 @@ def generate_gemini_agents(agents_dir, output_dir):
         gemini_fm["timeout_mins"] = 10
 
         # Rewrite paths: ${CLAUDE_PLUGIN_ROOT} -> ~/.gemini/extensions/arckit
-        prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", gemini_path_prefix)
+        # ($HOME/... where the path opens a double-quoted string).
+        prompt = expand_plugin_root(prompt, gemini_path_prefix)
         prompt = rewrite_user_config_placeholders(prompt)
 
         # Rewrite Read instructions to shell commands

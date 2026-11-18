@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **A build recipe can say how short a document may be.** `/arckit:build` failed any document of 100 lines or fewer, and a recipe could not change that. A recipe target can now set `min_lines`, the fewest lines its document may have; a target without it still needs more than 100, as before, so no existing recipe builds differently. The food overlay's `uk-food-sfbb` recipe sets one for each of its documents, so it now builds the business's own methods with the others.
 - **ArcKit no longer tells you to promote a draft that only its own command can change.** The session-start notice about drafts left unchanged for over a month, and `/arckit:health`'s long-running draft finding, both said to promote such a draft to review or approval. A document type can now name, in the registry, the command that sets its status (`statusSetBy`), and a draft of such a type is left out of both. The food overlay's eight document types are the first: only its sign-off command changes their status, and its completion record always stays a draft. An overdue review is still reported for every type.
 
+### Fixed
+
+- **Gemini CLI: a command that runs a bundled script by a quoted path finds the script.** The Gemini extension names its own folder `~/.gemini/extensions/arckit`, and a shell does not expand `~` inside quotes, so a command that quotes a script's path could not run it: the food and legacy IT overlays' commands, `/arckit:tenders`, `/arckit:competitors` and the Netherlands GEMMA and NORA commands. Such a path now starts `$HOME`. Gemini replaces `${extensionPath}` only in its manifest and hooks, not in a command's text, so the path is written out. No other extension changes.
+
 ## [6.22.1] — 2026-11-17
 
 ### Changed
