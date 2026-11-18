@@ -1516,6 +1516,78 @@ test('M3: one list of unseen characters: whatever a sign-off\'s name refuses, a 
   }
 });
 
+// Ruling G7: the characters added to the one list, by code point, with what each is. A range is given by
+// its first and last code point and is tried at both ends and in the middle. None is written in this file.
+const REFUSED = [
+  [0xe0001, 0xe0001, 'the language tag'], [0xe0020, 0xe007f, 'the tag characters'], [0x2061, 0x2064, 'the invisible operators'],
+  [0x180e, 0x180e, 'the Mongolian vowel separator'], [0xfff9, 0xfffb, 'the interlinear annotation marks'],
+  [0x034f, 0x034f, 'the combining grapheme joiner'], [0x115f, 0x115f, 'the Hangul choseong filler'], [0x1160, 0x1160, 'the Hangul jungseong filler'],
+  [0x3164, 0x3164, 'the Hangul filler'], [0xffa0, 0xffa0, 'the halfwidth Hangul filler'], [0x1d173, 0x1d17a, 'the musical format characters']
+];
+const pointsOf = ([first, last]) => [...new Set([first, Math.floor((first + last) / 2), last])];
+// Characters that stay allowed: the Arabic letter mark, which does the job of the two direction marks, and
+// the neighbours of each range, which are not in it.
+const STILL_ALLOWED = [0x061c, 0x034e, 0x0350, 0x115e, 0x1161, 0x180d, 0x180f, 0x2065, 0x3163, 0x3165, 0xff9f, 0xffa1, 0xfff8, 0xfffc,
+  0x1d172, 0x1d17b, 0xe0000, 0xe0002, 0xe001f, 0xe0080];
+
+test('G7: each character the list names is refused in an answer, a name, a written procedure and a sign-off name, with its line and code point; the Arabic letter mark and each range\'s neighbours are not', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'uk-food-'));
+  const signs = (name) => run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', name, '--role', 'Owner', '--version', '1.0');
+  let tried = 0;
+  for (const range of REFUSED) {
+    for (const point of pointsOf(range)) {
+      const char = String.fromCodePoint(point);
+      const code = codePoint(char);
+      assert.match(code, /^U\+[0-9A-F]{4,5}$/);
+      // In an answer and in the name of the person who gave it.
+      for (const [at, lines] of [['Answer: A bain', confirmed(`A bain${char}marie`)],
+        ['By: Sam', ['Answer: A bain-marie', 'State: confirmed', `By: Sam${char} Okafor`, 'On: 2026-11-17', 'Source:']]]) {
+        const text = fill(blankWorksheet('CK', data), 'CK-06-Q02', ...lines);
+        const parsed = parse(text);
+        assert.equal(parsed.problems.length, 1, `${code} ${range[2]} ${at}: ${messages(parsed)}`);
+        assert.equal(parsed.problems[0].line, lineOf(text, at, '### CK-06-Q02'), code);
+        assert.ok(parsed.problems[0].message.includes(`this line holds ${code}:`), parsed.problems[0].message);
+        assert.match(parsed.problems[0].message, /not used/);
+        assert.equal(parsed.answers.get('CK-06-Q02').answered, false, code);
+      }
+      // In a procedure kept word for word.
+      const line = `Stir${char} twice.`;
+      const procedure = procedureEntry(['First line.', '', line]);
+      const own = parse(procedure);
+      assert.equal(own.problems.length, 1, `${code} in a procedure: ${messages(own)}`);
+      assert.equal(own.problems[0].line, procedure.split('\n').findIndex((l) => l === `  ${line}`) + 1, code);
+      assert.ok(own.problems[0].message.includes(code), own.problems[0].message);
+      assert.equal(own.entries.get('OWN-01').answered, false, code);
+      // In the name and in the role of a person signing off: a usage error, before anything is read.
+      const signed = signs(`Sam${char}Okafor`);
+      assert.equal(signed.status, 2, code);
+      assert.match(signed.stderr, /--name is the name of the person signing off/, code);
+      const role = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Sam Okafor', '--role', `Own${char}er`, '--version', '1.0');
+      assert.match(role.stderr, /--role is the role of the person signing off/, code);
+      tried++;
+    }
+  }
+  assert.equal(tried, 19, 'each single code point, and both ends and the middle of each of the four ranges');
+  for (const point of STILL_ALLOWED) {
+    const char = String.fromCodePoint(point);
+    assert.deepEqual(parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed(`Sam${char}Okafor`))).problems, [], codePoint(char));
+    assert.doesNotMatch(signs(`Sam${char}Okafor`).stderr, /--name is the name/, codePoint(char));
+  }
+  // The cost: a flag made of tag characters, such as England's, is refused, and each tag character in it is named once.
+  const england = String.fromCodePoint(0x1f3f4, 0xe0067, 0xe0062, 0xe0065, 0xe006e, 0xe0067, 0xe007f);
+  const flag = parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed(`Kept hot ${england}`)));
+  assert.equal(flag.problems.length, 1);
+  assert.ok(flag.problems[0].message.includes('this line holds U+E0067, U+E0062, U+E0065, U+E006E and U+E007F:'), flag.problems[0].message);
+  // A flag made of two regional letters, and the black flag on its own, are read as written.
+  const wales = String.fromCodePoint(0x1f1ec, 0x1f1e7);
+  assert.deepEqual(parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed(`Kept hot ${wales} ${String.fromCodePoint(0x1f3f4)}`))).problems, []);
+  // An Arabic name followed by the Arabic letter mark is taken, in a worksheet and as a signer's name.
+  const maryam = `${String.fromCodePoint(0x645, 0x631, 0x64a, 0x645, 0x61c)} (Maryam)`;
+  const named = parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', 'Answer: A bain-marie', 'State: confirmed', `By: ${maryam}`, 'On: 2026-11-17', 'Source:'));
+  assert.deepEqual(named.problems, []);
+  assert.equal(named.answers.get('CK-06-Q02').by, maryam);
+});
+
 // ---- Command line ----
 
 test('worksheet --section prints the blank worksheet for each section', () => {

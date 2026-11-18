@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { basename, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import {
   COMPLETION_ROWS, DATA_ID, DEFAULT_DATA_DIR, PENDING, PROFILE_QUESTIONS, SECTION_DOCS, SECTION_IDS, SIGN_OFFS_SCHEMA,
   STATUS_ORDER, blankWorksheet, checkDocument, completionTargets, documentHashes, emitWorksheet, loadData, parseWorksheet,
@@ -55,8 +55,12 @@ const signOff = (dir, doc, ...extra) => run('sign-off', '--doc', doc, '--project
   ...(extra.includes('--version') ? [] : ['--version', '1.0']), ...(extra.includes('--date') ? [] : ['--date', '2026-11-17']), ...extra);
 const markerHash = (file) => /body=([0-9a-f]{64})/.exec(readFileSync(file, 'utf8'))[1];
 const sha256 = (text) => createHash('sha256').update(text).digest('hex');
-// The two hashes a sign-off holds for a document as it is now.
-const hashesOf = (file, doc) => documentHashes(readFileSync(file, 'utf8'), doc);
+// The two hashes a sign-off holds for a document as it is now, read as the helper reads them: with the
+// file's name and the sign-offs recorded in its project.
+const hashesOf = (file, doc) => {
+  const records = existsSync(signOffsFile(dirname(file))) ? JSON.parse(readFileSync(signOffsFile(dirname(file)), 'utf8')).signOffs : [];
+  return documentHashes(readFileSync(file, 'utf8'), doc, basename(file), records);
+};
 const today = () => {
   const now = new Date();
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
@@ -96,11 +100,12 @@ const AWAITING = 'own entry OWN-02 (Sous vide eggs) is awaiting environmental he
 const otherVersionLine = (version, name, signed, date) => `this is version ${version}, and the newest sign-off is ${name}'s of ` +
   `version ${signed}, on ${date}: once this version is finished, a named person signs it off`;
 const changedLine = (name, date) => `signed off by ${name} on ${date}, but changed since: sign off again`;
-const answersChangedLine = (name, date) => `signed off by ${name} on ${date}, but its answers have changed since: the new ` +
-  'version needs signing off';
+const answersChangedLine = (name, date) => `signed off by ${name} on ${date}, but its answers have changed since: writing ` +
+  'the document again makes a new version, which then needs signing off';
+// Told when the header claims nothing, so the file is in step and its command has nothing to write.
 const outsideChangedLine = (name, date) => `signed off by ${name} on ${date}, but the file was changed outside its UK-FOOD ` +
-  'markers after that, so the sign-off no longer covers it: take that change out again, or write the document again with ' +
-  'its command, which makes a new version to sign off';
+  'markers after that, so the sign-off no longer covers it: take that change out again, or have a named person sign it off ' +
+  'again as it now reads';
 // A written document that fails check, by check's own first reason.
 const staleLine = (file) => `document ${file} is out of date, as its worksheets have changed since it was written: write the ` +
   'document again from its worksheet';
@@ -482,7 +487,7 @@ test('sign-off of CK records who, what and when, with the hash of the body the d
   const text = readFileSync(signOffsFile(dir), 'utf8');
   assert.equal(text, `${JSON.stringify({ schema: SIGN_OFFS_SCHEMA, signOffs: [record] }, null, 2)}\n`);
   assert.deepEqual(Object.keys(JSON.parse(text).signOffs[0]), ['doc', 'version', 'file', 'name', 'role', 'date', 'paperSigned', 'body', 'outside']);
-  // One line, saying what was recorded and that the document's header still says DRAFT.
+  // One line, saying what was recorded and that the document's header reads as it did, DRAFT or an earlier sign-off.
   assert.equal(result.stdout.trimEnd().split('\n').length, 1, result.stdout);
   for (const word of ['Sam Okafor', 'ARC-001-FOODCOOK-v1.0.md', '2026-11-17', 'DRAFT']) assert.ok(result.stdout.includes(word), word);
   assert.equal(result.stderr, '');
@@ -677,9 +682,15 @@ test('R50b: a sign-off recorded for an unfinished document does not make it sign
     const doc = docStatus(dir, code);
     assert.deepEqual([doc.inSync, doc.signedOff, doc.signOff.name], [true, false, 'Forged Name'], code);
   }
-  // Nothing has changed since the record, so it is not said to have; the lines say only what is unfinished.
+  // Nothing has changed since the record, so it is not said to have. The cross-contamination document
+  // still shows questions not yet answered, so its record cannot be right, and is said to be so (G8).
+  // The own methods document shows none: it may have been signed before the profile confirmed the
+  // process, so its lines say only what is unfinished.
   const xc = outstanding(dir, 'XC');
-  assert.deepEqual(linesFor(dir, 'FOODXC'), [unansweredLine('XC', xc.unanswered), proposedLine('XC', xc.proposed)]);
+  assert.deepEqual(linesFor(dir, 'FOODXC'), [unansweredLine('XC', xc.unanswered), proposedLine('XC', xc.proposed),
+    'the sign-off recorded for this file in Forged Name\'s name, on 2026-11-17, cannot be right: the document still shows a ' +
+    'question not yet answered or an entry not yet confirmed, and one that does is never signed off. Once it is finished and ' +
+    'written again, a named person signs it off']);
   assert.deepEqual(linesFor(dir, 'FOODOWN'), [UNCOVERED, AWAITING]);
   const rows = tableRows(rendered('FOODCMP', dir));
   rows.forEach((row, i) => assert.deepEqual(row.slice(1, 3), targets[i].section === 'CK' ? ['2026-11-17', 'Forged Name'] : [PENDING, PENDING], row[0]));
@@ -821,7 +832,7 @@ test('the completion record lists what is unfinished, the sous vide entry awaiti
   assert.equal(odd.status, 0, odd.stderr);
   setSheet(dir, 'CK', swap(sheet(dir, 'CK'), 'Answer: Baked beans', 'Answer: Baked beans and soup'));
   const changed = rendered('FOODCMP', dir);
-  assert.ok(changed.includes('- Cooking (FOODCOOK): signed off by Sam \\*Okafor\\* &lt;b&gt;\\$x\\$&lt;/b&gt; on 2026-11-17, but its answers have changed since: the new version needs signing off\n'), changed);
+  assert.ok(changed.includes('- Cooking (FOODCOOK): signed off by Sam \\*Okafor\\* &lt;b&gt;\\$x\\$&lt;/b&gt; on 2026-11-17, but its answers have changed since: writing the document again makes a new version, which then needs signing off\n'), changed);
   assert.doesNotMatch(changed, /<b>|(?<!\\)\*Okafor/);
 });
 
@@ -891,18 +902,19 @@ const PARTIALS = 'plugins/arckit-uk-food/templates/_partials';
 const REGIMES = readdirSync(PARTIALS).map((name) => /^document-control-([a-z]+)\.md$/.exec(name)?.[1]).filter(Boolean);
 const HEADER_MARKER = '<!-- DOC-CONTROL-HEADER -->\n<!-- Resolved at command-execution time per _partials/RENDERING.md. -->';
 // A document written as a command writes it: the template, its Document Control marker resolved to a
-// regime's partial, and a fresh render at the body marker. `header` gives Status, Reviewed By and
-// Approved By; `history` the approval cells of the Revision History row.
+// regime's partial, Last Modified given its date, and a fresh render at the body marker. `header` gives
+// Status, Reviewed By and Approved By; `history` the approval cells of the Revision History row.
 const templated = (dir, doc, { regime = 'uk', version = '1.0', status = 'DRAFT', reviewed = '[PENDING]', approved = '[PENDING]',
   history = ['[PENDING]', '[PENDING]'], body = rendered(doc, dir) } = {}) => {
   const partial = readFileSync(join(PARTIALS, `document-control-${regime}.md`), 'utf8').trimEnd();
-  for (const row of ['| **Status** | DRAFT |', '| **Reviewed By** | [PENDING] |', '| **Approved By** | [PENDING] |']) {
+  for (const row of ['| **Status** | DRAFT |', '| **Reviewed By** | [PENDING] |', '| **Approved By** | [PENDING] |', '| **Last Modified** | [YYYY-MM-DD] |']) {
     assert.ok(partial.includes(`\n${row}\n`), `${regime}: ${row}`);
   }
   const text = swap(swap(swap(TEMPLATE, HEADER_MARKER, partial
     .replace('| **Status** | DRAFT |', `| **Status** | ${status} |`)
     .replace('| **Reviewed By** | [PENDING] |', `| **Reviewed By** | ${reviewed} |`)
-    .replace('| **Approved By** | [PENDING] |', `| **Approved By** | ${approved} |`)),
+    .replace('| **Approved By** | [PENDING] |', `| **Approved By** | ${approved} |`)
+    .replace('| **Last Modified** | [YYYY-MM-DD] |', '| **Last Modified** | 2026-11-16 |')),
   '| [VERSION] | [YYYY-MM-DD] | ArcKit AI | [CHANGES] | [PENDING] | [PENDING] |',
   `| ${version} | 2026-11-17 | ArcKit AI | Written from the business's confirmed answers | ${history.join(' | ')} |`),
   '<!-- UK-FOOD-BODY -->', body);
@@ -916,7 +928,7 @@ const mark = (file, who = 'Sam Okafor, Owner, 2026-11-17') => {
   edit(file, '| **Status** | DRAFT |', '| **Status** | APPROVED |');
   edit(file, '| **Reviewed By** | [PENDING] |', `| **Reviewed By** | ${who} |`);
   edit(file, '| **Approved By** | [PENDING] |', `| **Approved By** | ${who} |`);
-  edit(file, '| **Last Modified** | [YYYY-MM-DD] |', '| **Last Modified** | 2026-11-17 |');
+  edit(file, '| **Last Modified** | 2026-11-16 |', '| **Last Modified** | 2026-11-17 |');
   edit(file, 'confirmed answers | [PENDING] | [PENDING] |', 'confirmed answers | Sam Okafor, Owner | 2026-11-17 |');
 };
 const lineNumber = (file, needle) => {
@@ -1109,17 +1121,19 @@ test('I1: marking the header, filling in the Revision History row and a Build Pr
   const signed = () => docStatus(dir, 'FOODCOOK').signedOff;
   mark(file);
   assert.equal(signed(), true);
-  const provenance = (stamp) => `\n<!-- arckit-provenance:start -->\n\n## Build Provenance\n\n*Stamped automatically.*\n\n| Field | Value |\n` +
-    `|-------|-------|\n| Stamped at | ${stamp} |\n\n<!-- arckit-provenance:end -->\n`;
-  writeFileSync(file, `${readFileSync(file, 'utf8')}${provenance('2026-11-17T10:00:00Z')}`);
+  // The Build Provenance block as core's hook writes it (hookBlock, below, has the hook make one).
+  const stamped = /\| Stamped at \| [^|]+ \|/;
+  writeFileSync(file, `${readFileSync(file, 'utf8')}\n${hookBlock()}\n`);
   assert.equal(signed(), true);
-  edit(file, '2026-11-17T10:00:00Z', '2026-11-17T11:30:00Z');
+  writeFileSync(file, readFileSync(file, 'utf8').replace(stamped, '| Stamped at | 2026-11-17T11:30:00.000Z |'));
+  assert.ok(readFileSync(file, 'utf8').includes('| Stamped at | 2026-11-17T11:30:00.000Z |'));
   assert.equal(signed(), true);
   edit(file, '| **Last Modified** | 2026-11-17 |', '| **Last Modified** | 2026-11-16 |');
   assert.equal(signed(), true);
-  // The approval cells of the Revision History row, written another way: still the sign-off command's to fill in.
+  // The approval cells of the Revision History row hold what the sign-off command writes and nothing
+  // else (G1): written another way, they count, so the sign-off ends.
   edit(file, 'answers | Sam Okafor, Owner | 2026-11-17 |', 'answers | Sam Okafor, Owner, 2026-11-17 | 17 November 2026 |');
-  assert.equal(signed(), true);
+  assert.equal(signed(), false);
   // A row written without its closing pipe is read the same.
   edit(file, 'answers | Sam Okafor, Owner, 2026-11-17 | 17 November 2026 |', 'answers | Sam Okafor, Owner | 2026-11-17');
   assert.equal(signed(), false, 'the closing pipe of the row is itself part of the file');
@@ -1222,7 +1236,7 @@ test('M4: the readable status says what is wrong with a written document, not "o
     ['Poached eggs', 'Boiled eggs', 'changed by hand between its markers'],
     ['<!-- UK-FOOD:END -->', '', 'with its markers missing or damaged'],
     ['## Revision History', '## COOKING\n\n## Revision History', 'with the pack\'s text outside its markers'],
-    ['| **Status** | DRAFT |', '| **Status** | APPROVED |', 'with a header that claims a sign-off nobody recorded']
+    ['| **Status** | DRAFT |', '| **Status** | APPROVED |', 'with a header that no recorded sign-off bears out']
   ]) {
     writeFileSync(file, swap(text, from, to));
     assert.equal(line(), says(words), words);
@@ -1322,4 +1336,473 @@ test('M2: sign-off refuses a date after today, writing nothing, and takes today 
   records.signOffs.at(-1).date = '2999-01-01';
   writeFileSync(signOffsFile(dir), `${JSON.stringify(records, null, 2)}\n`);
   assert.equal(run('status', '--project', dir).status, 0);
+});
+
+// ---- The seven open items (rulings G1 to G8) ----
+
+const HOOK = 'plugins/arckit-claude/hooks/provenance-stamp.mjs';
+// A copy of the cafe's project inside a repository's projects folder, where core's hooks look for documents.
+const cafeInRepo = () => {
+  const root = mkdtempSync(join(tmpdir(), 'uk-food-repo-'));
+  const dir = join(root, 'projects', '001-bramble-cafe');
+  mkdirSync(dir, { recursive: true });
+  cpSync(join(CAFE, 'food-safety'), join(dir, 'food-safety'), { recursive: true });
+  return { root, dir };
+};
+// Runs core's provenance hook as Claude Code does after a Write or an Edit of `file`.
+const stamp = (root, file, tool = 'Edit') => {
+  const result = spawnSync('node', [HOOK], { input: JSON.stringify({ tool_name: tool, cwd: root, tool_input: { file_path: file } }), encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+};
+const blockOf = (text) => text.slice(text.indexOf('<!-- arckit-provenance:start -->'), text.indexOf('<!-- arckit-provenance:end -->') + '<!-- arckit-provenance:end -->'.length);
+// The Build Provenance block exactly as the hook writes it today, made by the hook itself.
+const hookBlock = (() => {
+  let made = null;
+  return () => {
+    if (!made) {
+      const { root, dir } = cafeInRepo();
+      const file = templated(dir, 'FOODCOOK');
+      stamp(root, file, 'Write');
+      made = blockOf(readFileSync(file, 'utf8'));
+      assert.match(made, /^<!-- arckit-provenance:start -->\n\n## Build Provenance\n/);
+    }
+    return made;
+  };
+})();
+const SAM = 'Sam Okafor, Owner, 2026-11-17';
+// A cell of the header that holds something the commands do not write there, as the unfinished list tells it.
+const cellLine = (file, line, field, typed, want) => `document ${file} has ${typed === '' ? 'nothing' : `"${typed}"`} in ${field}, at line ${line}, ` +
+  `a cell the sign-off step rewrites: write ${want} there first, so that marking the document as signed off changes nothing else in the file`;
+const unsoundLine = (name, date) => `the sign-off recorded for this file in ${name}'s name, on ${date}, cannot be right: the document ` +
+  'still shows a question not yet answered or an entry not yet confirmed, and one that does is never signed off. Once it is ' +
+  'finished and written again, a named person signs it off';
+
+test('G1: the real provenance hook, run on a document before and after it is signed off and marked, leaves the sign-off standing each time it stamps', () => {
+  for (const model of ['[AI_MODEL]', 'claude-opus-5-5', 'claude-sonnet-4-6']) {
+    const { root, dir } = cafeInRepo();
+    const file = templated(dir, 'FOODCOOK');
+    edit(file, '**Model**: [AI_MODEL]', `**Model**: ${model}`);
+    stamp(root, file, 'Write');
+    assert.match(readFileSync(file, 'utf8'), /\n<!-- arckit-provenance:start -->\n\n## Build Provenance\n/, model);
+    assert.equal(signOff(dir, 'FOODCOOK').status, 0, model);
+    assert.equal(docStatus(dir, 'FOODCOOK').signedOff, true, model);
+    mark(file);
+    const before = readFileSync(file, 'utf8');
+    stamp(root, file);
+    const after = readFileSync(file, 'utf8');
+    assert.notEqual(after, before, 'the hook stamps again, with a new time');
+    assert.equal(check(dir, 'FOODCOOK', file).exit, 0, check(dir, 'FOODCOOK', file).message);
+    assert.deepEqual([docStatus(dir, 'FOODCOOK').inSync, docStatus(dir, 'FOODCOOK').signedOff], [true, true], model);
+    assert.deepEqual(linesFor(dir, 'FOODCOOK'), [], model);
+  }
+  // A document signed before it was ever stamped, then stamped by the edit that marks it.
+  const { root, dir } = cafeInRepo();
+  const file = templated(dir, 'FOODCOOK');
+  assert.equal(signOff(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  stamp(root, file);
+  assert.ok(readFileSync(file, 'utf8').includes('## Build Provenance'));
+  assert.equal(docStatus(dir, 'FOODCOOK').signedOff, true);
+  // Written inside a build: the hook adds the build's rows, and stamps the same ones again.
+  const built = cafeInRepo();
+  const other = templated(built.dir, 'FOODCOOK');
+  mkdirSync(join(built.dir, '.arckit'), { recursive: true });
+  const buildState = (topic) => writeFileSync(join(built.dir, '.arckit', 'state.json'), JSON.stringify({ recipe: 'uk-food-sfbb',
+    targets: { CK: { status: 'complete', path: `projects/001-bramble-cafe/${basename(other)}`, wave: 2, skill: 'uk-food-safe-methods', topic } } }));
+  buildState(null);
+  stamp(built.root, other, 'Write');
+  assert.match(readFileSync(other, 'utf8'), /\| Build Recipe \| `uk-food-sfbb` \|\n\| Build Wave \| 2 \|\n\| Build Target \| `CK` \|/);
+  assert.equal(signOff(built.dir, 'FOODCOOK').status, 0);
+  mark(other);
+  stamp(built.root, other);
+  assert.equal(docStatus(built.dir, 'FOODCOOK').signedOff, true);
+  // A build's topic is free text the hook copies, so that one row counts as it was signed: another topic ends the sign-off.
+  buildState('The cooking record');
+  stamp(built.root, other);
+  assert.match(readFileSync(other, 'utf8'), /\| Build Topic \| The cooking record \|/);
+  assert.equal(docStatus(built.dir, 'FOODCOOK').signedOff, false);
+});
+
+test('G1: once a document is signed off, a header cell, an approval cell of the Revision History or a line of the Build Provenance block that holds anything but what the commands and the hook write ends the sign-off, and one that reads as a claim fails check at its own line', () => {
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  assert.equal(signOff(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  writeFileSync(file, `${readFileSync(file, 'utf8')}\n${hookBlock()}\n`);
+  const signed = () => docStatus(dir, 'FOODCOOK').signedOff;
+  assert.equal(signed(), true);
+  assert.equal(check(dir, 'FOODCOOK', file).exit, 0, check(dir, 'FOODCOOK', file).message);
+  const text = readFileSync(file, 'utf8');
+  const name = basename(file);
+  // What the commands and the hook do write: another date, another time of stamping, the rows put back to pending.
+  for (const [from, to] of [
+    ['| **Last Modified** | 2026-11-17 |', '| **Last Modified** | 2026-11-18 |'],
+    ['| **Last Modified** | 2026-11-17 |', '| **Last Modified** | [PENDING] |'],
+    [/\| Stamped at \| [^|]+ \|/, '| Stamped at | 2027-01-02T03:04:05.678Z |'],
+    [/\| Effective Effort \| [^\n]+ \|/, '| Effective Effort | `high` (downgraded from `max` \u2014 model does not support that level) |'],
+    [/\| Effective Effort \| [^\n]+ \|/, '| Effective Effort | `max` |']
+  ]) {
+    assert.ok(typeof from === 'string' ? text.includes(from) : from.test(text), String(from));
+    writeFileSync(file, text.replace(from, to));
+    assert.equal(signed(), true, to);
+    assert.equal(check(dir, 'FOODCOOK', file).exit, 0, to);
+  }
+  // The six the review showed, and others of their kinds. Each ends the sign-off; `kind` and `at` say how check fails.
+  const header = (pattern) => ({ kind: 'header', pattern });
+  const end = '<!-- arckit-provenance:end -->';
+  const cases = [
+    ['| **Status** | APPROVED |', '| **Status** | APPROVED by the council |', header(/Status is "APPROVED by the council".*Write APPROVED there, or put it back to DRAFT/)],
+    ['| **Status** | APPROVED |', '| **Status** | Approved |', header(/Status is "Approved".*Write APPROVED there/)],
+    ['| **Status** | APPROVED |', '| **Status** | **APPROVED** |', header(/Write APPROVED there/)],
+    [`| **Approved By** | ${SAM} |`, `| **Approved By** | ${SAM}; inspected by Westshire EHO |`,
+      header(/Approved By is "Sam Okafor, Owner, 2026-11-17; inspected by Westshire EHO", which is not exactly what Sam Okafor's sign-off of this file records\. Write "Sam Okafor, Owner, 2026-11-17" there and nothing else, or put it back to \[PENDING\]/)],
+    [`| **Reviewed By** | ${SAM} |`, '| **Reviewed By** | Sam Okafor, Owner and inspector for the council, 2026-11-17 |', header(/which is not exactly what Sam Okafor's sign-off of this file records/)],
+    [`| **Reviewed By** | ${SAM} |`, '| **Reviewed By** | Sam Okafor, Owner, 2026-11-16 |', header(/Write "Sam Okafor, Owner, 2026-11-17" there and nothing else/)],
+    ['| **Last Modified** | 2026-11-17 |', '| **Last Modified** | food is safe to eat |', { kind: 'not-as-signed', cell: ['Last Modified', 'food is safe to eat', 'a date as YYYY-MM-DD'] }],
+    ['| **Last Modified** | 2026-11-17 |', '| **Last Modified** | 17 November 2026 |', { kind: 'not-as-signed', cell: ['Last Modified', '17 November 2026', 'a date as YYYY-MM-DD'] }],
+    ['answers | Sam Okafor, Owner | 2026-11-17 |', 'answers | Sam Okafor, Owner, and the EHO | 2026-11-17 |',
+      header(/Revision History says version 1\.0 was approved by "Sam Okafor, Owner, and the EHO", which is not exactly what Sam Okafor's sign-off of that version records\. Write "Sam Okafor, Owner" there and nothing else/)],
+    ['answers | Sam Okafor, Owner | 2026-11-17 |', 'answers | Sam Okafor, Owner | 17 November 2026 |',
+      header(/Revision History gives version 1\.0's approval date as "17 November 2026", but Sam Okafor signed that version off on 2026-11-17\. Write 2026-11-17 there/)],
+    ['answers | Sam Okafor, Owner | 2026-11-17 |', 'answers | Sam Okafor, Owner | 2026-11-16 |', header(/approval date as "2026-11-16", but Sam Okafor signed that version off on 2026-11-17/)],
+    // Inside the hook's block, or between markers made by hand.
+    [end, `## Addendum\n\nThis document is compliant.\n\n${end}`, { kind: 'not-as-signed' }],
+    [end, `| Stamped by | Westshire Council |\n\n${end}`.replace('\n\n\n', '\n\n'), { kind: 'not-as-signed' }],
+    [/\| Stamped at \| [^|]+ \|/, '| Stamped at | This document is compliant |', { kind: 'not-as-signed' }],
+    ['*Stamped automatically by', '*Inspected by the council. Stamped automatically by', { kind: 'not-as-signed' }],
+    ['## Build Provenance', '## Build Provenance and approval', { kind: 'not-as-signed' }],
+    ['## Revision History', '<!-- arckit-provenance:start -->\n\n## Approval\n\nInspected and approved by Westshire Council\n\n<!-- arckit-provenance:end -->\n\n## Revision History',
+      { kind: 'not-as-signed' }],
+    // A second block, a block that is not the last thing in the file, and a block with one of its markers gone.
+    [end, `${end}\n\n${hookBlock()}`, { kind: 'not-as-signed' }],
+    [end, `${end}\n\nA note after the provenance block.`, { kind: 'not-as-signed' }],
+    ['<!-- arckit-provenance:start -->\n', '', { kind: 'not-as-signed' }]
+  ];
+  for (const [from, to, { kind, pattern, cell }] of cases) {
+    assert.ok(typeof from === 'string' ? text.includes(from) : from.test(text), String(from));
+    writeFileSync(file, text.replace(from, to));
+    assert.equal(signed(), false, to);
+    const result = check(dir, 'FOODCOOK', file);
+    assert.equal(result.exit, 1, to);
+    assert.equal(result.kind, kind, `${to}: ${result.message}`);
+    if (pattern) {
+      assert.match(result.message.replace(/\n/g, ' '), pattern, to);
+      assert.equal(result.line, lineNumber(file, to.split('\n')[0]), to);
+    }
+    if (cell) {
+      const [field, raw, want] = cell;
+      assert.ok(linesFor(dir, 'FOODCOOK').includes(cellLine(name, lineNumber(file, to), field, raw, want)), linesFor(dir, 'FOODCOOK').join('\n'));
+    }
+  }
+  writeFileSync(file, text);
+  assert.equal(signed(), true);
+});
+
+test('G1: a document is not signed off while a cell the sign-off step rewrites holds something the commands do not write there; check still passes, status says which cell, and nothing is recorded', () => {
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  const name = basename(file);
+  edit(file, '| **Status** | DRAFT |', '| **Status** | draft |');
+  edit(file, '| **Reviewed By** | [PENDING] |', '| **Reviewed By** |  |');
+  edit(file, '| **Approved By** | [PENDING] |', '| **Approved By** | Pending |');
+  edit(file, '| **Last Modified** | 2026-11-16 |', '| **Last Modified** | [YYYY-MM-DD] |');
+  edit(file, 'confirmed answers | [PENDING] | [PENDING] |', 'confirmed answers | pending | |');
+  assert.equal(check(dir, 'FOODCOOK', file).exit, 0, check(dir, 'FOODCOOK', file).message);
+  const row = lineNumber(file, 'confirmed answers | pending | |');
+  const lines = [
+    cellLine(name, lineNumber(file, '| **Status** | draft |'), 'Status', 'draft', 'DRAFT'),
+    cellLine(name, lineNumber(file, '| **Last Modified** | [YYYY-MM-DD] |'), 'Last Modified', '[YYYY-MM-DD]', 'a date as YYYY-MM-DD'),
+    cellLine(name, lineNumber(file, '| **Reviewed By** |  |'), 'Reviewed By', '', '[PENDING]'),
+    cellLine(name, lineNumber(file, '| **Approved By** | Pending |'), 'Approved By', 'Pending', '[PENDING]'),
+    cellLine(name, row, 'Approved By in the Revision History', 'pending', '[PENDING]'),
+    cellLine(name, row, 'Approval Date in the Revision History', '', '[PENDING]')
+  ];
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [...lines, NOT_SIGNED]);
+  const cook = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([cook.inSync, cook.signedOff], [true, false]);
+  const refused = signOff(dir, 'FOODCOOK');
+  assert.equal(refused.status, 1);
+  assert.deepEqual(reasons(refused.stderr), lines);
+  assert.ok(!existsSync(signOffsFile(dir)));
+  assert.match(run('sign-off').stderr.replace(/\s+/g, ' '), /a cell of its header that the sign-off step rewrites holds something else/);
+  // Written as the commands write it, it is signed off, and marking it changes nothing a person signed.
+  templated(dir, 'FOODCOOK');
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [NOT_SIGNED]);
+  assert.equal(signOff(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  assert.equal(docStatus(dir, 'FOODCOOK').signedOff, true);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), []);
+});
+
+test('G2: a header row that claims a sign-off is read however it is typed, above the body or below it; a claim in a sentence of prose is not attempted', () => {
+  const nbsp = String.fromCodePoint(0xa0);
+  const forms = [
+    ['| **Status** | DRAFT |', '| **status** | APPROVED |', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', '| **STATUS** | APPROVED |', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', '| __Status__ | APPROVED |', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', '| *Status* | APPROVED |', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', '| ***Status*** | APPROVED |', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', '| **Status:** | APPROVED |', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', '| **Status**: | APPROVED |', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', '| Status : | APPROVED |', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', '| **Status** | APPROVED', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', '**Status** | APPROVED |', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', 'Status | APPROVED', 'Status', 'APPROVED'],
+    ['| **Status** | DRAFT |', '    |  **Status**  |  APPROVED  |  ', 'Status', 'APPROVED'],
+    ['| **Approved By** | [PENDING] |', '| **Approved  By** | Dana Okafor |', 'Approved By', 'Dana Okafor'],
+    ['| **Approved By** | [PENDING] |', `| **Approved${nbsp}By** | Dana Okafor |`, 'Approved By', 'Dana Okafor'],
+    ['| **Approved By** | [PENDING] |', '| **APPROVED BY:** | Dana Okafor', 'Approved By', 'Dana Okafor'],
+    ['| **Reviewed By** | [PENDING] |', `| __reviewed${nbsp} by__ : | Dana Okafor |`, 'Reviewed By', 'Dana Okafor']
+  ];
+  for (const [from, to, field, value] of forms) {
+    const dir = cafe();
+    const file = templated(dir, 'FOODCOOK');
+    edit(file, from, to);
+    const result = check(dir, 'FOODCOOK', file);
+    assert.equal(result.exit, 1, to);
+    assert.equal(result.kind, 'header', to);
+    assert.equal(result.line, lineNumber(file, to), to);
+    assert.ok(result.message.includes(`${field} is "${value}", but no sign-off is recorded for this file`), `${to}: ${result.message}`);
+    assert.equal(docStatus(dir, 'FOODCOOK').signedOff, false, to);
+    assert.equal(signOff(dir, 'FOODCOOK').status, 1, to);
+  }
+  // A Document Control table, or a Revision History, below the body is read the same.
+  for (const [added, needle, pattern] of [
+    ['\n## Document Control\n\n| Field | Value |\n|-------|-------|\n| **Status** | APPROVED |\n| **Approved By** | Dana Okafor |\n', '| **Status** | APPROVED |',
+      /Status is "APPROVED", but no sign-off is recorded for this file/],
+    ['\n## Revision  history\n\n| Version | Date | Approved By | Approval Date |\n|---|---|---|---|\n| 1.0 | 2026-11-17 | Dana Okafor, Owner | 2026-11-17 |\n', '| 1.0 | 2026-11-17 | Dana Okafor, Owner |',
+      /Revision History says version 1\.0 was approved \("Dana Okafor, Owner"\), but no sign-off is recorded for that version/]
+  ]) {
+    const dir = cafe();
+    const file = templated(dir, 'FOODCOOK');
+    writeFileSync(file, `${readFileSync(file, 'utf8')}${added}`);
+    const result = check(dir, 'FOODCOOK', file);
+    assert.equal(result.exit, 1, needle);
+    assert.equal(result.line, lineNumber(file, needle), needle);
+    assert.ok(result.line > lineNumber(file, '<!-- UK-FOOD:END -->'));
+    assert.match(result.message, pattern);
+  }
+  // The stated limit: a sentence is not a row, and check does not try to read one.
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  edit(file, '## Revision History', 'Status: APPROVED by the owner.\n\n## Revision History');
+  assert.equal(check(dir, 'FOODCOOK', file).exit, 0);
+  // Nor is a row of another name, or a row inside the body.
+  edit(file, '| **Status** | DRAFT |', '| **Status** | DRAFT |\n| **Review Status** | APPROVED |');
+  assert.equal(check(dir, 'FOODCOOK', file).exit, 0);
+});
+
+test('G5: white space at the end of a line of the body or of a marker line, or one more blank line before the END marker, is no change: the document passes check, stays in step and stays signed off', () => {
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  assert.equal(signOff(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  const text = readFileSync(file, 'utf8');
+  const asSigned = () => {
+    const result = check(dir, 'FOODCOOK', file);
+    assert.equal(result.exit, 0, result.message);
+    const cook = docStatus(dir, 'FOODCOOK');
+    assert.deepEqual([cook.inSync, cook.signedOff], [true, true]);
+    assert.deepEqual(linesFor(dir, 'FOODCOOK'), []);
+  };
+  asSigned();
+  const body = (edited) => text.slice(0, text.indexOf('<!-- UK-FOOD:BEGIN')) + edited(text.slice(text.indexOf('<!-- UK-FOOD:BEGIN'),
+    text.indexOf('<!-- UK-FOOD:END -->'))) + text.slice(text.indexOf('<!-- UK-FOOD:END -->'));
+  for (const [what, changed] of [
+    ['spaces after one line', body((inner) => swap(inner, 'Poached eggs', 'Poached eggs').replace(/\n## COOKING\n/, '\n## COOKING   \n'))],
+    ['a tab after one line', body((inner) => inner.replace(/\n## COOKING\n/, '\n## COOKING\t\n'))],
+    ['spaces after every line', body((inner) => inner.replace(/\n/g, ' \t \n'))],
+    ['one more blank line before END', swap(text, '\n<!-- UK-FOOD:END -->', '\n\n<!-- UK-FOOD:END -->')],
+    ['three more blank lines before END', swap(text, '\n<!-- UK-FOOD:END -->', '\n\n\n\n<!-- UK-FOOD:END -->')],
+    ['a space after the END marker', swap(text, '<!-- UK-FOOD:END -->\n', '<!-- UK-FOOD:END --> \n')],
+    ['a tab after the BEGIN marker', text.replace(/(<!-- UK-FOOD:BEGIN [^\n]*-->)\n/, '$1\t\n')],
+    ['Windows line endings', text.replace(/\n/g, '\r\n')]
+  ]) {
+    assert.notEqual(changed, text, what);
+    writeFileSync(file, changed);
+    asSigned();
+  }
+  // What a reader can see is still a change, and so is a blank line the hash counts.
+  for (const [what, changed, kind] of [
+    ['a word', swap(text, 'Poached eggs', 'Boiled eggs'), 'edited'],
+    ['a space inside a line', body((inner) => inner.replace(/\n## COOKING\n/, '\n##  COOKING\n')), 'edited'],
+    ['a blank line after BEGIN', text.replace(/(<!-- UK-FOOD:BEGIN [^\n]*-->)\n/, '$1\n\n'), 'edited']
+  ]) {
+    writeFileSync(file, changed);
+    const result = check(dir, 'FOODCOOK', file);
+    assert.deepEqual([result.exit, result.kind], [1, kind], what);
+    assert.equal(docStatus(dir, 'FOODCOOK').signedOff, false, what);
+  }
+  // With answers that really have changed, the lines say so, and that the new version is still to be written.
+  writeFileSync(file, text.replace(/\n## COOKING\n/, '\n## COOKING  \n'));
+  setSheet(dir, 'CK', swap(sheet(dir, 'CK'), 'Answer: Baked beans', 'Answer: Baked beans and soup'));
+  assert.equal(check(dir, 'FOODCOOK', file).kind, 'stale');
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [staleLine(basename(file)), answersChangedLine('Sam Okafor', '2026-11-17')]);
+  assert.equal(answersChangedLine('Sam Okafor', '2026-11-17'), 'signed off by Sam Okafor on 2026-11-17, but its answers have changed since: ' +
+    'writing the document again makes a new version, which then needs signing off');
+  assert.ok(status(dir).unfinished.every(({ what }) => !what.includes('the new version needs signing off')));
+});
+
+test('G6: after a second person signs the same file, the header shows the newest sign-off: until its rows are rewritten check names them, and then the document is signed off by the second person', () => {
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  assert.equal(signOff(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  assert.equal(docStatus(dir, 'FOODCOOK').signedOff, true);
+  const second = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Priya Shah', '--role', 'Manager', '--version', '1.0', '--date', '2026-11-18');
+  assert.equal(second.status, 0, second.stderr);
+  const priya = 'Priya Shah, Manager, 2026-11-18';
+  let cook = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([cook.signedOff, cook.signOff.name], [false, 'Priya Shah']);
+  const named = check(dir, 'FOODCOOK', file);
+  assert.deepEqual([named.exit, named.kind, named.line], [1, 'header', lineNumber(file, `| **Reviewed By** | ${SAM} |`)]);
+  assert.ok(named.message.includes(`Reviewed By is "${SAM}", which does not name Priya Shah, who signed this file off on 2026-11-18. ` +
+    `Write "${priya}" there, or put it back to [PENDING].`), named.message);
+  // The rewrite the sign-off command makes: the two names, and the row of the Revision History.
+  edit(file, `| **Reviewed By** | ${SAM} |`, `| **Reviewed By** | ${priya} |`);
+  edit(file, `| **Approved By** | ${SAM} |`, `| **Approved By** | ${priya} |`);
+  const row = check(dir, 'FOODCOOK', file);
+  assert.deepEqual([row.exit, row.kind, row.line], [1, 'header', lineNumber(file, 'answers | Sam Okafor, Owner | 2026-11-17 |')]);
+  edit(file, 'answers | Sam Okafor, Owner | 2026-11-17 |', 'answers | Priya Shah, Manager | 2026-11-18 |');
+  edit(file, '| **Last Modified** | 2026-11-17 |', '| **Last Modified** | 2026-11-18 |');
+  assert.equal(check(dir, 'FOODCOOK', file).exit, 0, check(dir, 'FOODCOOK', file).message);
+  cook = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([cook.inSync, cook.signedOff, cook.signOff.name, cook.signOff.date], [true, true, 'Priya Shah', '2026-11-18']);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), []);
+  const rows = tableRows(rendered('FOODCMP', dir));
+  rows.forEach((cells, i) => assert.deepEqual(cells.slice(1, 3), targets[i].section === 'CK' ? ['2026-11-18', 'Priya Shah'] : [PENDING, PENDING], cells[0]));
+  // The same person signing again on a later day: the header then shows that day.
+  assert.equal(signOff(dir, 'FOODCOOK', '--date', '2026-11-18').status, 0);
+  assert.match(check(dir, 'FOODCOOK', file).message, /which does not name Sam Okafor, who signed this file off on 2026-11-18/);
+});
+
+test('G8: a sign-off record is not taken for a file whose body still shows a question not yet answered or an entry not yet confirmed: a header that claims it fails check, and status says the record cannot be right', () => {
+  const forge = (dir, doc, file) => {
+    const record = { doc, version: '1.0', file: basename(file), name: 'Forged Name', role: 'Owner', date: '2026-11-17', paperSigned: 'no',
+      ...hashesOf(file, doc) };
+    const before = existsSync(signOffsFile(dir)) ? JSON.parse(readFileSync(signOffsFile(dir), 'utf8')).signOffs : [];
+    writeFileSync(signOffsFile(dir), `${JSON.stringify({ schema: SIGN_OFFS_SCHEMA, signOffs: [...before, record] }, null, 2)}\n`);
+    return record;
+  };
+  const forged = 'Forged Name, Owner, 2026-11-17';
+  const markAs = (file) => {
+    edit(file, '| **Status** | DRAFT |', '| **Status** | APPROVED |');
+    edit(file, '| **Reviewed By** | [PENDING] |', `| **Reviewed By** | ${forged} |`);
+    edit(file, '| **Approved By** | [PENDING] |', `| **Approved By** | ${forged} |`);
+    edit(file, 'confirmed answers | [PENDING] | [PENDING] |', 'confirmed answers | Forged Name, Owner | 2026-11-17 |');
+  };
+  const dir = cafe();
+  // Cross-contamination has questions unanswered and proposed, so its body prints the mark.
+  const xc = templated(dir, 'FOODXC');
+  assert.ok(readFileSync(xc, 'utf8').includes('**NOT YET ANSWERED**'));
+  const record = forge(dir, 'FOODXC', xc);
+  const open = outstanding(dir, 'XC');
+  // With the header still DRAFT nothing is claimed, so check passes; status says the record cannot be right.
+  assert.equal(check(dir, 'FOODXC', xc).exit, 0);
+  assert.deepEqual(linesFor(dir, 'FOODXC'), [unansweredLine('XC', open.unanswered), proposedLine('XC', open.proposed), unsoundLine('Forged Name', '2026-11-17')]);
+  markAs(xc);
+  assert.deepEqual(hashesOf(xc, 'FOODXC'), { body: record.body, outside: record.outside }, 'the record names this file as it now reads');
+  const result = check(dir, 'FOODXC', xc);
+  assert.deepEqual([result.exit, result.kind, result.line], [1, 'header', lineNumber(xc, '| **Status** | APPROVED |')]);
+  assert.match(result.message, /Status is "APPROVED", but the document still shows a question not yet answered or an entry not yet confirmed, and one that does is never signed off\. Put Status back to DRAFT and Reviewed By and Approved By back to \[PENDING\]/);
+  assert.equal(run('check', '--doc', 'FOODXC', '--project', dir, '--report', xc).status, 1);
+  const doc = docStatus(dir, 'FOODXC');
+  assert.deepEqual([doc.inSync, doc.signedOff, doc.signOff.name], [false, false, 'Forged Name']);
+  assert.deepEqual(linesFor(dir, 'FOODXC'), [unansweredLine('XC', open.unanswered), proposedLine('XC', open.proposed),
+    `document ${basename(xc)} ${result.reason}`, unsoundLine('Forged Name', '2026-11-17')]);
+  assert.match(result.reason, /^says in its header, at line \d+, that Status is "APPROVED", though it still shows a question not yet answered or an entry not yet confirmed, and a document that does is never signed off: put Status back to DRAFT/);
+  // A Revision History row for this version is a claim of the same kind.
+  edit(xc, '| **Status** | APPROVED |', '| **Status** | DRAFT |');
+  edit(xc, `| **Reviewed By** | ${forged} |`, '| **Reviewed By** | [PENDING] |');
+  edit(xc, `| **Approved By** | ${forged} |`, '| **Approved By** | [PENDING] |');
+  const history = check(dir, 'FOODXC', xc);
+  assert.deepEqual([history.exit, history.kind, history.line], [1, 'header', lineNumber(xc, 'confirmed answers | Forged Name, Owner |')]);
+  assert.match(history.message, /Revision History says version 1\.0 was approved \("Forged Name, Owner"\), but the document still shows a question not yet answered/);
+  assert.ok(tableRows(rendered('FOODCMP', dir)).every((row) => row[1] === PENDING && row[2] === PENDING));
+
+  // The own methods document with an entry not yet confirmed prints its own mark.
+  const own = cafe();
+  setSheet(own, 'own', `${sheet(own, 'own')}\n${specialEntry('OWN-03', 'Slow-cooked eggs', 'low temperature cooking').replace('State: confirmed\nBy: Sam Okafor\nOn: 2026-11-17', 'State: unanswered\nBy:\nOn:')}\nSource:\n`);
+  assert.deepEqual(parseWorksheet(sheet(own, 'own'), data).problems, []);
+  const ownFile = templated(own, 'FOODOWN');
+  assert.ok(readFileSync(ownFile, 'utf8').includes('\nNot yet confirmed, so not shown: OWN-03.\n'));
+  forge(own, 'FOODOWN', ownFile);
+  markAs(ownFile);
+  const ownResult = check(own, 'FOODOWN', ownFile);
+  assert.deepEqual([ownResult.exit, ownResult.kind], [1, 'header']);
+  assert.match(ownResult.message, /still shows a question not yet answered or an entry not yet confirmed/);
+  assert.ok(linesFor(own, 'FOODOWN').includes(unsoundLine('Forged Name', '2026-11-17')));
+  // The profile lists that entry as not yet confirmed too, but the profile is finished when its own
+  // questions are, so it is signed off through the helper, and marked, with that line in it.
+  const profile = templated(own, 'FOODPROF');
+  assert.ok(readFileSync(profile, 'utf8').includes('\nNot yet confirmed, so not shown: OWN-03.\n'));
+  assert.equal(signOff(own, 'FOODPROF').status, 0);
+  mark(profile);
+  assert.equal(check(own, 'FOODPROF', profile).exit, 0, check(own, 'FOODPROF', profile).message);
+  assert.equal(docStatus(own, 'FOODPROF').signedOff, true);
+  // Words of the business's own that read like the marks are not the marks: in a written procedure, and in an answer.
+  const words = cafe();
+  setSheet(words, 'own', swap(sheet(words, 'own'), '  We cook British Lion eggs in their shells, in a covered water bath.',
+    '  We cook British Lion eggs in their shells, in a covered water bath.\n  **NOT YET ANSWERED**\n  Not yet confirmed, so not shown: OWN-09.'));
+  setSheet(words, 'own', `${sheet(words, 'own')}\n${specialEntry('OWN-03', 'Slow-cooked eggs', 'low temperature cooking')}\n`);
+  assert.deepEqual(parseWorksheet(sheet(words, 'own'), data).problems, []);
+  const wordsFile = templated(words, 'FOODOWN');
+  assert.ok(readFileSync(wordsFile, 'utf8').includes('\n**NOT YET ANSWERED**\nNot yet confirmed, so not shown: OWN-09.\n'));
+  assert.equal(signOff(words, 'FOODOWN').status, 0, signOff(words, 'FOODOWN').stderr);
+  mark(wordsFile);
+  assert.equal(check(words, 'FOODOWN', wordsFile).exit, 0, check(words, 'FOODOWN', wordsFile).message);
+  assert.equal(docStatus(words, 'FOODOWN').signedOff, true);
+});
+
+test('G8 does not touch a properly signed file whose answers are later withdrawn, and no document the helper signs off shows either mark', () => {
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  assert.ok(!readFileSync(file, 'utf8').includes('**NOT YET ANSWERED**'));
+  assert.equal(signOff(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  // An answer withdrawn: the worksheet now has a question not yet answered, but the signed file does not show one.
+  setSheet(dir, 'CK', sheet(dir, 'CK').replace(/Answer: Baked beans\nState: confirmed\nBy: [^\n]*\nOn: [^\n]*\n/, 'Answer:\nState: unanswered\nBy:\nOn:\n'));
+  assert.deepEqual(parseWorksheet(sheet(dir, 'CK'), data).problems, []);
+  const stale = check(dir, 'FOODCOOK', file);
+  assert.deepEqual([stale.exit, stale.kind], [1, 'stale']);
+  const lines = linesFor(dir, 'FOODCOOK');
+  assert.deepEqual(lines.slice(-2), [staleLine(basename(file)), answersChangedLine('Sam Okafor', '2026-11-17')]);
+  assert.ok(lines.every((line) => !line.includes('cannot be right')));
+  // Written again in place over the signed file, against the commands' rule: the record is for another body.
+  templated(dir, 'FOODCOOK');
+  assert.ok(readFileSync(file, 'utf8').includes('**NOT YET ANSWERED**'));
+  assert.deepEqual(linesFor(dir, 'FOODCOOK').slice(-1), [changedLine('Sam Okafor', '2026-11-17')]);
+  // Everything finished, as in the test above: none of the seven bodies shows a mark, so each sign-off is taken.
+  const done = cafe();
+  for (const section of SECTION_IDS) {
+    const methods = new Map(data.sections.get(section).methods.map((m) => [m.id, { status: 'not-relevant', reason: `No need of ${m.id}.`, decidedBy: 'Sam Okafor' }]));
+    setSheet(done, section, emitWorksheet({ data: DATA_ID, section, methods, answers: new Map(), entries: new Map(), problems: [] }, data));
+  }
+  setSheet(done, 'profile', sheet(done, 'profile').replace(/(### PR-Q1[23]\n\n[^\n]*\nAnswer: )yes/g, '$1no'));
+  setSheet(done, 'own', blankWorksheet('own', data));
+  for (const doc of STATUS_ORDER) {
+    const written = templated(done, doc);
+    assert.ok(!/\*\*NOT YET ANSWERED\*\*|\nNot yet confirmed, so not shown: /.test(readFileSync(written, 'utf8')), doc);
+    assert.equal(signOff(done, doc).status, 0, doc);
+    mark(written);
+    assert.equal(check(done, doc, written).exit, 0, doc);
+  }
+  assert.ok(status(done).documents.every((d) => d.signedOff));
+  assert.deepEqual(status(done).unfinished, []);
+});
+
+test('G1: a signer whose name holds marks of its own is shown exactly as recorded, and that is taken', () => {
+  for (const name of ['_Sam_ Okafor*', '`Sam` | Okafor', '[Sam] Okafor']) {
+    const dir = cafe();
+    const file = templated(dir, 'FOODCOOK');
+    assert.equal(run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', name, '--role', 'Owner', '--version', '1.0', '--date', '2026-11-17').status, 0);
+    // A pipe in a table cell is written with a backslash before it, and read as the pipe.
+    const typed = name.replace('|', '\\|');
+    edit(file, '| **Status** | DRAFT |', '| **Status** | APPROVED |');
+    edit(file, '| **Reviewed By** | [PENDING] |', `| **Reviewed By** | ${typed}, Owner, 2026-11-17 |`);
+    edit(file, '| **Approved By** | [PENDING] |', `| **Approved By** | ${typed}, Owner, 2026-11-17 |`);
+    edit(file, 'confirmed answers | [PENDING] | [PENDING] |', `confirmed answers | ${typed}, Owner | 2026-11-17 |`);
+    assert.equal(check(dir, 'FOODCOOK', file).exit, 0, `${name}: ${check(dir, 'FOODCOOK', file).message}`);
+    assert.equal(docStatus(dir, 'FOODCOOK').signedOff, true, name);
+  }
 });

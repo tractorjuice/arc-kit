@@ -1094,3 +1094,28 @@ test('a data folder whose CK.json lacks the box on page 53 makes the profile exi
   assert.equal(cli.status, 2, cli.stderr);
   assert.doesNotMatch(cli.stderr, /TypeError|usage:/);
 });
+
+test('G5: render prints no line that ends in a space or a tab, and one blank line before the END marker, whatever the worksheets hold: so check can read a body as its hash does', () => {
+  // The cafe as it stands; every worksheet blank; and the business's own words written with white space
+  // after them: an answer, a line carried on, and a procedure with a hard line break and a line of spaces.
+  const spaced = cafe({
+    CK: swap(swap(cafeText('CK'), 'Answer: We do not cook rice.', 'Answer: We do not cook rice.   \t'), 'Answer: Baked beans', 'Answer: Baked beans  \n  and soup   '),
+    own: swap(cafeText('own'), '  We cook British Lion eggs in their shells, in a covered water bath.',
+      '  We cook British Lion eggs in their shells,  \n  in a covered water bath.\t\n  \n  A paragraph after a line of spaces.   ')
+  });
+  for (const section of ['CK', 'own']) {
+    assert.deepEqual(parseWorksheet(readFileSync(join(spaced, 'food-safety', `answers-${section}.md`), 'utf8'), data).problems, [], section);
+  }
+  const projects = { cafe: cafe(), blank: project(Object.fromEntries(WORKSHEETS.map((s) => [s, blankWorksheet(s, data)]))), spaced };
+  for (const [name, dir] of Object.entries(projects)) {
+    for (const doc of [...DOC_CODES, 'FOODCMP']) {
+      const lines = rendered(doc, dir).split('\n');
+      assert.deepEqual(lines.filter((line) => /[ \t]$/.test(line)), [], `${name} ${doc}`);
+      assert.match(lines[0], /^<!-- UK-FOOD:BEGIN /, `${name} ${doc}`);
+      assert.deepEqual([lines[1], lines.at(-2), lines.at(-1)], ['', '', '<!-- UK-FOOD:END -->'], `${name} ${doc}`);
+      assert.ok(lines[2] !== '' && lines.at(-3) !== '', `${name} ${doc}: one blank line after BEGIN and one before END`);
+    }
+  }
+  assert.ok(rendered('FOODOWN', spaced).includes('\nWe cook British Lion eggs in their shells,\nin a covered water bath.\n\nA paragraph after a line of spaces.\n'));
+  for (const section of SECTION_IDS) assert.deepEqual(referenceText(section, data).split('\n').filter((line) => /[ \t]$/.test(line)), [], section);
+});

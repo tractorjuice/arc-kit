@@ -892,15 +892,19 @@ def build(code: str, project: Path, version: str = "1.0") -> Path:
     """Write `code`'s document into `project` as its command tells the model to.
 
     The template's text; the DOC-CONTROL-HEADER marker and its comment replaced by the UK partial
-    (RENDERING.md, steps 3 and 4) with its placeholders left as they are, so Status DRAFT and both
-    names [PENDING]; the Revision History row given its version; the render output placed unchanged
-    at the UK-FOOD-BODY line; saved under the name generate-document-id.mjs gives.
+    (RENDERING.md, steps 3 and 4), Status DRAFT and both names [PENDING] as it has them, and Created
+    Date and Last Modified written YYYY-MM-DD as **The header** says; its other placeholders left as
+    they are; the Revision History row given its version; the render output placed unchanged at the
+    UK-FOOD-BODY line; saved under the name generate-document-id.mjs gives.
     """
     rendered = run(HELPER, "render", "--doc", code, "--project", project)
     assert rendered.returncode == 0, rendered.stderr
     body = rendered.stdout[:-1] if rendered.stdout.endswith("\n") else rendered.stdout
     template = (OVERLAY / "templates" / TEMPLATE_OF[code]).read_text(encoding="utf-8")
     header = PARTIAL.read_text(encoding="utf-8").rstrip("\n")
+    for field in ["Created Date", "Last Modified"]:
+        assert f"| **{field}** | [YYYY-MM-DD] |" in header
+        header = header.replace(f"| **{field}** | [YYYY-MM-DD] |", f"| **{field}** | 2026-11-16 |")
     assert HISTORY_ROW in template
     document = (template.replace(f"{MARKER}\n{MARKER_COMMENT}", header)
                 .replace(HISTORY_ROW, HISTORY_ROW.replace("[VERSION]", version)).replace(BODY, body))
