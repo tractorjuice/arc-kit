@@ -1939,7 +1939,10 @@ const evalWorksheets = readdirSync(EVAL_FIXTURES, { recursive: true }).filter((n
 
 test('I4: every worksheet in the behaviour cases\' fixture projects parses with no problems and is in the helper\'s own layout', () => {
   assert.deepEqual(evalWorksheets.map((name) => name.split('/').slice(0, 1).concat(name.split('/').at(-1)).join(': ')), [
-    'cafe-cooking-nearly-done: answers-CK.md', 'cafe-cooking-nearly-done: answers-profile.md', 'cafe-no-cooking: answers-profile.md']);
+    'cafe-cooking-finished: answers-CK.md', 'cafe-cooking-finished: answers-profile.md',
+    'cafe-cooking-nearly-done: answers-CK.md', 'cafe-cooking-nearly-done: answers-profile.md',
+    'cafe-cooking-written-unfinished: answers-CK.md', 'cafe-cooking-written-unfinished: answers-profile.md',
+    'cafe-no-cooking: answers-profile.md', 'cafe-sous-vide: answers-profile.md']);
   for (const name of evalWorksheets) {
     const text = readFileSync(join(EVAL_FIXTURES, name), 'utf8');
     const parsed = parse(text);
