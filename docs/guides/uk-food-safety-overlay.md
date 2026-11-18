@@ -140,7 +140,7 @@ Run the profile command once first, so the project exists. The build saves its w
 /arckit:build 001 --recipe uk-food-sfbb --no-commit
 ```
 
-The recipe passes ArcKit's recipe checks, but nobody has yet run it end to end through the build.
+The recipe passes ArcKit's recipe checks, and a dry run of the build plans it as it should: the profile first, then the five sections together, then your own methods, then the completion record. Nobody has yet run it end to end through the build.
 
 ArcKit's notices about drafts that have not changed for a while leave these documents out, and its general health check does not count them as long-running drafts: only the sign-off command changes a document's status, and the completion record always stays a draft. If you give a document a next review date, ArcKit still says when that date has passed. Its health check is written for architecture documents, so the next step it suggests then does not fit these documents: use the overlay's own commands instead.
 

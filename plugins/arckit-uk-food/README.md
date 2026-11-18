@@ -68,7 +68,7 @@ Recipe: `uk-food-sfbb` (the business profile, the five sections of safe methods,
 - It does not carry the pack's bold and underlining into documents. The words are carried over; the formatting is not.
 - It does not use the pack's pictures or the FSA's logo.
 - It does not change the pack's wording to settle differences inside the pack. Where the pack says two things in two places, the documents print each place as the pack prints it: in CK-06 HOT HOLDING, one limit is worded two slightly different ways, and CH-01 CHILLED STORAGE AND DISPLAYING CHILLED FOOD and CK-07 READY-TO-EAT FOOD describe differently which ready-to-eat foods one of their limits covers. Maintainers can find both places, with their pages, in the limits check sheet printed by `scripts/uk-food/render-limits-check.py` in the ArcKit source repository.
-- Its build recipe, `uk-food-sfbb`, passes the repository's recipe checks but has not yet been run end to end through ArcKit's build.
+- Its build recipe, `uk-food-sfbb`, passes the repository's recipe checks, and ArcKit's build has planned it in a dry run, but it has not yet been run end to end.
 
 ## Not legal advice
 
