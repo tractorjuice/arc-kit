@@ -598,7 +598,8 @@ const codePoint = (char) => `U+${char.codePointAt(0).toString(16).toUpperCase().
 // - The musical format characters (U+1D173 to U+1D17A).
 // - The tag characters (U+E0001 and U+E0020 to U+E007F), which can carry a hidden message of any length.
 //   The cost: the flags of England, Scotland and Wales are each an emoji followed by tag characters,
-//   so a value that holds one is refused. The message names each tag character and the line it is on.
+//   so a value that holds one is refused. The message names each tag character, by its code point: in
+//   a worksheet with the line it is on, and for a sign-off's name or role in the usage error.
 // Allowed, because writing needs them: the joiners that Persian, Urdu, Hindi and other scripts and many
 // emoji use (U+200C, U+200D), the direction marks editors put around right-to-left text (U+200E and
 // U+200F, and the Arabic letter mark, U+061C, which does the same job) and the soft hyphen (U+00AD).
@@ -1905,13 +1906,15 @@ const SIGNED_FIELDS = [...CLAIM_FIELDS, 'Last Modified'];
 // "| **Status** | DRAFT |", but a person reads the row the same in capitals or small letters, with up
 // to three * or _ round the name, with a colon after the name inside those marks or outside them, with
 // more than one space or a no-break space between its words (\s takes both), set in from the margin,
-// and with or without the pipe before the name or after the value. Each of those is read as the row,
-// and its value is everything after the name's cell.
+// with or without the pipe before the name or after the value, and inside a blockquote (after one or
+// more > marks), which is still a table row to a reader. Each of those is read as the row, and its
+// value is everything after the name's cell. A quoted row is read for what it claims, but it is not
+// one of the header's own rows: it never stands for the cell the sign-off command writes.
 // That is as far as reading goes. A claim made in a sentence of prose cannot be told from any other
 // sentence, so it is not looked for: before a sign-off, such a sentence is the business of the person
 // who reads the document and signs it; after one, the sign-off covers every line outside the markers,
 // so a sentence added there ends it.
-const CONTROL_ROW = new RegExp(`^\\s*\\|?\\s*[*_]{0,3}\\s*(${SIGNED_FIELDS.map((name) => name.replace(' ', '\\s+')).join('|')})` +
+const CONTROL_ROW = new RegExp(`^\\s*((?:>\\s*)*)\\|?\\s*[*_]{0,3}\\s*(${SIGNED_FIELDS.map((name) => name.replace(' ', '\\s+')).join('|')})` +
   '\\s*:?\\s*[*_]{0,3}\\s*:?\\s*\\|(.*?)(?:(?<!\\\\)\\|)?\\s*$', 'i');
 const fieldNamed = (typed) => SIGNED_FIELDS.find((name) => name.toLowerCase() === typed.replace(/\s+/g, ' ').toLowerCase());
 const REVISION_HEADING = /^ {0,3}#{1,6}\s+Revision\s+History[\s#]*$/i;
@@ -1924,20 +1927,21 @@ const PROVENANCE_OPENS = [PROVENANCE.start, '', '## Build Provenance', '',
   'human-authored footer above. Carries only fields the model can\'t authoritatively self-report: build context from ' +
   '`.arckit/state.json` and effort levels derived from command frontmatter + the silent-downgrade matrix.*',
   '', '| Field | Value |', '|-------|-------|'];
-// Each row the hook writes, with the form its value takes: an effort is one of the five levels, the
-// build's recipe and target are each one name with no space in it, its wave is a number and the time is
-// a timestamp. A build's topic is free text the hook copies from the build's state, so no form can be
-// asked of it: see stampedBlock.
+// The rows the hook writes, each field once at most and in the hook's order, with the form its value
+// takes. The command's two effort rows come together or not at all, each one of the five levels. A
+// build's rows follow: its recipe, which is a recipe file's base name as the build harness records it
+// (small letters and digits joined by hyphens, as every recipe ArcKit ships is named); its wave, a
+// number, when it has one; its target, an identifier of a recipe target (capitals, digits, hyphens and
+// underscores); and its topic, when it has one. The time of stamping is always there, last. The hook
+// writes no block that has neither the effort rows nor the build's. A build's topic is free text the
+// hook copies from the build's state, so no form can be asked of it: see stampedBlock.
 const EFFORT = '`(?:low|medium|high|xhigh|max)`';
-const PROVENANCE_ROWS = [
-  new RegExp(`^\\| Requested Effort \\| ${EFFORT} \\|$`),
-  new RegExp(`^\\| Effective Effort \\| (?:${EFFORT}(?: \\(downgraded from ${EFFORT} \u2014 model does not support that level\\))?|` +
-    '_unknown \u2014 model not parsed from existing footer_) \\|$'),
-  /^\| Build Recipe \| (?:`[\w.:/-]+`|_unknown_) \|$/,
-  /^\| Build Wave \| \d+ \|$/,
-  /^\| Build Target \| `[\w.:/-]+` \|$/,
-  /^\| Stamped at \| \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z \|$/
-];
+const PROVENANCE_ROWS = new RegExp('^' +
+  `(?:\\| Requested Effort \\| ${EFFORT} \\|\\n\\| Effective Effort \\| (?:${EFFORT}(?: \\(downgraded from ${EFFORT} \u2014 model does not ` +
+  'support that level\\))?|_unknown \u2014 model not parsed from existing footer_) \\|\\n)?' +
+  '(?:\\| Build Recipe \\| (?:`[a-z0-9]+(?:[-_.][a-z0-9]+)*`|_unknown_) \\|\\n(?:\\| Build Wave \\| \\d+ \\|\\n)?' +
+  '\\| Build Target \\| `[A-Z][A-Z0-9_-]*` \\|\\n(?:\\| Build Topic \\| [^\\n]*\\|\\n)?)?' +
+  '\\| Stamped at \\| \\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z \\|$');
 const BUILD_TOPIC = /^\| Build Topic \| .*\|$/;
 // What stands for the body in the text outsideHash hashes: where the body is still counts.
 const BODY_PLACE = '<!-- UK-FOOD body -->';
@@ -2000,8 +2004,8 @@ function headerOf(lines, body) {
     if (i >= body.begin - 1 && i < body.end) continue;
     const row = CONTROL_ROW.exec(lines[i]);
     if (row) {
-      all.push({ field: fieldNamed(row[1]), line: i + 1, value: plainCell(row[2]), typed: typedCell(row[2]) });
-      if (!rows.has(all.at(-1).field)) rows.set(all.at(-1).field, all.at(-1));
+      all.push({ field: fieldNamed(row[2]), line: i + 1, value: plainCell(row[3]), typed: typedCell(row[3]) });
+      if (row[1] === '' && !rows.has(all.at(-1).field)) rows.set(all.at(-1).field, all.at(-1));
     }
     if (REVISION_HEADING.test(lines[i])) history.push(...revisionRows(lines, i + 1, i < body.begin - 1 ? body.begin - 1 : lines.length));
   }
@@ -2031,6 +2035,22 @@ function writtenCells(doc, name, header, records) {
   return { rows, history };
 }
 
+// Whether the file's header shows the newest sign-off recorded for it, exactly as the sign-off command
+// marks one: Status APPROVED, Reviewed By and Approved By that record's text, and, where the Revision
+// History has a row for this version, that row's two approval cells. Null with no sign-off recorded for
+// the file. A document can be signed off with a header that does not show it (the record is made before
+// the header is marked, and a marking can be undone), so this is told as a fact of its own: the sign-off
+// command is not finished until it is true.
+function headerShows(doc, name, header, records) {
+  const version = DOCUMENT_FILE.exec(name)?.[2] ?? null;
+  const mine = records.filter((record) => record.doc === doc && record.file === name && record.version === version).at(-1);
+  if (!mine) return null;
+  const typed = (field) => header.rows.get(field)?.typed;
+  const row = header.history.find((entry) => entry.version === version);
+  return typed('Status') === 'APPROVED' && typed('Reviewed By') === signedText(mine) && typed('Approved By') === signedText(mine) &&
+    (!row || (row.typedBy === signedCell(mine) && row.typedDate === mine.date));
+}
+
 // The cells the sign-off command fills in that hold something the commands do not write there and that
 // claims nothing, each as { line, field, typed, want }, in the order written: a Status that reads as
 // DRAFT but is typed another way, a name left empty or typed "pending", a Last Modified that is not a
@@ -2055,10 +2075,12 @@ function unwrittenCells(header, written) {
 // The Build Provenance block that outsideHash leaves out, as { from, to, kept }: its first and last line
 // indexes, and those of its lines that count all the same. Null unless the file holds exactly one of
 // each of the hook's markers outside the body, the block is the last thing in the file, and every line
-// of it is one the hook writes (PROVENANCE_OPENS, then rows of PROVENANCE_ROWS). Anything else between
-// such markers, a second block, a marker in the middle of a line or a block with text after it is no
-// stamp of the hook's, and every line of it counts like any other line. A Build Topic row is in the
-// hook's form whatever it says, so it is the one line of a block that counts as written.
+// of it is one the hook writes (PROVENANCE_OPENS, then the rows PROVENANCE_ROWS allows, each once and in
+// order). Anything else between such markers, a field given twice or out of its place, a second block,
+// a marker in the middle of a line or a block with text after it is no stamp of the hook's, and every
+// line of it counts like any other line. A Build Topic row is in the hook's form whatever it says, so
+// it is the one line of a block that counts as written. What a recipe's or a target's name says cannot
+// be checked beyond its shape: a row of that shape is taken as the hook's.
 // If the hook's output ever changes, its blocks stop matching these forms and count. A signed document
 // then loses its sign-off the next time the hook stamps it, and status says the file was changed
 // outside its markers: the change fails where it is seen, and no document passes with lines nobody
@@ -2074,7 +2096,7 @@ function stampedBlock(lines, body) {
   const rows = block.slice(PROVENANCE_OPENS.length, -2);
   const shaped = to > from && lines.slice(to + 1).every((line) => line.trim() === '') &&
     PROVENANCE_OPENS.every((line, i) => block[i] === line) && block.at(-2) === '' && block.at(-1) === PROVENANCE.end &&
-    rows.length > 0 && rows.every((row) => BUILD_TOPIC.test(row) || PROVENANCE_ROWS.some((form) => form.test(row)));
+    rows.length > 1 && PROVENANCE_ROWS.test(rows.join('\n'));
   if (!shaped) return null;
   return { from, to, kept: new Set(rows.flatMap((row, i) => (BUILD_TOPIC.test(row) ? [from + PROVENANCE_OPENS.length + i] : []))) };
 }
@@ -2347,7 +2369,8 @@ const BEFORE_RENDER = ['unreadable', 'markers', 'pack-text', 'header'];
 // with the next step: status and sign-off give it as it is. Whenever the markers were found: `hashes`
 // are the file's own (documentHashes), `unwritten` the cells sign-off rewrites that hold something else
 // (unwrittenCells), `unfinished` whether its body shows something not yet answered (showsUnfinished),
-// `otherText` the lines outside the markers that are not its frame (otherText), and `bodyInStep`
+// `otherText` the lines outside the markers that are not its frame (otherText), `headerShowsSignOff`
+// whether its header shows the newest sign-off recorded for it (headerShows), and `bodyInStep`
 // whether the body equals a fresh render, whatever else is wrong with the file: true or false, or null
 // when no fresh render could be made. A fault outside the body leaves it true. `signOffs` is what
 // readSignOffs returns, read here unless given. Text outside the markers is not compared with anything:
@@ -2372,7 +2395,8 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
   const written = writtenCells(doc, basename(report), header, signOffs.records ?? []);
   const hashes = { body: bodyHash(inner), outside: outsideHash(lines, body, header, written) };
   const facts = { hashes, unwritten: unwrittenCells(header, written), unfinished: showsUnfinished(doc, inner),
-    otherText: otherText(lines, body), bodyInStep: null };
+    otherText: otherText(lines, body), bodyInStep: null,
+    headerShowsSignOff: headerShows(doc, basename(report), header, signOffs.records ?? []) };
   const failed = (kind, line, message, reason, more = {}) =>
     ({ exit: 1, ok: false, kind, ...facts, line, ...more, message: `${report}:${line}: ${message}`, reason });
   // The body is compared first, though a fault outside it is told first: whether the body is in step is a
@@ -2714,6 +2738,10 @@ const checkLine = (file, check) => `document ${file} ${check.reason ?? `does not
 // What the unfinished list says of a document that has a sign-off record and is not signed off. Each
 // names who signed and when, says truly what has happened since, and ends with what to do.
 const changedLine = (record) => `signed off by ${record.name} on ${record.date}, but changed since: sign off again`;
+// What the file prints is no longer what was signed, and is not what would be printed now either: a
+// new version follows, as for answers that have changed.
+const rewriteLine = (record) => `signed off by ${record.name} on ${record.date}, but what it prints has changed since: writing ` +
+  'the document again makes a new version, which then needs signing off';
 const answersChangedLine = (record) => `signed off by ${record.name} on ${record.date}, but its answers have changed since: ` +
   'writing the document again makes a new version, which then needs signing off';
 // The header claims nothing here (check's own line covers a header that does), so the file is in step
@@ -2740,11 +2768,17 @@ function signLine(record, current, check, asSigned) {
   if (!current) return goneLine(record);
   if (record.file !== current.file || record.version !== current.version) return otherVersionLine(record, current);
   if (check.unfinished && check.hashes?.body === record.body) return unsoundLine(record);
-  // check's own line says the header claims a sign-off the file has outlived.
-  if (check.kind === 'not-as-signed') return null;
+  // A fault outside the body that check tells on a line of its own is put right as that line says, and
+  // nothing is added to it: a header that claims a sign-off the file has outlived, a header cell that
+  // is not what the record bears out (a slip while a sign-off is marked, which changes the file outside
+  // its markers too, and is put right in that cell and nowhere else), the pack's text outside the
+  // markers, or a file that cannot be read.
+  if (['not-as-signed', 'header', 'pack-text', 'unreadable'].includes(check.kind)) return null;
   // The file is what was signed. If a fresh render now differs, its answers have moved on; otherwise the
   // lines before this one say what is unfinished, and nothing has changed since the sign-off.
   if (asSigned) return check.kind === 'stale' ? answersChangedLine(record) : null;
+  // The body is not in step, so signing again is not what comes next: a new version is.
+  if (['edited', 'stale', 'markers'].includes(check.kind)) return rewriteLine(record);
   return check.hashes?.body === record.body ? outsideChangedLine(record) : changedLine(record);
 }
 const uncoveredLine = (name) => `${name} has no own entry: add an own entry of kind special-process whose Process is ${name}, ` +
@@ -2851,6 +2885,8 @@ function collectStatus(project, data) {
       bodyInStep: !current ? null : check.kind === 'markers' ? false : check.bodyInStep ?? null,
       otherText: check?.otherText ?? []
     };
+    // Whether the file's header shows the newest sign-off recorded for it: see headerShows.
+    const headerShowsSignOff = check?.headerShowsSignOff ?? null;
     // A worksheet that is not clean gives one line and none from its counts. A document whose worksheets
     // are missing, misplaced or have problems cannot be compared with a fresh render, but what check finds
     // before it renders is told all the same; any other that fails check is given check's own first reason.
@@ -2886,6 +2922,7 @@ function collectStatus(project, data) {
       record.version === current.version && record.body === check.hashes.body && record.outside === check.hashes.outside);
     doc.signedOff = held.length === 0 && asSigned;
     doc.signOff = record;
+    doc.headerShowsSignOff = headerShowsSignOff;
     signLines.set(code, doc.signedOff ? null : signLine(record, current, check, asSigned));
     checks.set(code, check);
     hashes.set(code, check?.hashes ?? null);
@@ -3141,7 +3178,10 @@ export function signOffCommand(args, io = { out: console.log, err: console.error
   if (!options.project) return usageError(io, '--project names the project folder that holds food-safety/');
   for (const [field, what] of [['name', 'name of the person signing off'], ['role', 'role of the person signing off, such as owner']]) {
     if (!isPersonText(options[field])) {
-      return usageError(io, `--${field} is the ${what}: some text, on one line, with no character that cannot be seen`);
+      // A character that cannot be seen is named by its code point: nobody can find it by looking.
+      const unseen = isString(options[field]) ? unseenIn(options[field]) : '';
+      return usageError(io, `--${field} is the ${what}: some text, on one line, with no character that cannot be seen` +
+        (unseen ? `. It holds ${unseen}: delete ${unseen.includes(' and ') ? 'them' : 'it'}, or type it again` : ''));
     }
   }
   if (!options.version) {

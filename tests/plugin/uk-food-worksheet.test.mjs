@@ -1587,8 +1587,8 @@ test('G7: each character the list names is refused in an answer, a name, a writt
   assert.equal(flag.problems.length, 1);
   assert.ok(flag.problems[0].message.includes('this line holds U+E0067, U+E0062, U+E0065, U+E006E and U+E007F:'), flag.problems[0].message);
   // A flag made of two regional letters, and the black flag on its own, are read as written.
-  const wales = String.fromCodePoint(0x1f1ec, 0x1f1e7);
-  assert.deepEqual(parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed(`Kept hot ${wales} ${String.fromCodePoint(0x1f3f4)}`))).problems, []);
+  const unionFlag = String.fromCodePoint(0x1f1ec, 0x1f1e7);
+  assert.deepEqual(parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed(`Kept hot ${unionFlag} ${String.fromCodePoint(0x1f3f4)}`))).problems, []);
   // An Arabic name followed by the Arabic letter mark is taken, in a worksheet and as a signer's name.
   const maryam = `${String.fromCodePoint(0x645, 0x631, 0x64a, 0x645, 0x61c)} (Maryam)`;
   const named = parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', 'Answer: A bain-marie', 'State: confirmed', `By: ${maryam}`, 'On: 2026-11-17', 'Source:'));

@@ -197,9 +197,10 @@ test('the status JSON has the documented shape: the seven documents in order, th
   assert.deepEqual(STATUS_ORDER, result.documents.map((d) => d.code));
   for (const doc of result.documents) {
     assert.deepEqual(Object.keys(doc), ['code', 'worksheets', 'missingWorksheets', 'problems', 'misplaced', 'questions', 'confirmed', 'proposed',
-      'unanswered', 'notRelevantMethods', 'adaptedMethods', 'file', 'version', 'rendered', 'inSync', 'bodyInStep', 'otherText', 'signedOff', 'signOff'], doc.code);
+      'unanswered', 'notRelevantMethods', 'adaptedMethods', 'file', 'version', 'rendered', 'inSync', 'bodyInStep', 'otherText', 'signedOff', 'signOff',
+      'headerShowsSignOff'], doc.code);
     assert.deepEqual([doc.file, doc.version, doc.rendered, doc.inSync, doc.signedOff, doc.signOff], [null, null, false, false, false, null], doc.code);
-    assert.deepEqual([doc.bodyInStep, doc.otherText], [null, []], doc.code);
+    assert.deepEqual([doc.bodyInStep, doc.otherText, doc.headerShowsSignOff], [null, [], null], doc.code);
     assert.deepEqual([doc.missingWorksheets, doc.problems, doc.misplaced], [[], 0, null], doc.code);
   }
   const worksheets = Object.fromEntries(result.documents.map((d) => [d.code, d.worksheets]));
@@ -2128,4 +2129,177 @@ test('H1: set-up-folder changes nothing in a project that already existed: one w
   assert.equal(run('set-up-folder').status, 2);
   assert.equal(run('set-up-folder', '--project', join(tmpdir(), 'no-such-project-folder')).status, 2);
   assert.match(run('set-up-folder').stderr.replace(/\s+/g, ' '), /set-up-folder --project DIR/);
+});
+
+// ---- What the re-review of the seven fixes found (H8, H9) ----
+
+const rewriteLine = (name, date) => `signed off by ${name} on ${date}, but what it prints has changed since: writing the document again ` +
+  'makes a new version, which then needs signing off';
+
+test('H8: a cell typed inexactly while a sign-off is marked gives one line, check\'s own, and following it leaves the document signed off with its header showing the sign-off', () => {
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  const name = basename(file);
+  // Before any sign-off there is nothing for a header to show.
+  assert.equal(docStatus(dir, 'FOODCOOK').headerShowsSignOff, null);
+  assert.equal(docStatus(dir, 'FOODXC').headerShowsSignOff, null);
+  assert.equal(signOff(dir, 'FOODCOOK').status, 0);
+  assert.deepEqual([docStatus(dir, 'FOODCOOK').signedOff, docStatus(dir, 'FOODCOOK').headerShowsSignOff], [true, false]);
+  mark(file);
+  assert.deepEqual([docStatus(dir, 'FOODCOOK').signedOff, docStatus(dir, 'FOODCOOK').headerShowsSignOff], [true, true]);
+  const marked = readFileSync(file, 'utf8');
+  // Each slip of the kind a marking makes, and each other header fault on a signed file: one line, the header's.
+  for (const [from, to, pattern] of [
+    [`| **Approved By** | ${SAM} |`, '| **Approved By** | Sam Okafor (Owner), 2026-11-17 |', /Write "Sam Okafor, Owner, 2026-11-17" there and nothing else/],
+    [`| **Reviewed By** | ${SAM} |`, '| **Reviewed By** | Sam Okafor, Owner |', /Write "Sam Okafor, Owner, 2026-11-17" there and nothing else/],
+    ['| **Status** | APPROVED |', '| **Status** | APPROVED by the council |', /Write APPROVED there, or put it back to DRAFT/],
+    ['answers | Sam Okafor, Owner | 2026-11-17 |', 'answers | Sam Okafor (Owner) | 2026-11-17 |', /Write "Sam Okafor, Owner" there and nothing else/]
+  ]) {
+    writeFileSync(file, swap(marked, from, to));
+    const result = check(dir, 'FOODCOOK', file);
+    assert.deepEqual([result.exit, result.kind, result.line], [1, 'header', lineNumber(file, to)], to);
+    assert.match(result.message, pattern, to);
+    assert.deepEqual(linesFor(dir, 'FOODCOOK'), [`document ${name} ${result.reason}`], to);
+    assert.ok(status(dir).unfinished.every(({ what }) => !/changed outside its UK-FOOD markers|sign it off again|sign the document off again/.test(what)), to);
+    const cook = docStatus(dir, 'FOODCOOK');
+    assert.deepEqual([cook.signedOff, cook.inSync, cook.bodyInStep, cook.headerShowsSignOff], [false, false, true, false], to);
+    // Signing again does not put a header right, and is refused for that line alone.
+    const refused = signOff(dir, 'FOODCOOK');
+    assert.equal(refused.status, 1, to);
+    assert.deepEqual(reasons(refused.stderr), [`document ${name} ${result.reason}`], to);
+    // Following the line: the cell written as it says.
+    writeFileSync(file, marked);
+    assert.equal(check(dir, 'FOODCOOK', file).exit, 0, to);
+    assert.deepEqual([docStatus(dir, 'FOODCOOK').signedOff, docStatus(dir, 'FOODCOOK').headerShowsSignOff], [true, true], to);
+    assert.deepEqual(linesFor(dir, 'FOODCOOK'), [], to);
+  }
+  assert.equal(JSON.parse(readFileSync(signOffsFile(dir), 'utf8')).signOffs.length, 1);
+  // The end the review reached by "putting the edit back": the record stands and check passes, but the
+  // header reads DRAFT. status says the document is signed off and that its header does not show it.
+  const unmarked = readFileSync(templated(cafe(), 'FOODCOOK'), 'utf8');
+  writeFileSync(file, unmarked);
+  const draft = docStatus(dir, 'FOODCOOK');
+  assert.equal(check(dir, 'FOODCOOK', file).exit, 0);
+  assert.deepEqual([draft.signedOff, draft.headerShowsSignOff], [true, false]);
+  // Half marked is not marked: a Status of APPROVED with the names still pending, or the history row not filled in.
+  for (const [from, to] of [[`| **Reviewed By** | ${SAM} |`, '| **Reviewed By** | [PENDING] |'],
+    ['answers | Sam Okafor, Owner | 2026-11-17 |', 'answers | [PENDING] | [PENDING] |']]) {
+    writeFileSync(file, swap(marked, from, to));
+    assert.deepEqual([docStatus(dir, 'FOODCOOK').signedOff, docStatus(dir, 'FOODCOOK').headerShowsSignOff], [true, false], to);
+  }
+  // A second signer: the header shows the newest sign-off only once it is rewritten to it.
+  writeFileSync(file, marked);
+  assert.equal(run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Priya Shah', '--role', 'Manager', '--version', '1.0', '--date', '2026-11-18').status, 0);
+  assert.equal(docStatus(dir, 'FOODCOOK').headerShowsSignOff, false);
+  assert.equal(linesFor(dir, 'FOODCOOK').length, 1);
+  assert.match(linesFor(dir, 'FOODCOOK')[0], /which does not name Priya Shah/);
+});
+
+test('H9: a signed file whose text between the markers was changed by hand is told that writing it again makes a new version, not to sign off again', () => {
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  assert.equal(signOff(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  edit(file, 'Poached eggs', 'Boiled eggs');
+  const result = check(dir, 'FOODCOOK', file);
+  assert.deepEqual([result.exit, result.kind, result.bodyInStep], [1, 'edited', false]);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [editedLine(basename(file), result.line), rewriteLine('Sam Okafor', '2026-11-17')]);
+  assert.equal(signOff(dir, 'FOODCOOK').status, 1, 'signing again is refused until the document is written again');
+  // The same when its markers are damaged: there is no body to compare, so a new version is what follows.
+  edit(file, 'Boiled eggs', 'Poached eggs');
+  edit(file, '<!-- UK-FOOD:END -->', '');
+  assert.equal(linesFor(dir, 'FOODCOOK').at(-1), rewriteLine('Sam Okafor', '2026-11-17'));
+  // A pack heading outside the markers is told on its own line, which says to take it out: nothing is added to it.
+  const other = cafe();
+  const second = templated(other, 'FOODCOOK');
+  assert.equal(signOff(other, 'FOODCOOK').status, 0);
+  mark(second);
+  edit(second, '## Revision History', '## COOKING\n\n## Revision History');
+  assert.deepEqual(linesFor(other, 'FOODCOOK'), [outsideLine(basename(second), lineNumber(second, '## COOKING'))]);
+});
+
+test('H9: the Build Provenance block is the hook\'s only with each field once, in the hook\'s order, and a recipe and a target of the shape a build writes', () => {
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  assert.equal(signOff(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  writeFileSync(file, `${readFileSync(file, 'utf8')}\n${hookBlock()}\n`);
+  const signed = () => docStatus(dir, 'FOODCOOK').signedOff;
+  assert.equal(signed(), true);
+  const text = readFileSync(file, 'utf8');
+  const stamped = /\| Stamped at \| [^|]+ \|\n/.exec(text)[0];
+  const efforts = /\| Requested Effort \| [^\n]+\n\| Effective Effort \| [^\n]+\n/.exec(text)[0];
+  const build = '| Build Recipe | `uk-food-sfbb` |\n| Build Wave | 2 |\n| Build Target | `CK` |\n';
+  // What the hook itself may write in place of what is there: a build's rows, in their place, with or without a wave.
+  for (const rows of [`${efforts}${build}${stamped}`, `${efforts}${build.replace('| Build Wave | 2 |\n', '')}${stamped}`, `${build}${stamped}`,
+    `${efforts}| Build Recipe | _unknown_ |\n| Build Target | \`ADR-001\` |\n${stamped}`, `${efforts}| Build Recipe | \`uk-saas\` |\n| Build Target | \`ADR_AEMO_INTERFACES\` |\n${stamped}`]) {
+    writeFileSync(file, swap(text, `${efforts}${stamped}`, rows));
+    assert.equal(signed(), true, rows);
+  }
+  // What it never writes: a field twice, fields out of order, one effort without the other, a build's rows
+  // without its recipe or its target, no time of stamping, or a recipe or target that is not shaped like one.
+  for (const rows of [
+    `${efforts}${stamped}${stamped}`, `${stamped}${efforts}`, `${efforts}${efforts}${stamped}`, `${efforts}${stamped}${build}`,
+    `${efforts.split('\n')[0]}\n${stamped}`, `${efforts.split('\n')[1]}\n${stamped}`, `${efforts}`, `${stamped.repeat(1)}`.replace(stamped, ''),
+    `${efforts}| Build Wave | 2 |\n${stamped}`, `${efforts}| Build Recipe | \`uk-food-sfbb\` |\n${stamped}`, `${efforts}| Build Target | \`CK\` |\n${stamped}`,
+    `${efforts}${build}${build}${stamped}`, `${efforts}| Build Target | \`CK\` |\n| Build Recipe | \`uk-food-sfbb\` |\n${stamped}`,
+    `${efforts}| Build Recipe | \`approved-by-Westshire-EHO\` |\n| Build Target | \`CK\` |\n${stamped}`,
+    `${efforts}| Build Recipe | \`Approved\` |\n| Build Target | \`CK\` |\n${stamped}`,
+    `${efforts}| Build Recipe | \`recipes/uk-food-sfbb.yaml\` |\n| Build Target | \`CK\` |\n${stamped}`,
+    `${efforts}| Build Recipe | \`uk-food-sfbb\` |\n| Build Target | \`approved by the council\` |\n${stamped}`,
+    `${efforts}| Build Recipe | \`uk-food-sfbb\` |\n| Build Target | \`seen-by-the-eho\` |\n${stamped}`,
+    `${efforts}| Build Recipe | \`uk-food-sfbb\` |\n| Build Wave | two |\n| Build Target | \`CK\` |\n${stamped}`
+  ]) {
+    writeFileSync(file, swap(text, `${efforts}${stamped}`, rows));
+    assert.equal(signed(), false, JSON.stringify(rows));
+    assert.equal(check(dir, 'FOODCOOK', file).kind, 'not-as-signed', JSON.stringify(rows));
+  }
+  writeFileSync(file, text);
+  assert.equal(signed(), true);
+});
+
+test('H9: a header row inside a blockquote is read as a row: it cannot claim a sign-off nobody recorded, and it does not stand in for the header\'s own row', () => {
+  for (const row of ['> | **Status** | APPROVED |', '>| Status | APPROVED |', '> > | **Status** | APPROVED |', '  > | __status:__ | APPROVED']) {
+    const dir = cafe();
+    const file = templated(dir, 'FOODCOOK');
+    edit(file, '## Revision History', `${row}\n\n## Revision History`);
+    const result = check(dir, 'FOODCOOK', file);
+    assert.deepEqual([result.exit, result.kind, result.line], [1, 'header', lineNumber(file, row)], row);
+    assert.match(result.message, /Status is "APPROVED", but no sign-off is recorded for this file/, row);
+    // And in place of the header's own row.
+    const stood = templated(dir, 'FOODCOOK');
+    edit(stood, '| **Status** | DRAFT |', row);
+    assert.deepEqual([check(dir, 'FOODCOOK', stood).exit, check(dir, 'FOODCOOK', stood).kind], [1, 'header'], row);
+  }
+  // On a signed and marked file, a quoted row is not one of the cells the sign-off step writes: it counts as any other line.
+  const dir = cafe();
+  const file = templated(dir, 'FOODCOOK');
+  assert.equal(signOff(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  edit(file, '| **Status** | APPROVED |', '> | **Status** | APPROVED |');
+  assert.deepEqual([docStatus(dir, 'FOODCOOK').signedOff, docStatus(dir, 'FOODCOOK').headerShowsSignOff], [false, false]);
+  assert.equal(check(dir, 'FOODCOOK', file).kind, 'not-as-signed');
+  // A quoted row that claims nothing is only a line of other text, shown to whoever signs.
+  const quiet = cafe();
+  const plain = templated(quiet, 'FOODCOOK');
+  edit(plain, '## Revision History', '> | **Status** | DRAFT |\n\n## Revision History');
+  assert.equal(check(quiet, 'FOODCOOK', plain).exit, 0);
+  assert.deepEqual(check(quiet, 'FOODCOOK', plain).otherText.map((entry) => entry.text), ['> | **Status** | DRAFT |']);
+  assert.deepEqual(linesFor(quiet, 'FOODCOOK'), [NOT_SIGNED]);
+});
+
+test('H9: a sign-off name or role that holds a refused character is told which one, by its code point', () => {
+  const dir = cafe();
+  writeDocument(dir, 'FOODCOOK');
+  const tag = String.fromCodePoint(0xe0041);
+  const override = String.fromCodePoint(0x202e);
+  const named = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', `Sam${override}Oka${tag}for`, '--role', 'Owner', '--version', '1.0');
+  assert.equal(named.status, 2);
+  assert.match(named.stderr, /--name is the name of the person signing off: some text, on one line, with no character that cannot be seen\. It holds U\+202E and U\+E0041: delete them, or type it again/);
+  const role = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Sam Okafor', '--role', `Own${tag}er`, '--version', '1.0');
+  assert.match(role.stderr, /--role is the role of the person signing off, such as owner: some text, on one line, with no character that cannot be seen\. It holds U\+E0041: delete it, or type it again/);
+  // An empty name, or one over two lines, is told as before, with no code point to name.
+  const empty = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', ' ', '--role', 'Owner', '--version', '1.0');
+  assert.match(empty.stderr, /--name is the name of the person signing off: some text, on one line, with no character that cannot be seen\n/);
+  assert.ok(!existsSync(signOffsFile(dir)));
 });

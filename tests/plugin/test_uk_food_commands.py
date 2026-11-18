@@ -491,6 +491,9 @@ def test_no_command_keeps_the_wording_the_review_found_wrong(name):
                  "must still be true",
                  # Rulings H4 and H7.
                  "Additional Safe Methods", "`inSync` is false: the file a person signed is out of step",
+                 # H8: the clause that led a marking slip to a signed document whose header read DRAFT.
+                 "your edit changed something other than those rows: put it back exactly as it was",
+                 "must now be true",
                  "a new version is written only when a file a person signed is out of step"]:
         assert gone not in body, f"{name} still says {gone!r}"
     if name == "uk-food-profile":
@@ -782,8 +785,9 @@ SIGN_OFF_RULES = {
                                                             "and ends when any line of it changes",
     "F8: no date after today": "refuses a date after today",
     "I1: marking the header changes nothing else": "Change nothing else in the file, not even to tidy it",
-    "I1: the document is signed off after marking": "the document's `signedOff` must now be true",
-    "I1: a stray edit is put back": "your edit changed something other than those rows: put it back exactly as it was",
+    "I1: the document is signed off after marking": "`check` exits 0, the document's `signedOff` is true",
+    "I1: a stray edit is put back": "something other than those cells was changed: put that back exactly as it was, and "
+                                    "leave the cells as step 2 says",
     "I2: what ends a sign-off, and what does not": "a change to something this document does not print leaves the sign-off "
                                                    "standing",
     "32: says the file and version and takes a yes": "take their yes before recording",
@@ -820,6 +824,13 @@ SIGN_OFF_RULES = {
                                                              "file as it now reads",
     "H7: never by a new version": "is put right by taking the change out or by signing the document off again, never by a "
                                   "new version",
+    "H8: the last check is that the header shows the sign-off": "and its `headerShowsSignOff` is true",
+    "H8: a header that reads DRAFT is not the end": "a document can be signed off while its header still reads `DRAFT`, and "
+                                                    "that is not the end of this command",
+    "H8: the cell is put right, and nothing else": "write it so, in that cell and nowhere else",
+    "H8: a cell still pending is written": "If `check` exits 0 and `headerShowsSignOff` is false, a cell still reads `DRAFT` "
+                                           "or `[PENDING]`: write it as step 2 says.",
+    "H8: no cell is put back to make check pass": "Never put a cell back to `DRAFT` or `[PENDING]` to make `check` pass.",
 }
 
 
@@ -927,7 +938,9 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "Classification is what the person said, or `[PENDING]`: never the plugin's `default_classification`",
                    # I1: nothing of the command's own outside the markers, and marking a header changes nothing else.
                    "you added no summary, note, heading or other text of your own, before the markers or after them",
-                   "`signedOff` is true, so nothing else in the file was changed",
+                   "`signedOff` and `headerShowsSignOff` are both true: the header shows the sign-off, and nothing else in the "
+                   "file was changed",
+                   "No cell was put back to `DRAFT` or `[PENDING]` to make `check` pass.",
                    # G1, G4 and G6: the cells a sign-off rewrites, the version rule and the newest record.
                    "the helper records no sign-off while one holds anything else",
                    "with `bodyInStep` true or null and `signedOff` false nothing was written and the document's `unfinished` "
@@ -1431,6 +1444,37 @@ def test_a_header_fault_on_a_signed_file_never_gets_a_new_version(rows, project)
     assert cooking(project)["signedOff"]
 
 
+def marking_is_finished(project: Path, path: Path) -> bool:
+    """Step 5.4 of the sign-off command: check exits 0, and signedOff and headerShowsSignOff are both true."""
+    doc = cooking(project)
+    return check("FOODCOOK", project, path).returncode == 0 and doc["signedOff"] is True and doc["headerShowsSignOff"] is True
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_marking_a_sign_off_is_not_finished_until_the_header_shows_it(project):
+    """H8: a cell typed inexactly gives one line, and putting the header back to DRAFT is not a way out."""
+    path = build("FOODCOOK", project)
+    draft = path.read_text(encoding="utf-8")
+    sign_and_mark("FOODCOOK", project, path)
+    marked = path.read_text(encoding="utf-8")
+    assert marking_is_finished(project, path)
+    # The slip: one name typed another way.
+    set_header(path, [("Approved By", "Sam Okafor (owner), 2026-11-17")])
+    assert not marking_is_finished(project, path)
+    lines = unfinished("FOODCOOK", project)
+    assert len(lines) == 1 and 'write "Sam Okafor, owner, 2026-11-17" there and nothing else' in lines[0], lines
+    assert "changed outside its UK-FOOD markers" not in lines[0]
+    # The end the review reached, by putting the whole header back: signed off, check passes, header reads DRAFT.
+    path.write_text(draft, encoding="utf-8")
+    doc = cooking(project)
+    assert check("FOODCOOK", project, path).returncode == 0 and doc["signedOff"] and doc["headerShowsSignOff"] is False
+    assert not marking_is_finished(project, path), "the step's last condition holds it open"
+    # The cell written as the line says: finished, with the header showing the sign-off.
+    path.write_text(marked, encoding="utf-8")
+    assert marking_is_finished(project, path)
+    assert "| **Status** | APPROVED |" in path.read_text(encoding="utf-8")
+
+
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
 def test_a_signed_file_whose_worksheet_cannot_be_read_is_left_until_it_can(project):
     """H7: with no fresh print to compare, the rule writes nothing yet."""
@@ -1543,6 +1587,31 @@ def test_the_pages_say_truly_what_a_document_shows_and_what_leaves_a_sign_off_st
     assert "**The lines that show the sign-off are part of it.**" in sign_off
     assert "**If a worksheet cannot be read**" in sign_off
     assert "because signing off rewrites those lines and must change nothing else" in sign_off
+
+
+def test_the_pages_no_longer_overstate_what_the_review_named():
+    """H9: five sentences, each made true, and held out."""
+    readme = (OVERLAY / "README.md").read_text(encoding="utf-8")
+    changelog = (OVERLAY / "CHANGELOG.md").read_text(encoding="utf-8")
+    overview = (ROOT_GUIDES / OVERVIEW_GUIDE).read_text(encoding="utf-8")
+    profile = (ROOT_GUIDES / "uk-food-profile.md").read_text(encoding="utf-8")
+    sign_off = (ROOT_GUIDES / "uk-food-sign-off.md").read_text(encoding="utf-8")
+    assert "a line of that document changed afterwards ends it. The paragraph on signing off, below, says what else does." in readme
+    assert "The earlier sign-off does not come back" in profile
+    assert "as a new version if it had been signed off, and that is the one to sign" in profile
+    assert "outside what you sign for only while each line of it is in the form ArcKit writes" in sign_off
+    assert "in place if nobody had signed it off, and as a new version to sign off if somebody had" in overview
+    assert "a confirmed answer as the business's own, a proposed one beside **NOT YET ANSWERED** with where it came from" in overview
+    assert "a proposed one is shown beside NOT YET ANSWERED with where it came from" in changelog
+    for path in hand_written():
+        text = path.read_text(encoding="utf-8")
+        for gone in ["it lasts until a line of that document changes", "until you record that entry with",
+                     "So does anything added to the Build Provenance table",
+                     "Record the entry, and the document is written again as a new version to sign off.",
+                     "from the pack's wording and your confirmed answers.",
+                     "from the pack's wording and the business's confirmed answers, checked",
+                     "A signed-off document that has changed is written again as a new version"]:
+            assert gone not in text, f"{path.name} still says {gone!r}"
 
 
 def test_the_pages_say_what_this_round_changed_for_an_owner():
