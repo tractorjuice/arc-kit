@@ -1681,7 +1681,8 @@ test('H3: upgrade-worksheet shows each line it would replace and writes nothing;
     assert.equal(readFileSync(kept, 'utf8'), older.text, section);
     assert.deepEqual(parse(readFileSync(file, 'utf8')).problems, [], section);
     assert.deepEqual(typed(parse(readFileSync(file, 'utf8'))), typed(parse(older.text)), section);
-    assert.match(written.stdout, /Every answer, state, name, date and entry reads the same as before/);
+    assert.match(written.stdout, /Every answer, state, name, date and entry is under the same identifier as before, unchanged\./);
+    assert.doesNotMatch(dry.stdout + written.stdout, /reads the same as before/);
     assert.ok(written.stdout.includes(kept), written.stdout);
     // Nothing more to do: said so, and nothing written or kept again.
     const again = run('upgrade-worksheet', '--file', file, '--write');
@@ -1941,6 +1942,185 @@ test('J3: the kept copy has a name that no pattern for worksheets matches, and n
       assert.match(name, new RegExp(`answers-${section}\\.md$`), name);
     }
   }
+});
+
+// ---- An upgrade must not move answers when the wording has also changed (ruling T4) ----
+
+// The wording of each question in a worksheet's text: its identifier, and the lines starting > under its heading.
+const wordingsOf = (text) => {
+  const found = new Map();
+  let current = null;
+  text.split('\n').forEach((line, at) => {
+    const heading = /^### (\S+)$/.exec(line);
+    if (heading) {
+      current = heading[1];
+      found.set(current, []);
+    } else if (/^## /.test(line)) current = null;
+    else if (line.startsWith('>') && current) found.get(current).push({ at, text: line });
+  });
+  return found;
+};
+const wordSet = (lines) => new Set(lines.map((line) => line.text).join(' ').toLowerCase().match(/[a-z0-9]+/g) ?? []);
+const shared = (a, b) => [...a].filter((word) => b.has(word)).length / (new Set([...a, ...b]).size || 1);
+// A question's wording with some of its words changed to words no question has: `chosen` are the words to
+// change (each wherever it stands in the lines); the rest of each line is as it was.
+const reworded = (lines, chosen) => lines.map((line) => {
+  let text = line.text;
+  chosen.forEach((word, n) => { text = text.replace(new RegExp(`\\b${word}\\b`, 'gi'), `zq${n}x`); });
+  return { at: line.at, text };
+});
+const withLines = (text, changed) => {
+  const lines = text.split('\n');
+  for (const { at, text: now } of changed) lines[at] = now;
+  return lines.join('\n');
+};
+const SECTIONS_ASKED = WORKSHEET_SECTIONS.filter((section) => section !== 'own');
+
+test('T4: with up to three of its words changed, every question in every worksheet still upgrades, whichever words they are', () => {
+  let questions = 0;
+  for (const section of SECTIONS_ASKED) {
+    const blank = blankWorksheet(section, data);
+    const wordings = wordingsOf(blank);
+    const sets = new Map([...wordings].map(([id, lines]) => [id, wordSet(lines)]));
+    questions += wordings.size;
+    // Which words to change: the first ones; the last ones; and, hardest, the words a question has that
+    // the question most like it lacks, so that what is left is as near the other question as it can be.
+    const choices = {
+      first: (id) => [...sets.get(id)].slice(0, 3),
+      last: (id) => [...sets.get(id)].slice(-3),
+      telling: (id) => {
+        const others = [...sets].filter(([other]) => other !== id).sort((a, b) => shared(sets.get(id), b[1]) - shared(sets.get(id), a[1]));
+        const own = [...sets.get(id)];
+        const only = own.filter((word) => !others[0][1].has(word));
+        return [...only, ...own.filter((word) => !only.includes(word))].slice(0, 3);
+      }
+    };
+    for (const [which, choose] of Object.entries(choices)) {
+      for (const k of [1, 2, 3]) {
+        const older = withLines(blank, [...wordings].flatMap(([id, lines]) => reworded(lines, choose(id).slice(0, k))));
+        assert.notEqual(older, blank);
+        const result = upgradeWorksheet(older, data);
+        assert.equal(result.exit, 0, `${section}, ${k} of the ${which} words: ${result.messages?.join(' ')}`);
+        assert.equal(result.text, blank, `${section}, ${k} of the ${which} words`);
+        assert.equal(result.changes.length, wordings.size, `${section}, ${k} of the ${which} words`);
+      }
+    }
+  }
+  assert.ok(questions > 200, String(questions));
+});
+
+test('T4: headings the wrong way round are refused whether the wording under them is this version\'s or has been lightly reworded, in every worksheet', () => {
+  // Every pair of questions of one safety method (every pair, in the profile), with their two headings the wrong
+  // way round. A pair from two methods is refused before this: each question must stand under its own method.
+  const written = { two: {}, three: {} };
+  let pairs = 0;
+  for (const section of SECTIONS_ASKED) {
+    const text = fixture(section);
+    const wordings = wordingsOf(text);
+    const ids = [...wordings.keys()];
+    const methodOfId = (id) => (section === 'profile' ? 'profile' : id.slice(0, 5));
+    const siblings = ids.flatMap((first, i) => ids.slice(i + 1).filter((second) => methodOfId(first) === methodOfId(second)).map((second) => [first, second]));
+    pairs += siblings.length;
+    let named = 0;
+    for (const [first, second] of siblings) {
+      const [a, b] = [wordings.get(first), wordings.get(second)];
+      const likeness = shared(wordSet(a), wordSet(b));
+      const variants = {
+        current: [],
+        two: [...reworded(a, [...wordSet(a)].slice(0, 2)), ...reworded(b, [...wordSet(b)].slice(0, 2))],
+        three: [...reworded(a, [...wordSet(a)].slice(-3)), ...reworded(b, [...wordSet(b)].slice(-3))]
+      };
+      for (const [which, changed] of Object.entries(variants)) {
+        const result = upgradeWorksheet(swapHeadings(withLines(text, changed), first, second), data);
+        if (result.exit === 0) {
+          // Written all the same: only ever with reworded wording, and only for two questions nearly alike.
+          assert.notEqual(which, 'current', `${first} and ${second}: this version's wording under the wrong headings was written`);
+          assert.ok(likeness >= (which === 'two' ? 0.8 : 0.65), `${first} and ${second} (${likeness.toFixed(2)} alike), ${which} words changed: written`);
+          written[which][section] = (written[which][section] ?? 0) + 1;
+          continue;
+        }
+        assert.equal(result.exit, 1);
+        const said = result.messages.join(' ');
+        assert.match(said, /Nothing has been changed\./);
+        // Refused as a moved heading, naming both; or, where an answer does not fit the other question, for that.
+        if (/a heading that has been moved/.test(said)) {
+          // With this version's wording each of the two is named with the question whose wording it stands over. Once
+          // reworded, at least one of the two headings is named: the lines under the other may not be clearly nearer
+          // another question, and those under either may be as near a twin of the right question, which is then named.
+          if (which === 'current') {
+            assert.match(said, new RegExp(`under ${second} are this version's wording of ${first}`), said);
+            assert.match(said, new RegExp(`under ${first} are this version's wording of ${second}`), said);
+          } else assert.match(said, new RegExp(`under (?:${first}|${second}) are far closer to this version's wording of \\S+ than to their own heading's`), `${which}: ${said}`);
+          assert.match(said, /Put each heading back over its own question first\. Nothing has been changed\./);
+          named++;
+        } else assert.match(said, /problems? besides its wording/, said);
+      }
+    }
+    assert.ok(named > siblings.length, `${section}: ${named} refusals named the two questions`);
+    // Two questions of different methods: refused, since each must stand under its own method's heading.
+    const apart = ids.find((id) => methodOfId(id) !== methodOfId(ids[0]));
+    if (apart) {
+      const result = upgradeWorksheet(swapHeadings(text, ids[0], apart), data);
+      assert.equal(result.exit, 1, section);
+      assert.match(result.messages.join(' '), new RegExp(`${apart} belongs to ${methodOfId(apart)}, but is not under ${methodOfId(apart)}'s heading`));
+    }
+  }
+  // What this leaves unseen, counted: of every such pair, those written all the same once two, and three, words of
+  // each question's wording have been changed as well. Each is a pair of questions that share nearly all their words.
+  assert.equal(pairs, 1456);
+  assert.deepEqual(written, { two: { XC: 8, CL: 4, CH: 22, CK: 1, MG: 13 }, three: { XC: 16, CL: 8, CH: 24, CK: 3, MG: 22, profile: 6 } });
+  // The reviewer's case: CK-06-Q01 and CK-06-Q03 the wrong way round, over wording an older version might have printed.
+  const older = fixture('CK').split('\n');
+  for (const id of ['CK-06-Q01', 'CK-06-Q03']) {
+    let at = older.indexOf(`### ${id}`) + 1;
+    while (older[at] === '' || older[at].startsWith('>')) at++;
+    assert.ok(older[at - 1].endsWith('(yes / no)'), older[at - 1]);
+    older[at - 1] = older[at - 1].replace('(yes / no)', '[yes or no]');
+  }
+  const { dir, file } = sheetIn('CK', swapHeadings(older.join('\n'), 'CK-06-Q01', 'CK-06-Q03'));
+  for (const args of [[], ['--write']]) {
+    const result = run('upgrade-worksheet', '--file', file, ...args);
+    assert.equal(result.status, 1, result.stdout);
+    assert.match(result.stderr.replace(/\s+/g, ' '), /under CK-06-Q03 are far closer to this version's wording of CK-06-Q01 than to their own heading's/);
+    assert.match(result.stderr.replace(/\s+/g, ' '), /those under CK-06-Q01 are far closer to this version's wording of CK-06-Q03 than to their own heading's/);
+    assert.equal(readFileSync(file, 'utf8'), swapHeadings(older.join('\n'), 'CK-06-Q01', 'CK-06-Q03'));
+    assert.deepEqual(readdirSync(dir), ['answers-CK.md']);
+  }
+  // With the headings where they belong, the same older wording upgrades, and the answers stay where they were.
+  const right = upgradeWorksheet(older.join('\n'), data);
+  assert.equal(right.exit, 0, right.messages?.join(' '));
+  assert.equal(right.text, fixture('CK'));
+});
+
+test('T4: the dry run shows, for each question it changes, its first line as it stands and as this version prints it, and claims only what was checked', () => {
+  const lines = fixture('CK').split('\n');
+  const long = lines.findIndex((line, i) => line.startsWith('>') && lines[i + 1].startsWith('>') && lines[i + 2].startsWith('>'));
+  const id = lines.slice(0, long).reverse().find((line) => line.startsWith('### ')).slice(4);
+  // The change is on the third line of a question's wording: its first line is shown all the same.
+  const older = [...lines];
+  older[long + 2] += ' (older)';
+  const { file } = sheetIn('CK', older.join('\n'));
+  const dry = run('upgrade-worksheet', '--file', file);
+  assert.equal(dry.status, 0, dry.stderr);
+  const shown = dry.stdout.split('\n');
+  const at = shown.findIndex((line) => line.startsWith(`${id}, line`));
+  assert.ok(at > 0, dry.stdout);
+  assert.equal(shown[at + 1], `  its first line as it stands: ${lines[long]}`);
+  assert.equal(shown[at + 2], `  its first line in this version: ${lines[long]}`);
+  assert.equal(shown[at + 3], `  takes out, line ${long + 3}: ${older[long + 2]}`);
+  assert.equal(shown[at + 4], `  puts in: ${lines[long + 2]}`);
+  assert.match(dry.stdout, /\n1 line taken out and 1 put in\. Every answer, state, name, date and entry is under the same identifier as before, unchanged\.\n/);
+  assert.doesNotMatch(dry.stdout, /reads the same/);
+  // The guidance comment has no question, so no first lines are shown for it.
+  const guided = [...lines];
+  guided[lines.indexOf('<!--') + 1] += ' (older)';
+  const other = run('upgrade-worksheet', '--file', sheetIn('CK', guided.join('\n')).file);
+  assert.doesNotMatch(other.stdout, /its first line/);
+  // The usage text says what the command does now.
+  const usage = run('upgrade-worksheet').stderr.replace(/\s+/g, ' ');
+  assert.match(usage, /print each line of its guidance and question wording that would be taken out or put in, and with --write do so/);
+  assert.match(usage, /or one whose wording under a question's heading is another question's \(a heading that has been moved\)/);
+  assert.doesNotMatch(usage, /would be replaced|replace them/);
 });
 
 // Ruling H3: each profile question has a key that says what it asks, and its printed identifier is tied

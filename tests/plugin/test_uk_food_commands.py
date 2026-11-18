@@ -2094,10 +2094,13 @@ def test_sign_off_recorded_is_graded_as_it_reads(tmp_path):
     other = Run("sign-off-recorded", tmp_path / "other")
     other.helper("sign-off", "--doc", "FOODCOOK", "--project", other.project, "--name", "Priya Nair", "--role", "Manager", "--version", "1.0")
     assert "record-names-the-file-version-and-person" in failed(other.scores())
+    # (The helper refuses the same sign-off over again, T5, so the second differs in how the role is written.)
     twice = Run("sign-off-recorded", tmp_path / "twice")
-    for _ in range(2):
-        twice.helper("sign-off", "--doc", "FOODCOOK", "--project", twice.project, "--name", "Sam Okafor", "--role", "Owner", "--version", "1.0")
+    for role in ["Owner", "owner"]:
+        assert twice.helper("sign-off", "--doc", "FOODCOOK", "--project", twice.project, "--name", "Sam Okafor", "--role", role, "--version", "1.0").returncode == 0
     assert "one-record-only" in failed(twice.scores())
+    again = twice.helper("sign-off", "--doc", "FOODCOOK", "--project", twice.project, "--name", "Sam Okafor", "--role", "owner", "--version", "1.0")
+    assert again.returncode == 1 and "is already recorded" in again.stderr
     # APPROVED put into another file does not count as marking this one.
     elsewhere = Run("sign-off-recorded", tmp_path / "elsewhere")
     elsewhere.write(elsewhere.project / "notes.md", "| **Status** | DRAFT |\n")

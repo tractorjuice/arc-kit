@@ -1335,9 +1335,12 @@ test('M2: sign-off refuses a date after today, writing nothing, and takes today 
     assert.ok(!existsSync(signOffsFile(dir)), date);
   }
   assert.match(run('sign-off').stderr.replace(/\s+/g, ' '), /DATE is YYYY-MM-DD, today when not given, and never after today/);
+  // Three people, since the same person's sign-off of an unchanged file is not recorded twice (T5).
+  const by = (name, date) => run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', name, '--role', 'Manager', '--version', '1.0',
+    '--date', date, '--other-text-read', 'yes');
   assert.equal(signOff(dir, 'FOODCOOK', '--date', today()).status, 0);
-  assert.equal(signOff(dir, 'FOODCOOK', '--date', dayFrom(-1)).status, 0);
-  assert.equal(signOff(dir, 'FOODCOOK', '--date', '2026-11-17').status, 0);
+  assert.equal(by('Priya Nair', dayFrom(-1)).status, 0);
+  assert.equal(by('Ali Khan', '2026-11-17').status, 0);
   assert.deepEqual(JSON.parse(readFileSync(signOffsFile(dir), 'utf8')).signOffs.map((record) => record.date), [today(), dayFrom(-1), '2026-11-17']);
   // A record read back is not held to today's date: the day it was made, it was not in the future.
   const records = JSON.parse(readFileSync(signOffsFile(dir), 'utf8'));
@@ -2069,7 +2072,7 @@ test('H1: a project folder the shared script has just made becomes the business\
   const readme = readFileSync(join(dir, 'README.md'), 'utf8');
   assert.ok(readme.startsWith('# Bramble Cafe: food safety records\n\n'), readme.slice(0, 80));
   // What the folder is, where things are, what to run next, and that it is kept private.
-  for (const needed of ['This folder holds Bramble Cafe\'s food safety records.', '`food-safety/`', '`ARC-001-FOOD', '`external/`',
+  for (const needed of ['This folder holds the food safety records of Bramble Cafe.', '`food-safety/`', '`ARC-001-FOOD', '`external/`',
     '1. `uk-food-profile`', '2. `uk-food-safe-methods`', '3. `uk-food-own-methods`', '4. `uk-food-check`', '5. `uk-food-sign-off`',
     '`/arckit-uk-food:uk-food-profile`', PRIVATE, 'They are not legal advice.',
     'The Food Standards Agency has not reviewed or endorsed the overlay or anything made with it.']) {
@@ -2338,6 +2341,68 @@ test('J7: a document that is signed off while its header still reads DRAFT is sa
   fromItsTemplate(other, 'FOODCOOK');
   assert.doesNotMatch(run('status', '--project', other).stdout, /not yet marked/);
   assert.doesNotMatch(run('render', '--doc', 'FOODCMP', '--project', other).stdout, /not yet marked/);
+});
+
+// ---- The last touch-up (T5, T6) ----
+
+test('T5: the helper refuses a sign-off that is the newest one over again: the same person, role, file and version, with nothing in the file changed', () => {
+  const dir = cafe();
+  const file = fromItsTemplate(dir, 'FOODCOOK');
+  const name = basename(file);
+  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  const already = `Sam Okafor's sign-off of ${name} (version 1.0) as Owner is already recorded, on 2026-11-17, and the file has not changed since, ` +
+    'so nothing more is recorded. If its header is not yet marked to show it, the sign-off command\'s marking step finishes it';
+  // Before the header is marked, and after.
+  for (const marked of [false, true]) {
+    if (marked) mark(file);
+    for (const extra of [[], ['--date', '2026-11-18'], ['--paper-signed', 'yes'], ['--other-text-read', 'yes']]) {
+      const again = signOffUnread(dir, 'FOODCOOK', ...extra);
+      assert.equal(again.status, 1, `${marked} ${extra}: ${again.stdout}`);
+      assert.equal(again.stdout, '');
+      assert.deepEqual(reasons(again.stderr), [already], `${marked} ${extra}`);
+      assert.equal(records(dir).length, 1);
+    }
+  }
+  assert.equal(docStatus(dir, 'FOODCOOK').signedOff, true);
+  // Another person, or the same person in another role, is another sign-off.
+  assert.equal(run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Priya Nair', '--role', 'Manager', '--version', '1.0', '--date', '2026-11-17').status, 0);
+  assert.equal(records(dir).length, 2);
+  // And once the file has changed outside its markers, the same person signs it again as it now reads.
+  const other = cafe();
+  const changed = fromItsTemplate(other, 'FOODCOOK');
+  assert.equal(signOffUnread(other, 'FOODCOOK').status, 0);
+  mark(changed);
+  writeFileSync(changed, `${readFileSync(changed, 'utf8')}\nSee the notice by the till.\n`);
+  assert.equal(signOffUnread(other, 'FOODCOOK', '--other-text-read', 'yes').status, 0);
+  assert.equal(records(other).length, 2);
+});
+
+test('T6: the readable status says of a slip in a cell what is true of it, and the folder\'s text needs no possessive of the business\'s name', () => {
+  // A Last Modified typed as words after a sign-off: the record is there and the names match, so no sign-off is "not borne out".
+  const dir = cafe();
+  const file = fromItsTemplate(dir, 'FOODCOOK');
+  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  edit(file, '| **Last Modified** | 2026-11-17 |', '| **Last Modified** | 18 November 2026 |');
+  const readable = run('status', '--project', dir).stdout;
+  assert.ok(readable.includes('; ARC-001-FOODCOOK-v1.0.md with a cell of its header that is not what a signed document has there; not signed off\n'), readable);
+  assert.doesNotMatch(readable, /no recorded sign-off bears out/);
+  // A header that claims a sign-off nobody recorded is still told as that.
+  const other = cafe();
+  const claimed = fromItsTemplate(other, 'FOODCOOK');
+  edit(claimed, '| **Status** | DRAFT |', '| **Status** | APPROVED |');
+  assert.ok(run('status', '--project', other).stdout.includes('with a header that no recorded sign-off bears out; not signed off\n'));
+  // The folder's README: a name that ends in s, and the default name typed with two spaces.
+  const kebabs = newProject('A-1 Kebabs');
+  assert.equal(setUp(kebabs).status, 0);
+  const readme = readFileSync(join(kebabs, 'README.md'), 'utf8');
+  assert.ok(readme.startsWith('# A-1 Kebabs: food safety records\n\nThis folder holds the food safety records of A-1 Kebabs. '), readme.slice(0, 120));
+  assert.doesNotMatch(readme, /Kebabs's|Kebabs'/);
+  assert.match(setUp(newProject('Bramble Cafe')).stdout, /is now set up for the food safety records of Bramble Cafe\./);
+  const spaced = newProject('Food  safety');
+  const done = setUp(spaced);
+  assert.equal(done.status, 0, done.stderr);
+  assert.ok(readFileSync(join(spaced, 'README.md'), 'utf8').startsWith('# Food safety records\n\nThis folder holds a food business\'s food safety records. '));
 });
 
 // ---- A worksheet whose guidance comment is gone (J3) ----

@@ -1308,6 +1308,38 @@ export const parseWorksheet = (text, data) => strictWorksheet(text, data).parsed
 const typedIn = (parsed) => JSON.stringify([[...parsed.methods], [...parsed.answers], [...parsed.entries]],
   (name, value) => (name === 'line' ? undefined : value instanceof Map ? [...value] : value));
 
+// How alike two wordings are: of all the words either holds, the share both hold (0 to 1). Letter case
+// and everything that is not a letter or a digit are left out, so a hint reworded from "(yes / no)" to
+// "[yes or no]" is one word of difference.
+const wordsOf = (lines) => new Set(lines.join(' ').toLowerCase().match(/[a-z0-9]+/g) ?? []);
+const alike = (a, b) => {
+  let both = 0;
+  for (const word of a) if (b.has(word)) both++;
+  return both / (a.size + b.size - both || 1);
+};
+// By how much the lines under a heading must be more like another question's wording than like their
+// own heading's before they are taken for that other question's (a heading that has been moved).
+// Chosen from the data: the most any question of the pack or the profile, with three of its own words
+// changed, comes nearer to another question than to itself is 0.097, so no rewording of up to three
+// words is taken for a move. What it leaves unseen: two questions of one safety method whose wordings
+// share nearly all their words, once the wording under them has been reworded as well; while the
+// wording is this version's, the exact comparison still tells them apart.
+const CLEARLY_CLOSER = 0.1;
+// The other question whose wording the lines under `id`'s heading are: [its identifier, whether exactly],
+// or null. `typed` is those lines, without their > marks.
+function movedTo(id, typed, prompts) {
+  const found = wordsOf(typed);
+  const own = alike(found, wordsOf(prompts.get(id).now));
+  let best = null;
+  for (const [other, { now }] of prompts) {
+    if (other === id) continue;
+    if (now.join('\n') === typed.join('\n')) return [other, true];
+    const near = alike(found, wordsOf(now));
+    if (near - own > CLEARLY_CLOSER && (!best || near > best[2])) best = [other, false, near];
+  }
+  return best;
+}
+
 // The steps that turn the lines `old` into the lines `now`, keeping every line the two share, in order
 // (a longest common subsequence): ['keep', i] and ['out', i] for a line of `old`, ['put', j] for one of `now`.
 function lineSteps(old, now) {
@@ -1339,12 +1371,14 @@ function lineSteps(old, now) {
 //   worksheet this helper reads;
 // - any problem besides the wording, an identifier the data does not have among them: those are put
 //   right first, so that nothing a person typed is in a place this cannot carry;
-// - > lines under one question's heading that are this version's wording of another question: that
-//   is a heading that has been moved, not old wording, and to put each question's own wording back
-//   under it would leave each answer under the wrong question, which reading the answers back cannot
-//   show, since each is still under the heading it was under;
+// - > lines under one question's heading that are this version's wording of another question, or far
+//   closer to it than to their own heading's (movedTo): that is a heading that has been moved, not old
+//   wording, and to put each question's own wording back under it would leave each answer under the
+//   wrong question, which reading the answers back cannot show, since each is still under the heading
+//   it was under;
 // - a result that would not read the same: the new text is read back, and must have no problem and
-//   hold every answer, state, name, date and entry as before (typedIn).
+//   hold every answer, state, name, date and entry under the same identifier as before (typedIn). That
+//   is all the comparison shows: whether a heading is over its own question is movedTo's to say.
 // A line a person typed inside the guidance or on a > line cannot be told from old wording, so it is
 // taken out with the rest: `changes` lists every line taken out, for a person to read before writing.
 export function upgradeWorksheet(text, data) {
@@ -1361,14 +1395,15 @@ export function upgradeWorksheet(text, data) {
       : `the worksheet has ${counted(n, 'problem', 'problems')} besides its wording, which ${isAre(n)} put right first:`;
     return { exit: 1, messages: [first, ...listed, leave] };
   }
-  const typedUnder = (prompt) => prompt.at.map((line) => layout.lines[line - 1].trimEnd().replace(/^>[ \t]?/, '')).join('\n');
+  const typedUnder = (prompt) => prompt.at.map((line) => layout.lines[line - 1].trimEnd().replace(/^>[ \t]?/, ''));
   const moved = [...layout.prompts].filter(([, prompt]) => prompt.foreign.length).flatMap(([id, prompt]) => {
-    const other = [...layout.prompts].find(([otherId, { now }]) => otherId !== id && now.join('\n') === typedUnder(prompt));
-    return other ? [[id, other[0]]] : [];
+    const other = movedTo(id, typedUnder(prompt), layout.prompts);
+    return other ? [[id, ...other]] : [];
   });
   if (moved.length) {
-    const said = moved.map(([id, other], i) => `${i ? 'those' : 'the lines starting >'} under ${id} are this version's wording of ${other}`);
-    return { exit: 1, messages: [`a question's heading is not over its own question: ${andList(said)}. That is a heading that has been ` +
+    const said = moved.map(([id, other, exactly], i) => `${i ? 'those' : 'the lines starting >'} under ${id} are ` +
+      (exactly ? `this version's wording of ${other}` : `far closer to this version's wording of ${other} than to their own heading's`));
+    return { exit: 1, messages: [`a question's heading is not over its own question: ${andList(said)}. That is the mark of a heading that has been ` +
       'moved, not wording from another version, and bringing the worksheet up to date would leave an answer under the wrong question. ' +
       `Put each heading back over its own question first. ${leave}`] };
   }
@@ -1381,7 +1416,8 @@ export function upgradeWorksheet(text, data) {
   const changes = [];
   const replace = (what, at, now) => {
     const old = at.map((line) => layout.lines[line - 1].trimEnd());
-    const change = { what, from: at[0], to: at.at(-1), out: [], put: [] };
+    // `first`: a question's first line as it stands and as this version prints it, for a person to see a mismatch.
+    const change = { what, from: at[0], to: at.at(-1), out: [], put: [], first: what.startsWith('The ') ? null : [old[0], now[0]] };
     let waiting = [];
     for (const [step, k] of lineSteps(old, now)) {
       if (step === 'put') {
@@ -3218,6 +3254,16 @@ export function signOffDocument(code, project, person, data) {
       'its ordinary frame, and a sign-off covers the whole file: show them to the person signing, and give --other-text-read ' +
       'yes once that person has read them and says they are theirs', ...doc.otherText.map(({ line, text }) => `  line ${line}: ${text}`));
   }
+  // The newest sign-off over again, with nothing in the file changed since, would be one statement
+  // recorded twice: it is refused. Only the header may still need marking, which is the command's to do.
+  const newest = signOffs.records.filter((entry) => entry.doc === code).at(-1);
+  const now = hashes.get(code);
+  if (newest && now && newest.file === doc.file && newest.version === doc.version && newest.name === person.name &&
+    newest.role === person.role && newest.body === now.body && newest.outside === now.outside) {
+    reasons.push(`- ${person.name}'s sign-off of ${doc.file} (version ${doc.version}) as ${person.role} is already recorded, on ` +
+      `${newest.date}, and the file has not changed since, so nothing more is recorded. If its header is not yet marked to show ` +
+      'it, the sign-off command\'s marking step finishes it');
+  }
   if (reasons.length) return { exit: 1, messages: [`${code} is not signed off, and nothing was written, because:`, ...reasons] };
   const record = { doc: code, version: doc.version, file: doc.file, name: person.name, role: person.role, date: person.date,
     paperSigned: person.paperSigned, otherTextRead: doc.otherText.length > 0 && person.otherTextRead === 'yes', ...hashes.get(code) };
@@ -3247,6 +3293,8 @@ const FAULT_WORDS = {
   'not-as-signed': 'changed since it was signed off'
 };
 const NOT_CHECKED = 'not checked, as a worksheet it needs is missing or has problems';
+// A slip in a cell the sign-off rewrites, after a sign-off: the record is there, so no claim lacks one.
+const CELL_FAULT = 'with a cell of its header that is not what a signed document has there';
 // A document can be signed off while its header still reads DRAFT: the record is made first, and the
 // sign-off command then marks the header. That leaves nothing unfinished and blocks nothing, so it is
 // not in the unfinished list; the readable status and the completion record each say it in one line.
@@ -3267,7 +3315,8 @@ function statusLines(status, data, sheets, checks) {
       `${doc.confirmed} of ${doc.questions} ${many} confirmed${doc.proposed ? `, ${doc.proposed} proposed` : ''}`,
       ...(doc.notRelevantMethods.length ? [`not relevant: ${doc.notRelevantMethods.join(', ')}`] : []),
       ...(doc.adaptedMethods.length ? [`adapted: ${doc.adaptedMethods.join(', ')}`] : []),
-      doc.rendered ? `${doc.file} ${doc.inSync ? 'in step with its worksheets' : FAULT_WORDS[checks.get(doc.code)?.kind] ?? NOT_CHECKED}` : 'not written',
+      doc.rendered ? `${doc.file} ${doc.inSync ? 'in step with its worksheets' : checks.get(doc.code)?.cell ? CELL_FAULT
+        : FAULT_WORDS[checks.get(doc.code)?.kind] ?? NOT_CHECKED}` : 'not written',
       ...(doc.otherText.length ? [`${counted(doc.otherText.length, 'line', 'lines')} outside its checked part`] : []),
       doc.signedOff ? `signed off by ${doc.signOff.name}, ${doc.signOff.role}, on ${doc.signOff.date}` +
         (unmarked(doc) ? `, with its header not yet marked to show it: ${MARK_HOW}` : '') : 'not signed off'
@@ -3363,10 +3412,12 @@ commands:
                                                      bring a worksheet made by a different version of
                                                      the overlay up to date: print each line of its
                                                      guidance and question wording that would be
-                                                     replaced, and with --write replace them, keeping
-                                                     the worksheet as it was beside it; exit 1,
-                                                     changing nothing, for a worksheet for other
-                                                     data or one with any other problem
+                                                     taken out or put in, and with --write do so,
+                                                     keeping the worksheet as it was beside it; exit
+                                                     1, changing nothing, for a worksheet for other
+                                                     data, one with any other problem, or one whose
+                                                     wording under a question's heading is another
+                                                     question's (a heading that has been moved)
   render --doc DOC --project DIR [--data DIR]        print a document's body, from the worksheets in
                                                      DIR/food-safety; DOC is one of FOODXC, FOODCLN,
                                                      FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN,
@@ -3391,9 +3442,11 @@ commands:
                                                      pass check, a cell of its header that the
                                                      sign-off step rewrites holds something else,
                                                      it holds text outside its checked part and
-                                                     --other-text-read yes is not given, or (for
+                                                     --other-text-read yes is not given, (for
                                                      FOODOWN) a special process the profile
-                                                     confirms has no own entry. DATE is
+                                                     confirms has no own entry, or it is the
+                                                     newest sign-off over again with nothing in
+                                                     the file changed. DATE is
                                                      YYYY-MM-DD, today when not given, and never
                                                      after today. The sign-off covers the whole
                                                      file as it then reads: it ends when a line of
@@ -3519,10 +3572,11 @@ export function upgradeWorksheetCommand(args, io = { out: console.log, err: cons
     'of its guidance and question wording, and changes no other line:'];
   for (const change of result.changes) {
     lines.push(`${change.what}${change.back ? '' : `, ${change.from === change.to ? `line ${change.from}` : `lines ${change.from} to ${change.to}`}`}:`,
+      ...(change.first ? [`  its first line as it stands: ${change.first[0]}`, `  its first line in this version: ${change.first[1]}`] : []),
       ...change.out.map(({ line, text }) => `  takes out, line ${line}: ${text}`), ...change.put.map((text) => `  puts in: ${text === '' ? '(a blank line)' : text}`));
   }
-  lines.push(`${counted(out.length, 'line', 'lines')} taken out and ${put.length} put in. Every answer, state, name, date and entry reads ` +
-    'the same as before.');
+  lines.push(`${counted(out.length, 'line', 'lines')} taken out and ${put.length} put in. Every answer, state, name, date and entry is under ` +
+    'the same identifier as before, unchanged.');
   if (!options.write) {
     io.out([...lines, 'Anything a person typed on a line that is taken out is not carried over: read the lines above first.',
       `Nothing has been written. Run it again with --write to write it; the worksheet as it is now is then kept beside it as ${basename(kept)}.`]
@@ -3580,12 +3634,12 @@ function scriptReadme(text, folder) {
   return sha256(shape) === SCRIPT_README ? name : null;
 }
 // The name the commands give a project when nobody has said what the business is called: no name at all.
-const named = (name) => (/^food safety$/i.test(name.trim()) ? '' : name);
+const named = (name) => (/^food safety$/i.test(name.trim().replace(/\s+/g, ' ')) ? '' : name);
 const KEEP_PRIVATE = 'This folder holds the names of the people who work in the business. Keep it somewhere private, and if it ' +
   'is a git repository that is pushed anywhere, keep that private too.';
 const folderReadme = (name, number) => `# ${name ? `${name}: food safety records` : 'Food safety records'}
 
-This folder holds ${name ? `${name}'s` : 'a food business\'s'} food safety records. They are built with ArcKit's UK Food Safety Overlay from the Food Standards Agency's pack, Safer food, better business for caterers, and from the answers that people at the business give.
+This folder holds ${name ? `the food safety records of ${name}` : 'a food business\'s food safety records'}. They are built with ArcKit's UK Food Safety Overlay from the Food Standards Agency's pack, Safer food, better business for caterers, and from the answers that people at the business give.
 
 ## What is here
 
@@ -3674,7 +3728,7 @@ export function setUpFolderCommand(args, io = { out: console.log, err: console.e
   } catch (writeError) {
     return failure(io, { exit: 2, messages: [`cannot set up ${project}: ${writeError.message}`] });
   }
-  io.out([`${project} is now set up ${name ? `as ${name}'s` : 'for a food business\'s'} food safety records.`,
+  io.out([`${project} is now set up for ${name ? `the food safety records of ${name}` : 'a food business\'s food safety records'}.`,
     '- README.md says what the folder is, where the worksheets and documents are, which command to run next, and to keep the folder private.',
     '- external/README.md says what that folder is for: documents of the business\'s own for the assistant to read.',
     ...(kept.length ? [`- The empty folders for ArcKit's architecture work were taken away: ${andList(kept)}.`] : [])].join('\n'));
