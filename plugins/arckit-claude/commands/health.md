@@ -3,6 +3,8 @@ description: Scan all projects for stale research, forgotten ADRs, unresolved re
 doc-type: none
 argument-hint: "<project ID or scope, e.g. '001', 'all', 'vendors only'>"
 tags: [health, quality, governance, staleness, maintenance, audit]
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Artifact Health Check
