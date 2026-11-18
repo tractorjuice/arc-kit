@@ -579,7 +579,10 @@ def test_no_command_keeps_the_wording_the_review_found_wrong(name):
                  # H8: the clause that led a marking slip to a signed document whose header read DRAFT.
                  "your edit changed something other than those rows: put it back exactly as it was",
                  "must now be true",
-                 "a new version is written only when a file a person signed is out of step"]:
+                 "a new version is written only when a file a person signed is out of step",
+                 # V3: a refusal or an early stop can leave a header that reads APPROVED, which the not-marked end now puts back.
+                 "nothing was recorded and the header was never touched", "reads `DRAFT` and `[PENDING]` again",
+                 "leave the header exactly as it is", "a fault of item 5 that is still there or was not of your making"]:
         assert gone not in body, f"{name} still says {gone!r}"
     if name == "uk-food-profile":
         assert "For each of them that does not exist yet" not in body, "M9: the profile command makes one worksheet"
@@ -890,19 +893,48 @@ SIGN_OFF_RULES = {
                                                               "of any kind may be reported on a line of the header",
     "T1: check is read as JSON": "check --doc <DOC> --project PROJECT --report PROJECT/<file> --json`, and `status --project "
                                  "PROJECT --json`",
-    "T1: its own stray change is put back, once": "If an edit you made in this run changed anything but those cells, put exactly "
-                                                  "that back as it was, and go back to 1. Do this once only.",
+    "T1, V3: its own stray change is put back, once, wherever it fell, before anything is judged":
+        "If an edit you made in this run changed any line but the cells of step 2, wherever it is in the file, between the UK-FOOD "
+        "markers as well as outside them, put exactly that line back as it was, before anything else. Do this once only.",
     "T1: every other case ends not marked": "end as **not marked**: put Status back to `DRAFT`, and Reviewed By, Approved By, and "
                                             "this version's Approved By and Approval Date in the Revision History, back to "
                                             "`[PENDING]`, changing nothing else.",
     "T1: nothing else is put right there": "Run `check` and `status` once more, and stop. Do not try to put anything else right here.",
     "T1: step 6 changes nothing after a not-marked end": "If it ended **not marked**, change nothing more in the document or anywhere "
                                                          "else: what is still wrong is what the summary reports",
-    "T1: the summary says which end, first": "which of the two ends the marking reached, in the first line: **marked** or **not "
+    "T1: the summary says which end, first": "which of the two ends the command reached, in the first line: **marked** or **not "
                                              "marked**",
-    "T1: the summary of a not-marked end": "if not marked: that the document's header reads `DRAFT` and `[PENDING]` again, whether "
-                                           "the helper recorded a sign-off in this run, and the document's own line from `status` "
-                                           "with its lines from `unfinished`, unchanged",
+    "V3: it is one of the two whichever step stopped it": "Whichever step stopped it, it is one of the two: a refusal by the helper is "
+                                                          "not marked unless an earlier sign-off still stands and its header shows it",
+    "T1, V3: the summary of a not-marked end": "if not marked: that the document's header reads as an unsigned document's, `DRAFT` and "
+                                               "`[PENDING]`, whether the helper recorded a sign-off in this run, and the document's own line "
+                                               "from `status` with its lines from `unfinished`, unchanged",
+    "V3: every stop on a document not signed off ends not marked": "So whenever it stops on a document that has been written, whichever "
+                                                                   "step stops it (the helper refused, something it needs is missing, "
+                                                                   "nobody is there to answer, or the marking could not be finished), run "
+                                                                   "`status --json`; if the document's `signedOff` is false, end **not "
+                                                                   "marked**",
+    "V3: only the current file is touched": "in the document's current file, the `file` that `status --json` gives for it and no other, "
+                                            "put back to `DRAFT` or `[PENDING]` each of those five cells that reads otherwise, changing "
+                                            "nothing else",
+    "V3: never a file that is not the current version": "Never touch a file that is not the current version: an earlier version keeps "
+                                                        "the header its own sign-off gave it.",
+    "V3: a refusal ends by what status says": "Then run `status --json`: if the document's `signedOff` is true, an earlier sign-off still "
+                                              "stands (the helper's first line says whose), so go to **5. Mark the document's header**; "
+                                              "otherwise end **not marked**, as **How the command ends** says.",
+    "V2: already signed off and marked: nothing recorded, and said truly": "otherwise, if `headerShowsSignOff` is true, the document is "
+                                                                           "already **marked**: record nothing, change nothing, and say in "
+                                                                           "the summary that it is already signed off, by that name and "
+                                                                           "role, on `signOff.date`, that its header shows it, and that "
+                                                                           "nothing was recorded",
+    "V2: the same person and role, as the helper compares them": "If its `signedOff` is true and `signOff.name` and `signOff.role` are "
+                                                                 "the name and role the person gives",
+    "V2: a printed copy signed since is recorded": "if the person says a printed copy has now been signed and `signOff.paperSigned` is "
+                                                   "`no`, that is new: record it as below, with `--paper-signed yes`, and say in the "
+                                                   "summary that a printed copy is now recorded as signed",
+    "V2: the summary says what is true of an earlier sign-off": "If it was already signed off by the person asking, with its header "
+                                                                "showing it, say so and that nothing was recorded; if a printed copy is "
+                                                                "now recorded as signed, say so.",
     "T1: a not-marked document is never called signed off": "Never describe such a document as signed off in words of your own",
     "T3: nothing of the business outside its project folder": "**Nothing of the business is written outside its project folder.**",
     "J6: the marking is one loop": "Finish the marking with this loop.",
@@ -928,8 +960,8 @@ SIGN_OFF_RULES = {
                                                                 "document's header",
     "G6: a second signer's rows are rewritten": "so `signedOff` is false until these rows are rewritten to the newest "
                                                 "record",
-    "G6: nothing recorded for this file, nothing marked": "If `signOff` is null or names another file, the helper recorded "
-                                                          "nothing for this file: leave the header exactly as it is",
+    "G6, V3: nothing recorded for this file, nothing marked": "If `signOff` is null or names another file, the helper recorded "
+                                                              "nothing for this file: mark nothing, and end **not marked**",
     "G3: the one exception, for own methods": "the own methods document also needs an entry for every special process the "
                                               "profile confirms, so confirming a new one in the profile puts own methods "
                                               "back to unfinished until that entry is recorded",
@@ -945,9 +977,9 @@ SIGN_OFF_RULES = {
     "J4: shown unchanged, from the file": "So read the file and show the person, unchanged:",
     "J4: one yes covers all of it": "Ask whether they have read all of it and it is the business's own: their yes covers all of it.",
     "J4: with nobody to ask and no other text": "if it is empty, the request's own naming of the file and version is enough",
-    "J7, T1: an unmarked header is finished without a new sign-off": "their sign-off is already recorded and only the header is "
-                                                                     "left to mark: record nothing new, and go to **5. Mark the "
-                                                                     "document's header**.",
+    "J7, T1: an unmarked header is finished without a new sign-off": "otherwise their sign-off is already recorded and only the "
+                                                                     "header is left to mark: record nothing new, and go to **5. "
+                                                                     "Mark the document's header**.",
     "H7: a changed file is signed again, not written again": "is signed off again in just this way: the helper records the "
                                                              "file as it now reads",
     "H7: never by a new version": "is put right by taking the change out or by signing the document off again, never by a "
@@ -1066,6 +1098,11 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "file was changed",
                    # T1: the two ends of the sign-off command.
                    "**The sign-off command ended marked or not marked, and said which.**",
+                   # V2 and V3: an earlier sign-off is not recorded again, and every stop ends at one of the two.
+                   "nothing new was recorded, unless they said a printed copy has been signed since",
+                   "This holds however the command stopped: a refusal, a stop before recording or marking, or the marking loop.",
+                   "Only the current version's file was touched, and a change the marking made to any other line, between the markers "
+                   "or outside them, was put back before the end was judged.",
                    "Not marked: Status reads `DRAFT`, and Reviewed By, Approved By and the Revision History row's two approval cells "
                    "read `[PENDING]`; nothing else in the file was changed by this run; and the summary gives the document's lines "
                    "from `status`, unchanged.",
@@ -1801,9 +1838,18 @@ def test_the_pages_say_what_this_round_changed_for_an_owner():
     assert "If an earlier run recorded your sign-off but did not finish marking the header, the command finishes the marking and records nothing new." in sign_off, "J7"
     assert "The command ends in one of two ways and tells you which." in sign_off, "T1"
     assert "It never leaves a header reading `APPROVED` on a document that is not signed off." in sign_off, "T1"
+    assert "That holds however the command stops: when the helper refuses, when something it needs is missing, and when the marking cannot be finished." in sign_off, "V3"
+    assert "If marking the header changed anything else in the file, inside the checked part or outside it, the command puts that back first." in sign_off, "V3"
+    assert "the header reads `DRAFT` and `[PENDING]` again" not in sign_off, "V3"
+    assert "> **Claude:** Marked. Recorded: signed off by Sam Okafor" in sign_off, "V6: the example opens as the command must"
+    assert "the command tells you it is already signed off, by you and on what date, and whether its header shows it" in sign_off, "V2"
+    assert "If you have signed a printed copy since, say so, and that is recorded." in sign_off, "V2"
+    assert "nothing rewrites a signed file" not in overview and "only the sign-off command puts such a header back to `DRAFT`" in overview, "V3"
     assert "here is its header as it stands in the file, because your sign-off covers it" in sign_off, "T6"
     assert "(`otherTextRead`, which is `false` when there was none)" in sign_off, "T6"
-    assert "The same sign-off is never recorded twice: if nothing in the file has changed, asking again only finishes the header." in sign_off, "T5"
+    assert ("The same sign-off is never recorded twice: if nothing in the file has changed, asking again only finishes the header, or, if the "
+            "header already shows it, says that the document is already signed off. A printed copy signed later is recorded, as a record of "
+            "its own.") in sign_off, "T5, V2"
     for gone in ["asks before it writes anything", "would replace first, and asks", "you are shown the added text first"]:
         assert all(gone not in text for text in [overview, check_guide, sign_off, readme]), f"J9: {gone}"
     assert "you have been shown it and have said you have read it" in sign_off, "H5"

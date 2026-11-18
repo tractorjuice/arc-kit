@@ -2403,16 +2403,18 @@ test('T5: the helper refuses a sign-off that is the newest one over again: the s
   const file = fromItsTemplate(dir, 'FOODCOOK');
   const name = basename(file);
   assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
-  const already = `Sam Okafor's sign-off of ${name} (version 1.0) as Owner is already recorded, on 2026-11-17, and the file has not changed since, ` +
-    'so nothing more is recorded. If its header is not yet marked to show it, the sign-off command\'s marking step finishes it';
-  // Before the header is marked, and after.
+  // The reason says truly whether the header shows the sign-off (V2): before the header is marked, and after.
+  const already = (marked) => `Sam Okafor's sign-off of ${name} (version 1.0) as Owner is already recorded, on 2026-11-17, and the file has not ` +
+    `changed since, so nothing more is recorded. ${marked ? 'Its header shows it.' : 'Its header is not yet marked to show it: the sign-off command ' +
+    'finishes the marking, and no new sign-off is needed.'}`;
   for (const marked of [false, true]) {
     if (marked) mark(file);
-    for (const extra of [[], ['--date', '2026-11-18'], ['--paper-signed', 'yes'], ['--other-text-read', 'yes']]) {
+    // (A printed copy signed since is not the same sign-off over again: V2 records it.)
+    for (const extra of [[], ['--date', '2026-11-18'], ['--other-text-read', 'yes']]) {
       const again = signOffUnread(dir, 'FOODCOOK', ...extra);
       assert.equal(again.status, 1, `${marked} ${extra}: ${again.stdout}`);
       assert.equal(again.stdout, '');
-      assert.deepEqual(reasons(again.stderr), [already], `${marked} ${extra}`);
+      assert.deepEqual(reasons(again.stderr), [already(marked)], `${marked} ${extra}`);
       assert.equal(records(dir).length, 1);
     }
   }
@@ -2428,6 +2430,128 @@ test('T5: the helper refuses a sign-off that is the newest one over again: the s
   writeFileSync(changed, `${readFileSync(changed, 'utf8')}\nSee the notice by the till.\n`);
   assert.equal(signOffUnread(other, 'FOODCOOK', '--other-text-read', 'yes').status, 0);
   assert.equal(records(other).length, 2);
+});
+
+// ---- The open items (V2, V3) ----
+
+const FIRST_LINE = (stderr) => stderr.split('\n')[0];
+
+test('V2: asking again to sign a document that is signed off and marked records nothing, and the refusal says it is already signed off, never that it is not', () => {
+  // The reviewer's demonstration: signed, marked, then the same sign-off asked for again.
+  const dir = cafe();
+  const file = fromItsTemplate(dir, 'FOODCOOK');
+  const name = basename(file);
+  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  const record = readFileSync(signOffsFile(dir), 'utf8');
+  const marked = readFileSync(file, 'utf8');
+  const again = signOffUnread(dir, 'FOODCOOK');
+  assert.equal(again.status, 1, again.stdout);
+  assert.equal(FIRST_LINE(again.stderr), 'FOODCOOK is already signed off, by Sam Okafor, Owner, on 2026-11-17, and nothing more was written, because:');
+  assert.doesNotMatch(again.stderr, /not signed off/);
+  assert.deepEqual(reasons(again.stderr), [`Sam Okafor's sign-off of ${name} (version 1.0) as Owner is already recorded, on 2026-11-17, and the file has ` +
+    'not changed since, so nothing more is recorded. Its header shows it.']);
+  assert.equal(readFileSync(signOffsFile(dir), 'utf8'), record);
+  assert.equal(readFileSync(file, 'utf8'), marked);
+  const cook = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([cook.signedOff, cook.headerShowsSignOff, cook.signOff.name, cook.signOff.role], [true, true, 'Sam Okafor', 'Owner']);
+  // Another reason besides, on a document that is signed off: the first line still says what is true of it.
+  const wrong = signOffUnread(dir, 'FOODCOOK', '--version', '1.1');
+  assert.equal(wrong.status, 1);
+  assert.equal(FIRST_LINE(wrong.stderr), 'FOODCOOK is already signed off, by Sam Okafor, Owner, on 2026-11-17, and nothing more was written, because:');
+  assert.equal(reasons(wrong.stderr).length, 2);
+  // A document that is not signed off is still told so.
+  const other = cafe();
+  writeDocument(other, 'FOODCOOK');
+  setSheet(other, 'CK', sheet(other, 'CK').replace(/State: confirmed\nBy: Sam Okafor\nOn: 2026-11-17/, 'State: unanswered\nBy:\nOn:').replace(/^Answer: .*\n(State: unanswered\nBy:\nOn:)/m, 'Answer:\n$1'));
+  assert.equal(FIRST_LINE(signOff(other, 'FOODCOOK').stderr), 'FOODCOOK is not signed off, and nothing was written, because:');
+});
+
+test('V2: the duplicate reason is given only while the recorded sign-off stands: with another fault, the refusal says the document is not signed off, why, and nothing of a marking step', () => {
+  const dir = cafe();
+  const file = fromItsTemplate(dir, 'FOODCOOK');
+  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  // The file is as it was signed, but its worksheet now has a problem, so the sign-off does not stand.
+  setSheet(dir, 'CK', `${sheet(dir, 'CK')}a stray line\n`);
+  const cook = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([cook.signedOff, cook.signOff.name], [false, 'Sam Okafor']);
+  const refused = signOffUnread(dir, 'FOODCOOK');
+  assert.equal(refused.status, 1);
+  assert.equal(FIRST_LINE(refused.stderr), 'FOODCOOK is not signed off, and nothing was written, because:');
+  assert.deepEqual(reasons(refused.stderr), [problemsLine('CK', 1)]);
+  assert.doesNotMatch(refused.stderr, /already recorded|marking/);
+  assert.equal(records(dir).length, 1);
+});
+
+test('V2: a printed copy signed after the sign-off is recorded, as a record that differs only in that, and the summary can say so; the same again is not', () => {
+  const dir = cafe();
+  const file = fromItsTemplate(dir, 'FOODCOOK');
+  const name = basename(file);
+  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  const paper = signOffUnread(dir, 'FOODCOOK', '--paper-signed', 'yes', '--date', '2026-11-18');
+  assert.equal(paper.status, 0, paper.stderr);
+  assert.match(paper.stdout, new RegExp(`signed off ${name.replace(/\./g, '\\.')} \\(FOODCOOK, version 1\\.0\\) on 2026-11-18, with a signed paper copy\\. ` +
+    'A printed copy is now recorded as signed: this sign-off was already recorded, on 2026-11-17, without one\\.'));
+  const [first, second] = records(dir);
+  assert.deepEqual([second.paperSigned, second.date, second.body, second.outside], ['yes', '2026-11-18', first.body, first.outside]);
+  assert.deepEqual({ ...second, paperSigned: first.paperSigned, date: first.date }, first);
+  // As for a second signer (G6), the header shows the earlier record's date until it is marked again with the newest, and
+  // the document's one line says what to write.
+  const before = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([before.signedOff, before.headerShowsSignOff, before.signOff.paperSigned], [false, false, 'yes']);
+  assert.match(linesFor(dir, 'FOODCOOK').join('\n'), /Write "Sam Okafor, Owner, 2026-11-18" there and nothing else/i);
+  for (const [from, to] of [[`| **Reviewed By** | ${SAM} |`, '| **Reviewed By** | Sam Okafor, Owner, 2026-11-18 |'],
+    [`| **Approved By** | ${SAM} |`, '| **Approved By** | Sam Okafor, Owner, 2026-11-18 |'],
+    ['confirmed answers | Sam Okafor, Owner | 2026-11-17 |', 'confirmed answers | Sam Okafor, Owner | 2026-11-18 |']]) edit(file, from, to);
+  assert.equal(check(dir, 'FOODCOOK', file).exit, 0);
+  assert.deepEqual([docStatus(dir, 'FOODCOOK').signedOff, docStatus(dir, 'FOODCOOK').headerShowsSignOff], [true, true]);
+  // The printed copy recorded, asking again records nothing, with the paper copy or without.
+  for (const extra of [['--paper-signed', 'yes'], []]) {
+    const again = signOffUnread(dir, 'FOODCOOK', ...extra);
+    assert.equal(again.status, 1, `${extra}: ${again.stdout}`);
+    assert.match(reasons(again.stderr)[0], /is already recorded, on 2026-11-18, and the file has not changed since, so nothing more is recorded\. Its header shows it\.$/);
+  }
+  assert.equal(records(dir).length, 2);
+});
+
+test('V3: a marking whose own edit also changed a line between the markers is put right by undoing that edit, after which the sign-off stands and the header shows it', () => {
+  const dir = cafe();
+  const file = fromItsTemplate(dir, 'FOODCOOK');
+  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  const marked = readFileSync(file, 'utf8');
+  // The stray change falls inside the markers: check calls it an edit, and status a new version to write.
+  edit(file, 'Poached eggs', 'Boiled eggs');
+  const result = check(dir, 'FOODCOOK', file);
+  assert.deepEqual([result.kind, result.bodyInStep], ['edited', false]);
+  assert.equal(docStatus(dir, 'FOODCOOK').signedOff, false);
+  assert.equal(linesFor(dir, 'FOODCOOK').at(-1), rewriteLine('Sam Okafor', '2026-11-17'));
+  // Undone, exactly: nothing more is needed.
+  edit(file, 'Boiled eggs', 'Poached eggs');
+  assert.equal(readFileSync(file, 'utf8'), marked);
+  assert.equal(check(dir, 'FOODCOOK', file).exit, 0);
+  assert.deepEqual([docStatus(dir, 'FOODCOOK').signedOff, docStatus(dir, 'FOODCOOK').headerShowsSignOff], [true, true]);
+});
+
+test('V3: a signed document someone has since edited, still reading APPROVED, reads as unsigned once its five cells are put back, and status still says what to do', () => {
+  const dir = cafe();
+  const file = fromItsTemplate(dir, 'FOODCOOK');
+  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  edit(file, 'Poached eggs', 'Boiled eggs');
+  // Signing again is refused, and the header still reads APPROVED: the not-marked end puts the five cells back.
+  const refused = signOff(dir, 'FOODCOOK');
+  assert.equal(refused.status, 1);
+  assert.equal(FIRST_LINE(refused.stderr), 'FOODCOOK is not signed off, and nothing was written, because:');
+  assert.match(readFileSync(file, 'utf8'), /\| \*\*Status\*\* \| APPROVED \|/);
+  unmark(file);
+  assert.doesNotMatch(readFileSync(file, 'utf8'), /APPROVED|Sam Okafor, Owner/);
+  const cook = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([cook.signedOff, cook.headerShowsSignOff, cook.bodyInStep], [false, false, false]);
+  assert.equal(check(dir, 'FOODCOOK', file).kind, 'edited');
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [editedLine(basename(file), check(dir, 'FOODCOOK', file).line), rewriteLine('Sam Okafor', '2026-11-17')]);
 });
 
 test('T6: the readable status says of a slip in a cell what is true of it, and the folder\'s text needs no possessive of the business\'s name', () => {

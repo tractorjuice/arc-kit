@@ -3265,17 +3265,20 @@ export function signOffDocument(code, project, person, data) {
       'its ordinary frame, and a sign-off covers the whole file: show them to the person signing, and give --other-text-read ' +
       'yes once that person has read them and says they are theirs', ...doc.otherText.map(({ line, text }) => `  line ${line}: ${text}`));
   }
-  // The newest sign-off over again, with nothing in the file changed since, would be one statement
-  // recorded twice: it is refused. Only the header may still need marking, which is the command's to do.
-  const newest = signOffs.records.filter((entry) => entry.doc === code).at(-1);
-  const now = hashes.get(code);
-  if (newest && now && newest.file === doc.file && newest.version === doc.version && newest.name === person.name &&
-    newest.role === person.role && newest.body === now.body && newest.outside === now.outside) {
+  // The newest sign-off over again, while it stands, would be one statement recorded twice: it is refused,
+  // and only the header may still need marking, which is the command's to do. A printed copy signed since
+  // it was recorded is a new statement, and is recorded.
+  const newest = doc.signOff;
+  const paper = newest?.paperSigned === 'no' && person.paperSigned === 'yes';
+  if (doc.signedOff && !paper && newest.name === person.name && newest.role === person.role) {
     reasons.push(`- ${person.name}'s sign-off of ${doc.file} (version ${doc.version}) as ${person.role} is already recorded, on ` +
-      `${newest.date}, and the file has not changed since, so nothing more is recorded. If its header is not yet marked to show ` +
-      'it, the sign-off command\'s marking step finishes it');
+      `${newest.date}, and the file has not changed since, so nothing more is recorded. ` +
+      `${doc.headerShowsSignOff ? 'Its header shows it.' : `Its header is not yet marked to show it: ${MARK_HOW}.`}`);
   }
-  if (reasons.length) return { exit: 1, messages: [`${code} is not signed off, and nothing was written, because:`, ...reasons] };
+  if (reasons.length) {
+    return { exit: 1, messages: [`${code} is ${doc.signedOff ? `already signed off, by ${newest.name}, ${newest.role}, on ${newest.date}, and nothing ` +
+      'more was' : 'not signed off, and nothing was'} written, because:`, ...reasons] };
+  }
   const record = { doc: code, version: doc.version, file: doc.file, name: person.name, role: person.role, date: person.date,
     paperSigned: person.paperSigned, otherTextRead: doc.otherText.length > 0 && person.otherTextRead === 'yes', ...hashes.get(code) };
   const file = signOffsFile(project);
@@ -3291,8 +3294,9 @@ export function signOffDocument(code, project, person, data) {
   return {
     exit: 0, record,
     message: `Recorded in ${file}: ${person.name}, ${person.role}, signed off ${doc.file} (${code}, version ${doc.version}) on ` +
-      `${person.date}${person.paperSigned === 'yes' ? ', with a signed paper copy' : ''}. The document's header reads as it did ` +
-      '(DRAFT, or an earlier sign-off) until the slash command marks it: this helper does not edit document files.'
+      `${person.date}${person.paperSigned === 'yes' ? ', with a signed paper copy' : ''}.${doc.signedOff && paper && newest.name === person.name &&
+      newest.role === person.role ? ` A printed copy is now recorded as signed: this sign-off was already recorded, on ${newest.date}, without one.` : ''} ` +
+      'The document\'s header reads as it did (DRAFT, or an earlier sign-off) until the slash command marks it: this helper does not edit document files.'
   };
 }
 
