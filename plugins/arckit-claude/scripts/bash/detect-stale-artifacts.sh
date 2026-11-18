@@ -7,7 +7,8 @@
 #
 # Stale criteria:
 #   1. Document Control "Next Review Date" is in the past
-#   2. Status is DRAFT and the file hasn't been touched in >30 days
+#   2. Status is DRAFT and the file hasn't been touched in >30 days, unless
+#      its type's Status is set only by a command (below)
 #
 # Output format is a single notification line per artifact, readable as
 # an additionalContext signal by Claude Code. Silent exit if the cwd is
@@ -27,6 +28,14 @@ fi
 today="$(date +%Y-%m-%d)"
 stale_count=0
 max_report=10
+
+# Document types whose Status only a command sets (`statusSetBy` in
+# config/doc-types.mjs), so nobody promotes them by hand: a long-running DRAFT
+# of one is not reported. The list is copied here so that this script, which
+# runs at every session start, starts no Node to read the registry;
+# tests/plugin/test_bash_portability.py fails when the two differ and prints
+# the line to write.
+status_set_by_command=" FOODPROF FOODXC FOODCLN FOODCHL FOODCOOK FOODMGT FOODOWN FOODCMP "
 
 # Resolve the date threshold for draft staleness (30 days ago): GNU `date -d`,
 # then BSD `date -v` (macOS, where -d means something else). If neither
@@ -69,8 +78,17 @@ while IFS= read -r -d '' file; do
   if [[ "$status" == "DRAFT" && -n "$draft_threshold" \
         && -n "$last_modified" && "$last_modified" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
     if [[ "$last_modified" < "$draft_threshold" ]]; then
-      echo "[ArcKit monitor] STALE: $rel — DRAFT unchanged since $last_modified"
-      stale_count=$((stale_count + 1))
+      # The doc-type code, as hook-utils.mjs extractDocType reads it, in
+      # parameter expansions only: ARC-001-FOODXC-v1.0.md -> FOODXC,
+      # ARC-001-ADR-002-v1.0.md -> ADR.
+      doc_type="${file##*/}"
+      doc_type="${doc_type#ARC-*-}"
+      doc_type="${doc_type%-v*}"
+      [[ "$doc_type" =~ -[0-9]{3}$ ]] && doc_type="${doc_type%-*}"
+      if [[ "$status_set_by_command" != *" $doc_type "* ]]; then
+        echo "[ArcKit monitor] STALE: $rel — DRAFT unchanged since $last_modified"
+        stale_count=$((stale_count + 1))
+      fi
     fi
   fi
 done < <(find "$cwd/projects" -type f -name "ARC-*.md" -not -path "*/node_modules/*" -print0 2>/dev/null)

@@ -29,6 +29,7 @@
     "scripts/",
     "schemas/",
     "data/",
+    "config/",
     "skills/",
     "hooks/"
   ],

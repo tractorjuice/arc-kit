@@ -1,0 +1,392 @@
+{
+  "schema": "uk-food-sfbb-data-1.0",
+  "data": "sfbb-caterers-2026-11-17",
+  "part": "front",
+  "pages": [
+    {
+      "page": 1,
+      "title": "SAFER FOOD BETTER BUSINESS FOR CATERERS",
+      "blocks": [
+        {
+          "kind": "table",
+          "heading": null,
+          "columns": [],
+          "rows": [],
+          "questions": [
+            {
+              "id": "FR-01-Q01",
+              "text": "BUSINESS NAME:",
+              "type": "text",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "FR-01-Q02",
+              "text": "OWNERS NAME:",
+              "type": "text",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "FR-01-Q03",
+              "text": "DATE OF COMPLETION:",
+              "type": "text",
+              "options": [],
+              "elseText": null
+            }
+          ],
+          "page": 1
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "title": "HOW TO USE THIS PACK",
+      "blocks": [
+        {
+          "kind": "text",
+          "heading": "IS THIS PACK FOR ME?",
+          "text": "This pack is for small catering businesses such as restaurants, cafés and takeaways.\nIt is designed to be practical and easy to use and can be adapted to suit the size and nature of your business.\nOther Safer Food Better Business packs are available for:\n• Retailers\n• Indian cuisine\n• Chinese cuisine\n• Childminders\n• Residential care homes (supplement)\nThese are available via the Safer Food Better Business web page. Other options as well as designing your own are the FSA's Safe Catering Pack or the MyHACCP tool which is better suited to more complex food businesses.",
+          "page": 2
+        },
+        {
+          "kind": "text",
+          "heading": "REGISTRATION",
+          "text": "You must register your food business with the Environmental Health Team at your local council, at least 28 days before you start food operations. Read additional guidance 'Getting ready to start your food business'.\nIf you have bought an existing food business from someone else, you need to register as the new owner. You must also tell your local council about any significant changes to your business on an ongoing basis.\nFor more information, visit Guidance on how to register a new and existing food business.",
+          "page": 2
+        },
+        {
+          "kind": "text",
+          "heading": "HOW DOES THIS PACK HELP ME COMPLY WITH THE LAW?",
+          "text": "The law says you must write down what you do to make sure food is safe. It is a legal requirement to put in place, implement and maintain food safety procedures based on hazard analysis, and critical control points (HACCP). It is an offence not to have food safety procedures in place and could lead to legal action being taken against the operator of the food business. This pack is a food safety management system based on the principles of HACCP, but you will not find words such as ‘HACCP’ or ‘hazard’ in the pack because we have cut out all the jargon. This pack must be completed for all your food operations and must outline the food safety practices in place with daily records kept in the diary. This will help demonstrate compliance with food hygiene laws and it will help you get a better food hygiene rating,",
+          "page": 2
+        },
+        {
+          "kind": "text",
+          "heading": "HOW DOES THE PACK WORK?",
+          "text": "This pack contains sheets for you to work through and complete. These are called ‘safe methods' and they must be completed before you start food operations. They need to be reviewed regularly and updated if your food operations change. This pack also contains a diary for you to fill in every day and write down anything different that happens, including anything that goes wrong.",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "title": null,
+      "blocks": [
+        {
+          "kind": "text",
+          "heading": "WHO SHOULD TAKE CHARGE OF THE PACK?",
+          "text": "The operator of the food business has overall responsibility for ensuring the food served to customers is safe to eat.\nAll food handlers are responsible for following the safe methods within this pack and reporting any problems to the food business operator immediately.\nThe person who takes charge of the pack needs to make sure other staff know how to use the pack and the diary is completed when they are not at work. This pack should always be available at the business.\nThey also need to make sure the pack is reviewed regularly and updated where needed. Filling in the table below will help you keep track of when the pack is updated or reviewed.",
+          "page": 3
+        },
+        {
+          "kind": "table",
+          "heading": null,
+          "columns": [],
+          "rows": [],
+          "questions": [
+            {
+              "id": "FR-03-Q01",
+              "text": "DATE PACK FIRST COMPLETED:",
+              "type": "text",
+              "options": [],
+              "elseText": null
+            }
+          ],
+          "page": 3,
+          "form": "packCompletion"
+        },
+        {
+          "kind": "table",
+          "heading": null,
+          "columns": [
+            "REVIEW DATE:",
+            "REVIEWED BY (NAME):"
+          ],
+          "rows": [],
+          "questions": [
+            {
+              "id": "FR-03-Q02",
+              "text": "",
+              "type": "list",
+              "options": [],
+              "elseText": null
+            }
+          ],
+          "page": 3,
+          "form": "reviewLog"
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "title": "HOW TO USE THE SAFE METHODS",
+      "blocks": [
+        {
+          "kind": "table",
+          "heading": "Front",
+          "columns": [],
+          "rows": [
+            [
+              "The ‘Safety point’ column highlights things that are important to make food safely."
+            ],
+            [
+              "The ‘Why’ column tells you why the safety point is important."
+            ],
+            [
+              "The ‘How do you do this?’ column is for you to write down what you do.\nIn some places you only need to tick a box and in other places write a small amount."
+            ],
+            [
+              "Pictures help to illustrate the safety points."
+            ]
+          ],
+          "page": 4
+        },
+        {
+          "kind": "table",
+          "heading": "Back",
+          "columns": [],
+          "rows": [
+            [
+              "Some safe methods have a ‘Check it’ section, which tells you what to look for to make sure your method has worked."
+            ],
+            [
+              "The ‘What to do if things go wrong’ column gives practical tips on how to tackle problems."
+            ],
+            [
+              "The ‘How to stop this happening again’ column tells you how you can prevent problems."
+            ],
+            [
+              "If things go wrong, write down what happened and what you did in your diary. Each safe method reminds you to do this."
+            ]
+          ],
+          "page": 4
+        },
+        {
+          "kind": "text",
+          "heading": null,
+          "text": "Sometimes the pictures are marked with one of these symbols:",
+          "page": 4
+        },
+        {
+          "kind": "table",
+          "heading": null,
+          "columns": [],
+          "rows": [
+            [
+              "RIGHT",
+              "WRONG"
+            ]
+          ],
+          "page": 4
+        }
+      ]
+    },
+    {
+      "page": 5,
+      "title": "HOW TO USE THE DIARY",
+      "blocks": [
+        {
+          "kind": "text",
+          "heading": null,
+          "text": "The diary should be filled in every day by the person responsible for running the business. There is also a 4-weekly review so you can look back at previous weeks and identify any persistent problems.",
+          "page": 5
+        },
+        {
+          "kind": "table",
+          "heading": null,
+          "columns": [],
+          "rows": [
+            [
+              "Fill in the date at the start of the week."
+            ],
+            [
+              "Each day, tick here to say you have completed your Opening checks and your Closing checks – see the Management section for more information on these."
+            ],
+            [
+              "If anything different happens or something goes wrong, make a note of it under the appropriate day."
+            ],
+            [
+              "Each day, write your name and sign to say that all the safe methods have been followed."
+            ],
+            [
+              "If you do any Extra checks, (e.g. something you don’t do every day such as maintenance of equipment or cleaning the freezer) make a note in the section at the end of the week – see the Management section for more information on these."
+            ]
+          ],
+          "page": 5
+        }
+      ]
+    },
+    {
+      "page": 6,
+      "title": "QUESTIONS",
+      "blocks": [
+        {
+          "kind": "text",
+          "heading": "WHAT DO I DO NEXT?",
+          "text": "Work through the pack one section at a time and complete all the safe methods that apply to your business. We suggest you do one section at a time but make sure the pack is completed before you start food operations.\nWhen you have worked through all the sections, make sure you and your staff:\n• follow the safe methods all the time\n• fill in the diary every day",
+          "page": 6
+        },
+        {
+          "kind": "text",
+          "heading": "HOW DO I USE THE ‘WORKING WITH FOOD?’ FACTSHEET",
+          "text": "Use the ‘Working with food?’ factsheet to train your staff on good personal hygiene on their first day at work. It has been designed to help overcome language difficulties. Food Safety Coaching videos are available on the FSA YouTube channel.",
+          "page": 6
+        },
+        {
+          "kind": "text",
+          "heading": "HOW WILL I BENEFIT FROM USING THIS PACK?",
+          "text": "Using the pack in your business will help you to:\n• comply with food hygiene regulations\n• show what you do to make food safely\n• train staff\n• protect your business’s reputation\n• improve your business, e.g. by wasting less food\n• improve your Food Hygiene Rating",
+          "page": 6
+        },
+        {
+          "kind": "text",
+          "heading": "DO I NEED TO KEEP LOTS OF DAILY RECORDS?",
+          "text": "No, but as a minimum, you need to fill in the diary each day. Depending on the size and nature of your business you may need to keep more records to demonstrate that you are making food safely.\nIt is a legal requirement to keep a record of what food products you have bought, who you bought them from, the quantity, the date and allergen information. Usually, the easiest way to do this is to keep all your invoices and receipts.",
+          "page": 6
+        },
+        {
+          "kind": "text",
+          "heading": "DO I NEED TO USE A TEMPERATURE PROBE?",
+          "text": "The use of a temperature probe is the best way to make sure what you are doing is safe when cooking, reheating, hot holding or chilling. See the ‘Prove it’ safe method in the Management section.",
+          "page": 6
+        },
+        {
+          "kind": "text",
+          "heading": "WHERE CAN I GET MORE INFORMATION?",
+          "text": "For more information on food safety, visit the FSA website. There are also several FSA videos relevant to food safety on the FSA YouTube Channel. If you still need additional guidance then contact the Environmental Health Team at your local council.",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "page": 7,
+      "title": null,
+      "blocks": [
+        {
+          "kind": "text",
+          "heading": "COPYRIGHT",
+          "text": "The material featured in this publication is subject to Crown copyright protection unless otherwise indicated.\nYou may re-use the information in the SFBB pack (not including the Food Standards Agency logos and photographs that are the copyright of a third party) free of charge in any format or medium, under the terms of the Open Government Licence available on the National Archives website.\nRead more information on our Terms and Conditions page.",
+          "page": 7
+        }
+      ]
+    },
+    {
+      "page": 8,
+      "title": "FOOD HYGIENE RATINGS",
+      "blocks": [
+        {
+          "kind": "text",
+          "heading": "INTRODUCTION TO FOOD HYGIENE RATINGS",
+          "text": "Following a food safety inspection from your local council, your business will receive a Food Hygiene Rating.\nFood Hygiene Ratings help customers choose where to eat or buy food – high ratings are good for business.\nRatings are a snapshot of the standards of food hygiene & safety found at the time of inspection.\nYour Food Hygiene Rating is based on:\n• Hygienic handling of food including preparation, cooking, re-heating, cooling and storage\n• Cleanliness and condition of facilities and building - including layout, ventilation, hand washing facilities and pest control\n• Hygienic management of food safety including the system or checks in place to ensure food sold or served is safe to eat, and that food safety is always well managed and good standards maintained",
+          "page": 8
+        },
+        {
+          "kind": "text",
+          "heading": "UNDERSTANDING FOOD HYGIENE RATINGS",
+          "text": "Following an inspection your business will be given a rating between 0 and 5:\n5 – hygiene standards are very good\n4 – hygiene standards are good\n3 – hygiene standards are generally satisfactory\n2 – some improvement is necessary\n1 – major improvement is necessary\n0 – urgent improvement is required\nUsing this pack properly, following the safe methods and completing the diary correctly will help ensure you are complying with the law and maximise your Food Hygiene Rating.\nIf you run a food business in Wales or Northern Ireland, you must display your Food Hygiene Rating sticker at each entrance where it can clearly be seen by customers. Food businesses in England are encouraged to do the same. Food Hygiene Ratings can also be seen online.\nFollowing an inspection, businesses can appeal their rating, publish a response to a rating and can request a re-visit from their local council.",
+          "page": 8
+        },
+        {
+          "kind": "text",
+          "heading": "WHERE CAN I GET MORE INFORMATION?",
+          "text": "More information is available on the FSA website.\nIf unsure about any of the guidance in this pack, you can contact the Environmental Health Team at your local council.",
+          "page": 8
+        }
+      ]
+    },
+    {
+      "page": 9,
+      "title": "WORKING WITH FOOD? FACTSHEET",
+      "blocks": [
+        {
+          "kind": "text",
+          "heading": "WHAT YOU NEED TO KNOW BEFORE YOU START",
+          "text": "It is easy for you to spread bacteria and viruses to food without realising. These bacteria are invisible and could make customers ill. Your personal hygiene is important. This is what you need to do to keep food safe:",
+          "page": 9,
+          "form": "workingWithFood"
+        },
+        {
+          "kind": "table",
+          "heading": "BEFORE YOU START WORKING WITH FOOD",
+          "columns": [],
+          "rows": [
+            [
+              "Always wash your hands",
+              "Wear clean clothes",
+              "Wear an apron if handling non-prepacked food",
+              "Tell your manager if you have vomiting or diarrhoea and do not work with food"
+            ],
+            [
+              "Take off your watch and jewellery",
+              "It is a good idea to tie hair back and wear a hat or hairnet"
+            ]
+          ],
+          "page": 9,
+          "form": "workingWithFood"
+        },
+        {
+          "kind": "table",
+          "heading": "WHEN YOU ARE WORKING WITH FOOD",
+          "columns": [],
+          "rows": [
+            [
+              "No smoking",
+              "No eating or drinking",
+              "Avoid touching your face, coughing or sneezing over food",
+              "Cover cuts with a brightly coloured waterproof dressing"
+            ]
+          ],
+          "page": 9,
+          "form": "workingWithFood"
+        }
+      ]
+    },
+    {
+      "page": 10,
+      "title": null,
+      "blocks": [
+        {
+          "kind": "table",
+          "heading": "WASHING HANDS EFFECTIVELY",
+          "columns": [],
+          "rows": [
+            [
+              "Step 1: Wet your hands thoroughly under warm running water and squirt liquid soap onto your palm",
+              "Step 2: Rub your hands together palm to palm to make a lather",
+              "Step 3: Rub the palm of one hand along the back of the other and along the fingers. Repeat with the other hand"
+            ],
+            [
+              "Step 4: Put your palms together with fingers interlocked and rub in between each of the fingers thoroughly",
+              "Step 5: Rub around your thumbs on each hand and then rub the fingertips of each hand against your palms",
+              "Step 6: Rinse off the soap with clean running water and dry your hands thoroughly on a disposable towel. Turn off the tap with the towel and then throw the towel away"
+            ]
+          ],
+          "page": 10,
+          "form": "workingWithFood"
+        },
+        {
+          "kind": "table",
+          "heading": "WHEN TO WASH HANDS",
+          "columns": [],
+          "rows": [
+            [
+              "Before touching or handling any food, especially ready-to-eat food",
+              "After going to the toilet",
+              "After every break",
+              "After touching raw meat, poultry, fish, eggs or unwashed vegetables"
+            ],
+            [
+              "After touching a cut or changing a dressing",
+              "After touching or emptying bins",
+              "After any cleaning",
+              "After touching phones, light switches, door handles, cash registers and money"
+            ]
+          ],
+          "page": 10,
+          "form": "workingWithFood"
+        }
+      ]
+    }
+  ]
+}

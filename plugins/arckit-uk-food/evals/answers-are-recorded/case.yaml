@@ -1,0 +1,29 @@
+schema_version: '1.1'
+name: answers-are-recorded
+tags:
+- artefact
+- uk-food
+- should-serve
+prompt: /arckit-uk-food:uk-food-safe-methods CK 001 This is Priya Nair, the kitchen
+  manager at Bramble Cafe. Four of our Cooking answers were still missing, so here
+  they are. The sausages and burgers we cook are pork sausages and beef burgers.
+  We don't cook any fish. Yes, we follow the manufacturer's storage and preparation
+  instructions for all ready-to-eat food where there are any. We put a use-by sticker
+  on everything we prepare and throw it away after two days. Nobody is here to answer
+  questions right now, so please write the document.
+plugins:
+- ../..
+runs: 1
+max_turns: 60
+timeout_seconds: 1500
+allowed_tools:
+- Read
+- Write
+- Edit
+- Glob
+- Grep
+- Bash
+context:
+  add_dirs:
+  - source: ../fixtures/cafe-cooking-nearly-done
+    dest: .

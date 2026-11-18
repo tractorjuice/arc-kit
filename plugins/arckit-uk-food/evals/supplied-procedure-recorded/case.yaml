@@ -1,0 +1,31 @@
+schema_version: '1.1'
+name: supplied-procedure-recorded
+tags:
+- artefact
+- uk-food
+- own-methods
+- should-serve
+prompt: >-
+  /arckit-uk-food:uk-food-own-methods 001 I'm Sam Okafor, the owner of Bramble Cafe. We
+  cook our eggs sous vide, and this is what we have written down for it: We start the
+  water bath on the egg programme from the supplier's card before service. Eggs go in
+  only when the display matches the card, and the chef on shift writes that in the
+  diary. If the display does not match, we stop, take the eggs out and tell the manager.
+  Our environmental health officer has not looked at it yet. Nobody is here to answer
+  questions right now, so please record it and write the document.
+plugins:
+- ../..
+runs: 1
+max_turns: 60
+timeout_seconds: 1500
+allowed_tools:
+- Read
+- Write
+- Edit
+- Glob
+- Grep
+- Bash
+context:
+  add_dirs:
+  - source: ../fixtures/cafe-sous-vide
+    dest: .

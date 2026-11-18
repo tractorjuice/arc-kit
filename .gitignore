@@ -27,6 +27,10 @@ ENV/
 env/
 .venv
 
+# `uv run` in the repository root writes a lock file. Nothing uses a tracked
+# one: no workflow, script or document runs uv with --locked or --frozen.
+/uv.lock
+
 # Node
 node_modules/
 
@@ -58,7 +62,10 @@ data/
 !plugins/arckit-eu/data/
 # The optional legacy overlay carries frozen source catalogues.
 !plugins/arckit-uk-legacy/data/
+# The UK food overlay carries the transcribed FSA pack as tracked source data.
+!plugins/arckit-uk-food/data/
 !plugins/arckit-claude/plugins/uk/legacy/data/
+!plugins/arckit-claude/plugins/uk/food/data/
 !plugins/arckit-claude/plugins/eu/data/
 
 # Plugin runtime caches — ephemeral, project-scoped, regenerated each session

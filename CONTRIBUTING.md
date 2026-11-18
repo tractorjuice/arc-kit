@@ -35,6 +35,15 @@ independent conformance check. Full rubric and definition source snapshots are b
 so tests and assessments do not need GOV.UK network access. See the
 [legacy assessment guide](docs/guides/legacy-assessment.md) for frozen-source maintenance.
 
+Food safety changes in `plugins/arckit-uk-food/` also need the overlay's Node tests
+(`node --test tests/plugin/uk-food-*.test.mjs`) and
+`node plugins/arckit-uk-food/scripts/uk-food.mjs validate-data`. The Food Standards
+Agency's wording lives only in the overlay's `data/` files; the `references/sfbb-caterers-*`
+files are printed by the helper's `reference` command and never edited by hand. No command,
+template or guide may restate a temperature, a time or a rule from the pack, and
+`tests/plugin/test_uk_food_commands.py` scans them for it. See the
+[UK food safety overlay guide](docs/guides/uk-food-safety-overlay.md).
+
 ## Types of Contributions
 
 ### 1. Bug Reports

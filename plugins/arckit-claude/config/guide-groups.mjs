@@ -53,6 +53,8 @@ export const GUIDE_CATEGORY_ORDER = [
   'UAE Federal Overlay',
   'UK G-Cloud Supplier Overlay',
   'UK Finance Payments Overlay',
+  'UK Food Safety Overlay',
+  'UK Legacy IT Assessment Overlay',
   'UK NHS Clinical Safety Overlay',
   'USA Federal Civilian Overlay',
   'Community',
@@ -382,6 +384,15 @@ add(GUIDE_SECTIONS.OVERLAY, 'UK Finance Payments Overlay', 'community', [
   'uk-fs-safeguarding',
   'uk-fs-sca-rts',
 ], 'UK Finance Payments Overlay');
+
+add(GUIDE_SECTIONS.OVERLAY, 'UK Food Safety Overlay', 'community', [
+  'uk-food-safety-overlay',
+  'uk-food-profile',
+  'uk-food-safe-methods',
+  'uk-food-own-methods',
+  'uk-food-check',
+  'uk-food-sign-off',
+], 'UK Food Safety Overlay');
 
 add(GUIDE_SECTIONS.OVERLAY, 'UK Legacy IT Assessment Overlay', 'community', [
   'legacy-assessment',

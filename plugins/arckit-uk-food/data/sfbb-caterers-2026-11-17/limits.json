@@ -1,0 +1,594 @@
+{
+  "schema": "uk-food-sfbb-data-1.0",
+  "data": "sfbb-caterers-2026-11-17",
+  "limits": [
+    {
+      "id": "L-01",
+      "value": "28 days",
+      "text": "You must register your food business with the Environmental Health Team at your local council, at least 28 days before you start food operations.",
+      "method": "front",
+      "page": 2
+    },
+    {
+      "id": "L-02",
+      "value": "4-weekly",
+      "text": "There is also a 4-weekly review so you can look back at previous weeks and identify any persistent problems.",
+      "method": "front",
+      "page": 5
+    },
+    {
+      "id": "L-03",
+      "value": "between 0 and 5",
+      "text": "Following an inspection your business will be given a rating between 0 and 5:",
+      "method": "front",
+      "page": 8
+    },
+    {
+      "id": "L-04",
+      "value": "48 hours",
+      "text": "Staff who have had diarrhoea and/or vomiting should not return to work until they have had no symptoms for 48 hours.",
+      "method": "XC-01",
+      "page": 14
+    },
+    {
+      "id": "L-05",
+      "value": "48 hours",
+      "text": "Even if the diarrhoea and vomiting has stopped, someone can still carry harmful bacteria for 48 hours afterwards.",
+      "method": "XC-01",
+      "page": 14
+    },
+    {
+      "id": "L-06",
+      "value": "48 hours",
+      "text": "Do you check food handlers have been free of symptoms for 48 hours before returning to work?",
+      "method": "XC-01",
+      "page": 14
+    },
+    {
+      "id": "L-07",
+      "value": "90°C",
+      "text": "A suitably high temperature can be obtained using a hot cycle of 90°C.",
+      "method": "XC-02",
+      "page": 15
+    },
+    {
+      "id": "L-08",
+      "value": "2 stage",
+      "text": "If this is not possible, separate by preparing them at different times to ready-to-eat foods and thoroughly clean and disinfect between tasks using the ‘2 stage clean’.",
+      "method": "XC-03",
+      "page": 17
+    },
+    {
+      "id": "L-09",
+      "value": "10mg/ kg",
+      "text": "Sulphur dioxide (when added and above 10mg/ kg in the finished food and drink)",
+      "method": "XC-04",
+      "page": 20
+    },
+    {
+      "id": "L-10",
+      "value": "BS EN 1499",
+      "text": "Ideally, antibacterial soap should meet standard BS EN 1499 for extra protection against harmful bacteria and contamination.",
+      "method": "CL-01",
+      "page": 29
+    },
+    {
+      "id": "L-11",
+      "value": "BS EN 1499",
+      "text": "Do you use antibacterial soap which meets standard BS EN 1499?",
+      "method": "CL-01",
+      "page": 29
+    },
+    {
+      "id": "L-12",
+      "value": "BS EN 1500",
+      "text": "If hand rubs or gels are used they should comply with standard BS EN 1500.",
+      "method": "CL-01",
+      "page": 30
+    },
+    {
+      "id": "L-13",
+      "value": "BS EN 1276",
+      "text": "Sanitisers and disinfectants should meet relevant standards, either BS EN 1276 or BS EN 13697.",
+      "method": "CL-02",
+      "page": 31
+    },
+    {
+      "id": "L-14",
+      "value": "BS EN 13697",
+      "text": "Sanitisers and disinfectants should meet relevant standards, either BS EN 1276 or BS EN 13697.",
+      "method": "CL-02",
+      "page": 31
+    },
+    {
+      "id": "L-15",
+      "value": "BS EN 1276",
+      "text": "Where do you keep information to confirm your disinfectants or sanitisers meet BS EN 1276 or BS EN 13697 standards?",
+      "method": "CL-02",
+      "page": 31
+    },
+    {
+      "id": "L-16",
+      "value": "BS EN 13697",
+      "text": "Where do you keep information to confirm your disinfectants or sanitisers meet BS EN 1276 or BS EN 13697 standards?",
+      "method": "CL-02",
+      "page": 31
+    },
+    {
+      "id": "L-17",
+      "value": "BS EN 13697",
+      "text": "Disinfectants and sanitisers should meet either BS EN 13697 or BS EN 1276 standards.",
+      "method": "CL-04",
+      "page": 37
+    },
+    {
+      "id": "L-18",
+      "value": "BS EN 1276",
+      "text": "Disinfectants and sanitisers should meet either BS EN 13697 or BS EN 1276 standards.",
+      "method": "CL-04",
+      "page": 37
+    },
+    {
+      "id": "L-19",
+      "value": "3 days",
+      "text": "High risk ready to eat foods should be kept for a maximum of 3 days in total (day of cook/opening + 2) unless you have evidence that it is safe to keep them for longer.",
+      "method": "CH-01",
+      "page": 40
+    },
+    {
+      "id": "L-20",
+      "value": "5°C",
+      "text": "It is recommended that fridges and chilled display equipment should be set at 5°C or below.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-21",
+      "value": "8°C",
+      "text": "This is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-22",
+      "value": "once a day",
+      "text": "You should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-23",
+      "value": "8°C",
+      "text": "When you display cold food (e.g. on a buffet) you should use suitable chilled display equipment to keep it at 8°C or below.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-24",
+      "value": "four hours",
+      "text": "If this is not possible there is a ‘4 hour rule’ exception: You can display food out of chilled storage for up to four hours, but you can only do this once.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-25",
+      "value": "once",
+      "text": "If this is not possible there is a ‘4 hour rule’ exception: You can display food out of chilled storage for up to four hours, but you can only do this once.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-26",
+      "value": "four hours",
+      "text": "Food which has been displayed for less than four hours can be put back in the fridge and kept at 8°C or below until it is used.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-27",
+      "value": "8°C",
+      "text": "Food which has been displayed for less than four hours can be put back in the fridge and kept at 8°C or below until it is used.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-28",
+      "value": "four hours",
+      "text": "If it has been out for more than four hours it must be thrown away.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-29",
+      "value": "4 hours",
+      "text": "This will make it easier to ensure that food is not left on display longer than 4 hours.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-30",
+      "value": "8°C",
+      "text": "Some foods require storage at temperatures lower than 8°C to keep them safe so always follow the manufacturer’s storage guidance.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-31",
+      "value": "four hours",
+      "text": "If food which requires refrigeration has not been kept chilled for more than four hours, throw it away.",
+      "method": "CH-01",
+      "page": 41
+    },
+    {
+      "id": "L-32",
+      "value": "80°C for at least 6 seconds",
+      "text": "80°C for at least 6 seconds",
+      "method": "CK-01",
+      "page": 51
+    },
+    {
+      "id": "L-33",
+      "value": "75°C for at least 30 seconds",
+      "text": "75°C for at least 30 seconds",
+      "method": "CK-01",
+      "page": 51
+    },
+    {
+      "id": "L-34",
+      "value": "70°C for at least 2 minutes",
+      "text": "70°C for at least 2 minutes",
+      "method": "CK-01",
+      "page": 51
+    },
+    {
+      "id": "L-35",
+      "value": "65°C for at least 10 minutes",
+      "text": "65°C for at least 10 minutes",
+      "method": "CK-01",
+      "page": 51
+    },
+    {
+      "id": "L-36",
+      "value": "60°C for at least 45 minutes",
+      "text": "60°C for at least 45 minutes",
+      "method": "CK-01",
+      "page": 51
+    },
+    {
+      "id": "L-37",
+      "value": "British Lion code",
+      "text": "British Lion code or equivalent assurance scheme",
+      "method": "CK-02",
+      "page": 52
+    },
+    {
+      "id": "L-38",
+      "value": "British Lion code",
+      "text": "The British Lion code or equivalent assurance schemes demonstrates eggs have been produced in a safe manner and therefore can be eaten less than thoroughly cooked.",
+      "method": "CK-02",
+      "page": 52
+    },
+    {
+      "id": "L-39",
+      "value": "60 days",
+      "text": "Keep the product label for 60 days, after opening.",
+      "method": "CK-02",
+      "page": 52
+    },
+    {
+      "id": "L-40",
+      "value": "60 days",
+      "text": "It is a legal requirement to keep labels for 60 days to trace suppliers, if needed.",
+      "method": "CK-02",
+      "page": 52
+    },
+    {
+      "id": "L-41",
+      "value": "between 0°C and 4°C",
+      "text": "If you buy fresh fish make sure you store it between 0°C and 4°C.",
+      "method": "CK-02",
+      "page": 53
+    },
+    {
+      "id": "L-42",
+      "value": "once",
+      "text": "You should only reheat once.",
+      "method": "CK-03",
+      "page": 54
+    },
+    {
+      "id": "L-43",
+      "value": "120⁰C",
+      "text": "Acrylamide is a chemical that is formed naturally when some foods are cooked at high temperatures (above 120⁰C) such as by frying, roasting, baking, grilling and toasting.",
+      "method": "CK-04",
+      "page": 56
+    },
+    {
+      "id": "L-44",
+      "value": "30–180 mins",
+      "text": "Soak (for 30–180 mins) in cold water after cutting.",
+      "method": "CK-04",
+      "page": 56
+    },
+    {
+      "id": "L-45",
+      "value": "175⁰C",
+      "text": "The oil temperature for cooking should ideally be below 175⁰C.",
+      "method": "CK-04",
+      "page": 57
+    },
+    {
+      "id": "L-46",
+      "value": "half way",
+      "text": "Fill the basket only half way.",
+      "method": "CK-04",
+      "page": 57
+    },
+    {
+      "id": "L-47",
+      "value": "63°C",
+      "text": "Hot food must be kept at 63°C or above, except for certain exceptions.",
+      "method": "CK-06",
+      "page": 60
+    },
+    {
+      "id": "L-48",
+      "value": "63°C",
+      "text": "When you display hot food, e.g. on a buffet, you should use suitable hot holding equipment to keep it above 63°C.",
+      "method": "CK-06",
+      "page": 60
+    },
+    {
+      "id": "L-49",
+      "value": "two hours",
+      "text": "If this is not possible, you can take food out of hot holding to display it for up to two hours, but you can only do this once.",
+      "method": "CK-06",
+      "page": 60
+    },
+    {
+      "id": "L-50",
+      "value": "once",
+      "text": "If this is not possible, you can take food out of hot holding to display it for up to two hours, but you can only do this once.",
+      "method": "CK-06",
+      "page": 60
+    },
+    {
+      "id": "L-51",
+      "value": "two hours",
+      "text": "Food that has not been used within two hours, should either be reheated until it is steaming hot and put back in hot holding or chilled down as quickly as possible to 8°C or below.",
+      "method": "CK-06",
+      "page": 60
+    },
+    {
+      "id": "L-52",
+      "value": "8°C",
+      "text": "Food that has not been used within two hours, should either be reheated until it is steaming hot and put back in hot holding or chilled down as quickly as possible to 8°C or below.",
+      "method": "CK-06",
+      "page": 60
+    },
+    {
+      "id": "L-53",
+      "value": "two hours",
+      "text": "If it has been out for more than two hours throw it away.",
+      "method": "CK-06",
+      "page": 60
+    },
+    {
+      "id": "L-54",
+      "value": "63°C",
+      "text": "Once it is cooked, keep food at 63°C or above until it is served.",
+      "method": "CK-06",
+      "page": 61
+    },
+    {
+      "id": "L-55",
+      "value": "once",
+      "text": "reheat it until it is a safe temperature and put back into hot holding (you should only do this once)",
+      "method": "CK-06",
+      "page": 61
+    },
+    {
+      "id": "L-56",
+      "value": "63°C",
+      "text": "Use a disinfected temperature probe to prove your method keeps food at a safe temperature of 63°C or above.",
+      "method": "CK-06",
+      "page": 61
+    },
+    {
+      "id": "L-57",
+      "value": "3 days",
+      "text": "Ready-to-eat foods should be kept for a maximum of 3 days in total (day of cook/opening + 2) unless you have evidence that it is safe to keep them for longer.",
+      "method": "CK-07",
+      "page": 63
+    },
+    {
+      "id": "L-58",
+      "value": "1 day",
+      "text": "Cooked rice should only be kept for 1 day once prepared.",
+      "method": "CK-07",
+      "page": 63
+    },
+    {
+      "id": "L-59",
+      "value": "within 1⁰C of 100⁰C and 0⁰C",
+      "text": "Placing in boiling water and melting ice (should be within 1⁰C of 100⁰C and 0⁰C).",
+      "method": "MG-02",
+      "page": 67
+    },
+    {
+      "id": "L-60",
+      "value": "63°C",
+      "text": "To check food in hot holding is at or above 63°C, use a clean, disinfected probe.",
+      "method": "MG-03",
+      "page": 68
+    },
+    {
+      "id": "L-61",
+      "value": "63°C",
+      "text": "It is a legal requirement that hot food must be kept at or above 63°C.",
+      "method": "MG-03",
+      "page": 68
+    },
+    {
+      "id": "L-62",
+      "value": "8°C",
+      "text": "It is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland, that certain chilled foods must be kept at 8°C or below.",
+      "method": "MG-03",
+      "page": 68
+    },
+    {
+      "id": "L-63",
+      "value": "8°C",
+      "text": "To check food is at 8°C or below, use a disinfected probe.",
+      "method": "MG-03",
+      "page": 68
+    },
+    {
+      "id": "L-64",
+      "value": "-18°C",
+      "text": "Frozen food should be kept at -18°C or below.",
+      "method": "MG-03",
+      "page": 68
+    },
+    {
+      "id": "L-65",
+      "value": "once a month",
+      "text": "If instructions aren't available still ensure the probe is checked regularly, for example once a month.",
+      "method": "MG-03",
+      "page": 69
+    },
+    {
+      "id": "L-66",
+      "value": "between -1°C and 1°C",
+      "text": "The readings in iced water should be between -1°C and 1°C.",
+      "method": "MG-03",
+      "page": 69
+    },
+    {
+      "id": "L-67",
+      "value": "between 99°C and 101°C",
+      "text": "The readings in boiling water should be between 99°C and 101°C.",
+      "method": "MG-03",
+      "page": 69
+    },
+    {
+      "id": "L-68",
+      "value": "fourteen",
+      "text": "Technical guidance on food allergen labeling and information requirements, as well as information on the fourteen regulated allergens can be on the FSA website: General background on allergens.",
+      "method": "MG-04",
+      "page": 70
+    },
+    {
+      "id": "L-69",
+      "value": "4-weekly",
+      "text": "Use the 4-weekly review in the diary to identify any problems with how staff are following safe methods and plan your training to address these.",
+      "method": "MG-05",
+      "page": 73
+    },
+    {
+      "id": "L-70",
+      "value": "4-weekly",
+      "text": "You should still complete the 4-weekly review yourself.",
+      "method": "MG-05",
+      "page": 73
+    },
+    {
+      "id": "L-71",
+      "value": "4-weekly",
+      "text": "4-weekly review",
+      "method": "diary",
+      "page": 81
+    },
+    {
+      "id": "L-72",
+      "value": "4-WEEKLY",
+      "text": "4-WEEKLY REVIEW",
+      "method": "diary",
+      "page": 81
+    },
+    {
+      "id": "L-73",
+      "value": "4-weekly",
+      "text": "The 4-weekly review gives you the opportunity to look back at previous weeks and identify any persistent problems.",
+      "method": "diary",
+      "page": 81
+    },
+    {
+      "id": "L-74",
+      "value": "4-weekly",
+      "text": "You may find it useful to read the 4-weekly review before starting to use the diary.",
+      "method": "diary",
+      "page": 81
+    },
+    {
+      "id": "L-75",
+      "value": "4-WEEKLY",
+      "text": "4-WEEKLY REVIEW",
+      "method": "diary",
+      "page": 99
+    },
+    {
+      "id": "L-76",
+      "value": "4 weeks",
+      "text": "Also look back over the past 4 weeks’ diary entries.",
+      "method": "diary",
+      "page": 99
+    },
+    {
+      "id": "L-77",
+      "value": "three times or more",
+      "text": "If you had a serious problem, or the same thing went wrong three times or more, make a note of it here, find out why and record what you did to resolve it.",
+      "method": "diary",
+      "page": 99
+    },
+    {
+      "id": "L-78",
+      "value": "three times or more",
+      "text": "Did you observe any problems or did the same issue occur in the diary three times or more?",
+      "method": "diary",
+      "page": 99
+    },
+    {
+      "id": "L-79",
+      "value": "4 weeks",
+      "text": "Have probes been calibrated in the last 4 weeks and results recorded?",
+      "method": "diary",
+      "page": 99
+    },
+    {
+      "id": "L-80",
+      "value": "4-WEEKLY",
+      "text": "4-WEEKLY REVIEW",
+      "method": "diary",
+      "page": 100
+    },
+    {
+      "id": "L-81",
+      "value": "4 weeks",
+      "text": "Also look back over the past 4 weeks’ diary entries.",
+      "method": "diary",
+      "page": 100
+    },
+    {
+      "id": "L-82",
+      "value": "three times or more",
+      "text": "If you had a serious problem, or the same thing went wrong three times or more, make a note of it here, find out why and record what you did to resolve it.",
+      "method": "diary",
+      "page": 100
+    },
+    {
+      "id": "L-83",
+      "value": "three times or more",
+      "text": "Did you observe any problems or did the same issue occur in the diary three times or more?",
+      "method": "diary",
+      "page": 100
+    },
+    {
+      "id": "L-84",
+      "value": "4 weeks",
+      "text": "Have probes been calibrated in the last 4 weeks and results recorded?",
+      "method": "diary",
+      "page": 100
+    }
+  ]
+}

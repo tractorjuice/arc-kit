@@ -3,6 +3,8 @@ description: Scan all projects for stale research, forgotten ADRs, unresolved re
 doc-type: none
 argument-hint: "<project ID or scope, e.g. '001', 'all', 'vendors only'>"
 tags: [health, quality, governance, staleness, maintenance, audit]
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Artifact Health Check
@@ -45,7 +47,7 @@ $ARGUMENTS
 
 Scans the `projects/` directory for all `ARC-*` artifacts and applies ten detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action. The hook also writes `docs/health.json` on every run for dashboard integration (consumed by `/arckit:pages`).
 
-The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of what the session-start `stale-artifact-scan` monitor surfaces, so the on-demand command and the background notification agree on the same set of artifacts.
+At its default threshold, the `STALE-DRAFT` rule reports every draft the session-start `stale-artifact-scan` monitor reports as unchanged, and it also falls back to the `Created Date` when `Last Modified` is missing. Overdue reviews differ: the monitor reports a past `Next Review Date` whatever the artifact's status, while `REVIEW-OVERDUE` skips `DRAFT`, `SUPERSEDED` and `ARCHIVED` artifacts, so a draft or a retired artifact with a past review date appears in the monitor's notice but not here.
 
 **This command does NOT modify any project files.** It is a diagnostic tool. The only file written is `docs/health.json`.
 
@@ -61,7 +63,7 @@ The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of wha
 | VERSION-DRIFT | Version Drift | LOW | Multiple versions of the same artifact type where the latest version is >3 months old |
 | STALE-EXT | Unincorporated External Files | HIGH | External file in `external/` newer than all ARC-* artifacts in the same project |
 | REVIEW-OVERDUE | Overdue Review | HIGH | Document Control `Next Review Date` is in the past, on a non-DRAFT/SUPERSEDED/ARCHIVED artifact |
-| STALE-DRAFT | Long-running Draft | MEDIUM | Artifact with `Status: DRAFT` whose `Last Modified` (or `Created Date`) is >30 days old (override via `STALE_DRAFT_DAYS=N`) |
+| STALE-DRAFT | Long-running Draft | MEDIUM | Artifact with `Status: DRAFT` whose `Last Modified` (or `Created Date`) is >30 days old (override via `STALE_DRAFT_DAYS=N`), unless only a command sets its type's Status |
 | STALE-VIEW | Out-of-date Generated View | MEDIUM | An artifact with a `## Source Artefacts` table (such as an arc42 description) cites a source, in its project or in `000-global`, that now has a newer version, or omits a later instance of a type it cites |
 
 ---
@@ -290,9 +292,10 @@ The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of wha
 
 1. Extract the Document Control `Status` field
 2. If status is `DRAFT`:
-   a. Extract `Last Modified` (or `Created Date` if missing)
-   b. Calculate age = baseline date − that date
-   c. If age > `STALE_DRAFT_DAYS` (default 30): **flag as MEDIUM severity**
+   a. Skip the artifact if its type's entry in ArcKit's document type registry, `${CLAUDE_PLUGIN_ROOT}/config/doc-types.mjs`, has a `statusSetBy` field. That field names the one command that sets the type's Status, such as a sign-off command, so nobody promotes it by hand and the advice below would be wrong. The session-start monitor leaves these drafts out too.
+   b. Extract `Last Modified` (or `Created Date` if missing)
+   c. Calculate age = baseline date − that date
+   d. If age > `STALE_DRAFT_DAYS` (default 30): **flag as MEDIUM severity**
 
 **Rationale**: A DRAFT artifact that hasn't been touched for over a month is usually one of three things — stalled work, abandoned scaffolding, or a decision that has been silently overtaken by events. Either way, it's a governance signal worth surfacing.
 

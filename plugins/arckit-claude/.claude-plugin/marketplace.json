@@ -290,6 +290,29 @@
       "category": "productivity"
     },
     {
+      "name": "arckit-uk-food",
+      "source": "./plugins/uk/food",
+      "description": "UK Food Safety Overlay. Experimental and community-maintained. Covers England and Wales. Builds a small caterer's food safety documents from the Food Standards Agency's Safer food, better business for caterers pack. Requires arckit core plugin.",
+      "version": "6.22.1",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "uk",
+        "food-safety",
+        "sfbb",
+        "haccp",
+        "catering",
+        "hospitality"
+      ],
+      "category": "productivity"
+    },
+    {
       "name": "arckit-fde",
       "source": "./plugins/fde",
       "description": "ArcKit FDE Site Generator — /arckit-fde:create interviews you and renders a brandable, GitHub-Pages-ready Forward Deploy Engineering consulting website to docs/. White-label brand, colour, pricing and contact; UK public sector or generic market preset. Claude Code only.",

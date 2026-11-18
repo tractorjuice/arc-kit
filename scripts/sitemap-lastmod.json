@@ -16,12 +16,12 @@
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
   "claude-code-plugin.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "0c026deccab06cfabd30a3108c1d5c2976a0004971ca762281cc841882f4e70c"
+    "lastmod": "2026-11-18",
+    "text_sha256": "51cc93ee5c2b70b9e6f3ce920a9fa0c708a8b87c6f8ece4305b26aea639570d4"
   },
   "commands.html": {
-    "lastmod": "2026-11-10",
-    "text_sha256": "5588477537625e75e0281a97a137025bf1c861c0490d5e36fe29669b8a593cbd"
+    "lastmod": "2026-11-18",
+    "text_sha256": "75e46ab6556f8ac8452597e95032ac8d53613f32c0bd220f1ba996d15aeb9ce0"
   },
   "contributors.html": {
     "lastmod": "2026-10-28",
@@ -528,8 +528,8 @@
     "text_sha256": "2ca2178cf518653bba0c92c1b0bc059587d1ff39955998ca2e487ab6122b1960"
   },
   "guide/health.html": {
-    "lastmod": "2026-10-31",
-    "text_sha256": "c8cab755daee2ad98944404c9976f54b541ee25cf3338db8c51d08b1559631ef"
+    "lastmod": "2026-11-18",
+    "text_sha256": "1cb95b4a25a64463786a5106bfc5909b61d62a628c49bedb5f10d8898cdae732"
   },
   "guide/hld-review.html": {
     "lastmod": "2026-11-08",
@@ -971,6 +971,30 @@
     "lastmod": "2026-10-28",
     "text_sha256": "2210533774b3945f8ace46fee73494ff815e94dabe82f85692000a2211c157a0"
   },
+  "guide/uk-food-check.html": {
+    "lastmod": "2026-11-18",
+    "text_sha256": "cfe51d1376b90f0d96b8f16f1025c6f4d67aa5041633a1b22826a04b88a4e97a"
+  },
+  "guide/uk-food-own-methods.html": {
+    "lastmod": "2026-11-18",
+    "text_sha256": "5fa4600b3f929d3e49de2e99d28c6567b80491e333d1323e1b25fef3ffdebf64"
+  },
+  "guide/uk-food-profile.html": {
+    "lastmod": "2026-11-18",
+    "text_sha256": "52a11318139ef8da1efa381c52637740ed082fc2bf917b6408e3304a9b003ceb"
+  },
+  "guide/uk-food-safe-methods.html": {
+    "lastmod": "2026-11-18",
+    "text_sha256": "f77b5d2c713655d1ca4db0589f22e612de9a6266c1d068a6da340077590bce0d"
+  },
+  "guide/uk-food-safety-overlay.html": {
+    "lastmod": "2026-11-18",
+    "text_sha256": "df0740f919bb3dd99b7fecb1fbffabc8bb711f8d9e247126933c6b0c5ea931a0"
+  },
+  "guide/uk-food-sign-off.html": {
+    "lastmod": "2026-11-18",
+    "text_sha256": "4cddb2eb5ca4dc363305a5ab9ab99a2c80397078727a75857d7a635ff9953369"
+  },
   "guide/uk-fs-consumer-duty.html": {
     "lastmod": "2026-10-27",
     "text_sha256": "147f349c2e9a91f2bfce1bab28908ee8390c6d25b4a893e7f3a73720c1746750"
@@ -1092,16 +1116,16 @@
     "text_sha256": "b46bcbcbdce0c5725e9522d081bdd184df98c7347ba1737b2c8e77a3f1530d75"
   },
   "guides.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "62bdad0edc0a685ea324b63486c67f95cb7cb594a130f54d3cbf9d75aeb4abcc"
+    "lastmod": "2026-11-18",
+    "text_sha256": "c60bae5b47464e57abd4491ddf801290bbd191dd2bd1c4393f6dbc49c6ea55ca"
   },
   "index.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "3b486e1d883cb19d43e7da35dcf0b60121efbcb69f597b3e3ca0c3fe1a1ef625"
+    "lastmod": "2026-11-18",
+    "text_sha256": "7dbb8ed53d7faf9afa56016780cd5a94d05ac85f5103fd51619a3846f0b3efdf"
   },
   "llms.txt": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "5ef9c6290092757f887b08a04606d29d37eb4fc4d04d8cdcbaf4f29173e0a94c"
+    "lastmod": "2026-11-18",
+    "text_sha256": "38f3a697f41def169bd3773afab063903bbe17506122e498b50ac905ec21c8b5"
   },
   "on-github.html": {
     "lastmod": "2026-11-16",

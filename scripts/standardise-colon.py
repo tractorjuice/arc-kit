@@ -44,6 +44,7 @@ INCLUDE_DIRS = [
     "plugins/arckit-us/commands", "plugins/arckit-us/templates", "plugins/arckit-us/recipes",
     "plugins/arckit-uk-finance/commands", "plugins/arckit-uk-finance/templates", "plugins/arckit-uk-finance/recipes",
     "plugins/arckit-uk-nhs/commands", "plugins/arckit-uk-nhs/templates", "plugins/arckit-uk-nhs/recipes",
+    "plugins/arckit-uk-food/commands", "plugins/arckit-uk-food/templates", "plugins/arckit-uk-food/recipes",
     ".arckit/templates",
     "scripts/bash",
     "scripts/python",

@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **A new overlay helps a small catering business in England or Wales build its food safety documents** from the Food Standards Agency's *Safer food, better business for caterers* pack. `arckit-uk-food` is experimental, community-maintained and switched off until you enable it. Its five commands record the business profile, work through the pack's five sections of safe methods one safe method at a time, record the business's own methods and its written procedure for any special process word for word, show what is finished in a completion record, and record a named person's sign-off, which covers the document exactly as it reads when it is signed. Only an answer a named person at the business confirms is printed as the business's answer: anything else reads NOT YET ANSWERED, with any proposed answer and where it came from beside it, and the pack's wording reaches a document only through a script that prints it unchanged and checks it. A document whose header says it is signed off when no sign-off is recorded fails that check. It is not legal advice, and the Food Standards Agency has not reviewed or endorsed it. Each command has a guide written for the person running the business, and the overview guide is on arckit.org. The `uk-food-sfbb` build recipe writes the draft documents that are not there yet; a build has nobody to answer, so it confirms nothing and signs nothing off. Help wanted: a food safety co-maintainer.
+
+### Changed
+
+- **A build recipe can say how short a document may be.** `/arckit:build` failed any document of 100 lines or fewer, and a recipe could not change that. A recipe target can now set `min_lines`, the fewest lines its document may have; a target without it still needs more than 100, as before, so no existing recipe builds differently. The food overlay's `uk-food-sfbb` recipe sets one for each of its documents, so it now builds the business's own methods with the others.
+- **ArcKit no longer tells you to promote a draft that only its own command can change.** `/arckit:health`'s long-running draft finding told you to promote such a draft to review or approval, and the session-start notice listed it as stale. A document type can now name, in the registry, the command that sets its status (`statusSetBy`), and a draft of such a type is left out of both. The food overlay's eight document types are the first: only its sign-off command changes their status, and its completion record always stays a draft. An overdue review is still reported for every type.
+
+### Fixed
+
+- **Gemini CLI: a command that runs a bundled script by a quoted path finds the script.** The Gemini extension names its own folder `~/.gemini/extensions/arckit`, and a shell does not expand `~` inside quotes, so a command that quotes a script's path could not run it: the food and legacy IT overlays' commands, `/arckit:tenders`, `/arckit:competitors` and the Netherlands GEMMA and NORA commands. Such a path now starts `$HOME`. Gemini replaces `${extensionPath}` only in its manifest and hooks, not in a command's text, so the path is written out. No other extension changes.
+
 ## [6.22.1] — 2026-11-17
 
 ### Changed

@@ -1,0 +1,1267 @@
+{
+  "schema": "uk-food-sfbb-data-1.0",
+  "data": "sfbb-caterers-2026-11-17",
+  "section": {
+    "id": "MG",
+    "code": "FOODMGT",
+    "title": "MANAGEMENT",
+    "pages": [
+      64,
+      65
+    ],
+    "intro": [
+      {
+        "text": "Managing your business effectively is vital for food safety.",
+        "page": 64
+      },
+      {
+        "text": "Managing your business effectively is vital for food safety.",
+        "page": 65
+      },
+      {
+        "text": "This section includes information on different management issues, including checks to do when you open and close, suppliers and contractors, stock control, and training and supervising staff. This section also includes information on managing food allergen information.",
+        "page": 65
+      },
+      {
+        "text": "The Management section should be used alongside the diary, which should be signed every day by the person responsible for running the business.",
+        "page": 65
+      }
+    ]
+  },
+  "methods": [
+    {
+      "id": "MG-01",
+      "title": "OPENING AND CLOSING CHECKS",
+      "summary": "It is essential that you and your staff do certain checks every time you open and close. This helps you maintain the basic standards you need to make sure that your business makes food safely.",
+      "pages": [
+        66
+      ],
+      "blocks": [
+        {
+          "kind": "table",
+          "heading": "OPENING CHECKS",
+          "columns": [
+            "You should do these checks at the beginning of the day. You can also add your own checks to the list."
+          ],
+          "rows": [],
+          "questions": [
+            {
+              "id": "MG-01-Q01",
+              "text": "Your fridges, chilled display equipment and freezers are working properly.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q02",
+              "text": "Your other equipment (e.g. oven) is working properly.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q03",
+              "text": "Staff are fit for work and wearing clean work clothes.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q04",
+              "text": "Food preparation areas are clean and disinfected (work surfaces, equipment, utensils, etc.).",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q05",
+              "text": "All areas are free from evidence of pest activity.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q06",
+              "text": "There are plenty of handwashing and cleaning materials (soap, paper towels, sanitiser, etc.).",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q07",
+              "text": "Hot running water is available at all sinks and hand wash basins.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q08",
+              "text": "Probe thermometer is working and probe wipes are available.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q09",
+              "text": "Allergen information is accurate for all items on sale.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q10",
+              "text": "Has cleaning been carried out according to the cleaning schedule",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q11",
+              "text": "",
+              "type": "list",
+              "options": [],
+              "elseText": null
+            }
+          ],
+          "page": 66
+        },
+        {
+          "kind": "table",
+          "heading": "CLOSING CHECKS",
+          "columns": [
+            "You should do these checks at the end of the day. You can also add your own checks to the list."
+          ],
+          "rows": [],
+          "questions": [
+            {
+              "id": "MG-01-Q12",
+              "text": "All food is covered, labelled and put in the fridge/freezer (where appropriate).",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q13",
+              "text": "Food on its Use By date has been thrown away.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q14",
+              "text": "Dirty cleaning equipment has been cleaned or thrown away.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q15",
+              "text": "Waste has been removed and new bags put into the bins.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q16",
+              "text": "Food preparation areas are clean and disinfected (work surfaces, equipment, utensils etc.).",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q17",
+              "text": "All washing up has been finished.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q18",
+              "text": "Floors are swept and clean.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q19",
+              "text": "‘Prove it’ checks have been recorded.",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q20",
+              "text": "Has cleaning been carried out according to the cleaning schedule",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "MG-01-Q21",
+              "text": "",
+              "type": "list",
+              "options": [],
+              "elseText": null
+            }
+          ],
+          "page": 66
+        },
+        {
+          "kind": "text",
+          "heading": null,
+          "text": "The opening and closing checks are also listed in the diary.",
+          "page": 66
+        }
+      ]
+    },
+    {
+      "id": "MG-02",
+      "title": "EXTRA CHECKS",
+      "summary": "Carrying out extra checks regularly helps you make sure your methods are being followed.\nSome of the safe methods in the rest of the pack advise you to check certain things regularly. These are less frequent than the daily opening and closing checks but still require regular completion.\nIn the table below there are examples of some recommended extra checks. Write down the details of any extra checks you do and how often you do them. When you carry out an extra check, make a note of it in the diary on the day you completed it along with details of what you did.",
+      "pages": [
+        67
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "WHAT TO DO",
+            "DETAILS OF CHECK",
+            "HOW OFTEN?"
+          ],
+          "rows": [
+            {
+              "id": "MG-02-P01",
+              "point": "Deep clean\ne.g. Clean behind equipment, vents, walls, ceilings, outside waste areas, etc.",
+              "why": null,
+              "page": 67,
+              "questions": [
+                {
+                  "id": "MG-02-Q01",
+                  "text": "Deep clean of whole kitchen area and outside waste area including walls, ceilings, extractor fan, vents.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q02",
+                  "text": "",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-02-P02",
+              "point": "Maintenance\ne.g. Clear drains and fridge/freezer condensers.",
+              "why": null,
+              "page": 67,
+              "questions": [
+                {
+                  "id": "MG-02-Q03",
+                  "text": "Check kitchen for damage to equipment or surfaces.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q04",
+                  "text": "",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-02-P03",
+              "point": null,
+              "why": null,
+              "page": 67,
+              "questions": [
+                {
+                  "id": "MG-02-Q05",
+                  "text": "Follow up on any outstanding repairs.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q06",
+                  "text": "",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-02-P04",
+              "point": "Dishwasher\nRemove food debris and limescale from water jets, filters and drains. Clean around door seals, etc.",
+              "why": null,
+              "page": 67,
+              "questions": [
+                {
+                  "id": "MG-02-Q07",
+                  "text": "Remove internal parts and deep clean.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q08",
+                  "text": "",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-02-P05",
+              "point": null,
+              "why": null,
+              "page": 67,
+              "questions": [
+                {
+                  "id": "MG-02-Q09",
+                  "text": "Check effectiveness of washing and report any problems.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q10",
+                  "text": "",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-02-P06",
+              "point": "Temperature probe\nCheck it is working accurately.",
+              "why": null,
+              "page": 67,
+              "questions": [
+                {
+                  "id": "MG-02-Q11",
+                  "text": "Placing in boiling water and melting ice (should be within 1⁰C of 100⁰C and 0⁰C).",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q12",
+                  "text": "",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-02-P07",
+              "point": "Pest control\ne.g. Look for signs of damage to walls, doors, etc. that could let in pests, and signs of pests.",
+              "why": null,
+              "page": 67,
+              "questions": [
+                {
+                  "id": "MG-02-Q13",
+                  "text": "Check all areas inside and outside the building for signs of pest activity.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q14",
+                  "text": "",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-02-P08",
+              "point": null,
+              "why": null,
+              "page": 67,
+              "questions": [
+                {
+                  "id": "MG-02-Q15",
+                  "text": "Make sure food is covered properly in storage areas.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q16",
+                  "text": "",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-02-P09",
+              "point": null,
+              "why": null,
+              "page": 67,
+              "questions": [
+                {
+                  "id": "MG-02-Q17",
+                  "text": "Check structure for holes and other places where pests could get in.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q18",
+                  "text": "",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-02-P10",
+              "point": "Additional checks",
+              "why": null,
+              "page": 67,
+              "questions": [
+                {
+                  "id": "MG-02-Q19",
+                  "text": "",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q20",
+                  "text": "",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-02-Q21",
+                  "text": "",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 67
+        }
+      ]
+    },
+    {
+      "id": "MG-03",
+      "title": "PROVE IT",
+      "summary": "Use of a disinfected temperature probe to measure temperatures will help to prove that your methods are safe. You can record details of these checks in the Prove It: Records section.",
+      "pages": [
+        68,
+        69
+      ],
+      "blocks": [
+        {
+          "kind": "table",
+          "heading": null,
+          "columns": [
+            "SAFE METHOD",
+            "WHAT TO DO",
+            "HOW TO DO IT"
+          ],
+          "rows": [
+            [
+              "Cooking and reheating",
+              "The ‘Cooking safely’ and ‘Reheating’ safe methods in the Cooking section tell you how to check food is thoroughly cooked/reheated. If you do a different check then you will need to prove it is safe.\nThe food is safe if it has reached a high enough temperature for a long enough time.",
+              "If you want to check the temperature of a food, use a disinfected probe. Insert the probe so the tip is in the centre of the food (or the thickest part).\nExamples of safe time/temperature combinations are listed in the ‘Cooking safely’ safe method."
+            ],
+            [
+              "Hot holding",
+              "To check food in hot holding is at or above 63°C, use a clean, disinfected probe. Insert the probe so the tip is in the centre of the food (or the thickest part).",
+              "The ‘Hot holding’ safe method in the Cooking section tells you how to hot hold safely. It is a legal requirement that hot food must be kept at or above 63°C."
+            ],
+            [
+              "Chilling down hot food",
+              "The ‘Chilling down hot food’ safe method in the Chilling section tells you how to chill down hot food safely.\nSometimes there might be more than one way of chilling down hot food that is suitable for what you are doing. You might want to compare different options to find out which is most effective.\nCompare different chilling options by trying them out with the same food.",
+              "When you have just cooked the food, test its temperature at the centre (or thickest part) with a clean, disinfected probe. Start to chill it using one option and test the temperature again at regular intervals to see how quickly it is dropping.\nRepeat this with other options to see which is fastest."
+            ],
+            [
+              "Chilled storage and displaying chilled food",
+              "The ‘Chilled storage and displaying chilled food’ safe method tells you how to keep food cold.\nIt is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland, that certain chilled foods must be kept at 8°C or below.",
+              "To check food is at 8°C or below, use a disinfected probe. Insert the probe so the tip is in the centre of the food (or the thickest part)."
+            ],
+            [
+              "Freezing",
+              "The Freezing safe method in the Chilling section tells you how to freeze food safely.\nFrozen food should be kept at -18°C or below.",
+              "You can use the digital display or a dial thermometer to check your freezer is keeping food at a safe temperature."
+            ]
+          ],
+          "page": 68
+        },
+        {
+          "kind": "text",
+          "heading": null,
+          "text": "You can record what you have done to prove your methods on the ‘Prove it: Records’ sheet in the diary.",
+          "page": 68
+        },
+        {
+          "kind": "table",
+          "heading": null,
+          "columns": [
+            "THERMOMETER TYPE",
+            "WHERE TO USE THE THERMOMETER",
+            "HOW TO USE THE THERMOMETER"
+          ],
+          "rows": [
+            [
+              "Digital thermometer",
+              "These are generally easy to use and accurate. They can be used with lots of foods, but they are not suitable to go in the oven.",
+              "Clean and disinfect the probe, then insert the probe. Wait for the display to stabilise before taking a reading. Clean the probe thoroughly and disinfect it before you use it again. This helps to prevent cross-contamination."
+            ],
+            [
+              "Infra-red thermometer",
+              "These types of thermometers are used for testing cold surface temperatures of food when delivered or in fridges and freezers. They cannot be used for checking the temperature in the centre of cooked, reheated, or cooling food.",
+              "Direct the probe at the surface of the food avoiding any reflective packaging or sticky labels (as this gives a false reading). If the temperature seems high, use a clean, disinfected probe thermometer to confirm the reading."
+            ]
+          ],
+          "page": 69
+        },
+        {
+          "kind": "text",
+          "heading": "CHECKING YOUR PROBE",
+          "text": "It is essential to know that your probe is working properly, so you can rely on its readings. The manufacturer’s instructions should include details of how often a probe needs to be checked and how to tell if it is accurate. If instructions aren't available still ensure the probe is checked regularly, for example once a month.\nA simple way to check a digital probe is to put it in iced water and boiling water:\n• The readings in iced water should be between -1°C and 1°C.\n• The readings in boiling water should be between 99°C and 101°C.\nIf the reading is outside this range, you should replace your probe or return it to the manufacturer to be calibrated.",
+          "page": 69
+        },
+        {
+          "kind": "text",
+          "heading": "LOOKING AFTER YOUR PROBE",
+          "text": "It is very important to keep your probe clean, otherwise it could spread dirt and harmful bacteria to the food you are testing. Before the probe is inserted into food, clean and disinfect it, and again after use.\nProbe wipes are a good way to clean and disinfect probe thermometers, however make sure the wipes don’t dry out as then they won’t disinfect properly.\nYou need to look after your probe to prevent it from getting damaged and help keep it working properly. Avoid leaving a digital probe inside a fridge, freezer or on hot surfaces for a long period of time. When you are not using it, store it safely, away from extreme temperatures and liquids. Keep the probe in its case, if it has one. Avoid banging or dropping your probe. If the battery is low, replace it immediately.",
+          "page": 69
+        }
+      ]
+    },
+    {
+      "id": "MG-04",
+      "title": "MANAGING FOOD ALLERGEN INFORMATION",
+      "summary": "How you handle allergens is important for food safety and to keep your customers safe.\nIt is a legal requirement for food businesses to provide accurate information about the allergenic ingredients used in the food and drink they serve. You also need to refer to and complete the ‘Food Allergies’ pages in the Cross Contamination section of this pack. Since October 2021, any business that produces prepacked for direct sale (PPDS) food is required to label it with the name of the food and a full ingredients list, with allergenic ingredients emphasised within the list.",
+      "pages": [
+        70,
+        71,
+        72
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "WHAT TO DO",
+            "WHY",
+            "HOW DO YOU DO THIS"
+          ],
+          "rows": [
+            {
+              "id": "MG-04-P01",
+              "point": "Customer information\nPPDS food must carry the name of the food and full ingredients labelling on the packaging, with allergens emphasised clearly.\nFor loose foods, such as meals served in a restaurant, you can provide allergen information:\n• in writing e.g. allergen matrix, on a menu or chalkboard\n• Providing the information orally to the customer (if this method is chosen, a sign must be displayed informing the customer where the information can be found)\nStaff should know where allergen information can be found (e.g. recipe sheets, food labels) and be able to handle allergen information requests.\nAllergen information must be accurate, consistent and up-to date.",
+              "why": "Customer with hypersensitivities (allergy, intolerance and Coeliac Disease) need to know this information so they can make safe food choices to avoid a reaction.\nThere should be a way to check that the information provided is correct and complete.\nTechnical guidance on food allergen labeling and information requirements, as well as information on the fourteen regulated allergens can be on the FSA website: General background on allergens.",
+              "page": 70,
+              "questions": [
+                {
+                  "id": "MG-04-Q01",
+                  "text": "Where do you keep allergen information for the foods you serve?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-04-Q02",
+                  "text": "Do your staff know where to find accurate and up-to-date allergen /ingredient information for the foods you serve?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-04-Q03",
+                  "text": "Have you trained all your staff in how to handle allergen information requests?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-04-Q04",
+                  "text": "How often do you review staff training in allergen management?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-04-Q05",
+                  "text": "When do you update your labels?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-04-P02",
+              "point": "For loose foods, such as meals served in restaurants, if allergen information is not provided in writing, there must be clear signposting letting customers know where to this information if they need it.",
+              "why": "Customers need this information so that they can make safe and informed food choices.\nCustomers should let you know if they need allergen information so you can help them make safe food choices.",
+              "page": 70,
+              "questions": [
+                {
+                  "id": "MG-04-Q06",
+                  "text": "Where do you display your signposting so customers know where to find allergen information?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-04-P03",
+              "point": "For loose foods, such as meals served in restaurants, it’s a good idea to give information in the name or description of dishes on the menu, especially if they include the foods listed over the page, e.g. chocolate and almond slice, sesame oil dressing. Remember to update the menu when recipes change.",
+              "why": "This helps people with food hypersensitivities to spot which dishes contain certain ingredients.\nRemember, you still need to have information on all allergenic ingredients available.",
+              "page": 70,
+              "questions": [
+                {
+                  "id": "MG-04-Q07",
+                  "text": "Do you use detailed information in the name or description of dishes on the menu?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 70
+        },
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "WHAT TO DO",
+            "WHY",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "MG-04-P04",
+              "point": "If your menu changes, make sure you change the list of ingredients with allergens for that food or drink and change the ingredients labels for PPDS foods.\nIf you advertise foods as ‘free from’, you must take care not to add or contaminate the food with the allergen it is free from. You must also make sure that the environment is free from that allergen and that there is no risk of the food coming into contact with that allergen.\nIt is important that precautionary allergen labelling, such as ‘may contain ‘statements, are only used if the risk of allergenic cross contamination is high after a full risk assessment. You can get help with completing a risk assessment either by contacting your Local Authority.",
+              "why": "If you do not have the correct ingredients listed, customers with food allergies could get the wrong information and could suffer an allergic reaction.\nIf allergen information or labels state a food is ‘free from’ an allergen, customers may assume there is no risk of allergens coming into contact with that food. Even really small amounts of allergens can be enough to cause an allergic reaction.",
+              "page": 71,
+              "questions": [
+                {
+                  "id": "MG-04-Q08",
+                  "text": "Do you check if the allergen content of dishes is updated when you change your menu?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-04-Q09",
+                  "text": "Do you make any ‘free-from’ meals or products?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-04-Q10",
+                  "text": "How do you make sure that they do not contain the allergen they are free from?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-04-Q11",
+                  "text": "If you intend to use any precautionary allergen labelling, have you completed a full risk assessment?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "MG-04-Q12",
+                  "text": "Where do you keep your risk assessment?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-04-P05",
+              "point": "Deliveries\nCheck deliveries to make sure you have the correct order and labelling information is provided.",
+              "why": "If you receive the wrong order or a different product, there may be different allergens in the food.",
+              "page": 71,
+              "questions": [
+                {
+                  "id": "MG-04-Q13",
+                  "text": "If you receive’ a different product what do you do to ensure your allergen information is up-to-date?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-04-P06",
+              "point": "Take Away – phone / online orders\nIf taking phone orders or using a website to advertise and/or take orders, you must be able to let your customers know what allergens are in the food you serve before the order is placed AND at the point of delivery to the customer.\nYou could put a clear and easy to see statement on your website, printed menus and flyers to tell customers where they can obtain allergen information.",
+              "why": "This allows customers with food hypersensitivities to know what is in the food they are ordering so they can choose what is safe for them to eat so they don’t have a reaction.",
+              "page": 71,
+              "questions": [
+                {
+                  "id": "MG-04-Q14",
+                  "text": "How do you let customers ordering over the phone or via a website know which allergens are in the foods you serve:",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-04-P07",
+              "point": "You need to make sure your staff know how to take orders over the phone and/or online for food allergy customers.",
+              "why": "If your staff do not know how to take orders over the phone/online for food allergy customers, this could result in the customer being served food which can be harmful to them",
+              "page": 71,
+              "questions": [
+                {
+                  "id": "MG-04-Q15",
+                  "text": "Are your staff trained in how to take orders over the phone/website for food allergy customers?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-04-P08",
+              "point": "You must ensure take away orders for customers with food allergies can be clearly identified.",
+              "why": "If a customer with a food allergy cannot easily identify which meal has been prepared for them, they could eat the wrong meal and have an allergic reaction.",
+              "page": 71,
+              "questions": [
+                {
+                  "id": "MG-04-Q16",
+                  "text": "How do you identify meals prepared for a customer with a food allergy at the point of delivery:",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 71
+        },
+        {
+          "kind": "text",
+          "heading": null,
+          "text": "There are some helpful tools and templates to help you record allergenic ingredients in your dishes. You can find this and other tools on the FSA website",
+          "page": 72
+        },
+        {
+          "kind": "table",
+          "heading": null,
+          "columns": [],
+          "rows": [
+            [
+              "You can use this Think Allergy poster to help with staff training. This poster is also available in Simplified Chinese, Punjabi, Bengali and Urdu."
+            ],
+            [
+              "Use this allergen recipe chart to help you keep a record of the allergens in the food you prepare. Staff can also use this to give information to customers."
+            ],
+            [
+              "These individual allergen menu sheets can be used for one-off dishes, such as ‘specials’, when ingredients run out or to share information between shifts."
+            ]
+          ],
+          "page": 72
+        }
+      ]
+    },
+    {
+      "id": "MG-05",
+      "title": "TRAINING AND SUPERVISION",
+      "summary": "It is essential to train and supervise your staff effectively to make sure they handle food safely.\nYou should train your staff in all the safe methods contained within this toolkit that are relevant to the job they do. You should also supervise them to check they are following the safe methods properly.",
+      "pages": [
+        73
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "WHAT TO DO",
+            "HOW?"
+          ],
+          "rows": [
+            {
+              "id": "MG-05-P01",
+              "point": "Once you have worked through them, use the safe methods in this pack to train staff. You need to be sure that each member of staff knows the safe methods for all the tasks they do.",
+              "why": null,
+              "page": 73,
+              "questions": [
+                {
+                  "id": "MG-05-Q01",
+                  "text": "Show the member of staff what to do, question them carefully on their knowledge and then ask them to show you.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-05-P02",
+              "point": "Make sure you know what training each member of staff has received and, where necessary, provide refresher training regularly.",
+              "why": null,
+              "page": 73,
+              "questions": [
+                {
+                  "id": "MG-05-Q02",
+                  "text": "Make a note on the Staff training record in the diary every time you train a member of staff.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-05-P03",
+              "point": "Watch the member of staff when they are carrying out a task as part of their work.\nWhen a member of staff has completed a task, ask them about how they followed the safe method, to help you find out if they did it correctly.",
+              "why": null,
+              "page": 73,
+              "questions": [
+                {
+                  "id": "MG-05-Q03",
+                  "text": "Make comments and observations to help the member of staff improve the way they work.\nReward good performance by giving positive feedback when the member of staff has followed the safe method successfully.\nIf the safe method is not being followed by the member of staff, tell them how they are going wrong and why it is important to follow the safe method.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 73
+        },
+        {
+          "kind": "text",
+          "heading": null,
+          "text": "In addition to the safe methods in this pack, it is a good idea to provide your staff with other food safety training. More information on food hygiene training can be found on the FSA website: online food safety training. Allergy and intolerance training can also be completed on the FSA website.",
+          "page": 73
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "If staff are not following a safe method properly, train them again and make sure they understand why it is important to follow the method."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "Use the 4-weekly review in the diary to identify any problems with how staff are following safe methods and plan your training to address these."
+          ],
+          "diaryNote": null,
+          "page": 73
+        },
+        {
+          "kind": "manage-it",
+          "heading": "MANAGE IT",
+          "columns": [],
+          "rows": [
+            {
+              "id": "MG-05-P04",
+              "point": "It is important that the diary is completed and signed every day. When you sign the diary you are confirming that you have supervised all the staff involved in making food that day. You may need to record additional checks such as more frequent temperature checks dependent on your business operations. This means making sure that your staff follow your safe methods and that any problems are being solved and recorded in the diary.\nIf you are away from the business, you can give responsibility for the diary to a member of staff. Sometimes there may be more than one person responsible during the day, e.g. when there is more than one shift, and in these cases the diary may need more than one signature. Make a note in the diary of those members of staff who have been given this responsibility and train them on all the relevant safe methods, including any in the Management section. Staff must understand how the diary works. If something different happens, or something goes wrong, they will need to take action and make a note of what they have done in the diary. You should still complete the 4-weekly review yourself.",
+              "why": null,
+              "page": 73,
+              "questions": []
+            }
+          ],
+          "page": 73
+        }
+      ]
+    },
+    {
+      "id": "MG-06",
+      "title": "CUSTOMERS",
+      "summary": "Customer feedback is a good indication of how well you are managing your business.\nKeeping your customers happy and protecting their health with good food hygiene is essential to the success of the business. It is very important to pay attention to any complaints to check whether mistakes have been made and prevent it happening again.",
+      "pages": [
+        74
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "WHAT TO DO",
+            "HOW?"
+          ],
+          "rows": [
+            {
+              "id": "MG-06-P01",
+              "point": "Listen to complaints.",
+              "why": null,
+              "page": 74,
+              "questions": [
+                {
+                  "id": "MG-06-Q01",
+                  "text": "Always take complaints seriously, no matter what the circumstances - these could point out a problem in your business that needs to be addressed.\nComplaints could include customers who have:\n• Symptoms of food poisoning after visiting your premises\n• Experienced an allergic reaction during or after visiting your premises\n• Found something in their food that made it unfit for eating",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-06-P02",
+              "point": "Find the source of the problem.",
+              "why": null,
+              "page": 74,
+              "questions": [
+                {
+                  "id": "MG-06-Q02",
+                  "text": "Try and work out how the problem arose. To do this you may need to:\n• Review the daily diary for details of any problems\n• Check your ‘Prove It’ records, look around your workplace and speak with staff to ensure relevant safe methods are being followed\n• See if any other similar complaints have been received\n• Check if any staff have reported illness in the days before\nWhile you are investigating, it may be appropriate to remove any of the same batch of food eaten from sale. It may also be appropriate to inform the supplier who provided you with the food if the problem may have arisen at their premises. More information in our Root Cause Analysis Training.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-06-P03",
+              "point": "Solve the problem.",
+              "why": null,
+              "page": 74,
+              "questions": [
+                {
+                  "id": "MG-06-Q03",
+                  "text": "Review the relevant safe methods as you may need to change how you do things to prevent it happening again and retrain staff.\nRecord any changes in the relevant section of your pack and make a note in the diary.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 74
+        }
+      ]
+    },
+    {
+      "id": "MG-07",
+      "title": "SUPPLIERS AND CONTRACTORS",
+      "summary": "How you handle suppliers and contractors is important to food safety.\nYou are required by food law to take reasonable precautions and do all that is needed to protect your customers. If you do not do this, your business and reputation could suffer.",
+      "pages": [
+        75
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "WHAT TO DO",
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "MG-07-P01",
+              "point": "Choose suppliers very carefully.",
+              "why": "It is important that you have reputable suppliers that you can trust to supply and handle food safely, as well as deliver on time etc.",
+              "page": 75,
+              "questions": [
+                {
+                  "id": "MG-07-Q01",
+                  "text": "• Make sure you choose reputable suppliers you can trust.\n• Ask the following questions:\n– Is the supplier registered with the local authority?\n– Does the supplier store, transport and pack their goods in a hygienic way?\n– Does the supplier provide allergen information?\n– Do they have any certification or quality assurance?\n– Does the supplier/contractor supply fully referenced invoices?\n• Ask other businesses for trusted recommendations.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-07-P02",
+              "point": "Make sure that your raw ingredients have been handled safely.",
+              "why": "The starting point for making food safely is to be confident about the safety of your raw ingredients and any ready-made products you buy in.",
+              "page": 75,
+              "questions": [
+                {
+                  "id": "MG-07-Q02",
+                  "text": "• Check that the supplier has a food safety management system.\n• Carry out regular delivery time, temperature and quality spot checks.\n• If you buy goods from a cash and carry, make sure that the vehicle you use to transport them is clean and that you bring chilled and frozen food back as soon as possible and put it straight into a fridge or freezer.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-07-P03",
+              "point": "Keep a record of what food products you have bought, who you bought them from, the quantity and the date.",
+              "why": "This is a legal requirement and is so that you or an enforcement officer can check back to see where a food came from.\nIdeally, you should keep these records until you are sure that the food they refer to has been consumed without any problems.",
+              "page": 75,
+              "questions": [
+                {
+                  "id": "MG-07-Q03",
+                  "text": "• Usually the easiest way to do this is to keep all your invoices and receipts. Or you might want to record the information in a different way, for example keeping a record of the batch number and other details.\n• Keep these records in a way that makes it easy for you or an enforcement officer to check them.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-07-P04",
+              "point": "Choose contractors carefully.",
+              "why": "Services such as pest control can be valuable in helping you to make food safely. It is important to have contractors you can trust to deliver these services effectively.",
+              "page": 75,
+              "questions": [
+                {
+                  "id": "MG-07-Q04",
+                  "text": "• Use the same checks you would use to choose suppliers (see top box).",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 75
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "If you are contacted by an unknown food supplier, check with your local authority to see if they are a registered and reputable business; they could be fraudulent.",
+            "If you do not think that the food a supplier delivers has been handled safely (for example, if you think it has not been kept cold enough) reject the delivery, contact your supplier immediately and write the details in the diary. If you have repeated problems, you can do the following things:",
+            "1. Contact the supplier/contractor by phone.",
+            "2. Write a formal letter of complaint.",
+            "3. Change supplier/contractor.",
+            "4. Contact your local authority."
+          ],
+          "preventHeading": null,
+          "prevent": [],
+          "diaryNote": null,
+          "page": 75
+        }
+      ]
+    },
+    {
+      "id": "MG-08",
+      "title": "STOCK CONTROL",
+      "summary": "Effective stock control is an important part of managing food safety.",
+      "pages": [
+        76
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "WHAT TO DO",
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "MG-08-P01",
+              "point": "Go through your menu and estimate how much of each ingredient you will need.",
+              "why": "Working through the menu allows you to plan for your specific needs.",
+              "page": 76,
+              "questions": [
+                {
+                  "id": "MG-08-Q01",
+                  "text": "• Review your menu regularly and how it affects your needs for stock.\n• Discuss your needs with your supplier.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-08-P02",
+              "point": "Plan ahead to make sure you have the right amount of stock and order carefully.",
+              "why": "Not having too much stock is best for food safety – and your profits.",
+              "page": 76,
+              "questions": [
+                {
+                  "id": "MG-08-Q02",
+                  "text": "• Plan the stock you need for each shift.\n• Make sure staff know the stock requirements for each shift.\n• Use a supplier who understands your business needs and supplies stock on time.\n• Do a stock check before placing an order.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-08-P03",
+              "point": "Check all stock when it is delivered to make sure that:\n• it is within its ‘use by’ date\n• it has been kept cold enough\n• it has not gone off\n• the stock is clean and not damaged, e.g. throw away any punctured vacuum packs, swollen packs or badly dented cans and check that tops are secure on bottles and jars and seals are unbroken.",
+              "why": "These checks are all to make sure that food is safe for you to use.\nDamaged packaging could mean that food will not be safe to use.\nSwollen or ‘blown’ packs can be a sign that bacteria have grown in food or drinks.\nIf bottles or jars have been opened, or if seals have been broken, the food or drink might not be safe to use.",
+              "page": 76,
+              "questions": [
+                {
+                  "id": "MG-08-Q03",
+                  "text": "• Train your staff in what to look for when checking deliveries.\n• Have a written agreement with your supplier about your delivery requirements.\n• Carry out spot checks on the deliveries yourself.\n• Use the diary to record any issues or problems with deliveries.\n• If you move food from its original packaging to another container, make sure you make a note of the name of the food, the ingredients and the ‘use by’ or ‘best before’ date.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-08-P04",
+              "point": "Carry out regular stock checks and throw away any food that has passed its ‘use by’ date.\nIf you freeze food, have a system in place to make sure it is clearly labelled with the date it is frozen.",
+              "why": "It is against the law to serve food after its ‘use by’ date because it might not be safe to eat and could make your customers ill.\nIf labelling is not clear on frozen food, new stock might be used before old stock.",
+              "page": 76,
+              "questions": [
+                {
+                  "id": "MG-08-Q04",
+                  "text": "• Follow the ‘first in, first out’ system of stock rotation, so that older stock is used first. This helps to avoid waste.\n• Train your staff in stock control and make sure they know in what order to use foods.\n• Check regularly that stock control is being carried out effectively and food past its ‘use by’ date is thrown away.\n• Record stock checks in the diary.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 76
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "• If you find that you have more food in stock than you need and you do not think you will use it all before the ‘use by’ date, you could freeze some of it to be used in the future. Follow the manufacturer’s instructions on freezing and label the food as appropriate. See ‘Freezing safe method’",
+            "• If you find that food that has passed its ‘use by’ date has not been thrown away, throw it away immediately.",
+            "• If you do not think that a food delivery has been handled safely, reject the delivery if possible. Do not use the food and contact your supplier immediately.",
+            "• If you have to use a substitution for an ingredient, check the allergen information is correct."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "• Review your ordering process.",
+            "• Review your stock rotation system.",
+            "• Review your agreement with your supplier.",
+            "• Train staff again on this safe method.",
+            "• Improve staff supervision."
+          ],
+          "diaryNote": null,
+          "page": 76
+        }
+      ]
+    },
+    {
+      "id": "MG-09",
+      "title": "PRODUCT WITHDRAWAL AND RECALL",
+      "summary": "Responding quickly to any problems with food products you use or sell is an important part of managing food safety in your business.\nSometimes there will be a problem with a food product that means you will need to ‘withdraw’ it (when you should stop using/selling it) and/or ‘recall’ it (when customers are asked to return/destroy a product). You may find out about a problem with a product from:\n• a manufacturer of the product\n• a supplier or wholesaler\n• a notice in newspapers\n• your local authority\n• a trade association\n• the Food Standards Agency\nIf you hear about a problem with a product, you should stop using/selling it straight away. You might also need to tell your customers. There are a number of reasons that a product might be withdrawn or recalled. For example, it could have been found to:\n• contain harmful bacteria\n• be physically contaminated, e.g. with pieces of glass or metal\n• be wrongly labelled, which could be a problem for people with food allergies\nYou or your staff may also notice a problem with a food product that means it may not be safe to eat. If this happens, you should stop using/selling it straight away and tell your local authority and the Food Standards Agency.",
+      "pages": [
+        77
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "WHAT TO DO",
+            "HOW?"
+          ],
+          "rows": [
+            {
+              "id": "MG-09-P01",
+              "point": "Make sure you know the details of the problem.",
+              "why": null,
+              "page": 77,
+              "questions": [
+                {
+                  "id": "MG-09-Q01",
+                  "text": "If a manufacturer or supplier has issued a product withdrawal or recall, make sure you know which product and which batches are affected.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-09-P02",
+              "point": "As soon as you find out about a problem with a product, stop using/selling it.",
+              "why": null,
+              "page": 77,
+              "questions": [
+                {
+                  "id": "MG-09-Q02",
+                  "text": "Remove the affected product from anywhere you use, store or sell it and label it clearly to show it should not be used/sold.\nRemember to check if you have used the product as an ingredient in any food you have prepared and stored, e.g. in the freezer – if you have, ask your local authority for advice.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-09-P03",
+              "point": "Make sure your staff know about the problem.",
+              "why": null,
+              "page": 77,
+              "questions": [
+                {
+                  "id": "MG-09-Q03",
+                  "text": "This is so your staff know what to do and do not use/sell the product.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "MG-09-P04",
+              "point": "Tell your customers if you need to.",
+              "why": null,
+              "page": 77,
+              "questions": [
+                {
+                  "id": "MG-09-Q04",
+                  "text": "If the problem is with a product that your customers might not eat or drink straight away, you may need to let them know that the product is being recalled and why.\nIf the manufacturer or supplier asks you to put up a recall notice, you should do this. If you are not sure what to do, contact your local authority.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 77
+        },
+        {
+          "kind": "think-twice",
+          "heading": "THINK TWICE!",
+          "text": "It is a legal requirement to keep a record of what food products you have bought, who you bought them from, the quantity and the date. Usually the easiest way to do this is to keep all your invoices and receipts. You should keep this information in a way that makes it easy for you or an enforcement officer to check back to see where a product came from.",
+          "page": 77
+        }
+      ]
+    }
+  ]
+}

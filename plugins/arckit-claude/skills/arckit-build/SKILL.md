@@ -64,6 +64,7 @@ cp "${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/uk-saas.yaml" .arckit/reci
 | `au-federal` | `arckit-au` | Australian Federal / DISP-supplier — ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988, OAIC NDB, PSPF, AI Assurance, DISP attestation (35 targets, 9 waves) |
 | `au-energy` | `arckit-au-energy` (composes `arckit-au` baseline) | Australian Energy Sector — AESCSF maturity, AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS layered on the AU federal baseline (Essential Eight, ISM, OT security, SOCI/CIRMP, Privacy Act/NDB). Optional default-off `SERVICE_INVENTORY` (`servicenow`). 23 targets. First **Australian sector** overlay. |
 | `uk-nhs-clinical-safety` | `arckit` (core, references `arckit-uk-nhs` commands) | UK NHS Clinical Safety + UK/EU MDR — NHS DCB0129 (manufacturer) + DCB0160 (deployer) clinical safety case (Marcus Baw SAFETY.md 3-file spec), NHS DTAC (form v2.0), UK MDR 2002 + EU MDR 2017/745 SaMD/AIaMD classification. Composes with UK SaaS baseline (no swaps; adds clinical safety + medical-device regulation on top). 44 targets across 8 waves. Second **sector** overlay, after UK Finance Payments. |
+| `uk-food-sfbb` | `arckit-uk-food` | UK food safety for a small caterer in England or Wales, from the FSA's Safer food, better business for caterers pack: business profile, the five sections of safe methods, the business's own methods and the completion record (8 targets, 4 waves), each target with a `min_lines` that suits its document. No ArcKit baseline. A build has nobody to answer, so it confirms nothing: it writes draft documents in which every unconfirmed answer reads NOT YET ANSWERED, and it never signs anything off. |
 
 ### Recipe schema (v1)
 
@@ -89,6 +90,7 @@ Each `targets[]` entry:
 | `output.subfolder` | no | Orientation hint shown in `--plan` and worker prompts; the actual subfolder is enforced by `validate-arc-filename.mjs`'s `SUBDIR_MAP` at write time |
 | `output.multi_instance` | no | Orientation hint; the hook's `MULTI_INSTANCE_TYPES` list is authoritative |
 | `topic` | no | Used in commit messages and `{TOPIC}` substitution |
+| `min_lines` | no | The fewest lines the written document may have, a whole number of 1 or more, for a document that is short by nature. The worker's check (worker step 3) and the orchestrator's validation (per-wave step 4) both use it. Absent, the document must have more than 100 lines, as before, the same as `min_lines: 101`. `scripts/check_recipes.py` rejects any other value |
 | `deps` | yes | List of target IDs, may include glob `"ADR-*"` |
 
 The `output.subfolder` / `output.multi_instance` fields document recipe author intent for human readers and `--plan` output, but the path-allocation hook is the source of truth at write time. If a recipe says `subfolder: decisions` for a single-instance type the hook doesn't recognise, the file lands wherever the hook decides — debug via the hook, not the recipe.
@@ -243,7 +245,7 @@ Use the **Agent tool** with `subagent_type: "general-purpose"`. One Agent call p
 
 **Pass `run_in_background: false` on every call in the wave.** Claude Code v2.1.232 made non-teammate `Agent` spawns background-by-default in interactive sessions — a backgrounded spawn returns `async_launched` and an `agentId`, *not* the worker's report. This harness needs the reports before it can validate, commit, and decide whether to halt, so a wave is exactly the case the parameter exists for. The parameter is stripped from the tool schema in some contexts; if it is unavailable, the spawns are background-only and you must **wait for every worker's completion notification before step 3** — do not proceed on `async_launched` results, and never infer a worker's outcome from the fact that it launched.
 
-Per-agent prompt template (substitute `{...}` placeholders from the resolved target). `{INPUT_PATHS_BULLETED}` has one bullet per file in `paths(dep)` for each resolved dep, so every path of an adopted dep; an excluded or pruned dep contributes none. `{PREVIOUS_VERSION_LINE}` is `Your target's previous version (read it to keep its IDs, owners and Revision History; write the next version beside it, never over it): {PATH}` when the target already has an artefact: its recorded `path` on a rebuild, or the latest `ARC-{P}-{TYPE}-v*.md` for a single-instance type. Otherwise leave the line out.
+Per-agent prompt template (substitute `{...}` placeholders from the resolved target). `{INPUT_PATHS_BULLETED}` has one bullet per file in `paths(dep)` for each resolved dep, so every path of an adopted dep; an excluded or pruned dep contributes none. `{PREVIOUS_VERSION_LINE}` is `Your target's previous version (read it to keep its IDs, owners and Revision History; write the next version beside it, never over it): {PATH}` when the target already has an artefact: its recorded `path` on a rebuild, or the latest `ARC-{P}-{TYPE}-v*.md` for a single-instance type. Otherwise leave the line out. `{MIN_LINES}` is the target's `min_lines`, or 101 when it sets none.
 
 ```
 You are an ArcKit artefact worker subagent (orchestrated by arckit-build, wave {WAVE_N}).
@@ -292,7 +294,7 @@ Steps:
 
 3. Sanity check the corrected path via Bash:
    - `test -f "$ACTUAL_PATH"` returns success
-   - `[ "$(wc -l < "$ACTUAL_PATH")" -gt 100 ]`
+   - `[ "$(wc -l < "$ACTUAL_PATH")" -ge {MIN_LINES} ]`
    - `grep -c '^## Document Control\|^| Document ID' "$ACTUAL_PATH"` returns ≥ 1
 
 4. Do NOT git commit. Do NOT modify other files. The orchestrator handles version control.
@@ -324,7 +326,7 @@ When all return, collect summaries. "Return" means the worker's ≤200-word repo
 For each target in wave:
 
 - File exists at expected path (`test -f`).
-- Line count > 100 (`wc -l`).
+- Line count at least `{MIN_LINES}` (`wc -l`), the value the worker checked: the target's `min_lines`, or 101 when it sets none.
 - Document control header present (`grep -c '^## Document Control'` ≥ 1).
 
 **One retry for a missing file.** Opus 5.5 can end a worker's turn with a progress report ("next I'll write the file…") before the work is done, and that report arrives as the worker's final answer. If a target has no file, or its report announces a step it never took, re-dispatch that one target once, in the same `run_in_background: false` form, adding to the prompt: `Your previous attempt ended before the file was written: "{LAST_LINE_OF_REPORT}". Finish the work this time.` If the retry also fails, mark it `failed` as below. Never retry more than once: a target that stops twice needs a person to look at it.

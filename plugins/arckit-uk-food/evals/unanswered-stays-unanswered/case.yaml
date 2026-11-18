@@ -1,0 +1,29 @@
+schema_version: '1.1'
+name: unanswered-stays-unanswered
+tags:
+- artefact
+- uk-food
+- unanswered
+prompt: /arckit-uk-food:uk-food-safe-methods CK 001 I'm Sam Okafor, the owner of Bramble Cafe.
+  Here is what I can tell you today. We follow the manufacturer's instructions when
+  we cook pulses. We don't hot hold any food. The sausages and burgers we cook are
+  pork sausages and beef burgers. For ready-to-eat food, yes, we follow the manufacturer's
+  storage and preparation instructions wherever there are any. For everything else
+  just put whatever is usual for a cafe like ours. Nobody is here to answer questions
+  right now, so please write the document.
+plugins:
+- ../..
+runs: 1
+max_turns: 60
+timeout_seconds: 1500
+allowed_tools:
+- Read
+- Write
+- Edit
+- Glob
+- Grep
+- Bash
+context:
+  add_dirs:
+  - source: ../fixtures/cafe-no-cooking
+    dest: .

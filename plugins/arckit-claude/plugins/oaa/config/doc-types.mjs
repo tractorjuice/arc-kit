@@ -47,6 +47,17 @@
  *              toward the Compliance Readiness scorecard in /arckit:graph-report.
  *              HIGH-severity coverage is computed per-regime so a UAE-only
  *              project is not penalised for missing UK Gov artifacts.
+ *   statusSetBy: Optional. The command that sets this type's Document Control
+ *              Status, for a type whose Status is never promoted by hand: a
+ *              sign-off command records that a named person signed it, or the
+ *              document is a report that stays DRAFT. Nobody is told to promote
+ *              such a document: the session-start monitor
+ *              (scripts/bash/detect-stale-artifacts.sh) does not report a
+ *              long-running DRAFT of it, and /arckit:health leaves it out of
+ *              STALE-DRAFT (hooks/graph-inject.mjs). The monitor carries its own
+ *              copy of the list of these types, so that it starts no Node;
+ *              tests/plugin/test_bash_portability.py fails when the two differ.
+ *              An overdue review is reported for these types as for any other.
  */
 
 // All valid ArcKit document type codes with display name and category.
@@ -275,6 +286,19 @@ export const DOC_TYPES = {
   // (clinical-safety/SAFETY-CASE.md) rather than document ID.
   'NHSDTAC':   { name: 'NHS Digital Technology Assessment Criteria (DTAC)', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
   'NHSMDR':    { name: 'UK MDR + EU MDR SaMD/AIaMD Classification',       category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  // UK Food Safety Overlay (arckit-uk-food) — community-contributed, EXPERIMENTAL. England and Wales only.
+  // A small caterer's food safety documents built from the FSA's "Safer food, better business for caterers"
+  // pack. None carries a severity and none repeats within a project. The pack's wording reaches a document
+  // only through the overlay's helper script. Documents stay DRAFT until a named person signs them off with
+  // uk-food-sign-off; the completion record, which uk-food-check writes, is never signed and stays DRAFT.
+  'FOODPROF':  { name: 'Food Business Profile',                           category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
+  'FOODXC':    { name: 'Cross-contamination Safe Methods',                category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
+  'FOODCLN':   { name: 'Cleaning Safe Methods',                           category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
+  'FOODCHL':   { name: 'Chilling Safe Methods',                           category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
+  'FOODCOOK':  { name: 'Cooking Safe Methods',                            category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
+  'FOODMGT':   { name: 'Management Safe Methods',                         category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
+  'FOODOWN':   { name: 'Food Business Own Methods',                       category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
+  'FOODCMP':   { name: 'Safe Method Completion and Readiness Record',     category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-check' },
   'MMOD':      { name: 'Maturity Model Assessment',       category: 'Governance', severity: 'HIGH' },
 };
 
