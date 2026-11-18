@@ -54,6 +54,7 @@ export const GUIDE_CATEGORY_ORDER = [
   'UK G-Cloud Supplier Overlay',
   'UK Finance Payments Overlay',
   'UK Food Safety Overlay',
+  'UK Legacy IT Assessment Overlay',
   'UK NHS Clinical Safety Overlay',
   'USA Federal Civilian Overlay',
   'Community',

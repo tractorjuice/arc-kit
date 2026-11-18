@@ -568,6 +568,7 @@
                 <li><strong>Tier = Community + Jurisdiction = USA</strong> → <code>arckit-us</code></li>
                 <li><strong>Tier = Community + Sector = UK Finance</strong> → <code>arckit-uk-finance</code> — payments slice (v1)</li>
                 <li><strong>Tier = Community + Sector = UK Food Safety</strong> → <code>arckit-uk-food</code> — food safety documents for small caterers in England and Wales, from the Food Standards Agency&#x27;s Safer food, better business pack (experimental)</li>
+                <li><strong>Tier = Community + Jurisdiction = UK Legacy IT</strong> → <code>arckit-uk-legacy</code> — assessment of existing systems against the UK&#x27;s updated definition of legacy IT, with remediation actions (experimental)</li>
                 <li><strong>Tier = Community + Sector = UK NHS</strong> → <code>arckit-uk-nhs</code> — clinical safety + medical-device classification</li>
                 <li><strong>Tier = Community + Category = UK G-Cloud Supplier</strong> → <code>arckit-uk-gcloud</code> — supplier-side G-Cloud 15 bid authoring and submission pack</li>
                 <li><strong>Tier = Community + Category = FDE Site Generator</strong> → <code>arckit-fde</code> — Forward Deploy Engineering website generator</li>
@@ -6263,6 +6264,17 @@
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-own-methods</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile</td><td class="govuk-table__cell">&mdash;</td></tr>
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-check</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile, uk-food-safe-methods, uk-food-own-methods</td><td class="govuk-table__cell">uk-food-sign-off</td></tr>
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-sign-off</code></td><td class="govuk-table__cell">the document being signed: uk-food-profile, uk-food-safe-methods or uk-food-own-methods</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">UK Legacy IT Assessment Overlay (1 command)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-legacy:uk-legacy-assessment</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">requirements, risk, diagram, operationalize, devops, secure</td><td class="govuk-table__cell">principles, evaluate, finops, service-assessment, tcop, sobc, roadmap, plan</td></tr>
                     </tbody>
                 </table>
             </div>
