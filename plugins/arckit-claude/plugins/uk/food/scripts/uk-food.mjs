@@ -2403,20 +2403,20 @@ function headerClaim(doc, name, header, records, unfinished = false) {
     }
     if (field === 'Status' && typed !== 'APPROVED') {
       const only = `where a document that is signed off reads APPROVED and nothing else, which says only that ${mine.name} signed it off`;
-      return { line, message: `this line says Status is "${typed}", ${only}. Write APPROVED there, or put it back to DRAFT.`,
+      return { line, cell: true, message: `this line says Status is "${typed}", ${only}. Write APPROVED there, or put it back to DRAFT.`,
         reason: `says in its header, at line ${line}, that Status is "${typed}", ${only}: write APPROVED there, or put it back to DRAFT` };
     }
     // Exactly the record's text is right, whatever marks the name itself holds.
     if (field === 'Status' || typed === signedText(mine)) continue;
     const right = `"${signedText(mine)}"`;
     if (!value.includes(mine.name)) {
-      return { line, message: `this line says ${says}, which does not name ${mine.name}, who signed this file off on ${mine.date}. ` +
+      return { line, cell: true, message: `this line says ${says}, which does not name ${mine.name}, who signed this file off on ${mine.date}. ` +
         `Write ${right} there, or put it back to [PENDING].`,
       reason: `says in its header, at line ${line}, that ${says}, which does not name ${mine.name}, who signed it off on ` +
         `${mine.date}: write ${right} there, or put it back to [PENDING]` };
     }
     const not = `which is not exactly what ${mine.name}'s sign-off of this file records`;
-    return { line, message: `this line says ${field} is "${typed}", ${not}. Write ${right} there and nothing else, or put it back ` +
+    return { line, cell: true, message: `this line says ${field} is "${typed}", ${not}. Write ${right} there and nothing else, or put it back ` +
       'to [PENDING].',
     reason: `says in its header, at line ${line}, that ${field} is "${typed}", ${not}: write ${right} there and nothing else, ` +
       'or put it back to [PENDING]' };
@@ -2436,7 +2436,7 @@ function headerClaim(doc, name, header, records, unfinished = false) {
     const right = `"${signedCell(signed)}"`;
     const named = isPending(row.approvedBy) || row.typedBy === signedCell(signed);
     if (!named && !row.approvedBy.includes(signed.name)) {
-      return { line, message: `this row of the Revision History says ${which} was approved by "${row.approvedBy}", which does ` +
+      return { line, cell: true, message: `this row of the Revision History says ${which} was approved by "${row.approvedBy}", which does ` +
         `not name ${signed.name}, who signed that version off on ${signed.date}. Write ${right} there, ` +
         'or put it back to [PENDING].',
       reason: `says in its Revision History, at line ${line}, that ${which} was approved by "${row.approvedBy}", which does not ` +
@@ -2445,14 +2445,14 @@ function headerClaim(doc, name, header, records, unfinished = false) {
     }
     if (!named) {
       const not = `which is not exactly what ${signed.name}'s sign-off of that version records`;
-      return { line, message: `this row of the Revision History says ${which} was approved by "${row.typedBy}", ${not}. Write ` +
+      return { line, cell: true, message: `this row of the Revision History says ${which} was approved by "${row.typedBy}", ${not}. Write ` +
         `${right} there and nothing else, or put it back to [PENDING].`,
       reason: `says in its Revision History, at line ${line}, that ${which} was approved by "${row.typedBy}", ${not}: write ` +
         `${right} there and nothing else, or put it back to [PENDING]` };
     }
     if (!isPending(row.approvalDate) && row.typedDate !== signed.date) {
       const but = `but ${signed.name} signed that version off on ${signed.date}`;
-      return { line, message: `this row of the Revision History gives ${which}'s approval date as "${row.typedDate}", ${but}. ` +
+      return { line, cell: true, message: `this row of the Revision History gives ${which}'s approval date as "${row.typedDate}", ${but}. ` +
         `Write ${signed.date} there, or put it back to [PENDING].`,
       reason: `gives in its Revision History, at line ${line}, ${which}'s approval date as "${row.typedDate}", ${but}: write ` +
         `${signed.date} there, or put it back to [PENDING]` };
@@ -2569,7 +2569,7 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
   }
   if (signOffs.error) return { exit: 2, ...facts, messages: [signOffs.error] };
   const claim = headerClaim(doc, basename(report), header, signOffs.records, facts.unfinished);
-  if (claim) return failed('header', claim.line, claim.message, claim.reason);
+  if (claim) return failed('header', claim.line, claim.message, claim.reason, { cell: claim.cell ?? false });
   // Once a sign-off is recorded for this file, a cell the sign-off command rewrites holds what a signed
   // document has there, and one that holds anything else is a slip made while the header was marked: a
   // Last Modified that is not a date, a name typed "pending". It is told like any other fault in the
@@ -3308,8 +3308,10 @@ const FAULT_WORDS = {
   'not-as-signed': 'changed since it was signed off'
 };
 const NOT_CHECKED = 'not checked, as a worksheet it needs is missing or has problems';
-// A slip in a cell the sign-off rewrites, after a sign-off: the record is there, so no claim lacks one.
-const CELL_FAULT = 'with a cell of its header that is not what a signed document has there';
+// A slip in a header cell of a file whose sign-off is recorded: the record is there, so no claim lacks one, and the
+// line under Unfinished says what to write.
+const CELL_FAULT = 'with a sign-off recorded, and a cell of its header that is not what a signed document has there: write in it what ' +
+  'its line under Unfinished says';
 // A document can be signed off while its header still reads DRAFT: the record is made first, and the
 // sign-off command then marks the header. That leaves nothing unfinished and blocks nothing, so it is
 // not in the unfinished list; the readable status and the completion record each say it in one line.

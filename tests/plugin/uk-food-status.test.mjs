@@ -2554,6 +2554,46 @@ test('V3: a signed document someone has since edited, still reading APPROVED, re
   assert.deepEqual(linesFor(dir, 'FOODCOOK'), [editedLine(basename(file), check(dir, 'FOODCOOK', file).line), rewriteLine('Sam Okafor', '2026-11-17')]);
 });
 
+// What the readable status says of a slip in a header cell on a file with a sign-off recorded (V4): that a sign-off is
+// recorded, and that the cell does not read as a signed document's does, with what to write in the line under Unfinished.
+const SLIP = 'with a sign-off recorded, and a cell of its header that is not what a signed document has there: write in it what its ' +
+  'line under Unfinished says';
+
+test('V4: the readable status says of each slip in a header cell that a sign-off is recorded and the cell does not read as it should, never that no recorded sign-off bears it out', () => {
+  const dir = cafe();
+  const file = fromItsTemplate(dir, 'FOODCOOK');
+  const name = basename(file);
+  assert.equal(signOffUnread(dir, 'FOODCOOK').status, 0);
+  mark(file);
+  const marked = readFileSync(file, 'utf8');
+  // The reviewer's four: a role typed in another case, a date in another form, the role in brackets, and a Revision History
+  // cell with the role in brackets. Each keeps the record's name.
+  for (const [from, to, write] of [
+    [`| **Reviewed By** | ${SAM} |`, '| **Reviewed By** | Sam Okafor, owner, 2026-11-17 |', `"${SAM}"`],
+    [`| **Approved By** | ${SAM} |`, '| **Approved By** | Sam Okafor, Owner, 18/11/2026 |', `"${SAM}"`],
+    [`| **Reviewed By** | ${SAM} |`, '| **Reviewed By** | Sam Okafor (owner), 2026-11-17 |', `"${SAM}"`],
+    ['confirmed answers | Sam Okafor, Owner | 2026-11-17 |', 'confirmed answers | Sam Okafor (owner) | 2026-11-17 |', '"Sam Okafor, Owner"'],
+    ['confirmed answers | Sam Okafor, Owner | 2026-11-17 |', 'confirmed answers | Sam Okafor, Owner | 17/11/2026 |', '2026-11-17']
+  ]) {
+    writeFileSync(file, swap(marked, from, to));
+    const readable = run('status', '--project', dir).stdout;
+    assert.ok(readable.includes(`; ${name} ${SLIP}; not signed off\n`), `${to}\n${readable}`);
+    assert.doesNotMatch(readable, /no recorded sign-off bears out/, to);
+    // The line under Unfinished says what to write there, and it is the document's only line.
+    const lines = linesFor(dir, 'FOODCOOK');
+    assert.equal(lines.length, 1, `${to}: ${lines.join('\n')}`);
+    assert.ok(lines[0].includes(`write ${write} there`), `${to}: ${lines[0]}`);
+    // Written as it says, the document is signed off with its header showing it again.
+    writeFileSync(file, marked);
+    assert.deepEqual([docStatus(dir, 'FOODCOOK').signedOff, docStatus(dir, 'FOODCOOK').headerShowsSignOff], [true, true]);
+  }
+  // A header that claims a sign-off nobody recorded is still told as that.
+  const other = cafe();
+  const claimed = fromItsTemplate(other, 'FOODCOOK');
+  edit(claimed, '| **Status** | DRAFT |', '| **Status** | APPROVED |');
+  assert.ok(run('status', '--project', other).stdout.includes('with a header that no recorded sign-off bears out; not signed off\n'));
+});
+
 test('T6: the readable status says of a slip in a cell what is true of it, and the folder\'s text needs no possessive of the business\'s name', () => {
   // A Last Modified typed as words after a sign-off: the record is there and the names match, so no sign-off is "not borne out".
   const dir = cafe();
@@ -2562,7 +2602,7 @@ test('T6: the readable status says of a slip in a cell what is true of it, and t
   mark(file);
   edit(file, '| **Last Modified** | 2026-11-17 |', '| **Last Modified** | 18 November 2026 |');
   const readable = run('status', '--project', dir).stdout;
-  assert.ok(readable.includes('; ARC-001-FOODCOOK-v1.0.md with a cell of its header that is not what a signed document has there; not signed off\n'), readable);
+  assert.ok(readable.includes(`; ARC-001-FOODCOOK-v1.0.md ${SLIP}; not signed off\n`), readable);
   assert.doesNotMatch(readable, /no recorded sign-off bears out/);
   // A header that claims a sign-off nobody recorded is still told as that.
   const other = cafe();
