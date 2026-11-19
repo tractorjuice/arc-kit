@@ -11,6 +11,7 @@ Releases before 6.15.0 are in the [changelog archive](https://github.com/tractor
 
 ### Changed
 
+- **The update notice says how to turn automatic updates on.** When a newer ArcKit is out, the session-start notice used to say only that auto-update was off. It now says where the switch is (`/plugin`, the Marketplaces tab, `arckit-claude`, auto-update on), that Claude Code then fetches each release in the background and loads it on your next launch, and still gives the command to update now and the way to pin a release.
 - **A command that has to ask which project or document you meant shows the choices.** `/arckit:research`, `/arckit:datascout`, `/arckit:grants`, `/arckit:gov-reuse`, `/arckit:tenders`, `/arckit:competitors`, `/arckit:aws-research`, `/arckit:azure-research`, `/arckit:gcp-research`, `/arckit:analyze`, `/arckit:trello`, `/arckit:navigator` and `/arckit:impact` asked in plain text when a name matched more than one. Each now lists the candidates and puts the question with the question selector, with none marked as recommended. With no answer the command stops; it never picks the most recent, and `/arckit:build` does not pick the first. `references/interview-pattern.md` has a new section for a choice only the user can make.
 
 ## [6.23.0] — 2026-11-19

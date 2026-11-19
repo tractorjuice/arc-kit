@@ -162,9 +162,11 @@ try {
       warnings.push(
         `## ArcKit Update Available\n\n` +
         `You are running **v${localVersion}**. The latest release is **v${latestVersion}**.\n\n` +
-        `To update, run \`claude plugin update arckit@arckit-claude\` (or \`/plugin\` → Marketplaces → arckit-claude → Update), then \`/reload-plugins\`. ` +
-        `Auto-update is off by default for this marketplace, so nothing changes until you update; ` +
-        `teams on a regulated engagement can pin a release with \`/plugin marketplace add tractorjuice/arckit-claude#v${latestVersion}\`.\n\n` +
+        `To update now, run \`claude plugin update arckit@arckit-claude\` (or \`/plugin\` → Marketplaces → arckit-claude → Update), then \`/reload-plugins\`.\n\n` +
+        `To get each release without doing anything, turn on auto-update: run \`/plugin\`, open the Marketplaces tab, select arckit-claude and turn auto-update on. ` +
+        `Claude Code leaves it off for any marketplace that isn't Anthropic's own, so until you do, nothing changes when ArcKit releases. ` +
+        `If it is on already, Claude Code fetches this update in the background and loads it on your next launch. ` +
+        `Teams on a regulated engagement can pin a release instead, with \`/plugin marketplace add tractorjuice/arckit-claude#v${latestVersion}\`.\n\n` +
         `Release notes: https://github.com/${REPO}/releases/tag/${latestTag}`
       );
       process.stderr.write(`[ArcKit] Update available: v${localVersion} → v${latestVersion}\n`);
