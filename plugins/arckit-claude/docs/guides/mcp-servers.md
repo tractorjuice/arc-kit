@@ -103,7 +103,8 @@ To have the plugin auto-enable for anyone who opens your repo, add `.claude/sett
       "source": {
         "source": "github",
         "repo": "tractorjuice/arckit-claude"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "enabledPlugins": {
@@ -111,6 +112,8 @@ To have the plugin auto-enable for anyone who opens your repo, add `.claude/sett
   }
 }
 ```
+
+`autoUpdate` keeps the plugin on the latest ArcKit release for everyone who opens the repo. Claude Code leaves automatic updates off for a marketplace that isn't Anthropic's own unless a settings entry turns them on. Leave the line out to update by hand with `claude plugin update arckit@arckit-claude`.
 
 ---
 

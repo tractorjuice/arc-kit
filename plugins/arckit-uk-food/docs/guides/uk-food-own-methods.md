@@ -37,7 +37,7 @@ You can also give a limit you work to, but only together with where that figure 
 2. **It looks at where things stand**: which special processes and foods the profile confirms, and whether each already has an entry.
 3. **It asks who is answering**, and your role, once, at the start.
 4. **It writes the own methods document as it stands**, before asking anything.
-5. **It offers to record each special process that has no entry**, then asks whether the business has any other controls of its own. It takes one entry at a time.
+5. **It offers to record each special process that has no entry**, then asks whether the business has any other controls of its own. It takes one entry at a time, and asks for one part of an entry at a time. In Claude Code the opening offers come up as a yes or no selector; what you say about a method is always typed in your own words.
 6. **It keeps what you give, and asks for the rest.** If you give only part of an entry and stop, it records that part in your words as not yet finished. A part-given entry is named in the document as not yet confirmed, with its contents left out, and the own methods document cannot be signed off until the entry is finished or you ask for it to be taken out.
 7. **It records the entry in your words**, with your name and today's date, writes the document again and runs the document check on it. The entry's name is yours too, unchanged. If you give no name for a special process, the entry takes the pack's name for that process.
 8. **It shows a summary**: the entries confirmed and waiting, each special process with its entry (or none) and its review, and what to do next.

@@ -41,6 +41,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 ### Onboarding and setup
 
 - [Getting started walkthrough](https://arckit.org/guides/start.md): `/arckit:start` onboarding.
+- [The ArcKit Workflow, Phase by Phase](https://arckit.org/guides/workflow.md): every phase from project plan to published documentation, with the command to run and what it produces.
 - [Project initialization](https://arckit.org/guides/init.md): `/arckit:init` and `arckit init` CLI.
 - [Template customization](https://arckit.org/guides/customize.md): Override templates in `.arckit/templates-custom/`.
 - [Template builder](https://arckit.org/guides/template-builder.md): Build new document templates.
@@ -287,7 +288,7 @@ French government (apply on top of EU baseline):
 
 - [UK Food Safety Overlay](https://arckit.org/guides/uk-food-safety-overlay.md): overview: the source pack and its licence, the order to work in, special processes, the `uk-food-sfbb` build recipe (which confirms nothing) and what the overlay does not cover.
 - [Business profile](https://arckit.org/guides/uk-food-profile.md): `/arckit-uk-food:uk-food-profile` who runs the business, where it is, what it sells, its equipment and staff, and any special process, in the business's own words.
-- [Safe methods](https://arckit.org/guides/uk-food-safe-methods.md): `/arckit-uk-food:uk-food-safe-methods` one of the pack's five sections, one safe method at a time, written from the pack's wording and the business's confirmed answers.
+- [Safe methods](https://arckit.org/guides/uk-food-safe-methods.md): `/arckit-uk-food:uk-food-safe-methods` one of the pack's five sections, one safe method and one question at a time, written from the pack's wording and the business's confirmed answers.
 - [Own methods](https://arckit.org/guides/uk-food-own-methods.md): `/arckit-uk-food:uk-food-own-methods` the business's own controls, and its written procedure for any special process, recorded word for word.
 - [Where things stand](https://arckit.org/guides/uk-food-check.md): `/arckit-uk-food:uk-food-check` what is finished and what is still waiting, and the completion record.
 - [Sign-off](https://arckit.org/guides/uk-food-sign-off.md): `/arckit-uk-food:uk-food-sign-off` a named person confirms a finished document, with their name, role and the version they read.

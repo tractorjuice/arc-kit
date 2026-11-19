@@ -522,6 +522,10 @@ _QUESTION_TOOL_RULES = [
     (r"If the skill calls `AskUserQuestion`", "If the skill asks the user a question"),
     (r"AskUserQuestion choices made", "Question choices made"),
     (r"Skipping the AskUserQuestion triage", "Skipping the triage questions"),
+    # A rule that holds only where a selector exists (#1135) stays conditional on any runtime: one that
+    # can show a question with options uses it, and one that cannot asks in plain text.
+    (r"Where you have (?:the )?(?:\*\*|`)?AskUserQuestion(?:\*\*|`)?(?: tool)?",
+     "Where the assistant you are running in has a tool that shows a question with its options to choose from"),
     # Catch-alls. Anything the rules above did not phrase away.
     (r"the \*\*AskUserQuestion\*\* tool", "a question to the user"),
     (r"\*\*AskUserQuestion\*\* tool", "question to the user"),

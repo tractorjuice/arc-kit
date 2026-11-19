@@ -41,7 +41,8 @@ All test repos now use the arckit plugin via the marketplace instead of synced f
       "source": {
         "source": "github",
         "repo": "tractorjuice/arckit-claude"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "enabledPlugins": {
@@ -49,6 +50,8 @@ All test repos now use the arckit plugin via the marketplace instead of synced f
   }
 }
 ```
+
+`autoUpdate` keeps each test repo on the latest ArcKit release. Claude Code leaves automatic updates off for a marketplace that isn't Anthropic's own, and a marketplace file has no field to turn them on, so the settings entry sets it.
 
 **What the plugin provides** (no longer synced to test repos):
 

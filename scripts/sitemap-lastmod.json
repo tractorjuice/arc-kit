@@ -20,8 +20,8 @@
     "text_sha256": "51cc93ee5c2b70b9e6f3ce920a9fa0c708a8b87c6f8ece4305b26aea639570d4"
   },
   "commands.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "75e46ab6556f8ac8452597e95032ac8d53613f32c0bd220f1ba996d15aeb9ce0"
+    "lastmod": "2026-11-19",
+    "text_sha256": "1ffca26c52b5a32f16c513c6b16fcd4c992512deb33e73fbc4bd38df05ece43a"
   },
   "contributors.html": {
     "lastmod": "2026-10-28",
@@ -572,8 +572,8 @@
     "text_sha256": "f9a6696799e088c982a8266a0a0f0f1f2dcca2ec6c512bf7a0eb5913bb07b061"
   },
   "guide/mcp-servers.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "323196241b84c19fa86fa32d8cb8bfadb40494c5d713be7373ca7cf3d2180ded"
+    "lastmod": "2026-11-19",
+    "text_sha256": "7cb468761276f89f5e72b5cdda3583daf5f549d7e4c676d3a638c5b88dbc5fec"
   },
   "guide/microsoft-learn-mcp.html": {
     "lastmod": "2026-10-25",
@@ -976,20 +976,20 @@
     "text_sha256": "cfe51d1376b90f0d96b8f16f1025c6f4d67aa5041633a1b22826a04b88a4e97a"
   },
   "guide/uk-food-own-methods.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "5fa4600b3f929d3e49de2e99d28c6567b80491e333d1323e1b25fef3ffdebf64"
+    "lastmod": "2026-11-19",
+    "text_sha256": "645ce5b32a59fc13d7a622b7196f01ce62b8e30bf009935dcd94ea697f137cbc"
   },
   "guide/uk-food-profile.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "52a11318139ef8da1efa381c52637740ed082fc2bf917b6408e3304a9b003ceb"
+    "lastmod": "2026-11-19",
+    "text_sha256": "a6d1f6388068ba9760972c994c13531b35cb682e63395d6518b055e77e643b56"
   },
   "guide/uk-food-safe-methods.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "f77b5d2c713655d1ca4db0589f22e612de9a6266c1d068a6da340077590bce0d"
+    "lastmod": "2026-11-19",
+    "text_sha256": "a28b638f8183f627e9e649019481d1eeae1d6d73dd9c6aef0710712e109477aa"
   },
   "guide/uk-food-safety-overlay.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "f4c5ddb9e2565a4083f6a97765761cd9d2449db387e46dc299bdbf4a8f64e564"
+    "lastmod": "2026-11-19",
+    "text_sha256": "8eb3f788ee96b59ea9c74e7625dc615980f3966dbeb0ded7a50d147c21d89b9c"
   },
   "guide/uk-food-sign-off.html": {
     "lastmod": "2026-11-18",
@@ -1115,17 +1115,21 @@
     "lastmod": "2026-10-25",
     "text_sha256": "b46bcbcbdce0c5725e9522d081bdd184df98c7347ba1737b2c8e77a3f1530d75"
   },
+  "guide/workflow.html": {
+    "lastmod": "2026-11-19",
+    "text_sha256": "be6b6290becf0a78637c292145655bc8bc9ec5fa61253f32b2cd0939330a008e"
+  },
   "guides.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "c60bae5b47464e57abd4491ddf801290bbd191dd2bd1c4393f6dbc49c6ea55ca"
+    "lastmod": "2026-11-19",
+    "text_sha256": "e42390cdfd8061df64281a2d66dff9d605ee440af5e271a90d9def25c963f7fd"
   },
   "index.html": {
     "lastmod": "2026-11-19",
     "text_sha256": "ca9a3929485f06a5c689672b7dd945e135327fe1966dd0dba035d776d178ef8f"
   },
   "llms.txt": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "38f3a697f41def169bd3773afab063903bbe17506122e498b50ac905ec21c8b5"
+    "lastmod": "2026-11-19",
+    "text_sha256": "1660268b7c4729f75116ef2c990c5c09665192f3b0269e3dd7a8f7e1612360f1"
   },
   "on-github.html": {
     "lastmod": "2026-11-16",

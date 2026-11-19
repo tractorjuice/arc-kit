@@ -1569,6 +1569,13 @@
       "category": "Wardley Mapping",
       "status": "experimental",
       "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/workflow.md",
+      "title": "The ArcKit Workflow, Phase by Phase",
+      "category": "Getting Started",
+      "status": "live",
+      "section": "Core Workflows"
     }
   ],
   "roleGuides": [
