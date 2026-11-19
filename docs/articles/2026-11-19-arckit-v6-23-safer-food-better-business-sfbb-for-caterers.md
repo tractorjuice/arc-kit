@@ -10,15 +10,17 @@
 
 ## What is Safer food, better business (SFBB)?
 
-The pack is free, and the caterers' version is, in its own words, "for small catering businesses such as restaurants, cafés and takeaways".
+Safer food, better business (SFBB) is the Food Standards Agency's pack to help a small caterer in England or Wales write down what they do to make sure food is safe. The pack says the law requires you to do that. It's free, and the caterers' version is, in its own words, "for small catering businesses such as restaurants, cafés and takeaways".
 
-The pack says the law requires you to write down what you do to make sure food is safe. It's the Food Standards Agency's pack to help a small caterer in England or Wales do that. It has 100 pages and 31 safe methods in five sections: cross-contamination, cleaning, chilling, cooking and management. To complete the pack you work through each section and fill in every safe method that applies to your business.
+It has 100 pages and 31 safe methods in five sections: cross-contamination, cleaning, chilling, cooking and management. To complete the pack you work through each section and fill in every safe method that applies to your business.
 
 ## Completing your SFBB pack with ArcKit
 
 ArcKit is an open-source toolkit that runs inside Claude Code, an AI assistant you type to. Until now it has been for architects. This part of it is for a café, a takeaway, a restaurant, a pub kitchen or a mobile caterer.
 
-It turns the pack into your own food safety documents: your answers, your own methods, and a named person who has read each one and signed it off. You'll need Claude Code, a Claude account to sign in with, and someone comfortable with a terminal to set it up once. After that you answer in ordinary words.
+It turns the pack into your own food safety documents: your answers, your own methods, and a named person who has read each one and signed it off. You'll need Claude Code on a paid Claude plan, and someone comfortable with a terminal to set it up once. After that you answer in ordinary words.
+
+Your answers and documents are sent to Anthropic, the company that makes Claude, so that Claude can work on them. If you name your staff, their names go too. Nothing is sent to ArcKit, and the documents are saved as files in a folder on your computer.
 
 ## Two things you can rely on
 
@@ -60,11 +62,24 @@ It tells you to contact your council's environmental health team, records your o
 
 ## What it doesn't cover
 
-- **It isn't legal advice.** The food business operator is responsible for the safety of the food and for keeping the records. Your council's environmental health team is the authority for your premises. The Food Standards Agency hasn't reviewed or endorsed it, and no food safety professional has reviewed it yet. Treat everything it produces as a draft to read and confirm.
+- **It isn't legal advice.** The food business operator is responsible for the safety of the food and for keeping the records. Your council's environmental health team is the authority for your premises. No food safety professional has reviewed it yet. Treat everything it produces as a draft to read and confirm.
 - **England and Wales only**, and the caterers' pack only.
 - **It doesn't keep the SFBB diary.** That stays with you, on paper or however you keep it today.
-- **It doesn't choose where the pack disagrees with itself.** In two places the pack words the same limit two ways. Your documents print each as the pack prints it. If one matters to you, ask your council's environmental health team.
+- **It doesn't choose where the pack disagrees with itself.** In two places the pack words the same limit two ways: once on the hot holding page, and once between the chilled storage and ready-to-eat food pages. Your documents print each as the pack prints it. If one matters to you, ask your council's environmental health team.
 - **The pack's separate sheets aren't in it yet**: the cleaning schedule, the training record, the suppliers' and contacts lists, and allergen information for each dish. There are no dates for those.
+
+## Get it
+
+```bash
+# Claude Code
+claude plugin install arckit-uk-food --marketplace tractorjuice/arckit-claude
+claude plugin enable arckit-uk-food
+
+# then start Claude Code in a folder for the business's records
+/arckit-uk-food:uk-food-profile Your Cafe Name
+```
+
+The overlay is switched off when it's installed, so the second line switches it on. The [overview guide](https://arckit.org/guide/uk-food-safety-overlay.html) covers the order to work in, special processes and what to do when the pack doesn't fit your business.
 
 ## How it was built
 
@@ -73,7 +88,7 @@ I built it with Claude Code over two days, 17 and 18 November 2026, starting fro
 - **The check came first.** Every word on every page was saved from the PDF's own text, 27,967 words, and a test held ArcKit's copy of the pack to exactly those words.
 - **Two readings.** An AI reader that never saw the first transcription read each section again, and the two were compared.
 - **The figures.** ArcKit keeps a table of 84 figures and named standards from the pack. A separate AI reader checked each against a picture of its page. All 84 matched.
-- **A builder and a reviewer.** One AI agent built each piece and a separate one tried to break it. It tried 15 kinds of edit to a signed document, and each one ended the sign-off.
+- **A builder and a reviewer.** One AI agent built each piece and a separate one tried to break it. The reviewer tried 15 kinds of edit to a signed document, and each one ended the sign-off.
 - **Live runs.** The commands were run more than 20 times against the invented café, and judged on what they did to the files.
 
 No real business has used it yet. That's why it's marked experimental.
@@ -86,23 +101,10 @@ I'm looking for a food safety co-maintainer. If you're an environmental health p
 
 Also in 6.23.0:
 
-- **A build recipe can say how short a document may be.** `/arckit:build` used to fail any document of 100 lines or fewer. A recipe can now set its own minimum for each document. Existing recipes build as before.
-- **ArcKit no longer tells you to promote a draft that only its own command can change.** The health check and the notice at the start of a session leave those drafts alone. An overdue review is still reported.
-- **Gemini CLI: a command that runs a bundled script now finds it.** This affected the food and legacy IT overlays, `/arckit:tenders`, `/arckit:competitors` and two of the Netherlands commands.
-- **Paperclip: two bundled scripts run from the published package again.**
-
-## Get it
-
-```bash
-# Claude Code
-claude plugin install arckit-uk-food --marketplace tractorjuice/arckit-claude
-claude plugin enable arckit-uk-food
-
-# then start Claude Code in a folder for the business's records
-/arckit-uk-food:uk-food-profile Bramble Cafe
-```
-
-The overlay is switched off when it's installed, so the second line switches it on. The [overview guide](https://arckit.org/guide/uk-food-safety-overlay.html) covers the order to work in, special processes and what to do when the pack doesn't fit your business.
+- **A build recipe can set its own minimum length for each document.** `/arckit:build` uses it in place of the standard 100-line check. Existing recipes build as before.
+- **A draft that only its own command can change is left alone.** The health check and the notice at the start of a session don't ask you to promote it. An overdue review is still reported.
+- **Gemini CLI: commands that run a bundled script find it.** This covers the food and legacy IT overlays, `/arckit:tenders`, `/arckit:competitors` and two of the Netherlands commands.
+- **Paperclip: the two bundled scripts run from the published package.**
 
 Already using ArcKit? Run `claude plugin update arckit@arckit-claude`.
 
