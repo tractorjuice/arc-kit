@@ -5,6 +5,12 @@ through to complete their Safer food, better business (SFBB) pack, then what
 they can rely on. Same house style as the sibling generate-hero-*.py scripts.
 
     uv run --with pillow python docs/articles/generate-hero-v6-23-safer-food-better-business.py
+
+The published hero is a redesigned version of this layout, supplied by the
+maintainer on 19 November 2026, with three lines added beside the headline.
+In its foot line "England" was set half in bold; the other half was thickened
+to match before publishing. Running this script overwrites the published hero
+with the plain version, so only run it to start a new design.
 """
 
 from pathlib import Path
