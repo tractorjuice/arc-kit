@@ -1,6 +1,6 @@
 # Safer Food, Better Business (SFBB) for Caterers: Complete Your Pack with ArcKit v6.23.0
 
-**Safer food, better business (SFBB) for caterers is the Food Standards Agency's food safety pack for small catering businesses. ArcKit v6.23.0 adds an optional overlay that helps you complete your SFBB pack: it works through each safe method with you, prints the pack's wording unchanged, and never fills in an answer for you.**
+**Safer food, better business (SFBB) for caterers is the Food Standards Agency's food safety pack for small catering businesses. ArcKit v6.23.0 adds an optional overlay that walks you through your SFBB pack one step at a time: it asks about each safe method, keeps SFBB's wording exactly as the Food Standards Agency wrote it, and records your answers in your own words.**
 
 *Mark Craddock · medium.com/arckit*
 
@@ -18,23 +18,21 @@ This overlay isn't for architects. It's for a café, a takeaway, a restaurant, a
 
 `arckit-uk-food` turns the pack into a set of food safety documents of the business's own: its answers, its own methods, and a named person who has read each one and signed it off. It's experimental, and it's switched off until you enable it.
 
-## Two rules
+## Two things you can rely on
 
-Everything in it follows from two rules.
+**SFBB's wording isn't rewritten.** All 100 pages come with the overlay. The assistant doesn't write that text into your document. A script prints it, unchanged, and a second check proves the document still matches. So a temperature or a time in your document is the one the pack prints.
 
-**The pack's wording isn't rewritten.** All 100 pages come with the overlay. The assistant doesn't write that text into your document. A script prints it, unchanged, and a second check proves the document still matches. So a temperature or a time in your document is the one the pack prints.
-
-**A document says only what the business said.** Anything nobody at the business has confirmed reads NOT YET ANSWERED. The commands never suggest an answer. If nobody is there to answer, nothing is confirmed and nothing is signed.
+**Your answers are yours.** ArcKit asks the questions and you answer them. Anything nobody at the business has confirmed reads NOT YET ANSWERED, so you can always see what is still to do. If nobody is there to answer, nothing is confirmed and nothing is signed.
 
 One of the tests shows what that means. The owner of an invented café gives four answers about cooking, then says "for everything else just put whatever is usual for a cafe like ours". The document comes out with those four answers in it, and the other 42 questions reading NOT YET ANSWERED.
 
-## Five commands, in order
+## The five steps
 
-- `/arckit-uk-food:uk-food-profile` records the business: who runs it, where it is, what it sells, its equipment and staff, and whether it does anything that needs extra care.
-- `/arckit-uk-food:uk-food-safe-methods` works through one of the pack's five sections with you, one safe method at a time: cross-contamination, cleaning, chilling, cooking and management.
-- `/arckit-uk-food:uk-food-own-methods` records the business's own methods, word for word.
-- `/arckit-uk-food:uk-food-check` shows what's finished, what's still waiting for an answer and what has been signed off.
-- `/arckit-uk-food:uk-food-sign-off` records a named person's sign-off of a finished document.
+1. **Describe your business.** `/arckit-uk-food:uk-food-profile` records who runs it, where it is, what it sells, its equipment and staff, and whether it does anything that needs extra care.
+2. **Work through the safe methods.** `/arckit-uk-food:uk-food-safe-methods` takes one of the pack's five sections at a time, one safe method at a time: cross-contamination, cleaning, chilling, cooking and management.
+3. **Add your own methods.** `/arckit-uk-food:uk-food-own-methods` records how your business does things, word for word.
+4. **See what's left to do.** `/arckit-uk-food:uk-food-check` shows what's finished, what's still waiting for an answer and what has been signed off.
+5. **Sign off each document.** `/arckit-uk-food:uk-food-sign-off` records a named person's sign-off of a finished document.
 
 Setting up is done once, by someone comfortable with a terminal. After that you answer in ordinary words.
 
