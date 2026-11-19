@@ -42,9 +42,11 @@ You can work through the sections in any order.
 3. **It asks who is answering**, and your role, once, at the start.
 4. **It writes the section's document as it stands**, before asking anything. Every question nobody has answered reads **NOT YET ANSWERED**.
 5. **It goes through each safe method in order.** For each one:
-   - it names the safe method, and tells you that if it does not apply to your business, or you do it differently, you can say so;
-   - it shows each question that is not yet confirmed, word for word as the pack prints it, and asks for your answer in the form the question wants: yes or no, a list, or a description;
-   - it records your reply in your words, with your name and today's date, and writes the document again.
+   - it names the safe method, says how many of its questions are still to answer, and tells you that if it does not apply to your business, or you do it differently, you can say so;
+   - it asks one question at a time, with its reference (such as `XC-01-Q14`), word for word as the pack prints it, and asks for your answer in the form the question wants: yes or no, a list, or a description;
+   - it records your reply in your words, with your name and today's date, before it asks the next question. Say "skip" to leave a question for later;
+   - in Claude Code, the questions that take yes or no come up as a selector, up to four at a time: choose an answer for each, or type what you do instead. Where the pack sets out a method and asks whether you follow it, "Yes" is marked as recommended: that is the pack's advice, not a guess about your business. Nothing is recorded unless you choose it;
+   - when the safe method's questions are done, it writes the document again.
 6. **It runs the document check** each time it writes the document: a script proves that the body of the document matches a fresh print from the pack and your worksheet.
 7. **It shows a summary**: how many questions are confirmed, proposed and not yet answered, any safe methods marked not relevant or done differently and who decided, and what to do next.
 
@@ -103,7 +105,7 @@ Once a document has been signed off, the command never writes over it. If nothin
 ## What it will not do, and why
 
 - **It will not change the pack's wording or figures.** A changed word or figure in a food safety record could mislead someone. The body of the document is printed by a script from the pack as bundled with the overlay, and checked after every write.
-- **It will not answer for you, or suggest answers.** An answer it supplied would be a statement nobody at the business made.
+- **It will not answer for you, or suggest what your business does.** An answer it supplied would be a statement nobody at the business made. The one mark it may show, "Yes" as recommended where the pack sets out a method, is the pack's advice, and is recorded only if you choose it.
 - **It will not decide that a safe method does not apply.** Only you can, with your reason.
 - **It will not work out a date** from "last month". It asks for the exact date.
 - **It will not give food safety advice.** Your council's environmental health team is the authority.

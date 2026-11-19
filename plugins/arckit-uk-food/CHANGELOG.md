@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Changed
+
+- The profile and safe methods commands ask one question at a time, named by its worksheet reference, and record each answer before asking the next. "Skip" leaves a question for later. A safe method is named once, and a safety point shared by questions in a row is quoted once. The own methods command asks for one part of an entry at a time. The document is written again after each safe method, after the profile's questions about the business, and whenever the person stops (#1132).
+
+- In Claude Code, the profile, safe methods and own methods commands put the questions that take yes or no in a selector, up to four at a time, each with the pack's wording. Choose an answer for each, or type what you do instead. An answer may be marked as recommended only where the pack sets out a method and asks whether you follow it, and nothing is recorded unless you choose it. Questions answered in your own words, and every other assistant, are unchanged (#1135).
+
+### Fixed
+
+- An error about a wrong value, such as a sign-off date still to come, prints its one-line message without the script's full usage text (#1132).
+
 ### Added
 
 - First release of the UK Food Safety Overlay (experimental, community-maintained, England and Wales). It builds a small caterer's food safety documents from the Food Standards Agency's Safer food, better business for caterers pack: a business profile, the five sections of safe methods, the business's own methods, a completion record, and sign-off by a named person. Five commands do this: `uk-food-profile`, `uk-food-safe-methods` (one section at a time), `uk-food-own-methods`, `uk-food-check` and `uk-food-sign-off`. The profile, safe methods and own methods commands ask their questions in conversation, record an answer as confirmed only when a named person at the business gives or agrees it, and write their documents from the pack's wording and the business's answers, checked against a fresh print: a confirmed answer is printed as the business's own, and a proposed one is shown beside NOT YET ANSWERED with where it came from. The check command writes the completion record from the project as it stands, and the sign-off command records a named person's sign-off through the helper. A sign-off covers the whole document as it reads when it is signed: it ends when a line of that document changes, and a document whose header says it is signed off with no sign-off recorded fails the check.

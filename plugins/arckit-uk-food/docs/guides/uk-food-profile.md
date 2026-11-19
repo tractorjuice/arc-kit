@@ -32,8 +32,8 @@ Your other documents print the business's name from the profile, so it comes fir
 2. **It makes the profile worksheet**, `food-safety/answers-profile.md`, if there is not one yet. Your answers are kept there. Once a worksheet exists it is never made again, because that would lose your answers.
 3. **It asks who is answering**, and your role, once, at the start.
 4. **It writes the profile document as it stands**, before asking anything. Every question nobody has answered reads **NOT YET ANSWERED**.
-5. **It asks the questions a few at a time**: first the ten about the business, then the ten about special processes and foods. It shows each question as it is written, and asks for the answer in the form the question wants: a name, a date, yes or no, or a list.
-6. **It records each answer in your words**, with your name and today's date, and writes the document again after each reply. You can stop at any time: everything you have confirmed is already in the document.
+5. **It asks the questions one at a time**, in order: first the ten about the business, then the ten about special processes and foods. It shows each question as it is written, with its reference (such as `PR-Q07`), and asks for the answer in the form the question wants: a name, a date, yes or no, or a list. Say "skip" to leave a question for later. In Claude Code, the questions that take yes or no come up as a selector, up to four at a time: choose an answer for each, or type what you do instead. Nothing is recorded unless you choose it.
+6. **It records each answer in your words**, with your name and today's date, as soon as you give it, and writes the document again after the questions about the business and at the end. You can stop at any time: every answer you have given is kept, and the document is written again before it finishes.
 7. **It runs the document check** each time it writes the document: a script proves that the body of the document matches a fresh print from your worksheet.
 8. **It shows a summary**: how many questions are confirmed, how many are proposed and waiting for someone to confirm them, how many are not yet answered, and what to do next.
 

@@ -38,7 +38,7 @@ In Claude Code the commands carry the overlay's name:
 | Command | What it does | Document it writes |
 |---|---|---|
 | `/arckit-uk-food:uk-food-profile` | Records the business's profile: who runs it, where it is, what it sells, its equipment and staff, and whether it does any special process. | Business profile (`FOODPROF`) |
-| `/arckit-uk-food:uk-food-safe-methods` | Works through one section of safe methods with you, one safe method at a time. Name the section by its code (`XC`, `CL`, `CH`, `CK` or `MG`) or by its name; with none, it takes the first one that still needs answers or needs writing. | Cross-contamination (`FOODXC`), cleaning (`FOODCLN`), chilling (`FOODCHL`), cooking (`FOODCOOK`) or management (`FOODMGT`) |
+| `/arckit-uk-food:uk-food-safe-methods` | Works through one section of safe methods with you, one safe method and one question at a time. Name the section by its code (`XC`, `CL`, `CH`, `CK` or `MG`) or by its name; with none, it takes the first one that still needs answers or needs writing. | Cross-contamination (`FOODXC`), cleaning (`FOODCLN`), chilling (`FOODCHL`), cooking (`FOODCOOK`) or management (`FOODMGT`) |
 | `/arckit-uk-food:uk-food-own-methods` | Records the business's own methods, and the written procedure for any special process, word for word. | Own methods (`FOODOWN`) |
 | `/arckit-uk-food:uk-food-check` | Shows what is finished and what is still waiting, and writes the completion record. | Completion record (`FOODCMP`) |
 | `/arckit-uk-food:uk-food-sign-off` | Records that a named person has read a finished document and confirms it, with their name, role and the version they confirmed. | None: it marks the signed document's header |
