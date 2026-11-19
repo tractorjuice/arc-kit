@@ -2659,7 +2659,10 @@ function failure(io, result) {
 function documentOptions(args, valued, flags = []) {
   const { options, error } = readOptions(args, ['doc', 'project', 'data', ...valued], flags);
   if (error) return { usage: error };
-  if (!RENDERED_CODES.includes(options.doc)) return { [options.doc === undefined ? 'usage' : 'wrong']: `--doc is one of ${RENDERED_CODES.join(', ')}` };
+  if (!RENDERED_CODES.includes(options.doc)) {
+    // Left out, a usage error; given and wrong, a value that is wrong: as optionError decides it.
+    return { [options.doc === undefined ? 'usage' : 'wrong']: `--doc is one of ${RENDERED_CODES.join(', ')}` };
+  }
   if (!options.project) return { usage: '--project names the project folder that holds food-safety/' };
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
   return dataError ? { input: dataError } : { options, data };
@@ -2695,7 +2698,7 @@ export function checkCommand(args, io = { out: console.log, err: console.error }
 export function referenceCommand(args, io = { out: console.log, err: console.error }) {
   const { options, error } = readOptions(args, ['section', 'data']);
   if (error) return usageError(io, error);
-  if (!SECTION_IDS.includes(options.section)) return valueError(io, `--section is one of ${SECTION_IDS.join(', ')}`, options.section);
+  if (!SECTION_IDS.includes(options.section)) return optionError(io, options.section, `--section is one of ${SECTION_IDS.join(', ')}`);
   const dir = options.data ?? DEFAULT_DATA_DIR;
   const { data, error: dataError } = loadValidData(dir);
   if (dataError) return failure(io, { exit: 2, messages: [dataError] });
@@ -3391,18 +3394,18 @@ export function signOffCommand(args, io = { out: console.log, err: console.error
     return valueError(io, `${COMPLETION_RECORD}, the completion record, is not signed off: it is a report, signed through the ` +
       'documents it lists, so sign off each of them');
   }
-  if (!DOC_CODES.includes(options.doc)) return valueError(io, `--doc is one of ${DOC_CODES.join(', ')}`, options.doc);
+  if (!DOC_CODES.includes(options.doc)) return optionError(io, options.doc, `--doc is one of ${DOC_CODES.join(', ')}`);
   if (!options.project) return usageError(io, '--project names the project folder that holds food-safety/');
   for (const [field, what] of [['name', 'name of the person signing off'], ['role', 'role of the person signing off, such as owner']]) {
     if (!isPersonText(options[field])) {
       // A character that cannot be seen is named by its code point: nobody can find it by looking.
       const unseen = isString(options[field]) ? unseenIn(options[field]) : '';
-      return valueError(io, `--${field} is the ${what}: some text, on one line, with no character that cannot be seen` +
-        (unseen ? `. It holds ${unseen}: delete ${unseen.includes(' and ') ? 'them' : 'it'}, or type it again` : ''), options[field]);
+      return optionError(io, options[field], `--${field} is the ${what}: some text, on one line, with no character that cannot be seen` +
+        (unseen ? `. It holds ${unseen}: delete ${unseen.includes(' and ') ? 'them' : 'it'}, or type it again` : ''));
     }
   }
   if (!options.version) {
-    return valueError(io, '--version is the version of the document signed off, as in its file name: 1.0 for ARC-001-FOODCOOK-v1.0.md', options.version);
+    return optionError(io, options.version, '--version is the version of the document signed off, as in its file name: 1.0 for ARC-001-FOODCOOK-v1.0.md');
   }
   const paperSigned = options['paper-signed'] ?? 'no';
   if (!['yes', 'no'].includes(paperSigned)) return valueError(io, '--paper-signed is yes, when a signed paper copy is kept, or no');
@@ -3517,12 +3520,15 @@ function usageError(io, message) {
   return 2;
 }
 
-// A value that is wrong: the message says what it must be, so the usage text is left out. An option
-// that was not given at all (its value is passed, and is undefined) is a usage error like any other.
-function valueError(io, message, ...given) {
-  if (given.length && given[0] === undefined) return usageError(io, message);
-  io.err(message);
-  return 2;
+// A value that is wrong: the message says what it must be, so the usage text is left out.
+function valueError(io, message) {
+  return failure(io, { exit: 2, messages: [message] });
+}
+
+// An option a command needs. Left out, it is a usage error like any other; given with a value that is
+// wrong, the message stands alone.
+function optionError(io, value, message) {
+  return value === undefined ? usageError(io, message) : valueError(io, message);
 }
 
 // Reads `--name value` options and bare `--flag`s; anything else is an error.
@@ -3552,7 +3558,7 @@ export function worksheetCommand(args, io = { out: console.log, err: console.err
   const { options, error } = readOptions(args, ['section', 'data']);
   if (error) return usageError(io, error);
   if (!WORKSHEET_SECTIONS.includes(options.section)) {
-    return valueError(io, `--section is one of ${WORKSHEET_SECTIONS.join(', ')}`, options.section);
+    return optionError(io, options.section, `--section is one of ${WORKSHEET_SECTIONS.join(', ')}`);
   }
   const dir = options.data ?? DEFAULT_DATA_DIR;
   const { data, error: dataError } = loadValidData(dir);

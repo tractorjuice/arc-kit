@@ -880,67 +880,101 @@ def test_the_shared_blocks_are_the_same_in_each_gathering_command(title):
 #
 # A run on 19 November 2026 got ten to seventeen questions in a message. The replies came back in shorthand,
 # numbered by the message and not by the worksheet, so an answer could be recorded against the wrong question.
+# The rules for asking sit in the block the three commands share word for word, so they cannot drift apart.
 
 ASKING_STEP = {"uk-food-profile": "Go through the profile with the person",
                "uk-food-safe-methods": "Work through the section, one safe method at a time",
                "uk-food-own-methods": "Record the business's own methods with the person"}
-ONE_AT_A_TIME = {
-    "one question to a message": "Ask one question in each message, never two",
-    "named by the worksheet's identifier": "never by a number of your own",
-    "recorded before the next is asked": "before you ask the next question",
-    "yes or no runs are not grouped": "A run of yes or no questions is still asked one at a time",
-    "a reply in the wrong form is asked for once more": "ask that question once more",
-    "a second misfit is left unanswered": "If the second reply still does not fit, leave the question unanswered and go on",
-    "skip leaves a question unanswered": 'If the person says "skip", or does not know, leave the question unanswered',
-    "stopping writes the document": "Every answer given so far is already in the worksheet: write the document again",
+ASKING_RULES = {
+    "one thing to a message": "Ask one question, or one field of an entry, in each message, never two, and record the reply "
+                              "before you ask the next",
+    "yes or no runs are not grouped": "A run of yes or no questions is asked the same way",
+    "more than was asked is not recorded yet": "record only the part that answers what you asked",
+    "and is put to the person when its turn comes": "repeat what the person said earlier, in their words, and ask whether that "
+                                                    "is their answer to it",
+    "a reply in the wrong form is asked for once more": "say what form the answer needs and ask once more",
+    "a second misfit is left as it was": "If the second reply still does not fit, leave the question or field as it was and go on",
+    "a reply that could mean the method does not apply": "ask which the person means before you record anything",
+    "skip leaves it as it was": 'If the person says "skip", or does not know, leave the question or field as it was',
+    "stopping writes the document": "write the document again if a worksheet has changed since the document was last written, "
+                                    "then go to the summary",
+    "nothing confirmed is asked again": "Do not ask for an answer that is already confirmed unless the person wants to change it",
 }
 
 
-@pytest.mark.parametrize("rule", ONE_AT_A_TIME)
-@pytest.mark.parametrize("name", ["uk-food-profile", "uk-food-safe-methods"])
-def test_questions_are_asked_one_at_a_time(name, rule):
+@pytest.mark.parametrize("rule", ASKING_RULES)
+def test_the_shared_block_holds_the_rules_for_asking(rule):
+    """Checked in the first command; test_the_shared_blocks_are_the_same... holds the other two to the same text."""
+    shared = block(split(command(GATHERING[0]))[1], "Record only what the person gives")
+    assert ASKING_RULES[rule] in shared, rule
+
+
+@pytest.mark.parametrize("name", GATHERING)
+def test_each_gathering_step_points_at_the_rules_for_asking(name):
     step = block(split(command(name))[1], ASKING_STEP[name])
-    assert ONE_AT_A_TIME[rule] in step, f"{name}: {rule}"
+    assert "as **Record only what the person gives** says" in step
+    assert "one at a time" in step or "one field at a time" in step
 
 
 @pytest.mark.parametrize("name", GATHERING)
 def test_no_gathering_command_asks_in_batches(name):
     _, body = split(command(name))
-    for old in ["a few at a time", "first `PR-Q01` to `PR-Q10`", "the questions you have just shown"]:
+    for old in ["a few at a time", "first `PR-Q01` to `PR-Q10`", "the questions you have just shown",
+                # The review of the first fix: older lines that asked two things at once, or rewrote after every reply.
+                "together with the first questions", "after each reply that changes a worksheet"]:
         assert old not in body, f"{name} still says {old!r}"
     assert "each message asks one thing" in body, f"{name}: the note on the interview pattern does not say why"
+    who = block(body, "Find out who is answering")
+    assert "ask once, at the start, in a message of its own, before the first question" in who
+    written = block(body, "Write the document as it stands")
+    assert "again at each point the step that gathers answers names" in written
+    assert "the next run of this command writes the document from it" in written
+
+
+@pytest.mark.parametrize("name", ["uk-food-profile", "uk-food-safe-methods"])
+def test_a_question_is_named_by_its_worksheet_identifier_and_recorded_before_the_next(name):
+    step = block(split(command(name))[1], ASKING_STEP[name])
+    assert "never by a number of your own" in step
+    assert "Wait for the reply, and record it before you ask the next question." in step
+    assert "the worksheet is the record: do not write the document again after each answer." in step
 
 
 def test_the_safe_methods_command_names_a_method_once_and_quotes_a_shared_safety_point_once():
     step = block(split(command("uk-food-safe-methods"))[1], ASKING_STEP["uk-food-safe-methods"])
     assert "say how many of its questions are still to answer" in step
-    assert "Say this once, when the safe method starts." in step
+    assert "Say this once, when the safe method starts, in the message that asks its first question." in step
     assert "do not quote them again: quote the lines that are new, and always the last line, which is the question itself" in step
-    assert "When the reply to the safe method's last question is recorded, write the document again" in step
-    assert "Until then the worksheet is the record: do not write the document again after each answer." in step
+    # A method whose last question is skipped, or that is marked not relevant, still gets its document written.
+    assert ("When you have been through the safe method's last question, or the person has decided that the method does not "
+            "apply or is done differently, write the document again if a worksheet has changed") in step
 
 
-def test_the_profile_command_writes_the_document_at_two_points_not_after_every_answer():
+def test_the_profile_command_writes_the_document_at_two_points_and_only_when_something_changed():
     step = block(split(command("uk-food-profile"))[1], ASKING_STEP["uk-food-profile"])
-    assert "Write the document again when the questions about the business are done (after `PR-Q10`), and again at the end." in step
-    assert "then write the document again. Do not ask" not in step
-    assert "Between those points the worksheet is the record: do not write the document again after each answer." in step
+    assert ("Write the document again when you have been through `PR-Q10`, and again at the end, each time only if a "
+            "worksheet has changed since the document was last written.") in step
 
 
 def test_the_own_methods_command_asks_for_one_field_at_a_time():
     step = block(split(command("uk-food-own-methods"))[1], ASKING_STEP["uk-food-own-methods"])
     assert "within an entry ask for one field at a time" in step
-    assert "wait for the reply" in step
-    assert "After each entry, write the document again." in step
+    assert "wait for the reply, and record it before you ask for the next" in step
+    # A council that has not replied is `pending`, not an empty field that would hold the whole entry back.
+    assert "`EH-review` is the one exception: with no reply from the council to give, it is `pending`." in step
+    assert "After each entry, and when the person stops part-way through one, write the document again." in step
 
 
-def test_the_guides_describe_one_question_at_a_time():
+def test_the_guides_and_listings_describe_one_question_at_a_time():
     profile = (ROOT_GUIDES / "uk-food-profile.md").read_text(encoding="utf-8")
     assert "**It asks the questions one at a time**" in profile and "a few at a time" not in profile
     safe = (ROOT_GUIDES / "uk-food-safe-methods.md").read_text(encoding="utf-8")
     assert "it asks one question at a time, with its reference" in safe
     own = (ROOT_GUIDES / "uk-food-own-methods.md").read_text(encoding="utf-8")
     assert "asks for one part of an entry at a time" in own
+    for listing in [ROOT / "README.md", ROOT / "docs" / "llms.txt", ROOT / "docs" / "commands.html", OVERLAY / "README.md"]:
+        text = listing.read_text(encoding="utf-8")
+        assert "one safe method at a time" not in text, f"{listing.name} still describes the command as it was"
+        assert "one safe method and one question at a time" in text, listing.name
 
 
 SIGN_OFF_RULES = {
