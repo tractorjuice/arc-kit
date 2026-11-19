@@ -587,3 +587,19 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-75267164
 > Does that match how you make build-or-buy calls, or did you find the verdict useful? I'd like to know before the next release.
 >
 > <https://arckit.org/share/2026-11-12-arckit-v6-22-research-reports-evidence.html>
+
+### Q51. ArcKit 6.23.0 article — Medium, ArcKit publication — published 19 November
+
+Published: <https://medium.com/arckit/safer-food-better-business-sfbb-for-caterers-complete-your-pack-with-arckit-v6-23-0-6c6fb8703306>. Imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: ArcKit, Food Safety, Small Business, Hospitality, Open Source. The maintainer's 299 subscribers were notified. The known import fixes were needed (empty heading lines, the code block, the byline, the community list), with two new ones: an empty second code block to delete, and the two italic lines at the foot run together. The image has a shorter alt text because Medium takes at most 500 characters.
+
+### Q52. ArcKit 6.23.0 article — maintainer's own LinkedIn, as a LinkedIn article — published 19 November
+
+Published: <https://www.linkedin.com/pulse/safer-food-better-business-sfbb-caterers-complete-your-mark-craddock-spk9e/>. Asked which LinkedIn posts to send, the maintainer chose a LinkedIn article in place of the page and group posts, so neither went out for this release. The body is the Medium story's, with commands in bold because LinkedIn drops inline code, the hero as the cover, a search title and description set in the article's settings, and no introduction.
+
+### Q53. ArcKit 6.23.0 — Discord #announcements — posted 19 November
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/1572814172045967440>. The link to the arckit.org article and nothing else, on the maintainer's word. Discord's preview card shows the article's title, description and hero.
+
+**Revised the same day.** A brand review of the published article with the marketing plugin found 17 points, and the maintainer said to apply them all. The article was changed on arckit.org, and the Medium story and the LinkedIn article were updated to match: a "Before you start" line under the opening, a plain account of what ArcKit is and what a caterer needs to run it, "What stays in your hands" in place of a list of things it won't do, and AI readers and reviewers named as such. The LinkedIn copy no longer carries the Medium byline. The addresses above are unchanged.
+
+**The last five articles revised, 19 November.** The maintainer then asked for the same review of the five most recent articles (6.19.0 to 6.23.0). It found 40 points, and he said to fix them all, retitle the four older ones and republish (pull request #1125). On arckit.org and Medium the four older articles have new titles that open with the phrase people search for: "Legacy Systems: Assess Yours Against the UK Government's Definition of Legacy IT", "Tender Evaluation with AI: Keep a Bid's Hidden Instructions Out of the Score", "High-Level Design Review: A Second Look from Three AI Reviewers" and "Build vs Buy: Research That Reports the Evidence and Published G-Cloud Prices", each ending "in ArcKit" or "with ArcKit" and its version. Every address is unchanged, on both sites. The install commands in the 6.19.0 and 6.20.0 articles are corrected, AI reviewers and scorers are named as AI, and what a reader must do first sits under each opening. Medium's search title and description were updated for the four older stories. The 6.23.0 LinkedIn article was updated to match. The LinkedIn page posts, the group posts and the Discord messages for these releases keep the words they went out with, and the four older hero images keep their original headlines.
