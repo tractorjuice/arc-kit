@@ -288,9 +288,12 @@ def test_handoffs_name_the_next_overlay_commands(name):
 
 
 @pytest.mark.parametrize("name", COMMANDS)
-def test_no_command_names_the_question_tool(name):
-    """Answers are gathered in ordinary conversation, one safe method at a time."""
-    assert "AskUserQuestion" not in command(name).read_text(encoding="utf-8")
+def test_only_the_gathering_commands_name_the_question_tool(name):
+    """The three commands that put the pack's questions use Claude Code's selector for the closed ones (issue #1135).
+    The check asks nothing of the business, and a sign-off is the person's own statement, given in their words after
+    they have been shown the file, so neither of those two names the tool."""
+    names_it = "AskUserQuestion" in command(name).read_text(encoding="utf-8")
+    assert names_it == (name in GATHERING), name
 
 
 @pytest.mark.parametrize("name", COMMANDS)
@@ -975,6 +978,113 @@ def test_the_guides_and_listings_describe_one_question_at_a_time():
         text = listing.read_text(encoding="utf-8")
         assert "one safe method at a time" not in text, f"{listing.name} still describes the command as it was"
         assert "one safe method and one question at a time" in text, listing.name
+
+
+# --- the question selector (issue #1135) -----------------------------------------------
+#
+# Issue #1132 put one question in each message, because a batch in plain text came back as shorthand that had to be
+# matched to the right question. In Claude Code the selector attaches each answer to its own question, so closed
+# questions go up to four in a call there. Everything else, and every other runtime, stays as #1132 left it. The
+# maintainer allowed a recommended option on 19 November 2026; the rules keep it to what the pack or a named source
+# says, and never let it stand in for an answer.
+
+SELECTOR_RULES = {
+    "closed questions go to the selector": "Where you have the AskUserQuestion tool and a person is there to answer, "
+                                           "put closed questions to them with it",
+    "what counts as closed": "`(yes / no)`, `(yes if you do this / no)`, `(yes, or say what you do instead)` or a list of choices "
+                             "separated by `/`",
+    "open questions stay in plain text": "Every other question, and every field of an entry, is asked in plain text, one in each "
+                                         "message",
+    "as many calls as needed, and no default": "there are as many calls as the questions need, and no question ever takes a default",
+    "four at most, in order, within one safe method": "One call holds up to four closed questions that follow one another in the "
+                                                      "worksheet, in the worksheet's order, and never questions from two safe "
+                                                      "methods",
+    "an open question ends the run": "A question that is not closed ends the run: ask it on its own in plain text, then start the "
+                                     "next call",
+    "each question stands alone": "The person may see only the selector, so each question stands on its own",
+    "the header is the worksheet identifier": "`header` is the question's worksheet identifier, such as `XC-01-Q14`",
+    "the pack's lines are in the question": "every one of the question's `>` lines, unchanged and in order",
+    "the options are the form asked for": "The options are the form the hint asks for and nothing more",
+    "what the business does instead is typed": "`Yes` and `Skip for now`, with the selector's own free-text entry for what the "
+                                               "business does instead",
+    "no option speaks for the business": "No label or description says what the business does",
+    "a recommended option in two cases only": "You may mark one option `(Recommended)`, first in its list, in two cases only",
+    "the pack's method": "the option's description is \"The pack's method, as quoted in the question\"",
+    "a proposed answer, with its source": "The other is the option that matches a question's proposed answer, and its description "
+                                          "gives the answer's `Source`",
+    "never a guess about the business": "Mark none anywhere else, and never because of what you think the business does",
+    "a recommended option is not a default": "A recommended option is not a default.",
+    "only what was selected or typed is recorded": "Record an answer only when the person selected it or typed it, as `confirmed`, "
+                                                   "with their name and today's date, each against its own identifier",
+    "passed over stays as it was": "A question the person passed over or dismissed, or chose `Skip for now` for, stays as it was",
+    "without the tool, plain text": "If the tool is not there, fails or comes back with no answer, go on in plain text, one "
+                                    "question in each message; with nobody to answer, stop asking",
+    "typed words are a reply like any other": "**Words typed into the selector** are a reply like any other",
+}
+INTERVIEW_PATTERN = "${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md"
+
+
+@pytest.mark.parametrize("rule", SELECTOR_RULES)
+def test_the_shared_block_holds_the_rules_for_the_selector(rule):
+    """Checked in the first command; test_the_shared_blocks_are_the_same... holds the other two to the same text."""
+    shared = block(split(command(GATHERING[0]))[1], "Record only what the person gives")
+    assert SELECTOR_RULES[rule] in shared, rule
+
+
+def test_one_thing_to_a_message_names_the_selector_as_its_one_exception():
+    shared = block(split(command(GATHERING[0]))[1], "Record only what the person gives")
+    assert ("The one exception is **The question selector**, below: it puts up to four closed questions in one call, and each is "
+            "still answered and recorded on its own.") in shared
+
+
+@pytest.mark.parametrize("name", GATHERING)
+def test_a_command_that_names_the_tool_points_at_the_pattern_and_has_its_reference(name):
+    _, body = split(command(name))
+    assert INTERVIEW_PATTERN in body, name
+    assert (OVERLAY / "references" / "interview-pattern.md").is_file()
+    # The note on how this differs from the pattern says the selector never records what was not chosen.
+    assert "an option the person did not choose is never recorded" in body, name
+
+
+@pytest.mark.parametrize("name", GATHERING)
+def test_the_selector_never_carries_the_patterns_default(name):
+    """The house pattern resolves a skipped question to its (Recommended) option. Here that would be a statement about
+    the business that nobody made, so the pattern's wording for it must not come in with the tool."""
+    _, body = split(command(name))
+    for phrase in ["takes its default", "resolves to the **(Recommended)**", "take the default", "that option is the default"]:
+        assert phrase not in body, f"{name} says {phrase!r}"
+    assert not re.search(r"Maximum \d+ rounds", body)
+
+
+@pytest.mark.parametrize("name", ["uk-food-profile", "uk-food-safe-methods"])
+def test_the_asking_step_sends_closed_questions_to_the_selector(name):
+    step = block(split(command(name))[1], ASKING_STEP[name])
+    assert "With the question selector, closed questions go up to four in a call" in step
+    assert "After a call of the question selector, record every answer it brought back before the next call." in step
+
+
+def test_the_safe_methods_step_keeps_each_selector_question_whole():
+    step = block(split(command("uk-food-safe-methods"))[1], ASKING_STEP["uk-food-safe-methods"])
+    # The notice that a method may not apply has to reach a person who sees only the selector.
+    assert ("With the question selector, say it in a message before the safe method's first call, and add it to the first "
+            "question of that call, on a line of its own after the pack's lines") in step
+    # Leaving out lines already quoted is for plain text: a selector question is read on its own.
+    assert "This is for plain text only: in the question selector every question carries all its lines." in step
+
+
+def test_the_own_methods_step_uses_the_selector_for_its_two_offers_only():
+    step = block(split(command("uk-food-own-methods"))[1], ASKING_STEP["uk-food-own-methods"])
+    assert "put each as `Yes` and `No`, one offer in a call, with no option marked as recommended" in step
+    assert "An entry's fields are the person's own words, and are always asked for in plain text." in step
+
+
+def test_the_guides_say_what_the_selector_looks_like_in_claude_code():
+    for name in ["uk-food-profile", "uk-food-safe-methods"]:
+        text = (ROOT_GUIDES / f"{name}.md").read_text(encoding="utf-8")
+        assert "come up as a selector, up to four at a time" in text, name
+        assert "nothing is recorded unless you choose it" in text.lower(), name
+    own = (ROOT_GUIDES / "uk-food-own-methods.md").read_text(encoding="utf-8")
+    assert "the two opening offers come up as a yes or no selector" in own
 
 
 SIGN_OFF_RULES = {

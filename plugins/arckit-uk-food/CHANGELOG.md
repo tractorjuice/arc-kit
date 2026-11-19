@@ -6,6 +6,8 @@
 
 - The profile and safe methods commands ask one question at a time, named by its worksheet reference, and record each answer before asking the next. "Skip" leaves a question for later. A safe method is named once, and a safety point shared by questions in a row is quoted once. The own methods command asks for one part of an entry at a time. The document is written again after each safe method, after the profile's questions about the business, and whenever the person stops (#1132).
 
+- In Claude Code, the profile, safe methods and own methods commands put the questions that take yes or no in a selector, up to four at a time, each with the pack's wording. Choose an answer for each, or type what you do instead. An answer may be marked as recommended where the pack sets out the method or a file you supplied gives the answer, and nothing is recorded unless you choose it. Questions answered in your own words, and every other assistant, are unchanged (#1135).
+
 ### Fixed
 
 - An error about a wrong value, such as a sign-off date still to come, prints its one-line message without the script's full usage text (#1132).
