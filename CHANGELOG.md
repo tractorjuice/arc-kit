@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `SECURITY_MODEL.md` at the repo root: the threat model (trust boundaries, components, assets, attackers, existing controls) that security scans start from.
+
 ## [6.23.0] — 2026-11-19
 
 ### Added
