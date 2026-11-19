@@ -2,67 +2,65 @@
 
 **Safer food, better business (SFBB) for caterers is the Food Standards Agency's food safety pack for small catering businesses. ArcKit v6.23.0 adds an optional overlay that walks you through your SFBB pack one step at a time: it asks about each safe method, keeps SFBB's wording exactly as the Food Standards Agency wrote it, and records your answers in your own words.**
 
-*Mark Craddock · medium.com/arckit*
+**Before you start:** this is an experimental tool, not legal advice. The Food Standards Agency hasn't reviewed or endorsed it. It covers the pack's safe methods. The diary and the record sheets stay with you.
+
+*Mark Craddock*
 
 ---
 
 ## What is Safer food, better business (SFBB)?
 
-Safer food, better business is a free pack from the Food Standards Agency. The caterers' version is, in its own words, "for small catering businesses such as restaurants, cafés and takeaways".
+The pack is free, and the caterers' version is, in its own words, "for small catering businesses such as restaurants, cafés and takeaways".
 
-The law says a food business must write down what it does to keep food safe. The pack is the Food Standards Agency's way for a small caterer in England or Wales to do that. It's 100 pages and 31 safe methods in five sections: cross-contamination, cleaning, chilling, cooking and management. To complete the pack you work through each section and fill in every safe method that applies to your business.
+The pack says the law requires you to write down what you do to make sure food is safe. It's the Food Standards Agency's pack to help a small caterer in England or Wales do that. It has 100 pages and 31 safe methods in five sections: cross-contamination, cleaning, chilling, cooking and management. To complete the pack you work through each section and fill in every safe method that applies to your business.
 
 ## Completing your SFBB pack with ArcKit
 
-This overlay isn't for architects. It's for a café, a takeaway, a restaurant, a pub kitchen or a mobile caterer.
+ArcKit is an open-source toolkit that runs inside Claude Code, an AI assistant you type to. Until now it has been for architects. This part of it is for a café, a takeaway, a restaurant, a pub kitchen or a mobile caterer.
 
-`arckit-uk-food` turns the pack into a set of food safety documents of the business's own: its answers, its own methods, and a named person who has read each one and signed it off. It's experimental, and it's switched off until you enable it.
+It turns the pack into your own food safety documents: your answers, your own methods, and a named person who has read each one and signed it off. You'll need Claude Code, a Claude account to sign in with, and someone comfortable with a terminal to set it up once. After that you answer in ordinary words.
 
 ## Two things you can rely on
 
-**SFBB's wording isn't rewritten.** All 100 pages come with the overlay. The assistant doesn't write that text into your document. A script prints it, unchanged, and a second check proves the document still matches. So a temperature or a time in your document is the one the pack prints.
+**SFBB's wording isn't rewritten.** All 100 pages come with ArcKit. The AI doesn't retype that text into your document. ArcKit prints it, unchanged, from its own copy of the pack, and then checks the document still matches. So a temperature or a time in your document is the one the pack prints.
 
-**Your answers are yours.** ArcKit asks the questions and you answer them. Anything nobody at the business has confirmed reads NOT YET ANSWERED, so you can always see what is still to do. If nobody is there to answer, nothing is confirmed and nothing is signed.
+**Your answers are yours.** ArcKit asks the questions and you answer them. Anything nobody at your business has confirmed reads NOT YET ANSWERED, so you can always see what is still to do. If nobody is there to answer, nothing is confirmed and nothing is signed.
 
 One of the tests shows what that means. The owner of an invented café gives four answers about cooking, then says "for everything else just put whatever is usual for a cafe like ours". The document comes out with those four answers in it, and the other 42 questions reading NOT YET ANSWERED.
 
 ## The five steps
 
-1. **Describe your business.** `/arckit-uk-food:uk-food-profile` records who runs it, where it is, what it sells, its equipment and staff, and whether it does anything that needs extra care.
+1. **Describe your business.** `/arckit-uk-food:uk-food-profile` records who runs it, where it is, what you sell, your equipment and staff, and whether you do anything that needs extra care.
 2. **Work through the safe methods.** `/arckit-uk-food:uk-food-safe-methods` takes one of the pack's five sections at a time, one safe method at a time: cross-contamination, cleaning, chilling, cooking and management.
-3. **Add your own methods.** `/arckit-uk-food:uk-food-own-methods` records how your business does things, word for word.
+3. **Add your own methods.** `/arckit-uk-food:uk-food-own-methods` records how you do things, word for word.
 4. **See what's left to do.** `/arckit-uk-food:uk-food-check` shows what's finished, what's still waiting for an answer and what has been signed off.
 5. **Sign off each document.** `/arckit-uk-food:uk-food-sign-off` records a named person's sign-off of a finished document.
-
-Setting up is done once, by someone comfortable with a terminal. After that you answer in ordinary words.
 
 ## A sign-off means someone read it
 
 A sign-off records a name, a role, a date and the version that person read. It covers the document exactly as it reads when it's signed.
 
-Change an answer afterwards and the sign-off no longer counts. The document is written again as a new version, and that version needs signing. A document whose header says it's signed off when no sign-off is recorded fails the check.
+Change an answer afterwards and the sign-off no longer counts. ArcKit writes the document again as a new version, and that version needs signing. A document that says it's signed off when no sign-off is recorded fails ArcKit's check.
 
-## What it won't do, even if you ask
+## What stays in your hands
 
-Most of the reviewing went into the ways a helpful assistant could quietly make a food safety document untrue. These are the ones that changed how the overlay works.
-
-- **It won't offer you the usual answers** to approve with one "yes". An answer has to come from you.
-- **It won't make up a reason or a date.** Where the pack asks for one and you haven't given it, the command asks you. Until then the answer stays unconfirmed.
-- **It won't tidy your words.** A procedure you wrote is kept exactly as you wrote it, and so is the name you gave it.
-- **It won't let a changed document stay signed.** A reviewer tried fifteen kinds of edit to a signed file. Each one ended the sign-off.
-- **It won't undo sign-offs that still hold.** Add a member of staff and the profile needs signing again. The documents that don't print the staff list stay signed.
+- **Every answer comes from you.** ArcKit asks. It doesn't offer a usual answer for you to approve.
+- **Reasons and dates are yours too.** Where the pack asks for one, ArcKit asks you and waits.
+- **Your words stay as you wrote them**, including the name you give a method.
+- **A sign-off always matches what was read.** Change the document and it needs signing again.
+- **Other documents keep their sign-off.** Add a member of staff and only the profile needs signing again.
 
 ## Special processes stay with you and your council
 
-The pack names processes and foods that need extra care, such as vacuum packing, sous vide and less than thoroughly cooked burgers. The profile asks whether the business does each one.
+The pack names processes and foods that need extra care, such as vacuum packing, sous vide and less than thoroughly cooked burgers. ArcKit asks whether you do each one.
 
-The overlay won't write a procedure for any of them, and it won't finish or improve one if you ask. A procedure written by a tool would be a control nobody at the business has tested.
+It doesn't write a procedure for any of them, and it doesn't finish or improve one. A procedure written by a tool would be a control nobody at your business has tested.
 
-What it does is tell you to contact your council's environmental health team, record your own procedure word for word, and add the council's reply when it comes.
+It tells you to contact your council's environmental health team, records your own procedure word for word, and adds the council's reply when it comes.
 
-## What the overlay doesn't cover
+## What it doesn't cover
 
-- **It isn't legal advice.** The food business operator is responsible for the safety of the food and for keeping the records. Your council's environmental health team is the authority for your premises. The Food Standards Agency hasn't reviewed or endorsed the overlay, and no food safety professional has reviewed it yet. Treat everything it produces as a draft to read and confirm.
+- **It isn't legal advice.** The food business operator is responsible for the safety of the food and for keeping the records. Your council's environmental health team is the authority for your premises. The Food Standards Agency hasn't reviewed or endorsed it, and no food safety professional has reviewed it yet. Treat everything it produces as a draft to read and confirm.
 - **England and Wales only**, and the caterers' pack only.
 - **It doesn't keep the SFBB diary.** That stays with you, on paper or however you keep it today.
 - **It doesn't choose where the pack disagrees with itself.** In two places the pack words the same limit two ways. Your documents print each as the pack prints it. If one matters to you, ask your council's environmental health team.
@@ -70,14 +68,13 @@ What it does is tell you to contact your council's environmental health team, re
 
 ## How it was built
 
-It was built with Claude Code over two days, starting from the pack itself: 39 PDFs, the main one 100 pages.
+I built it with Claude Code over two days, 17 and 18 November 2026, starting from the pack itself: 39 PDFs, the main one 100 pages.
 
-- **The check came first.** Before any of the pack was typed up, every word on every page was saved from the PDF's own text: 27,967 words. A test then held the overlay's copy of the pack to exactly those words, page by page.
-- **Two readings.** Each section was then read a second time, by a reader that never saw the first transcription, and the two were compared.
-- **The figures.** The pack prints 84 figures and named standards: temperatures, times, British Standards. Each was checked against a picture of its page by a separate AI reader that saw only the pictures. All 84 matched.
-- **A builder and a reviewer.** Each piece was built by one AI agent from a written brief, then reviewed by a separate one whose job was to break it. The fixes were checked again.
-- **Decisions on the record.** 95 decisions were written down as they were made, each with what it would cost if it turned out wrong.
-- **Live runs.** The commands were run more than twenty times against the invented café. Each run was judged on what it did to the files, not on what it said it had done.
+- **The check came first.** Every word on every page was saved from the PDF's own text, 27,967 words, and a test held ArcKit's copy of the pack to exactly those words.
+- **Two readings.** An AI reader that never saw the first transcription read each section again, and the two were compared.
+- **The figures.** ArcKit keeps a table of 84 figures and named standards from the pack. A separate AI reader checked each against a picture of its page. All 84 matched.
+- **A builder and a reviewer.** One AI agent built each piece and a separate one tried to break it. It tried 15 kinds of edit to a signed document, and each one ended the sign-off.
+- **Live runs.** The commands were run more than 20 times against the invented café, and judged on what they did to the files.
 
 No real business has used it yet. That's why it's marked experimental.
 
@@ -85,7 +82,9 @@ No real business has used it yet. That's why it's marked experimental.
 
 I'm looking for a food safety co-maintainer. If you're an environmental health practitioner or a food safety consultant, please [open an issue](https://github.com/tractorjuice/arc-kit/issues) tagged `co-maintainer: uk-food`.
 
-## Also in this release
+## For existing ArcKit users
+
+Also in 6.23.0:
 
 - **A build recipe can say how short a document may be.** `/arckit:build` used to fail any document of 100 lines or fewer. A recipe can now set its own minimum for each document. Existing recipes build as before.
 - **ArcKit no longer tells you to promote a draft that only its own command can change.** The health check and the notice at the start of a session leave those drafts alone. An overdue review is still reported.
@@ -103,7 +102,7 @@ claude plugin enable arckit-uk-food
 /arckit-uk-food:uk-food-profile Bramble Cafe
 ```
 
-The [overview guide](https://arckit.org/guide/uk-food-safety-overlay.html) covers the order to work in, special processes and what to do when the pack doesn't fit your business.
+The overlay is switched off when it's installed, so the second line switches it on. The [overview guide](https://arckit.org/guide/uk-food-safety-overlay.html) covers the order to work in, special processes and what to do when the pack doesn't fit your business.
 
 Already using ArcKit? Run `claude plugin update arckit@arckit-claude`.
 
