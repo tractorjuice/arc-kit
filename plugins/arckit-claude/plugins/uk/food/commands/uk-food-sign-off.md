@@ -74,7 +74,7 @@ The completion record, `FOODCMP`, is a report and is not signed off: each docume
 
 ### 2. Find the project
 
-Use, in this order: the project the request names, by number (`001`) or by name; the ArcKit Project Context; the one project with a `food-safety/` folder. If more than one could be meant, ask which; with nobody to answer, stop and list the projects you found. If there is none, there is nothing to sign: say that `/arckit-uk-food:uk-food-profile` starts a business's documents, and stop. This command never creates a project.
+Use, in this order: the project the request names, by number (`001`) or by name; the ArcKit Project Context; the one project with a `food-safety/` folder. If more than one could be meant, ask which (where you have a tool that shows a question with its options to choose from, use it, with the projects as the options and none marked as recommended); with nobody to answer, stop and list the projects you found. If there is none, there is nothing to sign: say that `/arckit-uk-food:uk-food-profile` starts a business's documents, and stop. This command never creates a project.
 
 ### 3. Know what is to be signed, and by whom
 
