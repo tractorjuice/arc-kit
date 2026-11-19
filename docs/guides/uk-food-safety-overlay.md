@@ -69,7 +69,7 @@ Setting up is done once, by someone comfortable installing software and typing c
 | Step | Command | What it does | Guide |
 |---|---|---|---|
 | 1 | `/arckit-uk-food:uk-food-profile` | Records the business profile: who runs it, where it is, what it sells, its equipment and staff, and whether it does any special process or food that needs extra care | [Business profile](uk-food-profile.md) |
-| 2 | `/arckit-uk-food:uk-food-safe-methods` | Works through one of the five sections of safe methods with you, one safe method at a time | [Safe methods](uk-food-safe-methods.md) |
+| 2 | `/arckit-uk-food:uk-food-safe-methods` | Works through one of the five sections of safe methods with you, one safe method and one question at a time | [Safe methods](uk-food-safe-methods.md) |
 | 3 | `/arckit-uk-food:uk-food-own-methods` | Records your own controls that the pack does not cover, and your written procedure for any special process, word for word | [Own methods](uk-food-own-methods.md) |
 | Any time | `/arckit-uk-food:uk-food-check` | Shows what is finished and what is still waiting, and writes the completion record | [Where things stand](uk-food-check.md) |
 | Last | `/arckit-uk-food:uk-food-sign-off` | Records that a named person has read a finished document and confirms it | [Sign-off](uk-food-sign-off.md) |

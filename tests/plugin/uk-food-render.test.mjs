@@ -917,14 +917,22 @@ test('business text is escaped wherever it is printed, so no markup in it can hi
 
 test('render, check and reference exit 2 on a usage error', () => {
   for (const args of [
-    ['render'], ['render', '--doc', 'FOODCOOK'], ['render', '--doc', 'FOODNONE', '--project', CAFE], ['render', '--doc', 'FOODCOOK', '--project'],
+    ['render'], ['render', '--doc', 'FOODCOOK'], ['render', '--doc', 'FOODCOOK', '--project'],
     ['check', '--doc', 'FOODCOOK', '--project', CAFE], ['check', '--doc', 'FOODCOOK', '--report', 'x.md'],
-    ['reference'], ['reference', '--section', 'profile'], ['reference', '--section', 'CK', '--extra']
+    ['reference'], ['reference', '--section', 'CK', '--extra']
   ]) {
     const result = run(...args);
     assert.equal(result.status, 2, args.join(' '));
     assert.equal(result.stdout, '', args.join(' '));
     assert.match(result.stderr, /usage: uk-food\.mjs/, args.join(' '));
+  }
+  // Issue #1132: a value that is wrong gets its one-line message, and the usage text is left out.
+  for (const args of [['render', '--doc', 'FOODNONE', '--project', CAFE], ['reference', '--section', 'profile']]) {
+    const result = run(...args);
+    assert.equal(result.status, 2, args.join(' '));
+    assert.equal(result.stdout, '', args.join(' '));
+    assert.doesNotMatch(result.stderr, /usage:/, args.join(' '));
+    assert.equal(result.stderr.trim().split('\n').length, 1, args.join(' '));
   }
 });
 

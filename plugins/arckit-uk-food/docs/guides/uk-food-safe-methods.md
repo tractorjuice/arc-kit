@@ -42,9 +42,10 @@ You can work through the sections in any order.
 3. **It asks who is answering**, and your role, once, at the start.
 4. **It writes the section's document as it stands**, before asking anything. Every question nobody has answered reads **NOT YET ANSWERED**.
 5. **It goes through each safe method in order.** For each one:
-   - it names the safe method, and tells you that if it does not apply to your business, or you do it differently, you can say so;
-   - it shows each question that is not yet confirmed, word for word as the pack prints it, and asks for your answer in the form the question wants: yes or no, a list, or a description;
-   - it records your reply in your words, with your name and today's date, and writes the document again.
+   - it names the safe method, says how many of its questions are still to answer, and tells you that if it does not apply to your business, or you do it differently, you can say so;
+   - it asks one question at a time, with its reference (such as `XC-01-Q14`), word for word as the pack prints it, and asks for your answer in the form the question wants: yes or no, a list, or a description;
+   - it records your reply in your words, with your name and today's date, before it asks the next question. Say "skip" to leave a question for later;
+   - when the safe method's questions are done, it writes the document again.
 6. **It runs the document check** each time it writes the document: a script proves that the body of the document matches a fresh print from the pack and your worksheet.
 7. **It shows a summary**: how many questions are confirmed, proposed and not yet answered, any safe methods marked not relevant or done differently and who decided, and what to do next.
 

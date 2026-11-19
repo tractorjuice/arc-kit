@@ -2654,19 +2654,24 @@ function failure(io, result) {
 }
 
 // The options render and check share: --doc, --project and --data, checked, with the data loaded.
-// Returns { options, data }, { usage } for a usage error or { input } for data that will not load.
+// Returns { options, data }, { usage } for a usage error, { wrong } for a value that is wrong, or { input }
+// for data that will not load.
 function documentOptions(args, valued, flags = []) {
   const { options, error } = readOptions(args, ['doc', 'project', 'data', ...valued], flags);
   if (error) return { usage: error };
-  if (!RENDERED_CODES.includes(options.doc)) return { usage: `--doc is one of ${RENDERED_CODES.join(', ')}` };
+  if (!RENDERED_CODES.includes(options.doc)) {
+    // Left out, a usage error; given and wrong, a value that is wrong: as optionError decides it.
+    return { [options.doc === undefined ? 'usage' : 'wrong']: `--doc is one of ${RENDERED_CODES.join(', ')}` };
+  }
   if (!options.project) return { usage: '--project names the project folder that holds food-safety/' };
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
   return dataError ? { input: dataError } : { options, data };
 }
 
 export function renderCommand(args, io = { out: console.log, err: console.error }) {
-  const { options, data, usage, input } = documentOptions(args, []);
+  const { options, data, usage, wrong, input } = documentOptions(args, []);
   if (usage) return usageError(io, usage);
+  if (wrong) return valueError(io, wrong);
   if (input) return failure(io, { exit: 2, messages: [input] });
   const result = renderDocument(options.doc, options.project, data);
   if (result.exit) return failure(io, result);
@@ -2675,8 +2680,9 @@ export function renderCommand(args, io = { out: console.log, err: console.error 
 }
 
 export function checkCommand(args, io = { out: console.log, err: console.error }) {
-  const { options, data, usage, input } = documentOptions(args, ['report'], ['json']);
+  const { options, data, usage, wrong, input } = documentOptions(args, ['report'], ['json']);
   if (usage) return usageError(io, usage);
+  if (wrong) return valueError(io, wrong);
   if (!options.report) return usageError(io, 'check needs --report: the document to check');
   if (input) return failure(io, { exit: 2, messages: [input] });
   const result = checkDocument(options.doc, options.project, options.report, data);
@@ -2692,7 +2698,7 @@ export function checkCommand(args, io = { out: console.log, err: console.error }
 export function referenceCommand(args, io = { out: console.log, err: console.error }) {
   const { options, error } = readOptions(args, ['section', 'data']);
   if (error) return usageError(io, error);
-  if (!SECTION_IDS.includes(options.section)) return usageError(io, `--section is one of ${SECTION_IDS.join(', ')}`);
+  if (!SECTION_IDS.includes(options.section)) return optionError(io, options.section, `--section is one of ${SECTION_IDS.join(', ')}`);
   const dir = options.data ?? DEFAULT_DATA_DIR;
   const { data, error: dataError } = loadValidData(dir);
   if (dataError) return failure(io, { exit: 2, messages: [dataError] });
@@ -3385,35 +3391,35 @@ export function signOffCommand(args, io = { out: console.log, err: console.error
   const { options, error } = readOptions(args, ['doc', 'project', 'name', 'role', 'version', 'paper-signed', 'other-text-read', 'date', 'data']);
   if (error) return usageError(io, error);
   if (options.doc === COMPLETION_RECORD) {
-    return usageError(io, `${COMPLETION_RECORD}, the completion record, is not signed off: it is a report, signed through the ` +
+    return valueError(io, `${COMPLETION_RECORD}, the completion record, is not signed off: it is a report, signed through the ` +
       'documents it lists, so sign off each of them');
   }
-  if (!DOC_CODES.includes(options.doc)) return usageError(io, `--doc is one of ${DOC_CODES.join(', ')}`);
+  if (!DOC_CODES.includes(options.doc)) return optionError(io, options.doc, `--doc is one of ${DOC_CODES.join(', ')}`);
   if (!options.project) return usageError(io, '--project names the project folder that holds food-safety/');
   for (const [field, what] of [['name', 'name of the person signing off'], ['role', 'role of the person signing off, such as owner']]) {
     if (!isPersonText(options[field])) {
       // A character that cannot be seen is named by its code point: nobody can find it by looking.
       const unseen = isString(options[field]) ? unseenIn(options[field]) : '';
-      return usageError(io, `--${field} is the ${what}: some text, on one line, with no character that cannot be seen` +
+      return optionError(io, options[field], `--${field} is the ${what}: some text, on one line, with no character that cannot be seen` +
         (unseen ? `. It holds ${unseen}: delete ${unseen.includes(' and ') ? 'them' : 'it'}, or type it again` : ''));
     }
   }
   if (!options.version) {
-    return usageError(io, '--version is the version of the document signed off, as in its file name: 1.0 for ARC-001-FOODCOOK-v1.0.md');
+    return optionError(io, options.version, '--version is the version of the document signed off, as in its file name: 1.0 for ARC-001-FOODCOOK-v1.0.md');
   }
   const paperSigned = options['paper-signed'] ?? 'no';
-  if (!['yes', 'no'].includes(paperSigned)) return usageError(io, '--paper-signed is yes, when a signed paper copy is kept, or no');
+  if (!['yes', 'no'].includes(paperSigned)) return valueError(io, '--paper-signed is yes, when a signed paper copy is kept, or no');
   const otherTextRead = options['other-text-read'] ?? 'no';
   if (!['yes', 'no'].includes(otherTextRead)) {
-    return usageError(io, '--other-text-read is yes, when the person signing has read the lines outside the document\'s checked part, or no');
+    return valueError(io, '--other-text-read is yes, when the person signing has read the lines outside the document\'s checked part, or no');
   }
   const today = localToday();
   const date = options.date ?? today;
-  if (!isIsoDate(date)) return usageError(io, `--date is a real date written YYYY-MM-DD, not ${JSON.stringify(date)}`);
+  if (!isIsoDate(date)) return valueError(io, `--date is a real date written YYYY-MM-DD, not ${JSON.stringify(date)}`);
   // A sign-off records something that has happened, so its date is never one still to come. Only a new
   // sign-off is held to this: a record already made is read back whatever this computer's date is.
   if (date > today) {
-    return usageError(io, `--date is the day the document was signed off, which cannot be after today, ${today}: ${date} is still to come`);
+    return valueError(io, `--date is the day the document was signed off, which cannot be after today, ${today}: ${date} is still to come`);
   }
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
   if (dataError) return failure(io, { exit: 2, messages: [dataError] });
@@ -3514,6 +3520,17 @@ function usageError(io, message) {
   return 2;
 }
 
+// A value that is wrong: the message says what it must be, so the usage text is left out.
+function valueError(io, message) {
+  return failure(io, { exit: 2, messages: [message] });
+}
+
+// An option a command needs. Left out, it is a usage error like any other; given with a value that is
+// wrong, the message stands alone.
+function optionError(io, value, message) {
+  return value === undefined ? usageError(io, message) : valueError(io, message);
+}
+
 // Reads `--name value` options and bare `--flag`s; anything else is an error.
 function readOptions(args, valued, flags = []) {
   const options = {};
@@ -3541,13 +3558,13 @@ export function worksheetCommand(args, io = { out: console.log, err: console.err
   const { options, error } = readOptions(args, ['section', 'data']);
   if (error) return usageError(io, error);
   if (!WORKSHEET_SECTIONS.includes(options.section)) {
-    return usageError(io, `--section is one of ${WORKSHEET_SECTIONS.join(', ')}`);
+    return optionError(io, options.section, `--section is one of ${WORKSHEET_SECTIONS.join(', ')}`);
   }
   const dir = options.data ?? DEFAULT_DATA_DIR;
   const { data, error: dataError } = loadValidData(dir);
-  if (dataError) return usageError(io, dataError);
+  if (dataError) return valueError(io, dataError);
   if (SECTION_IDS.includes(options.section) && !data.sections.has(options.section)) {
-    return usageError(io, `the data in ${dir} has no ${options.section}.json`);
+    return valueError(io, `the data in ${dir} has no ${options.section}.json`);
   }
   io.out(blankWorksheet(options.section, data).replace(/\n$/, ''));
   return 0;
@@ -3561,10 +3578,10 @@ export function parseWorksheetCommand(args, io = { out: console.log, err: consol
   try {
     text = readFileSync(options.file, 'utf8');
   } catch (readError) {
-    return usageError(io, `cannot read ${options.file}: ${readError.message}`);
+    return valueError(io, `cannot read ${options.file}: ${readError.message}`);
   }
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
-  if (dataError) return usageError(io, dataError);
+  if (dataError) return valueError(io, dataError);
   const parsed = parseWorksheet(text, data);
   if (options.json) io.out(worksheetJson(parsed));
   else if (parsed.problems.length === 0) io.out(`${options.file}: no problems`);
@@ -3591,10 +3608,10 @@ export function upgradeWorksheetCommand(args, io = { out: console.log, err: cons
   try {
     bytes = readFileSync(options.file);
   } catch (readError) {
-    return usageError(io, `cannot read ${options.file}: ${readError.message}`);
+    return valueError(io, `cannot read ${options.file}: ${readError.message}`);
   }
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
-  if (dataError) return usageError(io, dataError);
+  if (dataError) return valueError(io, dataError);
   const result = upgradeWorksheet(bytes.toString('utf8'), data);
   if (result.exit) return failure(io, { exit: 1, messages: [`${options.file}: ${result.messages[0]}`, ...result.messages.slice(1)] });
   if (!result.changes.length) {
@@ -3729,7 +3746,7 @@ export function setUpFolderCommand(args, io = { out: console.log, err: console.e
   try {
     entries = readdirSync(project, { withFileTypes: true });
   } catch (readError) {
-    return usageError(io, `cannot read the project folder ${project}: ${readError.message}`);
+    return valueError(io, `cannot read the project folder ${project}: ${readError.message}`);
   }
   const refuse = (why) => failure(io, { exit: 1, messages: [`${project} ${why}, so it is not as this version of the overlay expects a new ` +
     'project folder to be. Nothing in it has been changed: this command sets up only a folder that is exactly as ArcKit makes a new one.'] });
