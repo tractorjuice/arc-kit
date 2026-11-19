@@ -991,11 +991,13 @@ def test_the_guides_and_listings_describe_one_question_at_a_time():
 SELECTOR_RULES = {
     "closed questions go to the selector": "Where you have the AskUserQuestion tool and a person is there to answer, "
                                            "put closed questions to them with it",
-    "what counts as closed": "`(yes / no)`, `(yes if you do this / no)`, `(yes, or say what you do instead)` or a list of choices "
-                             "separated by `/`",
-    "open questions stay in plain text": "Every other question, and every field of an entry, is asked in plain text, one in each "
-                                         "message",
-    "as many calls as needed, and no default": "there are as many calls as the questions need, and no question ever takes a default",
+    "what counts as closed": "`(yes / no)`, `(yes if you do this / no)`, `(yes, or say what you do instead)` or a list of four "
+                             "choices or fewer separated by `/`, and that holds no proposed answer",
+    # A proposed answer has to be shown with its source, which a selector's options cannot do; and the nation question
+    # has five choices, one more than a selector takes, so both stay in plain text.
+    "open and proposed questions stay in plain text": "Every other question, every question with a proposed answer and every "
+                                                      "field of an entry is asked in plain text, one in each message",
+    "as many calls as needed, and no default": "There are as many calls as the questions need, and no question ever takes a default",
     "four at most, in order, within one safe method": "One call holds up to four closed questions that follow one another in the "
                                                       "worksheet, in the worksheet's order, and never questions from two safe "
                                                       "methods",
@@ -1008,18 +1010,24 @@ SELECTOR_RULES = {
     "what the business does instead is typed": "`Yes` and `Skip for now`, with the selector's own free-text entry for what the "
                                                "business does instead",
     "no option speaks for the business": "No label or description says what the business does",
-    "a recommended option in two cases only": "You may mark one option `(Recommended)`, first in its list, in two cases only",
+    "a recommended option in one case only": "You may mark `Yes` as `(Recommended)`, first in its list, on a question whose hint "
+                                             "is `(yes if you do this / no)` or `(yes, or say what you do instead)`, and nowhere "
+                                             "else",
     "the pack's method": "the option's description is \"The pack's method, as quoted in the question\"",
-    "a proposed answer, with its source": "The other is the option that matches a question's proposed answer, and its description "
-                                          "gives the answer's `Source`",
-    "never a guess about the business": "Mark none anywhere else, and never because of what you think the business does",
+    "the mark is the pack's, not a guess about the business": "It is not a suggestion of yours about the business, and you never "
+                                                              "mark an option because of what you think the business does",
     "a recommended option is not a default": "A recommended option is not a default.",
     "only what was selected or typed is recorded": "Record an answer only when the person selected it or typed it, as `confirmed`, "
                                                    "with their name and today's date, each against its own identifier",
+    # The helper reads `Yes (Recommended)` on a "say what you do instead" question as the business's own method.
+    "a choice is recorded as the worksheet takes it": "never as its label: `Yes (Recommended)` is recorded as `yes`",
     "passed over stays as it was": "A question the person passed over or dismissed, or chose `Skip for now` for, stays as it was",
     "without the tool, plain text": "If the tool is not there, fails or comes back with no answer, go on in plain text, one "
                                     "question in each message; with nobody to answer, stop asking",
     "typed words are a reply like any other": "**Words typed into the selector** are a reply like any other",
+    # A person who types "we don't do this" on the first question may still click through the other three.
+    "a doubt about the method holds the whole call": "record nothing from that call until the person has said which they mean",
+    "and its answers go if the method does not apply": "none of that call's answers is recorded",
 }
 INTERVIEW_PATTERN = "${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md"
 
@@ -1033,17 +1041,34 @@ def test_the_shared_block_holds_the_rules_for_the_selector(rule):
 
 def test_one_thing_to_a_message_names_the_selector_as_its_one_exception():
     shared = block(split(command(GATHERING[0]))[1], "Record only what the person gives")
-    assert ("The one exception is **The question selector**, below: it puts up to four closed questions in one call, and each is "
-            "still answered and recorded on its own.") in shared
+    assert ("The one exception is **The question selector**, below, and only where that tool is there: it puts up to four closed "
+            "questions in one call, and each is still answered and recorded on its own. Without the tool there is no exception.") in shared
+
+
+@pytest.mark.parametrize("name", COMMANDS)
+def test_no_command_sends_its_reader_to_the_interview_pattern(name):
+    """That reference marks one (Recommended) option on every question and takes it for a question nobody answered. A
+    model sent there to learn how to put a call together would do the same here, so no command names the file; the
+    overlay is listed as outside the pattern in tests/plugin/test_interview_pattern.py, with the reason."""
+    text = command(name).read_text(encoding="utf-8")
+    assert INTERVIEW_PATTERN not in text and "interview-pattern.md" not in text, name
+    pattern_test = (ROOT / "tests" / "plugin" / "test_interview_pattern.py").read_text(encoding="utf-8")
+    assert '"arckit-uk-food",' in pattern_test.split("NOT_ON_THE_PATTERN = {", 1)[1].split("}", 1)[0]
 
 
 @pytest.mark.parametrize("name", GATHERING)
-def test_a_command_that_names_the_tool_points_at_the_pattern_and_has_its_reference(name):
+def test_the_note_on_the_pattern_says_what_the_selector_may_and_may_not_do(name):
     _, body = split(command(name))
-    assert INTERVIEW_PATTERN in body, name
-    assert (OVERLAY / "references" / "interview-pattern.md").is_file()
-    # The note on how this differs from the pattern says the selector never records what was not chosen.
-    assert "an option the person did not choose is never recorded" in body, name
+    assert "It may mark the pack's own method as recommended, and an option the person did not choose is never recorded." in body
+
+
+@pytest.mark.parametrize("name", COMMANDS)
+def test_a_choice_of_project_is_offered_as_options_where_the_runtime_can(name):
+    """Which of several projects was meant is a closed question in all five commands. The wording names no tool, so the
+    check and the sign-off still do not name one."""
+    text = command(name).read_text(encoding="utf-8")
+    assert ("If more than one could be meant, ask which (where you have a tool that shows a question with its options to choose "
+            "from, use it, with the projects as the options and none marked as recommended)") in text, name
 
 
 @pytest.mark.parametrize("name", GATHERING)
@@ -1074,7 +1099,11 @@ def test_the_safe_methods_step_keeps_each_selector_question_whole():
 
 def test_the_own_methods_step_uses_the_selector_for_its_two_offers_only():
     step = block(split(command("uk-food-own-methods"))[1], ASKING_STEP["uk-food-own-methods"])
-    assert "put each as `Yes` and `No`, one offer in a call, with no option marked as recommended" in step
+    # One offer for each special process without an entry, and one for any other control: not always two.
+    assert "one for each special process that has no entry, and one for whether the business has another control of its own" in step
+    assert "Each has `Own method` as its `header`, the offer as its `question`" in step
+    assert "naming the process exactly as the guidance comment lists it" in step
+    assert "`Yes` and `No` as its options, with none marked as recommended" in step
     assert "An entry's fields are the person's own words, and are always asked for in plain text." in step
 
 
@@ -1084,7 +1113,18 @@ def test_the_guides_say_what_the_selector_looks_like_in_claude_code():
         assert "come up as a selector, up to four at a time" in text, name
         assert "nothing is recorded unless you choose it" in text.lower(), name
     own = (ROOT_GUIDES / "uk-food-own-methods.md").read_text(encoding="utf-8")
-    assert "the two opening offers come up as a yes or no selector" in own
+    assert "the opening offers come up as a yes or no selector" in own
+
+
+def test_the_guides_do_not_promise_no_suggestion_beside_a_recommended_mark():
+    """The safe methods guide says the tool suggests nothing about the business, and says what the one mark is. The
+    profile has no question where the pack sets out a method, so its guide never mentions a recommended answer."""
+    safe = (ROOT_GUIDES / "uk-food-safe-methods.md").read_text(encoding="utf-8")
+    assert "**It will not answer for you, or suggest answers.**" not in safe
+    assert "**It will not answer for you, or suggest what your business does.**" in safe
+    assert safe.count("is the pack's advice") == 2
+    profile = (ROOT_GUIDES / "uk-food-profile.md").read_text(encoding="utf-8")
+    assert "recommended" not in profile
 
 
 SIGN_OFF_RULES = {

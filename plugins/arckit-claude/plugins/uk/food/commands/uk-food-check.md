@@ -59,7 +59,7 @@ Read nothing else from the overlay: the helper reads the pack for you. The overl
 
 ### 2. Find the project
 
-Use, in this order: the project the request names, by number (`001`) or by name; the ArcKit Project Context; the one project with a `food-safety/` folder. If more than one could be meant, ask which; with nobody to answer, stop and list the projects you found. If there is none, there is nothing to report: say that `/arckit-uk-food:uk-food-profile` starts a business's documents, and stop without writing anything. This command never creates a project.
+Use, in this order: the project the request names, by number (`001`) or by name; the ArcKit Project Context; the one project with a `food-safety/` folder. If more than one could be meant, ask which (where you have a tool that shows a question with its options to choose from, use it, with the projects as the options and none marked as recommended); with nobody to answer, stop and list the projects you found. If there is none, there is nothing to report: say that `/arckit-uk-food:uk-food-profile` starts a business's documents, and stop without writing anything. This command never creates a project.
 
 If `PROJECT/food-safety/answers-profile.md` does not exist, say that `/arckit-uk-food:uk-food-profile` should be run first, and carry on: the record says which worksheets have not been started.
 
