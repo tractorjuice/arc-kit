@@ -4,7 +4,7 @@ Three panels left to right: the pack's own words, the business's own answers,
 and a named person's sign-off. A strip of facts underneath. Same house style as
 the sibling generate-hero-*.py scripts.
 
-    uv run --with pillow python docs/articles/generate-hero-v6-23-food-safety-documents.py
+    uv run --with pillow python docs/articles/generate-hero-v6-23-safer-food-better-business.py
 """
 
 from pathlib import Path
@@ -43,9 +43,9 @@ def arrow(x0, y, x1, colour):
 
 
 d.text((80, 62), "ArcKit v6.23.0", font=font(28, True), fill=GOLD)
-d.text((80, 104), "Food safety documents that say", font=font(58, True), fill=TEXT)
-d.text((80, 172), "only what the business said.", font=font(58, True), fill=TEXT)
-d.text((80, 254), "A new overlay for small caterers in England and Wales", font=font(28), fill=MUTED)
+d.text((80, 104), "Safer food, better business (SFBB)", font=font(58, True), fill=TEXT)
+d.text((80, 172), "for caterers: complete your pack.", font=font(58, True), fill=TEXT)
+d.text((80, 254), "Food safety documents that say only what the business said. England and Wales.", font=font(28), fill=MUTED)
 
 # Three panels: where each part of a document comes from.
 TOP = 330
@@ -79,6 +79,6 @@ d.line((80, 762, 1520, 762), fill=LINE, width=2)
 d.text((80, 790), "Experimental, and switched off until you enable it", font=font(28), fill=TEXT)
 d.text((80, 836), "Not legal advice. The Food Standards Agency has not reviewed or endorsed it.", font=font(22), fill=MUTED)
 
-out = Path(__file__).with_name("2026-11-19-arckit-v6-23-food-safety-documents-hero.png")
+out = Path(__file__).with_name("2026-11-19-arckit-v6-23-safer-food-better-business-sfbb-for-caterers-hero.png")
 img.save(out, optimize=True)
 print(out)
