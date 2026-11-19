@@ -2228,11 +2228,16 @@ test('worksheet --section prints the blank worksheet for each section', () => {
 });
 
 test('worksheet exits 2 on a usage error', () => {
-  for (const args of [[], ['--section'], ['--section', 'XX'], ['--section', 'CK', '--bogus']]) {
+  for (const args of [[], ['--section'], ['--section', 'CK', '--bogus']]) {
     const result = run('worksheet', ...args);
     assert.equal(result.status, 2, args.join(' '));
     assert.match(result.stderr, /usage:/);
   }
+  // Issue #1132: a section that is not one of the pack's gets a one-line message, with no usage text.
+  const wrong = run('worksheet', '--section', 'XX');
+  assert.equal(wrong.status, 2);
+  assert.match(wrong.stderr, /^--section is one of /);
+  assert.doesNotMatch(wrong.stderr, /usage:/);
   const empty = mkdtempSync(join(tmpdir(), 'uk-food-'));
   assert.equal(run('worksheet', '--section', 'CK', '--data', empty).status, 2);
   // Data that is valid but has no file for the section asked for.
@@ -2241,7 +2246,7 @@ test('worksheet exits 2 on a usage error', () => {
   const result = run('worksheet', '--section', 'XC', '--data', partial);
   assert.equal(result.status, 2, result.stderr);
   assert.match(result.stderr, /XC\.json/);
-  assert.match(result.stderr, /usage:/);
+  assert.doesNotMatch(result.stderr, /usage:/);
   assert.equal(run('worksheet', '--section', 'own', '--data', partial).status, 0);
 });
 
@@ -2501,4 +2506,31 @@ test('the words each question is known by do not change within one edition of th
       'PROFILE_WAS. A change to which lines of context are printed above a question must leave every question known by lines that ' +
       'earlier versions printed too.');
   }
+});
+
+// Issue #1132 reported this note printed twice for one line when the method also lacked Decided-by. It could
+// not be made to happen, so this holds every safe method of every section to once, with no problem listed twice.
+test('a method marked not relevant with an answer under it gets the "not read" note once, with or without Decided-by', () => {
+  let tried = 0;
+  for (const section of SECTION_IDS) {
+    for (const method of data.sections.get(section).methods) {
+      const first = questionsOf(method).find((q) => q.type !== 'note');
+      if (!first) continue;
+      for (const decided of ['', ' Sam Okafor']) {
+        let text = blankWorksheet(section, data);
+        const at = text.indexOf(`## ${method.id} `);
+        assert.ok(at >= 0, method.id);
+        text = text.slice(0, at) + text.slice(at).replace('Status: applies\nReason:\nDecided-by:\n',
+          `Status: not-relevant\nReason: We do not do this\nDecided-by:${decided}\n`);
+        text = fill(text, first.id, ...confirmed('yes'));
+        const { problems } = parseWorksheet(text, data);
+        const notes = problems.filter((p) => p.message.includes('answers given for a method marked not relevant are not read'));
+        assert.equal(notes.length, 1, `${method.id}${decided ? '' : ' without Decided-by'}`);
+        const listed = problems.map((p) => `${p.line}: ${p.message}`);
+        assert.equal(new Set(listed).size, listed.length, `${method.id}: a problem is listed twice`);
+        tried++;
+      }
+    }
+  }
+  assert.ok(tried >= 40, `only ${tried} cases were tried`);
 });

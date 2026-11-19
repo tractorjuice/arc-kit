@@ -743,10 +743,20 @@ test('sign-off exits 2, writing nothing, on a usage error: the completion record
     ['--doc', 'FOODCMP', ...person], ['--doc', 'FOODNONE', ...person], ['--doc', 'FOODCOOK', '--name', '', '--role', 'Owner'],
     ['--doc', 'FOODCOOK', '--name', '  \t ', '--role', 'Owner'], ['--doc', 'FOODCOOK', '--name', 'Sam Okafor', '--role', ''],
     ['--doc', 'FOODCOOK', '--name', 'Sam Okafor', '--role', '   '], ['--doc', 'FOODCOOK', '--name', 'Sam\nOkafor', '--role', 'Owner'],
-    ['--doc', 'FOODCOOK', '--name', 'Sam\u202eOkafor', '--role', 'Owner'], ['--doc', 'FOODCOOK', '--role', 'Owner'],
+    ['--doc', 'FOODCOOK', '--name', 'Sam\u202eOkafor', '--role', 'Owner'],
     ['--doc', 'FOODCOOK', ...person, '--date', '2026-02-30'], ['--doc', 'FOODCOOK', ...person, '--date', 'tomorrow'],
-    ['--doc', 'FOODCOOK', ...person, '--paper-signed', 'maybe'], ['--doc', 'FOODCOOK', ...person, '--extra']
+    ['--doc', 'FOODCOOK', ...person, '--paper-signed', 'maybe']
   ]) {
+    // Issue #1132: a value that is wrong gets its one-line message, and the usage text is left out.
+    const result = run(...base, ...args);
+    assert.equal(result.status, 2, args.join(' '));
+    assert.equal(result.stdout, '', args.join(' '));
+    assert.doesNotMatch(result.stderr, /usage:/, args.join(' '));
+    assert.equal(result.stderr.trim().split('\n').length, 1, args.join(' '));
+    assert.ok(!existsSync(signOffsFile(dir)), args.join(' '));
+  }
+  // An option left out, or one the command does not take, is a usage error and still shows the usage.
+  for (const args of [['--doc', 'FOODCOOK', '--role', 'Owner'], ['--doc', 'FOODCOOK', ...person, '--extra'], [...person]]) {
     const result = run(...base, ...args);
     assert.equal(result.status, 2, args.join(' '));
     assert.equal(result.stdout, '', args.join(' '));
@@ -1331,7 +1341,9 @@ test('M2: sign-off refuses a date after today, writing nothing, and takes today 
     assert.equal(refused.status, 2, date);
     assert.equal(refused.stdout, '', date);
     assert.ok(refused.stderr.includes(`--date is the day the document was signed off, which cannot be after today, ${today()}: ${date} is`), refused.stderr);
-    assert.match(refused.stderr, /usage: uk-food\.mjs/);
+    // Issue #1132: the message stands alone, with no usage text after it.
+    assert.doesNotMatch(refused.stderr, /usage:/, date);
+    assert.equal(refused.stderr.trim().split('\n').length, 1, date);
     assert.ok(!existsSync(signOffsFile(dir)), date);
   }
   assert.match(run('sign-off').stderr.replace(/\s+/g, ' '), /DATE is YYYY-MM-DD, today when not given, and never after today/);

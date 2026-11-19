@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The food safety overlay asks one question at a time.** The profile and safe methods commands used to put ten to seventeen questions in one message, and the replies came back in shorthand that had to be matched to the right question. Each message now asks one question, named by its worksheet reference (such as `XC-01-Q14`), and the answer is recorded before the next is asked. Say "skip" to leave a question for later. A safe method is named once, with how many of its questions are left, and a safety point shared by questions in a row is quoted once. The own methods command asks for one part of an entry at a time. The document is written again after each safe method, after the profile's questions about the business, and whenever you stop (#1132).
+
+### Fixed
+
+- **Food safety overlay: an error about a wrong value prints one line.** The helper script printed its full usage text after every error, including a sign-off date still to come. It now prints the usage only when an option is missing or is not one the command takes (#1132).
+
 ## [6.23.0] — 2026-11-19
 
 ### Added
