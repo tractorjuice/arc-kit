@@ -1,26 +1,35 @@
 ![ArcKit v6.20.0: a bid can't mark its own homework. A supplier's bid goes to a read-only reader, one supplier at a time, and stops at a wall. Only short claims cross it to the scoring, where each score traces to a file and a location. No claim, no marks. Planted text is reported, not followed. An unreadable bid stays unscored. Also new: arc42 from your existing artefacts, and NORA and GEMMA for Dutch government.](https://arckit.org/articles/2026-11-07-arckit-v6-20-a-bid-cant-mark-its-own-homework-hero.png)
 
-# ArcKit v6.20.0: A Bid Can't Mark Its Own Homework
+# Tender Evaluation with AI: Keep a Bid's Hidden Instructions Out of the Score in ArcKit v6.20.0
 
-**ArcKit v6.20.0 is out, and the main change is for anyone scoring suppliers: a bid no longer reaches the part of ArcKit that scores it. Also new are an arc42 overlay from Chris McKelt, and NORA and GEMMA for Dutch government from @trednets.**
+**When an AI assistant helps with tender evaluation, a supplier can hide an instruction in a bid for it to follow, a trick known as prompt injection. From ArcKit v6.20.0 a bid no longer reaches the part of ArcKit that scores it. Also new are an arc42 overlay from Chris McKelt, and NORA and GEMMA for Dutch government from @trednets.**
 
-*Mark Craddock · medium.com/arckit*
+**Before you start:** ArcKit's scores are a draft for your evaluation panel. The panel's own scoring and moderation are the record. If you already use ArcKit, the four things to do before you update come first.
+
+*Mark Craddock*
 
 ---
+
+## Before you update
+
+- **Update Claude Code.** ArcKit needs v2.1.319 or later.
+- **Check Node.js is installed.** Writing ArcKit artefacts and reading bids now need it on your `PATH`.
+- **Export Word bids to PDF.** The AI reader can't open Word documents.
+- **Move any existing evaluations.** They now sit in `vendors/_evaluations/<vendor>/`. Before re-scoring a vendor, move its `evaluation.md` and `notes.md` there. Scoring stops for a vendor whose folder still holds them, because they could equally have come with the bid.
 
 ## A bid can't mark its own homework
 
 A supplier wants a high score, and hiding an instruction in a proposal is a cheap way to try for one. So I've split reading a bid from scoring it.
 
-In Claude Code, a read-only reader now opens one supplier's documents at a time and returns short claims against each criterion. `/arckit:evaluate` and `/arckit:score` work from those claims and never see the bid.
+In Claude Code, a read-only AI reader now opens one supplier's documents at a time and returns short claims against each criterion. `/arckit:evaluate` and `/arckit:score` work from those claims and never see the bid. You run both commands as before.
 
-- **No claim, no marks.** A criterion the bid doesn't address scores 0. That's arithmetic, not opinion.
-- **Mandatory qualifications need evidence.** One with no claim fails, and `/arckit:score compare` won't recommend that vendor.
+- **No claim, no marks.** A criterion the bid doesn't address scores 0.
+- **Mandatory qualifications need evidence.** One with no claim fails, and that vendor is left out of the draft recommendation `/arckit:score compare` gives your panel.
 - **Every score traces to its source.** The claims are saved with their file and location.
 - **A bid that can't be read stays unscored.** You're told which file and why. It never gets a 0.
 - **Planted text gets reported, not followed.** The finding says where it is, not what it says.
 
-It isn't bulletproof. Scoring is still a judgement on what a supplier claims, so a bid that fools the reader into a false claim can still move a score. I'd check the claims behind any close result. The other assistants can't run a separate reader, so they still read bids in one place.
+It isn't bulletproof. Scoring is still a judgement on what a supplier claims, so a bid that fools the AI reader into a false claim can still move a score. I'd check the claims behind any close result. The other assistants can't run a separate reader, so they still read bids in one place.
 
 `/arckit:hld-review`, `/arckit:dld-review`, `/arckit:gcloud-search` and `/arckit:gcloud-clarify` get a lighter version. They treat what a supplier wrote as claims and list anything aimed at the reviewer, but that's an instruction to the model, not a separation, so it's weaker.
 
@@ -38,16 +47,9 @@ Four more commands cover quality scenarios, crosscutting concepts, a technical d
 
 ## NORA and GEMMA for Dutch government
 
-@trednets has added two commands to the Netherlands overlay. `/arckit-nl:nl-nora` assesses a Dutch government service against the NORA principles, adding the GEMMA principles for a gemeente. `/arckit-nl:nl-gemma` maps a gemeente's application landscape onto GEMMA's reference components, showing coverage, overlap and gaps.
+@trednets has added two commands to the Netherlands overlay. `/arckit-nl:nl-nora` assesses a Dutch government service against the NORA principles, adding the GEMMA principles for a gemeente (a municipality). `/arckit-nl:nl-gemma` maps a gemeente's application landscape onto GEMMA's reference components, showing coverage, overlap and gaps.
 
 ArcKit ships no NORA or GEMMA text. The commands build a local copy from the official sources on your machine.
-
-## Before you update
-
-- **Update Claude Code.** ArcKit now needs v2.1.295 or later.
-- **Check Node.js is installed.** Writing ArcKit artefacts and reading bids now need it on your `PATH`.
-- **Export Word bids to PDF.** The reader can't open Word documents.
-- **Move any existing evaluations.** They now sit in `vendors/_evaluations/<vendor>/`. Before re-scoring a vendor, move its `evaluation.md` and `notes.md` there. Scoring stops for a vendor whose folder still holds them, because they could equally have come with the bid.
 
 ## Thank you
 
@@ -60,9 +62,11 @@ Thanks to Chris McKelt, @chrismckelt, for arc42, the Spec Kit handover and getti
 /plugin marketplace add tractorjuice/arckit-claude
 claude plugin install arckit
 
-# the optional overlays
-claude plugin install arckit arckit-arc42
-claude plugin install arckit arckit-nl
+# the optional overlays, each switched on after it's installed
+claude plugin install arckit-arc42 --marketplace tractorjuice/arckit-claude
+claude plugin enable arckit-arc42
+claude plugin install arckit-nl --marketplace tractorjuice/arckit-claude
+claude plugin enable arckit-nl
 ```
 
 Already using ArcKit? Run `claude plugin update arckit@arckit-claude`.
