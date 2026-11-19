@@ -1,36 +1,38 @@
-# ArcKit v6.23.0: Food Safety Documents That Say Only What the Business Said
+# Safer Food, Better Business (SFBB) for Caterers: Complete Your Pack with ArcKit v6.23.0
 
-**ArcKit v6.23.0 is out. A new optional overlay helps a small catering business in England or Wales build its food safety documents from the Food Standards Agency's *Safer food, better business for caterers* pack. It prints the pack's wording unchanged, and it never fills in an answer for you.**
+**Safer food, better business (SFBB) for caterers is the Food Standards Agency's food safety pack for small catering businesses. ArcKit v6.23.0 adds an optional overlay that walks you through your SFBB pack one step at a time: it asks about each safe method, keeps SFBB's wording exactly as the Food Standards Agency wrote it, and records your answers in your own words.**
 
 *Mark Craddock · medium.com/arckit*
 
 ---
 
-## An overlay for a kitchen
+## What is Safer food, better business (SFBB)?
+
+Safer food, better business is a free pack from the Food Standards Agency. The caterers' version is, in its own words, "for small catering businesses such as restaurants, cafés and takeaways".
+
+The law says a food business must write down what it does to keep food safe. The pack is the Food Standards Agency's way for a small caterer in England or Wales to do that. It's 100 pages and 31 safe methods in five sections: cross-contamination, cleaning, chilling, cooking and management. To complete the pack you work through each section and fill in every safe method that applies to your business.
+
+## Completing your SFBB pack with ArcKit
 
 This overlay isn't for architects. It's for a café, a takeaway, a restaurant, a pub kitchen or a mobile caterer.
 
-A food business has to keep food safety management documents. The Food Standards Agency publishes a free pack for that, *Safer food, better business for caterers*: 100 pages and 31 safe methods, each asking how your business does it.
+`arckit-uk-food` turns the pack into a set of food safety documents of the business's own: its answers, its own methods, and a named person who has read each one and signed it off. It's experimental, and it's switched off until you enable it.
 
-`arckit-uk-food` turns the pack into a set of documents of the business's own: its answers, its own methods, and a named person who has read each one and signed it off. It's experimental, and it's switched off until you enable it.
+## Two things you can rely on
 
-## Two rules
+**SFBB's wording isn't rewritten.** All 100 pages come with the overlay. The assistant doesn't write that text into your document. A script prints it, unchanged, and a second check proves the document still matches. So a temperature or a time in your document is the one the pack prints.
 
-Everything in it follows from two rules.
-
-**The pack's wording isn't rewritten.** All 100 pages come with the overlay. The assistant doesn't write that text into your document. A script prints it, unchanged, and a second check proves the document still matches. So a temperature or a time in your document is the one the pack prints.
-
-**A document says only what the business said.** Anything nobody at the business has confirmed reads NOT YET ANSWERED. The commands never suggest an answer. If nobody is there to answer, nothing is confirmed and nothing is signed.
+**Your answers are yours.** ArcKit asks the questions and you answer them. Anything nobody at the business has confirmed reads NOT YET ANSWERED, so you can always see what is still to do. If nobody is there to answer, nothing is confirmed and nothing is signed.
 
 One of the tests shows what that means. The owner of an invented café gives four answers about cooking, then says "for everything else just put whatever is usual for a cafe like ours". The document comes out with those four answers in it, and the other 42 questions reading NOT YET ANSWERED.
 
-## Five commands, in order
+## The five steps
 
-- `/arckit-uk-food:uk-food-profile` records the business: who runs it, where it is, what it sells, its equipment and staff, and whether it does anything that needs extra care.
-- `/arckit-uk-food:uk-food-safe-methods` works through one of the pack's five sections with you, one safe method at a time: cross-contamination, cleaning, chilling, cooking and management.
-- `/arckit-uk-food:uk-food-own-methods` records the business's own methods, word for word.
-- `/arckit-uk-food:uk-food-check` shows what's finished, what's still waiting for an answer and what has been signed off.
-- `/arckit-uk-food:uk-food-sign-off` records a named person's sign-off of a finished document.
+1. **Describe your business.** `/arckit-uk-food:uk-food-profile` records who runs it, where it is, what it sells, its equipment and staff, and whether it does anything that needs extra care.
+2. **Work through the safe methods.** `/arckit-uk-food:uk-food-safe-methods` takes one of the pack's five sections at a time, one safe method at a time: cross-contamination, cleaning, chilling, cooking and management.
+3. **Add your own methods.** `/arckit-uk-food:uk-food-own-methods` records how your business does things, word for word.
+4. **See what's left to do.** `/arckit-uk-food:uk-food-check` shows what's finished, what's still waiting for an answer and what has been signed off.
+5. **Sign off each document.** `/arckit-uk-food:uk-food-sign-off` records a named person's sign-off of a finished document.
 
 Setting up is done once, by someone comfortable with a terminal. After that you answer in ordinary words.
 
@@ -58,11 +60,11 @@ The overlay won't write a procedure for any of them, and it won't finish or impr
 
 What it does is tell you to contact your council's environmental health team, record your own procedure word for word, and add the council's reply when it comes.
 
-## What it doesn't do
+## What the overlay doesn't cover
 
 - **It isn't legal advice.** The food business operator is responsible for the safety of the food and for keeping the records. Your council's environmental health team is the authority for your premises. The Food Standards Agency hasn't reviewed or endorsed the overlay, and no food safety professional has reviewed it yet. Treat everything it produces as a draft to read and confirm.
 - **England and Wales only**, and the caterers' pack only.
-- **It doesn't keep the diary.** That stays with you, on paper or however you keep it today.
+- **It doesn't keep the SFBB diary.** That stays with you, on paper or however you keep it today.
 - **It doesn't choose where the pack disagrees with itself.** In two places the pack words the same limit two ways. Your documents print each as the pack prints it. If one matters to you, ask your council's environmental health team.
 - **The pack's separate sheets aren't in it yet**: the cleaning schedule, the training record, the suppliers' and contacts lists, and allergen information for each dish. There are no dates for those.
 
