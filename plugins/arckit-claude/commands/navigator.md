@@ -26,7 +26,7 @@ $ARGUMENTS
 
 - Example: `001` or `001-payment-gateway`
 - If omitted in a single-project repo, the only project is auto-selected.
-- If omitted in a multi-project repo, the hook exits silently, so use the AskUserQuestion tool to ask which, with the projects as its options and none marked (Recommended), as `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` section 5 sets out. With no answer, stop and list them.
+- If omitted in a multi-project repo, the hook exits silently. Then, or when the argument matches more than one project, list the projects, then use the AskUserQuestion tool to ask which, offering them as the choices with none marked as recommended (`${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`, section 5). With no answer, stop: do not pick one.
 
 ---
 

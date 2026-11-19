@@ -90,4 +90,4 @@ $ARGUMENTS
 
 6. **If no impacts found**, report that the document has no downstream dependencies. Note this may indicate a traceability gap — suggest running `/arckit:traceability` to check coverage.
 
-7. **If the query matches multiple documents**, list them and use the AskUserQuestion tool to ask which, with the matching documents as its options and none marked (Recommended), as `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` section 5 sets out. With no answer, stop: the list is the result.
+7. **If the query matches multiple documents**, list them, then use the AskUserQuestion tool to ask which, offering them as the choices with none marked as recommended (`${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`, section 5). With no answer, stop: the list is the result.

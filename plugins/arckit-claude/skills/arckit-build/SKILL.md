@@ -274,10 +274,13 @@ Steps:
    | Phase | value from skill args, else `alpha` |
    | AI mode / scope | derive from REQ FRs (AI-in-scope iff any FR mentions AI/ML/LLM) |
    | Risk appetite | `Medium` |
+   | A choice between projects or documents (no option marked, section 5 of the reference) | none: see below |
    | Anything else | first option in the list |
 
    Document the choice you made in your final report so the orchestrator can record it.
-   Never block waiting for an answer.
+   Never block waiting for an answer. The one question you do not answer is a choice between
+   several projects or documents: do not pick one. Stop without writing the artefact and name the
+   candidates in your final report, so the orchestrator can record why the target was not built.
    This is the non-interactive rule of `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`;
    the table above wins where it names a header.
 

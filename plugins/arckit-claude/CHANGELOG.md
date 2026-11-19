@@ -11,7 +11,7 @@ Releases before 6.15.0 are in the [changelog archive](https://github.com/tractor
 
 ### Changed
 
-- **A command that has to ask which project or document you meant shows the choices.** `/arckit:research`, `/arckit:datascout`, `/arckit:grants`, `/arckit:gov-reuse`, `/arckit:tenders`, `/arckit:competitors`, `/arckit:analyze`, `/arckit:trello`, `/arckit:navigator` and `/arckit:impact` asked in plain text when a name matched more than one. They now put the question with the question selector, the candidates as its options and none marked as recommended. With no answer the command stops and lists them; it never picks the most recent. `references/interview-pattern.md` has a new section for a choice only the user can make.
+- **A command that has to ask which project or document you meant shows the choices.** `/arckit:research`, `/arckit:datascout`, `/arckit:grants`, `/arckit:gov-reuse`, `/arckit:tenders`, `/arckit:competitors`, `/arckit:aws-research`, `/arckit:azure-research`, `/arckit:gcp-research`, `/arckit:analyze`, `/arckit:trello`, `/arckit:navigator` and `/arckit:impact` asked in plain text when a name matched more than one. Each now lists the candidates and puts the question with the question selector, with none marked as recommended. With no answer the command stops; it never picks the most recent, and `/arckit:build` does not pick the first. `references/interview-pattern.md` has a new section for a choice only the user can make.
 
 ## [6.23.0] — 2026-11-19
 
