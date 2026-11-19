@@ -599,3 +599,5 @@ Published: <https://www.linkedin.com/pulse/safer-food-better-business-sfbb-cater
 ### Q53. ArcKit 6.23.0 — Discord #announcements — posted 19 November
 
 Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/1572814172045967440>. The link to the arckit.org article and nothing else, on the maintainer's word. Discord's preview card shows the article's title, description and hero.
+
+**Revised the same day.** A brand review of the published article with the marketing plugin found 17 points, and the maintainer said to apply them all. The article was changed on arckit.org, and the Medium story and the LinkedIn article were updated to match: a "Before you start" line under the opening, a plain account of what ArcKit is and what a caterer needs to run it, "What stays in your hands" in place of a list of things it won't do, and AI readers and reviewers named as such. The LinkedIn copy no longer carries the Medium byline. The addresses above are unchanged.
