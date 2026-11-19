@@ -56,7 +56,8 @@
       "source": {
         "source": "github",
         "repo": "tractorjuice/arckit-claude"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "enabledPlugins": {

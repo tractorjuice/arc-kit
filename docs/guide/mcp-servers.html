@@ -501,7 +501,8 @@ claude
       &quot;source&quot;: {
         &quot;source&quot;: &quot;github&quot;,
         &quot;repo&quot;: &quot;tractorjuice/arckit-claude&quot;
-      }
+      },
+      &quot;autoUpdate&quot;: true
     }
   },
   &quot;enabledPlugins&quot;: {
@@ -509,6 +510,7 @@ claude
   }
 }
 </code></pre>
+<p><code>autoUpdate</code> keeps the plugin on the latest ArcKit release for everyone who opens the repo. Claude Code leaves automatic updates off for a marketplace that isn't Anthropic's own unless a settings entry turns them on. Leave the line out to update by hand with <code>claude plugin update arckit@arckit-claude</code>.</p>
 <hr />
 <h2 id="mcp-servers">MCP Servers</h2>
 <p>ArcKit includes 4 bundled MCP (Model Context Protocol) servers for cloud research, plus support for optional third-party MCPs like Pinecone.</p>

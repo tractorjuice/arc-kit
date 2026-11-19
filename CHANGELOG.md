@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The README is easier to find your way round.** It now opens with a contents list, and Quick Start is arranged by assistant: Claude Code in full, and Gemini CLI, GitHub Copilot, Codex CLI, OpenCode CLI, Mistral Vibe and Kimi Code each in a block of its own with how to install, start a project, run a command and update. The overlays sit under one heading with a table of all 20, including the four that had no section of their own (Australia, Australian energy, repository tooling and the FDE site generator). The second Documentation section, the second list of example projects and the repeated Copilot and Codex instructions are gone.
+- **ArcKit's settings examples turn automatic updates on.** Claude Code leaves automatic updates off for any marketplace that isn't Anthropic's own, and a marketplace has no way to turn them on for you: the choice is the `autoUpdate` line of the marketplace entry in a settings file. The test-repo template, the MCP servers guide, the test-repo notes and this repository's own settings now carry that line, as the enterprise guide already did, so a team that copies one gets each ArcKit release without doing anything. A test keeps every published example that way.
+
+### Fixed
+
+- **The README's overlay install commands install the overlay.** `claude plugin install` takes one plugin name and ignores a second, so `claude plugin install arckit arckit-uae` installed the core plugin and nothing else. Twelve commands in the README had that form. Each now installs the overlay by name and enables it, since an overlay is switched off until you enable it.
+- **The README no longer says the Claude Code plugin updates itself with no action needed.** It does only once automatic updates are turned on. The README now says how: in `/plugin`, under Marketplaces, or with the `autoUpdate` line in a settings file.
+- **The README no longer says Windows needs bash and jq.** ArcKit's hooks have run on Node for some time, and the platform table beside that note already showed the Claude Code plugin as fully supported on Windows.
+
 ## [6.23.0] — 2026-11-19
 
 ### Added
