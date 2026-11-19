@@ -96,7 +96,7 @@ $ARGUMENTS
    - **Risk Level**: Critical, High, Medium, Low
    - **Oversight Level**: Human-in-the-loop, Human-on-the-loop, Human-out-of-the-loop
 
-   > **If fewer than 3 agents are found**, ask the user: *"I've identified fewer than 3 agents. Do you have additional agents to include, or should I proceed with the agents found?"*
+   > **If fewer than 3 agents are found**, use the AskUserQuestion tool to ask: *"I've identified fewer than 3 agents. Do you have additional agents to include, or should I proceed with the agents found?"*, with "Proceed with the agents found (Recommended)" and "I have more to add" as its options, as `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` sets out. With no answer, proceed with the agents found and list that as an assumption.
 
 6. **Build the agent inventory:**
 

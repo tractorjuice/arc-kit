@@ -4,6 +4,8 @@ doc-type: none
 argument-hint: "<project ID, e.g. '001' or '001-payment-gateway'>"
 tags: [navigator, governance, planning, recommendations, graph]
 effort: low
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Navigator — what should I do next?
@@ -24,7 +26,7 @@ $ARGUMENTS
 
 - Example: `001` or `001-payment-gateway`
 - If omitted in a single-project repo, the only project is auto-selected.
-- If omitted in a multi-project repo, the hook exits silently and you should ask the user which project they meant.
+- If omitted in a multi-project repo, the hook exits silently, so use the AskUserQuestion tool to ask which, with the projects as its options and none marked (Recommended), as `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` section 5 sets out. With no answer, stop and list them.
 
 ---
 

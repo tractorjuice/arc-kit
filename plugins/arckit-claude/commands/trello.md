@@ -3,6 +3,8 @@ description: Export product backlog to Trello - create board, lists, cards with 
 doc-type: none
 argument-hint: "<project ID, e.g. '001'>"
 alwaysShow: true
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Export Backlog to Trello
@@ -49,7 +51,7 @@ Reads the JSON backlog produced by `/arckit:backlog FORMAT=json` and pushes it t
 Find the project directory:
 
 - Look in `projects/` for subdirectories
-- If multiple projects, ask which one
+- If multiple projects, use the AskUserQuestion tool to ask which, with the projects as its options and none marked (Recommended), as `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` section 5 sets out; with no answer, stop and list them
 - If single project, use it
 
 Locate the backlog JSON file:

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **In Claude Code, a command that has to ask which project or document you meant shows the choices.** Eleven commands asked that in plain text when a name matched more than one: `/arckit:research`, `/arckit:datascout`, `/arckit:grants`, `/arckit:gov-reuse`, `/arckit:tenders`, `/arckit:competitors`, `/arckit:analyze`, `/arckit:trello`, `/arckit:navigator`, `/arckit:impact` and the repository audit. They now put the question with the question selector, the candidates as its options. None is marked as recommended, and with no answer the command stops and lists them: it never picks the most recent. The repository audit asks the same way before it scores a codebase against a project that may describe a different system, and the two agent architecture commands that find fewer than three agents offer "proceed" as the recommended choice. Other assistants ask in plain text, as before.
+
 ## [6.23.0] — 2026-11-19
 
 ### Added

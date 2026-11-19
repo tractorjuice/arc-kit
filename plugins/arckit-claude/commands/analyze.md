@@ -1510,7 +1510,7 @@ User: `/arckit:analyze`
 
 You should:
 
-1. Identify project (if multiple, ask which)
+1. Identify project (if multiple, use the AskUserQuestion tool to ask which, with the projects as its options and none marked (Recommended), as `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` section 5 sets out; with no answer, stop and list them)
 2. Load artifacts progressively:
    - Architecture principles
    - Stakeholder drivers (if exists - RECOMMENDED)
