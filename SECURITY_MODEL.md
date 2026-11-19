@@ -1,71 +1,71 @@
-# Modelo de amenazas — johnfelipe/arc-kit (ArcKit)
+# Threat model — johnfelipe/arc-kit (ArcKit)
 
-Fork de `tractorjuice/arc-kit`. Este documento parte de `plugins/arckit-claude/docs/ENFORCEMENT.md` (qué se aplica en código, qué se pide al modelo y qué pone la organización) y del código.
+Fork of `tractorjuice/arc-kit`. This document builds on `plugins/arckit-claude/docs/ENFORCEMENT.md` (what is enforced in code, what is requested of the model and what the organisation owns) and on the code itself.
 
-## 1. Sistema y fronteras de confianza
+## 1. System and trust boundaries
 
-ArcKit es un arnés de gobernanza que corre **dentro del agente de IA del usuario** (Claude Code, Codex, Gemini, Kimi, OpenCode, Copilot, Paperclip, Vibe). Escribe artefactos `projects/NNN-*/ARC-*.md` en el repositorio del usuario. Los hooks (procesos Node lanzados por el runtime) son la única capa que se aplica en código (Tier 1); el resto son instrucciones al modelo (Tier 2).
+ArcKit is a governance harness that runs **inside the user's AI agent** (Claude Code, Codex, Gemini, Kimi, OpenCode, Copilot, Paperclip, Vibe). It writes `projects/NNN-*/ARC-*.md` artefacts into the user's repository. Hooks (Node processes launched by the runtime) are the only layer enforced in code (Tier 1); everything else is instructions to the model (Tier 2).
 
-Fronteras:
+Boundaries:
 
-- **Contenido no confiable → contexto del agente:** páginas web y MCP de investigación, documentos en `projects/*/external/`, ofertas de proveedores en `projects/*/vendors/`, `.arckit/memory/sessions.md` (asuntos de commit), `specs/`. Los hooks deben tratarlo como datos.
-- **Agente → sistema de archivos/shell del usuario:** los gates PreToolUse (`file-protection`, `secret-detection`, `validate-arc-filename`, `supplier-isolation`) limitan qué puede escribir/leer el agente.
-- **Internet → Worker de certificación** `certification-api.arckit.org` (Cloudflare).
-- **Repositorio → paquetes publicados:** converter, `push-extensions.sh`, release workflow, marketplace.
+- **Untrusted content → agent context:** research web pages and MCP servers, documents in `projects/*/external/`, supplier bids in `projects/*/vendors/`, `.arckit/memory/sessions.md` (commit subjects), `specs/`. Hooks must treat it as data.
+- **Agent → user's file system and shell:** the PreToolUse gates (`file-protection`, `secret-detection`, `validate-arc-filename`, `supplier-isolation`) limit what the agent can write and read.
+- **Internet → certification Worker** `certification-api.arckit.org` (Cloudflare).
+- **Repository → published packages:** converter, `push-extensions.sh`, release workflow, marketplace.
 
-## 2. Componentes
+## 2. Components
 
-| Componente | Código |
+| Component | Code |
 |---|---|
-| Hooks Claude | `plugins/arckit-claude/hooks/`, `plugins/arckit-claude/hooks/hooks.json` |
-| Hooks otros runtimes | `extensions/arckit-codex/hooks/` (a mano), `extensions/arckit-gemini/hooks/scripts/` (a mano), `plugins/arckit-claude/hooks/kimi-hook-adapter.mjs` |
-| Contenido del plugin | `plugins/arckit-*/` (commands, agents, skills, templates, references, `scripts/`, `.mcp.json`) |
+| Claude hooks | `plugins/arckit-claude/hooks/`, `plugins/arckit-claude/hooks/hooks.json` |
+| Other-runtime hooks | `extensions/arckit-codex/hooks/` (hand-maintained), `extensions/arckit-gemini/hooks/scripts/` (hand-maintained), `plugins/arckit-claude/hooks/kimi-hook-adapter.mjs` |
+| Plugin content | `plugins/arckit-*/` (commands, agents, skills, templates, references, `scripts/`, `.mcp.json`) |
 | CLI | `src/arckit_cli/`, `hatch_build.py`, `pyproject.toml` |
-| Build y release | `scripts/` (converter, push-extensions, bump-version), `.github/workflows/` |
-| Worker de certificación | `certification/worker/` (`wrangler.toml`, `src/*.mjs`), páginas `docs/certification/` |
-| Sitio y páginas | `docs/` (arckit.org, GitHub Pages), plantilla `/arckit:pages` (`.arckit/templates/pages-template.html` y copia en plugin) |
+| Build and release | `scripts/` (converter, push-extensions, bump-version), `.github/workflows/` |
+| Certification Worker | `certification/worker/` (`wrangler.toml`, `src/*.mjs`), pages under `docs/certification/` |
+| Site and pages | `docs/` (arckit.org, GitHub Pages), the `/arckit:pages` template (`.arckit/templates/pages-template.html` and its plugin copy) |
 | Paperclip | `extensions/arckit-paperclip/src/` |
 
-Casi todo `extensions/` es copia generada (gitignored) de `plugins/`; la causa raíz se corrige en `plugins/`.
+Almost all of `extensions/` is a generated (gitignored) copy of `plugins/`; the root cause is fixed in `plugins/`.
 
-## 3. Puntos de entrada y quién los alcanza
+## 3. Entry points and who can reach them
 
-- Payloads de hooks (stdin JSON del runtime): rutas de herramientas, comandos Bash, prompts — controlados por el modelo, que puede estar bajo prompt injection.
-- Archivos del repositorio del usuario leídos por hooks al iniciar sesión o en `/arckit:pages`, `/arckit:health`, `/arckit:traceability` (cualquiera que pueda hacer push al repo del usuario).
-- `arckit init` (rutas de destino, symlinks, datos del paquete).
-- Worker: `GET /awareness/questions`, `POST /awareness/submit`, `GET /<id de credencial>` — público, sin login; CORS a `https://arckit.org`; rate limit 5/min por IP y ubicación.
-- CI: workflows en push/PR y release por tag (`contents: write`).
+- Hook payloads (runtime stdin JSON): tool paths, Bash commands, prompts — controlled by the model, which may be under prompt injection.
+- Files in the user's repository read by hooks at session start or during `/arckit:pages`, `/arckit:health`, `/arckit:traceability` (anyone who can push to the user's repository).
+- `arckit init` (target paths, symlinks, package data).
+- Worker: `GET /awareness/questions`, `POST /awareness/submit`, `GET /<credential id>` — public, no login; CORS restricted to `https://arckit.org`; rate limit of 5 per minute per IP and location.
+- CI: workflows on push and PR, and release on tag (`contents: write`).
 
-## 4. Activos (críticos según el usuario)
+## 4. Assets (critical according to the owner)
 
-El usuario marcó como críticos los cuatro:
+The owner marked all four as critical:
 
-1. **Clave de firma RS256 (`SIGNING_KEY`) y validez de las credenciales**, más `DRAW_HMAC_KEY` y los bancos de preguntas con respuestas (KV `QUESTIONS`).
-2. **Secretos y equipo del usuario:** `.env*`, claves SSH, `.git/config`, credenciales; ejecución de código en la máquina del usuario.
-3. **Confidencialidad de ofertas de proveedores** (`supplier-isolation.mjs`: el orquestador no lee la oferta cruda durante `/arckit:evaluate` y `/arckit:score`).
-4. **Integridad de los paquetes publicados** (marketplace `tractorjuice/arckit-claude`, extensiones publicadas, wheel de PyPI).
+1. **RS256 signing key (`SIGNING_KEY`) and credential validity**, plus `DRAW_HMAC_KEY` and the question banks with their answers (KV `QUESTIONS`).
+2. **User secrets and machine:** `.env*`, SSH keys, `.git/config`, credentials; code execution on the user's machine.
+3. **Confidentiality of supplier bids** (`supplier-isolation.mjs`: the orchestrator does not read the raw bid during `/arckit:evaluate` and `/arckit:score`).
+4. **Integrity of published packages** (the `tractorjuice/arckit-claude` marketplace, published extensions, the PyPI wheel).
 
-Otros: datos personales en credenciales (nombre), sitio arckit.org.
+Other: personal data in credentials (name), the arckit.org site.
 
-## 5. Atacantes
+## 5. Attackers
 
-Según el usuario, **todos importan; no se descarta ninguno**:
+According to the owner, **all of them matter; none is ruled out**:
 
-- Contenido hostil que el agente lee (prompt injection) para saltarse hooks o exfiltrar.
-- Cualquiera en internet contra el Worker (falsificar credenciales, obtener respuestas, agotar cuota KV).
-- Contribuidor malicioso vía PR, CI o cadena de suministro de releases.
-- Quien puede hacer push al repo del usuario (commits, archivos en `external/`).
+- Hostile content the agent reads (prompt injection) to bypass hooks or exfiltrate data.
+- Anyone on the internet attacking the Worker (forging credentials, obtaining answers, exhausting KV quota).
+- A malicious contributor via PR, CI or the release supply chain.
+- Anyone who can push to the user's repository (commits, files in `external/`).
 
-## 6. Controles existentes
+## 6. Existing controls
 
-- Tier 1 de `ENFORCEMENT.md`: protección de archivos (resuelve symlinks), detección de secretos en escritura y prompt, nombres `ARC-*`, aislamiento de proveedor, contexto de sesión cercado como datos, ningún hook concede permisos, fallo cerrado para artefactos ArcKit y documentos de proveedor (Claude Code ≥ v2.1.295).
-- Worker: JWS RS256, HMAC del sorteo con nonce de un solo uso, rate limit, CORS restringido, logs sin cuerpo de petición.
-- CI: acciones fijadas por SHA (`check-action-pins.py`).
+- Tier 1 of `ENFORCEMENT.md`: file protection (resolves symlinks), secret detection on writes and prompts, `ARC-*` naming, supplier isolation, session context fenced as data, no hook grants permissions, fail-closed for ArcKit artefacts and supplier documents (Claude Code v2.1.295 or later).
+- Worker: RS256 JWS, HMAC-signed draw with a single-use nonce, rate limiting, restricted CORS, logs without request bodies.
+- CI: actions pinned by SHA (`check-action-pins.py`).
 
-## 7. Fuera de alcance / riesgo aceptado
+## 7. Out of scope and accepted risk
 
-El usuario indicó que **nada está fuera de alcance**: todos los runtimes (incluidos los que no tienen gates y Kimi) y las copias en `extensions/` cuentan.
+The owner stated that **nothing is out of scope**: every runtime (including those without gates, and Kimi) and the copies in `extensions/` count.
 
-## 8. Preguntas abiertas
+## 8. Open questions
 
-- ¿Qué hallazgos ya tienen PR upstream en `tractorjuice/arc-kit`? (etiqueta `Upstream`).
+- Which findings already have an upstream PR in `tractorjuice/arc-kit`? (`Upstream` tag).
