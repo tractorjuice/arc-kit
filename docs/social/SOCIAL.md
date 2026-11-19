@@ -587,3 +587,15 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-75267164
 > Does that match how you make build-or-buy calls, or did you find the verdict useful? I'd like to know before the next release.
 >
 > <https://arckit.org/share/2026-11-12-arckit-v6-22-research-reports-evidence.html>
+
+### Q51. ArcKit 6.23.0 article — Medium, ArcKit publication — published 19 November
+
+Published: <https://medium.com/arckit/safer-food-better-business-sfbb-for-caterers-complete-your-pack-with-arckit-v6-23-0-6c6fb8703306>. Imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: ArcKit, Food Safety, Small Business, Hospitality, Open Source. The maintainer's 299 subscribers were notified. The known import fixes were needed (empty heading lines, the code block, the byline, the community list), with two new ones: an empty second code block to delete, and the two italic lines at the foot run together. The image has a shorter alt text because Medium takes at most 500 characters.
+
+### Q52. ArcKit 6.23.0 article — maintainer's own LinkedIn, as a LinkedIn article — published 19 November
+
+Published: <https://www.linkedin.com/pulse/safer-food-better-business-sfbb-caterers-complete-your-mark-craddock-spk9e/>. Asked which LinkedIn posts to send, the maintainer chose a LinkedIn article in place of the page and group posts, so neither went out for this release. The body is the Medium story's, with commands in bold because LinkedIn drops inline code, the hero as the cover, a search title and description set in the article's settings, and no introduction.
+
+### Q53. ArcKit 6.23.0 — Discord #announcements — posted 19 November
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/1572814172045967440>. The link to the arckit.org article and nothing else, on the maintainer's word. Discord's preview card shows the article's title, description and hero.
