@@ -1,16 +1,40 @@
 """Generate the hero image for the ArcKit v6.20.0 release article.
 
-A supplier's bid stops at a wall. A read-only reader passes short claims
-through it to the scoring, with a strip for what follows from that and a line
-for the two new overlays. Same house style as the sibling generate-hero-*.py
-scripts.
+Written for the person evaluating tenders: the steps ArcKit takes them
+through, then what they can rely on. Same house style as the sibling
+generate-hero-*.py scripts.
 
-    uv run --with pillow python docs/articles/generate-hero-v6-20-a-bid-cant-mark-its-own-homework.py
+    uv run --with pillow python docs/articles/generate-hero-v6-20-a-bid-cant-mark-its-own-homework.py [output.png]
+
+With no argument it writes the published hero's file name, so pass a path to
+start a new design without overwriting a hero the maintainer has restyled.
+
+The published hero is a redesigned version of this layout, supplied by the
+maintainer on 19 November 2026, with three lines added beside the headline:
+"Read the bid with AI", "Score only the claims" and "Keep the bid separate".
 """
 
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
+
+# --- wording
+VERSION = "ArcKit v6.20.0"
+HEADLINE = ("Keep a bid's hidden instructions", "out of the score.")
+SUB = "Tender evaluation with AI: the bid stays away from the part of ArcKit that scores it"
+STEPS = (
+    ("Export each", "bid to PDF", "One folder for", "each supplier"),
+    ("An AI reader", "opens one bid", "Read-only, one", "supplier at a time"),
+    ("Short claims", "come back", "Each with its file", "and location"),
+    ("ArcKit scores", "the claims", "The bid stays with", "the AI reader"),
+    ("Your panel", "decides", "The scores are", "a draft"),
+)
+FACTS = ("Planted text is reported, with where it is", "Every score traces to its source")
+FOOT = "Also new: arc42 from your existing artefacts, and NORA and GEMMA for Dutch government."
+SMALL = "The separate AI reader needs Claude Code. The other assistants still read bids in one place."
+PUBLISHED = "2026-11-07-arckit-v6-20-a-bid-cant-mark-its-own-homework-hero.png"
+# --- drawing
 
 W, H = 1600, 900
 BG = (13, 17, 23)
@@ -21,7 +45,7 @@ MUTED = (139, 148, 158)
 GOLD = (234, 179, 8)
 CYAN = (34, 211, 238)
 GREEN = (52, 211, 153)
-RED = (248, 113, 113)
+COLOURS = (CYAN, GOLD, GREEN, CYAN, GREEN)
 
 img = Image.new("RGB", (W, H), BG)
 d = ImageDraw.Draw(img)
@@ -39,58 +63,44 @@ def font(size, bold=False):
     return ImageFont.load_default()
 
 
-def box(xy, title, lines, colour):
-    x0, y0, x1, y1 = xy
-    d.rounded_rectangle(xy, radius=18, fill=PANEL, outline=colour, width=3)
-    d.text(((x0 + x1) / 2, y0 + 44), title, font=font(30, True), fill=TEXT, anchor="mm")
-    for i, line in enumerate(lines):
-        d.text(((x0 + x1) / 2, y0 + 94 + i * 34), line, font=font(22), fill=MUTED, anchor="mm")
+def fits(text, face, width):
+    """Stop with the line named when wording is too wide for its space."""
+    if d.textlength(text, font=face) > width:
+        sys.exit(f"too wide for {width}px: {text!r}")
+    return text
 
 
-def arrow(x0, x1, y, colour, label=None):
-    d.line((x0, y, x1 - 14, y), fill=colour, width=5)
-    d.polygon([(x1, y), (x1 - 18, y - 11), (x1 - 18, y + 11)], fill=colour)
-    if label:
-        d.text(((x0 + x1) / 2, y - 26), label, font=font(21, True), fill=colour, anchor="mm")
+d.text((80, 62), VERSION, font=font(28, True), fill=GOLD)
+d.text((80, 104), fits(HEADLINE[0], font(58, True), 1440), font=font(58, True), fill=TEXT)
+d.text((80, 172), fits(HEADLINE[1], font(58, True), 1440), font=font(58, True), fill=TEXT)
+d.text((80, 254), fits(SUB, font(28), 1440), font=font(28), fill=MUTED)
 
+# The steps, in the order you meet them.
+TOP = 330
+WIDTH, GAP = 272, 20
+for i, (title1, title2, detail1, detail2) in enumerate(STEPS):
+    colour = COLOURS[i]
+    x = 80 + i * (WIDTH + GAP)
+    d.rounded_rectangle((x, TOP, x + WIDTH, TOP + 270), radius=16, fill=PANEL, outline=colour, width=3)
+    d.ellipse((x + 24, TOP + 24, x + 76, TOP + 76), fill=colour)
+    d.text((x + 50, TOP + 50), str(i + 1), font=font(30, True), fill=BG, anchor="mm")
+    d.text((x + 24, TOP + 118), fits(title1, font(27, True), WIDTH - 40), font=font(27, True), fill=TEXT, anchor="lm")
+    d.text((x + 24, TOP + 152), fits(title2, font(27, True), WIDTH - 40), font=font(27, True), fill=TEXT, anchor="lm")
+    d.text((x + 24, TOP + 204), fits(detail1, font(22), WIDTH - 40), font=font(22), fill=MUTED, anchor="lm")
+    d.text((x + 24, TOP + 234), fits(detail2, font(22), WIDTH - 40), font=font(22), fill=MUTED, anchor="lm")
 
-d.text((80, 62), "ArcKit v6.20.0", font=font(28, True), fill=GOLD)
-d.text((80, 104), "A bid can't mark its own homework", font=font(62, True), fill=TEXT)
-d.text((80, 190), "Scoring sees short claims, never the bid", font=font(30), fill=MUTED)
-
-TOP, BOTTOM = 290, 490
-MID = (TOP + BOTTOM) // 2
-box((80, TOP, 370, BOTTOM), "Supplier's bid", ["Written by someone", "who wants a high score"], RED)
-arrow(370, 470, MID, RED)
-box((470, TOP, 760, BOTTOM), "Reader", ["Read-only, and one", "supplier at a time"], CYAN)
-
-# The wall: the bid stops here, and only claims cross it.
-WALL = 806
-for y in range(TOP - 26, BOTTOM + 26, 26):
-    d.line((WALL, y, WALL, y + 14), fill=GOLD, width=6)
-d.text((WALL, BOTTOM + 52), "The bid stops here", font=font(22, True), fill=GOLD, anchor="mm")
-
-d.line((760, MID, WALL, MID), fill=GREEN, width=5)
-arrow(WALL, 1000, MID, GREEN, "Short claims")
-box((1000, TOP, 1520, BOTTOM), "Scoring", ["Each score traces to", "a file and a location"], GREEN)
-
-Y = 600
-facts = (
-    ("No claim, no marks", GREEN),
-    ("Planted text is reported, not followed", GOLD),
-    ("Unreadable bid stays unscored", CYAN),
-)
-widths = (360, 620, 480)
+# What you can rely on.
+Y = 640
 x = 80
-for (text, colour), width in zip(facts, widths):
-    d.rounded_rectangle((x, Y, x + width - 20, Y + 76), radius=14, fill=PANEL, outline=LINE, width=2)
-    d.text((x + (width - 20) / 2, Y + 38), text, font=font(25, True), fill=colour, anchor="mm")
-    x += width
+for text, colour in zip(FACTS, (CYAN, GREEN)):
+    d.rounded_rectangle((x, Y, x + 710, Y + 76), radius=14, fill=PANEL, outline=LINE, width=2)
+    d.text((x + 355, Y + 38), fits(text, font(26, True), 670), font=font(26, True), fill=colour, anchor="mm")
+    x += 730
 
-d.line((80, 736, 1520, 736), fill=LINE, width=2)
-d.text((80, 766), "Also new: arc42 from your existing artefacts, and NORA and GEMMA for Dutch government", font=font(29), fill=TEXT)
-d.text((80, 816), "Checks on your artefacts now stop the write when they can't run", font=font(25), fill=MUTED)
+d.line((80, 762, 1520, 762), fill=LINE, width=2)
+d.text((80, 790), fits(FOOT, font(26), 1440), font=font(26), fill=TEXT)
+d.text((80, 836), fits(SMALL, font(22), 1440), font=font(22), fill=MUTED)
 
-out = Path(__file__).with_name("2026-11-07-arckit-v6-20-a-bid-cant-mark-its-own-homework-hero.png")
+out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).with_name(PUBLISHED)
 img.save(out, optimize=True)
 print(out)
