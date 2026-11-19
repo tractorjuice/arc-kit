@@ -65,7 +65,7 @@ From the JSON `projects[]` array, each entry has `name`, `number`, and `path`. R
 - Otherwise match the `name` field case-insensitively against the service name / fragment in
   `$ARGUMENTS`.
 - If exactly one project matches, use it. If several match, use the **AskUserQuestion** tool to let
-  the user pick. If `$ARGUMENTS` is empty, list the candidate projects and ask which one.
+  the user pick. If `$ARGUMENTS` is empty, list the candidate projects, then use the AskUserQuestion tool to ask which, offering them as the choices with none marked as recommended (`${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`, section 5). With no answer, stop: do not pick one.
 
 **If no matching project is found**, tell the user the service project does not exist and that they
 must run `/arckit-uk-gcloud:service-design` first to create it, then **stop** (do not create a project here).

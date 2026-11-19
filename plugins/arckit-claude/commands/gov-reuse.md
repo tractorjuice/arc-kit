@@ -73,7 +73,7 @@ A DRAFT reuse-assessment artefact at `projects/{P}-{NAME}/research/ARC-{P}-GOVR-
 Resolve in this order — do not skip ahead:
 
 1. If the user's `$ARGUMENTS` contains an explicit `projects/{NNN}-{name}/` path, use that path verbatim.
-2. If `$ARGUMENTS` contains a bare project number (e.g. `001`) or name fragment, glob `projects/{NUMBER}-*/` or `projects/*-*{NAME}*/` and use the unique match. If multiple match, ask the user to disambiguate before proceeding — do not default to "most recent".
+2. If `$ARGUMENTS` contains a bare project number (e.g. `001`) or name fragment, glob `projects/{NUMBER}-*/` or `projects/*-*{NAME}*/` and use the unique match. If multiple match, list the matches, then use the AskUserQuestion tool to ask which, offering them as the choices with none marked as recommended (`${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`, section 5). With no answer, stop — do not default to "most recent".
 3. Otherwise, glob `projects/[0-9][0-9][0-9]-*/`, exclude `000-global`, and pick the directory with the most-recently-modified file. Echo the chosen path back so the user can correct you if wrong.
 
 Once `{P}-{NAME}` is locked, read:

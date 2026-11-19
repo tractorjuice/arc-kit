@@ -67,7 +67,7 @@ A DRAFT research artefact at `projects/{P}-{NAME}/research/ARC-{P}-AZRS-NN-vN.N.
 
 ### Step 1: Resolve the project directory
 
-Resolve `$ARGUMENTS` to a `projects/{NNN}-{name}/` path as usual — explicit path, then bare number or name fragment (ask to disambiguate on multiple matches), then most-recently-modified project, echoed back.
+Resolve `$ARGUMENTS` to a `projects/{NNN}-{name}/` path as usual — explicit path, then bare number or name fragment (on multiple matches, list them, then use the AskUserQuestion tool to ask which, offering them as the choices with none marked as recommended (`${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`, section 5); with no answer, stop), then most-recently-modified project, echoed back.
 
 Read:
 

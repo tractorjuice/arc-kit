@@ -28,9 +28,19 @@ Then say so. The closing summary carries an **Assumptions** line listing every d
 
 ## 4. Non-interactive runs never block
 
-The question tool is absent in headless runs (`claude -p`, the eval suite), inside build-harness subagents, and on runtimes that have no equivalent. In every such case take the default for every question, continue, and list the defaults as assumptions. The build harness (`skills/arckit-build/SKILL.md`) restates this for its workers with a defaults table keyed on question header; that table wins where it names a header.
+The question tool is absent in headless runs (`claude -p`, the eval suite), inside build-harness subagents, and on runtimes that have no equivalent. In every such case take the default for every question, continue, and list the defaults as assumptions. The one question that has no default is a choice under section 5: there the run stops and lists the candidates. The build harness (`skills/arckit-build/SKILL.md`) restates this for its workers with a defaults table keyed on question header; that table wins where it names a header.
 
-## 5. What this is not
+## 5. A choice only the user can make
+
+Some questions have no safe default: which of several matching projects a command should work on, or which of several documents a request meant. A guess would write an artefact into the wrong project or analyse the wrong document.
+
+List every candidate first, in a message of its own, because the question tool takes four options at most and the user may see only the tool. Then put the question with the question tool, on its own, offering the candidates as the choices (the first four where there are more; the tool's free-text entry takes any other) with **none** marked (Recommended).
+
+Rules 3 and 4 do not apply to it. If no answer comes back, or the run has nobody to answer, stop without writing anything and leave the list as the result, so the user can run the command again with one named. Never pick the most recent, the first or the largest.
+
+Rule 1 still applies: a project or document named in the arguments, or fixed by the project context, is not asked about.
+
+## 6. What this is not
 
 - Not a prerequisite check. A missing upstream artefact is a warning and a suggestion to run its command, not a question.
 - Not a request for documents. "Do you have any RFP or org chart I could read?" is an offer the user can take up by placing files under `external/` and re-running; it is stated once in the summary and never blocks the write.

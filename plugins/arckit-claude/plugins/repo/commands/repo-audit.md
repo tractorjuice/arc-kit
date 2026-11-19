@@ -109,7 +109,7 @@ Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to enumera
 
 - **No project exists** → skip to 3c, Cold mode. Do **not** call `create-project.sh` here: it requires `ARC-000-PRIN-*.md` and will refuse, which would block the audit on a prerequisite this command deliberately does not need. Write the artefact to `projects/001-{repo-slug}/audits/`, creating the directory directly.
 - **Exactly one project** → treat it as a *candidate*, not a decision. Continue to 3b.
-- **More than one** and the arguments do not name one → ask which project the audit belongs to. Do not guess.
+- **More than one** and the arguments do not name one → list them, then use the AskUserQuestion tool to ask which, offering them as the choices with none marked as recommended (`${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`, section 5). Do not guess: with no answer, stop.
 
 ### 3b. Confirm the project actually describes this repository
 
@@ -121,7 +121,7 @@ Signals that it does **not**:
 - Requirements describe business outcomes with no counterpart anywhere in the source tree.
 - No requirement references a component, service, or technology present in the repository.
 
-If the evidence is weak or contradictory, **ask the user**: "Project `{id}-{name}` looks like it describes `{summary}` rather than this codebase. Audit against it, or run a standalone audit?" A wrong answer here is expensive: it produces a full page of confident Met/Not-met verdicts scoring the code against requirements for an unrelated system.
+If the evidence is weak or contradictory, use the AskUserQuestion tool to ask: "Project `{id}-{name}` looks like it describes `{summary}` rather than this codebase. Audit against it, or run a standalone audit?", offering "Run a standalone audit (Recommended)" and "Audit against the project", as `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` sets out. With no answer, run the standalone audit and record that as an assumption in the Audit Scope: it scores nothing against requirements that may belong to another system. A wrong answer here is expensive: it produces a full page of confident Met/Not-met verdicts scoring the code against requirements for an unrelated system.
 
 Record the outcome in the artefact's Audit Scope, whichever way it goes.
 
