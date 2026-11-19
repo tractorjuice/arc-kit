@@ -1,4 +1,4 @@
-![ArcKit v6.20.0: a bid can't mark its own homework. A supplier's bid goes to a read-only reader, one supplier at a time, and stops at a wall. Only short claims cross it to the scoring, where each score traces to a file and a location. No claim, no marks. Planted text is reported, not followed. An unreadable bid stays unscored. Also new: arc42 from your existing artefacts, and NORA and GEMMA for Dutch government.](https://arckit.org/articles/2026-11-07-arckit-v6-20-a-bid-cant-mark-its-own-homework-hero.png)
+![Tender evaluation in ArcKit v6.20.0: keep a bid's hidden instructions out of the score. Five steps: export each bid to PDF, one folder for each supplier; an AI reader opens one bid, read-only, one supplier at a time; short claims come back, each with its file and location; ArcKit scores the claims while the bid stays with the AI reader; your panel decides, and the scores are a draft. Planted text is reported, with where it is, and every score traces to its source.](https://arckit.org/articles/2026-11-07-arckit-v6-20-a-bid-cant-mark-its-own-homework-hero.png)
 
 # Tender Evaluation with AI: Keep a Bid's Hidden Instructions Out of the Score in ArcKit v6.20.0
 
