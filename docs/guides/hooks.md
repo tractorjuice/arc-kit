@@ -34,7 +34,7 @@ Also detects:
 
 ### version-check
 
-Compares the local plugin version against the latest GitHub release tag. Shows a notification if an update is available.
+Compares the local plugin version against the latest GitHub release tag. If a newer ArcKit is out, it shows a notice with the command to update now, how to turn automatic updates on (`/plugin`, the Marketplaces tab, `arckit-claude`), and how to pin a release on a regulated engagement. It also warns when Claude Code is older than the version ArcKit needs.
 
 ## Stop / StopFailure Hooks
 
