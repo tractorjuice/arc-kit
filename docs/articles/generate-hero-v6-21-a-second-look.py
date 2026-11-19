@@ -11,7 +11,9 @@ start a new design without overwriting a hero the maintainer has restyled.
 
 The published hero is a redesigned version of this layout, supplied by the
 maintainer on 19 November 2026, with three lines added beside the headline:
-"Independent second look", "Three AI reviewers" and "A decision with your board".
+"A second look", "Three AI reviewers" and "A decision with your board". The first
+line arrived as "Independent second look" and was changed at the maintainer's
+word the same day, using letters already in the image.
 """
 
 import sys
