@@ -308,6 +308,7 @@
 <p>Everything in it follows from two rules.</p>
 <p><strong>The pack's wording isn't rewritten.</strong> All 100 pages come with the overlay. The assistant doesn't write that text into your document. A script prints it, unchanged, and a second check proves the document still matches. So a temperature or a time in your document is the one the pack prints.</p>
 <p><strong>A document says only what the business said.</strong> Anything nobody at the business has confirmed reads NOT YET ANSWERED. The commands never suggest an answer. If nobody is there to answer, nothing is confirmed and nothing is signed.</p>
+<p>One of the tests shows what that means. The owner of an invented café gives four answers about cooking, then says &quot;for everything else just put whatever is usual for a cafe like ours&quot;. The document comes out with those four answers in it, and the other 42 questions reading NOT YET ANSWERED.</p>
 <h2 id="five-commands-in-order">Five commands, in order</h2>
 <ul>
 <li><code>/arckit-uk-food:uk-food-profile</code> records the business: who runs it, where it is, what it sells, its equipment and staff, and whether it does anything that needs extra care.</li>
@@ -320,6 +321,15 @@
 <h2 id="a-sign-off-means-someone-read-it">A sign-off means someone read it</h2>
 <p>A sign-off records a name, a role, a date and the version that person read. It covers the document exactly as it reads when it's signed.</p>
 <p>Change an answer afterwards and the sign-off no longer counts. The document is written again as a new version, and that version needs signing. A document whose header says it's signed off when no sign-off is recorded fails the check.</p>
+<h2 id="what-it-wont-do-even-if-you-ask">What it won't do, even if you ask</h2>
+<p>Most of the reviewing went into the ways a helpful assistant could quietly make a food safety document untrue. These are the ones that changed how the overlay works.</p>
+<ul>
+<li><strong>It won't offer you the usual answers</strong> to approve with one &quot;yes&quot;. An answer has to come from you.</li>
+<li><strong>It won't make up a reason or a date.</strong> Where the pack asks for one and you haven't given it, the command asks you. Until then the answer stays unconfirmed.</li>
+<li><strong>It won't tidy your words.</strong> A procedure you wrote is kept exactly as you wrote it, and so is the name you gave it.</li>
+<li><strong>It won't let a changed document stay signed.</strong> A reviewer tried fifteen kinds of edit to a signed file. Each one ended the sign-off.</li>
+<li><strong>It won't undo sign-offs that still hold.</strong> Add a member of staff and the profile needs signing again. The documents that don't print the staff list stay signed.</li>
+</ul>
 <h2 id="special-processes-stay-with-you-and-your-council">Special processes stay with you and your council</h2>
 <p>The pack names processes and foods that need extra care, such as vacuum packing, sous vide and less than thoroughly cooked burgers. The profile asks whether the business does each one.</p>
 <p>The overlay won't write a procedure for any of them, and it won't finish or improve one if you ask. A procedure written by a tool would be a control nobody at the business has tested.</p>
@@ -329,13 +339,18 @@
 <li><strong>It isn't legal advice.</strong> The food business operator is responsible for the safety of the food and for keeping the records. Your council's environmental health team is the authority for your premises. The Food Standards Agency hasn't reviewed or endorsed the overlay, and no food safety professional has reviewed it yet. Treat everything it produces as a draft to read and confirm.</li>
 <li><strong>England and Wales only</strong>, and the caterers' pack only.</li>
 <li><strong>It doesn't keep the diary.</strong> That stays with you, on paper or however you keep it today.</li>
+<li><strong>It doesn't choose where the pack disagrees with itself.</strong> In two places the pack words the same limit two ways. Your documents print each as the pack prints it. If one matters to you, ask your council's environmental health team.</li>
 <li><strong>The pack's separate sheets aren't in it yet</strong>: the cleaning schedule, the training record, the suppliers' and contacts lists, and allergen information for each dish. There are no dates for those.</li>
 </ul>
-<h2 id="how-it-was-checked">How it was checked</h2>
+<h2 id="how-it-was-built">How it was built</h2>
+<p>It was built with Claude Code over two days, starting from the pack itself: 39 PDFs, the main one 100 pages.</p>
 <ul>
-<li><strong>The words.</strong> Every page of the transcription was compared with the PDF's own text. A second reader, which never saw the first reading, then read the pages again.</li>
+<li><strong>The check came first.</strong> Before any of the pack was typed up, every word on every page was saved from the PDF's own text: 27,967 words. A test then held the overlay's copy of the pack to exactly those words, page by page.</li>
+<li><strong>Two readings.</strong> Each section was then read a second time, by a reader that never saw the first transcription, and the two were compared.</li>
 <li><strong>The figures.</strong> The pack prints 84 figures and named standards: temperatures, times, British Standards. Each was checked against a picture of its page by a separate AI reader that saw only the pictures. All 84 matched.</li>
-<li><strong>The behaviour.</strong> The commands were run against an invented café, and each run was judged on what it did to the files, not on what it said it had done. An answer nobody gave stayed unanswered. A special process was flagged and not written up. A sign-off was refused while questions were still open.</li>
+<li><strong>A builder and a reviewer.</strong> Each piece was built by one AI agent from a written brief, then reviewed by a separate one whose job was to break it. The fixes were checked again.</li>
+<li><strong>Decisions on the record.</strong> 95 decisions were written down as they were made, each with what it would cost if it turned out wrong.</li>
+<li><strong>Live runs.</strong> The commands were run more than twenty times against the invented café. Each run was judged on what it did to the files, not on what it said it had done.</li>
 </ul>
 <p>No real business has used it yet. That's why it's marked experimental.</p>
 <h2 id="help-wanted">Help wanted</h2>

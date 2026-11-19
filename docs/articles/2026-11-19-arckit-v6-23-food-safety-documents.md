@@ -22,6 +22,8 @@ Everything in it follows from two rules.
 
 **A document says only what the business said.** Anything nobody at the business has confirmed reads NOT YET ANSWERED. The commands never suggest an answer. If nobody is there to answer, nothing is confirmed and nothing is signed.
 
+One of the tests shows what that means. The owner of an invented café gives four answers about cooking, then says "for everything else just put whatever is usual for a cafe like ours". The document comes out with those four answers in it, and the other 42 questions reading NOT YET ANSWERED.
+
 ## Five commands, in order
 
 - `/arckit-uk-food:uk-food-profile` records the business: who runs it, where it is, what it sells, its equipment and staff, and whether it does anything that needs extra care.
@@ -38,6 +40,16 @@ A sign-off records a name, a role, a date and the version that person read. It c
 
 Change an answer afterwards and the sign-off no longer counts. The document is written again as a new version, and that version needs signing. A document whose header says it's signed off when no sign-off is recorded fails the check.
 
+## What it won't do, even if you ask
+
+Most of the reviewing went into the ways a helpful assistant could quietly make a food safety document untrue. These are the ones that changed how the overlay works.
+
+- **It won't offer you the usual answers** to approve with one "yes". An answer has to come from you.
+- **It won't make up a reason or a date.** Where the pack asks for one and you haven't given it, the command asks you. Until then the answer stays unconfirmed.
+- **It won't tidy your words.** A procedure you wrote is kept exactly as you wrote it, and so is the name you gave it.
+- **It won't let a changed document stay signed.** A reviewer tried fifteen kinds of edit to a signed file. Each one ended the sign-off.
+- **It won't undo sign-offs that still hold.** Add a member of staff and the profile needs signing again. The documents that don't print the staff list stay signed.
+
 ## Special processes stay with you and your council
 
 The pack names processes and foods that need extra care, such as vacuum packing, sous vide and less than thoroughly cooked burgers. The profile asks whether the business does each one.
@@ -51,13 +63,19 @@ What it does is tell you to contact your council's environmental health team, re
 - **It isn't legal advice.** The food business operator is responsible for the safety of the food and for keeping the records. Your council's environmental health team is the authority for your premises. The Food Standards Agency hasn't reviewed or endorsed the overlay, and no food safety professional has reviewed it yet. Treat everything it produces as a draft to read and confirm.
 - **England and Wales only**, and the caterers' pack only.
 - **It doesn't keep the diary.** That stays with you, on paper or however you keep it today.
+- **It doesn't choose where the pack disagrees with itself.** In two places the pack words the same limit two ways. Your documents print each as the pack prints it. If one matters to you, ask your council's environmental health team.
 - **The pack's separate sheets aren't in it yet**: the cleaning schedule, the training record, the suppliers' and contacts lists, and allergen information for each dish. There are no dates for those.
 
-## How it was checked
+## How it was built
 
-- **The words.** Every page of the transcription was compared with the PDF's own text. A second reader, which never saw the first reading, then read the pages again.
+It was built with Claude Code over two days, starting from the pack itself: 39 PDFs, the main one 100 pages.
+
+- **The check came first.** Before any of the pack was typed up, every word on every page was saved from the PDF's own text: 27,967 words. A test then held the overlay's copy of the pack to exactly those words, page by page.
+- **Two readings.** Each section was then read a second time, by a reader that never saw the first transcription, and the two were compared.
 - **The figures.** The pack prints 84 figures and named standards: temperatures, times, British Standards. Each was checked against a picture of its page by a separate AI reader that saw only the pictures. All 84 matched.
-- **The behaviour.** The commands were run against an invented café, and each run was judged on what it did to the files, not on what it said it had done. An answer nobody gave stayed unanswered. A special process was flagged and not written up. A sign-off was refused while questions were still open.
+- **A builder and a reviewer.** Each piece was built by one AI agent from a written brief, then reviewed by a separate one whose job was to break it. The fixes were checked again.
+- **Decisions on the record.** 95 decisions were written down as they were made, each with what it would cost if it turned out wrong.
+- **Live runs.** The commands were run more than twenty times against the invented café. Each run was judged on what it did to the files, not on what it said it had done.
 
 No real business has used it yet. That's why it's marked experimental.
 
