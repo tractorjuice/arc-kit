@@ -282,7 +282,8 @@ def create_claude_settings() -> None:
                 "source": {
                     "source": "github",
                     "repo": "tractorjuice/arckit-claude",
-                }
+                },
+                "autoUpdate": True,
             }
         },
         "enabledPlugins": {

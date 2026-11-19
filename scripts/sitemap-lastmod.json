@@ -572,8 +572,8 @@
     "text_sha256": "f9a6696799e088c982a8266a0a0f0f1f2dcca2ec6c512bf7a0eb5913bb07b061"
   },
   "guide/mcp-servers.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "323196241b84c19fa86fa32d8cb8bfadb40494c5d713be7373ca7cf3d2180ded"
+    "lastmod": "2026-11-19",
+    "text_sha256": "7cb468761276f89f5e72b5cdda3583daf5f549d7e4c676d3a638c5b88dbc5fec"
   },
   "guide/microsoft-learn-mcp.html": {
     "lastmod": "2026-10-25",
@@ -1115,9 +1115,13 @@
     "lastmod": "2026-10-25",
     "text_sha256": "b46bcbcbdce0c5725e9522d081bdd184df98c7347ba1737b2c8e77a3f1530d75"
   },
+  "guide/workflow.html": {
+    "lastmod": "2026-11-19",
+    "text_sha256": "be6b6290becf0a78637c292145655bc8bc9ec5fa61253f32b2cd0939330a008e"
+  },
   "guides.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "c60bae5b47464e57abd4491ddf801290bbd191dd2bd1c4393f6dbc49c6ea55ca"
+    "lastmod": "2026-11-19",
+    "text_sha256": "e42390cdfd8061df64281a2d66dff9d605ee440af5e271a90d9def25c963f7fd"
   },
   "index.html": {
     "lastmod": "2026-11-19",
@@ -1125,7 +1129,7 @@
   },
   "llms.txt": {
     "lastmod": "2026-11-19",
-    "text_sha256": "faa29b2492ca9ea7f12926f3add98570e2e692c449b7d35c1081ab5fec3096fc"
+    "text_sha256": "1660268b7c4729f75116ef2c990c5c09665192f3b0269e3dd7a8f7e1612360f1"
   },
   "on-github.html": {
     "lastmod": "2026-11-16",
