@@ -41,6 +41,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 ### Onboarding and setup
 
 - [Getting started walkthrough](https://arckit.org/guides/start.md): `/arckit:start` onboarding.
+- [The ArcKit Workflow, Phase by Phase](https://arckit.org/guides/workflow.md): every phase from project plan to published documentation, with the command to run and what it produces.
 - [Project initialization](https://arckit.org/guides/init.md): `/arckit:init` and `arckit init` CLI.
 - [Template customization](https://arckit.org/guides/customize.md): Override templates in `.arckit/templates-custom/`.
 - [Template builder](https://arckit.org/guides/template-builder.md): Build new document templates.

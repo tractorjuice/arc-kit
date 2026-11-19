@@ -77,6 +77,9 @@ ROOT_ONLY_BY_DESIGN = {
     "uk-fs-payments-overlay.md",
     "uk-nhs-clinical-safety-overlay.md",
     "us-federal-overlay.md",
+    # The phase-by-phase walkthrough the root README carried until November 2026. It is about the
+    # whole workflow, not one command, so no plugin ships it.
+    "workflow.md",
 }
 
 

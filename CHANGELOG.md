@@ -7,15 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **The workflow has its own guide.** [The ArcKit Workflow, Phase by Phase](https://arckit.org/guide/workflow.html) goes through each phase from project plan to published documentation: the command to run, what it produces and what it draws on. It is the walkthrough the README used to carry, now on the site where a search can find it.
+
 ### Changed
 
-- **The README is easier to find your way round.** It now opens with a contents list, and Quick Start is arranged by assistant: Claude Code in full, and Gemini CLI, GitHub Copilot, Codex CLI, OpenCode CLI, Mistral Vibe and Kimi Code each in a block of its own with how to install, start a project, run a command and update. The overlays sit under one heading with a table of all 20, including the four that had no section of their own (Australia, Australian energy, repository tooling and the FDE site generator). The second Documentation section, the second list of example projects and the repeated Copilot and Codex instructions are gone.
+- **The README says what ArcKit is and how to install it on the first screen.** It opens with what ArcKit is, in the words people search for, then the two install lines for Claude Code, links to getting started, the command reference, the guides and the films on arckit.org, and a picture of a real output. Before, the install command was 93 lines down and the README had no link to arckit.org at all. A list of what ArcKit drafts links each document to its guide.
+- **The README is nearly a third shorter.** Quick Start is arranged by assistant: Claude Code in full, and Gemini CLI, GitHub Copilot, Codex CLI, OpenCode CLI, Mistral Vibe and Kimi Code each in a block of its own with how to install, start a project, run a command and update. The workflow is a 15-row table that links to the new guide. The overlays sit under one heading with a table of all 20. The second Documentation section, the second list of example projects and the repeated Copilot and Codex instructions are gone.
+- **"Why ArcKit?" lists what you get, in terms you can check,** and says what ArcKit costs: it is free, and the AI coding assistant it runs in usually is not. The token figures are under "Context footprint" and were measured again on Claude Code 2.1.326: about 14,600 tokens in every session.
+- **"UK Government Compliance" is now "UK Government assessments".** Each command drafts an assessment for the accountable person to decide on, which is what the README's own limits section says.
+- **The comparison with other tools names its sources and the date they were checked,** and gives each tool's cost in words.
 - **ArcKit's settings examples turn automatic updates on.** Claude Code leaves automatic updates off for any marketplace that isn't Anthropic's own, and a marketplace has no way to turn them on for you: the choice is the `autoUpdate` line of the marketplace entry in a settings file. The test-repo template, the MCP servers guide, the test-repo notes and this repository's own settings now carry that line, as the enterprise guide already did, so a team that copies one gets each ArcKit release without doing anything. A test keeps every published example that way.
 
 ### Fixed
 
 - **The README's overlay install commands install the overlay.** `claude plugin install` takes one plugin name and ignores a second, so `claude plugin install arckit arckit-uae` installed the core plugin and nothing else. Twelve commands in the README had that form. Each now installs the overlay by name and enables it, since an overlay is switched off until you enable it.
+- **The README names overlay commands as Claude Code does.** It showed 103 of them as `/arckit:uae-pdpl`, which Claude Code answers with "Unknown skill": the command is `/arckit-uae:uae-pdpl`. The Overlays section says what the other assistants call the same command.
 - **The README no longer says the Claude Code plugin updates itself with no action needed.** It does only once automatic updates are turned on. The README now says how: in `/plugin`, under Marketplaces, or with the `autoUpdate` line in a settings file.
+- **Figures in the README match what ships.** GitHub Copilot gets 14 custom agents, not 10. The Gemini CLI and Mistral Vibe extensions bundle five MCP servers, not two and four. The EU, French, Dutch and Austrian overlays have 30 commands, not 29: `fr-irn` was missing from the list.
 - **The README no longer says Windows needs bash and jq.** ArcKit's hooks have run on Node for some time, and the platform table beside that note already showed the Claude Code plugin as fully supported on Windows.
 
 ## [6.23.0] — 2026-11-19

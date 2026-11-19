@@ -1115,17 +1115,21 @@
     "lastmod": "2026-10-25",
     "text_sha256": "b46bcbcbdce0c5725e9522d081bdd184df98c7347ba1737b2c8e77a3f1530d75"
   },
+  "guide/workflow.html": {
+    "lastmod": "2026-11-19",
+    "text_sha256": "be6b6290becf0a78637c292145655bc8bc9ec5fa61253f32b2cd0939330a008e"
+  },
   "guides.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "c60bae5b47464e57abd4491ddf801290bbd191dd2bd1c4393f6dbc49c6ea55ca"
+    "lastmod": "2026-11-19",
+    "text_sha256": "e42390cdfd8061df64281a2d66dff9d605ee440af5e271a90d9def25c963f7fd"
   },
   "index.html": {
     "lastmod": "2026-11-19",
     "text_sha256": "ca9a3929485f06a5c689672b7dd945e135327fe1966dd0dba035d776d178ef8f"
   },
   "llms.txt": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "38f3a697f41def169bd3773afab063903bbe17506122e498b50ac905ec21c8b5"
+    "lastmod": "2026-11-19",
+    "text_sha256": "9f36c3cb266154962e9f88bb669a2a3db5a43e7ca277c38007d35e0a447e16e8"
   },
   "on-github.html": {
     "lastmod": "2026-11-16",
