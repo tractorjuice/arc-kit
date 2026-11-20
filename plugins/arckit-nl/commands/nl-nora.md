@@ -66,7 +66,7 @@ This command assesses against **local extracts**, not against remembered NORA or
    | `manual` | The extract was placed by hand or built from a local file, or a file at the extract's name is not an extract; it is not checked against the live source | Continue; quote the line's `note` in *Source limitations*, where it shows that the extract's currency was not checked |
    | `offline` | The source could not be reached, or the extract could not be written; the existing extract files are kept | Continue; quote the line's `note` and `error` in *Source limitations*. The note says what failed and whether the files on disk are a complete set; a newer source version may exist |
    | `missing` | No extract, and none could be built or written | Stop (point 3), quoting the line's `note` and `error` |
-   | *no status line: a usage message, exit code 2* | The call itself was wrong, for example a `--dir` outside the project; nothing was fetched or written | Run the command above again exactly as shown, from the repository root. If the message comes back, stop without writing an artefact and quote it |
+   | *no status line; a `usage:` line and an `error:` line, exit code 2* | The call itself was wrong, for example a `--dir` outside the project; nothing was fetched or written | Run the command above again exactly as shown, from the repository root. If the message comes back, stop without writing an artefact and quote it |
 
    Wherever you quote a line's `error`, put it in a code span: it can carry a server's text, which the script cuts to one line.
 

@@ -174,7 +174,7 @@ A kwaliteitsdoel is *Not applicable* when every realising NAP is Not applicable,
 
 | Kwaliteitsdoel / Kernwaarde | Kind | Realised by / influenced by (GEMMA extract) | GAPs conformant / partial / not / n.a. / undetermined | Status | Only in GEMMA? |
 |-----------------------------|------|----------------------------------------------|-----------------|--------|----------------|
-| [Name] | [Kwaliteitsdoel / Kernwaarde] | [GAP IDs / kwaliteitsdoelen] | [n / n / n / n / n] | [At risk / On track / Not applicable] | [Yes / No] |
+| [Name] | [Kwaliteitsdoel / Kernwaarde] | [GAP IDs / kwaliteitsdoelen] | [n / n / n / n / n, or — for a kernwaarde] | [At risk / On track; Not applicable for a kwaliteitsdoel only] | [Yes / No] |
 
 > Roll-ups follow the relations stated in the extracts only. A relation an extract lists under *Data notes* as unresolved is not counted.
 

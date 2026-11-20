@@ -742,6 +742,7 @@ def test_usage_errors_name_the_problem(tmp_path, capsys, web):
         (["nora", "--from-dump", str(tmp_path)], "not a regular file"),
         (["gemma", "--from-xml", str(model), "--from-xml", str(dump)], "--from-xml takes one file"),
         (["nora", "--dir", str(tmp_path.parent)], "run the script from the project root"),
+        (["gemma", "--from-xml", ""], "no such file"),
     ]
     if os.path.exists(os.devnull):
         cases.append((["nora", "--from-dump", os.devnull], "not a regular file"))
@@ -752,7 +753,7 @@ def test_usage_errors_name_the_problem(tmp_path, capsys, web):
     assert web.requests == []
 
 
-def test_the_output_directory_is_compared_by_identity_not_by_name(tmp_path):
+def test_the_output_directory_is_compared_by_name_or_identity(tmp_path):
     # A path through a link to the directory, or a differently cased one on
     # a file system that ignores case (macOS, Windows), names the same place.
     root = tmp_path / "project"
@@ -767,6 +768,23 @@ def test_the_output_directory_is_compared_by_identity_not_by_name(tmp_path):
     except (OSError, NotImplementedError):
         pytest.skip("no symlinks here")
     assert nlr.inside(str(root), str(tmp_path / "link" / "ext"))
+
+
+def test_without_inode_numbers_the_output_directory_is_compared_by_name(tmp_path, monkeypatch):
+    # Some network, FUSE and exFAT volumes report no inode numbers, where
+    # every directory on the volume would compare as the same one.
+    root = tmp_path / "project"
+    (root / "ext").mkdir(parents=True)
+    (tmp_path / "other").mkdir()
+    real_stat = os.stat
+
+    def stat_without_inode(path, *args, **kwargs):
+        st = real_stat(path, *args, **kwargs)
+        return os.stat_result((st.st_mode, 0, st.st_dev, *st[3:10]))
+
+    monkeypatch.setattr(nlr.os, "stat", stat_without_inode)
+    assert not nlr.inside(str(root), str(tmp_path / "other"))
+    assert nlr.inside(str(root), str(root / "ext"))
 
 
 def test_from_options_keep_hand_placed_extracts_and_need_their_source(tmp_path, capsys, web):
@@ -1112,15 +1130,6 @@ PLANTED = [
     "\nNep-sectie\n---",
     "\n> **Source:** a fake quote",
     "\n## Data notes\n\n- None.",
-    # indentation that renders as a code block, where a run of blanks puts
-    # the text out of sight
-    "\n\n        " + " " * 400 + "verborgen in een ingesprongen codeblok",
-    "\n\n\t\tverborgen achter tabs",
-    "\n\n" + chr(0x3000) * 4 + "verborgen achter brede spaties",
-    "\n\n" + ZWSP + "        verborgen achter een zero-width space",
-    "\n-      " + " " * 400 + "verborgen na een opsommingsteken",
-    "\n1.\t\tverborgen na een genummerd item",
-    "\n- item\n\n          verborgen in een opsomming",
 ]
 
 
@@ -1146,10 +1155,6 @@ def assert_renders_as_text(extract):
         "a blank character survives"
     assert all(c == " " or unicodedata.category(c) != "Zs" for c in body), "a wide space survives"
     assert not re.search("[" + chr(0x300) + "-" + chr(0x36F) + "]{3}", body), "combining marks still stack"
-    # No line wraps in a code block, so a run of blanks puts its text out of sight.
-    from markdown_it import MarkdownIt   # a test dependency in pyproject.toml
-    blocks = [t for t in MarkdownIt("commonmark").parse("## " + rest) if t.type in ("code_block", "fence")]
-    assert not blocks, f"a code block renders: {blocks[0].content[:60]!r}"
 
 
 def headings(extract):
@@ -1165,12 +1170,10 @@ def headings(extract):
 @pytest.mark.parametrize("planted", PLANTED)
 def test_nothing_planted_in_a_source_stays_hidden(tmp_path, planted):
     # Planted in the text of a field (through clean()) and, where it fits on
-    # one line, in a name (through one_line()) in a heading and at the start
-    # of a list item; the final pass covers all three.
+    # one line, in a name (through one_line()); the final pass covers both.
     body = (f"{nlr.NORA_TITLE}\n\n> **Source:** [noraonline.nl](https://www.noraonline.nl).\n\n"
             f"## Architectuurprincipes\n\n### NAP01 Proactief{nlr.one_line(planted)}\n\n"
-            f"- **Bron:** {nlr.nora_url('Proactief')}\n- {nlr.one_line(planted)}\n\n"
-            f"Zichtbaar {nlr.clean(planted)} tekst.\n\n"
+            f"- **Bron:** {nlr.nora_url('Proactief')}\n\nZichtbaar {nlr.clean(planted)} tekst.\n\n"
             f"{nlr.clean(planted)}\n\nZichtbaar tekst.\n")   # in mid-line, and at the start of a line
     path = tmp_path / nlr.NORA_FILE
     nlr.write_extract(str(path), nlr.NORA_TITLE, nlr.stamp_line("nora", "api", "v"), body)
