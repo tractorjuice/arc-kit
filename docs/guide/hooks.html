@@ -508,7 +508,7 @@
 <li><code>projects/*/external/</code> directories to watch for mid-session evidence changes</li>
 </ul>
 <h3 id="version-check">version-check</h3>
-<p>Compares the local plugin version against the latest GitHub release tag. Shows a notification if an update is available.</p>
+<p>Compares the local plugin version against the latest GitHub release tag. If a newer ArcKit is out, it shows a notice with the command to update now, how to turn automatic updates on (<code>/plugin</code>, the Marketplaces tab, <code>arckit-claude</code>), and how to pin a release on a regulated engagement. It also warns when Claude Code is older than the version ArcKit needs.</p>
 <h2 id="stop--stopfailure-hooks">Stop / StopFailure Hooks</h2>
 <h3 id="session-learner">session-learner</h3>
 <p>Fires when a session ends (both normal and failure). Records session activity — which projects were touched, what artifact types were created or modified — to <code>.arckit/memory/sessions.md</code> for context in future sessions.</p>
