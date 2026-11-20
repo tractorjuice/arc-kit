@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-uk-food",
   "displayName": "ArcKit UK Food Safety Overlay",
-  "version": "6.23.0",
+  "version": "6.24.0",
   "defaultEnabled": false,
   "description": "UK Food Safety Overlay for ArcKit. Experimental and community-maintained. Covers England and Wales. Builds a small caterer's food safety documents from the Food Standards Agency's Safer food, better business for caterers pack: a business profile, the five sections of safe methods, the business's own methods, a completion record, and sign-off by a named person. Requires arckit core plugin.",
   "author": {
@@ -30,7 +30,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.23.0"
+      "version": "=6.24.0"
     }
   ]
 }

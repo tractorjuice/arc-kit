@@ -9,6 +9,8 @@ Releases before 6.15.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+## [6.24.0] — 2026-11-20
+
 ### Changed
 
 - **The update notice says how to turn automatic updates on.** When a newer ArcKit is out, the session-start notice used to say only that auto-update was off. It now says where the switch is (`/plugin`, the Marketplaces tab, `arckit-claude`, auto-update on), that Claude Code then fetches each release in the background and loads it on your next launch, and still gives the command to update now and the way to pin a release.

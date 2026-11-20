@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.24.0] — 2026-11-20
+
 ### Added
 
 - **The workflow has its own guide.** [The ArcKit Workflow, Phase by Phase](https://arckit.org/guide/workflow.html) goes through each phase from project plan to published documentation: the command to run, what it produces and what it draws on. It is the walkthrough the README used to carry, now on the site where a search can find it.
