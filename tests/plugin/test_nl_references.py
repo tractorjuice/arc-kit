@@ -787,6 +787,18 @@ def test_without_inode_numbers_the_output_directory_is_compared_by_name(tmp_path
     assert nlr.inside(str(root), str(root / "ext"))
 
 
+def test_an_output_directory_on_another_drive_is_outside(tmp_path, monkeypatch):
+    # On Windows commonpath() refuses two paths on different drives.
+    (tmp_path / "project").mkdir()
+    (tmp_path / "other").mkdir()
+
+    def other_drive(paths):
+        raise ValueError("Paths don't have the same drive")
+
+    monkeypatch.setattr(nlr.os.path, "commonpath", other_drive)
+    assert not nlr.inside(str(tmp_path / "project"), str(tmp_path / "other"))
+
+
 def test_from_options_keep_hand_placed_extracts_and_need_their_source(tmp_path, capsys, web):
     dump, model = local_files(tmp_path)
     out_dir = tmp_path / "ext"
