@@ -1,7 +1,7 @@
 {
   "articles.html": {
-    "lastmod": "2026-11-12",
-    "text_sha256": "959f5d3356911707d303bc5acc460054ae30aa87158b0a8ac3e8fb169a058e46"
+    "lastmod": "2026-11-19",
+    "text_sha256": "791de856bb54ae092ce4742701fc3428c085e8846583631b4b7be2c100d3d015"
   },
   "certification/awareness.html": {
     "lastmod": "2026-10-14",
@@ -15,9 +15,13 @@
     "lastmod": "2026-10-14",
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
+  "claude-code-plugin.html": {
+    "lastmod": "2026-11-18",
+    "text_sha256": "51cc93ee5c2b70b9e6f3ce920a9fa0c708a8b87c6f8ece4305b26aea639570d4"
+  },
   "commands.html": {
-    "lastmod": "2026-11-10",
-    "text_sha256": "5588477537625e75e0281a97a137025bf1c861c0490d5e36fe29669b8a593cbd"
+    "lastmod": "2026-11-19",
+    "text_sha256": "1ffca26c52b5a32f16c513c6b16fcd4c992512deb33e73fbc4bd38df05ece43a"
   },
   "contributors.html": {
     "lastmod": "2026-10-28",
@@ -36,8 +40,8 @@
     "text_sha256": "00a39ac1aac6c32fbbf6ef7ae53116933583b0649e92aa2d208b06372f15b813"
   },
   "getting-started.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "5b41801c5e7f3fb3fabc58fd1cd3a891f511b18a10b0fc40a6e935aa6052125d"
+    "lastmod": "2026-11-13",
+    "text_sha256": "be8e5c90ab944c2a3992d0d62357464ebfa44139ed46b2aeac3ca6b48f286fce"
   },
   "guide/adm-preliminary.html": {
     "lastmod": "2026-07-01",
@@ -232,8 +236,8 @@
     "text_sha256": "1c4d744aa1a81bd5d30a3d9ed4b536695e488dc66336bc6569895d3b9493dfb3"
   },
   "guide/build.html": {
-    "lastmod": "2026-11-01",
-    "text_sha256": "1bd66e1092f3200565b786d5579a41a96843cc4b7a1a74179577a0995894c659"
+    "lastmod": "2026-11-13",
+    "text_sha256": "b2d68621e9f6b0f2122d5146d38ad130438516cf92342e2fcf927bcc8a957139"
   },
   "guide/business-capability-map.html": {
     "lastmod": "2026-10-18",
@@ -377,7 +381,7 @@
   },
   "guide/enterprise-scale.html": {
     "lastmod": "2026-11-13",
-    "text_sha256": "d81c3e91550a96542798ea6967aa0f01a47683aa33aa981dc0ba1976a84db39e"
+    "text_sha256": "132d0e9aebc5d37b374907553963934842d32074e58cd337cbbcf1fd46f477d2"
   },
   "guide/eu-ai-act.html": {
     "lastmod": "2026-10-18",
@@ -524,16 +528,16 @@
     "text_sha256": "2ca2178cf518653bba0c92c1b0bc059587d1ff39955998ca2e487ab6122b1960"
   },
   "guide/health.html": {
-    "lastmod": "2026-10-31",
-    "text_sha256": "c8cab755daee2ad98944404c9976f54b541ee25cf3338db8c51d08b1559631ef"
+    "lastmod": "2026-11-18",
+    "text_sha256": "1cb95b4a25a64463786a5106bfc5909b61d62a628c49bedb5f10d8898cdae732"
   },
   "guide/hld-review.html": {
     "lastmod": "2026-11-08",
     "text_sha256": "231b74555a48f80bf4b26826ec89fb322ae9b34056a4cf858b013c8d4bb88240"
   },
   "guide/hooks.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "23ecad71571bd88d81eacc5adb76a998127d1cc9342b7b13cd0a83147a81a187"
+    "lastmod": "2026-11-19",
+    "text_sha256": "d4e90a4272758c0bd4d00b11c1dcc147589a1a369102ba02fdd9d4e66655c1c5"
   },
   "guide/impact.html": {
     "lastmod": "2026-03-09",
@@ -568,8 +572,8 @@
     "text_sha256": "f9a6696799e088c982a8266a0a0f0f1f2dcca2ec6c512bf7a0eb5913bb07b061"
   },
   "guide/mcp-servers.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "323196241b84c19fa86fa32d8cb8bfadb40494c5d713be7373ca7cf3d2180ded"
+    "lastmod": "2026-11-19",
+    "text_sha256": "7cb468761276f89f5e72b5cdda3583daf5f549d7e4c676d3a638c5b88dbc5fec"
   },
   "guide/microsoft-learn-mcp.html": {
     "lastmod": "2026-10-25",
@@ -967,6 +971,30 @@
     "lastmod": "2026-10-28",
     "text_sha256": "2210533774b3945f8ace46fee73494ff815e94dabe82f85692000a2211c157a0"
   },
+  "guide/uk-food-check.html": {
+    "lastmod": "2026-11-18",
+    "text_sha256": "cfe51d1376b90f0d96b8f16f1025c6f4d67aa5041633a1b22826a04b88a4e97a"
+  },
+  "guide/uk-food-own-methods.html": {
+    "lastmod": "2026-11-19",
+    "text_sha256": "645ce5b32a59fc13d7a622b7196f01ce62b8e30bf009935dcd94ea697f137cbc"
+  },
+  "guide/uk-food-profile.html": {
+    "lastmod": "2026-11-19",
+    "text_sha256": "a6d1f6388068ba9760972c994c13531b35cb682e63395d6518b055e77e643b56"
+  },
+  "guide/uk-food-safe-methods.html": {
+    "lastmod": "2026-11-19",
+    "text_sha256": "a28b638f8183f627e9e649019481d1eeae1d6d73dd9c6aef0710712e109477aa"
+  },
+  "guide/uk-food-safety-overlay.html": {
+    "lastmod": "2026-11-19",
+    "text_sha256": "8eb3f788ee96b59ea9c74e7625dc615980f3966dbeb0ded7a50d147c21d89b9c"
+  },
+  "guide/uk-food-sign-off.html": {
+    "lastmod": "2026-11-18",
+    "text_sha256": "a5fc665a6d6df8303d88b38424262c9f309307a6486f4f7624d035a3077907a1"
+  },
   "guide/uk-fs-consumer-duty.html": {
     "lastmod": "2026-10-27",
     "text_sha256": "147f349c2e9a91f2bfce1bab28908ee8390c6d25b4a893e7f3a73720c1746750"
@@ -1087,29 +1115,33 @@
     "lastmod": "2026-10-25",
     "text_sha256": "b46bcbcbdce0c5725e9522d081bdd184df98c7347ba1737b2c8e77a3f1530d75"
   },
+  "guide/workflow.html": {
+    "lastmod": "2026-11-19",
+    "text_sha256": "be6b6290becf0a78637c292145655bc8bc9ec5fa61253f32b2cd0939330a008e"
+  },
   "guides.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "62bdad0edc0a685ea324b63486c67f95cb7cb594a130f54d3cbf9d75aeb4abcc"
+    "lastmod": "2026-11-19",
+    "text_sha256": "e42390cdfd8061df64281a2d66dff9d605ee440af5e271a90d9def25c963f7fd"
   },
   "index.html": {
-    "lastmod": "2026-11-12",
-    "text_sha256": "65dc82d132eda15fb4cffdfb9842176cdb79e91148232e607ba1b7c63ae248cf"
+    "lastmod": "2026-11-19",
+    "text_sha256": "ca9a3929485f06a5c689672b7dd945e135327fe1966dd0dba035d776d178ef8f"
   },
   "llms.txt": {
-    "lastmod": "2026-11-10",
-    "text_sha256": "463bd98171c4b1779f67cb41e8605f9062ab9db720ffeb9204e901f11456aaca"
+    "lastmod": "2026-11-19",
+    "text_sha256": "1660268b7c4729f75116ef2c990c5c09665192f3b0269e3dd7a8f7e1612360f1"
   },
   "on-github.html": {
-    "lastmod": "2026-11-09",
-    "text_sha256": "f29160b31a049e282373bae0870a04ec6c73826e1b7f58f280dc786e9879d9df"
+    "lastmod": "2026-11-16",
+    "text_sha256": "45ee62d70861630efea04cd6c6a6e204cb8e293e6c229ce738a543ac1d740992"
   },
   "privacy.html": {
-    "lastmod": "2026-11-03",
-    "text_sha256": "6efacf5932f519c54c4d7ed7eb90b5bb8d69fa1b0eeb27bf13010efe16728ef0"
+    "lastmod": "2026-11-14",
+    "text_sha256": "44f57ebf52ed6cc19bcddac0c8ea6da0a0254a500a040bf1e18ab0cdc62864a8"
   },
   "public-sector.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "4b87848402912e00d31bf1ba2d6086bde1573d81eb2f91edebdf55bc84e59cc0"
+    "lastmod": "2026-11-13",
+    "text_sha256": "ef6c9382951ce9958339b195708fe7a6ae3fb3ce933135d90a663137d0d2578c"
   },
   "roles.html": {
     "lastmod": "2026-06-15",

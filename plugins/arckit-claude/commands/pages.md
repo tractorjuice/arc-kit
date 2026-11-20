@@ -440,6 +440,15 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | **Compliance (Community-contributed — UK NHS Clinical Safety Overlay)** | | | |
 | | NHSDTAC | `ARC-*-NHSDTAC-*.md` | NHS Digital Technology Assessment Criteria (DTAC) |
 | | NHSMDR | `ARC-*-NHSMDR-*.md` | UK MDR + EU MDR SaMD/AIaMD Classification |
+| **Compliance (Community-contributed — UK Food Safety Overlay)** | | | |
+| | FOODPROF | `ARC-*-FOODPROF-*.md` | Food Business Profile |
+| | FOODXC | `ARC-*-FOODXC-*.md` | Cross-contamination Safe Methods |
+| | FOODCLN | `ARC-*-FOODCLN-*.md` | Cleaning Safe Methods |
+| | FOODCHL | `ARC-*-FOODCHL-*.md` | Chilling Safe Methods |
+| | FOODCOOK | `ARC-*-FOODCOOK-*.md` | Cooking Safe Methods |
+| | FOODMGT | `ARC-*-FOODMGT-*.md` | Management Safe Methods |
+| | FOODOWN | `ARC-*-FOODOWN-*.md` | Food Business Own Methods |
+| | FOODCMP | `ARC-*-FOODCMP-*.md` | Safe Method Completion and Readiness Record |
 
 > **Single source of truth**: this table mirrors [`arckit-claude/config/doc-types.mjs`](../config/doc-types.mjs). When adding new commands, register the type code in `doc-types.mjs` first (so the hook resolves category + display name) and then add the row here so `/arckit:pages` includes the artifact in the dashboard.
 

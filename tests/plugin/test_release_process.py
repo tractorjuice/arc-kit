@@ -46,6 +46,7 @@ EXPECTED_CLAUDE_MARKETPLACE_SOURCES = {
     "arckit-uk-finance": ("./plugins/uk/finance", "plugins/arckit-uk-finance", "MIT"),
     "arckit-uk-nhs": ("./plugins/uk/nhs", "plugins/arckit-uk-nhs", "MIT"),
     "arckit-uk-legacy": ("./plugins/uk/legacy", "plugins/arckit-uk-legacy", "MIT"),
+    "arckit-uk-food": ("./plugins/uk/food", "plugins/arckit-uk-food", "MIT"),
     "arckit-fde": ("./plugins/fde", "plugins/arckit-fde", "MIT"),
     "arckit-uk-gcloud": ("./plugins/uk/gcloud", "plugins/arckit-uk-gcloud", "Proprietary"),
     "arckit-togaf-adm": ("./plugins/togaf/adm", "plugins/arckit-togaf-adm", "MIT"),

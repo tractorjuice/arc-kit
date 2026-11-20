@@ -79,6 +79,8 @@ The concurrency cap is lifted in ultracode mode (which runs at `xhigh` effort an
 
 **Subagents run in the background by default** as of Claude Code v2.1.232, which means an `Agent` call can return a launch acknowledgement rather than the worker's report. The harness dispatches with `run_in_background: false` so each wave still forms a barrier before validation and commit. You may see the workers appear in `/tasks` regardless; what matters is that the build does not advance to the next wave until every worker in the current one has reported.
 
+**Progress summaries cost requests.** While a subagent runs, Claude Code makes extra model requests to write a short progress summary of it, and a 16-wide wave has 16 workers running at once. To turn the summaries and their requests off, set `CLAUDE_CODE_DISABLE_AGENT_PROGRESS_SUMMARIES=1` before you start Claude Code. The variable works from Claude Code v2.1.318 and is described in the v2.1.323 changelog; the environment variables reference doesn't list it yet. The build doesn't read the summaries: each wave waits for the workers' final reports. What you lose is the running one-line summary of each worker.
+
 ## Path allocation — trust the hook
 
 Workers don't construct filenames or call `generate-document-id.mjs` themselves. The plugin's `validate-arc-filename.mjs` PreToolUse hook checks paths at write time. If a path is wrong, it blocks the write and names the corrected one: the next sequence number for ADR/DIAG, the `decisions/` or `diagrams/` subfolder, a padded project ID. The worker writes there instead, then reports the path it actually wrote as `ACTUAL_PATH`.

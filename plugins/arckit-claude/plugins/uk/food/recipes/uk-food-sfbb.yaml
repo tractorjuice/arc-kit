@@ -1,0 +1,135 @@
+# ArcKit build recipe: UK food safety (Safer food, better business for caterers)
+#
+# Scope: a small catering business in England or Wales, building its food
+# safety documents from the Food Standards Agency's Safer food, better business
+# for caterers pack with the arckit-uk-food overlay. No ArcKit architecture
+# documents: the overlay needs none.
+#
+# What a build can and cannot do. A build has nobody to answer, and only an
+# answer a named person at the business gives can be confirmed. So a build
+# confirms nothing: it makes the worksheets that are missing and writes
+# each document that does not exist yet, from the answers already confirmed.
+# On a new project every answer reads NOT YET ANSWERED. The answers come from
+# running the commands with the person.
+#
+# A document that already exists is taken as done. The harness dispatches a
+# target again only when it is named with --refresh (PROFILE, XC, CL, CH, CK,
+# MG, OWN or CHECK), or when a document it is built after has changed since the
+# last build. So a build does not bring an existing document up to date with
+# answers confirmed since: its own command does that.
+#
+# A build never signs anything off: /arckit-uk-food:uk-food-sign-off is not a
+# target. For a document that is signed off and in step, the commands write
+# nothing, inside a build too.
+#
+# The project must exist before a build. Running
+# /arckit-uk-food:uk-food-profile once creates it.
+#
+# The build harness makes a git commit after each wave. A business's records
+# folder is rarely a git repository: run the build with --no-commit then.
+#
+# No post-build step: ArcKit's health scan is written for architecture
+# documents. Only the overlay's own commands set these documents' status, as
+# statusSetBy in core's config/doc-types.mjs records:
+# /arckit-uk-food:uk-food-sign-off for each document a person signs, and
+# /arckit-uk-food:uk-food-check for the completion record, which always stays a
+# draft. So the health scan and the session-start monitor leave their drafts
+# out of their stale-draft rules.
+#
+# This recipe passes the repository's recipe checks, and the build harness has
+# planned it in a dry run (--plan, 18 November 2026): the profile, then the five
+# sections together, then own methods, then the completion record. It has not
+# yet been run end to end through the build harness.
+#
+# Every target writes `output:` on one line: check-doc-type-registry.py reads
+# only the inline form, so a block-style `output:` would escape its check.
+#
+# Every target sets min_lines, the fewest lines the build accepts in the
+# document it writes (without it the build wants more than 100). Each is about
+# a fifth below the smallest the document can be, measured on 18 November 2026
+# without the provenance block the hook adds: the profile 117 lines, blank;
+# each section with every safe method in it marked not relevant, XC 100, CL 70,
+# CH 70, CK 86 and MG 92; own methods 52, with no entries; the completion
+# record 97, with nothing outstanding. tests/plugin/test_uk_food_commands.py
+# builds those documents and fails if one is shorter than its min_lines.
+
+recipe: uk-food-sfbb
+schema_version: 1
+description: >
+  UK food safety for a small catering business in England or Wales, from
+  the Food Standards Agency's Safer food, better business for caterers pack:
+  the business profile, the five sections of safe methods (cross-contamination,
+  cleaning, chilling, cooking, management), the business's own methods and the
+  completion record. A build has nobody to answer, so it confirms nothing: it
+  makes the worksheets that are missing and writes each document that does not
+  exist yet as a draft, from the answers a named person has already confirmed.
+  A document that is already there is taken as done and left as it is, unless
+  its target is named with --refresh. On a new project every answer reads NOT
+  YET ANSWERED. It does not sign anything off.
+
+defaults:
+  version: "1.0"
+
+targets:
+
+  # --- The profile first: the section documents take the business's name
+  # from it, and each section command makes the profile worksheet if it is
+  # missing, so it must exist before they run side by side.
+  - id: PROFILE
+    skill: arckit-uk-food:uk-food-profile
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FOODPROF }
+    min_lines: 90
+    deps: []
+
+  # --- The five sections of safe methods, side by side.
+  - id: XC
+    skill: arckit-uk-food:uk-food-safe-methods
+    args: "XC {P}"
+    output: { project: "{P}-{NAME}", type: FOODXC }
+    min_lines: 80
+    deps: [PROFILE]
+
+  - id: CL
+    skill: arckit-uk-food:uk-food-safe-methods
+    args: "CL {P}"
+    output: { project: "{P}-{NAME}", type: FOODCLN }
+    min_lines: 55
+    deps: [PROFILE]
+
+  - id: CH
+    skill: arckit-uk-food:uk-food-safe-methods
+    args: "CH {P}"
+    output: { project: "{P}-{NAME}", type: FOODCHL }
+    min_lines: 55
+    deps: [PROFILE]
+
+  - id: CK
+    skill: arckit-uk-food:uk-food-safe-methods
+    args: "CK {P}"
+    output: { project: "{P}-{NAME}", type: FOODCOOK }
+    min_lines: 65
+    deps: [PROFILE]
+
+  - id: MG
+    skill: arckit-uk-food:uk-food-safe-methods
+    args: "MG {P}"
+    output: { project: "{P}-{NAME}", type: FOODMGT }
+    min_lines: 70
+    deps: [PROFILE]
+
+  # --- The business's own methods, after the sections.
+  - id: OWN
+    skill: arckit-uk-food:uk-food-own-methods
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FOODOWN }
+    min_lines: 40
+    deps: [XC, CL, CH, CK, MG]
+
+  # --- The completion record, last: it reports on every other document.
+  - id: CHECK
+    skill: arckit-uk-food:uk-food-check
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FOODCMP }
+    min_lines: 75
+    deps: [PROFILE, XC, CL, CH, CK, MG, OWN]

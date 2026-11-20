@@ -1365,9 +1365,12 @@ function formatHealth(graph, prompt, repoRoot) {
     // Rule 9: STALE-DRAFT — status is DRAFT and the artifact has not been
     // touched in > draftThresholdDays days (default 30, override via
     // STALE_DRAFT_DAYS=N). Mirrors the session-start monitor in
-    // scripts/bash/detect-stale-artifacts.sh.
+    // scripts/bash/detect-stale-artifacts.sh. A type whose Status only its own
+    // command sets (`statusSetBy` in config/doc-types.mjs) is left out: its
+    // drafts are not promoted by hand, so the advice below would be wrong.
     for (const n of projectNodes) {
       if ((n.status || '').toUpperCase() !== 'DRAFT') continue;
+      if (DOC_TYPES[n.type]?.statusSetBy) continue;
       const dateStr = n.lastModified || n.createdDate;
       if (!dateStr) continue;
       const age = daysBetween(dateStr, baseline);

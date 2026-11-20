@@ -91,7 +91,7 @@ Run this command after `/arckit-agent-architecture:agent-governance` and `/arcki
    - **Data contracts**: Input/output schemas
    - **SLA requirements**: Latency, throughput, availability
 
-   > **If fewer than 3 agents are found**, ask the user: *"I've identified fewer than 3 agents for integration. Do you want to expand the scope, or proceed with what exists?"*
+   > **If fewer than 3 agents are found**, use the AskUserQuestion tool to ask: *"I've identified fewer than 3 agents for integration. Do you want to expand the scope, or proceed with what exists?"*, with "Proceed with what exists (Recommended)" and "Expand the scope" as its options, as `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` sets out. With no answer, proceed with what exists and list that as an assumption.
 
 6. **Build the integration architecture**:
 

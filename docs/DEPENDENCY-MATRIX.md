@@ -433,6 +433,18 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:uk-fs-consumer-duty` | — | — | principles, requirements, risk, stakeholders |
 | `/arckit:uk-fs-ctp-dependency` | — | principles, requirements, risk, uk-fs-safeguarding | — |
 
+### ArcKit UK Food Safety Overlay (`arckit-uk-food`)
+
+The overlay reads no ArcKit core document. Its commands read each other's worksheets and documents; a missing profile is reported and the command carries on.
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit-uk-food:uk-food-profile` | — | — | — |
+| `/arckit-uk-food:uk-food-safe-methods` | — | uk-food-profile | — |
+| `/arckit-uk-food:uk-food-own-methods` | — | uk-food-profile | — |
+| `/arckit-uk-food:uk-food-check` | — | uk-food-profile, uk-food-safe-methods, uk-food-own-methods | uk-food-sign-off |
+| `/arckit-uk-food:uk-food-sign-off` | the document being signed: uk-food-profile, uk-food-safe-methods or uk-food-own-methods | — | — |
+
 ### ArcKit UK Legacy IT Assessment Overlay (`arckit-uk-legacy`)
 
 | Command | Needs (M) | Recommended (R) | Optional (O) |
@@ -666,11 +678,17 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 6.18.2
 - **Matrix Date**: 2026-10-17
-- **Commands Documented**: 76 core commands in the matrix; 125 community overlay and tooling commands in Community Overlay Dependencies
+- **Commands Documented**: 76 core commands in the matrix; 133 community overlay and tooling commands in Community Overlay Dependencies
 - **Matrix Rows**: 65 (63 commands + 2 external documents)
 - **Note**: `/arckit:build`, `/arckit:customize`, `/arckit:export-okf`, `/arckit:graph-report`, `/arckit:health`, `/arckit:impact`, `/arckit:import-okf`, `/arckit:init`, `/arckit:navigator`, `/arckit:pages`, `/arckit:search`, `/arckit:start`, `/arckit:template-builder` are not in the matrix. They need no earlier documents, or they work across whatever the project already holds rather than on particular documents, and no other command reads their output
 
 ## Changelog
+
+### 2026-11-18 - UK Food Safety Overlay (Community, Sector)
+
+- **Added**: an `arckit-uk-food` table to Community Overlay Dependencies for the five commands that build a small caterer's Safer food, better business documents (England and Wales): `uk-food-profile`, `uk-food-safe-methods`, `uk-food-own-methods`, `uk-food-check` and `uk-food-sign-off`
+- **Dependencies**: no ArcKit core document. The section and own methods commands recommend the profile and carry on without it; the check command reads every other food document; sign-off needs the document it signs
+- **Updated**: Commands Documented from 125 to 133 community overlay and tooling commands. The tables held 128 rows before this change: the count had not kept up with earlier additions, including the UK legacy IT overlay
 
 ### 2026-10-31 - arc42 overlay Phase 2
 

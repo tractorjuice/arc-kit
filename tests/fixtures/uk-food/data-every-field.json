@@ -1,0 +1,410 @@
+{
+  "source": {
+    "title": "Safer food, better business for caterers",
+    "publisher": "Food Standards Agency",
+    "url": "https://assets.publishing.service.gov.uk/media/69c5247ecdfd19de13d0f6ca/sfbb-caterers-pack-fixed_0_3.pdf",
+    "publication": "https://www.gov.uk/government/publications/safer-food-better-business-for-caterers",
+    "retrieved": "2026-11-17",
+    "file": "sfbb-caterers-pack-fixed_0_3.pdf",
+    "sha256": "35b2eea9a33741cca907e0902847ca003fabc792bb4149216987102441952838",
+    "pages": 100,
+    "licence": "OGL-3.0",
+    "attribution": "Contains public sector information licensed under the Open Government Licence v3.0."
+  },
+  "section": {
+    "schema": "uk-food-sfbb-data-1.0",
+    "data": "sfbb-caterers-2026-11-17",
+    "section": {
+      "id": "CK",
+      "code": "FOODCOOK",
+      "title": "Cooking",
+      "pages": [
+        55,
+        56
+      ],
+      "intro": [
+        {
+          "text": "Cook it",
+          "page": 55
+        }
+      ]
+    },
+    "methods": [
+      {
+        "id": "CK-06",
+        "title": "Hot holding",
+        "summary": null,
+        "pages": [
+          65,
+          66
+        ],
+        "blocks": [
+          {
+            "kind": "points",
+            "heading": "SAFE METHOD",
+            "columns": [
+              "SAFETY POINT",
+              "WHY?",
+              "HOW DO YOU DO THIS?"
+            ],
+            "rows": [
+              {
+                "id": "CK-06-P01",
+                "point": "Keep it hot",
+                "why": null,
+                "page": 65,
+                "questions": [
+                  {
+                    "id": "CK-06-Q01",
+                    "text": "",
+                    "type": "tick",
+                    "options": [
+                      "Yes",
+                      "No"
+                    ],
+                    "elseText": "If not, what do you do?"
+                  },
+                  {
+                    "id": "CK-06-Q05",
+                    "text": "",
+                    "type": "yes-no-else",
+                    "options": [
+                      "Yes"
+                    ],
+                    "elseText": null
+                  },
+                  {
+                    "id": "CK-06-Q06",
+                    "text": "Make a note in your diary.",
+                    "type": "note",
+                    "options": [],
+                    "elseText": null
+                  }
+                ]
+              }
+            ],
+            "page": 65
+          },
+          {
+            "kind": "manage-it",
+            "heading": "MANAGE IT",
+            "columns": [
+              "A"
+            ],
+            "rows": [
+              {
+                "id": "CK-06-P02",
+                "point": "Keep it hot",
+                "why": null,
+                "page": 65,
+                "questions": [
+                  {
+                    "id": "CK-06-Q03",
+                    "text": "",
+                    "type": "tick",
+                    "options": [
+                      "Yes",
+                      "No"
+                    ],
+                    "elseText": "If not, what do you do?"
+                  }
+                ]
+              }
+            ],
+            "page": 66
+          },
+          {
+            "kind": "think-twice",
+            "heading": "THINK TWICE!",
+            "text": "Think",
+            "page": 65
+          },
+          {
+            "kind": "check-it",
+            "heading": "CHECK IT",
+            "columns": [
+              "WHY?",
+              "HOW DO YOU DO THIS?"
+            ],
+            "text": null,
+            "rows": [
+              {
+                "id": "CK-06-P03",
+                "point": "Keep it hot",
+                "why": null,
+                "page": 65,
+                "questions": [
+                  {
+                    "id": "CK-06-Q04",
+                    "text": "",
+                    "type": "tick",
+                    "options": [
+                      "Yes",
+                      "No"
+                    ],
+                    "elseText": "If not, what do you do?"
+                  }
+                ]
+              }
+            ],
+            "questions": [
+              {
+                "id": "CK-06-Q02",
+                "text": "Done?",
+                "type": "yes-no"
+              }
+            ],
+            "page": 66
+          },
+          {
+            "kind": "prove-it",
+            "heading": "PROVE IT",
+            "text": "Prove",
+            "page": 66
+          },
+          {
+            "kind": "wrong",
+            "heading": "WHAT IF",
+            "wrongHeading": "WHAT CAN GO WRONG",
+            "wrong": [
+              "a"
+            ],
+            "preventHeading": "PREVENT IT",
+            "prevent": [
+              "b"
+            ],
+            "diaryNote": null,
+            "page": 66
+          },
+          {
+            "kind": "table",
+            "heading": "T",
+            "columns": [
+              "a",
+              "b"
+            ],
+            "rows": [
+              [
+                "x\n• y",
+                "z"
+              ]
+            ],
+            "questions": [],
+            "page": 66
+          },
+          {
+            "kind": "text",
+            "heading": "H",
+            "text": "words",
+            "page": 66,
+            "fromImage": false
+          },
+          {
+            "kind": "table",
+            "heading": null,
+            "columns": [
+              "Item",
+              "After use",
+              "Daily",
+              "Gloves",
+              "Goggles"
+            ],
+            "columnGroups": [
+              {
+                "label": "Frequency",
+                "from": 1,
+                "to": 2
+              },
+              {
+                "label": "Precautions",
+                "from": 3,
+                "to": 4
+              }
+            ],
+            "rows": [
+              [
+                "Fridge",
+                "",
+                "X",
+                "X",
+                ""
+              ]
+            ],
+            "page": 66
+          }
+        ]
+      }
+    ]
+  },
+  "front": {
+    "schema": "uk-food-sfbb-data-1.0",
+    "data": "sfbb-caterers-2026-11-17",
+    "part": "front",
+    "pages": [
+      {
+        "page": 2,
+        "title": null,
+        "blocks": [
+          {
+            "kind": "text",
+            "heading": "IS THIS PACK FOR ME?",
+            "text": "words",
+            "page": 2
+          }
+        ]
+      },
+      {
+        "page": 3,
+        "title": "WHO SHOULD TAKE CHARGE",
+        "blocks": [
+          {
+            "kind": "points",
+            "heading": null,
+            "columns": [
+              "DATE PACK FIRST COMPLETED:"
+            ],
+            "rows": [
+              {
+                "id": "FR-03-P01",
+                "point": "Fill it in",
+                "why": null,
+                "page": 3,
+                "questions": [
+                  {
+                    "id": "FR-03-Q01",
+                    "text": "Date",
+                    "type": "text",
+                    "options": [],
+                    "elseText": null
+                  }
+                ]
+              }
+            ],
+            "page": 3,
+            "form": "packCompletion"
+          },
+          {
+            "kind": "table",
+            "heading": null,
+            "columns": [
+              "REVIEW DATE:",
+              "REVIEWED BY (NAME):"
+            ],
+            "rows": [],
+            "questions": [
+              {
+                "id": "FR-03-Q02",
+                "text": "",
+                "type": "list",
+                "options": [],
+                "elseText": null
+              }
+            ],
+            "page": 3,
+            "form": "reviewLog"
+          }
+        ]
+      }
+    ]
+  },
+  "diary": {
+    "schema": "uk-food-sfbb-data-1.0",
+    "data": "sfbb-caterers-2026-11-17",
+    "part": "diary",
+    "pages": [
+      {
+        "page": 81,
+        "title": "INTRODUCTION",
+        "blocks": [
+          {
+            "kind": "text",
+            "heading": "HOW DOES THIS DIARY WORK?",
+            "text": "words",
+            "page": 81,
+            "fromImage": false
+          }
+        ]
+      },
+      {
+        "page": 100,
+        "title": null,
+        "blocks": [
+          {
+            "kind": "points",
+            "heading": null,
+            "columns": [
+              "SAFE METHOD",
+              "CHECK LIST"
+            ],
+            "rows": [
+              {
+                "id": "DY-100-P01",
+                "point": "Reviewed?",
+                "why": null,
+                "page": 100,
+                "questions": [
+                  {
+                    "id": "DY-100-Q01",
+                    "text": "",
+                    "type": "yes-no",
+                    "options": [
+                      "Yes",
+                      "No"
+                    ],
+                    "elseText": null
+                  }
+                ]
+              }
+            ],
+            "page": 100,
+            "form": "fourWeeklyReview"
+          },
+          {
+            "kind": "table",
+            "heading": null,
+            "columns": [],
+            "rows": [],
+            "questions": [
+              {
+                "id": "DY-100-Q02",
+                "text": "NAME:",
+                "type": "text",
+                "options": [],
+                "elseText": null
+              }
+            ],
+            "page": 100,
+            "form": "fourWeeklyReview"
+          }
+        ]
+      }
+    ]
+  },
+  "limits": {
+    "schema": "uk-food-sfbb-data-1.0",
+    "data": "sfbb-caterers-2026-11-17",
+    "limits": [
+      {
+        "id": "L-01",
+        "value": "28 days",
+        "text": "Register at least 28 days before you open.",
+        "method": "front",
+        "page": 2
+      },
+      {
+        "id": "L-02",
+        "value": "63°C",
+        "text": "Keep it hot, at 63°C or above.",
+        "method": "CK-06",
+        "page": 65
+      },
+      {
+        "id": "L-03",
+        "value": "4 weeks",
+        "text": "Calibrated in the last 4 weeks?",
+        "method": "diary",
+        "page": 100
+      }
+    ]
+  }
+}

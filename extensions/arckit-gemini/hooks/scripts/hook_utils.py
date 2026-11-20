@@ -225,6 +225,15 @@ DOC_TYPES = {
     # UK NHS Clinical Safety Overlay
     "NHSDTAC":    {"name": "NHS Digital Technology Assessment Criteria (DTAC)",             "category": "Compliance"},
     "NHSMDR":     {"name": "UK MDR + EU MDR SaMD/AIaMD Classification",                     "category": "Compliance"},
+    # UK Food Safety Overlay (experimental)
+    "FOODPROF":  {"name": "Food Business Profile", "category": "Compliance"},
+    "FOODXC":    {"name": "Cross-contamination Safe Methods", "category": "Compliance"},
+    "FOODCLN":   {"name": "Cleaning Safe Methods", "category": "Compliance"},
+    "FOODCHL":   {"name": "Chilling Safe Methods", "category": "Compliance"},
+    "FOODCOOK":  {"name": "Cooking Safe Methods", "category": "Compliance"},
+    "FOODMGT":   {"name": "Management Safe Methods", "category": "Compliance"},
+    "FOODOWN":   {"name": "Food Business Own Methods", "category": "Compliance"},
+    "FOODCMP":   {"name": "Safe Method Completion and Readiness Record", "category": "Compliance"},
     "MMOD":       {"name": "Maturity Model Assessment",                                     "category": "Governance"},
 }
 

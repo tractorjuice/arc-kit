@@ -1,0 +1,1063 @@
+[
+ {
+  "name": "unknown block kind",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/2/kind",
+    "value": "think twice"
+   }
+  ]
+ },
+ {
+  "name": "stray questions on think-twice",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/2/questions",
+    "value": []
+   }
+  ]
+ },
+ {
+  "name": "think-twice without text",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/2/text"
+   }
+  ]
+ },
+ {
+  "name": "prove-it without text",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/4/text"
+   }
+  ]
+ },
+ {
+  "name": "text block without text",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/7/text"
+   }
+  ]
+ },
+ {
+  "name": "text block with non-string text",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/7/text",
+    "value": 5
+   }
+  ]
+ },
+ {
+  "name": "wrong block without wrong",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/5/wrong"
+   }
+  ]
+ },
+ {
+  "name": "wrong block without prevent",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/5/prevent"
+   }
+  ]
+ },
+ {
+  "name": "wrong items not strings",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/5/wrong",
+    "value": [
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "name": "wrong block with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/5/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "table without columns",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/6/columns"
+   }
+  ]
+ },
+ {
+  "name": "table without rows",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/6/rows"
+   }
+  ]
+ },
+ {
+  "name": "table rows not an array",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/6/rows",
+    "value": "x"
+   }
+  ]
+ },
+ {
+  "name": "table row not an array",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/6/rows",
+    "value": [
+     "x"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "table columns not strings",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/6/columns",
+    "value": [
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "name": "column group with an empty label",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/0/label",
+    "value": ""
+   }
+  ]
+ },
+ {
+  "name": "column group from below 0",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/0/from",
+    "value": -1
+   }
+  ]
+ },
+ {
+  "name": "column group from greater than to",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/0/to",
+    "value": 0
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "column group to beyond the last column",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/1/to",
+    "value": 5
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "column groups that overlap",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/1/from",
+    "value": 2
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "column group with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "check-it columns not strings",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/3/columns",
+    "value": [
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "name": "points block without rows",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/0/rows"
+   }
+  ]
+ },
+ {
+  "name": "block without page",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/2/page"
+   }
+  ]
+ },
+ {
+  "name": "block page outside 1 to 100",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/2/page",
+    "value": 101
+   }
+  ]
+ },
+ {
+  "name": "fromImage not a boolean",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/7/fromImage",
+    "value": "no"
+   }
+  ]
+ },
+ {
+  "name": "heading not a string",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/2/heading",
+    "value": 5
+   }
+  ]
+ },
+ {
+  "name": "method id not two letters and two digits",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/id",
+    "value": "CK-6"
+   }
+  ]
+ },
+ {
+  "name": "method id with the wrong section prefix",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/id",
+    "value": "XC-06"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "duplicate identifier",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/1/rows/0/id",
+    "value": "CK-06-P01"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "method pages empty",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/pages",
+    "value": []
+   }
+  ]
+ },
+ {
+  "name": "method page outside 1 to 100",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/pages",
+    "value": [
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "method with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "method without title",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/title"
+   }
+  ]
+ },
+ {
+  "name": "row without id",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/0/rows/0/id"
+   }
+  ]
+ },
+ {
+  "name": "row without page",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/0/rows/0/page"
+   }
+  ]
+ },
+ {
+  "name": "row with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "row point not a string",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/point",
+    "value": 3
+   }
+  ]
+ },
+ {
+  "name": "question type outside the six",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/0/type",
+    "value": "maybe"
+   }
+  ]
+ },
+ {
+  "name": "question options not an array",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/0/options",
+    "value": "Yes"
+   }
+  ]
+ },
+ {
+  "name": "question options not strings",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/0/options",
+    "value": [
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "name": "note with empty text",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/2/text",
+    "value": ""
+   }
+  ]
+ },
+ {
+  "name": "note with options",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/2/options",
+    "value": [
+     "Yes"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "note with elseText",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/2/elseText",
+    "value": "If not, what do you do?"
+   }
+  ]
+ },
+ {
+  "name": "question with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/3/questions/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "question elseText not a string",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/0/elseText",
+    "value": 4
+   }
+  ]
+ },
+ {
+  "name": "section file wrong schema",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/schema",
+    "value": "other"
+   }
+  ]
+ },
+ {
+  "name": "section file wrong data id",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/data",
+    "value": "other"
+   }
+  ]
+ },
+ {
+  "name": "section file with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "section id outside the five",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/section/id",
+    "value": "ZZ"
+   }
+  ]
+ },
+ {
+  "name": "section without title",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/section/title"
+   }
+  ]
+ },
+ {
+  "name": "section with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/section/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "intro item without page",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/section/intro/0/page"
+   }
+  ]
+ },
+ {
+  "name": "intro item with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/section/intro/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "source sha256 wrong",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/sha256",
+    "value": "abc"
+   }
+  ]
+ },
+ {
+  "name": "source pages not 100",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/pages",
+    "value": 99
+   }
+  ]
+ },
+ {
+  "name": "source licence not OGL-3.0",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/licence",
+    "value": "MIT"
+   }
+  ]
+ },
+ {
+  "name": "source attribution altered",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/attribution",
+    "value": "Contains data"
+   }
+  ]
+ },
+ {
+  "name": "source publisher altered",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/publisher",
+    "value": "Someone"
+   }
+  ]
+ },
+ {
+  "name": "source retrieved not a date",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/retrieved",
+    "value": "17 November"
+   }
+  ]
+ },
+ {
+  "name": "source without url",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/source/url"
+   }
+  ]
+ },
+ {
+  "name": "source with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "pages file with an unknown part",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/part",
+    "value": "back"
+   }
+  ]
+ },
+ {
+  "name": "pages file with no pages",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages",
+    "value": []
+   }
+  ]
+ },
+ {
+  "name": "pages file with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "page object with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "page object without title",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/front/pages/0/title"
+   }
+  ]
+ },
+ {
+  "name": "page title not a string",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/title",
+    "value": 3
+   }
+  ]
+ },
+ {
+  "name": "form not in the list",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/blocks/1/form",
+    "value": "reviewSheet"
+   }
+  ]
+ },
+ {
+  "name": "form on a block in a section file",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/2/form",
+    "value": "reviewLog"
+   }
+  ]
+ },
+ {
+  "name": "block page differs from its page object's",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/blocks/1/page",
+    "value": 4
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "row page differs from its page object's",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/blocks/0/rows/0/page",
+    "value": 4
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "page printed twice",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1",
+    "value": {
+     "page": 2,
+     "title": null,
+     "blocks": []
+    }
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "pages out of order",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/0/page",
+    "value": 4
+   },
+   {
+    "op": "set",
+    "path": "/front/pages/0/blocks/0/page",
+    "value": 4
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "row identifier with the wrong prefix",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/blocks/0/rows/0/id",
+    "value": "DY-03-P01"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "question identifier naming another page",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/blocks/1/questions/0/id",
+    "value": "FR-04-Q02"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "page title empty",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/title",
+    "value": ""
+   }
+  ]
+ },
+ {
+  "name": "fromImage true in a section file",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/7/fromImage",
+    "value": true
+   }
+  ]
+ },
+ {
+  "name": "fromImage true in front.json",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/0/blocks/0/fromImage",
+    "value": true
+   }
+  ]
+ },
+ {
+  "name": "fromImage true on a diary page not in the list",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/diary/pages/0/blocks/0/fromImage",
+    "value": true
+   }
+  ]
+ },
+ {
+  "name": "diary row identifier with the front prefix",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/diary/pages/1/blocks/0/rows/0/id",
+    "value": "FR-100-P01"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "diary question identifier with the front prefix",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/diary/pages/1/blocks/1/questions/0/id",
+    "value": "FR-100-Q02"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "limits file wrong schema",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/schema",
+    "value": "other"
+   }
+  ]
+ },
+ {
+  "name": "limits file wrong data id",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/data",
+    "value": "other"
+   }
+  ]
+ },
+ {
+  "name": "limits file with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "limits file with no limits",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits",
+    "value": []
+   }
+  ]
+ },
+ {
+  "name": "limit with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "limit without text",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/limits/limits/1/text"
+   }
+  ]
+ },
+ {
+  "name": "limit with an empty value",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/value",
+    "value": ""
+   }
+  ]
+ },
+ {
+  "name": "limit page outside 1 to 100",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/page",
+    "value": 101
+   }
+  ]
+ },
+ {
+  "name": "limit identifier not L and two digits",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/id",
+    "value": "L2"
+   }
+  ]
+ },
+ {
+  "name": "limit identifier repeated",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/id",
+    "value": "L-01"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "limit identifier out of sequence",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/id",
+    "value": "L-03"
+   },
+   {
+    "op": "set",
+    "path": "/limits/limits/2/id",
+    "value": "L-02"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "limit method neither a safe method nor front nor diary",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/method",
+    "value": "cooking"
+   }
+  ]
+ },
+ {
+  "name": "limit method naming a safe method that does not exist",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/method",
+    "value": "CK-07"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "limit page outside its safe method's pages",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/page",
+    "value": 67
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "front limit page outside 1 to 10",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/0/page",
+    "value": 11
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "diary limit page outside 78 to 100",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/2/page",
+    "value": 77
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "limit text that does not contain its value",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/value",
+    "value": "75°C"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ }
+]

@@ -56,7 +56,8 @@ Use the **Write** tool to create each file inside `/tmp/arckit-test-setup/${REPO
       "source": {
         "source": "github",
         "repo": "tractorjuice/arckit-claude"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "enabledPlugins": {
@@ -66,6 +67,8 @@ Use the **Write** tool to create each file inside `/tmp/arckit-test-setup/${REPO
 ```
 
 > `minimumVersion` pins the test repo to ArcKit's current Claude Code floor (matches `MIN_CLAUDE_CODE_VERSION` in `plugins/arckit-claude/hooks/version-check.mjs`) so background auto-updates can't drop a Codespace below it. Bump this alongside the floor.
+>
+> `autoUpdate` keeps the test repo on the latest ArcKit release. Claude Code leaves automatic updates off for every marketplace that isn't Anthropic's own, and a marketplace file has no field to turn them on, so the settings entry is where it is set.
 
 ### 4b. `.devcontainer/devcontainer.json`
 

@@ -23,6 +23,12 @@ NOT_ON_THE_PATTERN = {
     # Standalone tooling plugin (no core dependency, no shared references/): its
     # /arckit-fde:create site wizard asks one setup concern at a time by design.
     "arckit-fde",
+    # The food safety overlay puts a pack's questions to the business: as many calls as there are
+    # questions, and no default, because a default would be a statement about the business that
+    # nobody made. Its three gathering commands name the tool for closed questions (#1135) and must
+    # not point their reader at a reference that says to take the (Recommended) option when a
+    # question goes unanswered. tests/plugin/test_uk_food_commands.py holds them to their own rules.
+    "arckit-uk-food",
 }
 # Core and every community overlay that asks the user anything.
 INTERVIEWING = sorted(

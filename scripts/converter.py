@@ -301,6 +301,7 @@ PLUGIN_SOURCES = [
     "plugins/arckit-uk-finance",
     "plugins/arckit-uk-nhs",
     "plugins/arckit-uk-legacy",
+    "plugins/arckit-uk-food",
     "plugins/arckit-togaf-adm",
     "plugins/arckit-oaa",
     "plugins/arckit-arc42",
@@ -382,8 +383,8 @@ AGENT_CONFIG = {
         "name": "Paperclip",
         "output_dir": "extensions/arckit-paperclip/src/data",
         "format": "json",
-        # Paperclip ships templates/, references/, schemas/ and data/ at its
-        # package root and replaces {arckit_package_root} in each prompt at
+        # Paperclip ships templates/, references/, schemas/, data/ and config/
+        # at its package root and replaces {arckit_package_root} in each prompt at
         # runtime (src/tools/command-tools.ts), so plugin-root assets resolve
         # there. Executable scripts keep script_path_prefix.
         "path_prefix": "{arckit_package_root}",
@@ -432,6 +433,21 @@ AGENT_CONFIG = {
 }
 
 
+def expand_plugin_root(text, prefix):
+    """Replace ${CLAUDE_PLUGIN_ROOT} with `prefix`.
+
+    A shell expands `~` only at the start of an unquoted word, so where the
+    placeholder opens a double-quoted string (`node "${CLAUDE_PLUGIN_ROOT}/x.mjs"`)
+    a `~/` prefix is written `$HOME/`, which a shell does expand inside double
+    quotes. Gemini CLI substitutes `${extensionPath}` only in its manifest and
+    hooks.json, never in a command's prompt, so the prompt must carry a path the
+    shell can expand itself. Unquoted uses and every other prefix are unchanged.
+    """
+    if prefix.startswith("~/"):
+        text = text.replace('"${CLAUDE_PLUGIN_ROOT}', '"$HOME/' + prefix[2:])
+    return text.replace("${CLAUDE_PLUGIN_ROOT}", prefix)
+
+
 def rewrite_paths(prompt, config):
     """Rewrite ${CLAUDE_PLUGIN_ROOT} paths using agent config."""
     result = rewrite_user_config_placeholders(prompt)
@@ -456,7 +472,7 @@ def rewrite_paths(prompt, config):
             f"{config['script_path_prefix']}/",
         )
 
-    result = result.replace("${CLAUDE_PLUGIN_ROOT}", config["path_prefix"])
+    result = expand_plugin_root(result, config["path_prefix"])
 
     if config.get("rewrite_read_instructions"):
         result = re.sub(
@@ -506,6 +522,10 @@ _QUESTION_TOOL_RULES = [
     (r"If the skill calls `AskUserQuestion`", "If the skill asks the user a question"),
     (r"AskUserQuestion choices made", "Question choices made"),
     (r"Skipping the AskUserQuestion triage", "Skipping the triage questions"),
+    # A rule that holds only where a selector exists (#1135) stays conditional on any runtime: one that
+    # can show a question with options uses it, and one that cannot asks in plain text.
+    (r"Where you have (?:the )?(?:\*\*|`)?AskUserQuestion(?:\*\*|`)?(?: tool)?",
+     "Where the assistant you are running in has a tool that shows a question with its options to choose from"),
     # Catch-alls. Anything the rules above did not phrase away.
     (r"the \*\*AskUserQuestion\*\* tool", "a question to the user"),
     (r"\*\*AskUserQuestion\*\* tool", "question to the user"),
@@ -704,7 +724,7 @@ def convert(commands_dirs, agents_dir):
         frontmatter, command_prompt = extract_frontmatter_and_prompt(command_content)
         description = frontmatter.get("description", "")
         handoffs = frontmatter.get("handoffs", [])
-        has_runtime_assets = bool(frontmatter.get("runtime-assets"))
+        runtime_scripts = [asset for asset in frontmatter.get("runtime-assets") or [] if asset.startswith("scripts/")]
         # Strip Claude-only fields — they have no meaning for Codex/OpenCode/Gemini/Copilot targets
         for field in CLAUDE_ONLY_COMMAND_FIELDS:
             frontmatter.pop(field, None)
@@ -728,11 +748,14 @@ def convert(commands_dirs, agents_dir):
         # Collect entry for Paperclip JSON format
         if "paperclip" in AGENT_CONFIG:
             pc_config = AGENT_CONFIG["paperclip"]
-            # This command runs a bundled calculator, not a project bash helper,
-            # so its scripts also resolve from the installed package.
-            if has_runtime_assets:
-                pc_config = {**pc_config, "script_path_prefix": "{arckit_package_root}/scripts"}
-            pc_prompt = rewrite_paths(prompt, pc_config)
+            # A script the command declares as a runtime asset is bundled, so it
+            # resolves from the installed package. Any other script it runs,
+            # such as the project helper create-project.sh, keeps the project
+            # prefix: the package does not ship it.
+            pc_source = prompt
+            for script in runtime_scripts:
+                pc_source = pc_source.replace(f"${{CLAUDE_PLUGIN_ROOT}}/{script}", f"{{arckit_package_root}}/{script}")
+            pc_prompt = rewrite_paths(pc_source, pc_config)
             pc_prompt = rewrite_hook_dependencies(pc_prompt, pc_config)
             pc_prompt = neutralise_question_tool(pc_prompt)
             template_content = read_template_for_command(
@@ -2301,7 +2324,8 @@ def generate_gemini_agents(agents_dir, output_dir):
         gemini_fm["timeout_mins"] = 10
 
         # Rewrite paths: ${CLAUDE_PLUGIN_ROOT} -> ~/.gemini/extensions/arckit
-        prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", gemini_path_prefix)
+        # ($HOME/... where the path opens a double-quoted string).
+        prompt = expand_plugin_root(prompt, gemini_path_prefix)
         prompt = rewrite_user_config_placeholders(prompt)
 
         # Rewrite Read instructions to shell commands

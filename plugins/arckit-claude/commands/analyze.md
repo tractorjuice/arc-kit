@@ -86,7 +86,7 @@ Identify the project directory to analyze:
 
 - If user specifies project: Use specified project directory
 - If only one project exists: Analyze that project
-- If multiple projects: Ask user which project to analyze
+- If multiple projects and none is specified, or the argument matches more than one: list them, then use the AskUserQuestion tool to ask which, offering them as the choices with none marked as recommended (`${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`, section 5). With no answer, stop: do not pick one
 
 Expected structure:
 
@@ -1510,7 +1510,7 @@ User: `/arckit:analyze`
 
 You should:
 
-1. Identify project (if multiple, ask which)
+1. Identify the project, asking which as above when more than one could be meant
 2. Load artifacts progressively:
    - Architecture principles
    - Stakeholder drivers (if exists - RECOMMENDED)

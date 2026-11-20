@@ -28,6 +28,7 @@ See the [full articles index](articles.html) for all ArcKit release notes, analy
 ### Getting Started
 
 - [Getting Started](guides/start.md) - `/arckit:start` - Onboarding walkthrough
+- [The ArcKit Workflow, Phase by Phase](guides/workflow.md) - every phase, the command to run and what it produces
 - [ArcKit Init](guides/init.md) - `/arckit:init` - Project initialization
 - [Template Customization](guides/customize.md) - `/arckit:customize` - Customize templates for your organization
 - [Template Builder](guides/template-builder.md) - `/arckit:template-builder` - Build custom document templates
@@ -335,4 +336,4 @@ Found a gap or want to improve documentation?
 ---
 
 **Last updated**: 2026-02-25
-**ArcKit Version**: 6.22.0
+**ArcKit Version**: 6.24.0

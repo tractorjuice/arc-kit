@@ -68,6 +68,14 @@ def test_every_source_phrasing_is_neutralised(line):
          "Ask **both** questions below **together, in one message** so the user sees them together."),
         ("- AskUserQuestion choices made (if any)", "- Question choices made (if any)"),
         ("Some prose naming AskUserQuestion mid-sentence.", "Some prose naming a question to the user mid-sentence."),
+        # A rule that applies only where the tool exists stays conditional, however the tool is written (#1135).
+        ("Where you have the AskUserQuestion tool and a person is there to answer, put closed questions to them with it.",
+         "Where the assistant you are running in has a tool that shows a question with its options to choose from and a person is "
+         "there to answer, put closed questions to them with it."),
+        ("Where you have the **AskUserQuestion** tool, use it.",
+         "Where the assistant you are running in has a tool that shows a question with its options to choose from, use it."),
+        ("Where you have `AskUserQuestion`, use it.",
+         "Where the assistant you are running in has a tool that shows a question with its options to choose from, use it."),
     ],
 )
 def test_known_rewrites(src, expected):

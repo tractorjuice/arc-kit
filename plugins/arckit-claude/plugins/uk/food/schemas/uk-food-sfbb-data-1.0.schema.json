@@ -1,0 +1,887 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arckit.org/schemas/uk-food-sfbb-data-1.0.schema.json",
+  "title": "UK food overlay: SFBB caterers pack data, version 1.0",
+  "description": "Shape of every JSON file in plugins/arckit-uk-food/data/<data id>/. Each file validates against one entry of the oneOf below.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/source"
+    },
+    {
+      "$ref": "#/$defs/sectionFile"
+    },
+    {
+      "$ref": "#/$defs/pagesFile"
+    },
+    {
+      "$ref": "#/$defs/limitsFile"
+    }
+  ],
+  "$defs": {
+    "page": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "pageList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 100
+      }
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "publisher",
+        "url",
+        "publication",
+        "retrieved",
+        "file",
+        "sha256",
+        "pages",
+        "licence",
+        "attribution"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publisher": {
+          "const": "Food Standards Agency"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "publication": {
+          "type": "string",
+          "format": "uri"
+        },
+        "retrieved": {
+          "type": "string",
+          "format": "date"
+        },
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "pages": {
+          "const": 100
+        },
+        "licence": {
+          "const": "OGL-3.0"
+        },
+        "attribution": {
+          "const": "Contains public sector information licensed under the Open Government Licence v3.0."
+        }
+      }
+    },
+    "sectionFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "data",
+        "section",
+        "methods"
+      ],
+      "properties": {
+        "schema": {
+          "const": "uk-food-sfbb-data-1.0"
+        },
+        "data": {
+          "const": "sfbb-caterers-2026-11-17"
+        },
+        "section": {
+          "$ref": "#/$defs/section"
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/method"
+          }
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "code",
+        "title",
+        "intro"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "XC",
+            "CL",
+            "CH",
+            "CK",
+            "MG"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pages": {
+          "$ref": "#/$defs/pageList"
+        },
+        "intro": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/textItem"
+          }
+        }
+      }
+    },
+    "textItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "page"
+      ],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      }
+    },
+    "method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "pages",
+        "blocks"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}-[0-9]{2}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pages": {
+          "$ref": "#/$defs/pageList"
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sectionBlock"
+          }
+        }
+      }
+    },
+    "sectionBlock": {
+      "$ref": "#/$defs/block",
+      "not": {
+        "anyOf": [
+          {
+            "required": [
+              "form"
+            ]
+          },
+          {
+            "$ref": "#/$defs/fromImageBlock"
+          }
+        ]
+      },
+      "$comment": "A block in a section file: any block but one carrying form, which only front.json and diary.json use, or fromImage: true, which only diary.json uses."
+    },
+    "form": {
+      "enum": [
+        "openingChecks",
+        "closingChecks",
+        "extraChecks",
+        "trainingRecord",
+        "suppliersList",
+        "contactsList",
+        "cleaningSchedule",
+        "proveItRecords",
+        "weekPage",
+        "fourWeeklyReview",
+        "completionRecord",
+        "workingWithFood",
+        "reviewLog",
+        "packCompletion"
+      ],
+      "$comment": "Marks a block that later work renders a business's own form from. It is not page text, and is allowed only on blocks in front.json and diary.json."
+    },
+    "fromImageBlock": {
+      "required": [
+        "fromImage"
+      ],
+      "properties": {
+        "fromImage": {
+          "const": true
+        }
+      },
+      "$comment": "A text block whose words are transcribed from the page image because the PDF's text layer does not hold them. The coverage test cannot see it, so it is allowed only in diary.json, on the pages in fromImagePage."
+    },
+    "fromImagePage": {
+      "enum": [
+        87,
+        89,
+        94,
+        99
+      ],
+      "$comment": "The diary pages whose blocks may carry fromImage: true. It must equal FROM_IMAGE_PAGES in uk-food.mjs; a Node test ties the two."
+    },
+    "pagesFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "data",
+        "part",
+        "pages"
+      ],
+      "properties": {
+        "schema": {
+          "const": "uk-food-sfbb-data-1.0"
+        },
+        "data": {
+          "const": "sfbb-caterers-2026-11-17"
+        },
+        "part": {
+          "enum": [
+            "front",
+            "diary"
+          ]
+        },
+        "pages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/pageObject"
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "part": {
+            "const": "front"
+          }
+        },
+        "required": [
+          "part"
+        ]
+      },
+      "then": {
+        "properties": {
+          "pages": {
+            "items": {
+              "properties": {
+                "blocks": {
+                  "items": {
+                    "not": {
+                      "$ref": "#/$defs/fromImageBlock"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "$comment": "front.json (part front) and diary.json (part diary): the pack's pages that are not safe methods, one page object per printed page. validateData also checks what the schema cannot express: part names its own file, pages are in order and each appears once, every block's and row's page is its page object's page, and row and question identifiers are FR-<page>-Pnn and FR-<page>-Qnn in front.json, DY-<page>-Pnn and DY-<page>-Qnn in diary.json, with the page as two digits (three for page 100)."
+    },
+    "limitsFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "data",
+        "limits"
+      ],
+      "properties": {
+        "schema": {
+          "const": "uk-food-sfbb-data-1.0"
+        },
+        "data": {
+          "const": "sfbb-caterers-2026-11-17"
+        },
+        "limits": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/limit"
+          }
+        }
+      },
+      "$comment": "limits.json: every number, limit and standard the pack prints that a business must work to, one entry for each place it is printed. It is derived from the transcribed files, not page text. validateData also checks what the schema cannot express: identifiers are L-01, L-02 and so on in order, none repeated; method names a safe method in the section files, or is front or diary; page is one of that safe method's pages, or 1 to 10 for front, 78 to 100 for diary; text contains value."
+    },
+    "limit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "value",
+        "text",
+        "method",
+        "page"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^L-[0-9]{2,}$"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "$comment": "The figure exactly as the data holds it, character for character: a raised zero (U+2070) where the pack prints one, never tidied to a degree sign."
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "$comment": "The FSA sentence or cell paragraph the figure comes from, quoted exactly from one part of a data string on the page."
+        },
+        "method": {
+          "type": "string",
+          "pattern": "^(?:[A-Z]{2}-[0-9]{2}|front|diary)$"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    },
+    "pageObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "page",
+        "title",
+        "blocks"
+      ],
+      "properties": {
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "$comment": "The page's printed title, or null when it prints none; never an empty string. Page text on this page."
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/block"
+          }
+        }
+      },
+      "if": {
+        "not": {
+          "properties": {
+            "page": {
+              "$ref": "#/$defs/fromImagePage"
+            }
+          },
+          "required": [
+            "page"
+          ]
+        }
+      },
+      "then": {
+        "properties": {
+          "blocks": {
+            "items": {
+              "not": {
+                "$ref": "#/$defs/fromImageBlock"
+              }
+            }
+          }
+        }
+      }
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "text",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "text": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "yes-no",
+            "yes-no-else",
+            "tick",
+            "text",
+            "list",
+            "note"
+          ]
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "elseText": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        }
+      },
+      "$comment": "Any question but a note may have empty text: its prompt is then its block's column headings and its row's point. A note is FSA text printed in an answer column that asks nothing.",
+      "if": {
+        "properties": {
+          "type": {
+            "const": "note"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "text": {
+            "minLength": 1
+          },
+          "options": {
+            "maxItems": 0
+          },
+          "elseText": {
+            "const": null
+          }
+        }
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/question"
+      }
+    },
+    "columnGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "from",
+        "to"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "to": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "$comment": "A label printed across several columns of a two-level table header, over the block's columns from `from` to `to` (0-based, inclusive). The label is page text. validateData also checks what the schema cannot express: from is not after to, to is a column of the block, and groups do not overlap."
+    },
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "page"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "point": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "why": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "questions": {
+          "$ref": "#/$defs/questions"
+        }
+      }
+    },
+    "block": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "page",
+            "rows"
+          ],
+          "properties": {
+            "kind": {
+              "const": "points"
+            },
+            "heading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "page": {
+              "$ref": "#/$defs/page"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/row"
+              }
+            },
+            "form": {
+              "$ref": "#/$defs/form"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "page",
+            "rows"
+          ],
+          "properties": {
+            "kind": {
+              "const": "manage-it"
+            },
+            "heading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "page": {
+              "$ref": "#/$defs/page"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/row"
+              }
+            },
+            "form": {
+              "$ref": "#/$defs/form"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "page"
+          ],
+          "properties": {
+            "kind": {
+              "const": "check-it"
+            },
+            "heading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "$comment": "As on manage-it: the box name stays in heading; the other column headings printed in the box's header row go here."
+            },
+            "page": {
+              "$ref": "#/$defs/page"
+            },
+            "text": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/row"
+              }
+            },
+            "questions": {
+              "$ref": "#/$defs/questions"
+            },
+            "form": {
+              "$ref": "#/$defs/form"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "page",
+            "text"
+          ],
+          "properties": {
+            "kind": {
+              "const": "think-twice"
+            },
+            "heading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "page": {
+              "$ref": "#/$defs/page"
+            },
+            "text": {
+              "type": "string"
+            },
+            "form": {
+              "$ref": "#/$defs/form"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "page",
+            "text"
+          ],
+          "properties": {
+            "kind": {
+              "const": "prove-it"
+            },
+            "heading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "page": {
+              "$ref": "#/$defs/page"
+            },
+            "text": {
+              "type": "string"
+            },
+            "form": {
+              "$ref": "#/$defs/form"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "page",
+            "text"
+          ],
+          "properties": {
+            "kind": {
+              "const": "text"
+            },
+            "heading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "page": {
+              "$ref": "#/$defs/page"
+            },
+            "text": {
+              "type": "string"
+            },
+            "fromImage": {
+              "type": "boolean",
+              "default": false
+            },
+            "form": {
+              "$ref": "#/$defs/form"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "page",
+            "wrong",
+            "prevent"
+          ],
+          "properties": {
+            "kind": {
+              "const": "wrong"
+            },
+            "heading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "page": {
+              "$ref": "#/$defs/page"
+            },
+            "wrongHeading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "preventHeading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "wrong": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "prevent": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "diaryNote": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "form": {
+              "$ref": "#/$defs/form"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "page",
+            "columns",
+            "rows"
+          ],
+          "properties": {
+            "kind": {
+              "const": "table"
+            },
+            "heading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "page": {
+              "$ref": "#/$defs/page"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "columnGroups": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/columnGroup"
+              }
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "questions": {
+              "$ref": "#/$defs/questions"
+            },
+            "form": {
+              "$ref": "#/$defs/form"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

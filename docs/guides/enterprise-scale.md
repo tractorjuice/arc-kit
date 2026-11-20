@@ -123,6 +123,35 @@ before they run, even when a project enables them. For managed dev containers
 or golden images, pre-populate the plugin cache with `CLAUDE_CODE_PLUGIN_SEED_DIR`
 so startup does not need to clone the marketplace at runtime.
 
+**Keep the second ArcKit marketplace out.** The `tractorjuice/arc-kit`
+repository publishes the same 20 plugins, under the same names, as a
+marketplace called `arc-kit`. A machine with both `arc-kit` and
+`arckit-claude` registered lists every plugin twice. The allowlist above
+prevents that, because it admits only `tractorjuice/arckit-claude`. If you
+aren't ready for an allowlist, block the one source instead:
+
+```json
+{
+  "blockedMarketplaces": [
+    {
+      "source": "github",
+      "repo": "tractorjuice/arc-kit"
+    }
+  ]
+}
+```
+
+Claude Code checks both lists again at session start, so a plugin already
+installed from the blocked marketplace stops loading. Reinstall it as
+`arckit@arckit-claude`.
+
+From Claude Code v2.1.321, a marketplace name declared in managed
+`extraKnownMarketplaces` can't be added from another source, and an entry of
+that name from elsewhere is hidden. A user therefore can't point the name
+`arckit-claude` at a fork. This pins the name only: it doesn't hide the
+differently named `arc-kit` marketplace, which is what the allowlist or the
+blocklist is for.
+
 ### 4. Configure ArcKit options and MCP
 
 At enable time, the ArcKit plugin exposes user configuration for organization
@@ -241,6 +270,7 @@ Use a narrow pilot before broad installation:
 
 | Version | Enterprise-relevant change | ArcKit impact |
 |---------|----------------------------|---------------|
+| v2.1.321 | A marketplace name declared in managed `extraKnownMarketplaces` can't be added from another source; an entry of that name from elsewhere is hidden, and plugins the declared marketplace lists are reinstalled from it | A user can't point the managed `arckit-claude` name at a fork. It doesn't hide the differently named `arc-kit` marketplace; use the allowlist or `blockedMarketplaces` for that |
 | v2.1.319 | PostToolUse hooks run, with up to 10 seconds, on a tool call that finishes after a new message interrupts the turn; three permission and sandbox bypasses closed (a crafted Bash environment prefix, `sed` in accept-edits and auto mode, worktree creation); Bash deny and ask rules match commands written with quoted words; a plugin update installs a dependency the new version adds; `permissions.denyInsteadOfPrompting` added | An artefact written as the user sends a new message still gets its provenance block and manifest entry. Deny rules a fleet writes match what they were written for. Overlays keep their core dependency across updates. This is ArcKit's floor |
 | v2.1.295 | `onFailure: "block"`: a command hook that can't start, times out or exits with an unexpected code stops the action | Gates on ArcKit's own artefacts and supplier documents fail closed, so those need Node on `PATH`. Other paths are unaffected |
 | v2.1.287 | Claude mods: a plugin can name a hooks module that observes, rewrites or answers tool calls, prompts and turns, and draws its own interface; plugin SessionStart hooks now run in new cloud sessions; a dangerous `rm` keeps its always-ask safeguard when it also redirects to a `~` or wildcard path; a shell write through a committed symlink onto a sensitive file or out of the working tree now waits for a person | Current floor, for the SessionStart fix in new cloud sessions. ArcKit ships no mod: 6.18.1 and earlier carried a status band above the prompt, removed because the Claude plugin directory holds any plugin with a mod for a reviewer. Organisations with managed settings get Anthropic's built-in `sec-default` mod, which keeps their own hooks and deny rules out of reach of installed plugins |
@@ -653,7 +683,7 @@ the *default* subagent model, and an agent definition's `model:` or an
 explicit per-spawn model takes precedence over it; v2.1.257 added
 `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` to restore the old override-everything
 behaviour. Every ArcKit agent declares `model: inherit`. Whether that
-declaration counts as an override is being verified on tractorjuice/arc-kit#580;
+declaration counts as an override is being verified on tractorjuice/arc-kit#1109;
 until it is, a fleet that routes ArcKit's readers and writers to a cheaper
 model should set `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` rather than rely on the
 default, and can read the model each subagent actually ran on from `/tasks`
@@ -669,7 +699,11 @@ driving adoption across many teams without a manual rollout. Pair with
 `strictKnownMarketplaces` / `blockedMarketplaces` if you want to *restrict*
 installs to only the marketplaces you've vetted. Both accept `owner/*`
 wildcards from Claude Code v2.1.223, so `tractorjuice/*` allowlists the
-marketplace and every standalone extension repo in one entry.
+marketplace and every standalone extension repo in one entry. That wildcard
+also admits `tractorjuice/arc-kit`, the second marketplace described under
+[Deploy the ArcKit marketplace and plugin](#3-deploy-the-arckit-marketplace-and-plugin),
+so add the `blockedMarketplaces` entry shown there. The blocklist is checked
+first.
 
 ### Slice usage/cost metrics by project
 

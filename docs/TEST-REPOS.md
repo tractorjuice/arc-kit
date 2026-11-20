@@ -28,6 +28,7 @@ ArcKit maintains public test repos on GitHub (pattern: `arckit-test-project-v*`)
 | v50 | post-office-horizon | Post Office Horizon |
 | v51 | prs-database | UK PRS Database under Renters' Rights Act 2025 |
 | v52 | uae-caio-playbook | UAE CAIO Playbook for the 24-month agentic AI mandate |
+| v54 | uk-food-safety | UK food safety overlay: an invented café working through *Safer food, better business for caterers* |
 
 ## Plugin-Based Setup (since 2026-02-07)
 
@@ -40,7 +41,8 @@ All test repos now use the arckit plugin via the marketplace instead of synced f
       "source": {
         "source": "github",
         "repo": "tractorjuice/arckit-claude"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "enabledPlugins": {
@@ -48,6 +50,8 @@ All test repos now use the arckit plugin via the marketplace instead of synced f
   }
 }
 ```
+
+`autoUpdate` keeps each test repo on the latest ArcKit release. Claude Code leaves automatic updates off for a marketplace that isn't Anthropic's own, and a marketplace file has no field to turn them on, so the settings entry sets it.
 
 **What the plugin provides** (no longer synced to test repos):
 

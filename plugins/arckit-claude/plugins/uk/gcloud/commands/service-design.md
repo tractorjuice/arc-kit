@@ -121,7 +121,7 @@ names a service project by number (`004`), by name or name fragment, or by path
   name (change the name inside the document, not the directory). If the input was only part of a
   name and could be a new service ("case" when `004-secure-case-mgmt` exists), confirm with
   **AskUserQuestion** first.
-- **Several match:** ask the user which one they mean.
+- **Several match:** list them, then use the AskUserQuestion tool to ask which, offering them as the choices with none marked as recommended (`${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`, section 5). With no answer, stop: do not pick one.
 - **None match:** if a listed project looks like this offer under another name, ask with
   **AskUserQuestion** whether to update that project or create a new one. Otherwise create a new one.
 

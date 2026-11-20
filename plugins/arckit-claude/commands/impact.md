@@ -14,6 +14,8 @@ handoffs:
   - command: conformance
     description: Re-assess conformance after changes
     condition: "Impact includes architecture design documents"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Impact Analysis
@@ -88,4 +90,4 @@ $ARGUMENTS
 
 6. **If no impacts found**, report that the document has no downstream dependencies. Note this may indicate a traceability gap — suggest running `/arckit:traceability` to check coverage.
 
-7. **If the query matches multiple documents**, list them and ask the user to specify which one to analyse.
+7. **If the query matches multiple documents**, list them, then use the AskUserQuestion tool to ask which, offering them as the choices with none marked as recommended (`${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`, section 5). With no answer, stop: the list is the result.

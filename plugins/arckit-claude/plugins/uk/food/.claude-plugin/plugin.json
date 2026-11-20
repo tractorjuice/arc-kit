@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "arckit-uk-food",
+  "displayName": "ArcKit UK Food Safety Overlay",
+  "version": "6.24.0",
+  "defaultEnabled": false,
+  "description": "UK Food Safety Overlay for ArcKit. Experimental and community-maintained. Covers England and Wales. Builds a small caterer's food safety documents from the Food Standards Agency's Safer food, better business for caterers pack: a business profile, the five sections of safe methods, the business's own methods, a completion record, and sign-off by a named person. Requires arckit core plugin.",
+  "author": {
+    "name": "TractorJuice",
+    "url": "https://github.com/tractorjuice"
+  },
+  "homepage": "https://arckit.org",
+  "repository": "https://github.com/tractorjuice/arckit-claude",
+  "license": "MIT",
+  "icon": "./assets/icon.svg",
+  "privacyPolicyUrl": "https://arckit.org/privacy.html",
+  "supportUrl": "https://github.com/tractorjuice/arc-kit/issues",
+  "documentationUrl": "https://github.com/tractorjuice/arckit-claude/tree/main/plugins/uk/food#readme",
+  "termsOfServiceUrl": "https://github.com/tractorjuice/arckit-claude/blob/main/LICENSE",
+  "keywords": [
+    "architecture",
+    "governance",
+    "uk",
+    "food-safety",
+    "sfbb",
+    "haccp",
+    "catering",
+    "hospitality"
+  ],
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=6.24.0"
+    }
+  ]
+}

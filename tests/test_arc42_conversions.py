@@ -260,6 +260,7 @@ def _load_converter():
     ("/arckit:community.security-assessment", "/arckit-community-security-assessment"),
     ("/arckit:community.{name} <project>", "/arckit-community-{name} <project>"),
     ("/arckit:uk-legacy-assessment", "/arckit-uk-legacy-assessment"),
+    ("then `/arckit:uk-food-safe-methods` CK.", "then `/arckit-uk-food-safe-methods` CK."),
     ("`/arckit:[command]`", "`/arckit-[command]`"),
     ("/arckit:{command}", "/arckit-{command}"),
     ("all /arckit:* commands", "all /arckit-* commands"),
