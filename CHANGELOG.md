@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`nl-references.py` usage errors name the problem:** an empty `--dir` or `--from-xml`, a directory given as a file, a second `--from-xml`. On macOS `--dir` accepts a differently cased path to the project.
+- **`/arckit-nl:nl-nora` and `/arckit-nl:nl-gemma` stop when Python is missing and there is no extract,** and tell you how to proceed: install Python 3 or place an extract by hand. A usage error from the script is quoted rather than passed over. The NORA assessment counts *Not applicable* in the kwaliteitsdoel tally and the GEMMA roll-up, and the GEMMA quality check asks for a note when the bedrijfsfunctiemodel extract is missing.
+
 ## [6.24.0] — 2026-11-20
 
 ### Added

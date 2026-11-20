@@ -1281,6 +1281,33 @@ def from_local(source, directory, force, build, files):
     return written(result, source, directory, "file", state, new_version, texts, files)
 
 
+def inside(root, target):
+    """Whether `target` is the directory `root` or below it: by name, or by
+    identity, so a differently cased path to the same directory on a
+    case-insensitive file system (macOS, Windows) counts as inside. Identity
+    counts only on a file system that reports inode numbers: where it
+    reports none, every directory would compare as the same one."""
+    try:
+        if os.path.commonpath([root, target]) == root:
+            return True
+    except ValueError:   # another drive on Windows
+        return False
+    root_stat = os.stat(root)
+    if not root_stat.st_ino:
+        return False
+    path = target
+    while True:
+        try:
+            if os.path.samestat(os.stat(path), root_stat):
+                return True
+        except OSError:   # a part that does not exist yet
+            pass
+        parent = os.path.dirname(path)
+        if parent == path:
+            return False
+        path = parent
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0],
                                  epilog=__doc__.split("\n\n", 1)[1],
@@ -1296,28 +1323,32 @@ def main(argv=None):
     ap.add_argument("--from-dump", action="append", metavar="XML",
                     help="build the NORA extract offline from a NORA Online MediaWiki XML export "
                          "(repeat for several files)")
-    ap.add_argument("--from-xml", metavar="XML",
+    ap.add_argument("--from-xml", action="append", metavar="XML",
                     help="build the GEMMA extracts offline from a local copy of `GEMMA release.xml`")
     args = ap.parse_args(argv)
+    if not args.dir:
+        ap.error("--dir needs a directory")
+    if args.from_xml and len(args.from_xml) > 1:
+        ap.error("--from-xml takes one file: `GEMMA release.xml` holds the whole model")
     if args.from_dump and args.source == "gemma":
         ap.error("--from-dump builds the NORA extract; use it with nora or all")
     if args.from_xml and args.source == "nora":
         ap.error("--from-xml builds the GEMMA extracts; use it with gemma or all")
     # A typo is a usage error, not an unusable source: report it as one.
-    for given in (args.from_dump or []) + ([args.from_xml] if args.from_xml else []):
-        if not os.path.isfile(given):
+    # Checked before --from-xml becomes one value, so an empty one is too.
+    for given in (args.from_dump or []) + (args.from_xml or []):
+        if not os.path.exists(given):
             ap.error(f"no such file: {given}")
+        if not os.path.isfile(given):
+            ap.error(f"not a regular file: {given}")
+    args.from_xml = args.from_xml[0] if args.from_xml else None
     # The commands pre-approve this script with any arguments, so it keeps its
     # writes inside the directory it runs from (the project): a --dir that
     # resolves outside it, also through a symlink, is refused.
     root = os.path.realpath(os.getcwd())
-    target = os.path.realpath(args.dir)
-    try:
-        inside = os.path.commonpath([root, target]) == root
-    except ValueError:   # another drive on Windows
-        inside = False
-    if not inside:
-        ap.error(f"--dir must be inside the current directory ({root}): {args.dir}")
+    if not inside(root, os.path.realpath(args.dir)):
+        ap.error(f"--dir must be inside the current directory ({root}): {args.dir}; "
+                 "run the script from the project root")
 
     nora_files = {NORA_FILE: NORA_TITLE}
     results = []
