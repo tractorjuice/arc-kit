@@ -2,7 +2,7 @@
 
 **Google Antigravity is Google's agentic development platform, and it runs Agent Skills that you call with a slash command. ArcKit v6.25.0 adds a Google Antigravity plugin that brings ArcKit's 190 architecture governance commands to it as Agent Skills: type `/arckit-requirements` and it drafts a requirements document from a template.**
 
-**Before you start:** the plugin is experimental. It passes Antigravity's own plugin check and it installs. As of 22 November 2026 I've run eight of the core commands in Antigravity and they work; the other 182 haven't been tried there yet. Everything ArcKit drafts is a draft for a qualified person to review.
+**Before you start:** the plugin is experimental. It passes Antigravity's own plugin check and it installs. As of 22 November 2026 I've run eight of the core commands in Antigravity and each wrote its document as it should; the other 182 haven't been tried there yet. The automatic checks ArcKit runs in Claude Code don't run in Antigravity. Everything ArcKit drafts is a draft for a qualified person to review.
 
 *Mark Craddock*
 
@@ -10,9 +10,9 @@
 
 ## What is Google Antigravity, and what is an Agent Skill?
 
-Antigravity is Google's platform for working with AI agents on a codebase: an app, an IDE and a command-line tool called `agy`. An Agent Skill is a folder with a `SKILL.md` file that tells the agent how to do one job. In Antigravity you run a skill by typing a slash and its name.
+[Antigravity](https://antigravity.google/docs) is Google's platform for working with AI agents on a codebase: an app, an IDE and a command-line tool called `agy`. An Agent Skill is a folder with a `SKILL.md` file that tells the agent how to do one job. In Antigravity you run a skill by typing a slash and its name.
 
-A plugin is a bundle of skills, with any MCP servers they need: the connections that let an agent reach outside tools and data. That's what ArcKit now ships for Antigravity.
+A [plugin](https://antigravity.google/docs/plugins) is a bundle of skills, with any MCP servers they need: the connections that let an agent reach outside tools and data. That's what ArcKit now ships for Antigravity.
 
 ## What ArcKit does
 
@@ -22,7 +22,7 @@ It runs on Claude Code, Gemini CLI, GitHub Copilot, Codex CLI and others. Antigr
 
 Your prompts and documents go to whichever AI model Antigravity is set to use, as with anything else you do there. Nothing is sent to ArcKit, and the documents are saved as files in your project.
 
-## Using ArcKit in Google Antigravity
+## How to install ArcKit in Google Antigravity
 
 You'll need Antigravity installed, Node.js, and Python for ArcKit's small setup tool.
 
@@ -67,7 +67,7 @@ Each one wrote its document from ArcKit's template, with the document control ta
 
 **Four research MCP servers that need no key.** AWS Knowledge, Microsoft Learn, UK government code search and UK tenders come with the plugin, so the research commands can read AWS and Azure documentation, search UK government code and look up UK contract awards. Two more, Google Developer Knowledge and Data Commons, need a key, so you add those yourself; the plugin's page says how.
 
-**Nothing cut short.** Antigravity's own plugin check, run on the first build, found something Google's documentation doesn't mention: Antigravity loads the first 24,000 bytes of a skill and drops the rest. 29 of ArcKit's commands are longer than that. The longest, for defence AI assurance, would have lost five sixths of its instructions without any warning. Each of those 29 now keeps its full instructions in a second file beside the skill and tells the agent to read it first. The check passes.
+**Nothing cut short.** Antigravity's own plugin check, run on the first build, found a limit I hadn't seen documented: Antigravity loads the first 24,000 bytes of a skill and drops the rest. Of ArcKit's commands, 29 are longer than that. The longest, for defence AI assurance, would have lost five sixths of its instructions without any warning. Each of those 29 now keeps its full instructions in a second file beside the skill and tells the agent to read it first. The check passes.
 
 ## What the 190 commands are
 
@@ -100,7 +100,7 @@ Each one wrote its document from ArcKit's template, with the document control ta
 
 **6 for AI agent architecture:** inventory, design, integration, security, governance and maturity of the AI agents an organisation runs.
 
-Most of the country, sector and method sets are contributed and maintained by the community, and several are marked experimental in their own guides. On Claude Code you install each set separately. In Antigravity they all come with the plugin, so type `/arckit-` and pick the ones you need.
+Most of the country, sector and method sets are contributed and maintained by the community, and some are marked experimental in their own guides. On Claude Code you install each set separately. In Antigravity they all come with the plugin, so type `/arckit-` and pick the ones you need.
 
 ## What isn't there yet
 
@@ -122,13 +122,12 @@ You can have both. They're installed separately and don't share anything.
 
 Also in 6.25.0:
 
-- **Mistral Vibe: the Wardley mapping commands write to the right file.** They named a file that didn't match the one they then read.
+- **Mistral Vibe: the Wardley mapping commands now write to the right file.**
 
-And in 6.24.0, which had no article of its own:
+Also new since 6.23.0:
 
 - **Claude Code shows you the choices.** When a command needs to know which project or document you meant, it lists them for you to pick from. The food safety overlay puts its yes-or-no questions the same way, up to four at a time.
 - **Automatic updates are easier to turn on.** The notice that tells you a newer ArcKit is out now says where the switch is: run `/plugin`, open the Marketplaces tab, select `arckit-claude` and turn auto-update on.
-- **The README was rewritten.** It says what ArcKit is and how to install it on the first screen.
 
 Already using ArcKit on Claude Code? Run `claude plugin update arckit@arckit-claude`.
 
