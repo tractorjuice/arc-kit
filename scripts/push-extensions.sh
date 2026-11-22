@@ -47,7 +47,7 @@ declare -A GENERATED_EXTENSION_REQUIRED_PATHS=(
   [paperclip]="src/data/commands.json skills templates docs/guides config"
   [vibe]="skills templates agents config docs/guides"
   [kimi]="skills templates config docs/guides kimi.plugin.json"
-  [antigravity]="skills templates config docs/guides plugin.json mcp_config.json assets/logo.svg"
+  [antigravity]="skills agents rules hooks/agy-hook.mjs hooks.json templates config docs/guides plugin.json mcp_config.json assets/logo.svg"
 )
 
 # Claude Code plugins are published together to the arckit-claude marketplace
