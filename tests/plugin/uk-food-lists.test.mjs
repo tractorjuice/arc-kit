@@ -5,9 +5,9 @@ import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSyn
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  CLEANING_FORM, DATA_ID, DEFAULT_DATA_DIR, DOCUMENTS, LIST_SECTIONS, LISTS, UNANSWERED, WORKSHEET_SECTIONS, beginReading, blankWorksheet,
-  checkDocument, documentOf, emitWorksheet, listOutstanding, loadData, main, parseWorksheet, projectStatus, readList, renderDocument,
-  signOffDocument, upgradeWorksheet, withDocuments
+  CLEANING_FORM, CONTACTS_FORM, DATA_ID, DEFAULT_DATA_DIR, DOCUMENTS, LIST_SECTIONS, LISTS, SUPPLIERS_FORM, UNANSWERED,
+  WORKSHEET_SECTIONS, beginReading, blankWorksheet, checkDocument, documentOf, emitWorksheet, listOutstanding, loadData, main, parseWorksheet,
+  projectStatus, readList, renderDocument, signOffDocument, upgradeWorksheet, withDocuments
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
 // The list worksheets and the list documents. The pack's words are never typed here: the cleaning
@@ -70,7 +70,7 @@ test('CLEANING_FORM finds one block of that form on that page, whose one column 
 
 test('LIST_SECTIONS are the sections of LISTS, in order, each a worksheet the helper makes, parses and upgrades', () => {
   assert.deepEqual(LIST_SECTIONS, Object.keys(LISTS).sort());
-  assert.deepEqual(LIST_SECTIONS, ['cleaning']);
+  assert.deepEqual(LIST_SECTIONS, ['cleaning', 'suppliers']);
   for (const section of LIST_SECTIONS) {
     assert.ok(WORKSHEET_SECTIONS.includes(section), section);
     assert.equal(LISTS[section].section, section);
@@ -82,6 +82,9 @@ test('LIST_SECTIONS are the sections of LISTS, in order, each a worksheet the he
   assert.deepEqual(WORKSHEET_SECTIONS.slice(0, 7), ['XC', 'CL', 'CH', 'CK', 'MG', 'profile', 'own']);
   assert.deepEqual(LISTS.cleaning.fields, ['Frequency', 'Other-frequency', 'Precautions', 'Method']);
   assert.equal(LISTS.cleaning.prefix, 'CS');
+  assert.deepEqual(LISTS.suppliers.fields, ['Kind', 'Contact-name', 'Telephone', 'Email', 'Address', 'Delivery-days', 'Lead-time',
+    'Goods-supplied', 'Useful-for']);
+  assert.equal(LISTS.suppliers.prefix, 'SUP');
 });
 
 // ---- The cleaning worksheet ----
@@ -641,4 +644,149 @@ test('M5: what a list worksheet is told of a ### heading and of wording from ano
   assert.equal(older.problems.length, 1);
   assert.match(older.problems[0].message, / Each entry, and anything written under Kept elsewhere, belongs below the opening comment\.$/);
   assert.doesNotMatch(older.problems[0].message, /own entry|Answer:/);
+});
+
+// ---- Suppliers and contacts (Task 6) ----
+
+// The pack's two forms, found in the data the way the helper finds them: the boxes of each form on its page that are
+// not the pack's filled-in example. None of their words is typed here.
+const boxesOf = ({ form, page }) => data.diary.pages.find((p) => p.page === page).blocks
+  .filter((b) => b.form === form && b.kind === 'table' && !b.fromImage);
+const forms = () => {
+  const [supplier] = boxesOf(SUPPLIERS_FORM);
+  const [team, contact] = boxesOf(CONTACTS_FORM);
+  // The pack's list of what the environmental health team is useful for advice on: the one cell of the team's box
+  // that holds more than one line.
+  return { supplier, team, contact, advice: team.rows.flat().find((cell) => cell.includes('\n')) };
+};
+
+const SUP_FIELDS = ['Kind', 'Contact-name', 'Telephone', 'Email', 'Address', 'Delivery-days', 'Lead-time', 'Goods-supplied', 'Useful-for',
+  'State', 'By', 'On', 'Source'];
+const supEntry = (id, title, fields) => [`## ${id} ${title}`, '',
+  ...SUP_FIELDS.map((f) => (fields[f] ? `${f}: ${fields[f].replace(/\n/g, '\n  ')}` : `${f}:`))].join('\n');
+const supSheet = (...entries) => `${blankWorksheet('suppliers', data)}${entries.map((e) => `\n${e}\n`).join('')}`;
+const GROCER_FIELDS = { Kind: 'supplier', 'Contact-name': 'Dev Hartley', Telephone: '01632 960118', 'Delivery-days': 'Tuesday and Friday',
+  'Lead-time': 'By the end of the day before', 'Goods-supplied': 'Fruit and vegetables' };
+const GROCER = supEntry('SUP-01', 'Hartley Greengrocers', { ...GROCER_FIELDS, ...agreed });
+const TEAM = supEntry('SUP-02', 'Exampleton District Council food team', { Kind: 'environmental-health', Telephone: '01632 960300', ...agreed });
+const PESTS = supEntry('SUP-03', 'Swift Pest Control', { Kind: 'contact', Email: 'visits@swift-pest-control.example',
+  'Useful-for': 'Mice, rats and insects', ...agreed });
+const SUP_KEPT = ['Where: The blue book by the till', 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17', 'Source:'];
+
+test('SUPPLIERS_FORM and CONTACTS_FORM find the pack\'s boxes, laid out as the suppliers and contacts document reads them', () => {
+  const { supplier, team, contact, advice } = forms();
+  assert.ok(supplier && team && contact);
+  // A supplier's box: two headings, the lead time beside a blank, then its other labels in a pair and alone, a blank row after each.
+  assert.equal(supplier.columns.length, 2);
+  assert.deepEqual(supplier.rows.map((row) => row.filter(Boolean).length), [1, 2, 0, 1, 0, 1, 0, 1, 0]);
+  assert.deepEqual(supplier.rows.map((row) => row.length), [3, 2, 2, 1, 1, 1, 1, 1, 1]);
+  // The team's box and another contact's have the same labels, and the team's holds the pack's list where the other
+  // leaves room for the business's own words.
+  assert.deepEqual([team.columns.length, contact.columns.length], [2, 2]);
+  assert.equal(team.columns[1], contact.columns[1]);
+  assert.deepEqual(team.rows.map((row) => row[0]), contact.rows.map((row) => row[0]));
+  assert.equal(team.rows.length, 4);
+  assert.ok(advice.split('\n').length > 1);
+  assert.equal(team.rows[0][1], advice);
+  assert.equal(contact.rows[0][1], '');
+  // The pack's filled-in example is on both forms' pages, so the test that it is never printed means something.
+  for (const where of [SUPPLIERS_FORM, CONTACTS_FORM]) {
+    assert.ok(data.diary.pages.find((p) => p.page === where.page).blocks.some((b) => b.form === where.form && b.fromImage), where.form);
+  }
+});
+
+test('a blank suppliers worksheet parses with no problems and no entries, and a filled one round-trips unchanged', () => {
+  const blank = blankWorksheet('suppliers', data);
+  const parsed = parse(blank);
+  assert.deepEqual(parsed.problems, []);
+  assert.deepEqual([parsed.section, parsed.entries.size, parsed.elsewhere.answered], ['suppliers', 0, false]);
+  assert.equal(blank.split('\n')[0], '# Answers: Suppliers and contacts (suppliers)');
+  assert.ok(blank.includes(`\n## SUP-01 Business or service name\n\n${SUP_FIELDS.map((f) => (f === 'State' ? 'State: unanswered' : `${f}:`)).join('\n')}\n-->\n`));
+  assert.ok(blank.endsWith(`-->\n\n${BLANK_ELSEWHERE}`), blank);
+  const text = withElsewhere(supSheet(GROCER, TEAM, PESTS), SUP_KEPT);
+  const filled = parse(text);
+  assert.deepEqual(filled.problems, []);
+  assert.equal(emitWorksheet(filled, data), text);
+  const grocer = filled.entries.get('SUP-01');
+  assert.deepEqual([grocer.title, grocer.kind, grocer.contactName, grocer.telephone, grocer.deliveryDays, grocer.leadTime, grocer.goodsSupplied,
+    grocer.answered], ['Hartley Greengrocers', 'supplier', 'Dev Hartley', '01632 960118', 'Tuesday and Friday', 'By the end of the day before',
+    'Fruit and vegetables', true]);
+  assert.deepEqual([filled.entries.get('SUP-03').usefulFor, filled.entries.get('SUP-03').email], ['Mice, rats and insects', 'visits@swift-pest-control.example']);
+});
+
+test('Kind is read in any letter case and kept as supplier, contact or environmental-health; anything else is a problem naming the three', () => {
+  for (const [typed, kind] of [['Supplier', 'supplier'], ['CONTACT', 'contact'], ['Environmental-Health', 'environmental-health']]) {
+    const fields = { Kind: typed, Telephone: '01632 960100', ...(kind === 'supplier' ? { 'Goods-supplied': 'Milk' } : {}), ...agreed };
+    const parsed = parse(supSheet(supEntry('SUP-01', 'Somebody', fields)));
+    assert.deepEqual(parsed.problems, [], typed);
+    assert.deepEqual([parsed.entries.get('SUP-01').kind, parsed.entries.get('SUP-01').answered], [kind, true], typed);
+  }
+  const text = supSheet(supEntry('SUP-01', 'Mill Lane Bakery', { Kind: 'baker', Telephone: '01632 960245', ...agreed }));
+  const parsed = parse(text);
+  assert.deepEqual(parsed.problems.map((p) => [p.line, p.message]),
+    [[lineOf(text, 'Kind: baker'), 'SUP-01: Kind "baker" is not supplier, contact or environmental-health']]);
+  assert.equal(parsed.entries.get('SUP-01').answered, false);
+});
+
+test('what an entry needs before it is proposed or confirmed: Kind; for a supplier, Goods-supplied; for a contact or the team, a Telephone or an Email, either one being enough', () => {
+  const says = (fields) => parse(supSheet(supEntry('SUP-01', 'Somebody', fields))).problems.map((p) => p.message);
+  assert.deepEqual(says({ State: 'proposed', Source: 'A delivery note' }), ['SUP-01 is proposed, so it needs Kind']);
+  assert.deepEqual(says({ Kind: 'supplier', Telephone: '01632 960100', ...agreed }), ['SUP-01 is confirmed, so it needs Goods-supplied']);
+  for (const kind of ['contact', 'environmental-health']) {
+    const text = supSheet(supEntry('SUP-01', 'Somebody', { Kind: kind, Address: '1 High Street, Exampleton', ...agreed }));
+    const parsed = parse(text);
+    // Told at the Telephone line, the first of the two it names.
+    assert.deepEqual(parsed.problems.map((p) => [p.line, p.message]),
+      [[lineOf(text, 'Telephone:', '## SUP-01 Somebody'), 'SUP-01 is confirmed, so it needs Telephone or Email']], kind);
+    assert.equal(parsed.entries.get('SUP-01').answered, false);
+    assert.deepEqual(says({ Kind: kind, Telephone: '01632 960100', ...agreed }), [], kind);
+    assert.deepEqual(says({ Kind: kind, Email: 'someone@place.example', ...agreed }), [], kind);
+  }
+  // A supplier needs no Telephone or Email, and an entry still unanswered needs nothing yet.
+  assert.deepEqual(says({ Kind: 'supplier', 'Goods-supplied': 'Milk', ...agreed }), []);
+  assert.deepEqual(says({ Kind: 'contact', State: 'unanswered' }), []);
+});
+
+test('a field its kind does not use, filled in, is a problem at its line, and the entry is not used', () => {
+  const supplierOnly = (field) => `${field} is only for an entry whose Kind is supplier: clear it, or set Kind to supplier`;
+  for (const [kind, field, message] of [
+    ['contact', 'Delivery-days', supplierOnly('Delivery-days')],
+    ['contact', 'Lead-time', supplierOnly('Lead-time')],
+    ['contact', 'Goods-supplied', supplierOnly('Goods-supplied')],
+    ['environmental-health', 'Delivery-days', supplierOnly('Delivery-days')],
+    ['environmental-health', 'Goods-supplied', supplierOnly('Goods-supplied')],
+    ['supplier', 'Useful-for', 'Useful-for is only for an entry whose Kind is contact: clear it, or set Kind to contact'],
+    ['environmental-health', 'Useful-for', 'Useful-for is only for an entry whose Kind is contact: the environmental health team\'s box lists ' +
+      'what the pack says the team advises on, so clear it']
+  ]) {
+    const fields = { Kind: kind, Telephone: '01632 960100', ...(kind === 'supplier' ? { 'Goods-supplied': 'Milk' } : {}), [field]: 'Something', ...agreed };
+    const text = supSheet(supEntry('SUP-01', 'Somebody', fields));
+    const parsed = parse(text);
+    assert.deepEqual(parsed.problems.map((p) => [p.line, p.message]), [[lineOf(text, `${field}: Something`), `SUP-01: ${message}`]], `${kind} ${field}`);
+    assert.equal(parsed.entries.get('SUP-01').answered, false);
+  }
+  // An entry still unanswered holds what has been given so far, unchecked.
+  assert.deepEqual(parse(supSheet(supEntry('SUP-01', 'Somebody', { Kind: 'contact', 'Delivery-days': 'Mondays', State: 'unanswered' }))).problems, []);
+});
+
+test('a second environmental-health entry, proposed or confirmed, is a problem at its Kind line; one still unanswered is held as given', () => {
+  for (const state of [agreed, { State: 'proposed', Source: 'An old letter from the council' }]) {
+    const second = supEntry('SUP-04', 'Exampleton council, the old number', { Kind: 'environmental-health', Telephone: '01632 960301', ...state });
+    const text = supSheet(GROCER, TEAM, second);
+    const parsed = parse(text);
+    assert.deepEqual(parsed.problems.map((p) => [p.line, p.message]), [[lineOf(text, 'Kind: environmental-health', '## SUP-04'),
+      'SUP-04: there is one environmental-health entry at most, and SUP-02 is one already: change this entry\'s Kind, or keep one of the two']],
+    state.State);
+    assert.deepEqual([parsed.entries.get('SUP-02').answered, parsed.entries.get('SUP-04').answered], [true, false]);
+  }
+  const held = supEntry('SUP-04', 'Exampleton council, the old number', { Kind: 'environmental-health', Telephone: '01632 960301', State: 'unanswered' });
+  assert.deepEqual(parse(supSheet(GROCER, TEAM, held)).problems, []);
+});
+
+test('the suppliers guidance says plainly that Kept elsewhere covers the suppliers\' list only, and that the team\'s entry is still needed', () => {
+  const guidance = blankWorksheet('suppliers', data).replace(/\s+/g, ' ');
+  assert.ok(guidance.includes('Kept elsewhere covers the suppliers\' list only: the document still needs the environmental health team\'s entry, ' +
+    'confirmed, even when the business keeps its suppliers\' list somewhere else.'), guidance);
+  assert.ok(guidance.includes('There is one environmental-health entry at most, once proposed or confirmed.'), guidance);
+  assert.ok(!guidance.includes('quoted from'), 'the guidance quotes nothing of the pack');
 });

@@ -49,6 +49,55 @@ function cleaningForm(data) {
   return { columns: block.columns, frequencies: block.columns.slice(groups[0].from, groups[0].to + 1) };
 }
 
+// The pack's suppliers' list form (diary pages 87 and 88, a box to each supplier) and its contacts list form (pages
+// 89 and 90: the environmental health team's box first, then a box to each other contact), each found by its form
+// name and the page its first box is on. The suppliers and contacts document prints their labels beside the
+// business's words, and the team's box with the pack's own list of what the team advises on. A test ties both to
+// the data.
+export const SUPPLIERS_FORM = { form: 'suppliersList', page: 87 };
+export const CONTACTS_FORM = { form: 'contactsList', page: 89 };
+// Where each label the document prints sits in a box of the form, as [row, column], a null row being the box's
+// column headings. The fields are the entry's (title being its name), in the order the document prints them, which is
+// the order the box reads in: a supplier's name and delivery days head its box, the lead time sits under the delivery
+// days, the contact name and goods supplied side by side, then telephone, email and address, each above a blank row.
+const SUPPLIER_CELLS = [['title', null, 0], ['deliveryDays', null, 1], ['leadTime', 0, 1], ['contactName', 1, 0], ['goodsSupplied', 1, 1],
+  ['telephone', 3, 0], ['email', 5, 0], ['address', 7, 0]];
+// A contact's box, and the team's: its heading, the contact name, telephone, email and address down its first column,
+// and "useful for advice on" heading its second, printed last here. The team's box has the pack's list under that
+// heading (TEAM_ADVICE), where another contact's leaves room for the business's own words.
+const CONTACT_CELLS = [['title', null, 0], ['contactName', 0, 0], ['telephone', 1, 0], ['email', 2, 0], ['address', 3, 0], ['usefulFor', null, 1]];
+const TEAM_ADVICE = [0, 1];
+const cellOf = (box, [row, column]) => (row === null ? box?.columns : box?.rows?.[row])?.[column];
+const isWords = (value) => typeof value === 'string' && value !== '';
+// The labels of a box, as [field, label] in the order of `cells`, or null when the box is missing or any of them is
+// not there: the document is then not printed (see lacking), rather than printed with a label left out.
+const labelsOf = (box, cells) => {
+  const labels = cells.map(([field, ...at]) => [field, cellOf(box, at)]);
+  return labels.every(([, label]) => isWords(label)) ? labels : null;
+};
+// The labels of a supplier's box, the team's and another contact's, and the pack's list of what the team advises on;
+// or null when the data lacks either form or lays one out otherwise. The boxes are the first of their form on its
+// page that the pack prints for a business to fill in: never its filled-in example (blocks marked fromImage), which
+// is an invented business's words and is never printed.
+function supplierForms(data) {
+  const boxes = ({ form, page }) => data.diary?.pages?.find((p) => p.page === page)?.blocks
+    ?.filter((b) => b.form === form && b.kind === 'table' && !b.fromImage) ?? [];
+  const [supplierBox] = boxes(SUPPLIERS_FORM);
+  const [teamBox, contactBox] = boxes(CONTACTS_FORM);
+  const [supplier, team, contact] = [[supplierBox, SUPPLIER_CELLS], [teamBox, CONTACT_CELLS], [contactBox, CONTACT_CELLS]]
+    .map(([box, cells]) => labelsOf(box, cells));
+  const advice = cellOf(teamBox, TEAM_ADVICE);
+  if (!supplier || !team || !contact || !isWords(advice) || cellOf(contactBox, TEAM_ADVICE) !== '') return null;
+  return { supplier, team, contact, advice };
+}
+
+// The kinds of entry a suppliers worksheet holds, and the fields that belong to one kind alone: a field another kind
+// fills in is a problem, as STATUS_USES has it for a safe method, since the document would show it nowhere. The team's
+// box prints the pack's own list of what the team advises on, so the team has no Useful-for of its own.
+const TEAM = 'environmental-health';
+const SUPPLIER_KINDS = ['supplier', 'contact', TEAM];
+const KIND_ONLY = { 'Delivery-days': 'supplier', 'Lead-time': 'supplier', 'Goods-supplied': 'supplier', 'Useful-for': 'contact' };
+
 // The lists, one object each. A list's fields:
 // - section: its worksheet's section, as in answers-<section>.md; nouns: what one entry is called, and many,
 //   in status and the unfinished list ("3 of 4 cleaning items confirmed"); prefix: its entries' identifiers start
@@ -119,6 +168,62 @@ export const LISTS = {
     lacking: (data, where = 'the data') => (cleaningForm(data) ? null : `${where} has no ${CLEANING_FORM.form} form on page ` +
       `${CLEANING_FORM.page} of diary.json in the layout the cleaning schedule is printed from: the item, one group of frequency ` +
       'columns, then two more columns')
+  },
+  // The business's suppliers, the environmental health team and its other contacts, each an entry of its Kind. The
+  // pack keeps them on two forms; the document prints both, one box to an entry. Kept elsewhere stands in for the
+  // suppliers' list alone: the document asks for the environmental health team's details whatever it says, as the
+  // team's box is the contact every business keeps.
+  suppliers: {
+    section: 'suppliers', nouns: ['entry', 'entries'], prefix: 'SUP', title: 'Suppliers and contacts', entryTitle: 'Business or service name',
+    elsewhereLabel: 'suppliers\' list',
+    fields: ['Kind', 'Contact-name', 'Telephone', 'Email', 'Address', 'Delivery-days', 'Lead-time', 'Goods-supplied', 'Useful-for'],
+    // Kind is read in any letter case and kept in its own spelling. The days a supplier delivers are the business's
+    // own words, printed under the pack's delivery days label: the pack's day boxes are not asked one by one.
+    values: {
+      Kind: (value) => {
+        const found = standard(value.replace(/\s+/g, ' '), SUPPLIER_KINDS);
+        return SUPPLIER_KINDS.includes(found) ? { value: found } : { error: `is not ${orList(SUPPLIER_KINDS)}` };
+      }
+    },
+    check: (entry) => (SUPPLIER_KINDS.includes(entry.kind) ? Object.entries(KIND_ONLY) : [])
+      .filter(([field, kind]) => entry[fieldKey(field)] && entry.kind !== kind)
+      .map(([field, kind]) => ({
+        field,
+        message: `${field} is only for an entry whose Kind is ${kind}: ${entry.kind === TEAM && kind === 'contact'
+          ? 'the environmental health team\'s box lists what the pack says the team advises on, so clear it'
+          : `clear it, or set Kind to ${kind}`}`
+      })),
+    // The document has one box for the environmental health team. An entry still unanswered holds what has been given
+    // so far, unchecked, as everywhere else, so only those proposed or confirmed are counted.
+    checkList: (entries) => {
+      const [first, ...more] = entries.filter((entry) => entry.kind === TEAM && entry.state !== 'unanswered');
+      return more.map((entry) => ({ id: entry.id, field: 'Kind', message: `there is one ${TEAM} entry at most, and ${first.id} is one ` +
+        'already: change this entry\'s Kind, or keep one of the two' }));
+    },
+    needs: (entry) => [...(entry.kind ? [] : ['Kind']), ...(entry.kind === 'supplier' && !entry.goodsSupplied ? ['Goods-supplied'] : []),
+      ...(['contact', TEAM].includes(entry.kind) && !entry.telephone && !entry.email ? ['Telephone or Email'] : [])],
+    each: 'supplier',
+    guidance: () => [
+      'Add one the same way for the environmental health team, and for each other service or person the business',
+      'may need to contact.',
+      `Kind is ${orList(SUPPLIER_KINDS)}. There is one ${TEAM} entry at most, once proposed or confirmed.`,
+      'Write the business\'s or service\'s name after the entry\'s number: for the environmental health team, what',
+      'you call it, such as the council\'s name. Contact-name is the person to ask for.',
+      'Delivery-days is the days a supplier delivers, in your own words, such as Monday and Thursday. Lead-time is',
+      'how far ahead an order has to be placed, in your own words. Goods-supplied is what the supplier supplies.',
+      'Useful-for is what a contact is useful for advice on, in your own words. The environmental health team\'s',
+      'box lists what the pack says the team advises on, so its Useful-for stays empty.',
+      'Delivery-days, Lead-time and Goods-supplied are for a supplier only, and Useful-for for a contact only.',
+      'An entry needs Kind before it can be proposed or confirmed. A supplier needs Goods-supplied too, and a',
+      'contact or the environmental health team a Telephone or an Email, or both.',
+      'Kept elsewhere covers the suppliers\' list only: the document still needs the environmental health team\'s',
+      'entry, confirmed, even when the business keeps its suppliers\' list somewhere else.'
+    ],
+    quoted: null,
+    lacking: (data, where = 'the data') => (supplierForms(data) ? null : `${where} has no ${SUPPLIERS_FORM.form} form on page ` +
+      `${SUPPLIERS_FORM.page} and ${CONTACTS_FORM.form} form on page ${CONTACTS_FORM.page} of diary.json in the layout the suppliers and ` +
+      'contacts document is printed from: a supplier\'s box, then the environmental health team\'s box with its list of what the team ' +
+      'advises on, and another contact\'s box')
   }
 };
 export const LIST_SECTIONS = Object.keys(LISTS).sort();
@@ -224,7 +329,8 @@ export function readList(list, reading, data) {
     if (!held) for (const { field, message } of list.check?.(entry, data, today) ?? []) report(lineOf(block, field), `${block.id}: ${message}`, block);
     checkState(block, block.id, entry.state, ['By', 'On']);
     if (entry.state === 'proposed' || entry.state === 'confirmed') {
-      for (const name of list.needs(entry, data)) report(lineOf(block, name), `${block.id} is ${entry.state}, so it needs ${name}`, block);
+      // A need that names two fields, either of which will do ("Telephone or Email"), is told at the first of them.
+      for (const name of list.needs(entry, data)) report(lineOf(block, name.split(' or ')[0]), `${block.id} is ${entry.state}, so it needs ${name}`, block);
       if (entry.state === 'proposed') needs(block, block.id, ['Source'], 'proposed');
     }
     entry.answered = entry.state === 'confirmed' && !block.faulty;
