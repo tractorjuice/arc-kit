@@ -12,7 +12,7 @@
 
 Antigravity is Google's platform for working with AI agents on a codebase: an app, an IDE and a command-line tool called `agy`. An Agent Skill is a folder with a `SKILL.md` file that tells the agent how to do one job. In Antigravity you run a skill by typing a slash and its name.
 
-A plugin is a bundle of skills, with any tool connections they need. That's what ArcKit now ships for Antigravity.
+A plugin is a bundle of skills, with any MCP servers they need: the connections that let an agent reach outside tools and data. That's what ArcKit now ships for Antigravity.
 
 ## What ArcKit does
 
@@ -59,13 +59,13 @@ You'll need Antigravity installed, Node.js, and Python for ArcKit's small setup 
 
 I started a project in Antigravity for a developer AI enablement platform and ran the core commands in order, with Gemini 3.8 Flash as the model: `/arckit-start` and `/arckit-init`, then principles, stakeholders, requirements, a DevOps strategy, a Secure by Design assessment and AWS research.
 
-Each one wrote its document from ArcKit's template, with the document control table filled in, the status set to DRAFT and the file named the way ArcKit names it. The AWS research used the AWS Knowledge connection that comes with the plugin. When I changed the brief from 350 developers to 6,000 and ran requirements again, it wrote version 1.1 beside version 1.0 and recorded what changed in the revision history.
+Each one wrote its document from ArcKit's template, with the document control table filled in, the status set to DRAFT and the file named the way ArcKit names it. The AWS research used the AWS Knowledge MCP server that comes with the plugin. When I changed the brief from 350 developers to 6,000 and ran requirements again, it wrote version 1.1 beside version 1.0 and recorded what changed in the revision history.
 
 ## What you get
 
 **The same commands as every other assistant.** The plugin is generated from the commands ArcKit ships everywhere else, and all 190 arrive in the one install. The next section lists them.
 
-**Five tool connections that need no key.** AWS Knowledge, Microsoft Learn, UK government code search, UK tenders and Trello come with the plugin. Two more, Google Developer Knowledge and Data Commons, need a key, so you add those yourself; the plugin's page says how.
+**Five MCP servers that need no key.** AWS Knowledge, Microsoft Learn, UK government code search, UK tenders and Trello come with the plugin, so the research commands can read AWS and Azure documentation, search UK government code and look up UK contract awards. Two more, Google Developer Knowledge and Data Commons, need a key, so you add those yourself; the plugin's page says how.
 
 **Nothing cut short.** I ran Antigravity's own plugin check on the first build and it found something Google's documentation doesn't mention: Antigravity loads the first 24,000 bytes of a skill and drops the rest. 29 of ArcKit's commands are longer than that. The longest, for defence AI assurance, would have lost five sixths of its instructions without any warning. Each of those 29 now keeps its full instructions in a second file beside the skill and tells the agent to read it first. The check passes.
 
@@ -105,7 +105,7 @@ Most of the country, sector and method sets are contributed and maintained by th
 ## What isn't there yet
 
 - **Most commands are untried in Antigravity.** Eight core commands have been run. If one of the others misbehaves, please [open an issue](https://github.com/tractorjuice/arc-kit/issues) and say which.
-- **Research runs in your main conversation.** On Claude Code, the research commands hand their web reading to separate agents. The Antigravity plugin has skills and tool connections only, for now.
+- **Research runs in your main conversation.** On Claude Code, the research commands hand their web reading to separate agents. The Antigravity plugin has skills and MCP servers only, for now.
 - **ArcKit's automatic checks don't run.** On Claude Code they name files, stamp each document with how it was made and stop secrets being written. In Antigravity the skills ask the agent to follow the same rules, and nothing enforces them.
 
 ## If you use Gemini CLI

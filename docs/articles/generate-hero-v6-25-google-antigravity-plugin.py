@@ -2,7 +2,8 @@
 
 Written for the person using Google Antigravity: what the one plugin brings,
 broken down as the article breaks it down (75 core commands, 74 for other
-countries, 16 for sectors, 19 for methods, 6 for AI agents). Same house style
+countries, 16 for sectors, 19 for methods, 6 for AI agents) and the five MCP
+servers that come with it. Same house style
 as the sibling generate-hero-*.py scripts.
 
     uv run --with pillow python docs/articles/generate-hero-v6-25-google-antigravity-plugin.py [output.png]
@@ -33,6 +34,8 @@ GROUPS = (
     ("19", "for methods", ("TOGAF ADM 9", "Open Agile Architecture 5", "arc42 5")),
     ("6", "for AI agents", ("Inventory, design, integration,", "security, governance", "and maturity")),
 )
+MCP_TITLE = "5 MCP servers, no key needed"
+MCP_LIST = "AWS Knowledge · Microsoft Learn · UK government code · UK tenders · Trello"
 FOOT = "agy plugin install https://github.com/tractorjuice/arckit-antigravity"
 SMALL = "Experimental: eight core commands have been run in Antigravity so far. Not a Google product."
 PUBLISHED = "2026-11-22-arckit-v6-25-google-antigravity-plugin-agent-skills-hero.png"
@@ -135,25 +138,25 @@ d.text((80, 90), fits(HEADLINE[0], font(56, True), 1440), font=font(56, True), f
 d.text((80, 156), fits(HEADLINE[1], font(56, True), 1440), font=font(56, True), fill=TEXT)
 
 # Row one: the core, then the countries.
-TOP, ROW1 = 250, 246
+TOP, ROW1 = 240, 236
 d.rounded_rectangle((80, TOP, 400, TOP + ROW1), radius=16, fill=PANEL, outline=CYAN, width=3)
-d.text((108, TOP + 28), CORE[0], font=font(96, True), fill=CYAN)
-d.text((108, TOP + 136), fits(CORE[1], font(30, True), 270), font=font(30, True), fill=TEXT)
-d.text((108, TOP + 180), fits(CORE[2], font(21), 270), font=font(21), fill=MUTED)
-d.text((108, TOP + 206), fits(CORE[3], font(21), 270), font=font(21), fill=MUTED)
+d.text((108, TOP + 18), CORE[0], font=font(96, True), fill=CYAN)
+d.text((108, TOP + 124), fits(CORE[1], font(30, True), 270), font=font(30, True), fill=TEXT)
+d.text((108, TOP + 166), fits(CORE[2], font(21), 270), font=font(21), fill=MUTED)
+d.text((108, TOP + 192), fits(CORE[3], font(21), 270), font=font(21), fill=MUTED)
 
 d.rounded_rectangle((420, TOP, 1520, TOP + ROW1), radius=16, fill=PANEL, outline=GOLD, width=3)
 d.text((448, TOP + 22), fits(COUNTRIES_TITLE, font(30, True), 1040), font=font(30, True), fill=TEXT)
 CELL = 268
 for i, (code, name, count) in enumerate(COUNTRIES):
     cx = 448 + (i % 4) * CELL
-    cy = TOP + 82 + (i // 4) * 80
+    cy = TOP + 78 + (i // 4) * 76
     flag(code, cx, cy)
     d.text((cx + FW + 14, cy + 9), fits(name, font(24, True), CELL - FW - 24), font=font(24, True), fill=TEXT, anchor="lm")
     d.text((cx + FW + 14, cy + 35), str(count), font=font(21), fill=GOLD, anchor="lm")
 
 # Row two: sectors, methods, AI agents.
-TOP2, ROW2 = 516, 196
+TOP2, ROW2 = 494, 180
 WIDTH, GAP = 466, 21
 for i, (number, label, lines) in enumerate(GROUPS):
     x = 80 + i * (WIDTH + GAP)
@@ -162,11 +165,17 @@ for i, (number, label, lines) in enumerate(GROUPS):
     offset = d.textlength(number, font=font(60, True))
     d.text((x + 40 + offset, TOP2 + 54), fits(label, font(28, True), WIDTH - 80 - offset), font=font(28, True), fill=TEXT, anchor="lm")
     for k, line in enumerate(lines):
-        d.text((x + 26, TOP2 + 106 + k * 28), fits(line, font(21), WIDTH - 48), font=font(21), fill=MUTED, anchor="lm")
+        d.text((x + 26, TOP2 + 100 + k * 26), fits(line, font(21), WIDTH - 48), font=font(21), fill=MUTED, anchor="lm")
 
-d.line((80, 742, 1520, 742), fill=LINE, width=2)
-d.text((80, 768), fits(FOOT, font(27, True), 1440), font=font(27, True), fill=TEXT)
-d.text((80, 820), fits(SMALL, font(22), 1440), font=font(22), fill=MUTED)
+# The MCP servers that come with the plugin.
+d.rounded_rectangle((80, 692, 1520, 750), radius=14, fill=PANEL, outline=LINE, width=2)
+d.text((106, 721), MCP_TITLE, font=font(24, True), fill=CYAN, anchor="lm")
+d.text((106 + d.textlength(MCP_TITLE, font=font(24, True)) + 28, 721),
+       fits(MCP_LIST, font(22), 1380 - d.textlength(MCP_TITLE, font=font(24, True))), font=font(22), fill=TEXT, anchor="lm")
+
+d.line((80, 770, 1520, 770), fill=LINE, width=2)
+d.text((80, 786), fits(FOOT, font(27, True), 1440), font=font(27, True), fill=TEXT)
+d.text((80, 834), fits(SMALL, font(22), 1440), font=font(22), fill=MUTED)
 
 out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).with_name(PUBLISHED)
 img.save(out, optimize=True)
