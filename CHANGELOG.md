@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.25.0] — 2026-11-22
+
 ### Added
 
 - **An experimental plugin for Google Antigravity.** `extensions/arckit-antigravity` is generated from the same commands as every other assistant: each ArcKit command is an Agent Skill invoked as `/arckit-<command>`, with five MCP servers that need no key. `arckit init --ai antigravity` scaffolds a project for it. It passes Antigravity's own plugin check and one command has been run there; the rest are untried, so it is installed from a build of this repository and has no published repository of its own.
+
+### Fixed
+
+- **Mistral Vibe: a file path is no longer rewritten as a command.** The Wardley mapping commands told the assistant to write `/tmp/arckit-wardley-owm` where the file is `/tmp/arckit-wardley.owm`, because the extension's command prefix also appears inside the path. The path is now left as it is.
 
 ## [6.24.0] — 2026-11-20
 

@@ -9,6 +9,10 @@ Releases before 6.15.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+## [6.25.0] — 2026-11-22
+
+No change to the Claude Code plugin. This release adds an experimental plugin for Google Antigravity and fixes a file path in the Mistral Vibe extension; see the [main changelog](https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md).
+
 ## [6.24.0] — 2026-11-20
 
 ### Changed
