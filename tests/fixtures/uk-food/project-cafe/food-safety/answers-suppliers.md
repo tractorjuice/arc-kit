@@ -8,7 +8,7 @@ Kept elsewhere block, number the entries SUP-01, SUP-02 and so on, and write eac
 after its number.
 Add one the same way for the environmental health team, and for each other service or person the business
 may need to contact.
-Kind is supplier, contact or environmental-health. There is one environmental-health entry at most, once proposed or confirmed.
+Kind is supplier, contact or environmental-health. There is one environmental-health entry at most.
 Write the business's or service's name after the entry's number: for the environmental health team, what
 you call it, such as the council's name. Contact-name is the person to ask for.
 Delivery-days is the days a supplier delivers, in your own words, such as Monday and Thursday. Lead-time is

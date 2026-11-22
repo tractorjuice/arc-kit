@@ -797,18 +797,32 @@ test('a field its kind does not use, filled in, is a problem at its line, and th
   assert.deepEqual(parse(supSheet(supEntry('SUP-01', 'Somebody', { Kind: 'contact', 'Delivery-days': 'Mondays', State: 'unanswered' }))).problems, []);
 });
 
-test('a second environmental-health entry, proposed or confirmed, is a problem at its Kind line; one still unanswered is held as given', () => {
-  for (const state of [agreed, { State: 'proposed', Source: 'An old letter from the council' }]) {
-    const second = supEntry('SUP-04', 'Exampleton council, the old number', { Kind: 'environmental-health', Telephone: '01632 960301', ...state });
-    const text = supSheet(GROCER, TEAM, second);
+test('a second environmental-health entry is a problem whatever the states of the two, told on the later one, naming the earlier', () => {
+  const states = { unanswered: { State: 'unanswered' }, proposed: { State: 'proposed', Source: 'An old letter from the council' }, confirmed: agreed };
+  for (const [one, two] of [['unanswered', 'confirmed'], ['confirmed', 'unanswered'], ['proposed', 'confirmed'], ['confirmed', 'confirmed'],
+    ['unanswered', 'unanswered']]) {
+    const first = supEntry('SUP-02', 'Exampleton District Council food team', { Kind: 'environmental-health', Telephone: '01632 960300', ...states[one] });
+    const second = supEntry('SUP-04', 'Exampleton council, the old number', { Kind: 'Environmental Health', Telephone: '01632 960301', ...states[two] });
+    const text = supSheet(GROCER, first, second);
     const parsed = parse(text);
-    assert.deepEqual(parsed.problems.map((p) => [p.line, p.message]), [[lineOf(text, 'Kind: environmental-health', '## SUP-04'),
-      'SUP-04: there is one environmental-health entry at most, and SUP-02 is one already: change this entry\'s Kind, or keep one of the two']],
-    state.State);
-    assert.deepEqual([parsed.entries.get('SUP-02').answered, parsed.entries.get('SUP-04').answered], [true, false]);
+    assert.deepEqual(parsed.problems.map((p) => [p.line, p.message]), [[lineOf(text, 'Kind: Environmental Health', '## SUP-04'),
+      'SUP-04: there is one environmental-health entry at most, and SUP-02 is one already: remove one of the two, or give this entry another Kind']],
+    `${one} then ${two}`);
+    assert.equal(parsed.entries.get('SUP-04').answered, false, `${one} then ${two}`);
   }
-  const held = supEntry('SUP-04', 'Exampleton council, the old number', { Kind: 'environmental-health', Telephone: '01632 960301', State: 'unanswered' });
-  assert.deepEqual(parse(supSheet(GROCER, TEAM, held)).problems, []);
+  // The state the review found: the team confirmed after an earlier team entry still unanswered. The worksheet has a
+  // problem, so status tells that, and nothing tells a person to confirm the unanswered one into a second problem.
+  const text = supSheet(GROCER, supEntry('SUP-02', 'Exampleton council', { Kind: 'environmental-health', State: 'unanswered' }),
+    supEntry('SUP-03', 'Exampleton District Council food team', { Kind: 'environmental-health', Telephone: '01632 960300', ...agreed }));
+  const dir = cafeSuppliers(text);
+  assert.deepEqual(supUnfinished(dir), [`worksheet ${SUP_FILE} has 1 problem, so none of its answers counts until it is fixed: parse-worksheet ` +
+    `--file ${SUP_FILE} lists it`, NOT_WRITTEN, NOT_SIGNED]);
+  assert.equal(renderDocument('FOODSUP', dir, data).exit, 1);
+  // Following that problem's remedy literally, either way, gives a worksheet with no problem.
+  for (const kept of ['SUP-02', 'SUP-03']) {
+    const one = text.split('\n## ').filter((block) => !block.startsWith(kept === 'SUP-02' ? 'SUP-03 ' : 'SUP-02 ')).join('\n## ');
+    assert.deepEqual(parse(one).problems, [], `keeping ${kept}`);
+  }
 });
 
 test('the cafe renders to the expected suppliers and contacts body', () => {
@@ -920,11 +934,61 @@ test('the document shows each part not yet answered in its own place: no confirm
   assert.ok(kept.includes('\n## Suppliers\' list\n\nThe business keeps its suppliers\' list elsewhere: The blue book by the till (said by Sam Okafor, ' +
     '2026-11-17).\n\n## Contacts list\n'), kept);
   assert.ok(kept.includes(`\n\n${box}\n\n`), kept);
-  // An entry not confirmed, of any kind, is named by its identifier, and nothing of it is printed.
+  // An entry not confirmed is named by its identifier, and nothing of it is printed: a supplier in the suppliers' part,
+  // any other (a contact, the team, an entry with no Kind yet) at the end.
   const open = renderedSup(cafeSuppliers(supSheet(supEntry('SUP-01', 'Hartley Greengrocers', { ...GROCER_FIELDS, State: 'unanswered' }), TEAM,
-    supEntry('SUP-03', 'Swift Pest Control', { Kind: 'contact', Telephone: '01632 960477', State: 'proposed', Source: 'A card through the door' }))));
-  assert.ok(open.includes(`\n${NOT_CONFIRMED_LINE}SUP-01 and SUP-03.\n`), open);
-  assert.ok(!open.includes('Hartley') && !open.includes('Swift'), open);
+    supEntry('SUP-03', 'Swift Pest Control', { Kind: 'contact', Telephone: '01632 960477', State: 'proposed', Source: 'A card through the door' }),
+    supEntry('SUP-04', 'Mill Lane Bakery', { State: 'unanswered' }))));
+  const [suppliersPart, contactsPart] = open.split('\n## Contacts list\n');
+  assert.ok(suppliersPart.endsWith(`\n\n${NOT_CONFIRMED_LINE}SUP-01.\n`), suppliersPart);
+  assert.ok(contactsPart.includes(`\n${NOT_CONFIRMED_LINE}SUP-03 and SUP-04.\n`), contactsPart);
+  assert.ok(!open.includes('Hartley') && !open.includes('Swift') && !open.includes('Bakery'), open);
+});
+
+test('Kept elsewhere confirmed with a supplier still unconfirmed: the suppliers\' part names that supplier, so it does not read as complete', () => {
+  const proposed = supEntry('SUP-01', 'Hartley Greengrocers', { ...GROCER_FIELDS, State: 'proposed', Source: 'A delivery note' });
+  const dir = cafeSuppliers(withElsewhere(supSheet(proposed, TEAM, PESTS), SUP_KEPT));
+  const text = renderedSup(dir);
+  assert.ok(text.includes('\n## Suppliers\' list\n\nThe business keeps its suppliers\' list elsewhere: The blue book by the till (said by Sam Okafor, ' +
+    `2026-11-17).\n\n${NOT_CONFIRMED_LINE}SUP-01.\n\n## Contacts list\n`), text);
+  assert.equal(text.split(NOT_CONFIRMED_LINE).length, 2, 'named once, and nothing under the contacts list');
+  assert.deepEqual(supUnfinished(dir), [`1 entry in ${SUP_FILE} is proposed but not confirmed (SUP-01): an entry counts when its State is ` +
+    'confirmed and By and On are filled in', NOT_WRITTEN, NOT_SIGNED]);
+});
+
+test('an entry with no Kind of the three yet is named in the line that would otherwise say only to add one, so following it adds nothing twice', () => {
+  const unkinded = supEntry('SUP-01', 'Hartley Greengrocers', { 'Goods-supplied': 'Fruit and vegetables', State: 'unanswered' });
+  const guessed = supEntry('SUP-02', 'Exampleton council', { Kind: 'council', Telephone: '01632 960300', State: 'unanswered' });
+  const dir = cafeSuppliers(supSheet(unkinded, guessed));
+  assert.deepEqual(supUnfinished(dir), [
+    `2 entries in ${SUP_FILE} are not yet confirmed (SUP-01 and SUP-02): an entry counts when its State is confirmed and By and On are filled in`,
+    `${SUP_FILE} has no entry whose Kind is supplier: add and confirm one for each supplier (if SUP-01 or SUP-02 is a supplier, set its Kind ` +
+      'to supplier instead of adding it again), or confirm under Kept elsewhere where the business keeps its suppliers\' list',
+    `${SUP_FILE} has no entry whose Kind is environmental-health: add and confirm one for the environmental health team, with its Telephone ` +
+      'or Email (if SUP-01 or SUP-02 is the team\'s entry, set its Kind to environmental-health instead of adding it again; Kept elsewhere ' +
+      'covers the suppliers\' list only)',
+    NOT_WRITTEN, NOT_SIGNED]);
+  // Followed: each given its Kind and confirmed, the document is finished.
+  const done = cafeSuppliers(supSheet(supEntry('SUP-01', 'Hartley Greengrocers', { Kind: 'supplier', 'Goods-supplied': 'Fruit and vegetables', ...agreed }),
+    supEntry('SUP-02', 'Exampleton council', { Kind: 'environmental-health', Telephone: '01632 960300', ...agreed })));
+  assert.deepEqual(supUnfinished(done), [NOT_WRITTEN, NOT_SIGNED]);
+  writtenAs(done, 'FOODSUP');
+  assert.equal(signOffSup(done).exit, 0);
+});
+
+test('needs gives what an entry lacks as the field to tell it at and the words to print, which may name two fields', () => {
+  assert.deepEqual(LISTS.suppliers.needs({ kind: 'contact', telephone: '', email: '' }, data), [{ field: 'Telephone', says: 'Telephone or Email' }]);
+  assert.deepEqual(LISTS.suppliers.needs({ kind: '' }, data), [{ field: 'Kind', says: 'Kind' }]);
+  assert.deepEqual(LISTS.cleaning.needs({ frequency: '', method: '' }, data), [{ field: 'Frequency', says: 'Frequency' }, { field: 'Method', says: 'Method' }]);
+  assert.deepEqual(LISTS.cleaning.needs({ frequency: OTHER, method: 'Wipe.', otherFrequency: '' }, data), [{ field: 'Other-frequency', says: 'Other-frequency' }]);
+});
+
+test('Kind takes a space for its hyphen, in any letter case, and is kept hyphenated', () => {
+  for (const typed of ['environmental health', 'Environmental  Health', ' ENVIRONMENTAL-HEALTH ']) {
+    const parsed = parse(supSheet(supEntry('SUP-01', 'Exampleton council', { Kind: typed, Telephone: '01632 960300', ...agreed })));
+    assert.deepEqual(parsed.problems, [], typed);
+    assert.equal(parsed.entries.get('SUP-01').kind, 'environmental-health', typed);
+  }
 });
 
 test('Review Focus 5 for suppliers: a name or value holding |, backticks, a # heading or the unfinished marks keeps every table\'s two columns, passes check and marks nothing unfinished', () => {
@@ -974,6 +1038,6 @@ test('the suppliers guidance says plainly that Kept elsewhere covers the supplie
   const guidance = blankWorksheet('suppliers', data).replace(/\s+/g, ' ');
   assert.ok(guidance.includes('Kept elsewhere covers the suppliers\' list only: the document still needs the environmental health team\'s entry, ' +
     'confirmed, even when the business keeps its suppliers\' list somewhere else.'), guidance);
-  assert.ok(guidance.includes('There is one environmental-health entry at most, once proposed or confirmed.'), guidance);
+  assert.ok(guidance.includes('Kind is supplier, contact or environmental-health. There is one environmental-health entry at most. Write'), guidance);
   assert.ok(!guidance.includes('quoted from'), 'the guidance quotes nothing of the pack');
 });

@@ -33,6 +33,9 @@ const BLANK_ELSEWHERE = { where: '', state: 'unanswered', by: '', on: '', source
 // The fields every entry ends with, after its list's own.
 const STATE_FIELDS = ['State', 'By', 'On', 'Source'];
 const entryFields = (list) => [...list.fields, ...STATE_FIELDS];
+// What an entry lacks, as a list's needs gives it: the field whose line the problem is told at, and what the problem
+// says is needed, which is the field's name unless the need is met by either of two fields ("Telephone or Email").
+const need = (field, says = field) => ({ field, says });
 const orList = (items) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} or ${items.at(-1)}`);
 
 // The pack's cleaning schedule form (diary page 91), found by its form name and page. The cleaning schedule
@@ -116,9 +119,10 @@ const KIND_ONLY = { 'Delivery-days': 'supplier', 'Lead-time': 'supplier', 'Goods
 //   message }], such as two entries of a kind of which there may be one. Each is told as check's are, after
 //   its entry's identifier, and the entry is not used; one naming no entry of the list is told against the
 //   worksheet's marker line.
-// - needs(entry, data): what a proposed or confirmed entry still lacks, each a field's name or a few words
-//   that name fields ("Telephone or Email"). An entry is answered only when it is confirmed, its By and On
-//   are valid and this is empty.
+// - needs(entry, data): what a proposed or confirmed entry still lacks, each as { field, says }: `says` is what
+//   the problem names as needed (a field's name, or a few words naming fields, such as "Telephone or Email"),
+//   and `field` the field whose line the problem is told at (Telephone, there). need(field) is { field, says:
+//   field }. An entry is answered only when it is confirmed, its By and On are valid and this is empty.
 // - guidance(data): the guidance lines particular to the list, which guidanceOf puts with those every list
 //   shares; quoted: what the line naming the pack says of them (null when they quote nothing of the pack).
 // - elsewhereLabel: the list as "the business keeps its ... elsewhere" names it. With `each`, it gives the two
@@ -127,8 +131,8 @@ const KIND_ONLY = { 'Delivery-days': 'supplier', 'Lead-time': 'supplier', 'Goods
 //   where: the whole phrase, article and all, so that each list words it as reads right ("a cleaning schedule", "its
 //   suppliers' list"), which no one rule for the article could.
 // - outstanding(parsed, data), when a list needs it: what else keeps its document from being finished, as
-//   plain lines for status, the completion record and sign-off, from a worksheet with no problems: no
-//   confirmed environmental health contact, say, or cells not confirmed in confirmed rows. None by default.
+//   plain lines for status, the completion record and sign-off, from a worksheet with no problems: no entry
+//   for the environmental health team, say, or cells not confirmed in confirmed rows. None by default.
 // - lacking(data, where): what the data lacks that the list is read or printed from, as a sentence
 //   starting with `where` ('the data' unless given), or null.
 export const LISTS = {
@@ -151,8 +155,8 @@ export const LISTS = {
         ? [{ field: 'Other-frequency', message: `Other-frequency is only for an entry whose Frequency is ${other}: clear it, or set Frequency to ${other}` }]
         : [];
     },
-    needs: (entry, data) => [...(entry.frequency ? [] : ['Frequency']), ...(entry.method ? [] : ['Method']),
-      ...(entry.frequency === cleaningForm(data).frequencies.at(-1) && !entry.otherFrequency ? ['Other-frequency'] : [])],
+    needs: (entry, data) => [...(entry.frequency ? [] : [need('Frequency')]), ...(entry.method ? [] : [need('Method')]),
+      ...(entry.frequency === cleaningForm(data).frequencies.at(-1) && !entry.otherFrequency ? [need('Other-frequency')] : [])],
     each: 'item the business cleans',
     guidance: (data) => {
       const { frequencies } = cleaningForm(data);
@@ -180,11 +184,12 @@ export const LISTS = {
     section: 'suppliers', nouns: ['entry', 'entries'], prefix: 'SUP', title: 'Suppliers and contacts', entryTitle: 'Business or service name',
     elsewhereLabel: 'suppliers\' list', keptElsewhere: 'The business keeps its suppliers\' list elsewhere',
     fields: ['Kind', 'Contact-name', 'Telephone', 'Email', 'Address', 'Delivery-days', 'Lead-time', 'Goods-supplied', 'Useful-for'],
-    // Kind is read in any letter case and kept in its own spelling. The days a supplier delivers are the business's
-    // own words, printed under the pack's delivery days label: the pack's day boxes are not asked one by one.
+    // Kind is read in any letter case, with a space for the hyphen ("environmental health"), and kept in its own
+    // spelling. The days a supplier delivers are the business's own words, printed under the pack's delivery days
+    // label: the pack's day boxes are not asked one by one.
     values: {
       Kind: (value) => {
-        const found = standard(value.replace(/\s+/g, ' '), SUPPLIER_KINDS);
+        const found = standard(value.trim().replace(/\s+/g, '-'), SUPPLIER_KINDS);
         return SUPPLIER_KINDS.includes(found) ? { value: found } : { error: `is not ${orList(SUPPLIER_KINDS)}` };
       }
     },
@@ -196,20 +201,23 @@ export const LISTS = {
           ? 'the environmental health team\'s box lists what the pack says the team advises on, so clear it'
           : `clear it, or set Kind to ${kind}`}`
       })),
-    // The document has one box for the environmental health team. An entry still unanswered holds what has been given
-    // so far, unchecked, as everywhere else, so only those proposed or confirmed are counted.
+    // The document has one box for the environmental health team, so the list has one entry of that Kind at most,
+    // whatever the entries' states: a second one held unanswered would otherwise sit there until it was confirmed,
+    // and status's remedy for it (confirm it) would then fail on the first. Kind is read even on an entry still
+    // unanswered (see values), so a second one is seen as soon as it is written. It is told on the later entry,
+    // naming the earlier.
     checkList: (entries) => {
-      const [first, ...more] = entries.filter((entry) => entry.kind === TEAM && entry.state !== 'unanswered');
+      const [first, ...more] = entries.filter((entry) => entry.kind === TEAM);
       return more.map((entry) => ({ id: entry.id, field: 'Kind', message: `there is one ${TEAM} entry at most, and ${first.id} is one ` +
-        'already: change this entry\'s Kind, or keep one of the two' }));
+        'already: remove one of the two, or give this entry another Kind' }));
     },
-    needs: (entry) => [...(entry.kind ? [] : ['Kind']), ...(entry.kind === 'supplier' && !entry.goodsSupplied ? ['Goods-supplied'] : []),
-      ...(['contact', TEAM].includes(entry.kind) && !entry.telephone && !entry.email ? ['Telephone or Email'] : [])],
+    needs: (entry) => [...(entry.kind ? [] : [need('Kind')]), ...(entry.kind === 'supplier' && !entry.goodsSupplied ? [need('Goods-supplied')] : []),
+      ...(['contact', TEAM].includes(entry.kind) && !entry.telephone && !entry.email ? [need('Telephone', 'Telephone or Email')] : [])],
     each: 'supplier',
     guidance: () => [
       'Add one the same way for the environmental health team, and for each other service or person the business',
       'may need to contact.',
-      `Kind is ${orList(SUPPLIER_KINDS)}. There is one ${TEAM} entry at most, once proposed or confirmed.`,
+      `Kind is ${orList(SUPPLIER_KINDS)}. There is one ${TEAM} entry at most.`,
       'Write the business\'s or service\'s name after the entry\'s number: for the environmental health team, what',
       'you call it, such as the council\'s name. Contact-name is the person to ask for.',
       'Delivery-days is the days a supplier delivers, in your own words, such as Monday and Thursday. Lead-time is',
@@ -226,18 +234,23 @@ export const LISTS = {
     // What else keeps the document from being finished, each in the words of what to do. listOutstanding has already
     // said so when nothing at all is written (with how to begin), so the line about suppliers is left out then. An
     // entry of the kind that is there but not confirmed is told by status's count of entries not confirmed, with how
-    // to confirm it; these lines are for a kind with no entry at all. Kept elsewhere stands in for suppliers, never
-    // for the team.
+    // to confirm it; these lines are for a kind with no entry at all. An entry whose Kind is not yet one of the three
+    // (only one still unanswered can be, in a worksheet with no problems) may be the one meant, so it is named, so
+    // that following the line does not add the same supplier or team twice. Kept elsewhere stands in for suppliers,
+    // never for the team.
     outstanding: (parsed) => {
       const file = `food-safety/${worksheetName('suppliers')}`;
       const entries = [...parsed.entries.values()];
       const has = (kind) => entries.some((entry) => entry.kind === kind);
       const nothingYet = !entries.length && !elsewhereGiven(parsed.elsewhere);
+      const unkinded = orList(entries.filter((entry) => !SUPPLIER_KINDS.includes(entry.kind)).map((entry) => entry.id));
+      const instead = (what, kind) => (unkinded ? `if ${unkinded} is ${what}, set its Kind to ${kind} instead of adding it again` : '');
       return [
         ...(!has('supplier') && !parsed.elsewhere.answered && !nothingYet ? [`${file} has no entry whose Kind is supplier: add and confirm one ` +
-          'for each supplier, or confirm under Kept elsewhere where the business keeps its suppliers\' list'] : []),
+          `for each supplier${unkinded ? ` (${instead('a supplier', 'supplier')})` : ''}, or confirm under Kept elsewhere where the business ` +
+          'keeps its suppliers\' list'] : []),
         ...(!has(TEAM) ? [`${file} has no entry whose Kind is ${TEAM}: add and confirm one for the environmental health team, with its ` +
-          'Telephone or Email (Kept elsewhere covers the suppliers\' list only)'] : [])
+          `Telephone or Email (${unkinded ? `${instead('the team\'s entry', TEAM)}; ` : ''}Kept elsewhere covers the suppliers' list only)`] : [])
       ];
     },
     lacking: (data, where = 'the data') => (supplierForms(data) ? null : `${where} has no ${SUPPLIERS_FORM.form} form on page ` +
@@ -349,8 +362,7 @@ export function readList(list, reading, data) {
     if (!held) for (const { field, message } of list.check?.(entry, data, today) ?? []) report(lineOf(block, field), `${block.id}: ${message}`, block);
     checkState(block, block.id, entry.state, ['By', 'On']);
     if (entry.state === 'proposed' || entry.state === 'confirmed') {
-      // A need that names two fields, either of which will do ("Telephone or Email"), is told at the first of them.
-      for (const name of list.needs(entry, data)) report(lineOf(block, name.split(' or ')[0]), `${block.id} is ${entry.state}, so it needs ${name}`, block);
+      for (const { field, says } of list.needs(entry, data)) report(lineOf(block, field), `${block.id} is ${entry.state}, so it needs ${says}`, block);
       if (entry.state === 'proposed') needs(block, block.id, ['Source'], 'proposed');
     }
     entry.answered = entry.state === 'confirmed' && !block.faulty;
@@ -497,8 +509,10 @@ const CONTACTS_HEADING = 'Contacts list';
 // list of what the team advises on, holding UNANSWERED in place of the team's name until its entry is confirmed; then
 // a box for each confirmed contact. Each box is a two-column table: the label, then the business's words, escaped,
 // with every label of the box printed, so a detail not given shows as a blank, as on the paper form. Who agreed each
-// entry is listed under its part's boxes, as the forms have no place for it; an entry not confirmed, of any kind, is
-// named by its identifier at the end, and nothing else of it is printed.
+// entry is listed under its part's boxes, as the forms have no place for it. An entry not confirmed is named by its
+// identifier, and nothing else of it is printed: a supplier in the suppliers' part, so that part never reads as
+// complete while one is outstanding; any other (a contact, the team, or an entry with no Kind of the three yet) at
+// the end.
 export function suppliersChunks(sources, data) {
   const list = LISTS.suppliers;
   const { parsed } = sources.get(list.section);
@@ -522,9 +536,11 @@ export function suppliersChunks(sources, data) {
   const adviceHeading = forms.team.at(-1)[1];
   const teamBox = team ? box(forms.team, team, { usefulFor: forms.advice })
     : tableLines([teamHeading, UNANSWERED], [[adviceHeading, forms.advice]]);
+  const isSupplier = (entry) => entry.kind === 'supplier';
   return [[`## ${SUPPLIERS_HEADING}`], ...kept, ...supplierPart, ...elsewhereNotConfirmed(list, parsed.elsewhere),
+    ...notConfirmed(entries.filter(isSupplier)),
     [`## ${CONTACTS_HEADING}`], teamBox, ...contacts.map((entry) => box(forms.contact, entry)), ...agreed([...(team ? [team] : []), ...contacts]),
-    ...notConfirmed(entries)];
+    ...notConfirmed(entries.filter((entry) => !isSupplier(entry)))];
 }
 
 // The suppliers and contacts document's last line. It always quotes the pack: the team's box, with its heading and its

@@ -174,6 +174,26 @@ function methodsAsked(sheet, file) {
   return asked;
 }
 
+// A list document: the list `section` of uk-food-lists.mjs (one of LISTS), printed from its own worksheet and the
+// profile. `overrides` gives what is particular to the document: always its `code`, its `nouns` (a literal equal to
+// its list's, which a test holds equal, as the list module cannot be read while this table is made), its `chunks`
+// and its `source`; and any field to put in place of the one given here, such as `uses` and `needs` for a document
+// that reads another worksheet too, or `unfinishedLine` for one with a mark of its own. Every field that calls the
+// list module, which imports this one, does so when it runs.
+// - An entry or a Kept elsewhere not yet confirmed shows it unfinished, as an own entry does FOODOWN; so does
+//   UNANSWERED, which a list document prints wherever it is unfinished in any other way.
+// - Its entries, and nothing else, are counted; listOutstanding and listSummary say the rest in its list's words.
+function listDocument(section, overrides) {
+  return {
+    name: () => LISTS[section].title, sheet: section, uses: ['profile', section], needs: ['profile', section], dataNeeded: null,
+    signable: true, inStatus: true, unfinishedLine: (line) => unanswered(line) || line.startsWith(NOT_CONFIRMED),
+    asks: (sheet) => listAsked(sheet), entries: true,
+    outstanding: (sheet, data) => listOutstanding(LISTS[section], sheet, data), summary: (doc, sheet) => listSummary(LISTS[section], doc, sheet),
+    lacking: (data) => LISTS[section].lacking(data),
+    ...overrides
+  };
+}
+
 // Let, not const, only so that withDocuments can put a test's table in its place.
 export let DOCUMENTS = [
   {
@@ -204,38 +224,17 @@ export let DOCUMENTS = [
     asks: (sheet) => ({ items: [...(sheet?.parsed?.entries.values() ?? [])].map((entry) => [entry.id, entry]) }),
     nouns: ['own entry', 'own entries'], entries: true, specialProcesses: true
   },
-  {
-    // The pack's cleaning schedule form, with the business's own entries; its body is uk-food-lists.mjs's,
-    // which imports this module, so each field that calls it does so when it runs.
-    code: 'FOODCS', name: () => LISTS.cleaning.title, sheet: 'cleaning', uses: ['profile', 'cleaning'], needs: ['profile', 'cleaning'],
-    dataNeeded: null, signable: true, inStatus: true, chunks: (sources, data) => cleaningScheduleChunks(sources, data),
-    // It says truly what it quotes: the form's column headings, when it prints the form.
-    source: (data, sources) => cleaningScheduleSource(sources, data),
-    // An entry or a Kept elsewhere not yet confirmed shows it unfinished, as an own entry does FOODOWN; so does
-    // a schedule with nothing confirmed at all, which says so with UNANSWERED.
-    unfinishedLine: (line) => unanswered(line) || line.startsWith(NOT_CONFIRMED),
-    // Its entries, and nothing else, are counted; its own lines say the rest. Its nouns are its list's (a test
-    // holds them equal: the list module cannot be read while this table is made).
-    asks: (sheet) => listAsked(sheet), nouns: ['cleaning item', 'cleaning items'], entries: true,
-    outstanding: (sheet, data) => listOutstanding(LISTS.cleaning, sheet, data), summary: (doc, sheet) => listSummary(LISTS.cleaning, doc, sheet),
-    lacking: (data) => LISTS.cleaning.lacking(data)
-  },
-  {
-    // The pack's suppliers' list and contacts list forms, with the business's suppliers, its environmental health
-    // team and its other contacts; its body is uk-food-lists.mjs's, called when each field runs, as FOODCS's is.
-    code: 'FOODSUP', name: () => LISTS.suppliers.title, sheet: 'suppliers', uses: ['profile', 'suppliers'], needs: ['profile', 'suppliers'],
-    dataNeeded: null, signable: true, inStatus: true, chunks: (sources, data) => suppliersChunks(sources, data),
-    // It quotes the forms' labels and the team's list in every state, and says so.
-    source: (data) => suppliersSource(data),
-    // An entry or a Kept elsewhere not yet confirmed shows it unfinished, and so does UNANSWERED, which it prints for
-    // a suppliers' list with nothing confirmed and for the team's box until the team's entry is confirmed.
-    unfinishedLine: (line) => unanswered(line) || line.startsWith(NOT_CONFIRMED),
-    // Its entries, and nothing else, are counted; its own lines say the rest. Its nouns are its list's (a test holds
-    // them equal: the list module cannot be read while this table is made).
-    asks: (sheet) => listAsked(sheet), nouns: ['entry', 'entries'], entries: true,
-    outstanding: (sheet, data) => listOutstanding(LISTS.suppliers, sheet, data), summary: (doc, sheet) => listSummary(LISTS.suppliers, doc, sheet),
-    lacking: (data) => LISTS.suppliers.lacking(data)
-  },
+  // The pack's cleaning schedule form, with the business's own entries. It says truly what it quotes: the form's
+  // column headings, when it prints the form.
+  listDocument('cleaning', {
+    code: 'FOODCS', nouns: ['cleaning item', 'cleaning items'], chunks: (sources, data) => cleaningScheduleChunks(sources, data),
+    source: (data, sources) => cleaningScheduleSource(sources, data)
+  }),
+  // The pack's suppliers' list and contacts list forms, with the business's suppliers, its environmental health team
+  // and its other contacts. It quotes the forms' labels and the team's list in every state, and says so.
+  listDocument('suppliers', {
+    code: 'FOODSUP', nouns: ['entry', 'entries'], chunks: (sources, data) => suppliersChunks(sources, data), source: (data) => suppliersSource(data)
+  }),
   {
     // It reads no worksheet itself: status, which it is rendered from, reads them all.
     code: 'FOODCMP', name: () => 'Completion record', sheet: null, uses: [], needs: [], dataNeeded: null, signable: false,
