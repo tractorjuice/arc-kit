@@ -2,7 +2,7 @@
 
 **Google Antigravity is Google's agentic development platform, and it runs Agent Skills that you call with a slash command. ArcKit v6.25.0 adds a Google Antigravity plugin that brings ArcKit's 190 architecture governance commands to it as Agent Skills: type `/arckit-requirements` and it drafts a requirements document from a template.**
 
-**Before you start:** the plugin is experimental. It passes Antigravity's own plugin check and it installs. As of 22 November 2026 one command has been run in Antigravity; the other 189 haven't been tried there yet. It isn't a Google product and carries no Google endorsement. Everything ArcKit drafts is a draft for a qualified person to review.
+**Before you start:** the plugin is experimental. It passes Antigravity's own plugin check and it installs. As of 22 November 2026 I've run eight of the core commands in Antigravity and they work; the other 182 haven't been tried there yet. It isn't a Google product and carries no Google endorsement. Everything ArcKit drafts is a draft for a qualified person to review.
 
 *Mark Craddock*
 
@@ -55,6 +55,12 @@ You'll need Antigravity installed, Node.js, and Python for ArcKit's small setup 
 
 5. **Review what it wrote.** Each document is a Markdown file in your project, marked DRAFT. Read it, correct it, and have the right person sign it off.
 
+## What I ran
+
+I started a project in Antigravity for a developer AI enablement platform and ran the core commands in order, with Gemini 3.8 Flash as the model: `/arckit-start` and `/arckit-init`, then principles, stakeholders, requirements, a DevOps strategy, a Secure by Design assessment and AWS research.
+
+Each one wrote its document from ArcKit's template, with the document control table filled in, the status set to DRAFT and the file named the way ArcKit names it. The AWS research used the AWS Knowledge connection that comes with the plugin. When I changed the brief from 350 developers to 6,000 and ran requirements again, it wrote version 1.1 beside version 1.0 and recorded what changed in the revision history.
+
 ## What you get
 
 **The same commands as every other assistant.** The plugin is generated from the commands ArcKit ships everywhere else, and all 190 arrive in the one install. The next section lists them.
@@ -98,7 +104,7 @@ Most of the country, sector and method sets are contributed and maintained by th
 
 ## What isn't there yet
 
-- **Most commands are untried in Antigravity.** If one misbehaves, please [open an issue](https://github.com/tractorjuice/arc-kit/issues) and say which.
+- **Most commands are untried in Antigravity.** Eight core commands have been run. If one of the others misbehaves, please [open an issue](https://github.com/tractorjuice/arc-kit/issues) and say which.
 - **Research runs in your main conversation.** On Claude Code, the research commands hand their web reading to separate agents. The Antigravity plugin has skills and tool connections only, for now.
 - **ArcKit's automatic checks don't run.** On Claude Code they name files, stamp each document with how it was made and stop secrets being written. In Antigravity the skills ask the agent to follow the same rules, and nothing enforces them.
 
