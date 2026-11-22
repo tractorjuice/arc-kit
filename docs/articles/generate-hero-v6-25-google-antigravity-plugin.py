@@ -14,6 +14,11 @@ start a new design without overwriting a hero the maintainer has restyled.
 The flags are drawn here as simple shapes, not loaded from image files, so the
 script needs nothing but Pillow. They are small pointers to a country, not
 accurate renderings.
+
+The published hero is a redesigned version of this layout, supplied by the
+maintainer on 22 November 2026, with a subtitle under the headline and three
+lines beside it: "190 commands in total", "Ready for Google Antigravity" and
+"Research, methods and agents".
 """
 
 import math
