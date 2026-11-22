@@ -267,6 +267,18 @@ def test_each_targets_min_lines_is_below_the_smallest_its_document_can_be(tmp_pa
     signed = run(HELPER, "sign-off", "--doc", "FOODSUP", "--project", project, "--name", "Sam Okafor", "--role", "owner",
                  "--version", "1.0", "--date", "2026-11-17", "--other-text-read", "yes")
     assert signed.returncode == 0, signed.stderr
+    # The allergen information at its smallest when finished: kept elsewhere, with MG-04 not relevant like every other
+    # safe method here, so how customers are told is its not-relevant line. Written the same way, not counted.
+    allergens = run(HELPER, "worksheet", "--section", "allergens").stdout.replace(
+        "## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:",
+        "## Kept elsewhere\n\nWhere: The recipe folder in the kitchen\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17")
+    (project / "food-safety" / "answers-allergens.md").write_text(allergens, encoding="utf-8")
+    body = run(HELPER, "render", "--doc", "FOODALG", "--project", project)
+    assert body.returncode == 0, body.stderr
+    (project / "ARC-001-FOODALG-v1.0.md").write_text(f"Header text.\n\n{body.stdout}\nFooter text.\n", encoding="utf-8")
+    signed = run(HELPER, "sign-off", "--doc", "FOODALG", "--project", project, "--name", "Sam Okafor", "--role", "owner",
+                 "--version", "1.0", "--date", "2026-11-17", "--other-text-read", "yes")
+    assert signed.returncode == 0, signed.stderr
     record = build("FOODCMP", project).read_text(encoding="utf-8")
     assert "Nothing is outstanding." in record
     lines["FOODCMP"] = record.count("\n")

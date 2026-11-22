@@ -1,9 +1,12 @@
 import { DATA_ID, isObject } from './uk-food-data.mjs';
 import {
-  addListWorksheets, andList, blockTools, fieldKey, fieldLines, isIsoDate, longDate, methodQuestions, quotedBy, readBlocks, standard, STATE_WORDS,
-  STATES, WORKSHEET_VERSION
+  addListWorksheets, andList, blockTools, counted, fieldKey, fieldLines, isAre, isIsoDate, longDate, methodQuestions, quotedBy, readBlocks, standard,
+  STATE_WORDS, STATES, WORKSHEET_VERSION
 } from './uk-food-worksheet.mjs';
-import { businessText, NOT_CONFIRMED, notConfirmed, said, tableLines, UNANSWERED, worksheetName } from './uk-food-document.mjs';
+import {
+  businessText, NOT_CONFIRMED, NOT_CONFIRMED_CELL, notConfirmed, notRelevantLine, packBlockChunks, questionCell, said, sectionView, tableLines,
+  UNANSWERED, worksheetName
+} from './uk-food-document.mjs';
 
 // ---------------------------------------------------------------------------------------------
 // List worksheets, and the documents printed from them. A list worksheet holds the entries of one list a
@@ -129,6 +132,10 @@ export function allergensOf(data) {
     name.toLowerCase().startsWith(field.replace(/-/g, ' ').toLowerCase());
   return read.every(fits) ? read.map(({ field, name, found }) => ({ field, name, found })) : null;
 }
+// The heading the Dishes table gives an allergen: its name as the pack prints it, cut at its first " (", which leaves the
+// pack's own word for it without the list of what it takes in, printed whole in the table above.
+const shortName = (name) => name.split(' (')[0];
+
 // The paragraphs of MG-04 the allergen information quotes, each whole, never cut inside a paragraph (each paragraph is a
 // line of the data's text), and each located by its safety point and its place in that point's text:
 // - PPDS_PARAGRAPH, the pack's sentence on labelling food prepacked for direct sale, in the first safety point;
@@ -173,6 +180,30 @@ const cellValue = (value) => {
 };
 // Whether a dish is prepacked for direct sale: yes or no, in any letter case, or nothing yet.
 const PPDS_VALUES = ['yes', 'no'];
+const ANSWER_COUNTS = 'an answer counts when its State is confirmed and By and On are filled in';
+// The lines status gives when the allergen information shows how customers are told as not yet answered, from the
+// Management worksheet as status read it (`sheets`, every worksheet read): not started, or one or more of the three
+// questions without a confirmed answer. Nothing when MG-04 is marked not relevant (the document prints the not-relevant
+// line then, which is finished), and nothing when that worksheet has problems or is for other data or in the wrong file:
+// the allergen information is not rendered from it then, and status tells that worksheet's state once, under the
+// Management document. Nothing either when no worksheets are given, as nothing is then known of that one.
+function customerLines(sheets) {
+  if (!sheets?.has('MG')) return [];
+  const mg = sheets.get('MG');
+  const file = `food-safety/${worksheetName('MG')}`;
+  const { method, questions } = CUSTOMER_QUESTIONS;
+  if (!mg) {
+    return [`${file}, the Management safe methods worksheet, is not started yet, and this document repeats its answers to ${andList(questions)} on ` +
+      `how customers are told: make it with worksheet --section MG, and answer those three there; ${ANSWER_COUNTS}`];
+  }
+  if (!mg.clean || mg.parsed.methods.get(method)?.status === 'not-relevant') return [];
+  const open = questions.filter((id) => !mg.parsed.answers.get(id)?.answered);
+  if (!open.length) return [];
+  const [it, has] = open.length === 1 ? ['it', 'has'] : ['them', 'have'];
+  return [`${andList(open)} in ${file} ${has} no confirmed answer yet, and this document repeats ${it} under How customers are told: answer ${it} ` +
+    `in the Management safe methods worksheet; ${ANSWER_COUNTS}`];
+}
+
 // The lists, one object each. A list's fields:
 // - section: its worksheet's section, as in answers-<section>.md; nouns: what one entry is called, and many,
 //   in status and the unfinished list ("3 of 4 cleaning items confirmed"); prefix: its entries' identifiers start
@@ -202,9 +233,10 @@ const PPDS_VALUES = ['yes', 'no'];
 // - keptElsewhere: the words the document's line opens with when Kept elsewhere is confirmed, before the colon and
 //   where: the whole phrase, article and all, so that each list words it as reads right ("a cleaning schedule", "its
 //   suppliers' list"), which no one rule for the article could.
-// - outstanding(parsed, data), when a list needs it: what else keeps its document from being finished, as
+// - outstanding(parsed, data, sheets), when a list needs it: what else keeps its document from being finished, as
 //   plain lines for status, the completion record and sign-off, from a worksheet with no problems: no entry
-//   for the environmental health team, say, or cells not confirmed in confirmed rows. None by default.
+//   for the environmental health team, say, or cells not confirmed in confirmed rows. `sheets` is every worksheet
+//   status read, for a document that prints from another worksheet too (or undefined when not given). None by default.
 // - lacking(data, where): what the data lacks that the list is read or printed from, as a sentence
 //   starting with `where` ('the data' unless given), or null.
 export const LISTS = {
@@ -383,6 +415,31 @@ export const LISTS = {
       'and On until it has been checked again.'
     ],
     quoted: null,
+    // What else the document shows unfinished, each in the words of what to do: a cell a confirmed dish left empty, a
+    // confirmed dish with no PPDS, and the Management worksheet's answers on how customers are told not yet confirmed
+    // (customerLines). A dish not confirmed is told by status's count of entries not confirmed.
+    outstanding: (parsed, data, sheets) => {
+      const file = `food-safety/${worksheetName('allergens')}`;
+      const confirmed = [...parsed.entries.values()].filter((entry) => entry.answered);
+      const empty = confirmed.map((entry) => ({ id: entry.id, fields: ALLERGEN_FIELDS.filter((field) => !CELL_VALUES.includes(entry[fieldKey(field)])) }))
+        .filter(({ fields }) => fields.length);
+      const n = empty.reduce((sum, { fields }) => sum + fields.length, 0);
+      // Each dish's empty cells, as "Mustard and Soya in DISH-01"; the dishes a comma apart, the last after ", and", so
+      // that no reader can take one dish's cells for another's.
+      const where = empty.map(({ id, fields }) => `${andList(fields)} in ${id}`);
+      const named = where.length < 2 ? where.join('') : `${where.slice(0, -1).join(', ')}, and ${where.at(-1)}`;
+      const noPpds = confirmed.filter((entry) => !PPDS_VALUES.includes(entry.ppds)).map((entry) => entry.id);
+      return [
+        ...(n ? [`${counted(n, 'allergen cell', 'allergen cells')} of confirmed dishes in ${file} ${isAre(n)} empty, so the document shows ` +
+          `${n === 1 ? 'it' : 'them'} as not confirmed (${named}): ` +
+          `${n === 1 ? 'fill it in' : 'fill in each'} as ${CELL_VALUES[0]} or ${CELL_VALUES[1]} from what was checked, then update ` +
+          `${empty.length === 1 ? 'that dish\'s' : 'each of those dishes\''} Checked-against, Checked-on, By and On`] : []),
+        ...(noPpds.length ? [`PPDS is empty in ${counted(noPpds.length, 'confirmed dish', 'confirmed dishes')} in ${file} (${andList(noPpds)}), so ` +
+          `the document shows ${noPpds.length === 1 ? 'it' : 'them'} as not confirmed under Prepacked for direct sale: write yes or no in ` +
+          `${noPpds.length === 1 ? 'its' : 'each one\'s'} PPDS, for whether it is prepacked for direct sale, then update its By and On`] : []),
+        ...customerLines(sheets)
+      ];
+    },
     lacking: (data, where = 'the data') => (!allergensOf(data) ? `${where} has no table in ${ALLERGEN_TABLE.method} on page ${ALLERGEN_TABLE.page} ` +
       `of XC.json in the layout the allergen information is made from: ${ALLERGEN_FIELDS.length} rows of two cells, each an allergen and where it may ` +
       'be found, in the order of the allergens worksheet\'s fields'
@@ -558,8 +615,9 @@ export const listAsked = (sheet) => ({ items: [...(sheet?.parsed?.entries.values
 // What keeps a list document from being finished besides its entries not yet confirmed, as lines for status's
 // unfinished list: nothing recorded at all, with the two ways to finish; what is written under Kept elsewhere
 // not confirmed, with what it needs; then the list's own (its `outstanding`). `sheet` is the worksheet as
-// readWorksheets reads it, which status gives only when it has no problems.
-export function listOutstanding(list, sheet, data) {
+// readWorksheets reads it, which status gives only when it has no problems; `sheets`, every worksheet status read,
+// passed to the list's own for a document that prints from another worksheet too.
+export function listOutstanding(list, sheet, data, sheets) {
   const parsed = sheet?.parsed;
   if (!parsed?.elsewhere) return [];
   const file = `food-safety/${worksheetName(list.section)}`;
@@ -569,7 +627,7 @@ export function listOutstanding(list, sheet, data) {
       `confirm an entry for each ${list.each}, or confirm under Kept elsewhere where the business keeps its ${list.elsewhereLabel}`] : []),
     ...(elsewhereGiven(elsewhere) && !elsewhere.answered ? [`Kept elsewhere in ${file} has something written in it but is not confirmed: ` +
       'fill in Where, set State to confirmed and fill in By and On, or clear it'] : []),
-    ...(list.outstanding?.(parsed, data) ?? [])
+    ...(list.outstanding?.(parsed, data, sheets) ?? [])
   ];
 }
 
@@ -680,3 +738,98 @@ export function suppliersChunks(sources, data) {
 export const suppliersSource = (data) => quotedSourceLine('The labels in the tables, and the list of what the environmental health team ' +
   'can advise on, are quoted from', data.source);
 
+// The allergen information's headings and its own lines. None says what a dish contains, or who can eat it: a confirmed
+// row is what a named person at the business agreed after checking what is named beside it, and every line here says
+// only that, or names what is not yet recorded. None but the free-from heading holds the words "free from".
+const ALLERGEN_HEADINGS = {
+  table: '### The fourteen allergens', dishes: '### Dishes', checked: '### What each row was checked against', ppds: '### Prepacked for direct sale',
+  freeFrom: '### The business\'s own "free from" statements', customers: '### How customers are told'
+};
+const DISHES_LEAD = 'A confirmed row records what a named person at the business agreed after checking the labels, specifications or ' +
+  'statements named in the next section.';
+const CHECKED_COLUMNS = ['Dish', 'Ingredients', 'Checked against', 'Checked on', 'Notes', 'Agreed by'];
+const PACK_SAYS = 'What the pack says:';
+const PACK_SAYS_TWICE = 'What the pack says, in a safety point and then in the reason it gives:';
+
+// The allergen information, in this order:
+// 1. Its heading; where the business keeps its allergen information for its dishes, when Kept elsewhere is confirmed; or
+//    that what is written about that is not confirmed.
+// 2. The pack's table of the fourteen allergens, unchanged.
+// 3. The Dishes table: a row to each entry, its cells under the fourteen names cut short. A confirmed dish's row is its
+//    identifier and name, then each cell as confirmed, or NOT_CONFIRMED_CELL for one left empty. A dish not confirmed
+//    shows its identifier alone (its name is not yet the business's) and NOT_CONFIRMED_CELL in every cell, whatever its
+//    worksheet holds: nothing of a row nobody confirmed is printed. A cell is printed only when it is exactly one of the
+//    two values, so nothing else a worksheet could hold can reach a cell. With no entry and Kept elsewhere not confirmed,
+//    UNANSWERED instead; with no entry and Kept elsewhere confirmed, this part and the next are left out.
+// 4. What each confirmed dish was checked against, and when, its ingredients and notes, and who agreed it and when; then
+//    the dishes not confirmed, by identifier.
+// 5. The pack's sentence on prepacked for direct sale food, then the confirmed dishes the business records as such, and
+//    those whose PPDS is not recorded, as NOT_CONFIRMED_CELL. With neither, a line saying none is recorded: true only
+//    because every confirmed dish said no.
+// 6. Each confirmed dish's own claim, in the business's words, then the pack's conditions for such a claim, its safety
+//    point's paragraph and its reason's. With no claim, a line saying none is recorded.
+// 7. The three questions on how customers are told, with the Management worksheet's answers, each printed by questionCell
+//    exactly as the Management document prints it; or that worksheet's not-relevant line for MG-04, as that document
+//    prints it; or, with no Management worksheet, UNANSWERED on a line naming it.
+// Every word of a business's is escaped (businessText, said); tableLines escapes a pipe and turns a line break into <br>.
+export function allergenChunks(sources, data) {
+  const list = LISTS.allergens;
+  const { parsed } = sources.get(list.section);
+  const allergens = allergensOf(data);
+  const quotes = allergenQuotes(data);
+  const entries = [...parsed.entries.values()];
+  const confirmed = entries.filter((entry) => entry.answered);
+  const kept = elsewhereChunks(list, parsed.elsewhere);
+  // A confirmed dish named in a line of the helper's, and in a table cell (where tableLines makes its line breaks <br>).
+  const named = (entry) => `${entry.id} ${said(entry.title)}`;
+  const inCell = (entry) => `${entry.id} ${businessText(entry.title)}`;
+  const cellOf = (entry, field) => (CELL_VALUES.includes(entry[fieldKey(field)]) ? entry[fieldKey(field)] : NOT_CONFIRMED_CELL);
+  const row = (entry) => (entry.answered ? [inCell(entry), ...allergens.map(({ field }) => cellOf(entry, field))]
+    : [entry.id, ...allergens.map(() => NOT_CONFIRMED_CELL)]);
+  const dishes = entries.length
+    ? [[ALLERGEN_HEADINGS.dishes], [DISHES_LEAD], tableLines(['Dish', ...allergens.map(({ name }) => shortName(name))], entries.map(row))]
+    : kept.length ? [] : [[ALLERGEN_HEADINGS.dishes], [`No dish has been confirmed yet: ${UNANSWERED}`]];
+  const checked = entries.length ? [[ALLERGEN_HEADINGS.checked],
+    ...(confirmed.length ? [tableLines(CHECKED_COLUMNS, confirmed.map((entry) => [inCell(entry),
+      ...[entry.ingredients, entry.checkedAgainst, entry.checkedOn, entry.notes].map(businessText), `${businessText(entry.by)}, ${businessText(entry.on)}`]))] : []),
+    ...notConfirmed(entries)] : [];
+  const prepacked = confirmed.filter((entry) => entry.ppds === 'yes');
+  const unrecorded = confirmed.filter((entry) => !PPDS_VALUES.includes(entry.ppds));
+  const ppds = [[ALLERGEN_HEADINGS.ppds], [PACK_SAYS], [`> ${quotes.ppds}`],
+    ...(prepacked.length ? [['The business records these dishes as prepacked for direct sale:'], prepacked.map((entry) => `- ${named(entry)}`)] : []),
+    ...(unrecorded.length ? [['Whether these dishes are prepacked for direct sale is not yet recorded:'],
+      unrecorded.map((entry) => `- ${named(entry)}: ${NOT_CONFIRMED_CELL}`)] : []),
+    ...(prepacked.length || unrecorded.length ? [] : [['No dish in this document is recorded as prepacked for direct sale.']])];
+  const claims = confirmed.filter((entry) => entry.freeFromClaim);
+  const freeFrom = [[ALLERGEN_HEADINGS.freeFrom],
+    ...(claims.length ? [['The business\'s own words, as confirmed for each dish:'], claims.map((entry) => `- ${named(entry)}: ${said(entry.freeFromClaim)}`)]
+      : [['None is recorded in this document.']]),
+    [PACK_SAYS_TWICE], ...quotes.freeFrom.map((paragraph) => [`> ${paragraph}`])];
+  return [[`## ${list.title}`], ...kept, ...elsewhereNotConfirmed(list, parsed.elsewhere),
+    [ALLERGEN_HEADINGS.table], ...packBlockChunks(allergenBlock(data)),
+    ...dishes, ...checked, ...ppds, ...freeFrom, ...customerChunks(sources, quotes)];
+}
+
+// Part 7: how customers are told, from the Management worksheet. It is in sources only when it exists and has no
+// problems: render refuses, as for any worksheet a document uses, when it has problems or is for other data.
+function customerChunks(sources, { method, questions }) {
+  const heading = [ALLERGEN_HEADINGS.customers];
+  const mg = sources.get('MG')?.parsed;
+  if (!mg) return [heading, [`How customers are told is answered in the Management safe methods worksheet, which has not been started yet: ${UNANSWERED}`]];
+  const lead = [`From ${method.id} ${method.title}, in the business's Management safe methods worksheet:`];
+  const record = mg.methods.get(method.id);
+  if (record?.status === 'not-relevant') return [heading, lead, [notRelevantLine(record)]];
+  const view = sectionView(mg);
+  return [heading, lead, tableLines([''], questions.map((question) => [questionCell(question, view)]))];
+}
+
+// The allergen information's last line: what it quotes, which is the pack's table and its three paragraphs in every state,
+// the table's names over the Dishes table when that is printed, and the three questions when they are printed.
+export function allergenSource(sources, data) {
+  const { parsed } = sources.get(LISTS.allergens.section);
+  const mg = sources.get('MG')?.parsed;
+  const asks = Boolean(mg) && mg.methods.get(CUSTOMER_QUESTIONS.method)?.status !== 'not-relevant';
+  const parts = ['The table of the fourteen allergens', ...(parsed.entries.size ? ['their shortened names over the Dishes table'] : []),
+    'the paragraphs given as what the pack says', ...(asks ? ['the questions under How customers are told'] : [])];
+  return quotedSourceLine(`${andList(parts)} are quoted from`, data.source);
+}

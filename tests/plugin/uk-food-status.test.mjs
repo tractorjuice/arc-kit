@@ -31,6 +31,9 @@ const signOffsFile = (dir) => join(dir, 'food-safety', 'sign-offs.json');
 // A cleaning worksheet that is finished with no entry: it says where the business keeps its schedule, confirmed.
 const KEPT_ELSEWHERE = () => swap(blankWorksheet('cleaning', data), '## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:',
   '## Kept elsewhere\n\nWhere: The red folder in the office\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17');
+// An allergens worksheet that is finished with no dish: it says where the business keeps its allergen information, confirmed.
+const ALLERGENS_KEPT = () => swap(blankWorksheet('allergens', data), '## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:',
+  '## Kept elsewhere\n\nWhere: The recipe folder in the kitchen\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17');
 const swap = (text, from, to) => {
   assert.ok(text.includes(from), `${JSON.stringify(from)} is not in the text`);
   return text.replace(from, to);
@@ -196,8 +199,8 @@ test('the status JSON has the documented shape: the seven documents in order, th
     'foodSafetyFolder']);
   assert.deepEqual([result.completionRecord, result.foodSafetyFolder], [null, true]);
   assert.equal(result.data, DATA_ID);
-  assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN', 'FOODCS',
-    'FOODSUP']);
+  assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN', 'FOODALG',
+    'FOODCS', 'FOODSUP']);
   assert.deepEqual(STATUS_ORDER, result.documents.map((d) => d.code));
   for (const doc of result.documents) {
     assert.deepEqual(Object.keys(doc), ['code', 'worksheets', 'missingWorksheets', 'problems', 'misplaced', 'questions', 'confirmed', 'proposed',
@@ -247,6 +250,16 @@ test('the unfinished list says, for each document in order, what is outstanding 
     { code: 'FOODMGT', what: NOT_SIGNED },
     { code: 'FOODOWN', what: NOT_WRITTEN },
     { code: 'FOODOWN', what: NOT_SIGNED },
+    { code: 'FOODALG', what: '1 dish in food-safety/answers-allergens.md is proposed but not confirmed (DISH-03): an entry counts when its ' +
+      'State is confirmed and By and On are filled in' },
+    { code: 'FOODALG', what: '2 allergen cells of confirmed dishes in food-safety/answers-allergens.md are empty, so the document shows them ' +
+      'as not confirmed (Celery and Mustard in DISH-02): fill in each as contains or does not contain from what was checked, then update that ' +
+      'dish\'s Checked-against, Checked-on, By and On' },
+    { code: 'FOODALG', what: 'MG-04-Q01, MG-04-Q06 and MG-04-Q14 in food-safety/answers-MG.md have no confirmed answer yet, and this document ' +
+      'repeats them under How customers are told: answer them in the Management safe methods worksheet; an answer counts when its State is ' +
+      'confirmed and By and On are filled in' },
+    { code: 'FOODALG', what: NOT_WRITTEN },
+    { code: 'FOODALG', what: NOT_SIGNED },
     { code: 'FOODCS', what: '1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an ' +
       'entry counts when its State is confirmed and By and On are filled in' },
     { code: 'FOODCS', what: NOT_WRITTEN },
@@ -872,6 +885,7 @@ test('when everything is finished, every row shows its signer and the list says 
   }
   setSheet(dir, 'profile', sheet(dir, 'profile').replace(/(### PR-Q1[23]\n\n[^\n]*\nAnswer: )yes/g, '$1no'));
   setSheet(dir, 'own', blankWorksheet('own', data));
+  setSheet(dir, 'allergens', ALLERGENS_KEPT());
   setSheet(dir, 'cleaning', KEPT_ELSEWHERE());
   for (const doc of STATUS_ORDER) {
     writeDocument(dir, doc);
@@ -1815,6 +1829,7 @@ test('G8 does not touch a properly signed file whose answers are later withdrawn
   }
   setSheet(done, 'profile', sheet(done, 'profile').replace(/(### PR-Q1[23]\n\n[^\n]*\nAnswer: )yes/g, '$1no'));
   setSheet(done, 'own', blankWorksheet('own', data));
+  setSheet(done, 'allergens', ALLERGENS_KEPT());
   setSheet(done, 'cleaning', KEPT_ELSEWHERE());
   for (const doc of STATUS_ORDER) {
     const written = templated(done, doc);

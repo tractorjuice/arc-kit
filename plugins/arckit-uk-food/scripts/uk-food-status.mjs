@@ -359,11 +359,12 @@ function collectStatus(project, data, options = {}) {
     // the header that sign-off would rewrite and that holds something else keeps the document from
     // being signed off, so that marking it as signed off changes nothing a person signed.
     // A document whose row has its own lines for what is outstanding (a list document's, see outstanding in the
-    // table) gives them after its counts, from a clean worksheet only, as its counts are.
+    // table) gives them after its counts, from a clean worksheet only, as its counts are. It is given every worksheet
+    // read too, for a document that prints from another (the allergen information, from the Management worksheet).
     const clean = sheets.get(row.sheet)?.clean;
     const docLines = [
       ...(clean ? countLines(row, counts, row.sheet) : []),
-      ...(clean && row.outstanding ? row.outstanding(sheets.get(row.sheet), data) : []),
+      ...(clean && row.outstanding ? row.outstanding(sheets.get(row.sheet), data, sheets) : []),
       ...fileLines,
       // (After a sign-off, check tells such a cell itself, one at a time, with what a signed document has there.)
       ...(check?.cell ? [] : check?.unwritten ?? []).map((cell) => cellLine(current.file, cell))

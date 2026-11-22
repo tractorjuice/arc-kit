@@ -9,12 +9,13 @@ import {
 import { completionRecordDocument, DOCUMENT_FILE, PENDING, readSignOffs } from './uk-food-status.mjs';
 import { HELPER, loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
 import {
-  cleaningScheduleChunks, cleaningScheduleSource, listAsked, listOutstanding, LISTS, listSummary, suppliersChunks, suppliersSource
+  allergenChunks, allergenSource, cleaningScheduleChunks, cleaningScheduleSource, listAsked, listOutstanding, LISTS, listSummary, suppliersChunks,
+  suppliersSource
 } from './uk-food-lists.mjs';
 export {
   BEFORE_RENDER, bodyText, businessText, closingNotice, COMPLETION_STALE, coverageChunks, DOC_OF_SECTION, extraCareDone,
-  failure, misplaced, NAME_QUESTION, NOT_CONFIRMED, notConfirmed, otherText, paragraphs, readWorksheets, said, sha256, sourcesOf, tableLines,
-  worksheetFile, worksheetName
+  failure, misplaced, NAME_QUESTION, NOT_CONFIRMED, notConfirmed, notRelevantLine, otherText, packBlockChunks, paragraphs, questionCell,
+  readWorksheets, said, sectionView, sha256, sourcesOf, tableLines, worksheetFile, worksheetName
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -67,6 +68,11 @@ export {
 // ---------------------------------------------------------------------------------------------
 
 export const UNANSWERED = '**NOT YET ANSWERED**';
+// What the allergen information prints in an allergen's cell, or beside a dish's PPDS, that no named person has
+// confirmed: in every cell of a dish not confirmed, whatever its worksheet holds, and in any cell a confirmed dish left
+// empty. Like UNANSWERED it shows the document unfinished wherever it is printed (see FOODALG's unfinishedLine), and a
+// business's words can never make it, as businessText escapes the asterisks.
+export const NOT_CONFIRMED_CELL = '**NOT CONFIRMED**';
 // Printed before every answer in a business's document, and before the unanswered and proposed strings.
 export const OUR_ANSWER = '**Our answer:** ';
 const END_MARKER = '<!-- UK-FOOD:END -->';
@@ -75,7 +81,7 @@ const BEGIN_MARKER = /^<!-- UK-FOOD:BEGIN doc=(\S+) data=(\S+) body=(\S+) -->$/;
 const beginMarker = (doc, hash) => `<!-- UK-FOOD:BEGIN doc=${doc} data=${DATA_ID} body=${hash} -->`;
 // The worksheets the documents read, in the order they are read: the one list a new worksheet is added
 // to. Let, not const, only so that withDocuments can give a test's list in its place.
-export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'cleaning', 'suppliers'];
+export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'allergens', 'cleaning', 'suppliers'];
 
 // ---------------------------------------------------------------------------------------------
 // The documents, one row each, in the order status lists them, the completion record last. Adding a
@@ -109,11 +115,14 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'cleaning', 'supplie
 //   method then counts as applying, as in a blank worksheet.
 // - nouns: what status calls those, one and many.
 // - entries: whether they are entries a person confirms, rather than questions a person answers.
-// - outstanding(sheet, data), when given: what else keeps the document from being finished, as lines for
-//   status's unfinished list (and so for the completion record and sign-off's reasons), after the lines its
-//   counts give; read from its own worksheet, `sheet`, only when that worksheet has no problems. A list
-//   document's says that nothing is recorded yet, or that what is written under Kept elsewhere is not
-//   confirmed, and whatever else its list needs (uk-food-lists.mjs).
+// - outstanding(sheet, data, sheets), when given: what else keeps the document from being finished, as lines
+//   for status's unfinished list (and so for the completion record and sign-off's reasons), after the lines its
+//   counts give; read from its own worksheet, `sheet`, only when that worksheet has no problems. `sheets` is
+//   every worksheet status read (readWorksheets), for a document that prints from another worksheet too: the
+//   allergen information repeats the Management worksheet's answers on how customers are told, so what it
+//   shows unfinished depends on that worksheet as well. A list document's says that nothing is recorded yet, or
+//   that what is written under Kept elsewhere is not confirmed, and whatever else its list needs
+//   (uk-food-lists.mjs).
 // - summary(doc, sheet), when given: what status's line for the document says in place of "N of M ...
 //   confirmed", as a list of parts; `doc` is the document's status entry. A list document's says that the
 //   list is kept elsewhere, where a count of entries could not.
@@ -188,7 +197,8 @@ function listDocument(section, overrides) {
     name: () => LISTS[section].title, sheet: section, uses: ['profile', section], needs: ['profile', section], dataNeeded: null,
     signable: true, inStatus: true, unfinishedLine: (line) => unanswered(line) || line.startsWith(NOT_CONFIRMED),
     asks: (sheet) => listAsked(sheet), entries: true,
-    outstanding: (sheet, data) => listOutstanding(LISTS[section], sheet, data), summary: (doc, sheet) => listSummary(LISTS[section], doc, sheet),
+    outstanding: (sheet, data, sheets) => listOutstanding(LISTS[section], sheet, data, sheets),
+    summary: (doc, sheet) => listSummary(LISTS[section], doc, sheet),
     lacking: (data) => LISTS[section].lacking(data),
     ...overrides
   };
@@ -224,6 +234,17 @@ export let DOCUMENTS = [
     asks: (sheet) => ({ items: [...(sheet?.parsed?.entries.values() ?? [])].map((entry) => [entry.id, entry]) }),
     nouns: ['own entry', 'own entries'], entries: true, specialProcesses: true
   },
+  // The business's dishes against the pack's fourteen allergens, with what each was checked against, its prepacked for
+  // direct sale food, its own "free from" statements beside the pack's conditions for them, and, from the Management
+  // worksheet, its answers on how customers are told. It renders without that worksheet (it says what is not yet
+  // answered), so the worksheet is in its uses and not its needs; one there with problems stops render, as for any
+  // worksheet a document uses. An allergen cell nobody confirmed shows it unfinished, as UNANSWERED and an entry not
+  // confirmed do.
+  listDocument('allergens', {
+    code: 'FOODALG', nouns: ['dish', 'dishes'], uses: ['profile', 'allergens', 'MG'], needs: ['profile', 'allergens'],
+    chunks: (sources, data) => allergenChunks(sources, data), source: (data, sources) => allergenSource(sources, data),
+    unfinishedLine: (line) => unanswered(line) || line.includes(NOT_CONFIRMED_CELL) || line.startsWith(NOT_CONFIRMED)
+  }),
   // The pack's cleaning schedule form, with the business's own entries. It says truly what it quotes: the form's
   // column headings, when it prints the form.
   listDocument('cleaning', {
@@ -434,6 +455,15 @@ function placements(questions, { left, width }) {
   return { fits, places: spans.map((span) => (fits ? { at: (at += span) - span, span } : { at: width - 1, span: 1 })) };
 }
 
+// What a document prints in a cell for one question: what `view.parts` gives of it, then the answer `view.answer`
+// gives (none for a note), one to a line; '' when there is nothing. This is the one printer of a question and its
+// answer: the section documents use it in their tables, and the allergen information uses it to repeat three of the
+// Management document's questions exactly as that document prints them.
+const questionCell = (question, view) => {
+  const answer = question.type === 'note' ? null : view.answer(question);
+  return [...view.parts(question), ...(answer ? [answer] : [])].join('\n');
+};
+
 // The cells of one row. A question goes in the first column of those it takes. `view.parts` gives
 // what to print of a question, and `view.answer` its answer, or null to print none.
 function rowCells(row, layout, view) {
@@ -442,9 +472,8 @@ function rowCells(row, layout, view) {
   if (row.why) cells[Number(layout.hasPoint)].push(row.why);
   const questions = row.questions ?? [];
   placements(questions, layout).places.forEach(({ at }, i) => {
-    const answer = questions[i].type === 'note' ? null : view.answer(questions[i]);
-    const lines = [...view.parts(questions[i]), ...(answer ? [answer] : [])];
-    if (lines.length) cells[at].push(lines.join('\n'));
+    const text = questionCell(questions[i], view);
+    if (text) cells[at].push(text);
   });
   return cells.map((segments) => segments.join('\n\n'));
 }
@@ -506,12 +535,14 @@ function blockChunks(block, view) {
 
 // A safe method. `view.method` gives the business's record of it (null in the reference, which
 // prints no status and no variation line); `view.parts` and `view.answer` what to print of a question.
+// The line a document prints for a method the business has marked not relevant, from the method's record in its
+// worksheet: the reason and who decided, in the business's words. The allergen information prints it too, for MG-04.
+const notRelevantLine = (record) => `Not relevant to this business: ${said(record.reason)} (decided by ${said(record.decidedBy)}).`;
+
 function methodChunks(method, view) {
   const heading = [`### ${method.id} ${method.title}`];
   const record = view.method(method.id);
-  if (record?.status === 'not-relevant') {
-    return [heading, [`Not relevant to this business: ${said(record.reason)} (decided by ${said(record.decidedBy)}).`]];
-  }
+  if (record?.status === 'not-relevant') return [heading, [notRelevantLine(record)]];
   const chunks = [heading, ...paragraphs(method.summary), ...method.blocks.flatMap((block) => blockChunks(block, view))];
   if (record?.status !== 'adapted') return chunks;
   return [...chunks, [`Our variation: ${said(record.variation)} Reason: ${said(record.reason)} Shown to be safe by: ` +
@@ -529,6 +560,9 @@ const sectionView = (parsed) => ({
   answer: (question) => answerOf(parsed.answers.get(question.id))
 });
 const REFERENCE_VIEW = { method: () => null, parts: (question) => printedParts(question, true), answer: () => null };
+// A box of the pack printed as the reference prints it, with no answers: for a box that asks nothing, such as the table
+// of the fourteen allergens the allergen information quotes, exactly as its section document prints it too.
+const packBlockChunks = (block) => blockChunks(block, REFERENCE_VIEW);
 
 // The profile document: the business's answers about itself, each safe method's status from the
 // section worksheets, the special processes and foods it has said it does with the pack's own
@@ -622,7 +656,8 @@ function ownEntryChunks(entry) {
 
 // Whether the lines of a rendered body of `doc` show that the document is unfinished: a line its row's
 // unfinishedLine marks, which is a question not yet answered (UNANSWERED, wherever answerOf prints it),
-// or, in the own methods document, an own entry not yet confirmed (the line notConfirmed prints).
+// or, in the own methods and list documents, an entry not yet confirmed (the line notConfirmed prints), or, in
+// the allergen information, a cell no named person has confirmed (NOT_CONFIRMED_CELL).
 // sign-off refuses a document with either outstanding, so a body that shows one was never signed off
 // through this helper. A business's own words cannot make either mark: businessText escapes the
 // asterisks, an answer never starts a line of its own, and the lines of a procedure printed word for
