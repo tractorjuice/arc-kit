@@ -2,7 +2,7 @@
 
 ArcKit's enterprise architecture governance commands, packaged as an Antigravity plugin.
 
-> **Experimental and not yet run in Antigravity.** This plugin is built from Antigravity's published plugin format and checked against it by ArcKit's own tests. Nobody has installed it in Antigravity yet. Please [open an issue](https://github.com/tractorjuice/arc-kit/issues) with what you find.
+> **Experimental and not yet run in Antigravity.** This plugin passes Antigravity's own check (`agy plugin validate --strict`, agy 1.5.13). No command has yet been run in an Antigravity session. Please [open an issue](https://github.com/tractorjuice/arc-kit/issues) with what you find.
 
 ## Install
 
@@ -52,6 +52,7 @@ Two more need a key and are left out, because a plugin with an unfilled key inst
 
 - **Agents and hooks.** The plugin ships skills and MCP servers only. Research commands run in the main conversation.
 - **A published repository.** You install from a build of this folder, as above.
+- **Long commands.** Antigravity loads the first 24,000 bytes of a skill. Twenty-nine ArcKit commands are longer, so each of those tells the agent to read the rest from a file in the skill's folder first.
 - **What you type after the command.** Antigravity's documentation does not say how a skill receives it. If a command ignores your text, say what you want in the next message.
 
 ## Licence

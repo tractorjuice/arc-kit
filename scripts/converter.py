@@ -2313,6 +2313,7 @@ def generate_antigravity_plugin(mcp_json_path, version, extension_dir):
         "displayName": "ArcKit",
         "version": version,
         "description": ANTIGRAVITY_PLUGIN_DESCRIPTION,
+        "logo": "assets/logo.svg",
         "suggestedPrompts": [
             "/arckit-start",
             "/arckit-requirements Build a payment processing system",
@@ -2366,6 +2367,52 @@ def prefix_antigravity_reference_skills(skills_dir):
     if renamed:
         print(f"  Prefixed {len(renamed)} reference skills: {', '.join(renamed)}")
     return renamed
+
+
+# Antigravity loads the first 24,000 bytes of a SKILL.md body and drops the rest
+# (`agy plugin validate` reports it; the limit is not in the documentation).
+ANTIGRAVITY_SKILL_BODY_LIMIT = 24000
+ANTIGRAVITY_INSTRUCTIONS_FILE = "instructions.md"
+ANTIGRAVITY_LONG_SKILL_BODY = (
+    "This command's instructions are longer than Antigravity loads from a skill file, so they are in "
+    "`" + ANTIGRAVITY_INSTRUCTIONS_FILE + "`, in this skill's folder.\n\n"
+    "Before you do anything else, read `" + ANTIGRAVITY_INSTRUCTIONS_FILE + "` from its first line to its last. "
+    "Then follow it exactly as if it were written here. Do not act on a part of it, and do not answer from this "
+    "description alone.\n\n"
+    "Whatever the user typed after the command is the input those instructions call the arguments.\n"
+)
+
+
+def split_long_antigravity_skills(skills_dir, limit=ANTIGRAVITY_SKILL_BODY_LIMIT):
+    """Move a skill body the loader would cut short into a file beside it.
+
+    A skill may read its own folder by a relative path, so the whole body goes
+    into `instructions.md` and SKILL.md keeps its frontmatter and a short body
+    that says to read that file first. Run after every rewrite, so the body is
+    measured as it will ship.
+    """
+    moved = []
+    if not os.path.isdir(skills_dir):
+        return moved
+    for entry in sorted(os.listdir(skills_dir)):
+        skill_md = os.path.join(skills_dir, entry, "SKILL.md")
+        if not os.path.isfile(skill_md):
+            continue
+        with open(skill_md, "r", encoding="utf-8") as f:
+            text = f.read()
+        if not text.startswith("---\n"):
+            continue
+        front, body = text[4:].split("\n---\n", 1)
+        if len(body.encode("utf-8")) <= limit:
+            continue
+        with open(os.path.join(skills_dir, entry, ANTIGRAVITY_INSTRUCTIONS_FILE), "w", encoding="utf-8") as f:
+            f.write(body.lstrip("\n"))
+        with open(skill_md, "w", encoding="utf-8") as f:
+            f.write("---\n" + front + "\n---\n\n" + ANTIGRAVITY_LONG_SKILL_BODY)
+        moved.append(entry)
+    if moved:
+        print(f"  Moved {len(moved)} skill bodies over {limit} bytes into {ANTIGRAVITY_INSTRUCTIONS_FILE}")
+    return moved
 
 
 def rewrite_antigravity_skills(skills_dir):
@@ -2956,6 +3003,10 @@ if __name__ == "__main__":
     )
     prefix_antigravity_reference_skills("extensions/arckit-antigravity/skills")
     rewrite_antigravity_skills("extensions/arckit-antigravity/skills")
+    split_long_antigravity_skills("extensions/arckit-antigravity/skills")
+    # The logo the plugin list shows; without one it gets a generic icon.
+    os.makedirs("extensions/arckit-antigravity/assets", exist_ok=True)
+    shutil.copy2("docs/assets/ArcKit_Logo_Stacked_Light.svg", "extensions/arckit-antigravity/assets/logo.svg")
 
     print()
     total = sum(counts.values())

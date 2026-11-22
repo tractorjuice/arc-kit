@@ -400,7 +400,7 @@ kimi
 <details>
 <summary><strong>Google Antigravity (experimental)</strong></summary>
 
-Built from Antigravity's published plugin format and not yet run in Antigravity. Build the plugin from this repository and install the folder:
+It passes Antigravity's own plugin check; no command has yet been run in an Antigravity session. Build the plugin from this repository and install the folder:
 
 ```bash
 git clone https://github.com/tractorjuice/arc-kit.git

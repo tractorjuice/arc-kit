@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **An experimental plugin for Google Antigravity.** `extensions/arckit-antigravity` is generated from the same commands as every other assistant: each ArcKit command is an Agent Skill invoked as `/arckit-<command>`, with five MCP servers that need no key. `arckit init --ai antigravity` scaffolds a project for it. It is built from Antigravity's published plugin format and has not yet been run in Antigravity, so it is installed from a build of this repository and has no published repository of its own.
+- **An experimental plugin for Google Antigravity.** `extensions/arckit-antigravity` is generated from the same commands as every other assistant: each ArcKit command is an Agent Skill invoked as `/arckit-<command>`, with five MCP servers that need no key. `arckit init --ai antigravity` scaffolds a project for it. It passes Antigravity's own plugin check, but no command has yet been run in an Antigravity session, so it is installed from a build of this repository and has no published repository of its own.
 
 ## [6.24.0] — 2026-11-20
 

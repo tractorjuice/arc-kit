@@ -7,16 +7,23 @@ Read from antigravity.google/docs (build-plugins, skills, mcp) on 22 November 20
   and `description` (1 to 1,024 characters); skills are invoked `/<name>` and are not namespaced by plugin;
 - `mcp_config.json` at the plugin root; a server that declares `variables` leaves the plugin disabled
   until they are filled in, so servers that need a key are left out;
+- the loader takes the first 24,000 bytes of a SKILL.md body and drops the rest. That limit is not in the
+  documentation: `agy plugin validate --strict` (agy 1.5.13) reported it on 29 skills, so a longer body goes
+  into `instructions.md` beside the skill;
 - a skill can read its own folder by relative path, and nothing else in the plugin is documented as
   reachable, so templates and scripts come from the project's `.arckit/`.
 
-Nobody has run the plugin in Antigravity. These tests hold it to the documented format only.
+The generated plugin passes `agy plugin validate --strict` (agy 1.5.13, 22 November 2026); the last test here runs
+it where `agy` is installed. No command has yet been run in an Antigravity session.
 """
 
 from __future__ import annotations
 
 import json
+import os
 import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -89,10 +96,10 @@ def test_every_skill_carries_the_prefix():
 
 def test_a_file_path_is_not_rewritten_as_a_command():
     """`/tmp/arckit-wardley.owm` holds the invocation prefix; it is a file, and keeps its extension."""
-    text = (SKILLS / "arckit-wardley" / "SKILL.md").read_text(encoding="utf-8")
+    text = skill_texts(SKILLS / "arckit-wardley" / "SKILL.md")
     assert "/tmp/arckit-wardley.owm" in text and "arckit-wardley-owm" not in text
     for path in skills():
-        assert not re.search(r"/tmp/arckit-[\w-]+-owm\b", path.read_text(encoding="utf-8")), path.parent.name
+        assert not re.search(r"/tmp/arckit-[\w-]+-owm\b", skill_texts(path)), path.parent.name
 
 
 def test_the_manifest_points_at_a_repository_that_exists():
@@ -109,8 +116,50 @@ def test_a_skill_is_in_the_documented_shape(path):
 
 
 @pytest.mark.parametrize("path", skills(), ids=lambda p: p.parent.name)
+def test_a_skill_body_fits_what_the_loader_reads(path):
+    """A body over the limit is cut short without a word, so it moves to a file the skill is told to read first."""
+    body = path.read_text(encoding="utf-8")[4:].split("\n---\n", 1)[1]
+    assert len(body.encode("utf-8")) <= converter.ANTIGRAVITY_SKILL_BODY_LIMIT
+    instructions = path.parent / converter.ANTIGRAVITY_INSTRUCTIONS_FILE
+    if instructions.exists():
+        assert len(instructions.read_bytes()) > converter.ANTIGRAVITY_SKILL_BODY_LIMIT
+        assert "read `instructions.md` from its first line to its last" in body
+        assert "do not answer from this description alone" in body
+
+
+def test_the_long_commands_are_the_ones_that_were_moved():
+    moved = {p.parent.name for p in skills() if (p.parent / converter.ANTIGRAVITY_INSTRUCTIONS_FILE).exists()}
+    assert {"arckit-jsp-936", "arckit-service-assessment", "arckit-diagram", "arckit-wardley"} <= moved
+    assert "arckit-start" not in moved
+
+
+def test_splitting_keeps_the_frontmatter_and_the_whole_body(tmp_path):
+    skill = tmp_path / "arckit-long"
+    skill.mkdir()
+    body = "# Long\n\n" + "x" * 30000 + "\nlast line\n"
+    (skill / "SKILL.md").write_text('---\nname: arckit-long\ndescription: "d"\n---\n\n' + body, encoding="utf-8")
+    short = tmp_path / "arckit-short"
+    short.mkdir()
+    (short / "SKILL.md").write_text('---\nname: arckit-short\ndescription: "d"\n---\n\nshort\n', encoding="utf-8")
+    assert converter.split_long_antigravity_skills(str(tmp_path)) == ["arckit-long"]
+    assert (skill / "instructions.md").read_text(encoding="utf-8") == body
+    assert (skill / "SKILL.md").read_text(encoding="utf-8").startswith('---\nname: arckit-long\ndescription: "d"\n---\n')
+    assert not (short / "instructions.md").exists()
+
+
+def test_the_manifest_names_a_logo_that_is_there():
+    manifest = json.loads((EXT / "plugin.json").read_text(encoding="utf-8"))
+    assert (EXT / manifest["logo"]).is_file()
+
+
+def skill_texts(path: Path) -> str:
+    extra = path.parent / converter.ANTIGRAVITY_INSTRUCTIONS_FILE
+    return path.read_text(encoding="utf-8") + (extra.read_text(encoding="utf-8") if extra.exists() else "")
+
+
+@pytest.mark.parametrize("path", skills(), ids=lambda p: p.parent.name)
 def test_a_skill_names_nothing_only_claude_code_has(path):
-    text = path.read_text(encoding="utf-8")
+    text = skill_texts(path)
     assert "${CLAUDE_PLUGIN_ROOT}" not in text
     assert "AskUserQuestion" not in text
     assert not re.search(r"(?<![\w/])/arckit[.:]", text), "a command in another assistant's form"
@@ -158,3 +207,13 @@ def test_the_readme_says_it_has_not_been_run():
     assert "Experimental and not yet run in Antigravity" in readme
     assert "arckit init my-project --ai antigravity" in readme
     assert "agy plugin install ./extensions/arckit-antigravity" in readme
+
+
+AGY = shutil.which("agy") or os.path.expanduser("~/.gemini/bin/agy")
+
+
+@pytest.mark.skipif(not os.path.isfile(AGY), reason="Antigravity's agy command is not installed")
+def test_antigravitys_own_validator_passes_in_strict_mode():
+    """The loader's own check: it reads the plugin as Antigravity will, and fails on anything it would skip."""
+    result = subprocess.run([AGY, "plugin", "validate", "--strict", str(EXT)], capture_output=True, text=True, timeout=120)
+    assert "Validation passed" in result.stdout + result.stderr, (result.stdout + result.stderr)[-600:]
