@@ -10,6 +10,8 @@ ArcKit's enterprise architecture governance commands, packaged as an Antigravity
 agy plugin install https://github.com/tractorjuice/arckit-antigravity
 ```
 
+Using Gemini CLI? ArcKit's established extension for it is [arckit-gemini](https://github.com/tractorjuice/arckit-gemini).
+
 Check it loaded with `agy plugin list`. If your shell can't find `agy`, it is at `~/.gemini/bin/agy`. To update, run the install command again.
 
 ## Set up a project

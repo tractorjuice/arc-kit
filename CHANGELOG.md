@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **The Antigravity plugin installs with one command.** It has its own repository, `tractorjuice/arckit-antigravity`, filled at each release: `agy plugin install https://github.com/tractorjuice/arckit-antigravity`. Before, you built it from a clone of arc-kit.
+- **arckit.org covers Antigravity.** The getting-started page has an Antigravity tab with the install steps, and the home page, the Claude Code plugin page and `llms.txt` list it as experimental. The Gemini CLI and Antigravity instructions point to each other, on the site and in the READMEs.
 
 ## [6.25.0] — 2026-11-22
 
