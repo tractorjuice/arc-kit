@@ -1,7 +1,7 @@
 import { DATA_ID, isObject, SECTION_IDS } from './uk-food-data.mjs';
 export {
-  andList, codePoint, counted, identifying, isAre, isIsoDate, longDate, methodQuestions, profileQuestion,
-  readWorksheet, sentenceCase, spanOf, strictWorksheet, typedIn, unseenIn
+  andList, codePoint, counted, fieldLines, identifying, isAre, isIsoDate, key as fieldKey, longDate, methodQuestions, profileQuestion,
+  quotedBy, readWorksheet, sentenceCase, spanOf, standard, STATE_WORDS, strictWorksheet, typedIn, unseenIn
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -10,7 +10,25 @@ export {
 // ---------------------------------------------------------------------------------------------
 
 export const WORKSHEET_VERSION = '1.0';
-export const WORKSHEET_SECTIONS = [...SECTION_IDS, 'profile', 'own'];
+// Every worksheet's section: the seven this module makes and reads, then the list worksheets'. Let, not
+// const, only so that addListWorksheets can add those: see there.
+export let WORKSHEET_SECTIONS = [...SECTION_IDS, 'profile', 'own'];
+// The list worksheets (cleaning, and the others uk-food-lists.mjs names) are that module's: it reads and
+// writes them with the parts of this one they share (beginReading, readBlocks, blockTools, fieldLines,
+// STATE_WORDS), and hands this module its reader, its writer and its guidance as it loads, so that every
+// function here that takes a section takes a list section too. It cannot be imported here: it also prints
+// the list documents, so it imports the document module, which imports this one, and a module that loads
+// before one it imports cannot read that one while it loads. Every program that reads a worksheet loads
+// it, as the helper's entry and the document module both import it. Until it has loaded, the list
+// sections are not worksheet sections.
+let LIST_WORKSHEETS = { sections: [] };
+const listed = (section) => LIST_WORKSHEETS.sections.includes(section);
+// For uk-food-lists.mjs alone, as it loads: `lists` is { sections, read(reading, data), emit(parsed, data),
+// guidance(section, data) }, which readWorksheet, emitWorksheet and guidanceFor call for a list section.
+export function addListWorksheets(lists) {
+  LIST_WORKSHEETS = lists;
+  WORKSHEET_SECTIONS = [...SECTION_IDS, 'profile', 'own', ...lists.sections];
+}
 export const STATES = ['unanswered', 'proposed', 'confirmed'];
 export const STATUSES = ['applies', 'adapted', 'not-relevant'];
 export const OWN_KINDS = ['additional', 'special-process'];
@@ -165,8 +183,10 @@ const QUOTED = {
   own: 'The names of the special processes and foods are quoted from'
 };
 const QUOTED_LINES = 'Everything else on the lines that start with > is quoted from';
-const quotedFrom = (section, source) => `${QUOTED[section] ?? QUOTED_LINES} the ${source.publisher}'s ${source.title}, ` +
-  `retrieved ${longDate(source.retrieved)}. ${source.attribution}`;
+// The line that says where a worksheet's words from the pack come from: what they are (`lead`), then the source.
+const quotedBy = (lead, source) => `${lead} the ${source.publisher}'s ${source.title}, retrieved ${longDate(source.retrieved)}. ` +
+  `${source.attribution}`;
+const quotedFrom = (section, source) => quotedBy(QUOTED[section] ?? QUOTED_LINES, source);
 
 // The Markdown lint rules a worksheet cannot meet without changing the pack's words or the
 // worksheet grammar, each turned off in that worksheet with its reason beside it.
@@ -176,12 +196,12 @@ const LINT_EXCEPTIONS = {
 
 // The guidance comment each worksheet carries after its marker: how to fill it in, then where the
 // pack's words in it come from (left out only for data that names no source), then, in the own
-// worksheet, the entry to copy.
-const guidanceFor = (section, data) => [
+// worksheet, the entry to copy. A list worksheet's is its own module's.
+const guidanceFor = (section, data) => (listed(section) ? LIST_WORKSHEETS.guidance(section, data) : [
   ...(section === 'own' ? OWN_GUIDANCE : section === 'profile' ? ANSWER_GUIDANCE : [...ANSWER_GUIDANCE, ...STATUS_GUIDANCE]),
   ...(isObject(data.source) ? [quotedFrom(section, data.source)] : []),
   ...(section === 'own' ? OWN_TEMPLATE : [])
-];
+]);
 
 // A field's name as a property of a parsed record: Decided-by is decidedBy, EH-review ehReview.
 const key = (field) => field.toLowerCase().replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
@@ -364,6 +384,7 @@ export function emitWorksheet(parsed, data) {
   if (!WORKSHEET_SECTIONS.includes(section)) throw new Error(`no worksheet for section ${section}`);
   if (parsed.data !== DATA_ID) throw new Error(`the worksheet answers data ${parsed.data}, not ${DATA_ID}`);
   if (SECTION_IDS.includes(section) && !data.sections.has(section)) throw new Error(`the data has no ${section}.json`);
+  if (listed(section)) return LIST_WORKSHEETS.emit(parsed, data);
   const comment = (lines) => ['<!--', ...lines, '-->'];
   const answerBlock = (question, prompt, record = { state: 'unanswered' }) => [
     `### ${question.id}`,
@@ -430,7 +451,11 @@ const MARKER = /^<!--\s*uk-food-answers\s+(\S+)\s+data=(\S+)\s+section=(\S+)\s*-
 // an unseen character in it is reported as one and the line is not read as something else.)
 const FIELD = /^([A-Za-z][A-Za-z-]*)[ \t]*:(.*)$/s;
 const FIELD_NAMES = new Map([...METHOD_FIELDS, ...ANSWER_FIELDS, ...OWN_FIELDS].map((f) => [f.toLowerCase(), f]));
-const FIELDS_OF = { method: METHOD_FIELDS, question: ANSWER_FIELDS, entry: OWN_FIELDS };
+// The fields each kind of block of these worksheets takes, and what a message calls such a block.
+const KINDS = {
+  method: { fields: METHOD_FIELDS, called: 'a method' }, question: { fields: ANSWER_FIELDS, called: 'a question' },
+  entry: { fields: OWN_FIELDS, called: 'an own entry' }
+};
 
 // Reads an answer as its question's type. Returns the value a document may print, or an error.
 function readValue(question, answer) {
@@ -455,20 +480,14 @@ function readValue(question, answer) {
   }
 }
 
-// Reads a worksheet against the data (what loadData returns), as { parsed, layout }. Never throws on
-// what a person or tool has written: every fault is a { line, message } problem, and an answer with a
-// problem in its block is not used. `answered` is true only for a confirmed answer with no problem,
-// under a method that is not marked not-relevant: nothing else counts as answered anywhere.
-// Two kinds of line are the tool's own, printed by emitWorksheet and never read: the guidance comment
-// and the lines starting > above a question. Where one of them is not what this helper prints, the
-// worksheet was made by a different version of the overlay, or someone typed there; the two cannot be
-// told apart. That is not reported here line by line: `layout` holds where those lines are, for
-// parseWorksheet to report once and upgradeWorksheet to replace. It is { lines, guidance, prompts,
-// wording }: the worksheet's lines; the guidance comment's first and last line numbers, or null; for
-// each question read, the line numbers of its > lines (`at`), those of them this helper does not
-// print (`foreign`) and what it does print (`now`); and the line number of every line of either kind
-// that is not this helper's wording.
-function readWorksheet(text, data) {
+// Begins reading a worksheet, for readWorksheet and for the list worksheets' reader in uk-food-lists.mjs:
+// its lines, and its marker line read and checked. Returns the reading: { parsed, layout, lines, report,
+// finish, markerAt, markerLine, section, stopped }. `report(line, message, block)` records a problem and,
+// given a block, marks it faulty; `finish()` gives { parsed, layout } with the problems in line order (see
+// readWorksheet for both). `stopped` is true when the marker line stops the reading: there is none, it is
+// not understood, or it names another version, other data or a section that has no worksheet. The reader
+// sets `parsed.section` itself, once it knows the data holds what the section needs.
+export function beginReading(text) {
   const problems = [];
   const parsed = { data: null, section: null, methods: new Map(), answers: new Map(), entries: new Map(), problems };
   const report = (line, message, block = null) => {
@@ -481,11 +500,12 @@ function readWorksheet(text, data) {
     problems.sort((a, b) => a.line - b.line);
     return { parsed, layout };
   };
+  const stopped = { parsed, layout, lines, report, finish, stopped: true };
 
   const markerAt = lines.findIndex((line) => /^<!--.*uk-food-answers/.test(line.trim()));
   if (markerAt < 0) {
     report(1, 'there is no uk-food-answers marker line, so this is not a worksheet the helper can read');
-    return finish();
+    return stopped;
   }
   for (let i = 0; i < markerAt; i++) {
     const line = lines[i].trim();
@@ -496,51 +516,48 @@ function readWorksheet(text, data) {
   const marker = MARKER.exec(lines[markerAt].trim());
   if (!marker) {
     report(markerLine, 'the marker line is not understood: it reads <!-- uk-food-answers 1.0 data=... section=... -->');
-    return finish();
+    return stopped;
   }
   const [, version, dataId, section] = marker;
   parsed.data = dataId;
   if (version !== WORKSHEET_VERSION) {
     report(markerLine, `this worksheet is version ${version}; the helper reads version ${WORKSHEET_VERSION}`);
-    return finish();
+    return stopped;
   }
   if (dataId !== DATA_ID) {
     report(markerLine, `this worksheet answers data ${dataId}, but the helper's data is ${DATA_ID}`);
-    return finish();
+    return stopped;
   }
   if (!WORKSHEET_SECTIONS.includes(section)) {
     report(markerLine, `section ${section} is not one of ${WORKSHEET_SECTIONS.join(', ')}`);
-    return finish();
+    return stopped;
   }
-  const methods = SECTION_IDS.includes(section) ? data.sections.get(section)?.methods : null;
-  if (SECTION_IDS.includes(section) && !Array.isArray(methods)) {
-    report(markerLine, `there is no ${section}.json in the data, so this ${section} worksheet cannot be read`);
-    return finish();
-  }
-  parsed.section = section;
+  return { parsed, layout, lines, report, finish, markerAt, markerLine, section, stopped: false };
+}
 
-  // Every question this worksheet asks, with its method and its prompt; and the pack's notes.
-  const asked = new Map();
-  const notes = new Set();
-  for (const method of methods ?? []) {
-    for (const entry of methodQuestions(method)) {
-      asked.set(entry.question.id, { owner: method.id, question: entry.question, prompt: promptLines(entry) });
-    }
-    for (const question of everyQuestion(method)) if (question.type === 'note') notes.add(question.id);
-  }
-  if (section === 'profile') {
-    for (const question of PROFILE_QUESTIONS) asked.set(question.id, { owner: null, question, prompt: profilePrompt(question) });
-  }
-  const methodIds = new Set((methods ?? []).map((method) => method.id));
-
-  // Pass 1: lines into blocks. A block is a method's status, a question or an own entry; a block
-  // that is reported as it opens (an unknown or repeated heading) is read and set aside, so its
-  // lines are not reported again.
+// Pass 1 of reading a worksheet, the same for every worksheet: the lines after the marker into blocks of
+// fields, read as the comment at FIELD says, with the guidance comment compared with `guidance` (every line
+// of the comment this helper prints, its marks included) and noted in the reading's layout as readWorksheet
+// says. What differs from one worksheet to another is given:
+// - heading({ title, id, rest, at, raw }, { seen, open, hidden }): what a "## " heading opens: { block,
+//   method } (`method` the method its questions belong to, or null), having put the block in `seen`; or
+//   null, having reported why, when the heading opens nothing, so that the lines under it are read and set
+//   aside. `id` is its first word in capitals and `rest` the words after it. `open(kind, id, line, extra)`
+//   makes a block; `hidden(raw, at, block)` reports an unseen character in a line that holds a value.
+// - asked and notes: the questions a "### " heading may name, each { owner, question, prompt }, and the
+//   identifiers of the pack's notes. A list worksheet has neither.
+// - names: every field name this worksheet knows, from its name in small letters. An indented line that
+//   starts with one is a field out of place, not a value carried on.
+// - kinds: for each kind of block that takes fields, { fields, called }: the fields it takes, and what a
+//   message calls such a block.
+// Returns `seen`: { method, question, entry }, each a Map from identifier to its block, and anything else
+// `heading` keeps there. Each block is { kind, id, line, fields, faulty }: `fields` maps each field read to
+// { line, lines }, the line it starts on and its value's lines.
+export function readBlocks({ lines, layout, report, markerAt }, { guidance, asked = new Map(), notes = new Set(), names, kinds, heading }) {
+  // A block is reported as it opens (an unknown or repeated heading) is read and set aside, so its lines
+  // are not reported again.
   const seen = { method: new Map(), question: new Map(), entry: new Map() };
   const open = (kind, id, line, extra = {}) => ({ kind, id, line, fields: new Map(), faulty: false, ...extra });
-  const titles = new Map((methods ?? []).map((m) => [m.id, m.title]));
-  const sameTitle = (a, b) => a.replace(/\s+/g, ' ').toLowerCase() === b.replace(/\s+/g, ' ').toLowerCase();
-  const guidance = ['<!--', ...guidanceFor(section, data), '-->'];
   let guidanceChecked = false;
   let method = null;
   let block = null;
@@ -550,7 +567,7 @@ function readWorksheet(text, data) {
   // A line that the worksheet would read if it were not in a comment: a heading or a field.
   const worksheetLine = (text) => {
     const match = FIELD.exec(text.trim());
-    return /^#{2,3}[ \t]+\S/.test(text.trim()) || Boolean(match && FIELD_NAMES.has(match[1].toLowerCase()));
+    return /^#{2,3}[ \t]+\S/.test(text.trim()) || Boolean(match && names.has(match[1].toLowerCase()));
   };
   // Nothing in a comment is read. Text after a comment's end on the same line is reported, never
   // dropped. The first comment over several lines, when it stands above every heading, is the
@@ -651,7 +668,7 @@ function readWorksheet(text, data) {
     if (/^[ \t]/.test(line)) {
       const text = line.trim();
       const looks = FIELD.exec(text);
-      if ((looks && FIELD_NAMES.has(looks[1].toLowerCase())) || /^#{1,6}[ \t]/.test(text)) {
+      if ((looks && names.has(looks[1].toLowerCase())) || /^#{1,6}[ \t]/.test(text)) {
         report(at, `a ${looks ? 'field' : 'heading'} must start at the beginning of the line: this indented line is not read`, block);
         field = { lines: [] };
       } else if (field?.empty) {
@@ -673,46 +690,25 @@ function readWorksheet(text, data) {
       }
       continue;
     }
-    const heading = /^(#+)[ \t]+(\S.*)$/s.exec(line);
-    if (heading && heading[1].length === 2) {
-      const title = heading[2].trim();
+    const headingLine = /^(#+)[ \t]+(\S.*)$/s.exec(line);
+    if (headingLine && headingLine[1].length === 2) {
+      const title = headingLine[2].trim();
       provenance = /^build provenance$/i.test(title);
       method = block = null;
       if (provenance) continue;
       const [first] = title.split(/\s+/);
       const id = first.toUpperCase();
       const rest = title.slice(first.length).trim();
-      if (section === 'own') {
-        if (!/^OWN-\d{2}$/.test(id)) report(at, `${id} is not an own entry: number entries OWN-01, OWN-02 and so on`);
-        else if (seen.entry.has(id)) report(at, `${id} appears more than once; only the first is read`);
-        else {
-          block = open('entry', id, at, { title: rest });
-          seen.entry.set(id, block);
-          // The title is printed in the documents, so it is a value like any other.
-          hidden(lines[i], at, block);
-          continue;
-        }
-      } else if (methodIds.has(id)) {
-        if (seen.method.has(id)) report(at, `${id} appears more than once; only the first is read`);
-        else {
-          method = block = open('method', id, at);
-          seen.method.set(id, block);
-          // The title is rewritten from the data, so anything else written on the heading is lost.
-          if (!sameTitle(rest, titles.get(id))) {
-            report(at, `the heading of ${id} reads "${rest}", but the method is "${sentenceCase(titles.get(id))}": text on a heading is not read`, block);
-          }
-          continue;
-        }
-      } else {
-        report(at, section === 'profile'
-          ? `the profile worksheet has no ## headings: "## ${title}" is not read`
-          : `"## ${title}" is not a safe method of ${section}`);
+      const opened = heading({ title, id, rest, at, raw: lines[i] }, { seen, open, hidden });
+      if (opened) {
+        ({ block, method } = opened);
+        continue;
       }
       method = block = open('set-aside', id, at);
       continue;
     }
-    if (heading && heading[1].length === 3) {
-      const [first, ...after] = heading[2].trim().split(/\s+/);
+    if (headingLine && headingLine[1].length === 3) {
+      const [first, ...after] = headingLine[2].trim().split(/\s+/);
       const id = first.toUpperCase();
       const known = asked.get(id);
       if (!known) {
@@ -753,11 +749,11 @@ function readWorksheet(text, data) {
     if (match && block?.kind === 'set-aside') {
       field = { lines: [] };
     } else if (match) {
-      const name = FIELD_NAMES.get(match[1].toLowerCase());
-      const allowed = FIELDS_OF[block?.kind];
+      const name = names.get(match[1].toLowerCase());
+      const kind = block && Object.hasOwn(kinds, block.kind) ? kinds[block.kind] : null;
       field = { line: at, lines: [], block: null, name: match[1], empty: match[2].trim() === '' };
-      if (!allowed) report(at, `${match[1]} is not read: a field belongs under a heading`);
-      else if (!allowed.includes(name)) report(at, `${match[1]} is not a field of ${block.kind === 'entry' ? 'an own entry' : `a ${block.kind}`}: the fields are ${allowed.join(', ')}`, block);
+      if (!kind) report(at, `${match[1]} is not read: a field belongs under a heading`);
+      else if (!kind.fields.includes(name)) report(at, `${match[1]} is not a field of ${kind.called}: the fields are ${kind.fields.join(', ')}`, block);
       else if (block.fields.has(name)) report(at, `${name} is given twice in ${block.id}; only the first is read`, block);
       else {
         field.block = block;
@@ -772,8 +768,16 @@ function readWorksheet(text, data) {
   }
   if (comment) report(comment[0].at, 'a comment that starts here is never closed, so nothing after it is read');
   layout.noGuidance = !guidanceChecked && !comment;
+  return seen;
+}
 
-  // Pass 2: blocks into records, checked field by field.
+// What pass 2 of reading a worksheet uses to turn blocks into records, the same for every worksheet, each
+// reporting through `report`: get(block, name), a field's value ('' when it is empty or not there);
+// lineOf(block, name), the line it starts on, or the block's heading line; needs(block, id, fields, why),
+// which reports each of `fields` that is empty; and checkState(block, id, state, words), which checks
+// State and, for a state that is not unanswered, By and On, and reports any of `words` given while State
+// is unanswered.
+export function blockTools(report) {
   const get = (b, name) => b?.fields.get(name)?.lines.join('\n') ?? '';
   const lineOf = (b, name) => b.fields.get(name)?.line ?? b.line;
   const needs = (b, id, fields, why) => {
@@ -791,6 +795,87 @@ function readWorksheet(text, data) {
       if (on && !isIsoDate(on)) report(lineOf(b, 'On'), `${id}: On "${on}" is not a date written YYYY-MM-DD`, b);
     }
   };
+  return { get, lineOf, needs, checkState };
+}
+
+// Reads a worksheet against the data (what loadData returns), as { parsed, layout }. Never throws on
+// what a person or tool has written: every fault is a { line, message } problem, and an answer with a
+// problem in its block is not used. `answered` is true only for a confirmed answer with no problem,
+// under a method that is not marked not-relevant: nothing else counts as answered anywhere.
+// Two kinds of line are the tool's own, printed by emitWorksheet and never read: the guidance comment
+// and the lines starting > above a question. Where one of them is not what this helper prints, the
+// worksheet was made by a different version of the overlay, or someone typed there; the two cannot be
+// told apart. That is not reported here line by line: `layout` holds where those lines are, for
+// parseWorksheet to report once and upgradeWorksheet to replace. It is { lines, guidance, prompts,
+// wording }: the worksheet's lines; the guidance comment's first and last line numbers, or null; for
+// each question read, the line numbers of its > lines (`at`), those of them this helper does not
+// print (`foreign`) and what it does print (`now`); and the line number of every line of either kind
+// that is not this helper's wording.
+// A list worksheet is read by its own module's reader (see addListWorksheets), from the same beginning.
+function readWorksheet(text, data) {
+  const reading = beginReading(text);
+  if (reading.stopped) return reading.finish();
+  const { parsed, report, finish, markerLine, section } = reading;
+  if (listed(section)) return LIST_WORKSHEETS.read(reading, data);
+  const methods = SECTION_IDS.includes(section) ? data.sections.get(section)?.methods : null;
+  if (SECTION_IDS.includes(section) && !Array.isArray(methods)) {
+    report(markerLine, `there is no ${section}.json in the data, so this ${section} worksheet cannot be read`);
+    return finish();
+  }
+  parsed.section = section;
+
+  // Every question this worksheet asks, with its method and its prompt; and the pack's notes.
+  const asked = new Map();
+  const notes = new Set();
+  for (const method of methods ?? []) {
+    for (const entry of methodQuestions(method)) {
+      asked.set(entry.question.id, { owner: method.id, question: entry.question, prompt: promptLines(entry) });
+    }
+    for (const question of everyQuestion(method)) if (question.type === 'note') notes.add(question.id);
+  }
+  if (section === 'profile') {
+    for (const question of PROFILE_QUESTIONS) asked.set(question.id, { owner: null, question, prompt: profilePrompt(question) });
+  }
+  const methodIds = new Set((methods ?? []).map((method) => method.id));
+
+  // Pass 1: lines into blocks. A block is a method's status, a question or an own entry.
+  const titles = new Map((methods ?? []).map((m) => [m.id, m.title]));
+  const sameTitle = (a, b) => a.replace(/\s+/g, ' ').toLowerCase() === b.replace(/\s+/g, ' ').toLowerCase();
+  const seen = readBlocks(reading, {
+    guidance: ['<!--', ...guidanceFor(section, data), '-->'], asked, notes, names: FIELD_NAMES, kinds: KINDS,
+    heading: ({ title, id, rest, at, raw }, { seen: found, open, hidden }) => {
+      if (section === 'own') {
+        if (!/^OWN-\d{2}$/.test(id)) report(at, `${id} is not an own entry: number entries OWN-01, OWN-02 and so on`);
+        else if (found.entry.has(id)) report(at, `${id} appears more than once; only the first is read`);
+        else {
+          const block = open('entry', id, at, { title: rest });
+          found.entry.set(id, block);
+          // The title is printed in the documents, so it is a value like any other.
+          hidden(raw, at, block);
+          return { block, method: null };
+        }
+      } else if (methodIds.has(id)) {
+        if (found.method.has(id)) report(at, `${id} appears more than once; only the first is read`);
+        else {
+          const block = open('method', id, at);
+          found.method.set(id, block);
+          // The title is rewritten from the data, so anything else written on the heading is lost.
+          if (!sameTitle(rest, titles.get(id))) {
+            report(at, `the heading of ${id} reads "${rest}", but the method is "${sentenceCase(titles.get(id))}": text on a heading is not read`, block);
+          }
+          return { block, method: block };
+        }
+      } else {
+        report(at, section === 'profile'
+          ? `the profile worksheet has no ## headings: "## ${title}" is not read`
+          : `"## ${title}" is not a safe method of ${section}`);
+      }
+      return null;
+    }
+  });
+
+  // Pass 2: blocks into records, checked field by field.
+  const { get, lineOf, needs, checkState } = blockTools(report);
   // Reads a question's block. `methodFaulty` is true when its method's status has a problem: no
   // answer under a method whose status cannot be read is used.
   const readAnswer = (b, question, ignored, methodFaulty = false) => {
@@ -930,9 +1015,10 @@ function strictWorksheet(text, data) {
 export const parseWorksheet = (text, data) => strictWorksheet(text, data).parsed;
 
 // What a person typed in a worksheet, as readWorksheet read it, without the line numbers it was read
-// from: two worksheets that give the same text here say the same.
-const typedIn = (parsed) => JSON.stringify([[...parsed.methods], [...parsed.answers], [...parsed.entries]],
-  (name, value) => (name === 'line' ? undefined : value instanceof Map ? [...value] : value));
+// from: two worksheets that give the same text here say the same. A list worksheet's Kept elsewhere block
+// is part of it.
+const typedIn = (parsed) => JSON.stringify([[...parsed.methods], [...parsed.answers], [...parsed.entries],
+  ...(parsed.elsewhere ? [parsed.elsewhere] : [])], (name, value) => (name === 'line' ? undefined : value instanceof Map ? [...value] : value));
 
 // A line's words as an upgrade compares them: small letters and digits, one space apart, nothing else.
 const plainWords = (text) => (String(text).toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []).join(' ');

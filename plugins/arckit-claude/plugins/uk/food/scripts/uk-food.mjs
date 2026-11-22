@@ -14,6 +14,7 @@ import {
 } from './uk-food-document.mjs';
 import { signOffCommand, statusCommand } from './uk-food-status.mjs';
 import { setUpFolderCommand } from './uk-food-folder.mjs';
+import { LIST_SECTIONS, LISTS } from './uk-food-lists.mjs';
 
 // These keep the helper's old single-file interface: every public name, from whichever module. No two modules may export the same name.
 export * from './uk-food-data.mjs';
@@ -21,6 +22,7 @@ export * from './uk-food-worksheet.mjs';
 export * from './uk-food-document.mjs';
 export * from './uk-food-status.mjs';
 export * from './uk-food-folder.mjs';
+export * from './uk-food-lists.mjs';
 export { HELPER, loadValidData, optionError, readOptions, usageError, valueError };
 
 // The helper itself, for the commands a message tells a person to run next.
@@ -52,7 +54,7 @@ commands:
                                                      not exactly as a new project is made
   validate-data [--data DIR]                         check the data files; exit 0 when valid, 1 when not
   worksheet --section SECTION [--data DIR]           print a blank answer worksheet; SECTION is one of
-                                                     XC, CL, CH, CK, MG, profile, own
+                                                     XC, CL, CH, CK, MG, profile, own, cleaning
   parse-worksheet --file FILE [--data DIR] [--json]  check a worksheet: print its problems (or, with
                                                      --json, what was read); exit 0 with no problems,
                                                      1 with problems
@@ -174,6 +176,8 @@ export function worksheetCommand(args, io = { out: console.log, err: console.err
   if (SECTION_IDS.includes(options.section) && !data.sections.has(options.section)) {
     return valueError(io, `the data in ${dir} has no ${options.section}.json`);
   }
+  const lacking = LIST_SECTIONS.includes(options.section) ? LISTS[options.section].lacking(data, `the data in ${dir}`) : null;
+  if (lacking) return valueError(io, lacking);
   io.out(blankWorksheet(options.section, data).replace(/\n$/, ''));
   return 0;
 }

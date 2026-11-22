@@ -9,7 +9,7 @@ commands:
                                                      not exactly as a new project is made
   validate-data [--data DIR]                         check the data files; exit 0 when valid, 1 when not
   worksheet --section SECTION [--data DIR]           print a blank answer worksheet; SECTION is one of
-                                                     XC, CL, CH, CK, MG, profile, own
+                                                     XC, CL, CH, CK, MG, profile, own, cleaning
   parse-worksheet --file FILE [--data DIR] [--json]  check a worksheet: print its problems (or, with
                                                      --json, what was read); exit 0 with no problems,
                                                      1 with problems
