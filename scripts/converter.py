@@ -243,6 +243,20 @@ def kimi_skill_invocation(command_name):
     return f"/skill:{kimi_skill_name(command_name)}"
 
 
+def antigravity_skill_name(command_name):
+    """Return the Antigravity skill name for an ArcKit command name.
+
+    Antigravity does not namespace a plugin's skills, so the name carries the
+    prefix, and it must match the skill's folder name.
+    """
+    return f"arckit-{command_name.replace('.', '-')}"
+
+
+def antigravity_skill_invocation(command_name):
+    """Return the invocation string for an Antigravity skill-backed command."""
+    return f"/{antigravity_skill_name(command_name)}"
+
+
 def titleize_arckit_name(name):
     """Return a human-readable ArcKit display name."""
     stem = name.replace("arckit-", "", 1).replace(".", "-")
@@ -421,6 +435,25 @@ AGENT_CONFIG = {
         "format": "kimi_skill",
         "path_prefix": ".arckit",
         "extension_dir": "extensions/arckit-kimi",
+        "copy_commands_to_extension": False,
+        "copy_agents_to_extension": False,
+        "copy_scripts_to_extension": True,
+        "copy_references_to_extension": True,
+        "copy_schemas_to_extension": True,
+        "clean_output_dir": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
+    },
+    "antigravity": {
+        "name": "Antigravity",
+        "output_dir": "extensions/arckit-antigravity/skills",
+        "format": "antigravity_skill",
+        # A skill in an Antigravity plugin can read only its own folder by a
+        # relative path, and a plugin-level folder is not documented as
+        # reachable, so templates and scripts come from the project's .arckit/
+        # (scaffolded by `arckit init --ai antigravity`), as they do for Kimi.
+        "path_prefix": ".arckit",
+        "extension_dir": "extensions/arckit-antigravity",
         "copy_commands_to_extension": False,
         "copy_agents_to_extension": False,
         "copy_scripts_to_extension": True,
@@ -799,6 +832,8 @@ def convert(commands_dirs, agents_dir):
                 cmd_fmt = lambda cmd: f"/{vibe_skill_name(cmd)}"
             elif config["format"] == "kimi_skill":
                 cmd_fmt = kimi_skill_invocation
+            elif config["format"] == "antigravity_skill":
+                cmd_fmt = antigravity_skill_invocation
             else:
                 cmd_fmt = "/arckit:{cmd}"
 
@@ -872,8 +907,16 @@ def convert(commands_dirs, agents_dir):
                     f.write(skill_md)
                 print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
                 counts[agent_id] += 1
-            elif config["format"] == "kimi_skill":
-                skill_name = kimi_skill_name(base_name)
+            elif config["format"] in ("kimi_skill", "antigravity_skill"):
+                # Antigravity reads the same Agent Skills layout. Its plugin
+                # loader requires `name` to equal the folder name and accepts
+                # name, description, disable-model-invocation, license and
+                # compatibility: the two fields written here are legal in both.
+                skill_name = (
+                    kimi_skill_name(base_name)
+                    if config["format"] == "kimi_skill"
+                    else antigravity_skill_name(base_name)
+                )
                 skill_dir = os.path.join(config["output_dir"], skill_name)
                 os.makedirs(skill_dir, exist_ok=True)
 
@@ -2081,8 +2124,12 @@ def _rewrite_skill_content(
     # contain command-name dots, such as $arckit-wardley.climate.
     # The capture must end in an alphanumeric so a trailing full stop is not
     # re-consumed (otherwise it undoes the trailing-punctuation fix above).
+    # A prefix that opens with a slash (`/arckit-`) also sits inside file paths
+    # such as `/tmp/arckit-wardley.owm`, which are not invocations: only a
+    # slash that does not follow a word character or another slash counts.
+    _not_in_a_path = r"(?<![\w/])" if inv_prefix.startswith("/") else ""
     content = re.sub(
-        re.escape(inv_prefix) + r"([A-Za-z0-9][A-Za-z0-9.-]*\.[A-Za-z0-9.-]*[A-Za-z0-9])",
+        _not_in_a_path + re.escape(inv_prefix) + r"([A-Za-z0-9][A-Za-z0-9.-]*\.[A-Za-z0-9.-]*[A-Za-z0-9])",
         normalize_invocation,
         content,
     )
@@ -2218,6 +2265,181 @@ def rewrite_codex_skills(skills_dir):
 
     if count:
         print(f"  Rewrote {count} skill files for Codex skill invocation format")
+
+
+ANTIGRAVITY_PLUGIN_DESCRIPTION = (
+    "Enterprise architecture governance: commands that draft requirements, business cases, design "
+    "reviews and UK government assessments from templates."
+)
+
+
+def generate_antigravity_plugin(mcp_json_path, version, extension_dir):
+    """Write the Antigravity plugin manifest and its MCP configuration.
+
+    `plugin.json` sits at the plugin root. Its schema allows no unknown key, so
+    only documented fields are written. Skills are found in `skills/` without
+    being listed.
+
+    `mcp_config.json` takes the keyless remote servers only. A server that needs
+    a key has to declare it under `variables`, and a plugin with an unset
+    variable installs disabled until the user fills it in: two optional servers
+    would switch off all of ArcKit. The README says how to add them by hand.
+    """
+    servers, left_out = {}, []
+    if os.path.isfile(mcp_json_path):
+        with open(mcp_json_path, "r", encoding="utf-8") as f:
+            mcp_config = json.load(f)
+        for name, entry in mcp_config.get("mcpServers", {}).items():
+            # A key from the user's configuration, or a path inside the Claude
+            # plugin, cannot be carried over: leave the server out and say so.
+            if "user_config" in json.dumps(entry) or "${" in json.dumps(entry):
+                left_out.append(name)
+            elif entry.get("url"):
+                # `url` and `serverUrl` are both read; `url` is what the plugin
+                # documentation's own example uses.
+                servers[name] = {"url": entry["url"]}
+            elif entry.get("command"):
+                mapped = {"command": entry["command"]}
+                for key in ("args", "env"):
+                    if entry.get(key):
+                        mapped[key] = entry[key]
+                servers[name] = mapped
+            else:
+                left_out.append(name)
+
+    manifest = {
+        "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+        "name": "arckit",
+        "displayName": "ArcKit",
+        "version": version,
+        "description": ANTIGRAVITY_PLUGIN_DESCRIPTION,
+        "logo": "assets/logo.svg",
+        "suggestedPrompts": [
+            "/arckit-start",
+            "/arckit-requirements Build a payment processing system",
+            "/arckit-navigator",
+        ],
+        "author": {"name": "ArcKit", "url": "https://arckit.org"},
+        "homepage": "https://arckit.org",
+        # The plugin has no repository of its own yet: it is built from arc-kit.
+        "repository": "https://github.com/tractorjuice/arc-kit",
+        "license": "MIT AND CC-BY-SA-4.0",
+        "keywords": ["enterprise-architecture", "governance", "procurement", "public-sector", "uk-government"],
+    }
+    os.makedirs(extension_dir, exist_ok=True)
+    with open(os.path.join(extension_dir, "plugin.json"), "w", encoding="utf-8") as f:
+        f.write(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
+    with open(os.path.join(extension_dir, "mcp_config.json"), "w", encoding="utf-8") as f:
+        f.write(json.dumps({"mcpServers": servers}, indent=2, ensure_ascii=False) + "\n")
+    print(f"  Generated: {extension_dir}/plugin.json and mcp_config.json "
+          f"({len(servers)} MCP servers; left out, needing a key or not mappable: {', '.join(left_out) or 'none'})")
+    return servers, left_out
+
+
+def prefix_antigravity_reference_skills(skills_dir):
+    """Give the reference skills the `arckit-` prefix every other skill has.
+
+    Antigravity does not namespace a plugin's skills, so a bare
+    `mermaid-syntax` would collide with any other plugin's skill of that name.
+    The folder and the `name:` field change together, because the loader
+    requires them to match.
+    """
+    if not os.path.isdir(skills_dir):
+        return []
+    renamed = []
+    for entry in sorted(os.listdir(skills_dir)):
+        src = os.path.join(skills_dir, entry)
+        if entry.startswith("arckit-") or not os.path.isfile(os.path.join(src, "SKILL.md")):
+            continue
+        dst = os.path.join(skills_dir, f"arckit-{entry}")
+        if os.path.isdir(dst):
+            shutil.rmtree(dst)
+        os.rename(src, dst)
+        skill_md = os.path.join(dst, "SKILL.md")
+        with open(skill_md, "r", encoding="utf-8") as f:
+            text = f.read()
+        text, count = re.subn(rf"(?m)^name:\s*{re.escape(entry)}\s*$", f"name: arckit-{entry}", text, count=1)
+        if count != 1:
+            raise ValueError(f"{skill_md}: no `name: {entry}` line to rename")
+        with open(skill_md, "w", encoding="utf-8") as f:
+            f.write(text)
+        renamed.append(entry)
+    if renamed:
+        print(f"  Prefixed {len(renamed)} reference skills: {', '.join(renamed)}")
+    return renamed
+
+
+# Antigravity loads the first 24,000 bytes of a SKILL.md body and drops the rest
+# (`agy plugin validate` reports it; the limit is not in the documentation).
+ANTIGRAVITY_SKILL_BODY_LIMIT = 24000
+ANTIGRAVITY_INSTRUCTIONS_FILE = "instructions.md"
+ANTIGRAVITY_LONG_SKILL_BODY = (
+    "This command's instructions are longer than Antigravity loads from a skill file, so they are in "
+    "`" + ANTIGRAVITY_INSTRUCTIONS_FILE + "`, in this skill's folder.\n\n"
+    "Before you do anything else, read `" + ANTIGRAVITY_INSTRUCTIONS_FILE + "` from its first line to its last. "
+    "Then follow it exactly as if it were written here. Do not act on a part of it, and do not answer from this "
+    "description alone.\n\n"
+    "Whatever the user typed after the command is the input those instructions call the arguments.\n"
+)
+
+
+def split_long_antigravity_skills(skills_dir, limit=ANTIGRAVITY_SKILL_BODY_LIMIT):
+    """Move a skill body the loader would cut short into a file beside it.
+
+    A skill may read its own folder by a relative path, so the whole body goes
+    into `instructions.md` and SKILL.md keeps its frontmatter and a short body
+    that says to read that file first. Run after every rewrite, so the body is
+    measured as it will ship.
+    """
+    moved = []
+    if not os.path.isdir(skills_dir):
+        return moved
+    for entry in sorted(os.listdir(skills_dir)):
+        skill_md = os.path.join(skills_dir, entry, "SKILL.md")
+        if not os.path.isfile(skill_md):
+            continue
+        with open(skill_md, "r", encoding="utf-8") as f:
+            text = f.read()
+        if not text.startswith("---\n"):
+            continue
+        front, body = text[4:].split("\n---\n", 1)
+        if len(body.encode("utf-8")) <= limit:
+            continue
+        with open(os.path.join(skills_dir, entry, ANTIGRAVITY_INSTRUCTIONS_FILE), "w", encoding="utf-8") as f:
+            f.write(body.lstrip("\n"))
+        with open(skill_md, "w", encoding="utf-8") as f:
+            f.write("---\n" + front + "\n---\n\n" + ANTIGRAVITY_LONG_SKILL_BODY)
+        moved.append(entry)
+    if moved:
+        print(f"  Moved {len(moved)} skill bodies over {limit} bytes into {ANTIGRAVITY_INSTRUCTIONS_FILE}")
+    return moved
+
+
+def rewrite_antigravity_skills(skills_dir):
+    """Rewrite Claude Code-specific references for the Antigravity plugin."""
+    if not os.path.isdir(skills_dir):
+        return
+    count = 0
+    for root, _dirs, files in os.walk(skills_dir):
+        for filename in files:
+            if not filename.endswith(".md"):
+                continue
+            filepath = os.path.join(root, filename)
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+            rewritten = _rewrite_skill_content(
+                content,
+                skill_dir_name=os.path.basename(root),
+                invocation_fn=antigravity_skill_invocation,
+                platform_label="Antigravity",
+                plugin_root_prefix=".arckit",
+            )
+            if rewritten != content:
+                with open(filepath, "w", encoding="utf-8") as f:
+                    f.write(rewritten)
+                count += 1
+    if count:
+        print(f"  Rewrote {count} skill files for Antigravity skill invocation format")
 
 
 def rewrite_kimi_skills(skills_dir):
@@ -2762,6 +2984,29 @@ if __name__ == "__main__":
     print()
     print("Rewriting Kimi extension skills for Kimi command format...")
     rewrite_kimi_skills("extensions/arckit-kimi/skills")
+
+    print()
+    print("Generating Antigravity plugin config...")
+    antigravity_version = "0.0.0"
+    antigravity_version_path = "extensions/arckit-antigravity/VERSION"
+    if os.path.isfile(antigravity_version_path):
+        with open(antigravity_version_path, "r", encoding="utf-8") as f:
+            antigravity_version = f.read().strip() or antigravity_version
+    generate_antigravity_plugin(
+        os.path.join(plugin_dir, ".mcp.json"),
+        antigravity_version,
+        "extensions/arckit-antigravity",
+    )
+    copy_reference_skills(
+        os.path.join(plugin_dir, "skills"),
+        "extensions/arckit-antigravity/skills",
+    )
+    prefix_antigravity_reference_skills("extensions/arckit-antigravity/skills")
+    rewrite_antigravity_skills("extensions/arckit-antigravity/skills")
+    split_long_antigravity_skills("extensions/arckit-antigravity/skills")
+    # The logo the plugin list shows; without one it gets a generic icon.
+    os.makedirs("extensions/arckit-antigravity/assets", exist_ok=True)
+    shutil.copy2("docs/assets/ArcKit_Logo_Stacked_Light.svg", "extensions/arckit-antigravity/assets/logo.svg")
 
     print()
     total = sum(counts.values())
