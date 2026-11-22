@@ -379,12 +379,16 @@ export const LISTS = {
       },
       ...Object.fromEntries(ALLERGEN_FIELDS.map((field) => [field, cellValue])),
       // The day the labels were checked has happened, so it is never after the caller's today. The commands always give
-      // one. A program that reads a worksheet without a date for today (as the tests do, through the module) has the date
-      // read as a date, and compared with On (see check), but not with a today it was not given: refusing it there would
-      // make every such reading of a business's worksheet differ from what the commands read.
+      // one. A program that reads a worksheet without a date for today cannot check that, so the date is refused rather
+      // than taken unchecked: a date on which what a customer is told rests is never accepted on trust. The message says
+      // the fault is the reading program's, as nothing in the worksheet can put it right.
       'Checked-on': (value, data, today) => {
         if (!isIsoDate(value)) return { error: 'is not a real date written YYYY-MM-DD' };
-        return today && value > today
+        if (!today) {
+          return { error: 'could not be checked against today\'s date, because the program reading this worksheet gave none: that is ' +
+            'the program\'s fault, not the worksheet\'s, and the helper\'s own commands always give it' };
+        }
+        return value > today
           ? { error: `is after today, ${today}: it is the day the labels were checked, which cannot be still to come` } : { value };
       }
     },

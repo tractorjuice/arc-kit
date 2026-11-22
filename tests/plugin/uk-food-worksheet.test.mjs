@@ -58,7 +58,10 @@ const promptOf = (text, qid) => {
 const shows = (prompt, text) => text.split('\n').every((paragraph) => prompt.includes(`> ${paragraph}`.trimEnd()));
 const askedOf = (rowId) => rowOf(rowId).questions.filter((q) => q.type !== 'note').map((q) => q.id);
 const messages = (parsed) => parsed.problems.map((p) => p.message).join('\n');
-const parse = (text) => parseWorksheet(text, data);
+// The date the commands would give as today. A worksheet with dated entries (the allergens worksheet's Checked-on) is read
+// with it, as every command reads one: a reading given no date refuses such a date rather than take it unchecked.
+const TODAY = '2026-11-22';
+const parse = (text) => parseWorksheet(text, data, { today: TODAY });
 // The worksheets that ask no questions: the own worksheet and the list worksheets hold entries a person adds.
 const ASKS_NOTHING = ['own', ...LIST_SECTIONS];
 
@@ -2102,7 +2105,7 @@ test('V1: a worksheet whose every form note reads another way, with nothing move
       const before = original.split('\n');
       const differ = older.split('\n').filter((line, i) => line !== before[i]).length;
       assert.equal(differ, how ? wordingsOf(original).size : 1, `${section}, ${form}: one line of each question differs`);
-      const result = upgradeWorksheet(older, data);
+      const result = upgradeWorksheet(older, data, { today: TODAY });
       assert.equal(result.exit, 0, `${section}, ${form}: ${result.messages?.join(' ')}`);
       assert.equal(result.text, original, `${section}, ${form}`);
       assert.deepEqual(typed(parse(result.text)), typed(parse(older)), `${section}, ${form}`);

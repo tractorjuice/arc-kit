@@ -38,8 +38,11 @@ const swap = (text, from, to) => {
   assert.ok(text.includes(from), `${JSON.stringify(from)} is not in the text`);
   return text.replace(from, to);
 };
+// The date the commands would give as today. A worksheet with dated entries (the allergens worksheet's Checked-on) is read
+// with it, as every command reads one: a reading given no date refuses such a date rather than take it unchecked.
+const TODAY = '2026-11-22';
 const rendered = (doc, dir) => {
-  const result = renderDocument(doc, dir, data);
+  const result = renderDocument(doc, dir, data, { today: TODAY });
   assert.equal(result.exit, 0, (result.messages ?? []).join('\n'));
   return result.text;
 };
@@ -51,7 +54,7 @@ const writeDocument = (dir, doc, version = '1.0', body = rendered(doc, dir)) => 
   return file;
 };
 const status = (dir) => {
-  const result = projectStatus(dir, data);
+  const result = projectStatus(dir, data, { today: TODAY });
   assert.equal(result.exit, undefined, (result.messages ?? []).join('\n'));
   return result;
 };
@@ -906,19 +909,19 @@ test('when everything is finished, every row shows its signer and the list says 
 test('check --doc FOODCMP passes on a fresh completion record, and once the project changes says it is out of date: render it again', () => {
   const dir = cafe();
   const record = writeDocument(dir, 'FOODCMP');
-  assert.equal(checkDocument('FOODCMP', dir, record, data).exit, 0);
+  assert.equal(checkDocument('FOODCMP', dir, record, data, undefined, { today: TODAY }).exit, 0);
   assert.equal(run('check', '--doc', 'FOODCMP', '--project', dir, '--report', record).status, 0);
   // The completion record is not a document status lists.
   assert.ok(!status(dir).documents.some((d) => d.code === 'FOODCMP'));
   writeDocument(dir, 'FOODCOOK');
-  const written = checkDocument('FOODCMP', dir, record, data);
+  const written = checkDocument('FOODCMP', dir, record, data, undefined, { today: TODAY });
   assert.equal(written.exit, 1);
   assert.match(written.message, /out of date/);
   assert.match(written.message, /render it again/);
   const fresh = writeDocument(dir, 'FOODCMP');
-  assert.equal(checkDocument('FOODCMP', dir, fresh, data).exit, 0);
+  assert.equal(checkDocument('FOODCMP', dir, fresh, data, undefined, { today: TODAY }).exit, 0);
   assert.equal(signOff(dir, 'FOODCOOK').status, 0);
-  const signed = checkDocument('FOODCMP', dir, fresh, data);
+  const signed = checkDocument('FOODCMP', dir, fresh, data, undefined, { today: TODAY });
   assert.equal(signed.exit, 1);
   assert.equal(signed.line, readFileSync(fresh, 'utf8').split('\n').findIndex((line) => line.startsWith('<!-- UK-FOOD:BEGIN')) + 1);
   assert.match(signed.message, /render it again/);
@@ -978,7 +981,7 @@ const lineNumber = (file, needle) => {
   assert.ok(at >= 0, needle);
   return at + 1;
 };
-const check = (dir, doc, file) => checkDocument(doc, dir, file, data);
+const check = (dir, doc, file) => checkDocument(doc, dir, file, data, undefined, { today: TODAY });
 const overClaimLine = (file, line, field, value) => `document ${file} says in its header, at line ${line}, that ${field} is ` +
   `"${value}", though no sign-off is recorded for it: put Status back to DRAFT and Reviewed By and Approved By back to [PENDING], ` +
   'and have a named person sign the document off once it is finished';
@@ -1328,7 +1331,7 @@ test('M4: status says where the completion record stands, in its own place: not 
   // Written again, it is up to date, and still passes its own check.
   writeFileSync(record, readFileSync(writeDocument(dir, 'FOODCMP'), 'utf8'));
   assert.equal(recordLine(), 'FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date');
-  assert.equal(checkDocument('FOODCMP', dir, record, data).exit, 0);
+  assert.equal(checkDocument('FOODCMP', dir, record, data, undefined, { today: TODAY }).exit, 0);
   // A header that claims a sign-off is told the same way.
   const claimed = templated(dir, 'FOODCMP', { status: 'APPROVED' });
   assert.match(recordLine(), /^FOODCMP \(Completion record\): document ARC-001-FOODCMP-v1\.0\.md says in its header, at line \d+, that Status is "APPROVED", though the completion record is a report that nobody signs/);

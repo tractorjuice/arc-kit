@@ -33,7 +33,10 @@ const project = (worksheets) => {
 };
 // The cafe's worksheets in a new project, with any of them replaced.
 const cafe = (changes = {}) => project({ ...Object.fromEntries(WORKSHEETS.map((s) => [s, cafeText(s)])), ...changes });
-const render = (doc, dir) => renderDocument(doc, dir, data);
+// The date the commands would give as today. A worksheet with dated entries (the allergens worksheet's Checked-on) is read
+// with it, as every command reads one: a reading given no date refuses such a date rather than take it unchecked.
+const TODAY = '2026-11-22';
+const render = (doc, dir) => renderDocument(doc, dir, data, { today: TODAY });
 const rendered = (doc, dir) => {
   const result = render(doc, dir);
   assert.equal(result.exit, 0, (result.messages ?? []).join('\n'));
@@ -876,7 +879,7 @@ const RAW = [/<details/, /<summary/, /<div/, /<img/, /(?<!\\)\[link/, /(?<!\\)\]
 function nastyCafe() {
   const worksheets = {};
   for (const section of WORKSHEETS) {
-    const parsed = parseWorksheet(cafeText(section), data);
+    const parsed = parseWorksheet(cafeText(section), data, { today: TODAY });
     for (const answer of parsed.answers.values()) {
       if (answer.state === 'unanswered') continue;
       if (['text', 'list', 'yes-no-else'].includes(answer.type) && answer.id !== 'PR-Q06') answer.answer = NASTY;
@@ -897,7 +900,7 @@ function nastyCafe() {
       if (entry.ehReview === 'pending') entry.ehReview = `2026-11-03 ${NASTY_LINE}`;
     }
     const text = emitWorksheet(parsed, data);
-    assert.deepEqual(parseWorksheet(text, data).problems, [], section);
+    assert.deepEqual(parseWorksheet(text, data, { today: TODAY }).problems, [], section);
     worksheets[section] = text;
   }
   return project(worksheets);

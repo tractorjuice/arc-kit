@@ -863,7 +863,7 @@ test('every label the document prints is the pack\'s, from its two forms, beside
 test('the pack\'s filled-in examples on the two forms are never printed, in any document of the cafe or any state of this one', () => {
   const found = examples();
   assert.ok(found.length >= 11);
-  const bodies = [...RENDERED_CODES.map((code) => renderDocument(code, CAFE, data).text), renderedSup(cafeSuppliers(supSheet())),
+  const bodies = [...RENDERED_CODES.map((code) => renderDocument(code, CAFE, data, { today: TODAY }).text), renderedSup(cafeSuppliers(supSheet())),
     renderedSup(cafeSuppliers(withElsewhere(supSheet(TEAM), SUP_KEPT)))];
   for (const body of bodies) {
     assert.equal(typeof body, 'string');
@@ -1295,10 +1295,16 @@ test('Checked-on is a real date, not after today and not after On: tomorrow, a s
   const checked = run('parse-worksheet', '--file', file);
   assert.equal(checked.status, 1, checked.stdout + checked.stderr);
   assert.match(checked.stdout, /DISH-01: Checked-on "2999-01-01" is after today, \d{4}-\d\d-\d\d: it is the day the labels were checked/);
-  // A caller that gives no date for today (a program using the module, as these tests do) has the date checked as a date and
-  // against On, never against a today it was not given.
-  assert.deepEqual(read({ 'Checked-on': '2026-11-23', On: '2026-11-23' }, null).problems, []);
-  assert.equal(read({ 'Checked-on': '2026-11-18', On: '2026-11-17' }, null).problems.length, 1);
+  // A program that reads the worksheet with no date for today cannot check the date against it, so the date is refused, in
+  // words that put the fault on the program, not the person; even a day long past is not taken unchecked.
+  for (const date of ['2026-11-23', '2026-11-17']) {
+    const unchecked = read({ 'Checked-on': date, On: '2026-11-23' }, null);
+    assert.deepEqual(unchecked.problems, [[lineOf(unchecked.text, `Checked-on: ${date}`), `DISH-01: Checked-on "${date}" could not be checked ` +
+      'against today\'s date, because the program reading this worksheet gave none: that is the program\'s fault, not the worksheet\'s, and ' +
+      'the helper\'s own commands always give it']], date);
+  }
+  // An unanswered dish holds its date unchecked, as it holds every value, and is never printed.
+  assert.deepEqual(algParse(algSheet(dish('DISH-01', 'Toastie', { 'Checked-on': '2999-01-01', State: 'unanswered' })), null).problems, []);
 });
 
 test('the cafe renders to the expected allergen information body', () => {
