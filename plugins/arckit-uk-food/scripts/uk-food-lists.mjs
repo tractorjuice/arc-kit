@@ -1,6 +1,7 @@
 import { DATA_ID, isObject } from './uk-food-data.mjs';
 import {
-  addListWorksheets, blockTools, fieldKey, fieldLines, longDate, quotedBy, readBlocks, standard, STATE_WORDS, STATES, WORKSHEET_VERSION
+  addListWorksheets, andList, blockTools, fieldKey, fieldLines, isIsoDate, longDate, methodQuestions, quotedBy, readBlocks, standard, STATE_WORDS,
+  STATES, WORKSHEET_VERSION
 } from './uk-food-worksheet.mjs';
 import { businessText, NOT_CONFIRMED, notConfirmed, said, tableLines, UNANSWERED, worksheetName } from './uk-food-document.mjs';
 
@@ -101,6 +102,77 @@ const TEAM = 'environmental-health';
 const SUPPLIER_KINDS = ['supplier', 'contact', TEAM];
 const KIND_ONLY = { 'Delivery-days': 'supplier', 'Lead-time': 'supplier', 'Goods-supplied': 'supplier', 'Useful-for': 'contact' };
 
+// The pack's table of the fourteen allergens and where each may be found (in XC-04, on page 20), found by its safe method
+// and page: the one table there. The allergen information prints it whole, and heads its Dishes table with its names.
+// ALLERGEN_FIELDS are the allergens worksheet's fields for the fourteen, in the table's order: the helper's names for
+// the cells a person fills in, never printed as the pack's. Each, with its hyphens read as spaces, is the start of its
+// row's name in any letter case: allergensOf will not read the table otherwise, and a test ties both to the data.
+export const ALLERGEN_TABLE = { method: 'XC-04', page: 20 };
+const ALLERGEN_FIELDS = ['Nuts', 'Peanuts', 'Eggs', 'Milk', 'Fish', 'Crustaceans', 'Molluscs', 'Cereals-containing-gluten', 'Celery', 'Lupin',
+  'Mustard', 'Sesame-seeds', 'Soya', 'Sulphur-dioxide'];
+// A safe method of the data, by its identifier, whichever section holds it.
+const methodOf = (data, id) => [...(data.sections?.values() ?? [])].flatMap((file) => file.methods ?? []).find((method) => method.id === id);
+// The table's block, or null when the data has none, or more than one, there.
+const allergenBlock = (data) => {
+  const blocks = methodOf(data, ALLERGEN_TABLE.method)?.blocks?.filter((block) => block.kind === 'table' && block.page === ALLERGEN_TABLE.page) ?? [];
+  return blocks.length === 1 ? blocks[0] : null;
+};
+// The fourteen allergens, in the pack's order, as [{ field, name, found }]: `name` the first cell of its row as the pack
+// prints it, `found` the second (where the pack says it may be found), `field` the worksheet's field for it. Null when the
+// data lacks the table, or lays it out otherwise: fourteen rows of two cells, each starting with the allergen its field
+// names. Nothing is printed from a table that is not that, so no field is ever printed beside another allergen's name.
+export function allergensOf(data) {
+  const rows = allergenBlock(data)?.rows;
+  if (rows?.length !== ALLERGEN_FIELDS.length) return null;
+  const read = rows.map((row, i) => ({ field: ALLERGEN_FIELDS[i], name: row[0], found: row[1], cells: row.length }));
+  const fits = ({ field, name, found, cells }) => cells === 2 && isWords(name) && isWords(found) &&
+    name.toLowerCase().startsWith(field.replace(/-/g, ' ').toLowerCase());
+  return read.every(fits) ? read.map(({ field, name, found }) => ({ field, name, found })) : null;
+}
+// The paragraphs of MG-04 the allergen information quotes, each whole, never cut inside a paragraph (each paragraph is a
+// line of the data's text), and each located by its safety point and its place in that point's text:
+// - PPDS_PARAGRAPH, the pack's sentence on labelling food prepacked for direct sale, in the first safety point;
+// - FREE_FROM_POINT, the safety point on page 71 that holds the pack's conditions for advertising food as free from an
+//   allergen: one paragraph of its point and one of its reason.
+// A test ties each to the data: the paragraph found holds the words it is quoted for, and no other paragraph of the same
+// text does. The words themselves are never typed here.
+export const PPDS_PARAGRAPH = { point: 'MG-04-P01', paragraph: 1 };
+export const FREE_FROM_POINT = { point: 'MG-04-P04', page: 71, paragraph: 1, reasonParagraph: 1 };
+// The three questions of MG-04 on how customers are told, whose answers in the Management worksheet the allergen
+// information repeats (call 7): where the allergen information is kept, where the signposting is, and how customers
+// ordering by phone or online are told. A test ties each to a text question of MG-04.
+export const CUSTOMER_QUESTIONS = { method: 'MG-04', questions: ['MG-04-Q01', 'MG-04-Q06', 'MG-04-Q14'] };
+// What the allergen information quotes from MG-04: { method, ppds, freeFrom: [point's paragraph, reason's paragraph],
+// questions }, or null when the data lacks any of it.
+function allergenQuotes(data) {
+  const method = methodOf(data, CUSTOMER_QUESTIONS.method);
+  if (!method) return null;
+  const rows = method.blocks.filter((block) => block.kind === 'points').flatMap((block) => block.rows ?? []);
+  const rowOf = (id) => rows.find((row) => row.id === id);
+  const paragraph = (text, index) => (typeof text === 'string' ? text.split('\n')[index] : undefined);
+  const ppds = paragraph(rowOf(PPDS_PARAGRAPH.point)?.point, PPDS_PARAGRAPH.paragraph);
+  const free = rowOf(FREE_FROM_POINT.point);
+  const freeFrom = free?.page === FREE_FROM_POINT.page
+    ? [paragraph(free.point, FREE_FROM_POINT.paragraph), paragraph(free.why, FREE_FROM_POINT.reasonParagraph)] : [];
+  const asked = methodQuestions(method).map(({ question }) => question);
+  const questions = CUSTOMER_QUESTIONS.questions.map((id) => asked.find((question) => question.id === id));
+  if (!isWords(ppds) || freeFrom.length !== 2 || !freeFrom.every(isWords) || !questions.every((question) => question?.type === 'text')) return null;
+  return { method, ppds, freeFrom, questions };
+}
+
+// What an allergen cell may hold: exactly one of the two, read in any letter case and with any run of spaces between the
+// words, and kept in this spelling; or nothing, which the document prints as not confirmed. There is no shorthand, on
+// purpose: "no", "none", "n/a", "x" or a tick could each be read two ways, and a cell read the wrong way is the worst
+// thing this overlay could print. A precautionary "may contain", or any other remark, is a note, and goes in Notes.
+const CELL_VALUES = ['contains', 'does not contain'];
+const cellValue = (value) => {
+  const found = standard(value.replace(/ +/g, ' '), CELL_VALUES);
+  return CELL_VALUES.includes(found) ? { value: found }
+    : { error: `is neither ${CELL_VALUES[0]} nor ${CELL_VALUES[1]}: write one of the two, or leave it empty while it is not known; a ` +
+      'precautionary statement such as may contain, or any other note, goes in Notes' };
+};
+// Whether a dish is prepacked for direct sale: yes or no, in any letter case, or nothing yet.
+const PPDS_VALUES = ['yes', 'no'];
 // The lists, one object each. A list's fields:
 // - section: its worksheet's section, as in answers-<section>.md; nouns: what one entry is called, and many,
 //   in status and the unfinished list ("3 of 4 cleaning items confirmed"); prefix: its entries' identifiers start
@@ -257,6 +329,66 @@ export const LISTS = {
       `${SUPPLIERS_FORM.page} and ${CONTACTS_FORM.form} form on page ${CONTACTS_FORM.page} of diary.json in the layout the suppliers and ` +
       'contacts document is printed from: a supplier\'s box, then the environmental health team\'s box with its list of what the team ' +
       'advises on, and another contact\'s box')
+  },
+  // The business's dishes, each against the pack's fourteen allergens. A cell is filled only from what a person checked
+  // (a label, a specification, a supplier's statement, or, for an ingredient with none, their own knowledge, which
+  // Checked-against then says), and the dish counts only once a named person confirms its row as a whole. Kept elsewhere
+  // says where the business keeps its allergen information for its dishes, if it keeps it somewhere else (the pack's
+  // MG-04-Q01 asks where it is kept).
+  allergens: {
+    section: 'allergens', nouns: ['dish', 'dishes'], prefix: 'DISH', title: 'Allergen information', entryTitle: 'Name of the dish',
+    elsewhereLabel: 'allergen information for its dishes', keptElsewhere: 'The business keeps its allergen information for its dishes elsewhere',
+    fields: ['Ingredients', 'PPDS', ...ALLERGEN_FIELDS, 'Notes', 'Checked-against', 'Checked-on', 'Free-from-claim'],
+    values: {
+      PPDS: (value) => {
+        const found = standard(value, PPDS_VALUES);
+        return PPDS_VALUES.includes(found) ? { value: found }
+          : { error: 'is not yes or no: yes when the dish is prepacked for direct sale, and no when it is not' };
+      },
+      ...Object.fromEntries(ALLERGEN_FIELDS.map((field) => [field, cellValue])),
+      // The day the labels were checked has happened, so it is never after the caller's today. The commands always give
+      // one. A program that reads a worksheet without a date for today (as the tests do, through the module) has the date
+      // read as a date, and compared with On (see check), but not with a today it was not given: refusing it there would
+      // make every such reading of a business's worksheet differ from what the commands read.
+      'Checked-on': (value, data, today) => {
+        if (!isIsoDate(value)) return { error: 'is not a real date written YYYY-MM-DD' };
+        return today && value > today
+          ? { error: `is after today, ${today}: it is the day the labels were checked, which cannot be still to come` } : { value };
+      }
+    },
+    // A dish is agreed after what it was checked against was checked, never before: a Checked-on after On is one of the
+    // two dates written wrongly, and nothing can tell which.
+    check: (entry) => (isIsoDate(entry.checkedOn) && isIsoDate(entry.on) && entry.checkedOn > entry.on
+      ? [{ field: 'Checked-on', message: `Checked-on ${entry.checkedOn} is after On ${entry.on}: a dish cannot be agreed before it was checked, so ` +
+        'correct whichever of the two dates is wrong' }] : []),
+    // An empty cell, or an empty PPDS, does not stop a dish being confirmed: the document prints it as not confirmed, and
+    // status says so. What it was checked against, and when, it cannot do without.
+    needs: (entry) => [...(entry.checkedAgainst ? [] : [need('Checked-against')]), ...(entry.checkedOn ? [] : [need('Checked-on')])],
+    each: 'dish the business serves',
+    guidance: () => [
+      'Ingredients is what goes into the dish, in your own words. PPDS is yes when the dish is prepacked for direct',
+      'sale, and no when it is not.',
+      `${ALLERGEN_FIELDS[0]} to ${ALLERGEN_FIELDS.at(-1)} are the fourteen allergens. Write contains or does not contain in each, as the`,
+      'labels, specifications or supplier statements checked say. For an ingredient that has none, such as loose',
+      'vegetables or fresh eggs, write what the person checking knows, and say so in Checked-against.',
+      'Leave one empty while it is not known: the document shows it as not confirmed. Never fill one in from the name',
+      'of a dish or of an ingredient.',
+      'Notes is anything else to say, such as a precautionary statement on a label that the food may contain an',
+      'allergen: that is never written in an allergen\'s field.',
+      'Checked-against names what was checked: each label, specification or supplier statement. Checked-on is the day',
+      'it was checked, written YYYY-MM-DD, and is not after today or after On.',
+      'Free-from-claim is any claim the business makes that the dish is free from an allergen, in its own words.',
+      'An entry needs Checked-against and Checked-on before it can be proposed or confirmed.',
+      'When a recipe, an ingredient, a brand or a supplier changes, set the dish\'s State to unanswered and clear By',
+      'and On until it has been checked again.'
+    ],
+    quoted: null,
+    lacking: (data, where = 'the data') => (!allergensOf(data) ? `${where} has no table in ${ALLERGEN_TABLE.method} on page ${ALLERGEN_TABLE.page} ` +
+      `of XC.json in the layout the allergen information is made from: ${ALLERGEN_FIELDS.length} rows of two cells, each an allergen and where it may ` +
+      'be found, in the order of the allergens worksheet\'s fields'
+      : !allergenQuotes(data) ? `${where} has no ${PPDS_PARAGRAPH.point}, ${FREE_FROM_POINT.point} on page ${FREE_FROM_POINT.page}, or text ` +
+        `questions ${andList(CUSTOMER_QUESTIONS.questions)}, in ${CUSTOMER_QUESTIONS.method} of MG.json, in the layout the allergen information quotes ` +
+        'them from' : null)
   }
 };
 export const LIST_SECTIONS = Object.keys(LISTS).sort();
@@ -547,3 +679,4 @@ export function suppliersChunks(sources, data) {
 // list, is printed in every state, and every other box's labels are the pack's.
 export const suppliersSource = (data) => quotedSourceLine('The labels in the tables, and the list of what the environmental health team ' +
   'can advise on, are quoted from', data.source);
+

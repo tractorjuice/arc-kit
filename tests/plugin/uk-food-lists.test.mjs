@@ -5,9 +5,10 @@ import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSyn
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  CLEANING_FORM, CONTACTS_FORM, DATA_ID, DEFAULT_DATA_DIR, DOCUMENTS, LIST_SECTIONS, LISTS, RENDERED_CODES, SUPPLIERS_FORM, UNANSWERED,
-  WORKSHEET_SECTIONS, beginReading, blankWorksheet, checkDocument, documentOf, emitWorksheet, listOutstanding, loadData, main, parseWorksheet,
-  projectStatus, readList, renderDocument, signOffDocument, upgradeWorksheet, withDocuments
+  ALLERGEN_TABLE, CLEANING_FORM, CONTACTS_FORM, CUSTOMER_QUESTIONS, DATA_ID, DEFAULT_DATA_DIR, DOCUMENTS, FREE_FROM_POINT, LIST_SECTIONS, LISTS,
+  PPDS_PARAGRAPH, RENDERED_CODES, SUPPLIERS_FORM, UNANSWERED, WORKSHEET_SECTIONS, allergensOf, beginReading, blankWorksheet, checkDocument,
+  documentOf, emitWorksheet, listOutstanding, loadData, main, parseWorksheet, projectStatus, readList, renderDocument, signOffDocument,
+  upgradeWorksheet, withDocuments
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
 // The list worksheets and the list documents. The pack's words are never typed here: the cleaning
@@ -70,7 +71,7 @@ test('CLEANING_FORM finds one block of that form on that page, whose one column 
 
 test('LIST_SECTIONS are the sections of LISTS, in order, each a worksheet the helper makes, parses and upgrades', () => {
   assert.deepEqual(LIST_SECTIONS, Object.keys(LISTS).sort());
-  assert.deepEqual(LIST_SECTIONS, ['cleaning', 'suppliers']);
+  assert.deepEqual(LIST_SECTIONS, ['allergens', 'cleaning', 'suppliers']);
   for (const section of LIST_SECTIONS) {
     assert.ok(WORKSHEET_SECTIONS.includes(section), section);
     assert.equal(LISTS[section].section, section);
@@ -1039,5 +1040,168 @@ test('the suppliers guidance says plainly that Kept elsewhere covers the supplie
   assert.ok(guidance.includes('Kept elsewhere covers the suppliers\' list only: the document still needs the environmental health team\'s entry, ' +
     'confirmed, even when the business keeps its suppliers\' list somewhere else.'), guidance);
   assert.ok(guidance.includes('Kind is supplier, contact or environmental-health. There is one environmental-health entry at most. Write'), guidance);
+  assert.ok(!guidance.includes('quoted from'), 'the guidance quotes nothing of the pack');
+});
+
+// ---- Allergen information (Task 7) ----
+
+// The fourteen fields, in the pack's order, as the helper names them. Each is tied to the data's table by the first test
+// below; no allergen's name, nor where the pack says it is found, is typed here.
+const ALG = ['Nuts', 'Peanuts', 'Eggs', 'Milk', 'Fish', 'Crustaceans', 'Molluscs', 'Cereals-containing-gluten', 'Celery', 'Lupin', 'Mustard',
+  'Sesame-seeds', 'Soya', 'Sulphur-dioxide'];
+const DISH_FIELDS = ['Ingredients', 'PPDS', ...ALG, 'Notes', 'Checked-against', 'Checked-on', 'Free-from-claim', 'State', 'By', 'On', 'Source'];
+const dish = (id, title, fields) => [`## ${id} ${title}`, '',
+  ...DISH_FIELDS.map((f) => (fields[f] ? `${f}: ${fields[f].replace(/\n/g, '\n  ')}` : `${f}:`))].join('\n');
+const algSheet = (...entries) => `${blankWorksheet('allergens', data)}${entries.map((e) => `\n${e}\n`).join('')}`;
+const cellsAll = (value) => Object.fromEntries(ALG.map((f) => [f, value]));
+// The date the commands would give as today in these tests. A worksheet is read with it, as every command reads one.
+const TODAY = '2026-11-22';
+const CHECKED = { 'Checked-against': 'Hollin Vale wholemeal bread label', 'Checked-on': '2026-11-17' };
+// A dish confirmed with every cell and PPDS filled in.
+const DONE = { PPDS: 'no', ...cellsAll('does not contain'), ...CHECKED, ...agreed };
+const ALG_KEPT = ['Where: The recipe folder in the kitchen', 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17', 'Source:'];
+const algParse = (text, today = TODAY) => parseWorksheet(text, data, { today });
+// The pack's table, and the MG-04 safe method, found in the data as the helper finds them.
+const allergenBlocks = () => data.sections.get('XC').methods.find((m) => m.id === ALLERGEN_TABLE.method).blocks
+  .filter((b) => b.kind === 'table' && b.page === ALLERGEN_TABLE.page);
+const mgMethod = () => data.sections.get('MG').methods.find((m) => m.id === CUSTOMER_QUESTIONS.method);
+const pointRow = (id) => mgMethod().blocks.filter((b) => b.kind === 'points').flatMap((b) => b.rows).find((r) => r.id === id);
+const askedQuestion = (id) => mgMethod().blocks.flatMap((b) => b.rows ?? []).flatMap((r) => r.questions ?? []).find((q) => q.id === id);
+// The heading the Dishes table gives an allergen: its name in the pack, cut at its first " (".
+const shortName = (name) => name.split(' (')[0];
+
+test('ALLERGEN_TABLE finds the one table of the pack\'s fourteen rows, and the fourteen fields tie to its rows in order', () => {
+  const blocks = allergenBlocks();
+  assert.equal(blocks.length, 1);
+  const [table] = blocks;
+  assert.equal(table.rows.length, 14);
+  assert.equal(ALG.length, 14);
+  // Each field, with its hyphens read as spaces, is the start of its row's name, in any letter case.
+  table.rows.forEach(([name], i) => assert.ok(name.toLowerCase().startsWith(ALG[i].replace(/-/g, ' ').toLowerCase()), `${ALG[i]}: ${name}`));
+  assert.deepEqual(allergensOf(data), table.rows.map(([name, found], i) => ({ field: ALG[i], name, found })));
+  assert.deepEqual(LISTS.allergens.fields, ['Ingredients', 'PPDS', ...ALG, 'Notes', 'Checked-against', 'Checked-on', 'Free-from-claim']);
+  assert.deepEqual([LISTS.allergens.prefix, LISTS.allergens.section, LISTS.allergens.title], ['DISH', 'allergens', 'Allergen information']);
+  // The Dishes table's headings, each name cut at its first " (": fourteen different words, each the start of its name.
+  const short = table.rows.map(([name]) => shortName(name));
+  assert.equal(new Set(short).size, 14);
+  short.forEach((s, i) => assert.ok(s.length > 0 && table.rows[i][0].startsWith(s), s));
+  assert.ok(short.some((s, i) => s !== table.rows[i][0]), 'some names are cut');
+});
+
+test('PPDS_PARAGRAPH and FREE_FROM_POINT each name the one paragraph of its text that holds its phrase, and CUSTOMER_QUESTIONS are text questions of MG-04', () => {
+  const holds = (text, index, phrase) => {
+    const paragraphs = text.split('\n');
+    assert.ok(paragraphs[index]?.includes(phrase), `${phrase}: ${paragraphs[index]}`);
+    assert.deepEqual(paragraphs.flatMap((p, i) => (p.includes(phrase) ? [i] : [])), [index], `${phrase} is in no other paragraph`);
+  };
+  holds(pointRow(PPDS_PARAGRAPH.point).point, PPDS_PARAGRAPH.paragraph, 'PPDS');
+  const free = pointRow(FREE_FROM_POINT.point);
+  assert.equal(free.page, FREE_FROM_POINT.page);
+  holds(free.point, FREE_FROM_POINT.paragraph, '\u2018free from\u2019');
+  holds(free.why, FREE_FROM_POINT.reasonParagraph, '\u2018free from\u2019');
+  assert.equal(CUSTOMER_QUESTIONS.method, 'MG-04');
+  assert.deepEqual(CUSTOMER_QUESTIONS.questions, ['MG-04-Q01', 'MG-04-Q06', 'MG-04-Q14']);
+  for (const id of CUSTOMER_QUESTIONS.questions) assert.equal(askedQuestion(id)?.type, 'text', id);
+});
+
+test('a blank allergens worksheet parses with no problems and no entries, and a filled one round-trips unchanged', () => {
+  const blank = blankWorksheet('allergens', data);
+  const parsed = algParse(blank);
+  assert.deepEqual(parsed.problems, []);
+  assert.deepEqual([parsed.section, parsed.entries.size, parsed.elsewhere.answered], ['allergens', 0, false]);
+  assert.equal(blank.split('\n')[0], '# Answers: Allergen information (allergens)');
+  assert.ok(blank.includes(`\n## DISH-01 Name of the dish\n\n${DISH_FIELDS.map((f) => (f === 'State' ? 'State: unanswered' : `${f}:`)).join('\n')}\n-->\n`));
+  assert.ok(blank.endsWith(`-->\n\n${BLANK_ELSEWHERE}`), blank);
+  const text = withElsewhere(algSheet(dish('DISH-01', 'Cheese toastie', { ...DONE, PPDS: 'yes', Milk: 'contains', Ingredients: 'Bread, cheese',
+    Notes: 'The bread label says it may contain sesame.', 'Free-from-claim': 'In our own words.' })), ALG_KEPT);
+  const filled = algParse(text);
+  assert.deepEqual(filled.problems, []);
+  assert.equal(emitWorksheet(filled, data), text);
+  const entry = filled.entries.get('DISH-01');
+  assert.deepEqual([entry.title, entry.ppds, entry.milk, entry.fish, entry.cerealsContainingGluten, entry.sulphurDioxide, entry.checkedAgainst,
+    entry.checkedOn, entry.freeFromClaim, entry.answered], ['Cheese toastie', 'yes', 'contains', 'does not contain', 'does not contain',
+    'does not contain', CHECKED['Checked-against'], '2026-11-17', 'In our own words.', true]);
+});
+
+test('Review Focus 2: an allergen cell reads only contains or does not contain, in any letter case and spacing; anything else is a problem at its line and the dish is not used', () => {
+  for (const [typed, kept] of [['Contains', 'contains'], ['CONTAINS', 'contains'], ['Does Not Contain', 'does not contain'],
+    ['does   not  contain', 'does not contain']]) {
+    const parsed = algParse(algSheet(dish('DISH-01', 'Toastie', { ...DONE, Fish: typed })));
+    assert.deepEqual(parsed.problems, [], typed);
+    assert.deepEqual([parsed.entries.get('DISH-01').fish, parsed.entries.get('DISH-01').answered], [kept, true], typed);
+  }
+  for (const typed of ['no', 'none', 'n/a', 'may contain', 'yes', 'free', '-', 'x', '\u2713', 'contain', 'doesnt contain', 'does not contains']) {
+    const text = algSheet(dish('DISH-01', 'Toastie', { ...DONE, Fish: typed }));
+    const parsed = algParse(text);
+    assert.deepEqual(parsed.problems.map((p) => [p.line, p.message]), [[lineOf(text, `\nFish: ${typed}\n`) + 1, `DISH-01: Fish "${typed}" is neither ` +
+      'contains nor does not contain: write one of the two, or leave it empty while it is not known; a precautionary statement such as may contain, ' +
+      'or any other note, goes in Notes']], typed);
+    assert.equal(parsed.entries.get('DISH-01').answered, false, typed);
+  }
+  // A proposed dish is held to it too.
+  const proposed = algParse(algSheet(dish('DISH-01', 'Toastie', { ...cellsAll('does not contain'), Milk: 'may contain', ...CHECKED, State: 'proposed',
+    Source: 'The label' })));
+  assert.deepEqual(proposed.problems.map((p) => p.message.slice(0, 27)), ['DISH-01: Milk "may contain"']);
+  // An unanswered dish holds what it has been given, as given, and is never shown.
+  const held = algParse(algSheet(dish('DISH-01', 'Toastie', { Fish: 'no', PPDS: 'maybe', State: 'unanswered' })));
+  assert.deepEqual(held.problems, []);
+  assert.equal(held.entries.get('DISH-01').fish, 'no');
+  // PPDS reads yes or no, in any letter case.
+  assert.equal(algParse(algSheet(dish('DISH-01', 'Toastie', { ...DONE, PPDS: 'YES' }))).entries.get('DISH-01').ppds, 'yes');
+  const maybe = algSheet(dish('DISH-01', 'Toastie', { ...DONE, PPDS: 'maybe' }));
+  assert.deepEqual(algParse(maybe).problems.map((p) => [p.line, p.message]), [[lineOf(maybe, 'PPDS: maybe'),
+    'DISH-01: PPDS "maybe" is not yes or no: yes when the dish is prepacked for direct sale, and no when it is not']]);
+});
+
+test('what a dish needs before it is proposed or confirmed is Checked-against and Checked-on; an empty cell or an empty PPDS does not stop it', () => {
+  const says = (fields) => algParse(algSheet(dish('DISH-01', 'Toastie', fields))).problems.map((p) => p.message);
+  assert.deepEqual(says({ ...DONE, 'Checked-against': '' }), ['DISH-01 is confirmed, so it needs Checked-against']);
+  assert.deepEqual(says({ ...DONE, 'Checked-on': '' }), ['DISH-01 is confirmed, so it needs Checked-on']);
+  assert.deepEqual(says({ State: 'proposed', Source: 'A label' }), ['DISH-01 is proposed, so it needs Checked-against',
+    'DISH-01 is proposed, so it needs Checked-on']);
+  const sparse = algParse(algSheet(dish('DISH-01', 'Toastie', { ...CHECKED, ...agreed })));
+  assert.deepEqual(sparse.problems, []);
+  assert.equal(sparse.entries.get('DISH-01').answered, true);
+  assert.deepEqual(LISTS.allergens.needs({ checkedAgainst: '', checkedOn: '' }, data), [{ field: 'Checked-against', says: 'Checked-against' },
+    { field: 'Checked-on', says: 'Checked-on' }]);
+});
+
+test('Checked-on is a real date, not after today and not after On: tomorrow, a slip, and a day after the dish was agreed are each a problem at its line', () => {
+  const read = (fields, today = TODAY) => {
+    const text = algSheet(dish('DISH-01', 'Toastie', { ...DONE, ...fields }));
+    return { text, problems: algParse(text, today).problems.map((p) => [p.line, p.message]) };
+  };
+  const tomorrow = read({ 'Checked-on': '2026-11-23', On: '2026-11-23' });
+  assert.deepEqual(tomorrow.problems, [[lineOf(tomorrow.text, 'Checked-on: 2026-11-23'), 'DISH-01: Checked-on "2026-11-23" is after today, ' +
+    '2026-11-22: it is the day the labels were checked, which cannot be still to come']]);
+  for (const slip of ['17/11/2026', '2026-02-30', 'last Tuesday']) {
+    const { text, problems } = read({ 'Checked-on': slip });
+    assert.deepEqual(problems, [[lineOf(text, `Checked-on: ${slip}`), `DISH-01: Checked-on "${slip}" is not a real date written YYYY-MM-DD`]], slip);
+  }
+  const late = read({ 'Checked-on': '2026-11-18', On: '2026-11-17' });
+  assert.deepEqual(late.problems, [[lineOf(late.text, 'Checked-on: 2026-11-18'), 'DISH-01: Checked-on 2026-11-18 is after On 2026-11-17: a dish ' +
+    'cannot be agreed before it was checked, so correct whichever of the two dates is wrong']]);
+  assert.deepEqual(read({ 'Checked-on': '2026-11-17', On: '2026-11-17' }).problems, [], 'checked and agreed the same day');
+  assert.deepEqual(read({ 'Checked-on': '2026-11-22', On: '2026-11-22' }).problems, [], 'today');
+  // The commands read a worksheet with this computer's date, so a day still to come is refused through them.
+  const dir = mkdtempSync(join(tmpdir(), 'uk-food-lists-'));
+  const file = join(dir, 'answers-allergens.md');
+  writeFileSync(file, algSheet(dish('DISH-01', 'Toastie', { ...DONE, 'Checked-on': '2999-01-01', On: '2999-01-01' })));
+  const checked = run('parse-worksheet', '--file', file);
+  assert.equal(checked.status, 1, checked.stdout + checked.stderr);
+  assert.match(checked.stdout, /DISH-01: Checked-on "2999-01-01" is after today, \d{4}-\d\d-\d\d: it is the day the labels were checked/);
+  // A caller that gives no date for today (a program using the module, as these tests do) has the date checked as a date and
+  // against On, never against a today it was not given.
+  assert.deepEqual(read({ 'Checked-on': '2026-11-23', On: '2026-11-23' }, null).problems, []);
+  assert.equal(read({ 'Checked-on': '2026-11-18', On: '2026-11-17' }, null).problems.length, 1);
+});
+
+test('the allergens guidance says how a cell is filled and that a change to a dish takes it back to unanswered', () => {
+  const guidance = blankWorksheet('allergens', data).replace(/\s+/g, ' ');
+  for (const words of ['Never fill one in from the name of a dish or of an ingredient.', 'Leave one empty while it is not known: the document shows it as not confirmed.',
+    'An entry needs Checked-against and Checked-on before it can be proposed or confirmed.',
+    'When a recipe, an ingredient, a brand or a supplier changes, set the dish\'s State to unanswered and clear By and On until it has been checked again.']) {
+    assert.ok(guidance.includes(words), words);
+  }
   assert.ok(!guidance.includes('quoted from'), 'the guidance quotes nothing of the pack');
 });

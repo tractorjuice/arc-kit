@@ -2029,8 +2029,8 @@ test('V1: each question is known by the pack\'s own words for it, the fewest tha
   // What was chosen, by worksheet: own words only ('start'); own words and one line of context, a paragraph or more
   // ('start+context'); in the profile, the pack's name of a special process or food ('within').
   assert.deepEqual(made, { XC: { start: 42, 'start+context': 8 }, CL: { start: 23 }, CH: { start: 16, 'start+context': 29 },
-    CK: { start: 26, 'start+context': 20 }, MG: { start: 35, 'start+context': 14 }, profile: { start: 10, within: 10 }, own: {}, cleaning: {},
-    suppliers: {} });
+    CK: { start: 26, 'start+context': 20 }, MG: { start: 35, 'start+context': 14 }, profile: { start: 10, within: 10 }, own: {}, allergens: {},
+    cleaning: {}, suppliers: {} });
   // Two questions are the lead-in of the next, whose wording holds all their words: they are told apart all the same.
   assert.deepEqual(nested, ['CH-03-Q13 in CH-03-Q14', 'CK-03-Q01 in CK-03-Q02']);
   assert.deepEqual(alike, [], 'no two questions of one worksheet that nothing tells apart');
