@@ -608,7 +608,7 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/15
 
 ### Q54. ArcKit 6.25.0 article — Medium, ArcKit publication — published 22 November
 
-Published: <https://medium.com/arckit/google-antigravity-plugin-for-enterprise-architecture-190-agent-skills-in-arckit-v6-25-0-5bc6d60108d7>. Pasted into a new story, not imported, because the arckit.org page was not yet live, so Medium's canonical link does not point to arckit.org. Topics: Enterprise Architecture, Google Antigravity, AI Agent, ArcKit, Gemini. The hero is the maintainer's styled version.
+Published: <https://medium.com/arckit/google-antigravity-plugin-for-enterprise-architecture-190-agent-skills-in-arckit-v6-25-0-5bc6d60108d7>. Pasted into a new story, not imported, because the arckit.org page was not yet live; the canonical link was set to the arckit.org page by hand once it was, with a search title and description. Topics: Enterprise Architecture, Google Antigravity, AI Agent, ArcKit, Gemini. The hero is the maintainer's styled version.
 
 ### Q55. ArcKit 6.25.0 article — maintainer's own LinkedIn, as a LinkedIn article — published 22 November
 
@@ -616,4 +616,8 @@ Published: <https://www.linkedin.com/pulse/google-antigravity-plugin-enterprise-
 
 ### Q56. ArcKit 6.25.0 — Discord #announcements — posted 22 November
 
-The link to the Medium story and nothing else, on the maintainer's word. It is the Medium link, not the arckit.org one, because the arckit.org page was not yet live.
+The link to the arckit.org article and nothing else, on the maintainer's word. It first went out as the Medium link, because the arckit.org page was not yet live, and was edited to the arckit.org link the same day.
+
+**Revised the same day.** The marketing plugin's brand review of the published article found 11 points and the maintainer said to apply them all (pull request #1145). The Medium story and the LinkedIn article were updated to match. The eleventh point, the hero's "Ready for Google Antigravity" line, is the maintainer's own image and stays.
+
+**Order from now on, set by the maintainer on 22 November.** An article goes live on arckit.org first, then to the other platforms, and every link posted anywhere is the arckit.org one.
