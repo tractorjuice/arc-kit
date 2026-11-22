@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODCMP data=sfbb-caterers-2026-11-17 body=981b761e9a239e6e165d399e6e5db69927232c545e9454cd05f89c6c8706e8d0 -->
+<!-- UK-FOOD:BEGIN doc=FOODCMP data=sfbb-caterers-2026-11-17 body=1aa78997b9c374b7921d5d95815a14e206cf73a214ac8a3b98bf1cce41b0ac88 -->
 
 ## SAFE METHOD COMPLETION RECORD
 
@@ -66,7 +66,7 @@ It does not matter in what order you work through the safe methods. As you compl
 - Management (FOODMGT): document not signed off yet: once it is finished, a named person signs it off
 - Own methods (FOODOWN): document not written yet: write the document from its worksheet
 - Own methods (FOODOWN): document not signed off yet: once it is finished, a named person signs it off
-- Cleaning schedule (FOODCS): 1 cleaning schedule entry in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an entry counts when its State is confirmed and By and On are filled in
+- Cleaning schedule (FOODCS): 1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an entry counts when its State is confirmed and By and On are filled in
 - Cleaning schedule (FOODCS): document not written yet: write the document from its worksheet
 - Cleaning schedule (FOODCS): document not signed off yet: once it is finished, a named person signs it off
 - Own methods (FOODOWN): low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it

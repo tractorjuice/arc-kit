@@ -246,7 +246,7 @@ test('the unfinished list says, for each document in order, what is outstanding 
     { code: 'FOODMGT', what: NOT_SIGNED },
     { code: 'FOODOWN', what: NOT_WRITTEN },
     { code: 'FOODOWN', what: NOT_SIGNED },
-    { code: 'FOODCS', what: '1 cleaning schedule entry in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an ' +
+    { code: 'FOODCS', what: '1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an ' +
       'entry counts when its State is confirmed and By and On are filled in' },
     { code: 'FOODCS', what: NOT_WRITTEN },
     { code: 'FOODCS', what: NOT_SIGNED },

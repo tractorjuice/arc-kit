@@ -5,8 +5,9 @@ import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSyn
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  CLEANING_FORM, DATA_ID, DEFAULT_DATA_DIR, LIST_SECTIONS, LISTS, UNANSWERED, WORKSHEET_SECTIONS, blankWorksheet, checkDocument,
-  emitWorksheet, loadData, main, parseWorksheet, projectStatus, renderDocument, upgradeWorksheet
+  CLEANING_FORM, DATA_ID, DEFAULT_DATA_DIR, DOCUMENTS, LIST_SECTIONS, LISTS, UNANSWERED, WORKSHEET_SECTIONS, beginReading, blankWorksheet,
+  checkDocument, documentOf, emitWorksheet, listOutstanding, loadData, main, parseWorksheet, projectStatus, readList, renderDocument,
+  signOffDocument, upgradeWorksheet, withDocuments
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
 // The list worksheets and the list documents. The pack's words are never typed here: the cleaning
@@ -355,7 +356,7 @@ test('Review Focus 4: Kept elsewhere confirmed and two entries, one not confirme
   assert.equal(signed.exit, 1, signed.out);
   assert.match(signed.err, /CS-03/);
   const status = projectStatus(dir, data).documents.find((d) => d.code === 'FOODCS');
-  assert.deepEqual([status.questions, status.confirmed, status.proposed], [3, 2, 1]);
+  assert.deepEqual([status.questions, status.confirmed, status.proposed], [2, 1, 1]);
 });
 
 test('sign-off refuses a cleaning schedule exactly when it shows something unfinished', () => {
@@ -375,7 +376,8 @@ test('sign-off refuses a cleaning schedule exactly when it shows something unfin
   // Kept elsewhere written and not confirmed, beside confirmed entries: kept, named as not confirmed, unfinished.
   const half = cafeWith(withElsewhere(sheet(BOARDS), ['Where: The red folder', 'State: unanswered', 'By:', 'On:', 'Source:']));
   const halfText = rendered(half);
-  assert.ok(halfText.includes(`\n${NOT_CONFIRMED_LINE}Kept elsewhere.\n`), halfText);
+  assert.ok(halfText.includes(`\n${NOT_CONFIRMED_LINE}what has been written down about where the business keeps its cleaning schedule elsewhere.\n`), halfText);
+  assert.ok(!halfText.includes('Kept elsewhere'), 'the document does not name a block of the worksheet');
   assert.ok(!halfText.includes('The red folder'), 'Where is not printed as the business\'s until it is confirmed');
   assert.equal(written(half, halfText).check.unfinished, true);
   assert.equal(signOff(half).exit, 1);
@@ -445,5 +447,198 @@ test('status lists the cleaning schedule after the own methods document, countin
   const doc = documents.find((d) => d.code === 'FOODCS');
   assert.deepEqual(doc.worksheets, ['answers-cleaning.md', 'answers-profile.md']);
   assert.deepEqual([doc.questions, doc.confirmed, doc.proposed, doc.unanswered], [4, 3, 1, 0]);
-  assert.match(mainSays('status', '--project', CAFE).out, /^FOODCS \(Cleaning schedule\): 3 of 4 cleaning schedule entries confirmed, 1 proposed; not written; not signed off$/m);
+  assert.match(mainSays('status', '--project', CAFE).out, /^FOODCS \(Cleaning schedule\): 3 of 4 cleaning items confirmed, 1 proposed; not written; not signed off$/m);
+});
+
+// ---- What status and sign-off say of a list document (review round 1) ----
+
+const NOT_WRITTEN = 'document not written yet: write the document from its worksheet';
+const NOT_SIGNED = 'document not signed off yet: once it is finished, a named person signs it off';
+const statusLine = (dir) => mainSays('status', '--project', dir).out.split('\n').find((line) => line.startsWith('FOODCS '));
+const unfinishedOf = (dir) => projectStatus(dir, data).unfinished.filter((line) => line.code === 'FOODCS').map((line) => line.what);
+const without = (dir) => {
+  rmSync(join(dir, 'food-safety', 'answers-cleaning.md'));
+  return dir;
+};
+const KEPT_UNCONFIRMED = ['Where: The red folder', 'State: unanswered', 'By:', 'On:', 'Source:'];
+
+test('status tells each state of a cleaning schedule in its own true words, counting entries and nothing else', () => {
+  const states = [
+    ['not started', without(cafeWith()), 'not started: answers-cleaning.md; no cleaning items yet', 0,
+      ['worksheet food-safety/answers-cleaning.md is not started yet: make it with worksheet --section cleaning and fill it in']],
+    ['blank', cafeWith(sheet()), 'no cleaning items yet', 0,
+      ['food-safety/answers-cleaning.md has no cleaning item yet, and nothing under Kept elsewhere: add and confirm an entry for each item ' +
+        'the business cleans, or confirm under Kept elsewhere where the business keeps its cleaning schedule']],
+    ['Kept elsewhere not confirmed', cafeWith(withElsewhere(sheet(), KEPT_UNCONFIRMED)), 'no cleaning items yet', 0,
+      ['Kept elsewhere in food-safety/answers-cleaning.md has something written in it but is not confirmed: fill in Where, set State to ' +
+        'confirmed and fill in By and On, or clear it']],
+    ['Kept elsewhere confirmed alone', cafeWith(withElsewhere(sheet(), KEPT)), 'the business keeps its cleaning schedule elsewhere', 0, []],
+    ['entries and Kept elsewhere', cafeWith(withElsewhere(sheet(BOARDS, FRIDGE), KEPT)),
+      '2 of 2 cleaning items confirmed; the business also keeps its cleaning schedule elsewhere', 2, []],
+    ['all confirmed', cafeWith(sheet(BOARDS, FRIDGE)), '2 of 2 cleaning items confirmed', 2, []],
+    ['one not confirmed', cafeWith(), '3 of 4 cleaning items confirmed, 1 proposed', 4,
+      ['1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an entry counts when its State is ' +
+        'confirmed and By and On are filled in']]
+  ];
+  for (const [state, dir, summary, entries, lines] of states) {
+    assert.equal(statusLine(dir), `FOODCS (Cleaning schedule): ${summary}; not written; not signed off`, state);
+    assert.deepEqual(unfinishedOf(dir), [...lines, NOT_WRITTEN, NOT_SIGNED], state);
+    assert.equal(projectStatus(dir, data).documents.find((d) => d.code === 'FOODCS').questions, entries, state);
+    // The completion record, which a business keeps in its folder, says the same.
+    const record = renderDocument('FOODCMP', dir, data).text;
+    for (const line of lines) assert.ok(record.includes(`\n- Cleaning schedule (FOODCS): ${line}\n`), `${state}: ${record}`);
+  }
+  // Each remedy is what the parser takes: following the Kept elsewhere one gives a worksheet with no problem.
+  const followed = withElsewhere(sheet(), ['Where: The red folder', 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17', 'Source:']);
+  assert.deepEqual(parse(followed).problems, []);
+  // Once written and signed off, the finished states leave nothing under Unfinished.
+  for (const dir of [cafeWith(withElsewhere(sheet(), KEPT)), cafeWith(sheet(BOARDS, FRIDGE))]) {
+    written(dir, rendered(dir));
+    assert.equal(signOff(dir).exit, 0, signOff(dir).err);
+    assert.deepEqual(unfinishedOf(dir), []);
+    assert.match(statusLine(dir), /; signed off by Sam Okafor, Owner, on 2026-11-17(, with its header not yet marked|$)/);
+  }
+});
+
+test('the row\'s words for an entry are its list\'s', () => {
+  assert.deepEqual(documentOf('FOODCS').nouns, LISTS.cleaning.nouns);
+});
+
+// A row made for these tests, before the completion record, reading the cleaning worksheet.
+const listRow = (changes) => ({
+  code: 'FOODTESTLIST', name: () => 'Test list', sheet: 'cleaning', uses: ['profile', 'cleaning'], needs: ['profile', 'cleaning'],
+  dataNeeded: null, signable: true, inStatus: true, chunks: () => [['## A test list']], source: () => 'Where the test list comes from.',
+  unfinishedLine: (line) => line.includes(UNANSWERED), asks: () => ({ items: [] }), nouns: ['test item', 'test items'], entries: true, ...changes
+});
+const withRow = (row) => [...DOCUMENTS.slice(0, -1), row, DOCUMENTS.at(-1)];
+const writtenAs = (dir, code) => {
+  const result = renderDocument(code, dir, data);
+  assert.equal(result.exit, 0, (result.messages ?? []).join('\n'));
+  writeFileSync(join(dir, `ARC-001-${code}-v1.0.md`), `Header text.\n\n${result.text}\n\nFooter text.\n`);
+};
+const PERSON = { name: 'Sam Okafor', role: 'Owner', version: '1.0', date: '2026-11-17', paperSigned: 'no', otherTextRead: 'yes' };
+
+test('sign-off refuses a document whose body shows something unfinished even when nothing counted is outstanding', () => {
+  const dir = cafeWith(sheet(BOARDS));
+  withDocuments(withRow(listRow({ chunks: () => [['## A test list'], [`The test list has nothing in it yet: ${UNANSWERED}`]] })), () => {
+    writtenAs(dir, 'FOODTESTLIST');
+    const doc = projectStatus(dir, data).documents.find((d) => d.code === 'FOODTESTLIST');
+    assert.deepEqual([doc.questions, doc.inSync], [0, true]);
+    const refused = signOffDocument('FOODTESTLIST', dir, PERSON, data);
+    assert.equal(refused.exit, 1);
+    assert.deepEqual(refused.messages, ['FOODTESTLIST is not signed off, and nothing was written, because:',
+      '- FOODTESTLIST still shows something not yet answered or not yet confirmed: finish its worksheet first, then write the document again']);
+  });
+  // The same row with nothing unfinished in its body is signed off.
+  withDocuments(withRow(listRow()), () => {
+    writtenAs(dir, 'FOODTESTLIST');
+    assert.equal(signOffDocument('FOODTESTLIST', dir, PERSON, data).exit, 0);
+  });
+});
+
+test('what sign-off says of each Plan 1 document, in each state it was tried in, is what it said before list documents came', () => {
+  const said = JSON.parse(readFileSync('tests/fixtures/uk-food/plan-1-sign-off.json', 'utf8'));
+  const SECTIONS = ['profile', 'XC', 'CL', 'CH', 'CK', 'MG', 'own'];
+  const DOCS = ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN'];
+  const person = (version = '1.0') => ({ ...PERSON, version });
+  const project = (text) => {
+    const dir = mkdtempSync(join(tmpdir(), 'uk-food-refusals-'));
+    mkdirSync(join(dir, 'food-safety'));
+    for (const section of SECTIONS) writeFileSync(join(dir, 'food-safety', `answers-${section}.md`), text(section));
+    return dir;
+  };
+  const write = (dir, doc) => {
+    const result = renderDocument(doc, dir, data);
+    if (result.exit === 0) writeFileSync(join(dir, `ARC-001-${doc}-v1.0.md`), `Header text.\n\n${result.text}\n\nFooter text.\n`);
+  };
+  const says = (dir, doc, version) => {
+    const result = signOffDocument(doc, dir, person(version), data);
+    const plain = (text) => text.split(dir).join('<project>');
+    return { doc, exit: result.exit, ...(result.messages ? { messages: result.messages.map(plain) } : { message: plain(result.message) }) };
+  };
+  const fromCafe = (section) => readFileSync(join(CAFE, 'food-safety', `answers-${section}.md`), 'utf8');
+  const states = {};
+  let dir = project(fromCafe);
+  states['nothing written'] = DOCS.map((doc) => says(dir, doc));
+  DOCS.forEach((doc) => write(dir, doc));
+  states['each written'] = DOCS.map((doc) => says(dir, doc));
+  states['each signed again'] = DOCS.map((doc) => says(dir, doc));
+  dir = project((section) => blankWorksheet(section, data));
+  DOCS.forEach((doc) => write(dir, doc));
+  states['blank worksheets, each written'] = DOCS.map((doc) => says(dir, doc));
+  dir = project(fromCafe);
+  DOCS.forEach((doc) => write(dir, doc));
+  states['each written, another version named'] = DOCS.map((doc) => says(dir, doc, '2.0'));
+  assert.deepEqual(states, said);
+});
+
+test('a list\'s outstanding hook adds its own lines to status, the completion record and sign-off\'s reasons', () => {
+  const invented = { ...LISTS.cleaning, outstanding: (parsed) => (parsed.entries.size < 2 ? ['the test list needs a second entry'] : []) };
+  const dir = cafeWith(sheet(BOARDS));
+  const parsedSheet = { parsed: parse(sheet(BOARDS)), clean: true };
+  assert.deepEqual(listOutstanding(invented, parsedSheet, data), ['the test list needs a second entry']);
+  assert.deepEqual(listOutstanding(LISTS.cleaning, parsedSheet, data), [], 'cleaning has no hook of its own');
+  // With nothing recorded, the list's own lines follow the line every list gives.
+  const blank = { parsed: parse(sheet()), clean: true };
+  assert.equal(listOutstanding(invented, blank, data).length, 2);
+  withDocuments(withRow(listRow({ outstanding: (s, d) => listOutstanding(invented, s, d) })), () => {
+    assert.deepEqual(projectStatus(dir, data).unfinished.filter((line) => line.code === 'FOODTESTLIST').map((line) => line.what),
+      ['the test list needs a second entry', NOT_WRITTEN, NOT_SIGNED]);
+    assert.ok(renderDocument('FOODCMP', dir, data).text.includes('\n- Test list (FOODTESTLIST): the test list needs a second entry\n'));
+    writtenAs(dir, 'FOODTESTLIST');
+    const refused = signOffDocument('FOODTESTLIST', dir, PERSON, data);
+    assert.deepEqual(refused.messages, ['FOODTESTLIST is not signed off, and nothing was written, because:', '- the test list needs a second entry']);
+  });
+});
+
+test('M1: a check across the list names its entry, and one naming an entry that is not there is told against the worksheet, not thrown', () => {
+  const text = sheet(BOARDS, FRIDGE);
+  const invented = { ...LISTS.cleaning, checkList: () => [{ id: 'CS-02', field: 'Method', message: 'only one entry may say so' },
+    { id: 'CS-09', field: 'Method', message: 'an entry the list does not have' }] };
+  const { parsed } = readList(invented, beginReading(text), data);
+  assert.deepEqual(parsed.problems.map((p) => [p.line, p.message]), [
+    [3, 'CS-09: an entry the list does not have'],
+    [lineOf(text, 'Method:', '## CS-02'), 'CS-02: only one entry may say so']
+  ]);
+  assert.deepEqual([parsed.entries.get('CS-01').answered, parsed.entries.get('CS-02').answered], [true, false]);
+});
+
+test('M1: the date a value is compared with is the caller\'s, given to every value reader; nothing reads the clock while reading', () => {
+  const seen = [];
+  const invented = { ...LISTS.cleaning, values: { ...LISTS.cleaning.values, Method: (value, d, today) => (seen.push(today), { value }) } };
+  readList(invented, beginReading(sheet(BOARDS), { today: '2026-11-22' }), data);
+  readList(invented, beginReading(sheet(BOARDS)), data);
+  assert.deepEqual(seen, ['2026-11-22', null]);
+  assert.equal(beginReading(sheet()).today, null);
+  assert.equal(beginReading(sheet(), { today: '2030-01-01' }).today, '2030-01-01');
+  assert.deepEqual(parseWorksheet(sheet(BOARDS), data, { today: '2030-01-01' }), parse(sheet(BOARDS)));
+});
+
+test('M2: a list document says truly what it quotes from the pack, from the data\'s source', () => {
+  const { source } = data;
+  const tail = `the ${source.publisher}'s ${source.title}, retrieved 17 November 2026. ${source.attribution} The ${source.publisher} ` +
+    'has not reviewed or endorsed this document.';
+  const lastLine = (text) => text.split('\n').at(-3);
+  assert.equal(lastLine(rendered(CAFE)), `The table's column headings are quoted from ${tail}`);
+  // With no table, nothing of the pack is printed, and the line says so, with no licence line, as it holds nothing licensed.
+  assert.equal(lastLine(rendered(cafeWith(withElsewhere(sheet(), KEPT)))), `Nothing in this document is quoted from the ${source.publisher}'s ` +
+    `${source.title}, and the ${source.publisher} has not reviewed or endorsed this document.`);
+  assert.ok(!rendered(CAFE).includes('Safety points, reasons and checks are quoted'));
+});
+
+test('M4: the guidance says Kept elsewhere needs Where, and what is named as not yet confirmed', () => {
+  const guidance = blankWorksheet('cleaning', data).replace(/\s+/g, ' ');
+  assert.ok(guidance.includes('Kept elsewhere needs Where before it can be proposed or confirmed.'), guidance);
+  assert.ok(guidance.includes('An entry that is not confirmed, and a Kept elsewhere that holds anything and is not confirmed, are named there as not yet confirmed.'));
+});
+
+test('M5: what a list worksheet is told of a ### heading and of wording from another version is true of a list worksheet', () => {
+  const text = sheet(BOARDS.replace('## CS-01', '### CS-01'));
+  const said = messages(parse(text));
+  assert.match(said, /### CS-01 is not read: this worksheet has no questions, and each entry is headed with ## and its number, such as ## CS-01/);
+  assert.doesNotMatch(said, /not a question in this worksheet/);
+  const older = parse(sheet(BOARDS).replace('\nAdd an entry for each item', '\nAdd one entry for each item'));
+  assert.equal(older.problems.length, 1);
+  assert.match(older.problems[0].message, / Each entry, and anything written under Kept elsewhere, belongs below the opening comment\.$/);
+  assert.doesNotMatch(older.problems[0].message, /own entry|Answer:/);
 });

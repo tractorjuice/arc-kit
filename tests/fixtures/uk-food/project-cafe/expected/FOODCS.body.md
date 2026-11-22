@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODCS data=sfbb-caterers-2026-11-17 body=2213cca3a29437f438d21617bc83d5ffb6ad946524adbb27eaf3d33202d63aeb -->
+<!-- UK-FOOD:BEGIN doc=FOODCS data=sfbb-caterers-2026-11-17 body=db2f7ba9237c03a3f420921544422482851d976d83a8e9532f94301708516530 -->
 
 ## Cleaning schedule
 
@@ -18,6 +18,6 @@ Not yet confirmed, so not shown: CS-04.
 
 This is Bramble Cafe's own food safety record. It is not legal advice. The food business operator is responsible for it, and the local council's environmental health team is the authority on whether it is adequate.
 
-Safety points, reasons and checks are quoted from the Food Standards Agency's Safer food, better business for caterers, retrieved 17 November 2026. Contains public sector information licensed under the Open Government Licence v3.0. The Food Standards Agency has not reviewed or endorsed this document.
+The table's column headings are quoted from the Food Standards Agency's Safer food, better business for caterers, retrieved 17 November 2026. Contains public sector information licensed under the Open Government Licence v3.0. The Food Standards Agency has not reviewed or endorsed this document.
 
 <!-- UK-FOOD:END -->

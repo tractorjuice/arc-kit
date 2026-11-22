@@ -1,8 +1,8 @@
 import { DATA_ID, isObject } from './uk-food-data.mjs';
 import {
-  addListWorksheets, blockTools, fieldKey, fieldLines, quotedBy, readBlocks, standard, STATE_WORDS, STATES, WORKSHEET_VERSION
+  addListWorksheets, blockTools, fieldKey, fieldLines, longDate, quotedBy, readBlocks, standard, STATE_WORDS, STATES, WORKSHEET_VERSION
 } from './uk-food-worksheet.mjs';
-import { businessText, notConfirmed, said, tableLines, UNANSWERED } from './uk-food-document.mjs';
+import { businessText, NOT_CONFIRMED, notConfirmed, said, tableLines, UNANSWERED, worksheetName } from './uk-food-document.mjs';
 
 // ---------------------------------------------------------------------------------------------
 // List worksheets, and the documents printed from them. A list worksheet holds the entries of one list a
@@ -19,7 +19,7 @@ import { businessText, notConfirmed, said, tableLines, UNANSWERED } from './uk-f
 // - the entries, "## CS-01 Name of the item" and so on, each with its list's fields, then State, By, On and
 //   Source.
 // Only a confirmed entry, and Kept elsewhere when it is confirmed, is printed as the business's. An entry
-// that is not confirmed, and a Kept elsewhere that holds anything and is not confirmed, is named in the
+// that is not confirmed, and a Kept elsewhere that holds anything and is not confirmed, are named in the
 // document as not yet confirmed, so that nothing a person wrote is left out without a word.
 //
 // This module loads after the worksheet module and may read it as it loads. It imports the document
@@ -50,29 +50,39 @@ function cleaningForm(data) {
 }
 
 // The lists, one object each. A list's fields:
-// - section: its worksheet's section, as in answers-<section>.md; prefix: its entries' identifiers start
+// - section: its worksheet's section, as in answers-<section>.md; nouns: what one entry is called, and many,
+//   in status and the unfinished list ("3 of 4 cleaning items confirmed"); prefix: its entries' identifiers start
 //   with it (CS-01); title: the worksheet's title and the document's heading; each: what one entry is, as
 //   "Add an entry for each ..." says it; entryTitle: the words on the heading of the entry given to copy.
 // - fields: the fields of an entry, in the worksheet's order, before State, By, On and Source.
-// - values: for a field whose value is one of a set, a reader taking (value, data) and giving { value }, the
-//   value in its standard form, or { error }, which says what is wrong after `<field> "<value>"`. A value
-//   read is kept in its standard form whatever the entry's State; one with an error is reported only once
-//   the entry is proposed or confirmed, as until then it holds what has been given so far, as it was given.
-// - check(entry, data): what is wrong across one proposed or confirmed entry, as [{ field, message }]: a
-//   field filled in that its other values do not use (as STATUS_USES does for a safe method).
+// - values: for a field whose value is one of a set, or must meet a rule, a reader taking (value, data, today)
+//   and giving { value }, the value in its standard form, or { error }, which says what is wrong after
+//   `<field> "<value>"`. `today` is the caller's date, YYYY-MM-DD, for a rule such as "not after today", or
+//   null when the caller gives none (see beginReading): nothing here reads the clock. A value read is kept in
+//   its standard form whatever the entry's State; one with an error is reported only once the entry is
+//   proposed or confirmed, as until then it holds what has been given so far, as it was given.
+// - check(entry, data, today): what is wrong across one proposed or confirmed entry, as [{ field, message }]:
+//   a field filled in that its other values do not use (as STATUS_USES does for a safe method).
 // - checkList(entries, data), when a list needs it: what is wrong across the entries, as [{ id, field,
-//   message }], such as two entries of a kind of which there may be one.
+//   message }], such as two entries of a kind of which there may be one. Each is told as check's are, after
+//   its entry's identifier, and the entry is not used; one naming no entry of the list is told against the
+//   worksheet's marker line.
 // - needs(entry, data): what a proposed or confirmed entry still lacks, each a field's name or a few words
 //   that name fields ("Telephone or Email"). An entry is answered only when it is confirmed, its By and On
 //   are valid and this is empty.
 // - guidance(data): the guidance lines particular to the list, which guidanceOf puts with those every list
 //   shares; quoted: what the line naming the pack says of them (null when they quote nothing of the pack).
-// - elsewhereLabel: the list as "The business keeps a ... elsewhere" names it.
+// - elsewhereLabel: the list as "The business keeps a ... elsewhere" names it. With `each`, it gives the two
+//   ways a list with nothing in it is finished, as status says them (listOutstanding).
+// - outstanding(parsed, data), when a list needs it: what else keeps its document from being finished, as
+//   plain lines for status, the completion record and sign-off, from a worksheet with no problems: no
+//   confirmed environmental health contact, say, or cells not confirmed in confirmed rows. None by default.
 // - lacking(data, where): what the data lacks that the list is read or printed from, as a sentence
 //   starting with `where` ('the data' unless given), or null.
 export const LISTS = {
   cleaning: {
-    section: 'cleaning', prefix: 'CS', title: 'Cleaning schedule', entryTitle: 'Name of the item', elsewhereLabel: 'cleaning schedule',
+    section: 'cleaning', nouns: ['cleaning item', 'cleaning items'], prefix: 'CS', title: 'Cleaning schedule', entryTitle: 'Name of the item',
+    elsewhereLabel: 'cleaning schedule',
     fields: ['Frequency', 'Other-frequency', 'Precautions', 'Method'],
     values: {
       Frequency: (value, data) => {
@@ -122,14 +132,15 @@ const guidanceOf = (list, data) => [
   'after its number.',
   ...list.guidance(data),
   `If the business keeps its ${list.elsewhereLabel} somewhere else, write where in Where, under Kept elsewhere.`,
-  'Entries may be listed here as well: both are printed.',
+  'Kept elsewhere needs Where before it can be proposed or confirmed. Entries may be listed here as well:',
+  'both are printed.',
   'To carry a value on to more lines, start each extra line with two spaces, straight after the line before',
   'it, with no blank line between.',
   'State says where an entry, or Kept elsewhere, stands: unanswered (it may hold what has been given so far; By and On stay empty);',
   `${STATE_WORDS[0]};`,
   `or ${STATE_WORDS[1]}.`,
   'Only a confirmed entry, or a confirmed Kept elsewhere, goes into your documents. An entry that is not',
-  'confirmed, and a Kept elsewhere that holds anything and is not confirmed, is named there as not yet confirmed.',
+  'confirmed, and a Kept elsewhere that holds anything and is not confirmed, are named there as not yet confirmed.',
   ...(isObject(data.source) && list.quoted ? [quotedBy(list.quoted, data.source)] : []),
   '',
   `## ${list.prefix}-01 ${list.entryTitle}`,
@@ -137,13 +148,13 @@ const guidanceOf = (list, data) => [
   ...entryFields(list).map((field) => (field === 'State' ? 'State: unanswered' : `${field}:`))
 ];
 
-// Reads a list worksheet, from the reading beginReading began, as readWorksheet reads the others: pass 1
-// by readBlocks, then the Kept elsewhere block and each entry into records, checked field by field. Gives
-// { parsed, layout }, `parsed` holding `elsewhere` (its record, blank and unanswered when the block is not
-// there) and `entries`, each { id, title, line, the list's fields, state, by, on, source, answered }.
-function readList(reading, data) {
-  const { parsed, report, finish, markerLine, section } = reading;
-  const list = LISTS[section];
+// Reads a list worksheet of `list` (one of LISTS), from the reading beginReading began, as readWorksheet
+// reads the others: pass 1 by readBlocks, then the Kept elsewhere block and each entry into records, checked
+// field by field, with the reading's `today` given to each value reader. Gives { parsed, layout }, `parsed`
+// holding `elsewhere` (its record, blank and unanswered when the block is not there) and `entries`, each
+// { id, title, line, the list's fields, state, by, on, source, answered }.
+export function readList(list, reading, data) {
+  const { parsed, report, finish, markerLine, section, today } = reading;
   const lacking = list.lacking(data);
   if (lacking) {
     report(markerLine, `${lacking}, so this ${section} worksheet cannot be read`);
@@ -155,6 +166,8 @@ function readList(reading, data) {
     guidance: ['<!--', ...guidanceOf(list, data), '-->'],
     names: new Map([...fields, ...ELSEWHERE_FIELDS].map((field) => [field.toLowerCase(), field])),
     kinds: { entry: { fields, called: `an entry of the ${list.title.toLowerCase()}` }, elsewhere: { fields: ELSEWHERE_FIELDS, called: `the ${ELSEWHERE} block` } },
+    notAQuestion: (id) => `### ${id} is not read: this worksheet has no questions, and each entry is headed with ## and its number, ` +
+      `such as ## ${list.prefix}-01`,
     heading: ({ title, id, rest, at, raw }, { seen: found, open, hidden }) => {
       if (title.replace(/\s+/g, ' ').toLowerCase() === ELSEWHERE.toLowerCase()) {
         if (found.elsewhere) report(at, `${ELSEWHERE} appears more than once; only the first is read`);
@@ -204,11 +217,11 @@ function readList(reading, data) {
     for (const [name, read] of Object.entries(list.values ?? {})) {
       const typed = entry[fieldKey(name)];
       if (!typed) continue;
-      const result = read(typed, data);
+      const result = read(typed, data, today);
       if (!result.error) entry[fieldKey(name)] = result.value;
       else if (!held) report(lineOf(block, name), `${block.id}: ${name} "${typed}" ${result.error}`, block);
     }
-    if (!held) for (const { field, message } of list.check?.(entry, data) ?? []) report(lineOf(block, field), `${block.id}: ${message}`, block);
+    if (!held) for (const { field, message } of list.check?.(entry, data, today) ?? []) report(lineOf(block, field), `${block.id}: ${message}`, block);
     checkState(block, block.id, entry.state, ['By', 'On']);
     if (entry.state === 'proposed' || entry.state === 'confirmed') {
       for (const name of list.needs(entry, data)) report(lineOf(block, name), `${block.id} is ${entry.state}, so it needs ${name}`, block);
@@ -217,9 +230,15 @@ function readList(reading, data) {
     entry.answered = entry.state === 'confirmed' && !block.faulty;
     parsed.entries.set(block.id, entry);
   }
+  // A check across the list is told as an entry's own is. One that names no entry of the list (a slip in the
+  // list's own code) is told against the worksheet, so that it is seen and nothing is thrown.
   for (const { id, field, message } of list.checkList?.([...parsed.entries.values()], data) ?? []) {
     const block = seen.entry.get(id);
-    report(lineOf(block, field), message, block);
+    if (!block) {
+      report(markerLine, `${id}: ${message}`);
+      continue;
+    }
+    report(lineOf(block, field), `${id}: ${message}`, block);
     parsed.entries.get(id).answered = false;
   }
   return finish();
@@ -243,7 +262,11 @@ function emitList(parsed, data) {
   return `${blocks.map((block) => block.join('\n')).join('\n\n')}\n`;
 }
 
-addListWorksheets({ sections: LIST_SECTIONS, read: readList, emit: emitList, guidance: (section, data) => guidanceOf(LISTS[section], data) });
+addListWorksheets({
+  sections: LIST_SECTIONS, read: (reading, data) => readList(LISTS[reading.section], reading, data), emit: emitList,
+  guidance: (section, data) => guidanceOf(LISTS[section], data),
+  placed: 'Each entry, and anything written under Kept elsewhere, belongs below the opening comment.'
+});
 
 // ---------------------------------------------------------------------------------------------
 // The list documents. Each prints its list's confirmed entries, says where the business keeps the list
@@ -254,20 +277,50 @@ addListWorksheets({ sections: LIST_SECTIONS, read: readList, emit: emitList, gui
 // Whether a Kept elsewhere holds anything a person wrote.
 const elsewhereGiven = (elsewhere) => Boolean(elsewhere.where || elsewhere.by || elsewhere.on || elsewhere.source) ||
   elsewhere.state !== 'unanswered';
-// What a list document names as not yet confirmed, as notConfirmed takes them.
-const pending = (parsed) => [...(elsewhereGiven(parsed.elsewhere) ? [{ id: ELSEWHERE, answered: parsed.elsewhere.answered }] : []),
-  ...parsed.entries.values()];
 
-// What a person confirms for a list document, from its worksheet, as a row's asks gives it to status (whose
-// counts are what sign-off refuses on): each entry, and Kept elsewhere when it holds anything or there is no
-// entry. So something is counted as not confirmed exactly when the document shows it unfinished: an entry or
-// a Kept elsewhere not confirmed, or neither an entry nor Kept elsewhere confirmed.
-export function listAsked(sheet) {
+// What a person confirms for a list document, as status counts it: its entries, and nothing else. What else
+// keeps a list document from being finished (nothing recorded yet, Kept elsewhere not confirmed, and whatever
+// its list's outstanding hook says) is told in its own words by listOutstanding, after the count. Sign-off
+// refuses on both, and also, whatever they say, on any document whose body shows something unfinished
+// (freshlyUnfinished in the document module).
+export const listAsked = (sheet) => ({ items: [...(sheet?.parsed?.entries.values() ?? [])].map((entry) => [entry.id, entry]) });
+
+// What keeps a list document from being finished besides its entries not yet confirmed, as lines for status's
+// unfinished list: nothing recorded at all, with the two ways to finish; what is written under Kept elsewhere
+// not confirmed, with what it needs; then the list's own (its `outstanding`). `sheet` is the worksheet as
+// readWorksheets reads it, which status gives only when it has no problems.
+export function listOutstanding(list, sheet, data) {
   const parsed = sheet?.parsed;
-  const entries = [...(parsed?.entries.values() ?? [])].map((entry) => [entry.id, entry]);
-  const elsewhere = parsed?.elsewhere;
-  return { items: [...(elsewhere && (elsewhereGiven(elsewhere) || !entries.length) ? [[ELSEWHERE, elsewhere]] : []), ...entries] };
+  if (!parsed?.elsewhere) return [];
+  const file = `food-safety/${worksheetName(list.section)}`;
+  const { elsewhere } = parsed;
+  return [
+    ...(!parsed.entries.size && !elsewhereGiven(elsewhere) ? [`${file} has no ${list.nouns[0]} yet, and nothing under Kept elsewhere: add and ` +
+      `confirm an entry for each ${list.each}, or confirm under Kept elsewhere where the business keeps its ${list.elsewhereLabel}`] : []),
+    ...(elsewhereGiven(elsewhere) && !elsewhere.answered ? [`Kept elsewhere in ${file} has something written in it but is not confirmed: ` +
+      'fill in Where, set State to confirmed and fill in By and On, or clear it'] : []),
+    ...(list.outstanding?.(parsed, data) ?? [])
+  ];
 }
+
+// What status's line for a list document says of its worksheet: how many entries are confirmed, and that the
+// business keeps the list elsewhere when that is confirmed; with no entry, that, or that there are none yet.
+// `doc` is the document's status entry, `sheet` its worksheet as readWorksheets reads it, or missing.
+export function listSummary(list, doc, sheet) {
+  const [, many] = list.nouns;
+  const kept = Boolean(sheet?.clean && sheet.parsed.elsewhere?.answered);
+  const keeps = `the business ${doc.questions ? 'also ' : ''}keeps its ${list.elsewhereLabel} elsewhere`;
+  if (!doc.questions) return [kept ? keeps : `no ${many} yet`];
+  return [`${doc.confirmed} of ${doc.questions} ${many} confirmed${doc.proposed ? `, ${doc.proposed} proposed` : ''}`, ...(kept ? [keeps] : [])];
+}
+
+// A list document's last line, which says truly what it quotes from the pack: `lead` names it, and the source
+// follows as the other documents' source line gives it, read from the data. A document that prints nothing of
+// the pack says so instead, with no licence line, as it holds no public sector information.
+export const quotedSourceLine = (lead, source) => `${lead} the ${source.publisher}'s ${source.title}, retrieved ` +
+  `${longDate(source.retrieved)}. ${source.attribution} The ${source.publisher} has not reviewed or endorsed this document.`;
+const unquotedSourceLine = (source) => `Nothing in this document is quoted from the ${source.publisher}'s ${source.title}, and the ` +
+  `${source.publisher} has not reviewed or endorsed this document.`;
 
 // The line a list document prints when Kept elsewhere is confirmed: where, and who said so and when.
 const elsewhereChunks = (list, elsewhere) => (elsewhere.answered
@@ -275,6 +328,11 @@ const elsewhereChunks = (list, elsewhere) => (elsewhere.answered
   : []);
 // Who agreed an entry the document prints, and when, on a line of its own under its table.
 const agreedLine = (entry) => `- ${entry.id} ${said(entry.title)}: ${said(entry.by)}, ${said(entry.on)}`;
+// The line a list document prints when something is written under Kept elsewhere and not confirmed, in the
+// document's own terms: a reader of the document has never seen the worksheet's block.
+const elsewhereNotConfirmed = (list, elsewhere) => (elsewhereGiven(elsewhere) && !elsewhere.answered
+  ? [[`${NOT_CONFIRMED}what has been written down about where the business keeps its ${list.elsewhereLabel} elsewhere.`]]
+  : []);
 
 // The cleaning schedule document: the pack's form, with a row for each confirmed entry, an X under its
 // frequency (or, under the last frequency, the business's own words for it), and its precautions and method
@@ -292,5 +350,13 @@ export function cleaningScheduleChunks(sources, data) {
     businessText(entry.precautions), businessText(entry.method)];
   const listed = confirmed.length ? [tableLines(columns, confirmed.map(cells)), ['Agreed by:'], confirmed.map(agreedLine)]
     : kept.length ? [] : [[`The cleaning schedule has no confirmed items yet: ${UNANSWERED}`]];
-  return [[`## ${list.title}`], ...kept, ...listed, ...notConfirmed(pending(parsed))];
+  return [[`## ${list.title}`], ...kept, ...listed, ...elsewhereNotConfirmed(list, parsed.elsewhere),
+    ...notConfirmed([...parsed.entries.values()])];
+}
+
+// The cleaning schedule's last line: it quotes the form's column headings when it prints the form, which is
+// when an entry is confirmed, and nothing of the pack otherwise.
+export function cleaningScheduleSource(sources, data) {
+  const printsForm = [...sources.get(LISTS.cleaning.section).parsed.entries.values()].some((entry) => entry.answered);
+  return printsForm ? quotedSourceLine("The table's column headings are quoted from", data.source) : unquotedSourceLine(data.source);
 }

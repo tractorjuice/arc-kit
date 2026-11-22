@@ -3,15 +3,15 @@ import { existsSync, readFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { DATA_ID, DEFAULT_DATA_DIR, SECTION_IDS } from './uk-food-data.mjs';
 import {
-  andList, codePoint, EXTRA_CARE, isIsoDate, longDate, methodQuestions, PROFILE_QUESTIONS, profileQuestion, sentenceCase,
+  andList, codePoint, EXTRA_CARE, isIsoDate, localToday, longDate, methodQuestions, PROFILE_QUESTIONS, profileQuestion, sentenceCase,
   spanOf, strictWorksheet
 } from './uk-food-worksheet.mjs';
 import { completionRecordDocument, DOCUMENT_FILE, PENDING, readSignOffs } from './uk-food-status.mjs';
 import { HELPER, loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
-import { cleaningScheduleChunks, listAsked, LISTS } from './uk-food-lists.mjs';
+import { cleaningScheduleChunks, cleaningScheduleSource, listAsked, listOutstanding, LISTS, listSummary } from './uk-food-lists.mjs';
 export {
   BEFORE_RENDER, bodyText, businessText, closingNotice, COMPLETION_STALE, coverageChunks, DOC_OF_SECTION, extraCareDone,
-  failure, misplaced, NAME_QUESTION, notConfirmed, otherText, paragraphs, readWorksheets, said, sha256, sourcesOf, tableLines,
+  failure, misplaced, NAME_QUESTION, NOT_CONFIRMED, notConfirmed, otherText, paragraphs, readWorksheets, said, sha256, sourcesOf, tableLines,
   worksheetFile, worksheetName
 };
 
@@ -97,7 +97,8 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'cleaning'];
 // - chunks(sources, data, project): its body, after the coverage sentence and before the closing
 //   notice, as chunks (see the layout above). `sources` maps each worksheet of `uses` that exists to
 //   what readWorksheets reads from it.
-// - source(data): the body's last line, which says where its words come from.
+// - source(data, sources): the body's last line, which says where its words come from. `sources` is as for
+//   chunks, for a document whose words from the pack depend on what its worksheet holds.
 // - unfinishedLine(line): whether a line of its body shows it unfinished (see showsUnfinished).
 // - asks(sheet, data): what a person answers for it, from its own worksheet (`sheet`, as readWorksheets
 //   reads it, or undefined when it is missing or the document has none): { items }, an [identifier,
@@ -106,12 +107,22 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'cleaning'];
 //   method then counts as applying, as in a blank worksheet.
 // - nouns: what status calls those, one and many.
 // - entries: whether they are entries a person confirms, rather than questions a person answers.
+// - outstanding(sheet, data), when given: what else keeps the document from being finished, as lines for
+//   status's unfinished list (and so for the completion record and sign-off's reasons), after the lines its
+//   counts give; read from its own worksheet, `sheet`, only when that worksheet has no problems. A list
+//   document's says that nothing is recorded yet, or that what is written under Kept elsewhere is not
+//   confirmed, and whatever else its list needs (uk-food-lists.mjs).
+// - summary(doc, sheet), when given: what status's line for the document says in place of "N of M ...
+//   confirmed", as a list of parts; `doc` is the document's status entry. A list document's says that the
+//   list is kept elsewhere, where a count of entries could not.
 // - section: set by sectionDocument alone, on a document that prints a section of the pack; the
 //   section, which is also its own worksheet. SECTION_DOCS and DOC_OF_SECTION come from it, and the
 //   usage text and each "--doc is one of" message list these documents first.
 // A rule that belongs to one document alone is a field of its row and no other:
 // - lacking(data), the profile's and the cleaning schedule's: what the data lacks that the document quotes,
 //   beyond its data file, as render says it, or null.
+// sign-off also refuses, whatever status counts, any document whose body rendered afresh shows a line its row's
+// unfinishedLine marks (see freshlyUnfinished).
 // - specialProcesses, the own methods document's: a special process the profile confirms that has no
 //   own entry keeps it from being signed off, and status lists that, and each own entry awaiting
 //   environmental health review, under this document.
@@ -196,19 +207,22 @@ export let DOCUMENTS = [
     // which imports this module, so each field that calls it does so when it runs.
     code: 'FOODCS', name: () => LISTS.cleaning.title, sheet: 'cleaning', uses: ['profile', 'cleaning'], needs: ['profile', 'cleaning'],
     dataNeeded: null, signable: true, inStatus: true, chunks: (sources, data) => cleaningScheduleChunks(sources, data),
-    // It quotes the pack's column headings, so it names its source as every document that quotes the pack does.
-    source: packSource,
+    // It says truly what it quotes: the form's column headings, when it prints the form.
+    source: (data, sources) => cleaningScheduleSource(sources, data),
     // An entry or a Kept elsewhere not yet confirmed shows it unfinished, as an own entry does FOODOWN; so does
     // a schedule with nothing confirmed at all, which says so with UNANSWERED.
     unfinishedLine: (line) => unanswered(line) || line.startsWith(NOT_CONFIRMED),
-    asks: (sheet) => listAsked(sheet), nouns: ['cleaning schedule entry', 'cleaning schedule entries'], entries: true,
+    // Its entries, and nothing else, are counted; its own lines say the rest. Its nouns are its list's (a test
+    // holds them equal: the list module cannot be read while this table is made).
+    asks: (sheet) => listAsked(sheet), nouns: ['cleaning item', 'cleaning items'], entries: true,
+    outstanding: (sheet, data) => listOutstanding(LISTS.cleaning, sheet, data), summary: (doc, sheet) => listSummary(LISTS.cleaning, doc, sheet),
     lacking: (data) => LISTS.cleaning.lacking(data)
   },
   {
     // It reads no worksheet itself: status, which it is rendered from, reads them all.
     code: 'FOODCMP', name: () => 'Completion record', sheet: null, uses: [], needs: [], dataNeeded: null, signable: false,
     inStatus: false, chunks: null, source: null, unfinishedLine: unanswered, asks: null, nouns: null, entries: false,
-    render: (project, data) => completionRecordDocument(project, data),
+    render: (project, data, options) => completionRecordDocument(project, data, options),
     outOfDate: { message: COMPLETION_STALE, reason: 'is out of date, as it no longer matches the project: render it again' },
     nobodySigns: 'the completion record is a report that nobody signs',
     signOffRefusal: 'FOODCMP, the completion record, is not signed off: it is a report, signed through the documents it lists, so ' +
@@ -253,7 +267,7 @@ function tableProblems(rows, sheets) {
     if (row.signable === false) {
       for (const field of ['nobodySigns', 'signOffRefusal']) if (!isText(row[field])) fault(field, 'is not given, and a document nobody signs needs its words');
     }
-    if (row.lacking !== undefined && !isFunction(row.lacking)) fault('lacking', 'is not a function');
+    for (const field of ['lacking', 'outstanding', 'summary']) if (row[field] !== undefined && !isFunction(row[field])) fault(field, 'is not a function');
     if (row.specialProcesses !== undefined && row.specialProcesses !== true) fault('specialProcesses', 'is neither true nor left out');
     else if (row.specialProcesses && rows.findIndex((other) => other.specialProcesses) !== i) {
       fault('specialProcesses', 'is another row\'s too: one document holds the special processes and own entries');
@@ -644,8 +658,9 @@ function misplaced(file, found, wanted, project) {
 // exist; to { section, name, file, readError } when it cannot be read; or to { section, name, file,
 // text, parsed, problems, wrongData, belongsTo, clean }. `problems` are the parser's, exactly what
 // parse-worksheet lists, as file:line: message. A worksheet for other data has `wrongData`; one in the
-// wrong file has `belongsTo`, the section it is the worksheet of. Neither is clean.
-function readWorksheets(project, data, sections = SHEETS_USED) {
+// wrong file has `belongsTo`, the section it is the worksheet of. Neither is clean. `options` is the caller's:
+// { today } (see beginReading).
+function readWorksheets(project, data, sections = SHEETS_USED, options = {}) {
   const sheets = new Map();
   for (const section of SHEET_ORDER.filter((name) => sections.includes(name))) {
     const file = worksheetFile(project, section);
@@ -662,7 +677,7 @@ function readWorksheets(project, data, sections = SHEETS_USED) {
     }
     // `otherVersion`: what of the tool's own wording is not this helper's, in a few words, so that the
     // worksheet is another version's; '' when nothing is.
-    Object.assign(sheet, strictWorksheet(sheet.text, data));
+    Object.assign(sheet, strictWorksheet(sheet.text, data, options));
     sheet.problems = sheet.parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`);
     sheet.wrongData = sheet.parsed.data !== null && sheet.parsed.data !== DATA_ID;
     const found = sheet.parsed.section;
@@ -676,9 +691,9 @@ function readWorksheets(project, data, sections = SHEETS_USED) {
 // Reads and parses the worksheets a document renders from. Returns { sources }, holding only the
 // worksheets that exist, or { exit, messages }: 2 for a missing, unreadable or wrong worksheet, 1 for
 // problems.
-function readSources(doc, project, data) {
+function readSources(doc, project, data, options = {}) {
   const { uses, needs } = sourcesOf(doc);
-  const sheets = readWorksheets(project, data, uses);
+  const sheets = readWorksheets(project, data, uses, options);
   const refused = [];
   const problems = [];
   for (const [section, sheet] of sheets) {
@@ -702,21 +717,29 @@ function readSources(doc, project, data) {
 }
 
 // Renders a document's body from the worksheets in `project`/food-safety. Returns { exit: 0, text }
-// or { exit, messages }; nothing is rendered from a worksheet the parser could not read cleanly.
-export function renderDocument(doc, project, data) {
+// or { exit, messages }; nothing is rendered from a worksheet the parser could not read cleanly. `options` is
+// the caller's: { today } (see beginReading).
+export function renderDocument(doc, project, data, options = {}) {
   const row = documentOf(doc);
   if (!row) return { exit: 2, messages: [`--doc is one of ${RENDERED_CODES.join(', ')}`] };
-  if (row.render) return row.render(project, data);
+  if (row.render) return row.render(project, data, options);
   if (row.dataNeeded && !data.sections.has(row.dataNeeded)) return { exit: 2, messages: [`the data has no ${row.dataNeeded}.json`] };
   const lacking = row.lacking?.(data);
   if (lacking) return { exit: 2, messages: [lacking] };
-  const read = readSources(doc, project, data);
+  const read = readSources(doc, project, data, options);
   if (read.exit) return read;
   const profile = read.sources.get('profile').parsed;
   const name = profile.answers.get(NAME_QUESTION);
   const chunks = [...coverageChunks(profile), ...row.chunks(read.sources, data, project),
-    [closingNotice(name?.answered ? name.answer : null)], [row.source(data)]];
+    [closingNotice(name?.answered ? name.answer : null)], [row.source(data, read.sources)]];
   return { exit: 0, text: bodyText(doc, chunks) };
+}
+
+// Whether `doc`'s body, rendered afresh from the worksheets in `project`, shows it unfinished (showsUnfinished);
+// false when it cannot be rendered, which status tells in its own lines. sign-off's backstop.
+export function freshlyUnfinished(doc, project, data, options = {}) {
+  const fresh = renderDocument(doc, project, data, options);
+  return fresh.exit === 0 && showsUnfinished(doc, fresh.text.split('\n').slice(1, -1));
 }
 
 // Finds the one rendered body in a document's lines: { begin, end, marker } (1-based line numbers),
@@ -1292,7 +1315,8 @@ const BEFORE_RENDER = ['unreadable', 'markers', 'pack-text', 'header'];
 // when no fresh render could be made. A fault outside the body leaves it true. `signOffs` is what
 // readSignOffs returns, read here unless given. Text outside the markers is not compared with anything:
 // until a document is signed off it is held only to the three checks above, and a sign-off then binds it.
-export function checkDocument(doc, project, report, data, signOffs = readSignOffs(project)) {
+// `options` is the caller's, for the fresh render: { today } (see beginReading).
+export function checkDocument(doc, project, report, data, signOffs = readSignOffs(project), options = {}) {
   let text;
   try {
     text = readFileSync(report, 'utf8');
@@ -1319,7 +1343,7 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
   // The body is compared first, though a fault outside it is told first: whether the body is in step is a
   // fact of its own, which says whether a signed document needs a new version (only when it is not).
   // Each body is read as its hash reads it, between its marker line and the END marker.
-  const fresh = renderDocument(doc, project, data);
+  const fresh = renderDocument(doc, project, data, options);
   const read = (between) => normalised(between.join('\n')).split('\n').slice(0, -1);
   const printed = fresh.exit ? [] : fresh.text.split('\n');
   const expected = fresh.exit ? [] : [printed[0], ...read(printed.slice(1, -1)), END_MARKER];
@@ -1429,7 +1453,7 @@ export function renderCommand(args, io = { out: console.log, err: console.error 
   if (usage) return usageError(io, usage);
   if (wrong) return valueError(io, wrong);
   if (input) return failure(io, { exit: 2, messages: [input] });
-  const result = renderDocument(options.doc, options.project, data);
+  const result = renderDocument(options.doc, options.project, data, { today: localToday() });
   if (result.exit) return failure(io, result);
   io.out(result.text);
   return 0;
@@ -1441,7 +1465,7 @@ export function checkCommand(args, io = { out: console.log, err: console.error }
   if (wrong) return valueError(io, wrong);
   if (!options.report) return usageError(io, 'check needs --report: the document to check');
   if (input) return failure(io, { exit: 2, messages: [input] });
-  const result = checkDocument(options.doc, options.project, options.report, data);
+  const result = checkDocument(options.doc, options.project, options.report, data, undefined, { today: localToday() });
   if (options.json) {
     io.out(JSON.stringify({ doc: options.doc, report: options.report, ok: result.exit === 0, ...result }, null, 2));
     return result.exit;

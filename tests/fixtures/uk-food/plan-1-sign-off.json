@@ -1,0 +1,297 @@
+{
+  "nothing written": [
+    {
+      "doc": "FOODPROF",
+      "exit": 1,
+      "messages": [
+        "FOODPROF is not signed off, and nothing was written, because:",
+        "- document not written yet: write the document from its worksheet"
+      ]
+    },
+    {
+      "doc": "FOODXC",
+      "exit": 1,
+      "messages": [
+        "FOODXC is not signed off, and nothing was written, because:",
+        "- 25 questions in food-safety/answers-XC.md are not yet answered (XC-03-Q01, XC-03-Q03, XC-03-Q04, XC-03-Q05, XC-03-Q06 and 20 more): an answer counts when its State is confirmed and By and On are filled in",
+        "- 2 answers in food-safety/answers-XC.md are proposed but not confirmed (XC-02-Q01 and XC-06-Q02): an answer counts when its State is confirmed and By and On are filled in",
+        "- document not written yet: write the document from its worksheet"
+      ]
+    },
+    {
+      "doc": "FOODCLN",
+      "exit": 1,
+      "messages": [
+        "FOODCLN is not signed off, and nothing was written, because:",
+        "- 23 questions in food-safety/answers-CL.md are not yet answered (CL-01-Q01, CL-01-Q02, CL-01-Q03, CL-01-Q04, CL-01-Q05 and 18 more): an answer counts when its State is confirmed and By and On are filled in",
+        "- document not written yet: write the document from its worksheet"
+      ]
+    },
+    {
+      "doc": "FOODCHL",
+      "exit": 1,
+      "messages": [
+        "FOODCHL is not signed off, and nothing was written, because:",
+        "- 44 questions in food-safety/answers-CH.md are not yet answered (CH-01-Q01, CH-01-Q02, CH-01-Q04, CH-01-Q05, CH-01-Q06 and 39 more): an answer counts when its State is confirmed and By and On are filled in",
+        "- document not written yet: write the document from its worksheet"
+      ]
+    },
+    {
+      "doc": "FOODCOOK",
+      "exit": 1,
+      "messages": [
+        "FOODCOOK is not signed off, and nothing was written, because:",
+        "- document not written yet: write the document from its worksheet"
+      ]
+    },
+    {
+      "doc": "FOODMGT",
+      "exit": 1,
+      "messages": [
+        "FOODMGT is not signed off, and nothing was written, because:",
+        "- 49 questions in food-safety/answers-MG.md are not yet answered (MG-01-Q01, MG-01-Q02, MG-01-Q03, MG-01-Q04, MG-01-Q05 and 44 more): an answer counts when its State is confirmed and By and On are filled in",
+        "- document not written yet: write the document from its worksheet"
+      ]
+    },
+    {
+      "doc": "FOODOWN",
+      "exit": 1,
+      "messages": [
+        "FOODOWN is not signed off, and nothing was written, because:",
+        "- document not written yet: write the document from its worksheet",
+        "- low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it"
+      ]
+    }
+  ],
+  "each written": [
+    {
+      "doc": "FOODPROF",
+      "exit": 0,
+      "message": "Recorded in <project>/food-safety/sign-offs.json: Sam Okafor, Owner, signed off ARC-001-FOODPROF-v1.0.md (FOODPROF, version 1.0) on 2026-11-17. The document's header reads as it did (DRAFT, or an earlier sign-off) until the slash command marks it: this helper does not edit document files."
+    },
+    {
+      "doc": "FOODXC",
+      "exit": 1,
+      "messages": [
+        "FOODXC is not signed off, and nothing was written, because:",
+        "- 25 questions in food-safety/answers-XC.md are not yet answered (XC-03-Q01, XC-03-Q03, XC-03-Q04, XC-03-Q05, XC-03-Q06 and 20 more): an answer counts when its State is confirmed and By and On are filled in",
+        "- 2 answers in food-safety/answers-XC.md are proposed but not confirmed (XC-02-Q01 and XC-06-Q02): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODCLN",
+      "exit": 1,
+      "messages": [
+        "FOODCLN is not signed off, and nothing was written, because:",
+        "- 23 questions in food-safety/answers-CL.md are not yet answered (CL-01-Q01, CL-01-Q02, CL-01-Q03, CL-01-Q04, CL-01-Q05 and 18 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODCHL",
+      "exit": 1,
+      "messages": [
+        "FOODCHL is not signed off, and nothing was written, because:",
+        "- 44 questions in food-safety/answers-CH.md are not yet answered (CH-01-Q01, CH-01-Q02, CH-01-Q04, CH-01-Q05, CH-01-Q06 and 39 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODCOOK",
+      "exit": 0,
+      "message": "Recorded in <project>/food-safety/sign-offs.json: Sam Okafor, Owner, signed off ARC-001-FOODCOOK-v1.0.md (FOODCOOK, version 1.0) on 2026-11-17. The document's header reads as it did (DRAFT, or an earlier sign-off) until the slash command marks it: this helper does not edit document files."
+    },
+    {
+      "doc": "FOODMGT",
+      "exit": 1,
+      "messages": [
+        "FOODMGT is not signed off, and nothing was written, because:",
+        "- 49 questions in food-safety/answers-MG.md are not yet answered (MG-01-Q01, MG-01-Q02, MG-01-Q03, MG-01-Q04, MG-01-Q05 and 44 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODOWN",
+      "exit": 1,
+      "messages": [
+        "FOODOWN is not signed off, and nothing was written, because:",
+        "- low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it"
+      ]
+    }
+  ],
+  "each signed again": [
+    {
+      "doc": "FOODPROF",
+      "exit": 1,
+      "messages": [
+        "FOODPROF is already signed off, by Sam Okafor, Owner, on 2026-11-17, and nothing more was written, because:",
+        "- Sam Okafor's sign-off of ARC-001-FOODPROF-v1.0.md (version 1.0) as Owner is already recorded, on 2026-11-17, and the file has not changed since, so nothing more is recorded. Its header is not yet marked to show it: the sign-off command finishes the marking, and no new sign-off is needed."
+      ]
+    },
+    {
+      "doc": "FOODXC",
+      "exit": 1,
+      "messages": [
+        "FOODXC is not signed off, and nothing was written, because:",
+        "- 25 questions in food-safety/answers-XC.md are not yet answered (XC-03-Q01, XC-03-Q03, XC-03-Q04, XC-03-Q05, XC-03-Q06 and 20 more): an answer counts when its State is confirmed and By and On are filled in",
+        "- 2 answers in food-safety/answers-XC.md are proposed but not confirmed (XC-02-Q01 and XC-06-Q02): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODCLN",
+      "exit": 1,
+      "messages": [
+        "FOODCLN is not signed off, and nothing was written, because:",
+        "- 23 questions in food-safety/answers-CL.md are not yet answered (CL-01-Q01, CL-01-Q02, CL-01-Q03, CL-01-Q04, CL-01-Q05 and 18 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODCHL",
+      "exit": 1,
+      "messages": [
+        "FOODCHL is not signed off, and nothing was written, because:",
+        "- 44 questions in food-safety/answers-CH.md are not yet answered (CH-01-Q01, CH-01-Q02, CH-01-Q04, CH-01-Q05, CH-01-Q06 and 39 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODCOOK",
+      "exit": 1,
+      "messages": [
+        "FOODCOOK is already signed off, by Sam Okafor, Owner, on 2026-11-17, and nothing more was written, because:",
+        "- Sam Okafor's sign-off of ARC-001-FOODCOOK-v1.0.md (version 1.0) as Owner is already recorded, on 2026-11-17, and the file has not changed since, so nothing more is recorded. Its header is not yet marked to show it: the sign-off command finishes the marking, and no new sign-off is needed."
+      ]
+    },
+    {
+      "doc": "FOODMGT",
+      "exit": 1,
+      "messages": [
+        "FOODMGT is not signed off, and nothing was written, because:",
+        "- 49 questions in food-safety/answers-MG.md are not yet answered (MG-01-Q01, MG-01-Q02, MG-01-Q03, MG-01-Q04, MG-01-Q05 and 44 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODOWN",
+      "exit": 1,
+      "messages": [
+        "FOODOWN is not signed off, and nothing was written, because:",
+        "- low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it"
+      ]
+    }
+  ],
+  "blank worksheets, each written": [
+    {
+      "doc": "FOODPROF",
+      "exit": 1,
+      "messages": [
+        "FOODPROF is not signed off, and nothing was written, because:",
+        "- 20 questions in food-safety/answers-profile.md are not yet answered (PR-Q01, PR-Q02, PR-Q03, PR-Q04, PR-Q05 and 15 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODXC",
+      "exit": 1,
+      "messages": [
+        "FOODXC is not signed off, and nothing was written, because:",
+        "- 50 questions in food-safety/answers-XC.md are not yet answered (XC-01-Q01, XC-01-Q02, XC-01-Q03, XC-01-Q04, XC-01-Q05 and 45 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODCLN",
+      "exit": 1,
+      "messages": [
+        "FOODCLN is not signed off, and nothing was written, because:",
+        "- 23 questions in food-safety/answers-CL.md are not yet answered (CL-01-Q01, CL-01-Q02, CL-01-Q03, CL-01-Q04, CL-01-Q05 and 18 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODCHL",
+      "exit": 1,
+      "messages": [
+        "FOODCHL is not signed off, and nothing was written, because:",
+        "- 45 questions in food-safety/answers-CH.md are not yet answered (CH-01-Q01, CH-01-Q02, CH-01-Q04, CH-01-Q05, CH-01-Q06 and 40 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODCOOK",
+      "exit": 1,
+      "messages": [
+        "FOODCOOK is not signed off, and nothing was written, because:",
+        "- 46 questions in food-safety/answers-CK.md are not yet answered (CK-02-Q01, CK-02-Q02, CK-02-Q03, CK-02-Q04, CK-02-Q05 and 41 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODMGT",
+      "exit": 1,
+      "messages": [
+        "FOODMGT is not signed off, and nothing was written, because:",
+        "- 49 questions in food-safety/answers-MG.md are not yet answered (MG-01-Q01, MG-01-Q02, MG-01-Q03, MG-01-Q04, MG-01-Q05 and 44 more): an answer counts when its State is confirmed and By and On are filled in"
+      ]
+    },
+    {
+      "doc": "FOODOWN",
+      "exit": 0,
+      "message": "Recorded in <project>/food-safety/sign-offs.json: Sam Okafor, Owner, signed off ARC-001-FOODOWN-v1.0.md (FOODOWN, version 1.0) on 2026-11-17. The document's header reads as it did (DRAFT, or an earlier sign-off) until the slash command marks it: this helper does not edit document files."
+    }
+  ],
+  "each written, another version named": [
+    {
+      "doc": "FOODPROF",
+      "exit": 1,
+      "messages": [
+        "FOODPROF is not signed off, and nothing was written, because:",
+        "- the current FOODPROF document is ARC-001-FOODPROF-v1.0.md, version 1.0, not version 2.0: give --version 1.0 to sign off the current document"
+      ]
+    },
+    {
+      "doc": "FOODXC",
+      "exit": 1,
+      "messages": [
+        "FOODXC is not signed off, and nothing was written, because:",
+        "- 25 questions in food-safety/answers-XC.md are not yet answered (XC-03-Q01, XC-03-Q03, XC-03-Q04, XC-03-Q05, XC-03-Q06 and 20 more): an answer counts when its State is confirmed and By and On are filled in",
+        "- 2 answers in food-safety/answers-XC.md are proposed but not confirmed (XC-02-Q01 and XC-06-Q02): an answer counts when its State is confirmed and By and On are filled in",
+        "- the current FOODXC document is ARC-001-FOODXC-v1.0.md, version 1.0, not version 2.0: give --version 1.0 to sign off the current document"
+      ]
+    },
+    {
+      "doc": "FOODCLN",
+      "exit": 1,
+      "messages": [
+        "FOODCLN is not signed off, and nothing was written, because:",
+        "- 23 questions in food-safety/answers-CL.md are not yet answered (CL-01-Q01, CL-01-Q02, CL-01-Q03, CL-01-Q04, CL-01-Q05 and 18 more): an answer counts when its State is confirmed and By and On are filled in",
+        "- the current FOODCLN document is ARC-001-FOODCLN-v1.0.md, version 1.0, not version 2.0: give --version 1.0 to sign off the current document"
+      ]
+    },
+    {
+      "doc": "FOODCHL",
+      "exit": 1,
+      "messages": [
+        "FOODCHL is not signed off, and nothing was written, because:",
+        "- 44 questions in food-safety/answers-CH.md are not yet answered (CH-01-Q01, CH-01-Q02, CH-01-Q04, CH-01-Q05, CH-01-Q06 and 39 more): an answer counts when its State is confirmed and By and On are filled in",
+        "- the current FOODCHL document is ARC-001-FOODCHL-v1.0.md, version 1.0, not version 2.0: give --version 1.0 to sign off the current document"
+      ]
+    },
+    {
+      "doc": "FOODCOOK",
+      "exit": 1,
+      "messages": [
+        "FOODCOOK is not signed off, and nothing was written, because:",
+        "- the current FOODCOOK document is ARC-001-FOODCOOK-v1.0.md, version 1.0, not version 2.0: give --version 1.0 to sign off the current document"
+      ]
+    },
+    {
+      "doc": "FOODMGT",
+      "exit": 1,
+      "messages": [
+        "FOODMGT is not signed off, and nothing was written, because:",
+        "- 49 questions in food-safety/answers-MG.md are not yet answered (MG-01-Q01, MG-01-Q02, MG-01-Q03, MG-01-Q04, MG-01-Q05 and 44 more): an answer counts when its State is confirmed and By and On are filled in",
+        "- the current FOODMGT document is ARC-001-FOODMGT-v1.0.md, version 1.0, not version 2.0: give --version 1.0 to sign off the current document"
+      ]
+    },
+    {
+      "doc": "FOODOWN",
+      "exit": 1,
+      "messages": [
+        "FOODOWN is not signed off, and nothing was written, because:",
+        "- low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it",
+        "- the current FOODOWN document is ARC-001-FOODOWN-v1.0.md, version 1.0, not version 2.0: give --version 1.0 to sign off the current document"
+      ]
+    }
+  ]
+}

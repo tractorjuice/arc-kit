@@ -647,7 +647,8 @@ test('the section document opens with the section\'s title and its introduction,
 
 test('every document ends with the closing notice, naming the business when its name is confirmed, then the source line', () => {
   assert.equal(sourceLine(data.source), SOURCE_LINE);
-  for (const doc of DOC_CODES.filter((code) => code !== 'FOODOWN')) {
+  // The own methods document quotes nothing, and a list document says what it quotes (uk-food-lists.test.mjs).
+  for (const doc of DOC_CODES.filter((code) => !['FOODOWN', 'FOODCS'].includes(code))) {
     const lines = rendered(doc, CAFE).split('\n');
     assert.deepEqual(lines.slice(-5), [notice('Bramble Cafe'), '', SOURCE_LINE, '', '<!-- UK-FOOD:END -->'], doc);
   }

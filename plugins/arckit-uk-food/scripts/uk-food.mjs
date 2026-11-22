@@ -6,7 +6,7 @@ import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DEFAULT_DATA_DIR, loadData, SECTION_IDS, validateData } from './uk-food-data.mjs';
 import {
-  blankWorksheet, counted, identifying, parseWorksheet, readWorksheet, typedIn, upgradeWorksheet, WORKSHEET_SECTIONS,
+  blankWorksheet, counted, identifying, localToday, parseWorksheet, readWorksheet, typedIn, upgradeWorksheet, WORKSHEET_SECTIONS,
   worksheetJson
 } from './uk-food-worksheet.mjs';
 import {
@@ -194,7 +194,7 @@ export function parseWorksheetCommand(args, io = { out: console.log, err: consol
   }
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
   if (dataError) return valueError(io, dataError);
-  const parsed = parseWorksheet(text, data);
+  const parsed = parseWorksheet(text, data, { today: localToday() });
   if (options.json) io.out(worksheetJson(parsed));
   else if (parsed.problems.length === 0) io.out(`${options.file}: no problems`);
   else for (const { line, message } of parsed.problems) io.out(`${options.file}:${line}: ${message}`);
@@ -224,7 +224,9 @@ export function upgradeWorksheetCommand(args, io = { out: console.log, err: cons
   }
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
   if (dataError) return valueError(io, dataError);
-  const result = upgradeWorksheet(bytes.toString('utf8'), data);
+  // The date a rule about dates compares a value with: this computer's, given here and nowhere below.
+  const reading = { today: localToday() };
+  const result = upgradeWorksheet(bytes.toString('utf8'), data, reading);
   if (result.exit) return failure(io, { exit: 1, messages: [`${options.file}: ${result.messages[0]}`, ...result.messages.slice(1)] });
   if (!result.changes.length) {
     io.out(`${options.file} is already what this version of the overlay prints: there is nothing to bring up to date.`);
@@ -254,9 +256,9 @@ export function upgradeWorksheetCommand(args, io = { out: console.log, err: cons
   try {
     writeFileSync(kept, bytes, { flag: 'wx' });
     writeFileSync(next, result.text);
-    const written = upgradeWorksheet(readFileSync(next, 'utf8'), data);
-    const before = readWorksheet(bytes.toString('utf8'), data).parsed;
-    if (written.exit || written.changes.length || typedIn(readWorksheet(readFileSync(next, 'utf8'), data).parsed) !== typedIn(before)) {
+    const written = upgradeWorksheet(readFileSync(next, 'utf8'), data, reading);
+    const before = readWorksheet(bytes.toString('utf8'), data, reading).parsed;
+    if (written.exit || written.changes.length || typedIn(readWorksheet(readFileSync(next, 'utf8'), data, reading).parsed) !== typedIn(before)) {
       rmSync(next, { force: true });
       rmSync(kept, { force: true });
       return failure(io, { exit: 1, messages: [`${options.file}: the worksheet as written would not read the same, so it is left as it was. Nothing has been changed.`] });

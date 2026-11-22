@@ -1,11 +1,11 @@
 import { existsSync, readdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { DATA_ID, DEFAULT_DATA_DIR, isObject, isString, SECTION_IDS } from './uk-food-data.mjs';
-import { andList, counted, isAre, isIsoDate, unseenIn } from './uk-food-worksheet.mjs';
+import { andList, counted, isAre, isIsoDate, localToday, unseenIn } from './uk-food-worksheet.mjs';
 import {
   BEFORE_RENDER, bodyText, businessText, checkDocument, closingNotice, COMPLETION_RECORD, coverageChunks, DOC_CODES,
-  DOC_OF_SECTION, documentOf, extraCareDone, failure, misplaced, NAME_QUESTION, otherText, paragraphs, readWorksheets,
-  SHEET_ORDER, sourceLine, STATUS_ORDER, tableLines, worksheetFile, worksheetName
+  DOC_OF_SECTION, documentOf, extraCareDone, failure, freshlyUnfinished, misplaced, NAME_QUESTION, otherText, paragraphs,
+  readWorksheets, SHEET_ORDER, sourceLine, STATUS_ORDER, tableLines, worksheetFile, worksheetName
 } from './uk-food-document.mjs';
 import { loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
 export { completionRecordDocument, DOCUMENT_FILE, readSignOffs };
@@ -61,10 +61,6 @@ const worksheetsOf = (row) => [...(row.sheet === null ? [] : [row.sheet]),
 // A sign-off's name or role: some text, on one line, with no tab and none of the UNSEEN characters.
 const isPersonText = (value) => isString(value) && value.trim() !== '' && !/[\t\n\r]/.test(value) && !unseenIn(value);
 const signOffsFile = (project) => join(project, 'food-safety', 'sign-offs.json');
-const localToday = () => {
-  const now = new Date();
-  return [now.getFullYear(), now.getMonth() + 1, now.getDate()].map((n, i) => String(n).padStart(i ? 2 : 4, '0')).join('-');
-};
 
 // Compares two versions part by part, as numbers: negative when `a` comes first.
 const compareVersions = (a, b) => {
@@ -285,8 +281,8 @@ function countLines(row, counts, section) {
 // `hashes` holds each written document's own two hashes (documentHashes), which a sign-off records.
 // `blockers` holds, for each document, what keeps it from being finished: { what, sheet, after }, where
 // `sheet` is the worksheet a line is about (null for the document's own lines) and `after` marks a
-// line the unfinished list gives after the documents.
-function collectStatus(project, data) {
+// line the unfinished list gives after the documents. `options` is the caller's: { today } (see beginReading).
+function collectStatus(project, data, options = {}) {
   const lacking = SECTION_IDS.find((id) => !data.sections.has(id));
   if (lacking) return { exit: 2, messages: [`the data has no ${lacking}.json`] };
   let folder = false;
@@ -298,7 +294,7 @@ function collectStatus(project, data) {
   if (!folder) return { exit: 2, messages: [`${project} is not a folder: --project names the project folder that holds food-safety/`] };
   const signOffs = readSignOffs(project);
   if (signOffs.error) return { exit: 2, messages: [signOffs.error] };
-  const sheets = readWorksheets(project, data);
+  const sheets = readWorksheets(project, data, undefined, options);
   const unreadable = [...sheets.values()].find((sheet) => sheet?.readError);
   if (unreadable) return { exit: 2, messages: [unreadable.readError] };
   let files;
@@ -321,7 +317,7 @@ function collectStatus(project, data) {
     const reads = worksheetsOf(row);
     const { needs } = row;
     const current = files.get(code) ?? null;
-    const check = current ? checkDocument(code, project, join(project, current.file), data, signOffs) : null;
+    const check = current ? checkDocument(code, project, join(project, current.file), data, signOffs, options) : null;
     const inSync = check?.exit === 0;
     // Counted from its own worksheet: none, for a document with no worksheet of its own (sheet null).
     const counts = countsOf(row, sheets.get(row.sheet), data);
@@ -362,8 +358,12 @@ function collectStatus(project, data) {
     // A worksheet that is not there yet is told by how to make it, not by questions "in" it. A cell of
     // the header that sign-off would rewrite and that holds something else keeps the document from
     // being signed off, so that marking it as signed off changes nothing a person signed.
+    // A document whose row has its own lines for what is outstanding (a list document's, see outstanding in the
+    // table) gives them after its counts, from a clean worksheet only, as its counts are.
+    const clean = sheets.get(row.sheet)?.clean;
     const docLines = [
-      ...(sheets.get(row.sheet)?.clean ? countLines(row, counts, row.sheet) : []),
+      ...(clean ? countLines(row, counts, row.sheet) : []),
+      ...(clean && row.outstanding ? row.outstanding(sheets.get(row.sheet), data) : []),
       ...fileLines,
       // (After a sign-off, check tells such a cell itself, one at a time, with what a signed document has there.)
       ...(check?.cell ? [] : check?.unwritten ?? []).map((cell) => cellLine(current.file, cell))
@@ -427,25 +427,25 @@ function collectStatus(project, data) {
 // `problem` being check's own reason when it fails. It is told beside the documents, never among them or
 // in the unfinished list: the record prints that list, so a line there about the record could never be
 // true of the record that holds it.
-function completionRecordState(project, data, collected) {
+function completionRecordState(project, data, collected, options = {}) {
   const current = collected.record;
   if (!current) return null;
-  const check = checkDocument(COMPLETION_RECORD, project, join(project, current.file), data, collected.signOffs);
+  const check = checkDocument(COMPLETION_RECORD, project, join(project, current.file), data, collected.signOffs, options);
   return { file: current.file, version: current.version, inSync: check.exit === 0, problem: check.exit === 0 ? null : checkLine(current.file, check) };
 }
 
 // Everything status reports, the completion record's own state included: collectStatus's result with
 // `status.completionRecord` filled in, or { exit: 2, messages }.
-function fullStatus(project, data) {
-  const collected = collectStatus(project, data);
+function fullStatus(project, data, options = {}) {
+  const collected = collectStatus(project, data, options);
   if (collected.exit) return collected;
-  collected.status.completionRecord = completionRecordState(project, data, collected);
+  collected.status.completionRecord = completionRecordState(project, data, collected, options);
   return collected;
 }
 
 // The status of the project in `project`, as status --json prints it, or { exit: 2, messages }.
-export function projectStatus(project, data) {
-  const result = fullStatus(project, data);
+export function projectStatus(project, data, options = {}) {
+  const result = fullStatus(project, data, options);
   return result.exit ? result : result.status;
 }
 
@@ -505,10 +505,10 @@ function completionRecordData(data) {
 // or PENDING in both when that document is not signed off, and "Not relevant" beside a method marked
 // not relevant; then what is unfinished; then the closing notice and the source line. It changes
 // when a worksheet, a document or a sign-off does, so check simply compares it with a fresh render.
-function completionRecordDocument(project, data) {
+function completionRecordDocument(project, data, options = {}) {
   const record = completionRecordData(data);
   if (record.error) return { exit: 2, messages: [record.error] };
-  const collected = collectStatus(project, data);
+  const collected = collectStatus(project, data, options);
   if (collected.exit) return collected;
   const { status, sheets } = collected;
   const documents = new Map(status.documents.map((doc) => [doc.code, doc]));
@@ -541,18 +541,22 @@ function completionRecordDocument(project, data) {
 // Records that a named person has confirmed a document, when it is finished: its worksheets present
 // and free of problems, every question confirmed, its current file of the version given and in step,
 // each cell of its header that the sign-off step rewrites holding what the commands write there,
-// and, for the own methods document, an own entry for each special process the profile confirms.
+// and, for the own methods document, an own entry for each special process the profile confirms. Whatever
+// else holds, a document whose body rendered afresh shows something unfinished is refused (the backstop).
 // A document that holds text outside its checked part (otherText) is recorded only when `person.otherTextRead`
 // is 'yes': the person signing has been shown those lines. The refusal lists them.
 // `person` is { name, role, version, date, paperSigned, otherTextRead }. Returns { exit: 0, record, message }, or
 // { exit, messages }: 1 for a refusal, which writes nothing and gives every reason with what to do
 // next, and 2 when the project cannot be read.
-export function signOffDocument(code, project, person, data) {
-  const collected = collectStatus(project, data);
+export function signOffDocument(code, project, person, data, options = {}) {
+  const collected = collectStatus(project, data, options);
   if (collected.exit) return collected;
   const { status, hashes, blockers, signOffs } = collected;
   const doc = status.documents.find((d) => d.code === code);
   const reasons = blockers.get(code).filter(({ resign }) => !resign).map(({ what }) => `- ${what}`);
+  // Whether the document's own lines in status already say why it is not finished: its counts, its
+  // worksheets, its file. See the backstop below.
+  const told = reasons.length > 0;
   if (doc.rendered && doc.version !== person.version) {
     reasons.push(`- the current ${code} document is ${doc.file}, version ${doc.version}, not version ${person.version}: give ` +
       `--version ${doc.version} to sign off the current document`);
@@ -574,6 +578,13 @@ export function signOffDocument(code, project, person, data) {
     reasons.push(`- ${person.name}'s sign-off of ${doc.file} (version ${doc.version}) as ${person.role} is already recorded, on ` +
       `${newest.date}, and the file has not changed since, so nothing more is recorded. ` +
       `${doc.headerShowsSignOff ? 'Its header shows it.' : `Its header is not yet marked to show it: ${MARK_HOW}.`}`);
+  }
+  // The backstop, which does not depend on what status counts: a document whose body, rendered afresh, shows
+  // something not yet answered or not yet confirmed (its row's unfinishedLine) is never signed off. It is
+  // told only when nothing in the document's own lines says why already, so that every refusal those lines
+  // give is worded as it always was; whatever they say, sign-off refuses such a body.
+  if (!told && freshlyUnfinished(code, project, data, options)) {
+    reasons.push(`- ${code} still shows something not yet answered or not yet confirmed: finish its worksheet first, then write the document again`);
   }
   if (reasons.length) {
     return { exit: 1, messages: [`${code} is ${doc.signedOff ? `already signed off, by ${newest.name}, ${newest.role}, on ${newest.date}, and nothing ` +
@@ -625,11 +636,15 @@ function statusLines(status, data, sheets, checks) {
   const lines = [`Food safety status, data ${status.data}${status.foodSafetyFolder ? '' : ': nothing has been started in this folder, ' +
     'which holds no food-safety folder. Check that it is the business\'s project folder'}`];
   for (const doc of status.documents) {
-    const [, many] = documentOf(doc.code).nouns;
+    const row = documentOf(doc.code);
+    const [, many] = row.nouns;
     const parts = [
       ...(doc.missingWorksheets.length ? [`not started: ${doc.missingWorksheets.join(', ')}`] : []),
       ...(doc.problems ? [counted(doc.problems, 'worksheet problem', 'worksheet problems')] : []),
-      `${doc.confirmed} of ${doc.questions} ${many} confirmed${doc.proposed ? `, ${doc.proposed} proposed` : ''}`,
+      // A list document says what its worksheet holds in its own words (its row's summary), as no count of
+      // entries says that a list is kept elsewhere.
+      ...(row.summary ? row.summary(doc, sheets.get(row.sheet))
+        : [`${doc.confirmed} of ${doc.questions} ${many} confirmed${doc.proposed ? `, ${doc.proposed} proposed` : ''}`]),
       ...(doc.notRelevantMethods.length ? [`not relevant: ${doc.notRelevantMethods.join(', ')}`] : []),
       ...(doc.adaptedMethods.length ? [`adapted: ${doc.adaptedMethods.join(', ')}`] : []),
       doc.rendered ? `${doc.file} ${doc.inSync ? 'in step with its worksheets' : checks.get(doc.code)?.cell ? CELL_FAULT
@@ -661,7 +676,7 @@ export function statusCommand(args, io = { out: console.log, err: console.error 
   if (!options.project) return usageError(io, '--project names the project folder that holds food-safety/');
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
   if (dataError) return failure(io, { exit: 2, messages: [dataError] });
-  const result = fullStatus(options.project, data);
+  const result = fullStatus(options.project, data, { today: localToday() });
   if (result.exit) return failure(io, result);
   io.out(options.json ? JSON.stringify(result.status, null, 2) : statusLines(result.status, data, result.sheets, result.checks).join('\n'));
   return 0;
@@ -703,7 +718,7 @@ export function signOffCommand(args, io = { out: console.log, err: console.error
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
   if (dataError) return failure(io, { exit: 2, messages: [dataError] });
   const person = { name: options.name.trim(), role: options.role.trim(), version: options.version, date, paperSigned, otherTextRead };
-  const result = signOffDocument(options.doc, options.project, person, data);
+  const result = signOffDocument(options.doc, options.project, person, data, { today });
   if (result.exit) return failure(io, result);
   io.out(result.message);
   return 0;

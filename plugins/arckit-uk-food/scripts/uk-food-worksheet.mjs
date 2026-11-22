@@ -1,6 +1,6 @@
 import { DATA_ID, isObject, SECTION_IDS } from './uk-food-data.mjs';
 export {
-  andList, codePoint, counted, fieldLines, identifying, isAre, isIsoDate, key as fieldKey, longDate, methodQuestions, profileQuestion,
+  andList, codePoint, counted, fieldLines, identifying, isAre, isIsoDate, key as fieldKey, localToday, longDate, methodQuestions, profileQuestion,
   quotedBy, readWorksheet, sentenceCase, spanOf, standard, STATE_WORDS, strictWorksheet, typedIn, unseenIn
 };
 
@@ -22,9 +22,11 @@ export let WORKSHEET_SECTIONS = [...SECTION_IDS, 'profile', 'own'];
 // it, as the helper's entry and the document module both import it. Until it has loaded, the list
 // sections are not worksheet sections.
 let LIST_WORKSHEETS = { sections: [] };
-const listed = (section) => LIST_WORKSHEETS.sections.includes(section);
+const isListSection = (section) => LIST_WORKSHEETS.sections.includes(section);
 // For uk-food-lists.mjs alone, as it loads: `lists` is { sections, read(reading, data), emit(parsed, data),
-// guidance(section, data) }, which readWorksheet, emitWorksheet and guidanceFor call for a list section.
+// guidance(section, data), placed }, which readWorksheet, emitWorksheet and guidanceFor call for a list section;
+// `placed` is the sentence that ends the problem about another version's wording, saying where a person's own
+// lines belong in a list worksheet.
 export function addListWorksheets(lists) {
   LIST_WORKSHEETS = lists;
   WORKSHEET_SECTIONS = [...SECTION_IDS, 'profile', 'own', ...lists.sections];
@@ -197,7 +199,7 @@ const LINT_EXCEPTIONS = {
 // The guidance comment each worksheet carries after its marker: how to fill it in, then where the
 // pack's words in it come from (left out only for data that names no source), then, in the own
 // worksheet, the entry to copy. A list worksheet's is its own module's.
-const guidanceFor = (section, data) => (listed(section) ? LIST_WORKSHEETS.guidance(section, data) : [
+const guidanceFor = (section, data) => (isListSection(section) ? LIST_WORKSHEETS.guidance(section, data) : [
   ...(section === 'own' ? OWN_GUIDANCE : section === 'profile' ? ANSWER_GUIDANCE : [...ANSWER_GUIDANCE, ...STATUS_GUIDANCE]),
   ...(isObject(data.source) ? [quotedFrom(section, data.source)] : []),
   ...(section === 'own' ? OWN_TEMPLATE : [])
@@ -223,6 +225,11 @@ const longDate = (iso) => {
   return `${day} ${MONTHS[month - 1]} ${year}`;
 };
 const counted = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+// This computer's date, written YYYY-MM-DD: what the helper's commands give as today. Nothing below a command reads it.
+const localToday = () => {
+  const now = new Date();
+  return [now.getFullYear(), now.getMonth() + 1, now.getDate()].map((n, i) => String(n).padStart(i ? 2 : 4, '0')).join('-');
+};
 const isAre = (n) => (n === 1 ? 'is' : 'are');
 // A character as its code point, U+ and four or more hex digits, so that one that looks like another shows.
 const codePoint = (char) => `U+${char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`;
@@ -384,7 +391,7 @@ export function emitWorksheet(parsed, data) {
   if (!WORKSHEET_SECTIONS.includes(section)) throw new Error(`no worksheet for section ${section}`);
   if (parsed.data !== DATA_ID) throw new Error(`the worksheet answers data ${parsed.data}, not ${DATA_ID}`);
   if (SECTION_IDS.includes(section) && !data.sections.has(section)) throw new Error(`the data has no ${section}.json`);
-  if (listed(section)) return LIST_WORKSHEETS.emit(parsed, data);
+  if (isListSection(section)) return LIST_WORKSHEETS.emit(parsed, data);
   const comment = (lines) => ['<!--', ...lines, '-->'];
   const answerBlock = (question, prompt, record = { state: 'unanswered' }) => [
     `### ${question.id}`,
@@ -482,12 +489,15 @@ function readValue(question, answer) {
 
 // Begins reading a worksheet, for readWorksheet and for the list worksheets' reader in uk-food-lists.mjs:
 // its lines, and its marker line read and checked. Returns the reading: { parsed, layout, lines, report,
-// finish, markerAt, markerLine, section, stopped }. `report(line, message, block)` records a problem and,
+// finish, today, markerAt, markerLine, section, stopped }. `report(line, message, block)` records a problem and,
 // given a block, marks it faulty; `finish()` gives { parsed, layout } with the problems in line order (see
 // readWorksheet for both). `stopped` is true when the marker line stops the reading: there is none, it is
 // not understood, or it names another version, other data or a section that has no worksheet. The reader
 // sets `parsed.section` itself, once it knows the data holds what the section needs.
-export function beginReading(text) {
+// `today` is the date, written YYYY-MM-DD, that a rule about dates compares a value with. It is the caller's
+// (`options.today`): the helper's commands give this computer's date, and nothing here reads the clock, so
+// what a worksheet reads as does not change with the day it is read on. It is null when the caller gives none.
+export function beginReading(text, { today = null } = {}) {
   const problems = [];
   const parsed = { data: null, section: null, methods: new Map(), answers: new Map(), entries: new Map(), problems };
   const report = (line, message, block = null) => {
@@ -500,7 +510,7 @@ export function beginReading(text) {
     problems.sort((a, b) => a.line - b.line);
     return { parsed, layout };
   };
-  const stopped = { parsed, layout, lines, report, finish, stopped: true };
+  const stopped = { parsed, layout, lines, report, finish, today, stopped: true };
 
   const markerAt = lines.findIndex((line) => /^<!--.*uk-food-answers/.test(line.trim()));
   if (markerAt < 0) {
@@ -532,7 +542,7 @@ export function beginReading(text) {
     report(markerLine, `section ${section} is not one of ${WORKSHEET_SECTIONS.join(', ')}`);
     return stopped;
   }
-  return { parsed, layout, lines, report, finish, markerAt, markerLine, section, stopped: false };
+  return { parsed, layout, lines, report, finish, today, markerAt, markerLine, section, stopped: false };
 }
 
 // Pass 1 of reading a worksheet, the same for every worksheet: the lines after the marker into blocks of
@@ -546,6 +556,7 @@ export function beginReading(text) {
 //   makes a block; `hidden(raw, at, block)` reports an unseen character in a line that holds a value.
 // - asked and notes: the questions a "### " heading may name, each { owner, question, prompt }, and the
 //   identifiers of the pack's notes. A list worksheet has neither.
+// - notAQuestion(id): what a "### " heading that names neither is told, given its first word in capitals.
 // - names: every field name this worksheet knows, from its name in small letters. An indented line that
 //   starts with one is a field out of place, not a value carried on.
 // - kinds: for each kind of block that takes fields, { fields, called }: the fields it takes, and what a
@@ -553,7 +564,9 @@ export function beginReading(text) {
 // Returns `seen`: { method, question, entry }, each a Map from identifier to its block, and anything else
 // `heading` keeps there. Each block is { kind, id, line, fields, faulty }: `fields` maps each field read to
 // { line, lines }, the line it starts on and its value's lines.
-export function readBlocks({ lines, layout, report, markerAt }, { guidance, asked = new Map(), notes = new Set(), names, kinds, heading }) {
+export function readBlocks({ lines, layout, report, markerAt }, {
+  guidance, asked = new Map(), notes = new Set(), names, kinds, heading, notAQuestion = (id) => `${id} is not a question in this worksheet`
+}) {
   // A block that is reported as it opens (an unknown or repeated heading) is read and set aside, so its
   // lines are not reported again.
   const seen = { method: new Map(), question: new Map(), entry: new Map() };
@@ -712,7 +725,7 @@ export function readBlocks({ lines, layout, report, markerAt }, { guidance, aske
       const id = first.toUpperCase();
       const known = asked.get(id);
       if (!known) {
-        report(at, notes.has(id) ? `${id} is a note in the pack, not a question to answer` : `${id} is not a question in this worksheet`);
+        report(at, notes.has(id) ? `${id} is a note in the pack, not a question to answer` : notAQuestion(id));
         block = open('set-aside', id, at);
       } else if (seen.question.has(id)) {
         report(at, `${id} appears more than once; only the first is read`);
@@ -812,11 +825,12 @@ export function blockTools(report) {
 // print (`foreign`) and what it does print (`now`); and the line number of every line of either kind
 // that is not this helper's wording.
 // A list worksheet is read by its own module's reader (see addListWorksheets), from the same beginning.
-function readWorksheet(text, data) {
-  const reading = beginReading(text);
+// `options` is the caller's: { today } (see beginReading).
+function readWorksheet(text, data, options = {}) {
+  const reading = beginReading(text, options);
   if (reading.stopped) return reading.finish();
   const { parsed, report, finish, markerLine, section } = reading;
-  if (listed(section)) return LIST_WORKSHEETS.read(reading, data);
+  if (isListSection(section)) return LIST_WORKSHEETS.read(reading, data);
   const methods = SECTION_IDS.includes(section) ? data.sections.get(section)?.methods : null;
   if (SECTION_IDS.includes(section) && !Array.isArray(methods)) {
     report(markerLine, `there is no ${section}.json in the data, so this ${section} worksheet cannot be read`);
@@ -991,28 +1005,30 @@ const otherWording = ({ wording, noGuidance }, where = false) => {
     `version prints${where ? `, the first at line ${Math.min(...wording)}` : ''}` : '';
   return noGuidance ? `its guidance comment is missing${n ? `, and ${lines}` : ''}` : lines;
 };
-// What the strict parser says, once for the whole worksheet, of wording that is not this helper's.
-const wordingProblem = (layout) => `this worksheet was made by a different version of the overlay: ${otherWording(layout, true)}. ` +
+// What the strict parser says, once for the whole worksheet, of wording that is not this helper's. It ends by
+// saying where a person's own lines belong: in a list worksheet, as its module words it.
+const wordingProblem = (layout, section) => `this worksheet was made by a different version of the overlay: ${otherWording(layout, true)}. ` +
   `${layout.wording.length ? 'Nothing typed on such lines is read. ' : ''}Run upgrade-worksheet --file on this worksheet: it shows each ` +
   'line it would take out or put in and writes nothing, and with --write it brings the worksheet up to date, keeping a copy of it as it ' +
   'is. Anything a person typed on a line it takes out cannot be told from old wording, so a person reads what it shows before it is ' +
-  'written. An answer belongs after Answer:, and an own entry below the opening comment.';
+  `written. ${isListSection(section) ? LIST_WORKSHEETS.placed : 'An answer belongs after Answer:, and an own entry below the opening comment.'}`;
 
 // Reads a worksheet strictly: readWorksheet's `parsed`, with one more problem when any of the tool's own
 // wording in it is not what this helper prints. A worksheet with a problem counts nowhere, so no answer
 // of one made by another version is used until it has been brought up to date.
 // `strictWorksheet` gives, beside it, what differs in a few words (`otherVersion`, '' when nothing does).
 // A worksheet that could not be read as far as its section has no wording to compare.
-function strictWorksheet(text, data) {
-  const { parsed, layout } = readWorksheet(text, data);
+function strictWorksheet(text, data, options = {}) {
+  const { parsed, layout } = readWorksheet(text, data, options);
   const otherVersion = parsed.section === null ? '' : otherWording(layout);
   if (otherVersion) {
-    parsed.problems.push({ line: Math.min(...layout.wording, ...(layout.noGuidance ? [layout.marker] : [])), message: wordingProblem(layout) });
+    parsed.problems.push({ line: Math.min(...layout.wording, ...(layout.noGuidance ? [layout.marker] : [])),
+      message: wordingProblem(layout, parsed.section) });
     parsed.problems.sort((a, b) => a.line - b.line);
   }
   return { parsed, otherVersion };
 }
-export const parseWorksheet = (text, data) => strictWorksheet(text, data).parsed;
+export const parseWorksheet = (text, data, options = {}) => strictWorksheet(text, data, options).parsed;
 
 // What a person typed in a worksheet, as readWorksheet read it, without the line numbers it was read
 // from: two worksheets that give the same text here say the same. A list worksheet's Kept elsewhere block
@@ -1101,9 +1117,9 @@ function lineSteps(old, now) {
 //   hold every answer, state, name, date and entry under the same identifier as before (typedIn).
 // A line a person typed inside the guidance or on a > line cannot be told from old wording, so it is
 // taken out with the rest: `changes` lists every line taken out, for a person to read before writing.
-export function upgradeWorksheet(text, data) {
+export function upgradeWorksheet(text, data, options = {}) {
   const leave = 'Nothing has been changed.';
-  const { parsed, layout } = readWorksheet(text, data);
+  const { parsed, layout } = readWorksheet(text, data, options);
   if (parsed.data !== null && parsed.data !== DATA_ID) {
     return { exit: 1, messages: [`this worksheet answers data ${parsed.data}, not this helper's data ${DATA_ID}: a new edition of ` +
       `the pack is another job, which this command does not do. ${leave}`] };
@@ -1183,7 +1199,7 @@ export function upgradeWorksheet(text, data) {
   const upgraded = bom + [...layout.lines.flatMap((line, i) => [
     ...(before.get(i) ?? []).map((added) => added + ending(i)), ...(gone.has(i) ? [] : [line + (pieces[2 * i + 1] ?? '')])]),
   ...(before.get(last) ?? []).map((added) => ending(last - 1) + added)].join('');
-  const after = readWorksheet(upgraded, data);
+  const after = readWorksheet(upgraded, data, options);
   if (after.parsed.problems.length || otherWording(after.layout) || typedIn(after.parsed) !== typedIn(parsed)) {
     return { exit: 1, messages: ['brought up to date, the worksheet would not read the same as it does now, so it is not ' +
       `written: ${after.parsed.problems[0]?.message ?? 'an answer, state, name, date or entry would differ'}. ${leave}`] };

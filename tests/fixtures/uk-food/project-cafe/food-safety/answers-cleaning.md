@@ -14,14 +14,15 @@ with any chemicals and equipment it is cleaned with.
 An entry needs Frequency and Method before it can be proposed or confirmed, and Other-frequency too when
 Frequency is Other.
 If the business keeps its cleaning schedule somewhere else, write where in Where, under Kept elsewhere.
-Entries may be listed here as well: both are printed.
+Kept elsewhere needs Where before it can be proposed or confirmed. Entries may be listed here as well:
+both are printed.
 To carry a value on to more lines, start each extra line with two spaces, straight after the line before
 it, with no blank line between.
 State says where an entry, or Kept elsewhere, stands: unanswered (it may hold what has been given so far; By and On stay empty);
 proposed (taken from a file, or given without a name, and not yet agreed by a named person at the business: say where it came from in Source);
 or confirmed (given or agreed by a named person at the business: put their name in By and the date, as YYYY-MM-DD, in On).
 Only a confirmed entry, or a confirmed Kept elsewhere, goes into your documents. An entry that is not
-confirmed, and a Kept elsewhere that holds anything and is not confirmed, is named there as not yet confirmed.
+confirmed, and a Kept elsewhere that holds anything and is not confirmed, are named there as not yet confirmed.
 The frequencies named above are quoted from the Food Standards Agency's Safer food, better business for caterers, retrieved 17 November 2026. Contains public sector information licensed under the Open Government Licence v3.0.
 
 ## CS-01 Name of the item
