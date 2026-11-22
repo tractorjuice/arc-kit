@@ -25,16 +25,16 @@ from PIL import Image, ImageDraw, ImageFont
 # --- wording
 VERSION = "ArcKit v6.25.0"
 HEADLINE = ("ArcKit for Google Antigravity:", "190 commands as Agent Skills.")
-CORE = ("75", "core commands", "From project plan to", "published documentation")
+CORE = ("75", "core commands", "From project plan", "to published docs")
 COUNTRIES_TITLE = "74 for other countries"
 COUNTRIES = (("uae", "UAE", 12), ("fr", "France", 12), ("ca", "Canada", 12), ("au", "Australia", 10),
              ("us", "USA", 10), ("eu", "EU", 8), ("nl", "Netherlands", 6), ("at", "Austria", 4))
 GROUPS = (
-    ("16", "for sectors", ("UK food safety 5 · UK finance 4", "UK NHS 4 · Australian energy 2", "UK legacy IT 1")),
-    ("19", "for methods", ("TOGAF ADM 9", "Open Agile Architecture 5", "arc42 5")),
-    ("6", "for AI agents", ("Inventory, design, integration,", "security, governance", "and maturity")),
+    ("16", "for sectors", ("UK food safety, finance, NHS,", "legacy IT. Australian energy")),
+    ("19", "for methods", ("TOGAF ADM, arc42,", "Open Agile Architecture")),
+    ("6", "for AI agents", ("Inventory, design, security,", "governance and more")),
 )
-MCP_TITLE = "4 research MCP servers, no key needed"
+MCP_TITLE = "MCP servers, no key needed"
 MCP_LIST = "AWS Knowledge · Microsoft Learn · UK government code · UK tenders"
 FOOT = "agy plugin install https://github.com/tractorjuice/arckit-antigravity"
 SMALL = "Experimental: eight core commands have been run in Antigravity so far."
@@ -133,49 +133,51 @@ def flag(code, x, y):
     d.rectangle((x, y, x + FW, y + FH), outline=LINE, width=1)
 
 
-d.text((80, 50), VERSION, font=font(28, True), fill=GOLD)
-d.text((80, 90), fits(HEADLINE[0], font(56, True), 1440), font=font(56, True), fill=TEXT)
-d.text((80, 156), fits(HEADLINE[1], font(56, True), 1440), font=font(56, True), fill=TEXT)
+# Sizes: nothing below 28px, so the smallest line is still readable when the
+# image is shown at phone width.
+d.text((80, 40), VERSION, font=font(30, True), fill=GOLD)
+d.text((80, 80), fits(HEADLINE[0], font(60, True), 1440), font=font(60, True), fill=TEXT)
+d.text((80, 148), fits(HEADLINE[1], font(60, True), 1440), font=font(60, True), fill=TEXT)
 
 # Row one: the core, then the countries.
-TOP, ROW1 = 240, 236
+TOP, ROW1 = 236, 240
 d.rounded_rectangle((80, TOP, 400, TOP + ROW1), radius=16, fill=PANEL, outline=CYAN, width=3)
-d.text((108, TOP + 18), CORE[0], font=font(96, True), fill=CYAN)
-d.text((108, TOP + 124), fits(CORE[1], font(30, True), 270), font=font(30, True), fill=TEXT)
-d.text((108, TOP + 166), fits(CORE[2], font(21), 270), font=font(21), fill=MUTED)
-d.text((108, TOP + 192), fits(CORE[3], font(21), 270), font=font(21), fill=MUTED)
+d.text((108, TOP + 12), CORE[0], font=font(96, True), fill=CYAN)
+d.text((108, TOP + 120), fits(CORE[1], font(34, True), 270), font=font(34, True), fill=TEXT)
+d.text((108, TOP + 166), fits(CORE[2], font(28), 270), font=font(28), fill=TEXT)
+d.text((108, TOP + 198), fits(CORE[3], font(28), 270), font=font(28), fill=TEXT)
 
 d.rounded_rectangle((420, TOP, 1520, TOP + ROW1), radius=16, fill=PANEL, outline=GOLD, width=3)
-d.text((448, TOP + 22), fits(COUNTRIES_TITLE, font(30, True), 1040), font=font(30, True), fill=TEXT)
+d.text((448, TOP + 16), fits(COUNTRIES_TITLE, font(34, True), 1040), font=font(34, True), fill=TEXT)
 CELL = 268
 for i, (code, name, count) in enumerate(COUNTRIES):
     cx = 448 + (i % 4) * CELL
-    cy = TOP + 78 + (i // 4) * 76
-    flag(code, cx, cy)
-    d.text((cx + FW + 14, cy + 9), fits(name, font(24, True), CELL - FW - 24), font=font(24, True), fill=TEXT, anchor="lm")
-    d.text((cx + FW + 14, cy + 35), str(count), font=font(21), fill=GOLD, anchor="lm")
+    cy = TOP + 78 + (i // 4) * 80
+    flag(code, cx, cy + 6)
+    d.text((cx + FW + 12, cy + 12), fits(name, font(30, True), CELL - FW - 18), font=font(30, True), fill=TEXT, anchor="lm")
+    d.text((cx + FW + 12, cy + 46), str(count), font=font(28, True), fill=GOLD, anchor="lm")
 
 # Row two: sectors, methods, AI agents.
-TOP2, ROW2 = 494, 180
+TOP2, ROW2 = 494, 170
 WIDTH, GAP = 466, 21
 for i, (number, label, lines) in enumerate(GROUPS):
     x = 80 + i * (WIDTH + GAP)
     d.rounded_rectangle((x, TOP2, x + WIDTH, TOP2 + ROW2), radius=16, fill=PANEL, outline=GREEN, width=3)
-    d.text((x + 26, TOP2 + 16), number, font=font(60, True), fill=GREEN)
+    d.text((x + 26, TOP2 + 8), number, font=font(60, True), fill=GREEN)
     offset = d.textlength(number, font=font(60, True))
-    d.text((x + 40 + offset, TOP2 + 54), fits(label, font(28, True), WIDTH - 80 - offset), font=font(28, True), fill=TEXT, anchor="lm")
+    d.text((x + 40 + offset, TOP2 + 46), fits(label, font(32, True), WIDTH - 80 - offset), font=font(32, True), fill=TEXT, anchor="lm")
     for k, line in enumerate(lines):
-        d.text((x + 26, TOP2 + 100 + k * 26), fits(line, font(21), WIDTH - 48), font=font(21), fill=MUTED, anchor="lm")
+        d.text((x + 26, TOP2 + 104 + k * 34), fits(line, font(28), WIDTH - 48), font=font(28), fill=TEXT, anchor="lm")
 
 # The MCP servers that come with the plugin.
-d.rounded_rectangle((80, 692, 1520, 750), radius=14, fill=PANEL, outline=LINE, width=2)
-d.text((106, 721), MCP_TITLE, font=font(24, True), fill=CYAN, anchor="lm")
-d.text((106 + d.textlength(MCP_TITLE, font=font(24, True)) + 28, 721),
-       fits(MCP_LIST, font(22), 1380 - d.textlength(MCP_TITLE, font=font(24, True))), font=font(22), fill=TEXT, anchor="lm")
+d.rounded_rectangle((80, 682, 1520, 746), radius=14, fill=PANEL, outline=LINE, width=2)
+d.text((106, 714), MCP_TITLE, font=font(28, True), fill=CYAN, anchor="lm")
+taken = d.textlength(MCP_TITLE, font=font(28, True)) + 28
+d.text((106 + taken, 714), fits(MCP_LIST, font(28), 1388 - taken), font=font(28), fill=TEXT, anchor="lm")
 
-d.line((80, 770, 1520, 770), fill=LINE, width=2)
-d.text((80, 786), fits(FOOT, font(27, True), 1440), font=font(27, True), fill=TEXT)
-d.text((80, 834), fits(SMALL, font(22), 1440), font=font(22), fill=MUTED)
+d.line((80, 764, 1520, 764), fill=LINE, width=2)
+d.text((80, 778), fits(FOOT, font(30, True), 1440), font=font(30, True), fill=TEXT)
+d.text((80, 826), fits(SMALL, font(28), 1440), font=font(28), fill=MUTED)
 
 out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).with_name(PUBLISHED)
 img.save(out, optimize=True)
