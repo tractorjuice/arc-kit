@@ -67,7 +67,7 @@ Each one wrote its document from ArcKit's template, with the document control ta
 
 **Four research MCP servers that need no key.** AWS Knowledge, Microsoft Learn, UK government code search and UK tenders come with the plugin, so the research commands can read AWS and Azure documentation, search UK government code and look up UK contract awards. Two more, Google Developer Knowledge and Data Commons, need a key, so you add those yourself; the plugin's page says how.
 
-**Nothing cut short.** I ran Antigravity's own plugin check on the first build and it found something Google's documentation doesn't mention: Antigravity loads the first 24,000 bytes of a skill and drops the rest. 29 of ArcKit's commands are longer than that. The longest, for defence AI assurance, would have lost five sixths of its instructions without any warning. Each of those 29 now keeps its full instructions in a second file beside the skill and tells the agent to read it first. The check passes.
+**Nothing cut short.** Antigravity's own plugin check, run on the first build, found something Google's documentation doesn't mention: Antigravity loads the first 24,000 bytes of a skill and drops the rest. 29 of ArcKit's commands are longer than that. The longest, for defence AI assurance, would have lost five sixths of its instructions without any warning. Each of those 29 now keeps its full instructions in a second file beside the skill and tells the agent to read it first. The check passes.
 
 ## What the 190 commands are
 
