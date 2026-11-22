@@ -24,6 +24,9 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 OVERLAY = ROOT / "plugins" / "arckit-uk-food"
 HELPER = OVERLAY / "scripts" / "uk-food.mjs"
+# The helper's modules, which uk-food.mjs imports, and the one that holds the project folder's wording.
+HELPER_MODULES = sorted((OVERLAY / "scripts").glob("uk-food*.mjs"))
+FOLDER_MODULE = OVERLAY / "scripts" / "uk-food-folder.mjs"
 DOC_ID = OVERLAY / "scripts" / "generate-document-id.mjs"
 CLI_TEMPLATES = ROOT / ".arckit" / "templates"
 FIXTURE = ROOT / "tests" / "fixtures" / "uk-food" / "project-cafe"
@@ -62,6 +65,11 @@ TEMPLATE_COMMAND = {
 # Ruling 12: the helper, the document namer, the schema and the nine data files. Not differences.md.
 RUNTIME_ASSETS = [
     "scripts/uk-food.mjs",
+    "scripts/uk-food-data.mjs",
+    "scripts/uk-food-worksheet.mjs",
+    "scripts/uk-food-document.mjs",
+    "scripts/uk-food-status.mjs",
+    "scripts/uk-food-folder.mjs",
     "scripts/generate-document-id.mjs",
     "schemas/uk-food-sfbb-data-1.0.schema.json",
     *[f"data/sfbb-caterers-2026-11-17/{name}.json"
@@ -266,6 +274,14 @@ def test_runtime_assets_are_exactly_the_helper_namer_schema_and_data(name):
     assert front["runtime-assets"] == RUNTIME_ASSETS, name
     for relative in front["runtime-assets"]:
         assert (OVERLAY / relative).is_file(), f"{name}: {relative}"
+
+
+def test_every_helper_module_is_well_under_the_directory_limit():
+    """The plugin directory refuses a file of 262,144 bytes, so each script stays under 200,000, with room to grow."""
+    sizes = {path.name: path.stat().st_size for path in sorted((OVERLAY / "scripts").glob("*.mjs"))}
+    assert sizes, "no scripts found"
+    over = {name: size for name, size in sizes.items() if size >= 200_000}
+    assert not over, f"over 200,000 bytes: {over}"
 
 
 @pytest.mark.parametrize("name", COMMANDS)
@@ -601,7 +617,7 @@ def test_a_gathering_command_states_the_rule(name, rule):
 
 def test_the_new_folders_explanation_is_the_helpers_alone():
     """H1 and H2: the README a business gets is printed by the helper, so no command restates it."""
-    helper = HELPER.read_text(encoding="utf-8")
+    helper = FOLDER_MODULE.read_text(encoding="utf-8")
     private = ("This folder holds the names of the people who work in the business. Keep it somewhere private, and if it "
                "is a git repository that is pushed anywhere, keep that private too.")
     assert "".join(part.strip("'") for part in re.findall(r"'[^']*'", helper[helper.index("const KEEP_PRIVATE"):helper.index("const folderReadme")])) == private
@@ -621,7 +637,7 @@ def test_the_own_methods_document_has_one_name_everywhere():
     assert "| | FOODOWN | `ARC-*-FOODOWN-*.md` | Food Business Own Methods |" in (ROOT / "plugins/arckit-claude/commands/pages.md").read_text(encoding="utf-8")
     assert '"FOODOWN":   {"name": "Food Business Own Methods", "category": "Compliance"},' in (
         ROOT / "extensions/arckit-gemini/hooks/scripts/hook_utils.py").read_text(encoding="utf-8")
-    for path in [*hand_written(), HELPER, ROOT / "README.md", ROOT / "docs" / "llms.txt", ROOT / "docs" / "commands.html",
+    for path in [*hand_written(), *HELPER_MODULES, ROOT / "README.md", ROOT / "docs" / "llms.txt", ROOT / "docs" / "commands.html",
                  ROOT / "docs" / "DEPENDENCY-MATRIX.md", OVERLAY / "recipes" / "uk-food-sfbb.yaml"]:
         text = path.read_text(encoding="utf-8")
         assert not re.search(r"additional safe[ -]methods?|own additional methods?", text, re.I), path.name
@@ -2112,7 +2128,7 @@ def test_the_pages_say_what_this_round_changed_for_an_owner():
     for name, text in [("README", readme), ("overview guide", overview)]:
         assert f"The project folder {private}" in text, f"H2: {name}"
         assert "made by a different version" in text, f"H3: {name}"
-    assert f"This folder {private}" in HELPER.read_text(encoding="utf-8").replace("' +\n  '", ""), "H2: the folder's own README"
+    assert f"This folder {private}" in FOLDER_MODULE.read_text(encoding="utf-8").replace("' +\n  '", ""), "H2: the folder's own README"
     assert "which command to run next" in overview and "which command to run next" in profile and "which command to run next" in readme, "H1"
     assert "shows you every line it would take out or put in, and writes them only when you agree. If nobody is there to agree, it writes nothing" in overview, "J9"
     assert "The kept copy's name starts with `before-upgrade-`." in overview, "J3"

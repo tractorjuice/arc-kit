@@ -6,6 +6,11 @@ effort: high
 keep-coding-instructions: true
 runtime-assets:
   - scripts/uk-food.mjs
+  - scripts/uk-food-data.mjs
+  - scripts/uk-food-worksheet.mjs
+  - scripts/uk-food-document.mjs
+  - scripts/uk-food-status.mjs
+  - scripts/uk-food-folder.mjs
   - scripts/generate-document-id.mjs
   - schemas/uk-food-sfbb-data-1.0.schema.json
   - data/sfbb-caterers-2026-11-17/source.json
