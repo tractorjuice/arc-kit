@@ -2321,8 +2321,7 @@ def generate_antigravity_plugin(mcp_json_path, version, extension_dir):
         ],
         "author": {"name": "ArcKit", "url": "https://arckit.org"},
         "homepage": "https://arckit.org",
-        # The plugin has no repository of its own yet: it is built from arc-kit.
-        "repository": "https://github.com/tractorjuice/arc-kit",
+        "repository": "https://github.com/tractorjuice/arckit-antigravity",
         "license": "MIT AND CC-BY-SA-4.0",
         "keywords": ["enterprise-architecture", "governance", "procurement", "public-sector", "uk-government"],
     }

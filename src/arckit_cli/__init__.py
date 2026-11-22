@@ -69,7 +69,7 @@ AGENT_CONFIG = {
     "antigravity": {
         "name": "Google Antigravity",
         "folder": ".arckit/",
-        "install_url": "https://github.com/tractorjuice/arc-kit/tree/main/extensions/arckit-antigravity",
+        "install_url": "https://github.com/tractorjuice/arckit-antigravity",
         "requires_cli": True,
     },
 }
@@ -1231,9 +1231,9 @@ export OPENCODE_HOME="$PWD/.opencode"
             "4. Create your first project: [cyan]/arckit-requirements[/cyan]"
         )
     elif ai_assistant == "antigravity":
-        next_steps.append("2. Install the ArcKit plugin for Antigravity (see its README):")
+        next_steps.append("2. Install the ArcKit plugin for Antigravity:")
         next_steps.append(
-            "   [cyan]https://github.com/tractorjuice/arc-kit/tree/main/extensions/arckit-antigravity[/cyan]"
+            "   [cyan]agy plugin install https://github.com/tractorjuice/arckit-antigravity[/cyan]"
         )
         next_steps.append(
             "3. Establish architecture principles: [cyan]/arckit-principles[/cyan]"

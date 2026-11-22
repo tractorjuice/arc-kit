@@ -400,13 +400,10 @@ kimi
 <details>
 <summary><strong>Google Antigravity (experimental)</strong></summary>
 
-It passes Antigravity's own plugin check and one command has been run there; the rest are untried. Build the plugin from this repository and install the folder:
+It passes Antigravity's own plugin check and one command has been run there; the rest are untried.
 
 ```bash
-git clone https://github.com/tractorjuice/arc-kit.git
-cd arc-kit
-uv run --no-project --with pyyaml python scripts/converter.py
-agy plugin install ./extensions/arckit-antigravity
+agy plugin install https://github.com/tractorjuice/arckit-antigravity
 ```
 
 Create a project with the ArcKit CLI (install it as for Codex CLI):
@@ -422,7 +419,7 @@ Every ArcKit command is an Agent Skill whose name starts `arckit-`:
 /arckit-requirements Build a payment processing system...
 ```
 
-See [the plugin's README](extensions/arckit-antigravity/README.md) for the MCP servers and what is not there yet. **Updating:** pull this repository, run the converter and install the folder again.
+See [the plugin's README](https://github.com/tractorjuice/arckit-antigravity) for the MCP servers and what is not there yet. **Updating:** run the install command again.
 
 </details>
 
@@ -938,7 +935,7 @@ claude agent recipes/togaf-agent-full.yaml
 | [OpenCode CLI](https://opencode.net/cli) | ✅ Core | CLI with commands and templates |
 | Mistral Vibe CLI | ✅ Full | Extension with skills, agents, and MCP servers ([arckit-vibe](https://github.com/tractorjuice/arckit-vibe)) |
 | Kimi Code CLI | ✅ Full | Plugin with Agent Skills and MCP servers ([arckit-kimi](https://github.com/tractorjuice/arckit-kimi)) |
-| Google Antigravity | 🧪 Experimental | Plugin with Agent Skills and MCP servers, built from this repository; it passes Antigravity's own check and most commands are untried there ([arckit-antigravity](extensions/arckit-antigravity/README.md)) |
+| Google Antigravity | 🧪 Experimental | Plugin with Agent Skills and MCP servers; it passes Antigravity's own check and most commands are untried there ([arckit-antigravity](https://github.com/tractorjuice/arckit-antigravity)) |
 
 ### Platform support
 

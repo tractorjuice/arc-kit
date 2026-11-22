@@ -6,16 +6,11 @@ ArcKit's enterprise architecture governance commands, packaged as an Antigravity
 
 ## Install
 
-The plugin is generated from the ArcKit repository. Build it, then install the folder:
-
 ```bash
-git clone https://github.com/tractorjuice/arc-kit.git
-cd arc-kit
-uv run --no-project --with pyyaml python scripts/converter.py
-agy plugin install ./extensions/arckit-antigravity
+agy plugin install https://github.com/tractorjuice/arckit-antigravity
 ```
 
-Check it loaded with `agy plugin list`. If your shell can't find `agy`, it is at `~/.gemini/bin/agy`. Without the `agy` command, copy the `arckit-antigravity` folder into `~/.gemini/config/plugins/` or your workspace's `.agents/plugins/`.
+Check it loaded with `agy plugin list`. If your shell can't find `agy`, it is at `~/.gemini/bin/agy`. To update, run the install command again.
 
 ## Set up a project
 
@@ -51,7 +46,6 @@ Two more need a key and are left out, because a plugin with an unfilled key inst
 ## What is not here yet
 
 - **Agents and hooks.** The plugin ships skills and MCP servers only. Research commands run in the main conversation.
-- **A published repository.** You install from a build of this folder, as above.
 - **Long commands.** Antigravity loads the first 24,000 bytes of a skill. Twenty-nine ArcKit commands are longer, so each of those tells the agent to read the rest from a file in the skill's folder first.
 
 ## Licence
