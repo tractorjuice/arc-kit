@@ -1,15 +1,21 @@
 """Generate the hero image for the ArcKit v6.25.0 release article.
 
-Written for the person using Google Antigravity: the steps they take to run ArcKit
-there, then what they can rely on. Same house style as the sibling
-generate-hero-*.py scripts.
+Written for the person using Google Antigravity: what the one plugin brings,
+broken down as the article breaks it down (75 core commands, 74 for other
+countries, 16 for sectors, 19 for methods, 6 for AI agents). Same house style
+as the sibling generate-hero-*.py scripts.
 
     uv run --with pillow python docs/articles/generate-hero-v6-25-google-antigravity-plugin.py [output.png]
 
 With no argument it writes the published hero's file name, so pass a path to
 start a new design without overwriting a hero the maintainer has restyled.
+
+The flags are drawn here as simple shapes, not loaded from image files, so the
+script needs nothing but Pillow. They are small pointers to a country, not
+accurate renderings.
 """
 
+import math
 import sys
 from pathlib import Path
 
@@ -18,20 +24,21 @@ from PIL import Image, ImageDraw, ImageFont
 # --- wording
 VERSION = "ArcKit v6.25.0"
 HEADLINE = ("ArcKit for Google Antigravity:", "190 commands as Agent Skills.")
-SUB = "Draft architecture governance documents from templates, with a slash command"
-STEPS = (
-    ("Install the", "plugin", "One line,", "190 skills"),
-    ("Set up your", "project", "Templates in", "your own folder"),
-    ("Get your", "bearings", "Type", "/arckit-start"),
-    ("Draft your", "documents", "Requirements,", "risks, business case"),
-    ("Review what", "it wrote", "Every document", "starts as a DRAFT"),
+CORE = ("75", "core commands", "From project plan to", "published documentation")
+COUNTRIES_TITLE = "74 for other countries"
+COUNTRIES = (("uae", "UAE", 12), ("fr", "France", 12), ("ca", "Canada", 12), ("au", "Australia", 10),
+             ("us", "USA", 10), ("eu", "EU", 8), ("nl", "Netherlands", 6), ("at", "Austria", 4))
+GROUPS = (
+    ("16", "for sectors", ("UK food safety 5 · UK finance 4", "UK NHS 4 · Australian energy 2", "UK legacy IT 1")),
+    ("19", "for methods", ("TOGAF ADM 9", "Open Agile Architecture 5", "arc42 5")),
+    ("6", "for AI agents", ("Inventory, design, integration,", "security, governance", "and maturity")),
 )
-FACTS = ("The same commands as every other assistant", "Passes Antigravity's own plugin check")
 FOOT = "agy plugin install https://github.com/tractorjuice/arckit-antigravity"
-SMALL = "Experimental: most commands are untried in Antigravity. Not a Google product."
+SMALL = "Experimental: eight core commands have been run in Antigravity so far. Not a Google product."
 PUBLISHED = "2026-11-22-arckit-v6-25-google-antigravity-plugin-agent-skills-hero.png"
-# --- drawing
+assert 75 + sum(n for _, _, n in COUNTRIES) + sum(int(g[0]) for g in GROUPS) == 190
 
+# --- drawing
 W, H = 1600, 900
 BG = (13, 17, 23)
 PANEL = (22, 27, 34)
@@ -41,7 +48,6 @@ MUTED = (139, 148, 158)
 GOLD = (234, 179, 8)
 CYAN = (34, 211, 238)
 GREEN = (52, 211, 153)
-COLOURS = (CYAN, GOLD, GREEN, CYAN, GREEN)
 
 img = Image.new("RGB", (W, H), BG)
 d = ImageDraw.Draw(img)
@@ -66,36 +72,101 @@ def fits(text, face, width):
     return text
 
 
-d.text((80, 62), VERSION, font=font(28, True), fill=GOLD)
-d.text((80, 104), fits(HEADLINE[0], font(58, True), 1440), font=font(58, True), fill=TEXT)
-d.text((80, 172), fits(HEADLINE[1], font(58, True), 1440), font=font(58, True), fill=TEXT)
-d.text((80, 254), fits(SUB, font(28), 1440), font=font(28), fill=MUTED)
+def star(cx, cy, r, fill, points=5):
+    pts = []
+    for k in range(points * 2):
+        radius = r if k % 2 == 0 else r * 0.42
+        angle = -math.pi / 2 + k * math.pi / points
+        pts.append((cx + radius * math.cos(angle), cy + radius * math.sin(angle)))
+    d.polygon(pts, fill=fill)
 
-# The steps, in the order you meet them.
-TOP = 330
-WIDTH, GAP = 272, 20
-for i, (title1, title2, detail1, detail2) in enumerate(STEPS):
-    colour = COLOURS[i]
+
+FW, FH = 66, 44
+RED, WHITE, BLUE, NAVY = (206, 17, 38), (255, 255, 255), (0, 85, 164), (0, 33, 105)
+
+
+def flag(code, x, y):
+    """A small flag at x, y. Simple shapes only."""
+    if code == "fr":
+        for i, c in enumerate((BLUE, WHITE, (239, 65, 53))):
+            d.rectangle((x + i * FW // 3, y, x + (i + 1) * FW // 3, y + FH), fill=c)
+    elif code == "nl":
+        for i, c in enumerate(((174, 28, 40), WHITE, (33, 70, 139))):
+            d.rectangle((x, y + i * FH // 3, x + FW, y + (i + 1) * FH // 3 + (1 if i == 2 else 0)), fill=c)
+    elif code == "at":
+        for i, c in enumerate(((237, 41, 57), WHITE, (237, 41, 57))):
+            d.rectangle((x, y + i * FH // 3, x + FW, y + (i + 1) * FH // 3 + (1 if i == 2 else 0)), fill=c)
+    elif code == "uae":
+        for i, c in enumerate(((0, 115, 47), WHITE, (0, 0, 0))):
+            d.rectangle((x, y + i * FH // 3, x + FW, y + (i + 1) * FH // 3 + (1 if i == 2 else 0)), fill=c)
+        d.rectangle((x, y, x + FW // 4, y + FH), fill=(255, 0, 0))
+    elif code == "ca":
+        d.rectangle((x, y, x + FW, y + FH), fill=WHITE)
+        d.rectangle((x, y, x + FW // 4, y + FH), fill=(255, 0, 0))
+        d.rectangle((x + FW - FW // 4, y, x + FW, y + FH), fill=(255, 0, 0))
+        star(x + FW // 2, y + FH // 2, 12, (255, 0, 0), points=6)  # stands in for the maple leaf
+    elif code == "us":
+        for i in range(7):
+            d.rectangle((x, y + i * FH / 7, x + FW, y + (i + 1) * FH / 7), fill=(178, 34, 52) if i % 2 == 0 else WHITE)
+        d.rectangle((x, y, x + FW * 0.44, y + FH * 4 / 7), fill=(60, 59, 110))
+        for row in range(3):
+            for col in range(4):
+                d.ellipse((x + 4 + col * 7, y + 4 + row * 7, x + 6 + col * 7, y + 6 + row * 7), fill=WHITE)
+    elif code == "eu":
+        d.rectangle((x, y, x + FW, y + FH), fill=(0, 51, 153))
+        for k in range(12):
+            angle = k * math.pi / 6
+            star(x + FW / 2 + 14 * math.cos(angle), y + FH / 2 + 14 * math.sin(angle), 3, (255, 204, 0))
+    elif code == "au":
+        d.rectangle((x, y, x + FW, y + FH), fill=NAVY)
+        # the Union Flag in the corner, as a white and red cross
+        d.rectangle((x, y + 9, x + 30, y + 13), fill=WHITE)
+        d.rectangle((x + 13, y, x + 17, y + 22), fill=WHITE)
+        d.rectangle((x, y + 10, x + 30, y + 12), fill=RED)
+        d.rectangle((x + 14, y, x + 16, y + 22), fill=RED)
+        star(x + 15, y + 33, 6, WHITE, points=7)
+        for sx, sy in ((48, 9), (56, 20), (48, 34), (41, 22)):
+            star(x + sx, y + sy, 3, WHITE, points=7)
+    d.rectangle((x, y, x + FW, y + FH), outline=LINE, width=1)
+
+
+d.text((80, 50), VERSION, font=font(28, True), fill=GOLD)
+d.text((80, 90), fits(HEADLINE[0], font(56, True), 1440), font=font(56, True), fill=TEXT)
+d.text((80, 156), fits(HEADLINE[1], font(56, True), 1440), font=font(56, True), fill=TEXT)
+
+# Row one: the core, then the countries.
+TOP, ROW1 = 250, 246
+d.rounded_rectangle((80, TOP, 400, TOP + ROW1), radius=16, fill=PANEL, outline=CYAN, width=3)
+d.text((108, TOP + 28), CORE[0], font=font(96, True), fill=CYAN)
+d.text((108, TOP + 136), fits(CORE[1], font(30, True), 270), font=font(30, True), fill=TEXT)
+d.text((108, TOP + 180), fits(CORE[2], font(21), 270), font=font(21), fill=MUTED)
+d.text((108, TOP + 206), fits(CORE[3], font(21), 270), font=font(21), fill=MUTED)
+
+d.rounded_rectangle((420, TOP, 1520, TOP + ROW1), radius=16, fill=PANEL, outline=GOLD, width=3)
+d.text((448, TOP + 22), fits(COUNTRIES_TITLE, font(30, True), 1040), font=font(30, True), fill=TEXT)
+CELL = 268
+for i, (code, name, count) in enumerate(COUNTRIES):
+    cx = 448 + (i % 4) * CELL
+    cy = TOP + 82 + (i // 4) * 80
+    flag(code, cx, cy)
+    d.text((cx + FW + 14, cy + 9), fits(name, font(24, True), CELL - FW - 24), font=font(24, True), fill=TEXT, anchor="lm")
+    d.text((cx + FW + 14, cy + 35), str(count), font=font(21), fill=GOLD, anchor="lm")
+
+# Row two: sectors, methods, AI agents.
+TOP2, ROW2 = 516, 196
+WIDTH, GAP = 466, 21
+for i, (number, label, lines) in enumerate(GROUPS):
     x = 80 + i * (WIDTH + GAP)
-    d.rounded_rectangle((x, TOP, x + WIDTH, TOP + 270), radius=16, fill=PANEL, outline=colour, width=3)
-    d.ellipse((x + 24, TOP + 24, x + 76, TOP + 76), fill=colour)
-    d.text((x + 50, TOP + 50), str(i + 1), font=font(30, True), fill=BG, anchor="mm")
-    d.text((x + 24, TOP + 118), fits(title1, font(27, True), WIDTH - 40), font=font(27, True), fill=TEXT, anchor="lm")
-    d.text((x + 24, TOP + 152), fits(title2, font(27, True), WIDTH - 40), font=font(27, True), fill=TEXT, anchor="lm")
-    d.text((x + 24, TOP + 204), fits(detail1, font(22), WIDTH - 40), font=font(22), fill=MUTED, anchor="lm")
-    d.text((x + 24, TOP + 234), fits(detail2, font(22), WIDTH - 40), font=font(22), fill=MUTED, anchor="lm")
+    d.rounded_rectangle((x, TOP2, x + WIDTH, TOP2 + ROW2), radius=16, fill=PANEL, outline=GREEN, width=3)
+    d.text((x + 26, TOP2 + 16), number, font=font(60, True), fill=GREEN)
+    offset = d.textlength(number, font=font(60, True))
+    d.text((x + 40 + offset, TOP2 + 54), fits(label, font(28, True), WIDTH - 80 - offset), font=font(28, True), fill=TEXT, anchor="lm")
+    for k, line in enumerate(lines):
+        d.text((x + 26, TOP2 + 106 + k * 28), fits(line, font(21), WIDTH - 48), font=font(21), fill=MUTED, anchor="lm")
 
-# What you can rely on.
-Y = 640
-x = 80
-for text, colour in zip(FACTS, (CYAN, GREEN)):
-    d.rounded_rectangle((x, Y, x + 710, Y + 76), radius=14, fill=PANEL, outline=LINE, width=2)
-    d.text((x + 355, Y + 38), fits(text, font(26, True), 670), font=font(26, True), fill=colour, anchor="mm")
-    x += 730
-
-d.line((80, 762, 1520, 762), fill=LINE, width=2)
-d.text((80, 790), fits(FOOT, font(26), 1440), font=font(26), fill=TEXT)
-d.text((80, 836), fits(SMALL, font(22), 1440), font=font(22), fill=MUTED)
+d.line((80, 742, 1520, 742), fill=LINE, width=2)
+d.text((80, 768), fits(FOOT, font(27, True), 1440), font=font(27, True), fill=TEXT)
+d.text((80, 820), fits(SMALL, font(22), 1440), font=font(22), fill=MUTED)
 
 out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).with_name(PUBLISHED)
 img.save(out, optimize=True)
