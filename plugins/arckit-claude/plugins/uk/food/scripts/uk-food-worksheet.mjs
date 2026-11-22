@@ -554,8 +554,8 @@ export function beginReading(text) {
 // `heading` keeps there. Each block is { kind, id, line, fields, faulty }: `fields` maps each field read to
 // { line, lines }, the line it starts on and its value's lines.
 export function readBlocks({ lines, layout, report, markerAt }, { guidance, asked = new Map(), notes = new Set(), names, kinds, heading }) {
-  // A block is reported as it opens (an unknown or repeated heading) is read and set aside, so its lines
-  // are not reported again.
+  // A block that is reported as it opens (an unknown or repeated heading) is read and set aside, so its
+  // lines are not reported again.
   const seen = { method: new Map(), question: new Map(), entry: new Map() };
   const open = (kind, id, line, extra = {}) => ({ kind, id, line, fields: new Map(), faulty: false, ...extra });
   let guidanceChecked = false;
