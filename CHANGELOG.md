@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Antigravity: subagents, write checks and a rule.** The plugin now carries three more of the five parts an Antigravity plugin can hold. Twelve research commands hand their work to a subagent (`agents/arckit-<command>-agent.md`) and keep the full instructions beside the skill for a session that can't start one. `hooks.json` runs ArcKit's file-name, protected-file and secret gates before a file is written and the manifest update after, through one adapter (`scripts/antigravity/agy-hook.mjs`) that translates Antigravity's hook input and output so the gates ship unchanged. A glob-triggered rule carries the artefact conventions. All three pass `agy plugin validate --strict`; none has been run in a live Antigravity session yet. `/arckit-evaluate` and `/arckit-score` stay in the main conversation.
+
 ### Changed
 
 - **The Antigravity plugin installs with one command.** It has its own repository, `tractorjuice/arckit-antigravity`, filled at each release: `agy plugin install https://github.com/tractorjuice/arckit-antigravity`. Before, you built it from a clone of arc-kit.

@@ -207,6 +207,9 @@ extensions/arckit-antigravity/schemas/
 extensions/arckit-antigravity/references/
 extensions/arckit-antigravity/scripts/
 extensions/arckit-antigravity/hooks/
+extensions/arckit-antigravity/hooks.json
+extensions/arckit-antigravity/agents/
+extensions/arckit-antigravity/rules/
 extensions/arckit-antigravity/plugin.json
 extensions/arckit-antigravity/mcp_config.json
 

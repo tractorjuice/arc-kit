@@ -45,9 +45,19 @@ Five servers come with the plugin and need no key: AWS Knowledge, Microsoft Lear
 
 Two more need a key and are left out, because a plugin with an unfilled key installs switched off: Google Developer Knowledge (`GOOGLE_API_KEY`) and Data Commons (`DATA_COMMONS_API_KEY`). To use them, add each to your workspace's `.agents/mcp_config.json` with its key in a header.
 
+## Subagents, checks and a rule
+
+These three parts are generated in the format Antigravity documents and pass `agy plugin validate --strict`. They have not yet been run in a live Antigravity session.
+
+- **Twelve subagents.** The research commands (`/arckit-research`, `/arckit-datascout`, `/arckit-grants`, `/arckit-tenders`, `/arckit-competitors`, the three cloud research commands, the three government code commands and `/arckit-framework`) hand their work to a subagent, so the pages they read stay out of your conversation. If a subagent can't be started, the command does the work itself. `/arckit-evaluate` and `/arckit-score` stay in your conversation.
+- **Checks on what gets written.** Before Antigravity creates or edits a file, the plugin stops a wrongly named `ARC-` document and names the right path, stops a write to a protected file such as `.env`, a lock file or a private key, and stops text that looks like a credential. After a write it updates the project's manifest where there is one. These need Node.js 18 or later. If a check can't run, a write to an `ARC-` document is stopped; any other write goes ahead.
+- **One rule.** ArcKit's conventions for naming, status, citations and requirement IDs apply while an `ARC-` document is in context.
+
+The protected-file check applies in every workspace while the plugin is enabled, not only in ArcKit projects. Turn the plugin off in a workspace where it gets in the way.
+
 ## What is not here yet
 
-- **Agents and hooks.** The plugin ships skills and MCP servers only. Research commands run in the main conversation.
+- **Session context, provenance stamps and the other Claude Code hooks.** Antigravity has no event for some of them, and the stamp records settings only Claude Code has.
 - **Long commands.** Antigravity loads the first 24,000 bytes of a skill. Twenty-nine ArcKit commands are longer, so each of those tells the agent to read the rest from a file in the skill's folder first.
 
 ## Licence

@@ -2414,6 +2414,160 @@ def split_long_antigravity_skills(skills_dir, limit=ANTIGRAVITY_SKILL_BODY_LIMIT
     return moved
 
 
+# ArcKit's gates that run in Antigravity, and the modules they import. They are
+# copied unchanged; scripts/antigravity/agy-hook.mjs translates Antigravity's
+# hook input and output to the Claude Code shapes they are written for.
+ANTIGRAVITY_HOOK_MODULES = (
+    "validate-arc-filename.mjs",
+    "file-protection.mjs",
+    "secret-file-scanner.mjs",
+    "update-manifest.mjs",
+    "hook-utils.mjs",
+    "okf-frontmatter.mjs",
+)
+ANTIGRAVITY_HOOK_ADAPTER = "scripts/antigravity/agy-hook.mjs"
+ANTIGRAVITY_RULES_DIR = "scripts/antigravity"
+ANTIGRAVITY_RULE_FILES = ("arckit-artefacts.md",)
+ANTIGRAVITY_WRITE_TOOLS = "write_to_file"
+ANTIGRAVITY_EDIT_TOOLS = "replace_file_content|multi_replace_file_content"
+
+
+def generate_antigravity_hooks(plugin_dir, extension_dir):
+    """Ship ArcKit's write gates as Antigravity lifecycle hooks.
+
+    Antigravity reads `hooks.json` at the plugin root and runs each command with
+    the plugin root as its working directory, so commands use relative paths.
+    One adapter call runs every gate for a tool call, so a write costs one
+    hook start, not one per gate. The file-name gate applies to new files only,
+    as it does in Claude Code.
+    """
+    hooks_dir = os.path.join(extension_dir, "hooks")
+    os.makedirs(hooks_dir, exist_ok=True)
+    for name in ANTIGRAVITY_HOOK_MODULES:
+        shutil.copy2(os.path.join(plugin_dir, "hooks", name), os.path.join(hooks_dir, name))
+    shutil.copy2(ANTIGRAVITY_HOOK_ADAPTER, os.path.join(hooks_dir, "agy-hook.mjs"))
+
+    def handler(mode, gates, timeout):
+        return {"type": "command", "command": f"node ./hooks/agy-hook.mjs {mode} {' '.join(gates)}", "timeout": timeout}
+
+    hooks = {
+        "arckit-gates": {
+            "PreToolUse": [
+                {
+                    "matcher": ANTIGRAVITY_WRITE_TOOLS,
+                    "hooks": [handler("pre", ["validate-arc-filename", "file-protection", "secret-file-scanner"], 30)],
+                },
+                {
+                    "matcher": ANTIGRAVITY_EDIT_TOOLS,
+                    "hooks": [handler("pre", ["file-protection", "secret-file-scanner"], 30)],
+                },
+            ],
+        },
+        "arckit-manifest": {
+            "PostToolUse": [
+                {"matcher": ANTIGRAVITY_WRITE_TOOLS, "hooks": [handler("post", ["update-manifest"], 15)]},
+            ],
+        },
+    }
+    with open(os.path.join(extension_dir, "hooks.json"), "w", encoding="utf-8") as f:
+        json.dump(hooks, f, indent=2)
+        f.write("\n")
+    print("  Generated: " + os.path.join(extension_dir, "hooks.json") + " (3 gates before a write, the manifest after)")
+
+
+def generate_antigravity_rules(extension_dir):
+    """Copy the rules Antigravity applies while an ArcKit artefact is in context."""
+    rules_dir = os.path.join(extension_dir, "rules")
+    if os.path.isdir(rules_dir):
+        shutil.rmtree(rules_dir)
+    os.makedirs(rules_dir)
+    for name in ANTIGRAVITY_RULE_FILES:
+        shutil.copy2(os.path.join(ANTIGRAVITY_RULES_DIR, name), os.path.join(rules_dir, name))
+    print(f"  Generated: {rules_dir} ({len(ANTIGRAVITY_RULE_FILES)} rule)")
+
+
+def antigravity_agent_name(command_filename):
+    """`research.md` -> `arckit-research-agent`. The suffix keeps it apart from the skill of the same command."""
+    return antigravity_skill_name(command_filename[:-len('.md')]) + "-agent"
+
+
+# Scoring a supplier's bid is a judgement the person running it follows and may
+# need to answer questions about, so these two stay in the main conversation.
+ANTIGRAVITY_INLINE_COMMANDS = frozenset({"evaluate.md", "score.md"})
+
+ANTIGRAVITY_DELEGATING_SKILL_BODY = (
+    "This command reads a great deal, so it runs in a subagent to keep that reading out of this conversation.\n\n"
+    "1. Start the `{agent}` subagent, which comes with the ArcKit plugin. Give it the user's request word for word, "
+    "the absolute path of this workspace, and the project the request is about if you know it.\n"
+    "2. Wait for it to finish. Then tell the user what it found and which files it wrote.\n\n"
+    "If you cannot start a subagent, read `" + ANTIGRAVITY_INSTRUCTIONS_FILE + "` in this skill's folder from its first "
+    "line to its last, and follow it yourself.\n\n"
+    "## User Input\n\n```text\n$ARGUMENTS\n```\n"
+)
+
+
+def generate_antigravity_agents(agents_dir, skills_dir, extension_dir):
+    """Give each research command a subagent, and make its skill hand the work over.
+
+    On every other non-Claude target a research command carries the whole agent
+    prompt inline, because those runtimes cannot start a subagent. Antigravity
+    can: a plugin's `agents/<name>.md` is a subagent the main agent may start.
+    So the prompt goes into the agent file, the skill becomes a short handover,
+    and the full prompt also stays beside the skill as `instructions.md` for a
+    session where no subagent can be started. Run after the skills are final.
+
+    The agent takes every tool and the plugin's MCP servers (`inheritMcp`), as
+    the inline prompt did. It is not offered as a session agent.
+    """
+    out_dir = os.path.join(extension_dir, "agents")
+    if os.path.isdir(out_dir):
+        shutil.rmtree(out_dir)
+    os.makedirs(out_dir)
+    made = []
+    for command_filename in sorted(build_agent_map(agents_dir)):
+        if command_filename in ANTIGRAVITY_INLINE_COMMANDS:
+            continue
+        skill = antigravity_skill_name(command_filename[:-len('.md')])
+        skill_md = os.path.join(skills_dir, skill, "SKILL.md")
+        if not os.path.isfile(skill_md):
+            continue
+        with open(skill_md, "r", encoding="utf-8") as f:
+            text = f.read()
+        front, body = text[4:].split("\n---\n", 1)
+        instructions = os.path.join(skills_dir, skill, ANTIGRAVITY_INSTRUCTIONS_FILE)
+        if os.path.isfile(instructions):
+            with open(instructions, "r", encoding="utf-8") as f:
+                body = f.read()
+        body = body.lstrip("\n")
+        description = ""
+        for line in front.splitlines():
+            if line.startswith("description:"):
+                description = line[len("description:"):].strip().strip('"')
+        agent = antigravity_agent_name(command_filename)
+        agent_front = "\n".join([
+            "---",
+            f"name: {agent}",
+            "description: " + json.dumps(
+                f"{description}. Does the reading and the writing for /{skill} in its own context and reports back."
+            ),
+            "mainAgent: false",
+            "subagent: true",
+            "model: inherit",
+            "inheritMcp: true",
+            "---",
+            "",
+        ])
+        with open(os.path.join(out_dir, agent + ".md"), "w", encoding="utf-8") as f:
+            f.write(agent_front + "\n" + body)
+        with open(instructions, "w", encoding="utf-8") as f:
+            f.write(body)
+        with open(skill_md, "w", encoding="utf-8") as f:
+            f.write("---\n" + front + "\n---\n\n" + ANTIGRAVITY_DELEGATING_SKILL_BODY.format(agent=agent))
+        made.append(agent)
+    print(f"  Generated: {out_dir} ({len(made)} subagents; their skills hand the work over)")
+    return made
+
+
 def rewrite_antigravity_skills(skills_dir):
     """Rewrite Claude Code-specific references for the Antigravity plugin."""
     if not os.path.isdir(skills_dir):
@@ -3003,6 +3157,13 @@ if __name__ == "__main__":
     prefix_antigravity_reference_skills("extensions/arckit-antigravity/skills")
     rewrite_antigravity_skills("extensions/arckit-antigravity/skills")
     split_long_antigravity_skills("extensions/arckit-antigravity/skills")
+    generate_antigravity_agents(
+        os.path.join(plugin_dir, "agents"),
+        "extensions/arckit-antigravity/skills",
+        "extensions/arckit-antigravity",
+    )
+    generate_antigravity_hooks(plugin_dir, "extensions/arckit-antigravity")
+    generate_antigravity_rules("extensions/arckit-antigravity")
     # The logo the plugin list shows; without one it gets a generic icon.
     os.makedirs("extensions/arckit-antigravity/assets", exist_ok=True)
     shutil.copy2("docs/assets/ArcKit_Logo_Stacked_Light.svg", "extensions/arckit-antigravity/assets/logo.svg")

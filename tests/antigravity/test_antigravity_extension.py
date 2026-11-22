@@ -108,7 +108,7 @@ def test_the_manifest_points_at_a_repository_that_exists():
     push = (REPO / "scripts" / "push-extensions.sh").read_text(encoding="utf-8")
     # The repository is filled at each release, with the generated files it cannot do without.
     assert '[antigravity]="extensions/arckit-antigravity:arckit-antigravity"' in push
-    assert '[antigravity]="skills templates config docs/guides plugin.json mcp_config.json assets/logo.svg"' in push
+    assert '[antigravity]="skills agents rules hooks/agy-hook.mjs hooks.json templates config docs/guides plugin.json mcp_config.json assets/logo.svg"' in push
 
 
 @pytest.mark.parametrize("path", skills(), ids=lambda p: p.parent.name)
@@ -125,6 +125,10 @@ def test_a_skill_body_fits_what_the_loader_reads(path):
     body = path.read_text(encoding="utf-8")[4:].split("\n---\n", 1)[1]
     assert len(body.encode("utf-8")) <= converter.ANTIGRAVITY_SKILL_BODY_LIMIT
     instructions = path.parent / converter.ANTIGRAVITY_INSTRUCTIONS_FILE
+    if (EXT / "agents" / f"{path.parent.name}-agent.md").exists():
+        # A command that hands over to a subagent keeps its prompt beside it whatever its length.
+        assert instructions.exists()
+        return
     if instructions.exists():
         assert len(instructions.read_bytes()) > converter.ANTIGRAVITY_SKILL_BODY_LIMIT
         assert "read `instructions.md` from its first line to its last" in body
@@ -204,6 +208,172 @@ def test_nothing_the_validator_would_flag_as_ignored_is_shipped():
     a root `AGENTS.md` and `hooks/hooks.json`."""
     for ignored in ["commands", ".mcp.json", "AGENTS.md", "hooks/hooks.json"]:
         assert not (EXT / ignored).exists(), ignored
+
+
+# --- subagents, hooks and the rule (read from antigravity.google/docs/build-plugins and /docs/hooks, 22 November 2026)
+
+AGENT_KEYS = {"name", "description", "mainAgent", "subagent", "model", "tools", "commandExecutionPolicy", "skills",
+              "inheritMcp", "inheritCustomizations"}
+HOOK_EVENTS = {"SessionStart", "PreToolUse", "PostToolUse", "PreInvocation", "PostInvocation", "Stop"}
+DELEGATED = sorted(p.stem for p in (EXT / "agents").glob("*.md")) if (EXT / "agents").is_dir() else []
+
+
+def front_and_body(path):
+    text = path.read_text(encoding="utf-8")
+    front, body = text[4:].split("\n---\n", 1)
+    return yaml.safe_load(front), body
+
+
+def test_the_research_commands_have_subagents_and_the_scoring_ones_do_not():
+    assert "arckit-research-agent" in DELEGATED and "arckit-grants-agent" in DELEGATED
+    assert len(DELEGATED) == 12
+    # Scoring a bid stays where the person running it can follow it.
+    assert "arckit-evaluate-agent" not in DELEGATED and "arckit-score-agent" not in DELEGATED
+
+
+@pytest.mark.parametrize("agent", DELEGATED)
+def test_a_subagent_is_in_the_documented_shape_and_carries_the_whole_prompt(agent):
+    front, body = front_and_body(EXT / "agents" / f"{agent}.md")
+    assert set(front) <= AGENT_KEYS, set(front) - AGENT_KEYS
+    assert front["name"] == agent and KEBAB.match(agent)
+    assert front["subagent"] is True and front["mainAgent"] is False
+    assert front["model"] in {"inherit", "flash_lite", "flash", "pro"}
+    # It needs the plugin's MCP servers to do its research.
+    assert front["inheritMcp"] is True
+    skill = agent[: -len("-agent")]
+    kept = (SKILLS / skill / converter.ANTIGRAVITY_INSTRUCTIONS_FILE).read_text(encoding="utf-8")
+    assert body.strip() == kept.strip(), "the agent and the fallback beside the skill must carry the same prompt"
+    assert len(body) > 2000
+    assert "Claude Code" not in body and "CLAUDE_PLUGIN_ROOT" not in body
+
+
+@pytest.mark.parametrize("agent", DELEGATED)
+def test_the_skill_hands_over_and_says_what_to_do_without_a_subagent(agent):
+    skill = agent[: -len("-agent")]
+    _, body = front_and_body(SKILLS / skill / "SKILL.md")
+    assert f"Start the `{agent}` subagent" in body
+    assert "If you cannot start a subagent, read `instructions.md`" in body
+    assert "$ARGUMENTS" in body
+    assert len(body.encode("utf-8")) < converter.ANTIGRAVITY_SKILL_BODY_LIMIT
+
+
+def test_hooks_json_is_in_the_documented_shape():
+    hooks = json.loads((EXT / "hooks.json").read_text(encoding="utf-8"))
+    assert set(hooks) == {"arckit-gates", "arckit-manifest"}
+    for group in hooks.values():
+        assert set(group) <= HOOK_EVENTS | {"enabled"}
+        for event in ("PreToolUse", "PostToolUse"):
+            for entry in group.get(event, []):
+                assert set(entry) == {"matcher", "hooks"}
+                re.compile(entry["matcher"])
+                for handler in entry["hooks"]:
+                    assert handler["type"] == "command"
+                    # Hook commands run with the plugin root as the working directory.
+                    assert handler["command"].startswith("node ./hooks/agy-hook.mjs ")
+                    assert "${" not in handler["command"]
+                    for gate in handler["command"].split()[3:]:
+                        assert (EXT / "hooks" / f"{gate}.mjs").is_file(), gate
+
+
+def test_the_file_name_gate_runs_on_new_files_only():
+    gates = json.loads((EXT / "hooks.json").read_text(encoding="utf-8"))["arckit-gates"]["PreToolUse"]
+    by_matcher = {e["matcher"]: e["hooks"][0]["command"] for e in gates}
+    assert "validate-arc-filename" in by_matcher["write_to_file"]
+    assert "validate-arc-filename" not in by_matcher["replace_file_content|multi_replace_file_content"]
+    for command in by_matcher.values():
+        assert "file-protection" in command and "secret-file-scanner" in command
+
+
+def run_hook(mode_and_gates, payload):
+    res = subprocess.run(["node", "./hooks/agy-hook.mjs", *mode_and_gates.split()], cwd=EXT, input=payload,
+                         capture_output=True, text=True, timeout=60)
+    assert res.returncode == 0, res.stderr
+    return json.loads(res.stdout)
+
+
+def write_call(workspace, rel, content="# Test"):
+    return json.dumps({"toolCall": {"name": "write_to_file", "args": {"TargetFile": str(workspace / rel), "CodeContent": content}},
+                       "workspacePaths": [str(workspace)], "conversationId": "c1"})
+
+
+ALL_GATES = "pre validate-arc-filename file-protection secret-file-scanner"
+needs_node = pytest.mark.skipif(shutil.which("node") is None, reason="the hooks need Node.js")
+
+
+@pytest.fixture
+def workspace(tmp_path):
+    (tmp_path / "projects" / "001-demo").mkdir(parents=True)
+    (tmp_path / ".arckit").mkdir()
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+    return tmp_path
+
+
+@needs_node
+def test_a_well_named_artefact_is_allowed(workspace):
+    assert run_hook(ALL_GATES, write_call(workspace, "projects/001-demo/ARC-001-REQ-v1.0.md")) == {"decision": "allow"}
+
+
+@needs_node
+def test_an_unknown_document_type_is_denied_with_the_reason(workspace):
+    verdict = run_hook(ALL_GATES, write_call(workspace, "projects/001-demo/ARC-001-ZZZZ-v1.0.md"))
+    assert verdict["decision"] == "deny" and "Unknown document type code 'ZZZZ'" in verdict["reason"]
+
+
+@needs_node
+def test_a_document_in_the_wrong_folder_is_denied_and_told_the_right_path(workspace):
+    verdict = run_hook(ALL_GATES, write_call(workspace, "projects/001-demo/ARC-001-ADR-001-v1.0.md"))
+    assert verdict["decision"] == "deny"
+    assert "projects/001-demo/decisions/ARC-001-ADR-001-v1.0.md" in verdict["reason"]
+
+
+@needs_node
+def test_a_credential_in_the_content_is_denied(workspace):
+    verdict = run_hook(ALL_GATES, write_call(workspace, "projects/001-demo/ARC-001-REQ-v1.0.md", "key AKIAIOSFODNN7EXAMPLE"))
+    assert verdict["decision"] == "deny" and "secrets detected" in verdict["reason"]
+
+
+@needs_node
+def test_an_edit_to_a_protected_file_is_denied_and_names_antigravity(workspace):
+    payload = json.dumps({"toolCall": {"name": "replace_file_content", "args": {
+        "TargetFile": str(workspace / ".env"), "TargetContent": "a", "ReplacementContent": "b"}}, "workspacePaths": [str(workspace)]})
+    verdict = run_hook("pre file-protection secret-file-scanner", payload)
+    assert verdict["decision"] == "deny" and "Protected" in verdict["reason"]
+    assert "Claude Code" not in verdict["reason"] and "Antigravity" in verdict["reason"]
+
+
+@needs_node
+@pytest.mark.parametrize("payload", ["not json", "{}", json.dumps({"toolCall": {"name": "run_command", "args": {"CommandLine": "ls"}}})])
+def test_anything_that_is_not_a_file_write_is_allowed(payload):
+    assert run_hook(ALL_GATES, payload) == {"decision": "allow"}
+
+
+@needs_node
+def test_a_check_that_cannot_run_stops_an_artefact_and_nothing_else(workspace):
+    """Antigravity ignores a hook that exits non-zero, so the adapter itself reports the failure as a deny."""
+    stopped = run_hook("pre no-such-gate", write_call(workspace, "projects/001-demo/ARC-001-REQ-v1.0.md"))
+    assert stopped["decision"] == "deny" and "could not run" in stopped["reason"]
+    assert run_hook("pre no-such-gate", write_call(workspace, "notes.md")) == {"decision": "allow"}
+
+
+@needs_node
+def test_the_hook_after_a_write_returns_an_empty_object(workspace):
+    assert run_hook("post update-manifest", write_call(workspace, "projects/001-demo/ARC-001-REQ-v1.0.md")) == {}
+
+
+def test_the_rule_is_triggered_by_artefacts_not_always_on():
+    front, body = front_and_body(EXT / "rules" / "arckit-artefacts.md")
+    assert front["trigger"] == "glob"
+    # Antigravity wants one comma-separated string here, not a list.
+    assert isinstance(front["globs"], str) and "**/ARC-*.md" in front["globs"]
+    assert "DRAFT" in body and "ARC-{PROJECT_ID}-{TYPE}-v{VERSION}.md" in body
+    # A root AGENTS.md would be ignored, and rules/AGENTS.md would load in every session.
+    assert not (EXT / "rules" / "AGENTS.md").exists()
+
+
+def test_the_readme_says_the_new_parts_are_unproven_in_a_live_session():
+    readme = (EXT / "README.md").read_text(encoding="utf-8")
+    assert "They have not yet been run in a live Antigravity session." in readme
+    assert "Twelve subagents." in readme and "`/arckit-evaluate` and `/arckit-score` stay in your conversation." in readme
 
 
 def test_the_readme_says_how_far_it_has_been_tried():
