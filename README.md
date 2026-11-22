@@ -221,6 +221,8 @@ Zero-config: 75 core commands, templates, scripts, and five bundled MCP servers 
 
 There is nothing to initialise. Commands are invoked as `/arckit:requirements`, `/arckit:stakeholders`, etc.
 
+Using Google Antigravity as well, or instead? ArcKit has an experimental plugin for it: see **Google Antigravity** below.
+
 </details>
 
 <details>
@@ -420,6 +422,8 @@ Every ArcKit command is an Agent Skill whose name starts `arckit-`:
 ```
 
 See [the plugin's README](https://github.com/tractorjuice/arckit-antigravity) for the MCP servers and what is not there yet. **Updating:** run the install command again.
+
+Using Gemini CLI as well, or instead? ArcKit's established extension for it is under **Gemini CLI** above.
 
 </details>
 

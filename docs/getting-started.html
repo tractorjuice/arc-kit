@@ -13,19 +13,19 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="Install the ArcKit AI harness in 5 minutes for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, or Mistral Vibe, then create governed architecture artifacts.">
-    <meta name="keywords" content="ArcKit getting started, install ArcKit, Claude Code plugin, Gemini CLI extension, Codex CLI, OpenCode CLI, GitHub Copilot, Mistral Vibe, architecture governance setup, quick start guide">
+    <meta name="description" content="Install the ArcKit AI harness in 5 minutes for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, Mistral Vibe, or Google Antigravity, then create governed architecture artifacts.">
+    <meta name="keywords" content="ArcKit getting started, install ArcKit, Claude Code plugin, Gemini CLI extension, Codex CLI, OpenCode CLI, GitHub Copilot, Mistral Vibe, Google Antigravity, architecture governance setup, quick start guide">
     <meta name="author" content="ArcKit">
     <title>Install ArcKit | Getting Started Guide</title>
     <meta property="og:title" content="Install ArcKit | Getting Started Guide">
-    <meta property="og:description" content="Install the ArcKit AI harness for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, or Mistral Vibe and create governed architecture artifacts.">
+    <meta property="og:description" content="Install the ArcKit AI harness for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, Mistral Vibe, or Google Antigravity and create governed architecture artifacts.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arckit.org/getting-started.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Install ArcKit | Getting Started Guide">
-    <meta name="twitter:description" content="Install the ArcKit AI harness for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, or Mistral Vibe and create governed architecture artifacts.">
+    <meta name="twitter:description" content="Install the ArcKit AI harness for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, Mistral Vibe, or Google Antigravity and create governed architecture artifacts.">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/getting-started.html">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -303,10 +303,10 @@
                 "@type": "HowTo",
                 "@id": "https://arckit.org/getting-started.html",
                 "name": "Install ArcKit | Getting Started Guide",
-                "description": "Install the ArcKit AI harness in 5 minutes for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, or Mistral Vibe, then create governed architecture artifacts.",
+                "description": "Install the ArcKit AI harness in 5 minutes for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, Mistral Vibe, or Google Antigravity, then create governed architecture artifacts.",
                 "totalTime": "PT5M",
                 "step": [
-                    { "@type": "HowToStep", "position": 1, "name": "Choose Your AI Platform", "text": "Pick Claude Code (premier), Gemini CLI, Codex CLI, OpenCode CLI, GitHub Copilot, or Mistral Vibe." },
+                    { "@type": "HowToStep", "position": 1, "name": "Choose Your AI Platform", "text": "Pick Claude Code (premier), Gemini CLI, Codex CLI, OpenCode CLI, GitHub Copilot, Mistral Vibe, or Google Antigravity (experimental)." },
                     { "@type": "HowToStep", "position": 2, "name": "Install Your AI Tool", "text": "Install Claude Code, Gemini CLI, Codex CLI, OpenCode CLI, GitHub Copilot, or Mistral Vibe using the platform-specific installer." },
                     { "@type": "HowToStep", "position": 3, "name": "Install ArcKit", "text": "Add the ArcKit plugin (Claude Code and Codex CLI), extension (Gemini CLI and Mistral Vibe), or run arckit init (OpenCode/Copilot)." },
                     { "@type": "HowToStep", "position": 4, "name": "Open Your Project", "text": "Navigate to your project directory and launch your chosen AI tool." },
@@ -364,7 +364,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">5 Minute Setup</span>
             <h1 class="app-page-hero__title">Install ArcKit</h1>
-            <p class="app-page-hero__description">Set up ArcKit for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, or Mistral Vibe and start your first governed architecture project.</p>
+            <p class="app-page-hero__description">Set up ArcKit for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, Mistral Vibe, or Google Antigravity and start your first governed architecture project.</p>
         </div>
     </div>
 
@@ -383,6 +383,7 @@
                 <button class="app-platform-tab" data-platform="opencode">OpenCode CLI</button>
                 <button class="app-platform-tab" data-platform="copilot">GitHub Copilot</button>
                 <button class="app-platform-tab" data-platform="vibe">Mistral Vibe</button>
+                <button class="app-platform-tab" data-platform="antigravity">Antigravity</button>
             </div>
 
             <!-- Claude Code -->
@@ -453,6 +454,7 @@ claude</code></pre></div>
                     <span class="app-step__number">2</span>
                     <h2 class="govuk-heading-m app-step__title">Install ArcKit Extension</h2>
                     <div class="app-code-block">gemini extensions install https://github.com/tractorjuice/arckit-gemini</div>
+                    <div class="app-install-note">Using Google Antigravity as well, or instead? ArcKit has an experimental plugin for it: see the <strong>Antigravity</strong> tab above.</div>
                     <p class="govuk-body govuk-!-margin-top-3">Zero-config: ArcKit commands, templates, scripts, and bundled MCP servers. Update with <code>gemini extensions update arckit</code>.</p>
                 </div>
 
@@ -664,6 +666,42 @@ vibe</code></pre></div>
                 </div>
             </div>
 
+            <!-- Google Antigravity -->
+            <div class="app-platform-content" id="platform-antigravity">
+                <div class="app-step">
+                    <span class="app-step__number">1</span>
+                    <h2 class="govuk-heading-m app-step__title">Install Antigravity</h2>
+                    <p class="govuk-body">Install Google Antigravity, then confirm its command-line tool is available:</p>
+                    <div class="app-code-block">agy --version</div>
+                    <div class="app-install-note">Experimental. The ArcKit plugin passes Antigravity's own plugin check and one command has been run there; most have not been tried yet. If your shell can't find <code>agy</code>, it is at <code>~/.gemini/bin/agy</code>.</div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">2</span>
+                    <h2 class="govuk-heading-m app-step__title">Install ArcKit Plugin</h2>
+                    <div class="app-code-block">agy plugin install https://github.com/tractorjuice/arckit-antigravity</div>
+                    <p class="govuk-body govuk-!-margin-top-3">The plugin brings every ArcKit command as an Agent Skill and five MCP servers that need no key. Update it later by running the same command again.</p>
+                    <div class="app-install-note">Using Gemini CLI as well, or instead? ArcKit's Gemini CLI extension is the established one: see the <strong>Gemini CLI</strong> tab above.</div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">3</span>
+                    <h2 class="govuk-heading-m app-step__title">Set Up Your Project</h2>
+                    <p class="govuk-body">ArcKit's skills read templates and helper scripts from your project's <code>.arckit/</code> folder, so scaffold it once:</p>
+                    <div class="app-code-block"><pre><code>pip install git+https://github.com/tractorjuice/arc-kit.git
+arckit init my-project --ai antigravity
+cd my-project
+agy</code></pre></div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">4</span>
+                    <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
+                    <div class="app-code-block">/arckit-start</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Shows project status, the command decision tree and recommended next steps. Every ArcKit command in Antigravity starts <code>/arckit-</code>.</p>
+                </div>
+            </div>
+
             <!-- Vibe Start -->
             <div class="govuk-notification-banner govuk-!-margin-top-6" role="region" aria-labelledby="vibe-start-title">
                 <div class="govuk-notification-banner__header">
@@ -672,7 +710,7 @@ vibe</code></pre></div>
                 <div class="govuk-notification-banner__content">
                     <h3 class="govuk-notification-banner__heading">Vibe Start &mdash; the 3-prompt super prompt</h3>
                     <p class="govuk-body">Skip the decision tree. Three prompts take you from empty repo to a fully-populated project. ArcKit chains commands via the <code>handoffs:</code> metadata in each command's frontmatter.</p>
-                    <div class="app-install-note">Use your platform syntax: Claude Code, Gemini CLI, and OpenCode use <code>/arckit:command</code>; Codex CLI uses <code>$arckit-command</code>; GitHub Copilot and Mistral Vibe use <code>/arckit-command</code>.</div>
+                    <div class="app-install-note">Use your platform syntax: Claude Code, Gemini CLI, and OpenCode use <code>/arckit:command</code>; Codex CLI uses <code>$arckit-command</code>; GitHub Copilot, Mistral Vibe and Antigravity use <code>/arckit-command</code>.</div>
                     <p class="govuk-body govuk-!-margin-top-3"><strong>Claude Code / Gemini CLI / OpenCode example:</strong></p>
                     <div class="app-code-block govuk-!-margin-top-3">/arckit:init  This is a project for {one-line description of what you're building}.</div>
                     <div class="app-code-block govuk-!-margin-top-2">/arckit:principles</div>
@@ -715,7 +753,7 @@ vibe</code></pre></div>
             <div class="app-step">
                 <span class="app-step__number">6</span>
                 <h2 class="govuk-heading-m app-step__title">Follow GDS Phases</h2>
-                <div class="app-install-note">Commands shown use Claude Code / Gemini CLI / OpenCode syntax (<code>/arckit:command</code>). For Codex CLI use <code>$arckit-command</code>. For GitHub Copilot and Mistral Vibe use <code>/arckit-command</code>.</div>
+                <div class="app-install-note">Commands shown use Claude Code / Gemini CLI / OpenCode syntax (<code>/arckit:command</code>). For Codex CLI use <code>$arckit-command</code>. For GitHub Copilot, Mistral Vibe and Antigravity use <code>/arckit-command</code>.</div>
 
                 <h3 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Discovery</h3>
                 <div class="app-code-block">/arckit:stakeholders Analyze stakeholders for appointment system</div>

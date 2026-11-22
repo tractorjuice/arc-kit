@@ -10,6 +10,8 @@ ArcKit provides 75 slash commands across strategy, architecture, delivery, assur
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 
+Using Google Antigravity? ArcKit has an experimental plugin for it: [arckit-antigravity](https://github.com/tractorjuice/arckit-antigravity).
+
 ### Prerequisites
 
 - **[Gemini CLI](https://github.com/google-gemini/gemini-cli)**: `npm install -g @google/gemini-cli@latest`

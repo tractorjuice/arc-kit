@@ -14,7 +14,7 @@
     </url>
     <url>
         <loc>https://arckit.org/getting-started.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
@@ -32,7 +32,7 @@
     </url>
     <url>
         <loc>https://arckit.org/claude-code-plugin.html</loc>
-        <lastmod>2026-11-18</lastmod>
+        <lastmod>2026-11-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -92,7 +92,7 @@
     </url>
     <url>
         <loc>https://arckit.org/llms.txt</loc>
-        <lastmod>2026-11-19</lastmod>
+        <lastmod>2026-11-22</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>

@@ -16,8 +16,8 @@
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
   "claude-code-plugin.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "51cc93ee5c2b70b9e6f3ce920a9fa0c708a8b87c6f8ece4305b26aea639570d4"
+    "lastmod": "2026-11-22",
+    "text_sha256": "5b398e3ecc894c57f94e4e1bc8f0ab81cb40e5122181c6585d37b6168e549e55"
   },
   "commands.html": {
     "lastmod": "2026-11-19",
@@ -40,8 +40,8 @@
     "text_sha256": "00a39ac1aac6c32fbbf6ef7ae53116933583b0649e92aa2d208b06372f15b813"
   },
   "getting-started.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "be8e5c90ab944c2a3992d0d62357464ebfa44139ed46b2aeac3ca6b48f286fce"
+    "lastmod": "2026-11-22",
+    "text_sha256": "cdbf5fc5390c5edde1074d939bda387c90a1f156e9f23501f380bfe78ed4d4e2"
   },
   "guide/adm-preliminary.html": {
     "lastmod": "2026-07-01",
@@ -1128,8 +1128,8 @@
     "text_sha256": "ca9a3929485f06a5c689672b7dd945e135327fe1966dd0dba035d776d178ef8f"
   },
   "llms.txt": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "1660268b7c4729f75116ef2c990c5c09665192f3b0269e3dd7a8f7e1612360f1"
+    "lastmod": "2026-11-22",
+    "text_sha256": "7cb06aacab379a520ab2b3b29b62399a28ba042eaa73410057647cbe93c4dadd"
   },
   "on-github.html": {
     "lastmod": "2026-11-16",
