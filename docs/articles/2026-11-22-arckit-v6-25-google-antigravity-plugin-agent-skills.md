@@ -67,7 +67,7 @@ You'll need Antigravity installed, Node.js, and Python for ArcKit's small setup 
 
 **75 core commands.** These cover a project from plan to published documentation: principles, stakeholders, risk, business case, requirements, data model, research, Wardley Maps, procurement, design reviews, backlog, traceability and the UK government assessments.
 
-**74 for other countries.** Each set drafts that country's own assessments and procurement documents:
+**74 for other countries.** Each set drafts documents against that country's own regulations and standards:
 
 - UAE federal: 12
 - France: 12
