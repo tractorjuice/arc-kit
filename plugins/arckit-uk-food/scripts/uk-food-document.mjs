@@ -8,7 +8,9 @@ import {
 } from './uk-food-worksheet.mjs';
 import { completionRecordDocument, DOCUMENT_FILE, PENDING, readSignOffs } from './uk-food-status.mjs';
 import { HELPER, loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
-import { cleaningScheduleChunks, cleaningScheduleSource, listAsked, listOutstanding, LISTS, listSummary } from './uk-food-lists.mjs';
+import {
+  cleaningScheduleChunks, cleaningScheduleSource, listAsked, listOutstanding, LISTS, listSummary, suppliersChunks, suppliersSource
+} from './uk-food-lists.mjs';
 export {
   BEFORE_RENDER, bodyText, businessText, closingNotice, COMPLETION_STALE, coverageChunks, DOC_OF_SECTION, extraCareDone,
   failure, misplaced, NAME_QUESTION, NOT_CONFIRMED, notConfirmed, otherText, paragraphs, readWorksheets, said, sha256, sourcesOf, tableLines,
@@ -73,7 +75,7 @@ const BEGIN_MARKER = /^<!-- UK-FOOD:BEGIN doc=(\S+) data=(\S+) body=(\S+) -->$/;
 const beginMarker = (doc, hash) => `<!-- UK-FOOD:BEGIN doc=${doc} data=${DATA_ID} body=${hash} -->`;
 // The worksheets the documents read, in the order they are read: the one list a new worksheet is added
 // to. Let, not const, only so that withDocuments can give a test's list in its place.
-export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'cleaning'];
+export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'cleaning', 'suppliers'];
 
 // ---------------------------------------------------------------------------------------------
 // The documents, one row each, in the order status lists them, the completion record last. Adding a
@@ -119,7 +121,7 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'cleaning'];
 //   section, which is also its own worksheet. SECTION_DOCS and DOC_OF_SECTION come from it, and the
 //   usage text and each "--doc is one of" message list these documents first.
 // A rule that belongs to one document alone is a field of its row and no other:
-// - lacking(data), the profile's and the cleaning schedule's: what the data lacks that the document quotes,
+// - lacking(data), the profile's and the list documents': what the data lacks that the document quotes,
 //   beyond its data file, as render says it, or null.
 // sign-off also refuses, whatever status counts, any document whose body rendered afresh shows a line its row's
 // unfinishedLine marks (see freshlyUnfinished).
@@ -217,6 +219,22 @@ export let DOCUMENTS = [
     asks: (sheet) => listAsked(sheet), nouns: ['cleaning item', 'cleaning items'], entries: true,
     outstanding: (sheet, data) => listOutstanding(LISTS.cleaning, sheet, data), summary: (doc, sheet) => listSummary(LISTS.cleaning, doc, sheet),
     lacking: (data) => LISTS.cleaning.lacking(data)
+  },
+  {
+    // The pack's suppliers' list and contacts list forms, with the business's suppliers, its environmental health
+    // team and its other contacts; its body is uk-food-lists.mjs's, called when each field runs, as FOODCS's is.
+    code: 'FOODSUP', name: () => LISTS.suppliers.title, sheet: 'suppliers', uses: ['profile', 'suppliers'], needs: ['profile', 'suppliers'],
+    dataNeeded: null, signable: true, inStatus: true, chunks: (sources, data) => suppliersChunks(sources, data),
+    // It quotes the forms' labels and the team's list in every state, and says so.
+    source: (data) => suppliersSource(data),
+    // An entry or a Kept elsewhere not yet confirmed shows it unfinished, and so does UNANSWERED, which it prints for
+    // a suppliers' list with nothing confirmed and for the team's box until the team's entry is confirmed.
+    unfinishedLine: (line) => unanswered(line) || line.startsWith(NOT_CONFIRMED),
+    // Its entries, and nothing else, are counted; its own lines say the rest. Its nouns are its list's (a test holds
+    // them equal: the list module cannot be read while this table is made).
+    asks: (sheet) => listAsked(sheet), nouns: ['entry', 'entries'], entries: true,
+    outstanding: (sheet, data) => listOutstanding(LISTS.suppliers, sheet, data), summary: (doc, sheet) => listSummary(LISTS.suppliers, doc, sheet),
+    lacking: (data) => LISTS.suppliers.lacking(data)
   },
   {
     // It reads no worksheet itself: status, which it is rendered from, reads them all.

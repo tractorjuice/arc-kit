@@ -196,7 +196,8 @@ test('the status JSON has the documented shape: the seven documents in order, th
     'foodSafetyFolder']);
   assert.deepEqual([result.completionRecord, result.foodSafetyFolder], [null, true]);
   assert.equal(result.data, DATA_ID);
-  assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN', 'FOODCS']);
+  assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN', 'FOODCS',
+    'FOODSUP']);
   assert.deepEqual(STATUS_ORDER, result.documents.map((d) => d.code));
   for (const doc of result.documents) {
     assert.deepEqual(Object.keys(doc), ['code', 'worksheets', 'missingWorksheets', 'problems', 'misplaced', 'questions', 'confirmed', 'proposed',
@@ -250,6 +251,8 @@ test('the unfinished list says, for each document in order, what is outstanding 
       'entry counts when its State is confirmed and By and On are filled in' },
     { code: 'FOODCS', what: NOT_WRITTEN },
     { code: 'FOODCS', what: NOT_SIGNED },
+    { code: 'FOODSUP', what: NOT_WRITTEN },
+    { code: 'FOODSUP', what: NOT_SIGNED },
     { code: 'FOODOWN', what: UNCOVERED },
     { code: 'FOODOWN', what: AWAITING }
   ]);

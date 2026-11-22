@@ -252,6 +252,21 @@ def test_each_targets_min_lines_is_below_the_smallest_its_document_can_be(tmp_pa
     signed = run(HELPER, "sign-off", "--doc", "FOODCS", "--project", project, "--name", "Sam Okafor", "--role", "owner",
                  "--version", "1.0", "--date", "2026-11-17", "--other-text-read", "yes")
     assert signed.returncode == 0, signed.stderr
+    # The suppliers and contacts list at its smallest when finished: the suppliers' list kept elsewhere, and the
+    # environmental health team's entry, which Kept elsewhere does not stand in for. Written the same way, not counted.
+    suppliers = run(HELPER, "worksheet", "--section", "suppliers").stdout.replace(
+        "## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:",
+        "## Kept elsewhere\n\nWhere: The blue book by the till\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17")
+    suppliers += ("\n## SUP-01 Exampleton District Council\n\nKind: environmental-health\nContact-name:\nTelephone: 01632 960300\nEmail:\n"
+                  "Address:\nDelivery-days:\nLead-time:\nGoods-supplied:\nUseful-for:\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17\n"
+                  "Source:\n")
+    (project / "food-safety" / "answers-suppliers.md").write_text(suppliers, encoding="utf-8")
+    body = run(HELPER, "render", "--doc", "FOODSUP", "--project", project)
+    assert body.returncode == 0, body.stderr
+    (project / "ARC-001-FOODSUP-v1.0.md").write_text(f"Header text.\n\n{body.stdout}\nFooter text.\n", encoding="utf-8")
+    signed = run(HELPER, "sign-off", "--doc", "FOODSUP", "--project", project, "--name", "Sam Okafor", "--role", "owner",
+                 "--version", "1.0", "--date", "2026-11-17", "--other-text-read", "yes")
+    assert signed.returncode == 0, signed.stderr
     record = build("FOODCMP", project).read_text(encoding="utf-8")
     assert "Nothing is outstanding." in record
     lines["FOODCMP"] = record.count("\n")

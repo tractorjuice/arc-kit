@@ -5,7 +5,7 @@ import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSyn
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  CLEANING_FORM, CONTACTS_FORM, DATA_ID, DEFAULT_DATA_DIR, DOCUMENTS, LIST_SECTIONS, LISTS, SUPPLIERS_FORM, UNANSWERED,
+  CLEANING_FORM, CONTACTS_FORM, DATA_ID, DEFAULT_DATA_DIR, DOCUMENTS, LIST_SECTIONS, LISTS, RENDERED_CODES, SUPPLIERS_FORM, UNANSWERED,
   WORKSHEET_SECTIONS, beginReading, blankWorksheet, checkDocument, documentOf, emitWorksheet, listOutstanding, loadData, main, parseWorksheet,
   projectStatus, readList, renderDocument, signOffDocument, upgradeWorksheet, withDocuments
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
@@ -74,7 +74,7 @@ test('LIST_SECTIONS are the sections of LISTS, in order, each a worksheet the he
   for (const section of LIST_SECTIONS) {
     assert.ok(WORKSHEET_SECTIONS.includes(section), section);
     assert.equal(LISTS[section].section, section);
-    for (const field of ['prefix', 'title', 'elsewhereLabel']) assert.equal(typeof LISTS[section][field], 'string', `${section} ${field}`);
+    for (const field of ['prefix', 'title', 'elsewhereLabel', 'keptElsewhere']) assert.equal(typeof LISTS[section][field], 'string', `${section} ${field}`);
     assert.ok(Array.isArray(LISTS[section].fields), section);
     assert.equal(typeof LISTS[section].needs, 'function', section);
     assert.equal(typeof LISTS[section].guidance, 'function', section);
@@ -505,6 +505,7 @@ test('status tells each state of a cleaning schedule in its own true words, coun
 
 test('the row\'s words for an entry are its list\'s', () => {
   assert.deepEqual(documentOf('FOODCS').nouns, LISTS.cleaning.nouns);
+  assert.deepEqual(documentOf('FOODSUP').nouns, LISTS.suppliers.nouns);
 });
 
 // A row made for these tests, before the completion record, reading the cleaning worksheet.
@@ -659,6 +660,15 @@ const forms = () => {
   // that holds more than one line.
   return { supplier, team, contact, advice: team.rows.flat().find((cell) => cell.includes('\n')) };
 };
+const formBlocks = () => data.diary.pages.flatMap((p) => p.blocks).filter((b) => [SUPPLIERS_FORM.form, CONTACTS_FORM.form].includes(b.form));
+// Every word the two forms print, in every box of either form on every page: the labels the document may quote.
+const formWords = () => new Set(formBlocks().filter((b) => !b.fromImage && b.kind === 'table').flatMap((b) => [...b.columns, ...b.rows.flat()])
+  .filter(Boolean));
+// The pack's filled-in example, written on the forms (an invented grocer and council): never printed.
+const examples = () => formBlocks().filter((b) => b.fromImage).map((b) => b.text);
+// A field's name or a label as its letters only, in lower case: each label is named after the field printed beside it.
+const letters = (text) => text.toLowerCase().replace(/[^a-z]/g, '');
+const keyOf = (field) => field.toLowerCase().replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
 
 const SUP_FIELDS = ['Kind', 'Contact-name', 'Telephone', 'Email', 'Address', 'Delivery-days', 'Lead-time', 'Goods-supplied', 'Useful-for',
   'State', 'By', 'On', 'Source'];
@@ -672,6 +682,24 @@ const TEAM = supEntry('SUP-02', 'Exampleton District Council food team', { Kind:
 const PESTS = supEntry('SUP-03', 'Swift Pest Control', { Kind: 'contact', Email: 'visits@swift-pest-control.example',
   'Useful-for': 'Mice, rats and insects', ...agreed });
 const SUP_KEPT = ['Where: The blue book by the till', 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17', 'Source:'];
+
+// The cafe's worksheets in a new project folder, with the suppliers worksheet given in place of its own (or none, for null).
+const cafeSuppliers = (text) => {
+  const dir = cafeWith();
+  const file = join(dir, 'food-safety', 'answers-suppliers.md');
+  if (text === null) rmSync(file, { force: true });
+  else if (text !== undefined) writeFileSync(file, text);
+  return dir;
+};
+const renderedSup = (dir) => {
+  const result = renderDocument('FOODSUP', dir, data);
+  assert.equal(result.exit, 0, (result.messages ?? []).join('\n'));
+  return result.text;
+};
+// Each table of a body, as its rows of cells, the header row first: every table is a chunk of its own.
+const tablesOf = (text) => text.split('\n\n').map((chunk) => chunk.split('\n')).filter((lines) => lines[0].startsWith('| '))
+  .map((lines) => lines.filter((line) => !line.startsWith('| ---')).map(cellsOf));
+const signOffSup = (dir) => signOffDocument('FOODSUP', dir, PERSON, data);
 
 test('SUPPLIERS_FORM and CONTACTS_FORM find the pack\'s boxes, laid out as the suppliers and contacts document reads them', () => {
   const { supplier, team, contact, advice } = forms();
@@ -781,6 +809,165 @@ test('a second environmental-health entry, proposed or confirmed, is a problem a
   }
   const held = supEntry('SUP-04', 'Exampleton council, the old number', { Kind: 'environmental-health', Telephone: '01632 960301', State: 'unanswered' });
   assert.deepEqual(parse(supSheet(GROCER, TEAM, held)).problems, []);
+});
+
+test('the cafe renders to the expected suppliers and contacts body', () => {
+  assert.equal(`${renderedSup(CAFE)}\n`, readFileSync(join(CAFE, 'expected', 'FOODSUP.body.md'), 'utf8'));
+});
+
+test('every label the document prints is the pack\'s, from its two forms, beside the value of the field it is named after', () => {
+  const { supplier, team, contact, advice } = forms();
+  const words = formWords();
+  const text = renderedSup(CAFE);
+  const parsed = parse(readFileSync(join(CAFE, 'food-safety', 'answers-suppliers.md'), 'utf8'));
+  const confirmed = (kind) => [...parsed.entries.values()].filter((e) => e.answered && e.kind === kind);
+  // A table to each confirmed entry: the suppliers, then the team, then the other contacts, each in the worksheet's order.
+  const shown = [...confirmed('supplier').map((e) => [e, supplier]), ...confirmed('environmental-health').map((e) => [e, team]),
+    ...confirmed('contact').map((e) => [e, contact])];
+  assert.deepEqual(shown.map(([e]) => e.kind), ['supplier', 'supplier', 'environmental-health', 'contact'], 'the cafe shows every kind');
+  const tables = tablesOf(text);
+  assert.equal(tables.length, shown.length);
+  tables.forEach((rows, i) => {
+    const [entry, box] = shown[i];
+    for (const [label] of rows) assert.ok(words.has(label), `${label} is not a word of the pack's forms`);
+    // The header row is the box's first heading, then the entry's name.
+    assert.deepEqual(rows[0], [box.columns[0], entry.title]);
+    assert.deepEqual(rows.map(([label]) => label).sort(), [box.columns[0], ...(box === supplier
+      ? [box.columns[1], ...box.rows.flat().filter((cell) => cell && !cell.includes('\n'))] : [box.columns[1], ...box.rows.map((row) => row[0])])].sort(),
+    `${entry.id} prints every label of its box`);
+    for (const [label, value] of rows.slice(1)) {
+      const named = SUP_FIELDS.filter((field) => letters(label).startsWith(letters(field)));
+      assert.equal(named.length, 1, `${label} names one field`);
+      const want = box === team && named[0] === 'Useful-for' ? advice.replace(/\n/g, '<br>') : entry[keyOf(named[0])];
+      assert.equal(value, want, `${entry.id}: ${label}`);
+    }
+  });
+});
+
+test('the pack\'s filled-in examples on the two forms are never printed, in any document of the cafe or any state of this one', () => {
+  const found = examples();
+  assert.ok(found.length >= 11);
+  const bodies = [...RENDERED_CODES.map((code) => renderDocument(code, CAFE, data).text), renderedSup(cafeSuppliers(supSheet())),
+    renderedSup(cafeSuppliers(withElsewhere(supSheet(TEAM), SUP_KEPT)))];
+  for (const body of bodies) {
+    assert.equal(typeof body, 'string');
+    for (const example of found) for (const line of example.split('\n')) assert.ok(!body.includes(line), `the pack's example "${line}" is printed`);
+  }
+});
+
+const SUP_FILE = 'food-safety/answers-suppliers.md';
+const NOTHING_YET = `${SUP_FILE} has no entry yet, and nothing under Kept elsewhere: add and confirm an entry for each supplier, or confirm ` +
+  'under Kept elsewhere where the business keeps its suppliers\' list';
+const NO_SUPPLIER = `${SUP_FILE} has no entry whose Kind is supplier: add and confirm one for each supplier, or confirm under Kept elsewhere ` +
+  'where the business keeps its suppliers\' list';
+const NO_TEAM = `${SUP_FILE} has no entry whose Kind is environmental-health: add and confirm one for the environmental health team, with ` +
+  'its Telephone or Email (Kept elsewhere covers the suppliers\' list only)';
+const SUP_KEPT_OPEN = `Kept elsewhere in ${SUP_FILE} has something written in it but is not confirmed: fill in Where, set State to confirmed ` +
+  'and fill in By and On, or clear it';
+const supStatusLine = (dir) => mainSays('status', '--project', dir).out.split('\n').find((line) => line.startsWith('FOODSUP '));
+const supUnfinished = (dir) => projectStatus(dir, data).unfinished.filter((line) => line.code === 'FOODSUP').map((line) => line.what);
+
+test('status tells each state of a suppliers and contacts list in its own true words; whatever the document shows unfinished, status says why, and sign-off refuses with those words', () => {
+  const proposedGrocer = supEntry('SUP-01', 'Hartley Greengrocers', { ...GROCER_FIELDS, State: 'proposed', Source: 'A delivery note' });
+  const states = [
+    ['blank', supSheet(), 'no entries yet', [NOTHING_YET, NO_TEAM]],
+    ['a supplier confirmed, no environmental health entry', supSheet(GROCER), '1 of 1 entries confirmed', [NO_TEAM]],
+    ['the team confirmed, no supplier', supSheet(TEAM), '1 of 1 entries confirmed', [NO_SUPPLIER]],
+    ['Kept elsewhere confirmed alone', withElsewhere(supSheet(), SUP_KEPT), 'the business keeps its suppliers\' list elsewhere', [NO_TEAM]],
+    ['Kept elsewhere not confirmed', withElsewhere(supSheet(), KEPT_UNCONFIRMED), 'no entries yet', [SUP_KEPT_OPEN, NO_SUPPLIER, NO_TEAM]],
+    ['a supplier proposed, the team confirmed', supSheet(proposedGrocer, TEAM), '1 of 2 entries confirmed, 1 proposed',
+      [`1 entry in ${SUP_FILE} is proposed but not confirmed (SUP-01): an entry counts when its State is confirmed and By and On are filled in`]],
+    ['Kept elsewhere and the team confirmed', withElsewhere(supSheet(TEAM), SUP_KEPT),
+      '1 of 1 entries confirmed; the business also keeps its suppliers\' list elsewhere', []],
+    ['everything confirmed', supSheet(GROCER, TEAM, PESTS), '3 of 3 entries confirmed', []]
+  ];
+  for (const [state, text, summary, lines] of states) {
+    const dir = cafeSuppliers(text);
+    assert.equal(supStatusLine(dir), `FOODSUP (Suppliers and contacts): ${summary}; not written; not signed off`, state);
+    assert.deepEqual(supUnfinished(dir), [...lines, NOT_WRITTEN, NOT_SIGNED], state);
+    const record = renderDocument('FOODCMP', dir, data).text;
+    for (const line of lines) assert.ok(record.includes(`\n- Suppliers and contacts (FOODSUP): ${line}\n`), `${state}: ${record}`);
+    // Written, the document is unfinished exactly when status names something, and sign-off gives status's own words, never
+    // the backstop's alone.
+    writtenAs(dir, 'FOODSUP');
+    const check = checkDocument('FOODSUP', dir, join(dir, 'ARC-001-FOODSUP-v1.0.md'), data);
+    assert.deepEqual([check.exit, check.unfinished], [0, lines.length > 0], state);
+    const signed = signOffSup(dir);
+    if (lines.length) assert.deepEqual(signed.messages, ['FOODSUP is not signed off, and nothing was written, because:', ...lines.map((l) => `- ${l}`)], state);
+    else assert.equal(signed.exit, 0, `${state}: ${signed.messages ?? signed.message}`);
+  }
+  // Not started: status says how to make the worksheet, and render refuses, saying the same.
+  const none = cafeSuppliers(null);
+  assert.equal(supStatusLine(none), 'FOODSUP (Suppliers and contacts): not started: answers-suppliers.md; no entries yet; not written; not signed off');
+  assert.deepEqual(supUnfinished(none), ['worksheet food-safety/answers-suppliers.md is not started yet: make it with worksheet --section ' +
+    'suppliers and fill it in', NOT_WRITTEN, NOT_SIGNED]);
+  const refused = renderDocument('FOODSUP', none, data);
+  assert.equal(refused.exit, 2);
+  assert.match(refused.messages.join('\n'), /answers-suppliers\.md does not exist\. Make it with: .* worksheet --section suppliers /);
+});
+
+test('the document shows each part not yet answered in its own place: no confirmed supplier in the suppliers\' list, no confirmed team in its box', () => {
+  const { team, advice } = forms();
+  const noTeam = renderedSup(cafeSuppliers(supSheet(GROCER)));
+  const box = `| ${team.columns[0]} | ${UNANSWERED} |\n| --- | --- |\n| ${team.columns[1]} | ${advice.replace(/\n/g, '<br>')} |`;
+  assert.ok(noTeam.includes(`\n\n${box}\n\n`), noTeam);
+  assert.ok(!noTeam.includes('The suppliers\' list has no confirmed supplier yet'));
+  const noSupplier = renderedSup(cafeSuppliers(supSheet(TEAM)));
+  assert.ok(noSupplier.includes(`\n## Suppliers' list\n\nThe suppliers' list has no confirmed supplier yet: ${UNANSWERED}\n\n## Contacts list\n`), noSupplier);
+  assert.equal(noSupplier.split(UNANSWERED).length, 2, 'the team\'s box is answered');
+  // Kept elsewhere confirmed covers the suppliers' list, in the business's words, and the team's box still asks.
+  const kept = renderedSup(cafeSuppliers(withElsewhere(supSheet(), SUP_KEPT)));
+  assert.ok(kept.includes('\n## Suppliers\' list\n\nThe business keeps its suppliers\' list elsewhere: The blue book by the till (said by Sam Okafor, ' +
+    '2026-11-17).\n\n## Contacts list\n'), kept);
+  assert.ok(kept.includes(`\n\n${box}\n\n`), kept);
+  // An entry not confirmed, of any kind, is named by its identifier, and nothing of it is printed.
+  const open = renderedSup(cafeSuppliers(supSheet(supEntry('SUP-01', 'Hartley Greengrocers', { ...GROCER_FIELDS, State: 'unanswered' }), TEAM,
+    supEntry('SUP-03', 'Swift Pest Control', { Kind: 'contact', Telephone: '01632 960477', State: 'proposed', Source: 'A card through the door' }))));
+  assert.ok(open.includes(`\n${NOT_CONFIRMED_LINE}SUP-01 and SUP-03.\n`), open);
+  assert.ok(!open.includes('Hartley') && !open.includes('Swift'), open);
+});
+
+test('Review Focus 5 for suppliers: a name or value holding |, backticks, a # heading or the unfinished marks keeps every table\'s two columns, passes check and marks nothing unfinished', () => {
+  // A line that would start a heading inside a value never reaches a document: the worksheet is refused at that line,
+  // as for any value, and render prints nothing from it.
+  const heading = supSheet(supEntry('SUP-01', 'Hartley', { Kind: 'supplier', 'Goods-supplied': 'Fruit\n# Vegetables', ...agreed }));
+  const refused = parse(heading);
+  assert.deepEqual(refused.problems.map((p) => p.line), [lineOf(heading, '  # Vegetables')], messages(refused));
+  assert.equal(renderDocument('FOODSUP', cafeSuppliers(heading), data).exit, 1);
+  // Everything else a person might type is printed as typed, escaped, and changes nothing about the document.
+  const odd = supEntry('SUP-01', '# Hartley | Sons **NOT YET ANSWERED**', { Kind: 'supplier', 'Contact-name': 'Dev `Hartley`',
+    'Delivery-days': 'Tuesday | Friday', 'Goods-supplied': '# Vegetables\n**NOT YET ANSWERED**\nNot yet confirmed, so not shown: SUP-09.\nUK-FOOD:END -->',
+    Address: 'Unit 3 | Station Yard', ...agreed });
+  const team = supEntry('SUP-02', 'Not yet confirmed, so not shown: SUP-08.', { Kind: 'environmental-health', Telephone: '01632 960300 | ext 4', ...agreed });
+  const contact = supEntry('SUP-03', '**NOT YET ANSWERED**', { Kind: 'contact', Email: 'someone@place.example', 'Useful-for': '| a | b |\n- a list item',
+    ...agreed });
+  const dir = cafeSuppliers(withElsewhere(supSheet(odd, team, contact), ['Where: # The **NOT YET ANSWERED** | book', 'State: confirmed',
+    'By: Sam Okafor', 'On: 2026-11-17', 'Source:']));
+  const text = renderedSup(dir);
+  const tables = tablesOf(text);
+  assert.equal(tables.length, 3);
+  for (const rows of tables) for (const row of rows) assert.equal(row.length, 2, row.join(' | '));
+  assert.equal(tables[0][0][1], '# Hartley \\| Sons \\*\\*NOT YET ANSWERED\\*\\*');
+  assert.ok(tables[0].some(([, value]) => value === '# Vegetables<br>\\*\\*NOT YET ANSWERED\\*\\*<br>Not yet confirmed, so not shown: SUP-09.<br>UK-FOOD:END --&gt;'),
+    JSON.stringify(tables[0]));
+  assert.ok(!text.includes(UNANSWERED), 'no business words make the unfinished mark');
+  const lines = text.split('\n');
+  assert.ok(!lines.some((line) => line.startsWith(NOT_CONFIRMED_LINE)), 'no business words make the not-confirmed line');
+  assert.deepEqual(lines.filter((line) => /^#/.test(line)), ['## Suppliers\' list', '## Contacts list'], 'no business words make a heading');
+  assert.equal(lines.filter((line) => line.includes('UK-FOOD:')).filter((line) => line.startsWith('<!-- UK-FOOD:')).length, 2);
+  writtenAs(dir, 'FOODSUP');
+  const check = checkDocument('FOODSUP', dir, join(dir, 'ARC-001-FOODSUP-v1.0.md'), data);
+  assert.deepEqual([check.exit, check.unfinished], [0, false], check.message);
+  assert.equal(signOffSup(dir).exit, 0);
+});
+
+test('the suppliers and contacts document says truly what it quotes from the pack, which it does in every state', () => {
+  const { source } = data;
+  const line = `The labels in the tables, and the list of what the environmental health team can advise on, are quoted from the ${source.publisher}'s ` +
+    `${source.title}, retrieved 17 November 2026. ${source.attribution} The ${source.publisher} has not reviewed or endorsed this document.`;
+  for (const dir of [CAFE, cafeSuppliers(supSheet()), cafeSuppliers(withElsewhere(supSheet(), SUP_KEPT))]) {
+    assert.equal(renderedSup(dir).split('\n').at(-3), line);
+  }
 });
 
 test('the suppliers guidance says plainly that Kept elsewhere covers the suppliers\' list only, and that the team\'s entry is still needed', () => {

@@ -6,7 +6,7 @@ import { businessText, NOT_CONFIRMED, notConfirmed, said, tableLines, UNANSWERED
 
 // ---------------------------------------------------------------------------------------------
 // List worksheets, and the documents printed from them. A list worksheet holds the entries of one list a
-// business keeps (the things it cleans, and later its dishes and its suppliers), one entry to a "## "
+// business keeps (the things it cleans, its suppliers and contacts, and later its dishes), one entry to a "## "
 // heading, or says that the business keeps that list somewhere else. It has the own worksheet's grammar
 // and is read by the same reader (readBlocks), with the same slips read as meant, the same refusal of
 // characters a reader cannot see, and the same guidance comment, which is the tool's own and which
@@ -121,8 +121,11 @@ const KIND_ONLY = { 'Delivery-days': 'supplier', 'Lead-time': 'supplier', 'Goods
 //   are valid and this is empty.
 // - guidance(data): the guidance lines particular to the list, which guidanceOf puts with those every list
 //   shares; quoted: what the line naming the pack says of them (null when they quote nothing of the pack).
-// - elsewhereLabel: the list as "The business keeps a ... elsewhere" names it. With `each`, it gives the two
+// - elsewhereLabel: the list as "the business keeps its ... elsewhere" names it. With `each`, it gives the two
 //   ways a list with nothing in it is finished, as status says them (listOutstanding).
+// - keptElsewhere: the words the document's line opens with when Kept elsewhere is confirmed, before the colon and
+//   where: the whole phrase, article and all, so that each list words it as reads right ("a cleaning schedule", "its
+//   suppliers' list"), which no one rule for the article could.
 // - outstanding(parsed, data), when a list needs it: what else keeps its document from being finished, as
 //   plain lines for status, the completion record and sign-off, from a worksheet with no problems: no
 //   confirmed environmental health contact, say, or cells not confirmed in confirmed rows. None by default.
@@ -131,7 +134,7 @@ const KIND_ONLY = { 'Delivery-days': 'supplier', 'Lead-time': 'supplier', 'Goods
 export const LISTS = {
   cleaning: {
     section: 'cleaning', nouns: ['cleaning item', 'cleaning items'], prefix: 'CS', title: 'Cleaning schedule', entryTitle: 'Name of the item',
-    elsewhereLabel: 'cleaning schedule',
+    elsewhereLabel: 'cleaning schedule', keptElsewhere: 'The business keeps a cleaning schedule elsewhere',
     fields: ['Frequency', 'Other-frequency', 'Precautions', 'Method'],
     values: {
       Frequency: (value, data) => {
@@ -175,7 +178,7 @@ export const LISTS = {
   // team's box is the contact every business keeps.
   suppliers: {
     section: 'suppliers', nouns: ['entry', 'entries'], prefix: 'SUP', title: 'Suppliers and contacts', entryTitle: 'Business or service name',
-    elsewhereLabel: 'suppliers\' list',
+    elsewhereLabel: 'suppliers\' list', keptElsewhere: 'The business keeps its suppliers\' list elsewhere',
     fields: ['Kind', 'Contact-name', 'Telephone', 'Email', 'Address', 'Delivery-days', 'Lead-time', 'Goods-supplied', 'Useful-for'],
     // Kind is read in any letter case and kept in its own spelling. The days a supplier delivers are the business's
     // own words, printed under the pack's delivery days label: the pack's day boxes are not asked one by one.
@@ -220,6 +223,23 @@ export const LISTS = {
       'entry, confirmed, even when the business keeps its suppliers\' list somewhere else.'
     ],
     quoted: null,
+    // What else keeps the document from being finished, each in the words of what to do. listOutstanding has already
+    // said so when nothing at all is written (with how to begin), so the line about suppliers is left out then. An
+    // entry of the kind that is there but not confirmed is told by status's count of entries not confirmed, with how
+    // to confirm it; these lines are for a kind with no entry at all. Kept elsewhere stands in for suppliers, never
+    // for the team.
+    outstanding: (parsed) => {
+      const file = `food-safety/${worksheetName('suppliers')}`;
+      const entries = [...parsed.entries.values()];
+      const has = (kind) => entries.some((entry) => entry.kind === kind);
+      const nothingYet = !entries.length && !elsewhereGiven(parsed.elsewhere);
+      return [
+        ...(!has('supplier') && !parsed.elsewhere.answered && !nothingYet ? [`${file} has no entry whose Kind is supplier: add and confirm one ` +
+          'for each supplier, or confirm under Kept elsewhere where the business keeps its suppliers\' list'] : []),
+        ...(!has(TEAM) ? [`${file} has no entry whose Kind is ${TEAM}: add and confirm one for the environmental health team, with its ` +
+          'Telephone or Email (Kept elsewhere covers the suppliers\' list only)'] : [])
+      ];
+    },
     lacking: (data, where = 'the data') => (supplierForms(data) ? null : `${where} has no ${SUPPLIERS_FORM.form} form on page ` +
       `${SUPPLIERS_FORM.page} and ${CONTACTS_FORM.form} form on page ${CONTACTS_FORM.page} of diary.json in the layout the suppliers and ` +
       'contacts document is printed from: a supplier\'s box, then the environmental health team\'s box with its list of what the team ' +
@@ -430,7 +450,7 @@ const unquotedSourceLine = (source) => `Nothing in this document is quoted from 
 
 // The line a list document prints when Kept elsewhere is confirmed: where, and who said so and when.
 const elsewhereChunks = (list, elsewhere) => (elsewhere.answered
-  ? [[`The business keeps a ${list.elsewhereLabel} elsewhere: ${said(elsewhere.where)} (said by ${said(elsewhere.by)}, ${said(elsewhere.on)}).`]]
+  ? [[`${list.keptElsewhere}: ${said(elsewhere.where)} (said by ${said(elsewhere.by)}, ${said(elsewhere.on)}).`]]
   : []);
 // Who agreed an entry the document prints, and when, on a line of its own under its table.
 const agreedLine = (entry) => `- ${entry.id} ${said(entry.title)}: ${said(entry.by)}, ${said(entry.on)}`;
@@ -466,3 +486,48 @@ export function cleaningScheduleSource(sources, data) {
   const printsForm = [...sources.get(LISTS.cleaning.section).parsed.entries.values()].some((entry) => entry.answered);
   return printsForm ? quotedSourceLine("The table's column headings are quoted from", data.source) : unquotedSourceLine(data.source);
 }
+
+// The headings of the document's two parts: the helper's words for the pack's two forms.
+const SUPPLIERS_HEADING = 'Suppliers\' list';
+const CONTACTS_HEADING = 'Contacts list';
+
+// The suppliers and contacts document. Under the first heading, a box for each confirmed supplier, its labels the
+// pack's suppliers' list form's; or, with none, the confirmed Kept elsewhere line; or, with neither, UNANSWERED.
+// Under the second, the environmental health team's box first, under the pack's heading for it and with the pack's
+// list of what the team advises on, holding UNANSWERED in place of the team's name until its entry is confirmed; then
+// a box for each confirmed contact. Each box is a two-column table: the label, then the business's words, escaped,
+// with every label of the box printed, so a detail not given shows as a blank, as on the paper form. Who agreed each
+// entry is listed under its part's boxes, as the forms have no place for it; an entry not confirmed, of any kind, is
+// named by its identifier at the end, and nothing else of it is printed.
+export function suppliersChunks(sources, data) {
+  const list = LISTS.suppliers;
+  const { parsed } = sources.get(list.section);
+  const forms = supplierForms(data);
+  const entries = [...parsed.entries.values()];
+  const confirmed = (kind) => entries.filter((entry) => entry.answered && entry.kind === kind);
+  const [suppliers, [team], contacts] = ['supplier', TEAM, 'contact'].map(confirmed);
+  // A box of `labels` for `entry`: its header row the first label and the entry's name, then a row for each other
+  // label. `own` gives a value the pack prints in place of the business's (the team's list of what it advises on).
+  const box = (labels, entry, own = {}) => {
+    const value = (field) => own[field] ?? businessText(entry[field]);
+    const [[field, label], ...rest] = labels;
+    return tableLines([label, value(field)], rest.map(([name, text]) => [text, value(name)]));
+  };
+  const agreed = (shown) => (shown.length ? [['Agreed by:'], shown.map(agreedLine)] : []);
+  const kept = elsewhereChunks(list, parsed.elsewhere);
+  const supplierPart = suppliers.length ? [...suppliers.map((entry) => box(forms.supplier, entry)), ...agreed(suppliers)]
+    : kept.length ? [] : [[`The suppliers' list has no confirmed supplier yet: ${UNANSWERED}`]];
+  // The team's heading and its "useful for advice on" heading are its box's first and last labels.
+  const teamHeading = forms.team[0][1];
+  const adviceHeading = forms.team.at(-1)[1];
+  const teamBox = team ? box(forms.team, team, { usefulFor: forms.advice })
+    : tableLines([teamHeading, UNANSWERED], [[adviceHeading, forms.advice]]);
+  return [[`## ${SUPPLIERS_HEADING}`], ...kept, ...supplierPart, ...elsewhereNotConfirmed(list, parsed.elsewhere),
+    [`## ${CONTACTS_HEADING}`], teamBox, ...contacts.map((entry) => box(forms.contact, entry)), ...agreed([...(team ? [team] : []), ...contacts]),
+    ...notConfirmed(entries)];
+}
+
+// The suppliers and contacts document's last line. It always quotes the pack: the team's box, with its heading and its
+// list, is printed in every state, and every other box's labels are the pack's.
+export const suppliersSource = (data) => quotedSourceLine('The labels in the tables, and the list of what the environmental health team ' +
+  'can advise on, are quoted from', data.source);
