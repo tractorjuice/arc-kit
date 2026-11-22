@@ -2,7 +2,7 @@
 
 **Google Antigravity is Google's agentic development platform, and it runs Agent Skills that you call with a slash command. ArcKit v6.25.0 adds a Google Antigravity plugin that brings ArcKit's 190 architecture governance commands to it as Agent Skills: type `/arckit-requirements` and it drafts a requirements document from a template.**
 
-**Before you start:** the plugin is experimental. It passes Antigravity's own plugin check and it installs. As of 22 November 2026 I've run eight of the core commands in Antigravity and they work; the other 182 haven't been tried there yet. It isn't a Google product and carries no Google endorsement. Everything ArcKit drafts is a draft for a qualified person to review.
+**Before you start:** the plugin is experimental. It passes Antigravity's own plugin check and it installs. As of 22 November 2026 I've run eight of the core commands in Antigravity and they work; the other 182 haven't been tried there yet. Everything ArcKit drafts is a draft for a qualified person to review.
 
 *Mark Craddock*
 
@@ -65,7 +65,7 @@ Each one wrote its document from ArcKit's template, with the document control ta
 
 **The same commands as every other assistant.** The plugin is generated from the commands ArcKit ships everywhere else, and all 190 arrive in the one install. The next section lists them.
 
-**Five MCP servers that need no key.** AWS Knowledge, Microsoft Learn, UK government code search, UK tenders and Trello come with the plugin, so the research commands can read AWS and Azure documentation, search UK government code and look up UK contract awards. Two more, Google Developer Knowledge and Data Commons, need a key, so you add those yourself; the plugin's page says how.
+**Four research MCP servers that need no key.** AWS Knowledge, Microsoft Learn, UK government code search and UK tenders come with the plugin, so the research commands can read AWS and Azure documentation, search UK government code and look up UK contract awards. Two more, Google Developer Knowledge and Data Commons, need a key, so you add those yourself; the plugin's page says how.
 
 **Nothing cut short.** I ran Antigravity's own plugin check on the first build and it found something Google's documentation doesn't mention: Antigravity loads the first 24,000 bytes of a skill and drops the rest. 29 of ArcKit's commands are longer than that. The longest, for defence AI assurance, would have lost five sixths of its instructions without any warning. Each of those 29 now keeps its full instructions in a second file beside the skill and tells the agent to read it first. The check passes.
 
@@ -135,8 +135,6 @@ Already using ArcKit on Claude Code? Run `claude plugin update arckit@arckit-cla
 ---
 
 *ArcKit is MIT licensed and maintained at [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit). The full list of changes is in the [6.25.0 release notes](https://github.com/tractorjuice/arc-kit/releases/tag/v6.25.0). The Antigravity plugin is at [github.com/tractorjuice/arckit-antigravity](https://github.com/tractorjuice/arckit-antigravity).*
-
-*Antigravity and Gemini CLI are Google's products. ArcKit is an independent project and isn't affiliated with Google.*
 
 <!-- arckit:community-block -->
 ## Join the ArcKit Community

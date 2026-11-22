@@ -2,8 +2,8 @@
 
 Written for the person using Google Antigravity: what the one plugin brings,
 broken down as the article breaks it down (75 core commands, 74 for other
-countries, 16 for sectors, 19 for methods, 6 for AI agents) and the five MCP
-servers that come with it. Same house style
+countries, 16 for sectors, 19 for methods, 6 for AI agents) and the four
+research MCP servers that come with it. Same house style
 as the sibling generate-hero-*.py scripts.
 
     uv run --with pillow python docs/articles/generate-hero-v6-25-google-antigravity-plugin.py [output.png]
@@ -34,10 +34,10 @@ GROUPS = (
     ("19", "for methods", ("TOGAF ADM 9", "Open Agile Architecture 5", "arc42 5")),
     ("6", "for AI agents", ("Inventory, design, integration,", "security, governance", "and maturity")),
 )
-MCP_TITLE = "5 MCP servers, no key needed"
-MCP_LIST = "AWS Knowledge · Microsoft Learn · UK government code · UK tenders · Trello"
+MCP_TITLE = "4 research MCP servers, no key needed"
+MCP_LIST = "AWS Knowledge · Microsoft Learn · UK government code · UK tenders"
 FOOT = "agy plugin install https://github.com/tractorjuice/arckit-antigravity"
-SMALL = "Experimental: eight core commands have been run in Antigravity so far. Not a Google product."
+SMALL = "Experimental: eight core commands have been run in Antigravity so far."
 PUBLISHED = "2026-11-22-arckit-v6-25-google-antigravity-plugin-agent-skills-hero.png"
 assert 75 + sum(n for _, _, n in COUNTRIES) + sum(int(g[0]) for g in GROUPS) == 190
 
