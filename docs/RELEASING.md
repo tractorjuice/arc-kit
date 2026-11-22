@@ -187,6 +187,7 @@ After step 13, verify the umbrella GitHub Release and every standalone GitHub Re
 - `tractorjuice/arckit-paperclip`
 - `tractorjuice/arckit-vibe`
 - `tractorjuice/arckit-kimi`
+- `tractorjuice/arckit-antigravity`
 
 The Claude plugin directory picks up the new `tractorjuice/arckit-claude` version through its push webhook, usually within minutes, or through its scheduled check about every six hours. Confirm the new version appears in the developer portal at <https://claude.ai/directory/manage>. After 6.18.3 the webhook recorded no delivery at all, so a version that hasn't appeared within the hour is waiting for the scheduled check, or for **Check for new commits** in the portal.
 

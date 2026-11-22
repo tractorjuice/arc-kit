@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The Antigravity plugin installs with one command.** It has its own repository, `tractorjuice/arckit-antigravity`, filled at each release: `agy plugin install https://github.com/tractorjuice/arckit-antigravity`. Before, you built it from a clone of arc-kit.
+
 ## [6.25.0] — 2026-11-22
 
 ### Added

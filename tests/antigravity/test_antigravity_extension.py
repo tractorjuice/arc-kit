@@ -104,7 +104,11 @@ def test_a_file_path_is_not_rewritten_as_a_command():
 
 def test_the_manifest_points_at_a_repository_that_exists():
     manifest = json.loads((EXT / "plugin.json").read_text(encoding="utf-8"))
-    assert manifest["repository"] == "https://github.com/tractorjuice/arc-kit"
+    assert manifest["repository"] == "https://github.com/tractorjuice/arckit-antigravity"
+    push = (REPO / "scripts" / "push-extensions.sh").read_text(encoding="utf-8")
+    # The repository is filled at each release, with the generated files it cannot do without.
+    assert '[antigravity]="extensions/arckit-antigravity:arckit-antigravity"' in push
+    assert '[antigravity]="skills templates config docs/guides plugin.json mcp_config.json assets/logo.svg"' in push
 
 
 @pytest.mark.parametrize("path", skills(), ids=lambda p: p.parent.name)
@@ -207,7 +211,7 @@ def test_the_readme_says_how_far_it_has_been_tried():
     assert "> **Experimental.**" in readme
     assert "The other 189 have not been run there yet." in readme
     assert "arckit init my-project --ai antigravity" in readme
-    assert "agy plugin install ./extensions/arckit-antigravity" in readme
+    assert "agy plugin install https://github.com/tractorjuice/arckit-antigravity" in readme
 
 
 AGY = shutil.which("agy") or os.path.expanduser("~/.gemini/bin/agy")

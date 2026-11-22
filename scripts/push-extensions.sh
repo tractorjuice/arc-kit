@@ -33,6 +33,7 @@ declare -A EXTENSIONS=(
   [paperclip]="extensions/arckit-paperclip:arckit-paperclip"
   [vibe]="extensions/arckit-vibe:arckit-vibe"
   [kimi]="extensions/arckit-kimi:arckit-kimi"
+  [antigravity]="extensions/arckit-antigravity:arckit-antigravity"
 )
 
 # Generated distributions are gitignored in the monorepo and must be created in
@@ -46,6 +47,7 @@ declare -A GENERATED_EXTENSION_REQUIRED_PATHS=(
   [paperclip]="src/data/commands.json skills templates docs/guides config"
   [vibe]="skills templates agents config docs/guides"
   [kimi]="skills templates config docs/guides kimi.plugin.json"
+  [antigravity]="skills templates config docs/guides plugin.json mcp_config.json assets/logo.svg"
 )
 
 # Claude Code plugins are published together to the arckit-claude marketplace
@@ -84,7 +86,7 @@ CLAUDE_PLUGIN_LAYOUT=(
 if [[ $# -gt 0 ]]; then
   TARGETS=("$@")
 else
-  TARGETS=("claude" "gemini" "codex" "opencode" "copilot" "paperclip" "vibe" "kimi")
+  TARGETS=("claude" "gemini" "codex" "opencode" "copilot" "paperclip" "vibe" "kimi" "antigravity")
 fi
 
 # ── Read version from root VERSION file ───────────────────────────────────────
