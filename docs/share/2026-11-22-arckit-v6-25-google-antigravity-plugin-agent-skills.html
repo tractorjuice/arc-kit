@@ -339,9 +339,38 @@ arckit init my-project --ai antigravity
 </li>
 </ol>
 <h2 id="what-you-get">What you get</h2>
-<p><strong>The same commands as every other assistant.</strong> The plugin is generated from the commands ArcKit ships everywhere else: 75 core commands and 115 from the optional overlays for other countries, sectors and methods.</p>
+<p><strong>The same commands as every other assistant.</strong> The plugin is generated from the commands ArcKit ships everywhere else, and all 190 arrive in the one install. The next section lists them.</p>
 <p><strong>Five tool connections that need no key.</strong> AWS Knowledge, Microsoft Learn, UK government code search, UK tenders and Trello come with the plugin. Two more, Google Developer Knowledge and Data Commons, need a key, so you add those yourself; the plugin's page says how.</p>
 <p><strong>Nothing cut short.</strong> I ran Antigravity's own plugin check on the first build and it found something Google's documentation doesn't mention: Antigravity loads the first 24,000 bytes of a skill and drops the rest. 29 of ArcKit's commands are longer than that. The longest, for defence AI assurance, would have lost five sixths of its instructions without any warning. Each of those 29 now keeps its full instructions in a second file beside the skill and tells the agent to read it first. The check passes.</p>
+<h2 id="what-the-190-commands-are">What the 190 commands are</h2>
+<p><strong>75 core commands.</strong> These cover a project from plan to published documentation: principles, stakeholders, risk, business case, requirements, data model, research, Wardley Maps, procurement, design reviews, backlog, traceability and the UK government assessments.</p>
+<p><strong>74 for other countries.</strong> Each set drafts that country's own assessments and procurement documents:</p>
+<ul>
+<li>UAE federal: 12</li>
+<li>France: 12</li>
+<li>Canada federal: 12</li>
+<li>Australia: 10</li>
+<li>USA federal civilian: 10</li>
+<li>European Union: 8</li>
+<li>Netherlands: 6</li>
+<li>Austria: 4</li>
+</ul>
+<p><strong>16 for particular sectors.</strong></p>
+<ul>
+<li>UK food safety for small caterers: 5</li>
+<li>UK financial services payments: 4</li>
+<li>UK NHS clinical safety: 4</li>
+<li>Australian energy: 2</li>
+<li>UK legacy IT assessment: 1</li>
+</ul>
+<p><strong>19 for architecture methods.</strong></p>
+<ul>
+<li>TOGAF ADM: 9</li>
+<li>Open Agile Architecture: 5</li>
+<li>arc42: 5</li>
+</ul>
+<p><strong>6 for AI agent architecture:</strong> inventory, design, integration, security, governance and maturity of the AI agents an organisation runs.</p>
+<p>Most of the country, sector and method sets are contributed and maintained by the community, and several are marked experimental in their own guides. On Claude Code you install each set separately. In Antigravity they all come with the plugin, so type <code>/arckit-</code> and pick the ones you need.</p>
 <h2 id="what-isnt-there-yet">What isn't there yet</h2>
 <ul>
 <li><strong>Most commands are untried in Antigravity.</strong> If one misbehaves, please <a href="https://github.com/tractorjuice/arc-kit/issues">open an issue</a> and say which.</li>

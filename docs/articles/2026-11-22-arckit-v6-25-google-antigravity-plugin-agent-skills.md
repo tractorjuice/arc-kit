@@ -57,11 +57,44 @@ You'll need Antigravity installed, Node.js, and Python for ArcKit's small setup 
 
 ## What you get
 
-**The same commands as every other assistant.** The plugin is generated from the commands ArcKit ships everywhere else: 75 core commands and 115 from the optional overlays for other countries, sectors and methods.
+**The same commands as every other assistant.** The plugin is generated from the commands ArcKit ships everywhere else, and all 190 arrive in the one install. The next section lists them.
 
 **Five tool connections that need no key.** AWS Knowledge, Microsoft Learn, UK government code search, UK tenders and Trello come with the plugin. Two more, Google Developer Knowledge and Data Commons, need a key, so you add those yourself; the plugin's page says how.
 
 **Nothing cut short.** I ran Antigravity's own plugin check on the first build and it found something Google's documentation doesn't mention: Antigravity loads the first 24,000 bytes of a skill and drops the rest. 29 of ArcKit's commands are longer than that. The longest, for defence AI assurance, would have lost five sixths of its instructions without any warning. Each of those 29 now keeps its full instructions in a second file beside the skill and tells the agent to read it first. The check passes.
+
+## What the 190 commands are
+
+**75 core commands.** These cover a project from plan to published documentation: principles, stakeholders, risk, business case, requirements, data model, research, Wardley Maps, procurement, design reviews, backlog, traceability and the UK government assessments.
+
+**74 for other countries.** Each set drafts that country's own assessments and procurement documents:
+
+- UAE federal: 12
+- France: 12
+- Canada federal: 12
+- Australia: 10
+- USA federal civilian: 10
+- European Union: 8
+- Netherlands: 6
+- Austria: 4
+
+**16 for particular sectors.**
+
+- UK food safety for small caterers: 5
+- UK financial services payments: 4
+- UK NHS clinical safety: 4
+- Australian energy: 2
+- UK legacy IT assessment: 1
+
+**19 for architecture methods.**
+
+- TOGAF ADM: 9
+- Open Agile Architecture: 5
+- arc42: 5
+
+**6 for AI agent architecture:** inventory, design, integration, security, governance and maturity of the AI agents an organisation runs.
+
+Most of the country, sector and method sets are contributed and maintained by the community, and several are marked experimental in their own guides. On Claude Code you install each set separately. In Antigravity they all come with the plugin, so type `/arckit-` and pick the ones you need.
 
 ## What isn't there yet
 
