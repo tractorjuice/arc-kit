@@ -9,10 +9,13 @@ import {
   blankWorksheet, counted, identifying, parseWorksheet, readWorksheet, typedIn, upgradeWorksheet, WORKSHEET_SECTIONS,
   worksheetJson
 } from './uk-food-worksheet.mjs';
-import { checkCommand, failure, referenceCommand, renderCommand } from './uk-food-document.mjs';
+import {
+  checkCommand, COMPLETION_RECORD, failure, referenceCommand, renderCommand, RENDERED_CODES
+} from './uk-food-document.mjs';
 import { signOffCommand, statusCommand } from './uk-food-status.mjs';
 import { setUpFolderCommand } from './uk-food-folder.mjs';
 
+// These keep the helper's old single-file interface: every public name, from whichever module. No two modules may export the same name.
 export * from './uk-food-data.mjs';
 export * from './uk-food-worksheet.mjs';
 export * from './uk-food-document.mjs';
@@ -23,7 +26,22 @@ export { HELPER, loadValidData, optionError, readOptions, usageError, valueError
 // The helper itself, for the commands a message tells a person to run next.
 const HELPER = fileURLToPath(import.meta.url);
 
-const USAGE = `usage: uk-food.mjs <command> [options]
+// Where the usage text's descriptions start, and the width each is wrapped to.
+const [COLUMN, WIDTH] = [53, 48];
+// A description in the usage text, wrapped to WIDTH a word at a time, each line after the first indented
+// to COLUMN.
+const described = (text) => text.split(' ').reduce((lines, word) => {
+  const last = lines.at(-1);
+  if (last && last.length + 1 + word.length <= WIDTH) lines[lines.length - 1] = `${last} ${word}`;
+  else lines.push(word);
+  return lines;
+}, []).join(`\n${' '.repeat(COLUMN)}`);
+
+// The usage text, made when it is printed. The documents render and check take are read from the
+// document table, so that a document added there is named here too.
+function usage() {
+  const documents = `${RENDERED_CODES.filter((code) => code !== COMPLETION_RECORD).join(', ')}, or ${COMPLETION_RECORD}, the completion record`;
+  return `usage: uk-food.mjs <command> [options]
 
 commands:
   set-up-folder --project DIR                        turn a project folder that has just been made
@@ -50,12 +68,8 @@ commands:
                                                      the words that identify that question (a
                                                      heading that has been moved, lines typed
                                                      over, or wording this version does not know)
-  render --doc DOC --project DIR [--data DIR]        print a document's body, from the worksheets in
-                                                     DIR/food-safety; DOC is one of FOODXC, FOODCLN,
-                                                     FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN,
-                                                     or FOODCMP, the completion record; exit 1,
-                                                     printing nothing, when a worksheet a document
-                                                     needs has problems
+  render --doc DOC --project DIR [--data DIR]        ${described(`print a document's body, from the worksheets in DIR/food-safety; ` +
+    `DOC is one of ${documents}; exit 1, printing nothing, when a worksheet a document needs has problems`)}
   check --doc DOC --project DIR --report FILE        exit 0 when the body between the UK-FOOD markers
         [--data DIR] [--json]                        in FILE equals a fresh render and the file claims
                                                      no sign-off that is not recorded, 1 when not
@@ -87,6 +101,7 @@ commands:
                                                      sign-off step marking the header or core's
                                                      hook rewriting its Build Provenance section
 `;
+}
 
 export function validateDataCommand(args, io = { out: console.log, err: console.error }) {
   let dir = DEFAULT_DATA_DIR;
@@ -109,7 +124,7 @@ export function validateDataCommand(args, io = { out: console.log, err: console.
 }
 
 function usageError(io, message) {
-  io.err(`${message}\n${USAGE}`);
+  io.err(`${message}\n${usage()}`);
   return 2;
 }
 

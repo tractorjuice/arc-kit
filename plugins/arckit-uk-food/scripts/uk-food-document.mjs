@@ -3,14 +3,14 @@ import { existsSync, readFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { DATA_ID, DEFAULT_DATA_DIR, SECTION_IDS } from './uk-food-data.mjs';
 import {
-  andList, codePoint, EXTRA_CARE, isIsoDate, longDate, PROFILE_QUESTIONS, profileQuestion, sentenceCase, spanOf,
-  strictWorksheet
+  andList, codePoint, EXTRA_CARE, isIsoDate, longDate, methodQuestions, PROFILE_QUESTIONS, profileQuestion, sentenceCase,
+  spanOf, strictWorksheet
 } from './uk-food-worksheet.mjs';
-import { COMPLETION_STALE, completionRecordDocument, DOCUMENT_FILE, PENDING, readSignOffs } from './uk-food-status.mjs';
+import { completionRecordDocument, DOCUMENT_FILE, PENDING, readSignOffs } from './uk-food-status.mjs';
 import { HELPER, loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
 export {
-  BEFORE_RENDER, bodyText, businessText, closingNotice, coverageChunks, DOC_OF_SECTION, extraCareDone, failure,
-  misplaced, NAME_QUESTION, otherText, paragraphs, readWorksheets, sha256, sourcesOf, tableLines, worksheetFile,
+  BEFORE_RENDER, bodyText, businessText, closingNotice, COMPLETION_STALE, coverageChunks, DOC_OF_SECTION, extraCareDone,
+  failure, misplaced, NAME_QUESTION, otherText, paragraphs, readWorksheets, sha256, sourcesOf, tableLines, worksheetFile,
   worksheetName
 };
 
@@ -63,15 +63,6 @@ export {
 // A body is built as chunks, each a list of lines, joined by an empty line.
 // ---------------------------------------------------------------------------------------------
 
-export const SECTION_DOCS = { FOODXC: 'XC', FOODCLN: 'CL', FOODCHL: 'CH', FOODCOOK: 'CK', FOODMGT: 'MG' };
-export const DOC_CODES = [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN'];
-// The completion record: rendered and checked like the documents above, but it reports on them, so it
-// is neither in their status nor signed off itself. See the status part below.
-export const COMPLETION_RECORD = 'FOODCMP';
-const RENDERED_CODES = [...DOC_CODES, COMPLETION_RECORD];
-// The documents status lists, in its order. The completion record is not one: it reports on them.
-export const STATUS_ORDER = ['FOODPROF', ...Object.keys(SECTION_DOCS), 'FOODOWN'];
-const DOC_OF_SECTION = Object.fromEntries(Object.entries(SECTION_DOCS).map(([doc, section]) => [section, doc]));
 export const UNANSWERED = '**NOT YET ANSWERED**';
 // Printed before every answer in a business's document, and before the unanswered and proposed strings.
 export const OUR_ANSWER = '**Our answer:** ';
@@ -81,12 +72,173 @@ const BEGIN_MARKER = /^<!-- UK-FOOD:BEGIN doc=(\S+) data=(\S+) body=(\S+) -->$/;
 const beginMarker = (doc, hash) => `<!-- UK-FOOD:BEGIN doc=${doc} data=${DATA_ID} body=${hash} -->`;
 // The worksheets in the order they are read.
 const SHEET_ORDER = ['profile', ...SECTION_IDS, 'own'];
+
+// ---------------------------------------------------------------------------------------------
+// The documents, one row each, in the order status lists them, the completion record last. Adding a
+// document is adding its row, before the completion record's: every list of documents the helper
+// keeps or prints (DOC_CODES, RENDERED_CODES, STATUS_ORDER, SECTION_DOCS, the usage text and each
+// "--doc is one of" message) is derived from this table, and render, check, status and sign-off read
+// what is particular to a document from its row. A row's fields:
+// - code: the document's code, as in its file name.
+// - name(data): what status and the completion record call it.
+// - uses: the worksheets it is rendered from, its own first: the one whose questions or entries status
+//   counts for it. status lists them in this order.
+// - needs: those of `uses` it cannot be rendered without: render refuses while one is missing. Any other
+//   it uses may be missing, and the document says so; one there with problems stops render all the same.
+// - dataNeeded: the section whose data file it cannot be rendered without, or null.
+// - signable: whether a named person signs it off. sign-off refuses one nobody signs, and its header
+//   says nothing but DRAFT and [PENDING].
+// - inStatus: whether status lists it among the documents. Only the completion record is not there: it
+//   reports on them.
+// - chunks(sources, data, project): its body, after the coverage sentence and before the closing
+//   notice, as chunks (see the layout above). `sources` maps each worksheet of `uses` that exists to
+//   what readWorksheets reads from it.
+// - source(data): the body's last line, which says where its words come from.
+// - unfinishedLine(line): whether a line of its body shows it unfinished (see showsUnfinished).
+// - asks(sheet, data): what a person answers for it, from its own worksheet (`sheet`, as readWorksheets
+//   reads it, or null when it is missing): { items }, an [identifier, record] for each question or entry
+//   in order, and for a section document `notRelevant` and `adapted`, the methods marked so. No method's
+//   status is read from a worksheet with problems: each method then counts as applying, as in a blank
+//   worksheet.
+// - nouns: what status calls those, one and many.
+// - entries: whether they are entries a person confirms, rather than questions a person answers.
+// A rule that belongs to one document alone is a field of its row and no other:
+// - lacking(data), the profile's: what the data lacks that the document quotes, beyond its data file,
+//   as render says it, or null.
+// - specialProcesses, the own methods document's: a special process the profile confirms that has no
+//   own entry keeps it from being signed off, and status lists that, and each own entry awaiting
+//   environmental health review, under this document.
+// - render(project, data), the completion record's: its own renderer, in uk-food-status.mjs, used in
+//   place of chunks and source. It is rendered from the project's status, so check reads any difference
+//   from a fresh render as out of date, in the words of `outOfDate`, never as an edit. Nobody signs it,
+//   and `nobodySigns` and `signOffRefusal` are how a header claim and sign-off say so.
+// ---------------------------------------------------------------------------------------------
+
+const QUESTIONS = ['question', 'questions'];
+// What shows a document unfinished, but for the own methods document: a question not yet answered,
+// wherever answerOf prints it.
+const unanswered = (line) => line.includes(UNANSWERED);
+// The last line of a document that quotes the pack.
+const packSource = (data) => sourceLine(data.source);
+const COMPLETION_STALE = 'this completion record is out of date: it no longer matches the project\'s worksheets, documents ' +
+  'and sign-offs, or it was edited. It is generated, so it is not changed by hand: render it again.';
+
+// A section document: the pack's section `section`, with the business's answers from its worksheet.
+function sectionDocument(code, section) {
+  return {
+    code, name: (data) => sentenceCase(data.sections.get(section).section.title), uses: [section, 'profile'],
+    needs: ['profile', section], dataNeeded: section, signable: true, inStatus: true,
+    chunks: (sources, data) => sectionChunks(data.sections.get(section), sectionView(sources.get(section).parsed)),
+    source: packSource, unfinishedLine: unanswered, asks: (sheet, data) => methodsAsked(sheet, data.sections.get(section)),
+    nouns: QUESTIONS, entries: false
+  };
+}
+
+// The questions of each method of a section that is not marked not relevant. See asks above.
+function methodsAsked(sheet, file) {
+  const asked = { items: [], notRelevant: [], adapted: [] };
+  for (const method of file.methods) {
+    const status = sheet?.clean ? sheet.parsed.methods.get(method.id)?.status : 'applies';
+    if (status === 'not-relevant') {
+      asked.notRelevant.push(method.id);
+      continue;
+    }
+    if (status === 'adapted') asked.adapted.push(method.id);
+    for (const { question } of methodQuestions(method)) asked.items.push([question.id, sheet?.parsed?.answers.get(question.id)]);
+  }
+  return asked;
+}
+
+// Let, not const, only so that withDocuments can put a test's table in its place.
+export let DOCUMENTS = [
+  {
+    // It quotes the special-processes paragraph from CK.json.
+    code: 'FOODPROF', name: () => 'Business profile', uses: SHEET_ORDER, needs: ['profile'], dataNeeded: 'CK', signable: true,
+    inStatus: true, chunks: profileChunks, source: packSource, unfinishedLine: unanswered,
+    asks: (sheet) => ({ items: PROFILE_QUESTIONS.map((question) => [question.id, sheet?.parsed?.answers.get(question.id)]) }),
+    nouns: QUESTIONS, entries: false,
+    lacking: (data) => (extraCareParagraph(data) ? null : `the data's CK.json has no text box in ${EXTRA_CARE_BOX.method} on page ` +
+      `${EXTRA_CARE_BOX.page}, whose first paragraph the profile quotes about special processes and foods`)
+  },
+  sectionDocument('FOODXC', 'XC'),
+  sectionDocument('FOODCLN', 'CL'),
+  sectionDocument('FOODCHL', 'CH'),
+  sectionDocument('FOODCOOK', 'CK'),
+  sectionDocument('FOODMGT', 'MG'),
+  {
+    code: 'FOODOWN', name: () => 'Own methods', uses: ['own', 'profile'], needs: ['profile', 'own'], dataNeeded: null,
+    signable: true, inStatus: true, chunks: ownChunks,
+    // It quotes nothing from the pack, and its last line says so.
+    source: () => OWN_SOURCE_LINE,
+    // An own entry not yet confirmed shows it unfinished too: the line notConfirmed prints. The profile
+    // lists such entries as well, but is finished when its own questions are, so that line counts for
+    // nothing there.
+    unfinishedLine: (line) => unanswered(line) || line.startsWith(NOT_CONFIRMED),
+    asks: (sheet) => ({ items: [...(sheet?.parsed?.entries.values() ?? [])].map((entry) => [entry.id, entry]) }),
+    nouns: ['own entry', 'own entries'], entries: true, specialProcesses: true
+  },
+  {
+    // It reads no worksheet of its own: status, which it is rendered from, reads them all.
+    code: 'FOODCMP', name: () => 'Completion record', uses: [], needs: [], dataNeeded: null, signable: false, inStatus: false,
+    chunks: null, source: null, unfinishedLine: unanswered, asks: null, nouns: null, entries: false,
+    render: (project, data) => completionRecordDocument(project, data),
+    outOfDate: { message: COMPLETION_STALE, reason: 'is out of date, as it no longer matches the project: render it again' },
+    nobodySigns: 'the completion record is a report that nobody signs',
+    signOffRefusal: 'FOODCMP, the completion record, is not signed off: it is a report, signed through the documents it lists, so ' +
+      'sign off each of them'
+  }
+];
+
+// The lists derived from DOCUMENTS, by deriveLists. Let, not const, only so that withDocuments can
+// derive them again from a test's table: nothing else assigns them.
+export let DOC_CODES;
+export let RENDERED_CODES;
+export let STATUS_ORDER;
+export let SECTION_DOCS;
+let DOC_OF_SECTION;
+export let COMPLETION_RECORD;
+function deriveLists() {
+  // A section document is one whose own worksheet is a section of the pack.
+  const sections = DOCUMENTS.filter((row) => SECTION_IDS.includes(row.uses[0]));
+  // The usage text and each "--doc is one of" message list the section documents first.
+  const listed = [...sections, ...DOCUMENTS.filter((row) => !sections.includes(row))];
+  // Every document render and check take, and those a named person signs off.
+  RENDERED_CODES = listed.map((row) => row.code);
+  DOC_CODES = listed.filter((row) => row.signable).map((row) => row.code);
+  // The documents status lists, in its order.
+  STATUS_ORDER = DOCUMENTS.filter((row) => row.inStatus).map((row) => row.code);
+  // Each section document's section, and each section's document.
+  SECTION_DOCS = Object.fromEntries(sections.map((row) => [row.code, row.uses[0]]));
+  DOC_OF_SECTION = Object.fromEntries(sections.map((row) => [row.uses[0], row.code]));
+  // The completion record: rendered and checked like the documents above, but it reports on them, so it
+  // is neither in their status nor signed off itself. Its renderer and its line in status are in
+  // uk-food-status.mjs.
+  COMPLETION_RECORD = DOCUMENTS.find((row) => !row.inStatus)?.code;
+}
+deriveLists();
+
+// The row of the document `code`, or undefined when there is none.
+export const documentOf = (code) => DOCUMENTS.find((row) => row.code === code);
+
+// For tests only: runs `fn`, synchronously, with `rows` in place of the table and every list derived
+// from them, then puts the table and its lists back, however `fn` ends. Returns what `fn` returns.
+export function withDocuments(rows, fn) {
+  const kept = DOCUMENTS;
+  DOCUMENTS = rows;
+  deriveLists();
+  try {
+    return fn();
+  } finally {
+    DOCUMENTS = kept;
+    deriveLists();
+  }
+}
+
 // The worksheets a document renders from, and those it cannot be rendered without. The profile
 // document says which section worksheets and own worksheet are missing; the others refuse.
 const sourcesOf = (doc) => {
-  if (doc === 'FOODPROF') return { uses: SHEET_ORDER, needs: ['profile'] };
-  const own = SECTION_DOCS[doc] ?? 'own';
-  return { uses: ['profile', own], needs: ['profile', own] };
+  const { uses, needs } = documentOf(doc);
+  return { uses, needs };
 };
 const OUTSIDE_COVERAGE = 'Safer food, better business applies to England and Wales. This business is outside that ' +
   'coverage: Scotland and Northern Ireland have their own guidance.';
@@ -352,21 +504,22 @@ function ownEntryChunks(entry) {
   return [...chunks, ['The text below is the business\'s own, and this tool did not write or check it.'], fenced(entry.suppliedText)];
 }
 
-// Whether the lines of a rendered body of `doc` show that the document is unfinished: a question not yet
-// answered (UNANSWERED, wherever answerOf prints it), or, in the own methods document, an own entry not
-// yet confirmed (the line notConfirmed prints). sign-off refuses a document with either outstanding, so
-// a body that shows one was never signed off through this helper. The profile also lists own entries
-// not yet confirmed, but it is finished when its own questions are, so that line counts for nothing
-// there. A business's own words cannot make either mark: businessText escapes the asterisks, an answer
-// never starts a line of its own, and the lines of a procedure printed word for word in a fenced code
-// block are not read here.
+// Whether the lines of a rendered body of `doc` show that the document is unfinished: a line its row's
+// unfinishedLine marks, which is a question not yet answered (UNANSWERED, wherever answerOf prints it),
+// or, in the own methods document, an own entry not yet confirmed (the line notConfirmed prints).
+// sign-off refuses a document with either outstanding, so a body that shows one was never signed off
+// through this helper. A business's own words cannot make either mark: businessText escapes the
+// asterisks, an answer never starts a line of its own, and the lines of a procedure printed word for
+// word in a fenced code block are not read here. A code with no row, which check can be given and then
+// cannot render, is read for a question not yet answered.
 function showsUnfinished(doc, inner) {
+  const unfinished = documentOf(doc)?.unfinishedLine ?? unanswered;
   let fence = null;
   for (const line of inner) {
     if (fence) {
       if (line === fence) fence = null;
     } else if (/^`{3,}text$/.test(line)) fence = line.slice(0, -'text'.length);
-    else if (line.includes(UNANSWERED) || (doc === 'FOODOWN' && line.startsWith(NOT_CONFIRMED))) return true;
+    else if (unfinished(line)) return true;
   }
   return false;
 }
@@ -465,25 +618,18 @@ function readSources(doc, project, data) {
 // Renders a document's body from the worksheets in `project`/food-safety. Returns { exit: 0, text }
 // or { exit, messages }; nothing is rendered from a worksheet the parser could not read cleanly.
 export function renderDocument(doc, project, data) {
-  if (doc === COMPLETION_RECORD) return completionRecordDocument(project, data);
-  if (!DOC_CODES.includes(doc)) return { exit: 2, messages: [`--doc is one of ${RENDERED_CODES.join(', ')}`] };
-  const section = SECTION_DOCS[doc];
-  // The profile quotes the special-processes paragraph from CK.json.
-  const dataNeeded = section ?? (doc === 'FOODPROF' ? 'CK' : null);
-  if (dataNeeded && !data.sections.has(dataNeeded)) return { exit: 2, messages: [`the data has no ${dataNeeded}.json`] };
-  if (doc === 'FOODPROF' && !extraCareParagraph(data)) {
-    return { exit: 2, messages: [`the data's CK.json has no text box in ${EXTRA_CARE_BOX.method} on page ${EXTRA_CARE_BOX.page}, ` +
-      'whose first paragraph the profile quotes about special processes and foods'] };
-  }
+  const row = documentOf(doc);
+  if (!row) return { exit: 2, messages: [`--doc is one of ${RENDERED_CODES.join(', ')}`] };
+  if (row.render) return row.render(project, data);
+  if (row.dataNeeded && !data.sections.has(row.dataNeeded)) return { exit: 2, messages: [`the data has no ${row.dataNeeded}.json`] };
+  const lacking = row.lacking?.(data);
+  if (lacking) return { exit: 2, messages: [lacking] };
   const read = readSources(doc, project, data);
   if (read.exit) return read;
-  let body;
-  if (section) body = sectionChunks(data.sections.get(section), sectionView(read.sources.get(section).parsed));
-  else body = doc === 'FOODPROF' ? profileChunks(read.sources, data) : ownChunks(read.sources);
   const profile = read.sources.get('profile').parsed;
   const name = profile.answers.get(NAME_QUESTION);
-  const chunks = [...coverageChunks(profile), ...body, [closingNotice(name?.answered ? name.answer : null)],
-    [doc === 'FOODOWN' ? OWN_SOURCE_LINE : sourceLine(data.source)]];
+  const chunks = [...coverageChunks(profile), ...row.chunks(read.sources, data, project),
+    [closingNotice(name?.answered ? name.answer : null)], [row.source(data)]];
   return { exit: 0, text: bodyText(doc, chunks) };
 }
 
@@ -896,7 +1042,8 @@ function claimsOf(header) {
 
 // The first thing a document says about sign-off, outside its body, that no sign-off record bears out,
 // as { line, message, reason }, or null. The file is `name`, a document of code `doc`.
-// - The completion record is a report that nobody signs, so it says nothing but DRAFT and [PENDING].
+// - A document nobody signs (its row's signable is false: the completion record, a report) says nothing
+//   but DRAFT and [PENDING]. Its row's nobodySigns says why.
 // - With no sign-off recorded for this file and version, so does any other document. This is what
 //   stops a document reading as approved, with a name, when nobody signed it: a status promoted by
 //   hand, or a signed version's header copied into the next version.
@@ -915,8 +1062,8 @@ function headerClaim(doc, name, header, records, unfinished = false) {
   const recorded = signings.filter((record) => record.file === name && record.version === version).at(-1) ?? null;
   const mine = unfinished ? null : recorded;
   const claims = claimsOf(header);
-  const report = doc === COMPLETION_RECORD;
-  const nobody = 'the completion record is a report that nobody signs';
+  const { signable, nobodySigns: nobody } = documentOf(doc) ?? {};
+  const report = signable === false;
   // Why a claim on this file has no sign-off behind it, as a message says it and as a reason does.
   const [none, noneOfIt] = recorded
     ? ['the document still shows a question not yet answered or an entry not yet confirmed, and one that does is never signed off',
@@ -1133,16 +1280,18 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
     }
     const at = index < 0 ? Math.min(region.length, expected.length) : index;
     const line = body.begin + at;
-    // The completion record also depends on which documents are written, in step and signed off, so
-    // any difference means it no longer matches the project.
+    // A document rendered from the project's status (its row's outOfDate: the completion record) also
+    // depends on which documents are written, in step and signed off, so any difference means it no
+    // longer matches the project.
+    const { outOfDate } = documentOf(doc);
     let kind = 'edited';
     let what = `this line is not what a fresh render of ${doc} gives.`;
     let reason = `was changed between its UK-FOOD markers, at line ${line}: make the change in its worksheet instead, and write ` +
       'the document again from its worksheet';
-    if (doc === COMPLETION_RECORD) {
+    if (outOfDate) {
       kind = 'stale';
-      what = COMPLETION_STALE;
-      reason = 'is out of date, as it no longer matches the project: render it again';
+      what = outOfDate.message;
+      reason = outOfDate.reason;
     } else if (intact) {
       kind = 'stale';
       what = 'the worksheets have changed since this body was rendered: render the document again.';
@@ -1151,7 +1300,7 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
     const [want, got] = [expected[at] ?? '', region[at] ?? ''];
     const { column, expectedChar, foundChar } = firstDifference(want, got);
     return failed(kind, line, `${what} The lines first differ at column ${column}, where the render has ${expectedChar} ` +
-      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}` + (doc === COMPLETION_RECORD ? '' : `\n${CHECK_ADVICE}`),
+      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}` + (outOfDate ? '' : `\n${CHECK_ADVICE}`),
     reason, { column, expected: want, found: got, expectedChar, foundChar });
   }
   const lapsed = lapsedClaim(doc, basename(report), header, hashes, signOffs.records);

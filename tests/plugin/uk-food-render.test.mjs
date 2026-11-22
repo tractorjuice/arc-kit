@@ -6,9 +6,9 @@ import { cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  DATA_ID, DEFAULT_DATA_DIR, DOC_CODES, EXTRA_CARE, EXTRA_CARE_BOX, PROFILE_QUESTIONS, SECTION_DOCS, SECTION_IDS,
-  UNANSWERED, blankWorksheet, checkDocument, emitWorksheet, loadData, parseWorksheet, referenceText, renderDocument,
-  sourceLine
+  DATA_ID, DEFAULT_DATA_DIR, DOC_CODES, DOCUMENTS, EXTRA_CARE, EXTRA_CARE_BOX, PROFILE_QUESTIONS, SECTION_DOCS, SECTION_IDS,
+  UNANSWERED, blankWorksheet, checkDocument, documentOf, emitWorksheet, loadData, main, parseWorksheet, projectStatus,
+  referenceText, renderDocument, sourceLine, withDocuments
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
 const helper = 'plugins/arckit-uk-food/scripts/uk-food.mjs';
@@ -1129,4 +1129,48 @@ test('G5: render prints no line that ends in a space or a tab, and one blank lin
   }
   assert.ok(rendered('FOODOWN', spaced).includes('\nWe cook British Lion eggs in their shells,\nin a covered water bath.\n\nA paragraph after a line of spaces.\n'));
   for (const section of SECTION_IDS) assert.deepEqual(referenceText(section, data).split('\n').filter((line) => /[ \t]$/.test(line)), [], section);
+});
+
+// The usage text as the helper prints it. This fixture changes only when a document or a command is
+// added, on purpose, and a reviewer reads its diff: it is never edited to make some other change pass.
+const USAGE_TEXT = 'tests/fixtures/uk-food/usage.txt';
+// The usage text the helper prints in this process, as main prints it for an unknown command.
+const usageNow = () => {
+  const said = [];
+  assert.equal(main(['--help'], { out: (text) => said.push(text), err: (text) => said.push(text) }), 2);
+  return said.join('\n');
+};
+
+test('--help prints the recorded usage text, byte for byte', () => {
+  const result = run('--help');
+  assert.equal(result.status, 2);
+  assert.equal(result.stderr, `unknown command: --help\n${readFileSync(USAGE_TEXT, 'utf8')}\n`);
+});
+
+test('a document is added in one place: one row in DOCUMENTS renders, is listed by status after FOODOWN, and is named in the usage text', () => {
+  // Every field a row has, filled in for a document that reads only the profile and prints one heading.
+  const row = {
+    code: 'FOODTEST', name: () => 'Test document', uses: ['profile'], needs: ['profile'], dataNeeded: null, signable: true,
+    inStatus: true, chunks: () => [['## A test document']], unfinishedLine: (line) => line.includes(UNANSWERED),
+    source: () => 'This line says where the words of the test document come from.',
+    asks: (sheet) => ({ items: PROFILE_QUESTIONS.map((q) => [q.id, sheet?.parsed?.answers.get(q.id)]) }),
+    nouns: ['question', 'questions'], entries: false
+  };
+  const rows = [...DOCUMENTS.slice(0, -1), row, DOCUMENTS.at(-1)];
+  assert.equal(DOCUMENTS.at(-1).code, 'FOODCMP', 'a new row goes in before the completion record');
+  withDocuments(rows, () => {
+    const result = renderDocument('FOODTEST', CAFE, data);
+    assert.equal(result.exit, 0, (result.messages ?? []).join('\n'));
+    const lines = result.text.split('\n');
+    assert.match(lines[0], /^<!-- UK-FOOD:BEGIN doc=FOODTEST data=\S+ body=[0-9a-f]{64} -->$/);
+    assert.equal(lines.at(-1), '<!-- UK-FOOD:END -->');
+    assert.ok(lines.includes('## A test document'), result.text);
+    assert.equal(lines.at(-3), 'This line says where the words of the test document come from.');
+    const codes = projectStatus(CAFE, data).documents.map((doc) => doc.code);
+    assert.equal(codes[codes.indexOf('FOODOWN') + 1], 'FOODTEST', codes.join(', '));
+    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, .*FOODOWN, FOODTEST, or FOODCMP, the completion record;/);
+  });
+  // The table is put back.
+  assert.equal(documentOf('FOODTEST'), undefined);
+  assert.equal(usageNow(), `unknown command: --help\n${readFileSync(USAGE_TEXT, 'utf8')}`);
 });
