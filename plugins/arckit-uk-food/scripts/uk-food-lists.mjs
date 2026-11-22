@@ -2,6 +2,7 @@ import { DATA_ID, isObject } from './uk-food-data.mjs';
 import {
   addListWorksheets, blockTools, fieldKey, fieldLines, quotedBy, readBlocks, standard, STATE_WORDS, STATES, WORKSHEET_VERSION
 } from './uk-food-worksheet.mjs';
+import { businessText, notConfirmed, said, tableLines, UNANSWERED } from './uk-food-document.mjs';
 
 // ---------------------------------------------------------------------------------------------
 // List worksheets, and the documents printed from them. A list worksheet holds the entries of one list a
@@ -21,7 +22,8 @@ import {
 // that is not confirmed, and a Kept elsewhere that holds anything and is not confirmed, is named in the
 // document as not yet confirmed, so that nothing a person wrote is left out without a word.
 //
-// This module loads after the worksheet module and may read it as it loads.
+// This module loads after the worksheet module and may read it as it loads. It imports the document
+// module too, which imports it, so nothing of the document module is read here until a function runs.
 // ---------------------------------------------------------------------------------------------
 
 // The block that says a list is kept somewhere else, and its fields.
@@ -243,3 +245,52 @@ function emitList(parsed, data) {
 
 addListWorksheets({ sections: LIST_SECTIONS, read: readList, emit: emitList, guidance: (section, data) => guidanceOf(LISTS[section], data) });
 
+// ---------------------------------------------------------------------------------------------
+// The list documents. Each prints its list's confirmed entries, says where the business keeps the list
+// when it says it keeps it elsewhere, and names whatever is not confirmed, in the line notConfirmed prints.
+// With no confirmed entry and no confirmed Kept elsewhere, it says so, with UNANSWERED.
+// ---------------------------------------------------------------------------------------------
+
+// Whether a Kept elsewhere holds anything a person wrote.
+const elsewhereGiven = (elsewhere) => Boolean(elsewhere.where || elsewhere.by || elsewhere.on || elsewhere.source) ||
+  elsewhere.state !== 'unanswered';
+// What a list document names as not yet confirmed, as notConfirmed takes them.
+const pending = (parsed) => [...(elsewhereGiven(parsed.elsewhere) ? [{ id: ELSEWHERE, answered: parsed.elsewhere.answered }] : []),
+  ...parsed.entries.values()];
+
+// What a person confirms for a list document, from its worksheet, as a row's asks gives it to status (whose
+// counts are what sign-off refuses on): each entry, and Kept elsewhere when it holds anything or there is no
+// entry. So something is counted as not confirmed exactly when the document shows it unfinished: an entry or
+// a Kept elsewhere not confirmed, or neither an entry nor Kept elsewhere confirmed.
+export function listAsked(sheet) {
+  const parsed = sheet?.parsed;
+  const entries = [...(parsed?.entries.values() ?? [])].map((entry) => [entry.id, entry]);
+  const elsewhere = parsed?.elsewhere;
+  return { items: [...(elsewhere && (elsewhereGiven(elsewhere) || !entries.length) ? [[ELSEWHERE, elsewhere]] : []), ...entries] };
+}
+
+// The line a list document prints when Kept elsewhere is confirmed: where, and who said so and when.
+const elsewhereChunks = (list, elsewhere) => (elsewhere.answered
+  ? [[`The business keeps a ${list.elsewhereLabel} elsewhere: ${said(elsewhere.where)} (said by ${said(elsewhere.by)}, ${said(elsewhere.on)}).`]]
+  : []);
+// Who agreed an entry the document prints, and when, on a line of its own under its table.
+const agreedLine = (entry) => `- ${entry.id} ${said(entry.title)}: ${said(entry.by)}, ${said(entry.on)}`;
+
+// The cleaning schedule document: the pack's form, with a row for each confirmed entry, an X under its
+// frequency (or, under the last frequency, the business's own words for it), and its precautions and method
+// in the business's words. The form has no column for who agreed a row, and none is added: they are listed
+// under the table.
+export function cleaningScheduleChunks(sources, data) {
+  const list = LISTS.cleaning;
+  const { parsed } = sources.get(list.section);
+  const { columns, frequencies } = cleaningForm(data);
+  const other = frequencies.at(-1);
+  const confirmed = [...parsed.entries.values()].filter((entry) => entry.answered);
+  const kept = elsewhereChunks(list, parsed.elsewhere);
+  const cells = (entry) => [businessText(entry.title),
+    ...frequencies.map((frequency) => (entry.frequency !== frequency ? '' : frequency === other ? businessText(entry.otherFrequency) : 'X')),
+    businessText(entry.precautions), businessText(entry.method)];
+  const listed = confirmed.length ? [tableLines(columns, confirmed.map(cells)), ['Agreed by:'], confirmed.map(agreedLine)]
+    : kept.length ? [] : [[`The cleaning schedule has no confirmed items yet: ${UNANSWERED}`]];
+  return [[`## ${list.title}`], ...kept, ...listed, ...notConfirmed(pending(parsed))];
+}

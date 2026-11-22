@@ -28,6 +28,9 @@ const sheetFile = (dir, section) => join(dir, 'food-safety', `answers-${section}
 const sheet = (dir, section) => readFileSync(sheetFile(dir, section), 'utf8');
 const setSheet = (dir, section, text) => writeFileSync(sheetFile(dir, section), text);
 const signOffsFile = (dir) => join(dir, 'food-safety', 'sign-offs.json');
+// A cleaning worksheet that is finished with no entry: it says where the business keeps its schedule, confirmed.
+const KEPT_ELSEWHERE = () => swap(blankWorksheet('cleaning', data), '## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:',
+  '## Kept elsewhere\n\nWhere: The red folder in the office\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17');
 const swap = (text, from, to) => {
   assert.ok(text.includes(from), `${JSON.stringify(from)} is not in the text`);
   return text.replace(from, to);
@@ -193,7 +196,7 @@ test('the status JSON has the documented shape: the seven documents in order, th
     'foodSafetyFolder']);
   assert.deepEqual([result.completionRecord, result.foodSafetyFolder], [null, true]);
   assert.equal(result.data, DATA_ID);
-  assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN']);
+  assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN', 'FOODCS']);
   assert.deepEqual(STATUS_ORDER, result.documents.map((d) => d.code));
   for (const doc of result.documents) {
     assert.deepEqual(Object.keys(doc), ['code', 'worksheets', 'missingWorksheets', 'problems', 'misplaced', 'questions', 'confirmed', 'proposed',
@@ -243,6 +246,10 @@ test('the unfinished list says, for each document in order, what is outstanding 
     { code: 'FOODMGT', what: NOT_SIGNED },
     { code: 'FOODOWN', what: NOT_WRITTEN },
     { code: 'FOODOWN', what: NOT_SIGNED },
+    { code: 'FOODCS', what: '1 cleaning schedule entry in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an ' +
+      'entry counts when its State is confirmed and By and On are filled in' },
+    { code: 'FOODCS', what: NOT_WRITTEN },
+    { code: 'FOODCS', what: NOT_SIGNED },
     { code: 'FOODOWN', what: UNCOVERED },
     { code: 'FOODOWN', what: AWAITING }
   ]);
@@ -862,6 +869,7 @@ test('when everything is finished, every row shows its signer and the list says 
   }
   setSheet(dir, 'profile', sheet(dir, 'profile').replace(/(### PR-Q1[23]\n\n[^\n]*\nAnswer: )yes/g, '$1no'));
   setSheet(dir, 'own', blankWorksheet('own', data));
+  setSheet(dir, 'cleaning', KEPT_ELSEWHERE());
   for (const doc of STATUS_ORDER) {
     writeDocument(dir, doc);
     assert.equal(signOff(dir, doc).status, 0, doc);
@@ -1804,6 +1812,7 @@ test('G8 does not touch a properly signed file whose answers are later withdrawn
   }
   setSheet(done, 'profile', sheet(done, 'profile').replace(/(### PR-Q1[23]\n\n[^\n]*\nAnswer: )yes/g, '$1no'));
   setSheet(done, 'own', blankWorksheet('own', data));
+  setSheet(done, 'cleaning', KEPT_ELSEWHERE());
   for (const doc of STATUS_ORDER) {
     const written = templated(done, doc);
     assert.ok(!/\*\*NOT YET ANSWERED\*\*|\nNot yet confirmed, so not shown: /.test(readFileSync(written, 'utf8')), doc);

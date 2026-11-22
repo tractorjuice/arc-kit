@@ -240,6 +240,18 @@ def test_each_targets_min_lines_is_below_the_smallest_its_document_can_be(tmp_pa
         path = build(code, project)
         lines[code] = path.read_text(encoding="utf-8").count("\n")
         sign_and_mark(code, project, path)
+    # The cleaning schedule, finished with no entry, as it says where the business keeps its schedule. It has no
+    # template or recipe target until its command comes, so it is written around its body alone and not counted.
+    cleaning = run(HELPER, "worksheet", "--section", "cleaning").stdout.replace(
+        "## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:",
+        "## Kept elsewhere\n\nWhere: The red folder in the office\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17")
+    (project / "food-safety" / "answers-cleaning.md").write_text(cleaning, encoding="utf-8")
+    body = run(HELPER, "render", "--doc", "FOODCS", "--project", project)
+    assert body.returncode == 0, body.stderr
+    (project / "ARC-001-FOODCS-v1.0.md").write_text(f"Header text.\n\n{body.stdout}\nFooter text.\n", encoding="utf-8")
+    signed = run(HELPER, "sign-off", "--doc", "FOODCS", "--project", project, "--name", "Sam Okafor", "--role", "owner",
+                 "--version", "1.0", "--date", "2026-11-17", "--other-text-read", "yes")
+    assert signed.returncode == 0, signed.stderr
     record = build("FOODCMP", project).read_text(encoding="utf-8")
     assert "Nothing is outstanding." in record
     lines["FOODCMP"] = record.count("\n")

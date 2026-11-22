@@ -8,10 +8,11 @@ import {
 } from './uk-food-worksheet.mjs';
 import { completionRecordDocument, DOCUMENT_FILE, PENDING, readSignOffs } from './uk-food-status.mjs';
 import { HELPER, loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
+import { cleaningScheduleChunks, listAsked, LISTS } from './uk-food-lists.mjs';
 export {
   BEFORE_RENDER, bodyText, businessText, closingNotice, COMPLETION_STALE, coverageChunks, DOC_OF_SECTION, extraCareDone,
-  failure, misplaced, NAME_QUESTION, otherText, paragraphs, readWorksheets, sha256, sourcesOf, tableLines, worksheetFile,
-  worksheetName
+  failure, misplaced, NAME_QUESTION, notConfirmed, otherText, paragraphs, readWorksheets, said, sha256, sourcesOf, tableLines,
+  worksheetFile, worksheetName
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -72,7 +73,7 @@ const BEGIN_MARKER = /^<!-- UK-FOOD:BEGIN doc=(\S+) data=(\S+) body=(\S+) -->$/;
 const beginMarker = (doc, hash) => `<!-- UK-FOOD:BEGIN doc=${doc} data=${DATA_ID} body=${hash} -->`;
 // The worksheets the documents read, in the order they are read: the one list a new worksheet is added
 // to. Let, not const, only so that withDocuments can give a test's list in its place.
-export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own'];
+export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'cleaning'];
 
 // ---------------------------------------------------------------------------------------------
 // The documents, one row each, in the order status lists them, the completion record last. Adding a
@@ -109,8 +110,8 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own'];
 //   section, which is also its own worksheet. SECTION_DOCS and DOC_OF_SECTION come from it, and the
 //   usage text and each "--doc is one of" message list these documents first.
 // A rule that belongs to one document alone is a field of its row and no other:
-// - lacking(data), the profile's: what the data lacks that the document quotes, beyond its data file,
-//   as render says it, or null.
+// - lacking(data), the profile's and the cleaning schedule's: what the data lacks that the document quotes,
+//   beyond its data file, as render says it, or null.
 // - specialProcesses, the own methods document's: a special process the profile confirms that has no
 //   own entry keeps it from being signed off, and status lists that, and each own entry awaiting
 //   environmental health review, under this document.
@@ -189,6 +190,19 @@ export let DOCUMENTS = [
     unfinishedLine: (line) => unanswered(line) || line.startsWith(NOT_CONFIRMED),
     asks: (sheet) => ({ items: [...(sheet?.parsed?.entries.values() ?? [])].map((entry) => [entry.id, entry]) }),
     nouns: ['own entry', 'own entries'], entries: true, specialProcesses: true
+  },
+  {
+    // The pack's cleaning schedule form, with the business's own entries; its body is uk-food-lists.mjs's,
+    // which imports this module, so each field that calls it does so when it runs.
+    code: 'FOODCS', name: () => LISTS.cleaning.title, sheet: 'cleaning', uses: ['profile', 'cleaning'], needs: ['profile', 'cleaning'],
+    dataNeeded: null, signable: true, inStatus: true, chunks: (sources, data) => cleaningScheduleChunks(sources, data),
+    // It quotes the pack's column headings, so it names its source as every document that quotes the pack does.
+    source: packSource,
+    // An entry or a Kept elsewhere not yet confirmed shows it unfinished, as an own entry does FOODOWN; so does
+    // a schedule with nothing confirmed at all, which says so with UNANSWERED.
+    unfinishedLine: (line) => unanswered(line) || line.startsWith(NOT_CONFIRMED),
+    asks: (sheet) => listAsked(sheet), nouns: ['cleaning schedule entry', 'cleaning schedule entries'], entries: true,
+    lacking: (data) => LISTS.cleaning.lacking(data)
   },
   {
     // It reads no worksheet itself: status, which it is rendered from, reads them all.

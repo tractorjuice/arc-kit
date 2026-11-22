@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODCMP data=sfbb-caterers-2026-11-17 body=696c70b23bc18a1727336f95244d00d68f89e3ebe35748840e78ff3f4faf6676 -->
+<!-- UK-FOOD:BEGIN doc=FOODCMP data=sfbb-caterers-2026-11-17 body=981b761e9a239e6e165d399e6e5db69927232c545e9454cd05f89c6c8706e8d0 -->
 
 ## SAFE METHOD COMPLETION RECORD
 
@@ -66,6 +66,9 @@ It does not matter in what order you work through the safe methods. As you compl
 - Management (FOODMGT): document not signed off yet: once it is finished, a named person signs it off
 - Own methods (FOODOWN): document not written yet: write the document from its worksheet
 - Own methods (FOODOWN): document not signed off yet: once it is finished, a named person signs it off
+- Cleaning schedule (FOODCS): 1 cleaning schedule entry in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an entry counts when its State is confirmed and By and On are filled in
+- Cleaning schedule (FOODCS): document not written yet: write the document from its worksheet
+- Cleaning schedule (FOODCS): document not signed off yet: once it is finished, a named person signs it off
 - Own methods (FOODOWN): low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it
 - Own methods (FOODOWN): own entry OWN-02 (Sous vide eggs) is awaiting environmental health review: once the council has replied, record the review's date and outcome in the entry's EH-review field
 

@@ -6,7 +6,7 @@ import { cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  DATA_ID, DEFAULT_DATA_DIR, DOC_CODES, DOCUMENTS, EXTRA_CARE, EXTRA_CARE_BOX, PROFILE_QUESTIONS, SECTION_DOCS, SECTION_IDS,
+  DATA_ID, DEFAULT_DATA_DIR, DOC_CODES, DOCUMENTS, EXTRA_CARE, EXTRA_CARE_BOX, LIST_SECTIONS, PROFILE_QUESTIONS, SECTION_DOCS, SECTION_IDS,
   SHEET_ORDER, UNANSWERED, blankWorksheet, checkDocument, documentOf, emitWorksheet, loadData, main, parseWorksheet, projectStatus,
   referenceText, renderDocument, sourceLine, withDocuments
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
@@ -16,7 +16,7 @@ const run = (...args) => spawnSync('node', [helper, ...args], { encoding: 'utf8'
 const data = loadData(DEFAULT_DATA_DIR);
 const CAFE = 'tests/fixtures/uk-food/project-cafe';
 const EXPECTED = join(CAFE, 'expected');
-const WORKSHEETS = ['profile', ...SECTION_IDS, 'own'];
+const WORKSHEETS = ['profile', ...SECTION_IDS, 'own', ...LIST_SECTIONS];
 const cafeText = (section) => readFileSync(join(CAFE, 'food-safety', `answers-${section}.md`), 'utf8');
 const referenceFile = (section) => `plugins/arckit-uk-food/references/sfbb-caterers-${section}-2026-11-17.md`;
 // The section document of each section: FOODXC for XC and so on.
@@ -507,7 +507,7 @@ test('each section document is named by its section\'s code in the data', () => 
   assert.deepEqual(Object.keys(SECTION_DOCS).sort(), SECTION_IDS.map((id) => data.sections.get(id).section.code).sort());
   for (const [doc, section] of Object.entries(SECTION_DOCS)) assert.equal(data.sections.get(section).section.code, doc);
   // Today's value, as the helper has always listed it.
-  assert.deepEqual(DOC_CODES, [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN']);
+  assert.deepEqual(DOC_CODES, [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN', 'FOODCS']);
   // The rule it is derived by: the documents a named person signs, those that print a section first,
   // then the others, each in the table's order. A change to the literal above is checked against this.
   const listed = [...DOCUMENTS.filter((row) => row.section !== undefined), ...DOCUMENTS.filter((row) => row.section === undefined)];
@@ -887,7 +887,9 @@ function nastyCafe() {
     }
     for (const entry of parsed.entries.values()) {
       entry.title = NASTY_LINE;
-      for (const field of ['hazard', 'control', 'limit', 'limitSource', 'check', 'ifItFails']) if (entry[field]) entry[field] = NASTY;
+      for (const field of ['hazard', 'control', 'limit', 'limitSource', 'check', 'ifItFails', 'otherFrequency', 'precautions', 'method']) {
+        if (entry[field]) entry[field] = NASTY;
+      }
       if (entry.suppliedText) entry.suppliedText = `${NASTY}\n\`\`\`\`four backticks\`\`\`\``;
       if (entry.ehReview === 'pending') entry.ehReview = `2026-11-03 ${NASTY_LINE}`;
     }
@@ -1182,18 +1184,18 @@ test('a document is added in one place: one row in DOCUMENTS renders, is counted
     assert.equal(lines.at(-1), '<!-- UK-FOOD:END -->');
     assert.ok(lines.includes('## A test document'), result.text);
     assert.equal(lines.at(-3), 'This line says where the words of the test document come from.');
-    // Status lists it after the own methods document, counts the entries of its own worksheet (as many as
-    // the own methods document counts there) and lists that worksheet first.
+    // Status lists it after the last document before the completion record, counts the entries of its own
+    // worksheet (as many as the own methods document counts there) and lists that worksheet first.
     const documents = projectStatus(dir, data).documents;
     const codes = documents.map((doc) => doc.code);
-    assert.equal(codes[codes.indexOf('FOODOWN') + 1], 'FOODTEST', codes.join(', '));
+    assert.equal(codes[codes.indexOf('FOODCS') + 1], 'FOODTEST', codes.join(', '));
     const [mine, own] = ['FOODTEST', 'FOODOWN'].map((code) => documents.find((doc) => doc.code === code));
     assert.ok(own.questions > 0);
     assert.deepEqual([mine.questions, mine.confirmed, mine.proposed], [own.questions, own.confirmed, own.proposed]);
     assert.deepEqual(mine.worksheets, ['answers-own.md', 'answers-profile.md']);
     assert.match(mainSays('status', '--project', dir).out, new RegExp(`^FOODTEST \\(Test document\\): ${own.confirmed} of ${own.questions} ` +
       'test entries confirmed; not written; not signed off$', 'm'));
-    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, .*FOODOWN, FOODTEST, or FOODCMP, the completion record;/);
+    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, .*FOODOWN, FOODCS, FOODTEST, or FOODCMP, the completion record;/);
     // Written into the project, it passes check, and a named person can sign it off.
     const file = join(dir, 'ARC-001-FOODTEST-v1.0.md');
     writeFileSync(file, `Header text.\n\n${result.text}\n\nFooter text.\n`);
@@ -1222,7 +1224,7 @@ test('the profile reads only the worksheets it prints from: one another document
   const sections = { ...SECTION_DOCS };
   withDocuments(withRow(extra), () => {
     assert.deepEqual(SECTION_DOCS, sections);
-    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, FOODCLN, FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN, FOODEXTRA, or FOODCMP/);
+    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, FOODCLN, FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN, FOODCS, FOODEXTRA, or FOODCMP/);
     const result = renderDocument('FOODEXTRA', dir, data);
     assert.equal(result.exit, 1, 'the extra worksheet is read by the document that uses it');
     assert.match(result.messages.join('\n'), /answers-extra\.md:1: /);
@@ -1251,5 +1253,5 @@ test('the table refuses a row that is not whole, naming the row and the field, a
   refused(testRow({ nouns: undefined }), /FOODTEST: nouns is not the two words/);
   refused(testRow({ code: 'FOODOWN' }), /FOODOWN: code is another row's too/);
   assert.throws(() => withDocuments(DOCUMENTS, async () => {}), /runs fn synchronously/);
-  assert.deepEqual(DOC_CODES, [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN']);
+  assert.deepEqual(DOC_CODES, [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN', 'FOODCS']);
 });
