@@ -38,7 +38,7 @@ Every ArcKit command is an Agent Skill. Type its name after a slash:
 /arckit-requirements Build a payment processing system
 ```
 
-Antigravity does not put a plugin's name in front of its skills, so every ArcKit skill starts `arckit-`.
+Antigravity does not put a plugin's name in front of its skills, so every ArcKit skill starts `arckit-`, the four reference skills included (`arckit-mermaid-syntax`, `arckit-plantuml-syntax`, `arckit-wardley-mapping`, `arckit-architecture-workflow`).
 
 Every output is a draft for a qualified person to review. See [What ArcKit does not do](https://github.com/tractorjuice/arc-kit#what-arckit-does-not-do).
 

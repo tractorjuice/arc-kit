@@ -2124,8 +2124,12 @@ def _rewrite_skill_content(
     # contain command-name dots, such as $arckit-wardley.climate.
     # The capture must end in an alphanumeric so a trailing full stop is not
     # re-consumed (otherwise it undoes the trailing-punctuation fix above).
+    # A prefix that opens with a slash (`/arckit-`) also sits inside file paths
+    # such as `/tmp/arckit-wardley.owm`, which are not invocations: only a
+    # slash that does not follow a word character or another slash counts.
+    _not_in_a_path = r"(?<![\w/])" if inv_prefix.startswith("/") else ""
     content = re.sub(
-        re.escape(inv_prefix) + r"([A-Za-z0-9][A-Za-z0-9.-]*\.[A-Za-z0-9.-]*[A-Za-z0-9])",
+        _not_in_a_path + re.escape(inv_prefix) + r"([A-Za-z0-9][A-Za-z0-9.-]*\.[A-Za-z0-9.-]*[A-Za-z0-9])",
         normalize_invocation,
         content,
     )
@@ -2286,9 +2290,13 @@ def generate_antigravity_plugin(mcp_json_path, version, extension_dir):
         with open(mcp_json_path, "r", encoding="utf-8") as f:
             mcp_config = json.load(f)
         for name, entry in mcp_config.get("mcpServers", {}).items():
-            if "user_config" in json.dumps(entry):
+            # A key from the user's configuration, or a path inside the Claude
+            # plugin, cannot be carried over: leave the server out and say so.
+            if "user_config" in json.dumps(entry) or "${" in json.dumps(entry):
                 left_out.append(name)
             elif entry.get("url"):
+                # `url` and `serverUrl` are both read; `url` is what the plugin
+                # documentation's own example uses.
                 servers[name] = {"url": entry["url"]}
             elif entry.get("command"):
                 mapped = {"command": entry["command"]}
@@ -2296,6 +2304,8 @@ def generate_antigravity_plugin(mcp_json_path, version, extension_dir):
                     if entry.get(key):
                         mapped[key] = entry[key]
                 servers[name] = mapped
+            else:
+                left_out.append(name)
 
     manifest = {
         "$schema": "https://antigravity.google/schemas/v1/plugin.json",
@@ -2310,7 +2320,8 @@ def generate_antigravity_plugin(mcp_json_path, version, extension_dir):
         ],
         "author": {"name": "ArcKit", "url": "https://arckit.org"},
         "homepage": "https://arckit.org",
-        "repository": "https://github.com/tractorjuice/arckit-antigravity",
+        # The plugin has no repository of its own yet: it is built from arc-kit.
+        "repository": "https://github.com/tractorjuice/arc-kit",
         "license": "MIT AND CC-BY-SA-4.0",
         "keywords": ["enterprise-architecture", "governance", "procurement", "public-sector", "uk-government"],
     }
@@ -2320,8 +2331,41 @@ def generate_antigravity_plugin(mcp_json_path, version, extension_dir):
     with open(os.path.join(extension_dir, "mcp_config.json"), "w", encoding="utf-8") as f:
         f.write(json.dumps({"mcpServers": servers}, indent=2, ensure_ascii=False) + "\n")
     print(f"  Generated: {extension_dir}/plugin.json and mcp_config.json "
-          f"({len(servers)} MCP servers; left out, they need a key: {', '.join(left_out) or 'none'})")
+          f"({len(servers)} MCP servers; left out, needing a key or not mappable: {', '.join(left_out) or 'none'})")
     return servers, left_out
+
+
+def prefix_antigravity_reference_skills(skills_dir):
+    """Give the reference skills the `arckit-` prefix every other skill has.
+
+    Antigravity does not namespace a plugin's skills, so a bare
+    `mermaid-syntax` would collide with any other plugin's skill of that name.
+    The folder and the `name:` field change together, because the loader
+    requires them to match.
+    """
+    if not os.path.isdir(skills_dir):
+        return []
+    renamed = []
+    for entry in sorted(os.listdir(skills_dir)):
+        src = os.path.join(skills_dir, entry)
+        if entry.startswith("arckit-") or not os.path.isfile(os.path.join(src, "SKILL.md")):
+            continue
+        dst = os.path.join(skills_dir, f"arckit-{entry}")
+        if os.path.isdir(dst):
+            shutil.rmtree(dst)
+        os.rename(src, dst)
+        skill_md = os.path.join(dst, "SKILL.md")
+        with open(skill_md, "r", encoding="utf-8") as f:
+            text = f.read()
+        text, count = re.subn(rf"(?m)^name:\s*{re.escape(entry)}\s*$", f"name: arckit-{entry}", text, count=1)
+        if count != 1:
+            raise ValueError(f"{skill_md}: no `name: {entry}` line to rename")
+        with open(skill_md, "w", encoding="utf-8") as f:
+            f.write(text)
+        renamed.append(entry)
+    if renamed:
+        print(f"  Prefixed {len(renamed)} reference skills: {', '.join(renamed)}")
+    return renamed
 
 
 def rewrite_antigravity_skills(skills_dir):
@@ -2910,6 +2954,7 @@ if __name__ == "__main__":
         os.path.join(plugin_dir, "skills"),
         "extensions/arckit-antigravity/skills",
     )
+    prefix_antigravity_reference_skills("extensions/arckit-antigravity/skills")
     rewrite_antigravity_skills("extensions/arckit-antigravity/skills")
 
     print()

@@ -24,7 +24,7 @@ ArcKit ships in multiple formats, each with its own version file. They are all b
 
 - `extensions/arckit-gemini/VERSION` + `extensions/arckit-gemini/gemini-extension.json`
 - `extensions/arckit-paperclip/VERSION` + `extensions/arckit-paperclip/package.json`
-- `extensions/arckit-opencode/VERSION`, `extensions/arckit-codex/VERSION`, `extensions/arckit-copilot/VERSION`, `extensions/arckit-vibe/VERSION` and `extensions/arckit-kimi/VERSION`
+- `extensions/arckit-opencode/VERSION`, `extensions/arckit-codex/VERSION`, `extensions/arckit-copilot/VERSION`, `extensions/arckit-vibe/VERSION`, `extensions/arckit-kimi/VERSION` and `extensions/arckit-antigravity/VERSION`
 
 `scripts/bump-version.sh <version>` updates all of these in one go, plus the README badges, `docs/README.md` and the `softwareVersion` in `docs/index.html`. It does not touch the `=X.Y.Z` core pin written as prose in `README.md` and `plugins/arckit-oaa/README.md`; change those by hand (step 4 below).
 

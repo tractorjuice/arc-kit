@@ -76,7 +76,28 @@ def test_every_convertible_command_has_a_skill():
     assert not missing, sorted(missing)[:5]
     # Antigravity gets what the other skill-based target gets.
     kimi = {p.parent.name for p in (REPO / "extensions" / "arckit-kimi" / "skills").glob("*/SKILL.md")}
-    assert names == kimi
+    assert names == {n if n.startswith("arckit-") else f"arckit-{n}" for n in kimi}
+
+
+def test_every_skill_carries_the_prefix():
+    """Antigravity does not namespace a plugin's skills, so a bare `mermaid-syntax` could collide with another
+    plugin's. The four reference skills are renamed for this target."""
+    names = {p.parent.name for p in skills()}
+    assert all(n.startswith("arckit-") for n in names), sorted(n for n in names if not n.startswith("arckit-"))
+    assert {"arckit-mermaid-syntax", "arckit-plantuml-syntax", "arckit-wardley-mapping", "arckit-architecture-workflow"} <= names
+
+
+def test_a_file_path_is_not_rewritten_as_a_command():
+    """`/tmp/arckit-wardley.owm` holds the invocation prefix; it is a file, and keeps its extension."""
+    text = (SKILLS / "arckit-wardley" / "SKILL.md").read_text(encoding="utf-8")
+    assert "/tmp/arckit-wardley.owm" in text and "arckit-wardley-owm" not in text
+    for path in skills():
+        assert not re.search(r"/tmp/arckit-[\w-]+-owm\b", path.read_text(encoding="utf-8")), path.parent.name
+
+
+def test_the_manifest_points_at_a_repository_that_exists():
+    manifest = json.loads((EXT / "plugin.json").read_text(encoding="utf-8"))
+    assert manifest["repository"] == "https://github.com/tractorjuice/arc-kit"
 
 
 @pytest.mark.parametrize("path", skills(), ids=lambda p: p.parent.name)
@@ -115,10 +136,13 @@ def test_the_generator_leaves_out_keyed_servers(tmp_path):
         "open": {"type": "http", "url": "https://example.org/mcp", "alwaysLoad": True},
         "keyed": {"type": "http", "url": "https://example.org/k", "headers": {"X-Key": "${user_config.KEY}"}},
         "local": {"command": "node", "args": ["server.mjs"]},
+        # Nothing the generator can map, and a path inside the Claude plugin: both are named, not dropped in silence.
+        "odd": {"type": "sse"},
+        "inside": {"command": "node", "args": ["${CLAUDE_PLUGIN_ROOT}/server.mjs"]},
     }}), encoding="utf-8")
     servers, left_out = converter.generate_antigravity_plugin(str(source), "1.2.3", str(tmp_path / "out"))
     assert servers == {"open": {"url": "https://example.org/mcp"}, "local": {"command": "node", "args": ["server.mjs"]}}
-    assert left_out == ["keyed"]
+    assert left_out == ["keyed", "odd", "inside"]
     assert json.loads((tmp_path / "out" / "plugin.json").read_text())["version"] == "1.2.3"
 
 

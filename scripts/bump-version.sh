@@ -298,7 +298,7 @@ for p in "${ALL_PLUGINS[@]}"; do
   [[ -f "$p/VERSION" ]] && VERSION_FILES+=("$p/VERSION")
 done
 # Extension repos (no plugin.json — added explicitly)
-for ext in extensions/arckit-gemini extensions/arckit-opencode extensions/arckit-codex extensions/arckit-copilot extensions/arckit-paperclip extensions/arckit-vibe extensions/arckit-kimi; do
+for ext in extensions/arckit-gemini extensions/arckit-opencode extensions/arckit-codex extensions/arckit-copilot extensions/arckit-antigravity extensions/arckit-paperclip extensions/arckit-vibe extensions/arckit-kimi; do
   [[ -f "$ext/VERSION" ]] && VERSION_FILES+=("$ext/VERSION")
 done
 grep -H "$NEW_VERSION" "${VERSION_FILES[@]}"
