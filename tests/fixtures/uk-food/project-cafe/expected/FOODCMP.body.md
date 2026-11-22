@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODCMP data=sfbb-caterers-2026-11-17 body=4d63a14d0c1d90067ec547b7af5b52406ea8b53904625e1cc22947084e1b1354 -->
+<!-- UK-FOOD:BEGIN doc=FOODCMP data=sfbb-caterers-2026-11-17 body=d351845ed76dc557eff62242450dcc9d94a2286ac1de640d45889c45e9c0785b -->
 
 ## SAFE METHOD COMPLETION RECORD
 
@@ -67,7 +67,7 @@ It does not matter in what order you work through the safe methods. As you compl
 - Own methods (FOODOWN): document not written yet: write the document from its worksheet
 - Own methods (FOODOWN): document not signed off yet: once it is finished, a named person signs it off
 - Allergen information (FOODALG): 1 dish in food-safety/answers-allergens.md is proposed but not confirmed (DISH-03): an entry counts when its State is confirmed and By and On are filled in
-- Allergen information (FOODALG): 2 allergen cells of confirmed dishes in food-safety/answers-allergens.md are empty, so the document shows them as not confirmed (Celery and Mustard in DISH-02): fill in each as contains or does not contain from what was checked, then update that dish's Checked-against, Checked-on, By and On
+- Allergen information (FOODALG): 2 allergen cells of confirmed dishes in food-safety/answers-allergens.md are not filled in, so the document shows them as not confirmed (Celery and Mustard in DISH-02): fill in each as contains or does not contain from what was checked, then update that dish's Checked-against, Checked-on, By and On
 - Allergen information (FOODALG): MG-04-Q01, MG-04-Q06 and MG-04-Q14 in food-safety/answers-MG.md have no confirmed answer yet, and this document repeats them under How customers are told: answer them in the Management safe methods worksheet; an answer counts when its State is confirmed and By and On are filled in
 - Allergen information (FOODALG): document not written yet: write the document from its worksheet
 - Allergen information (FOODALG): document not signed off yet: once it is finished, a named person signs it off

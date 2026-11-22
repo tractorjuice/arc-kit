@@ -255,7 +255,7 @@ test('the unfinished list says, for each document in order, what is outstanding 
     { code: 'FOODOWN', what: NOT_SIGNED },
     { code: 'FOODALG', what: '1 dish in food-safety/answers-allergens.md is proposed but not confirmed (DISH-03): an entry counts when its ' +
       'State is confirmed and By and On are filled in' },
-    { code: 'FOODALG', what: '2 allergen cells of confirmed dishes in food-safety/answers-allergens.md are empty, so the document shows them ' +
+    { code: 'FOODALG', what: '2 allergen cells of confirmed dishes in food-safety/answers-allergens.md are not filled in, so the document shows them ' +
       'as not confirmed (Celery and Mustard in DISH-02): fill in each as contains or does not contain from what was checked, then update that ' +
       'dish\'s Checked-against, Checked-on, By and On' },
     { code: 'FOODALG', what: 'MG-04-Q01, MG-04-Q06 and MG-04-Q14 in food-safety/answers-MG.md have no confirmed answer yet, and this document ' +

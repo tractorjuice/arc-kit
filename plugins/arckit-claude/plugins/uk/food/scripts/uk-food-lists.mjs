@@ -1,11 +1,11 @@
 import { DATA_ID, isObject } from './uk-food-data.mjs';
 import {
-  addListWorksheets, andList, blockTools, counted, fieldKey, fieldLines, isAre, isIsoDate, longDate, methodQuestions, quotedBy, readBlocks, standard,
-  STATE_WORDS, STATES, WORKSHEET_VERSION
+  addListWorksheets, andList, blockTools, codePoint, counted, fieldKey, fieldLines, isAre, isIsoDate, longDate, methodQuestions, quotedBy, readBlocks,
+  standard, STATE_WORDS, STATES, WORKSHEET_VERSION
 } from './uk-food-worksheet.mjs';
 import {
   businessText, NOT_CONFIRMED, NOT_CONFIRMED_CELL, notConfirmed, notRelevantLine, packBlockChunks, questionCell, said, sectionView, tableLines,
-  UNANSWERED, worksheetName
+  UNANSWERED, variationLine, worksheetName
 } from './uk-food-document.mjs';
 
 // ---------------------------------------------------------------------------------------------
@@ -74,12 +74,12 @@ const SUPPLIER_CELLS = [['title', null, 0], ['deliveryDays', null, 1], ['leadTim
 // heading (TEAM_ADVICE), where another contact's leaves room for the business's own words.
 const CONTACT_CELLS = [['title', null, 0], ['contactName', 0, 0], ['telephone', 1, 0], ['email', 2, 0], ['address', 3, 0], ['usefulFor', null, 1]];
 const TEAM_ADVICE = [0, 1];
-const cellOf = (box, [row, column]) => (row === null ? box?.columns : box?.rows?.[row])?.[column];
+const boxCell = (box, [row, column]) => (row === null ? box?.columns : box?.rows?.[row])?.[column];
 const isWords = (value) => typeof value === 'string' && value !== '';
 // The labels of a box, as [field, label] in the order of `cells`, or null when the box is missing or any of them is
 // not there: the document is then not printed (see lacking), rather than printed with a label left out.
 const labelsOf = (box, cells) => {
-  const labels = cells.map(([field, ...at]) => [field, cellOf(box, at)]);
+  const labels = cells.map(([field, ...at]) => [field, boxCell(box, at)]);
   return labels.every(([, label]) => isWords(label)) ? labels : null;
 };
 // The labels of a supplier's box, the team's and another contact's, and the pack's list of what the team advises on;
@@ -93,8 +93,8 @@ function supplierForms(data) {
   const [teamBox, contactBox] = boxes(CONTACTS_FORM);
   const [supplier, team, contact] = [[supplierBox, SUPPLIER_CELLS], [teamBox, CONTACT_CELLS], [contactBox, CONTACT_CELLS]]
     .map(([box, cells]) => labelsOf(box, cells));
-  const advice = cellOf(teamBox, TEAM_ADVICE);
-  if (!supplier || !team || !contact || !isWords(advice) || cellOf(contactBox, TEAM_ADVICE) !== '') return null;
+  const advice = boxCell(teamBox, TEAM_ADVICE);
+  if (!supplier || !team || !contact || !isWords(advice) || boxCell(contactBox, TEAM_ADVICE) !== '') return null;
   return { supplier, team, contact, advice };
 }
 
@@ -174,12 +174,26 @@ function allergenQuotes(data) {
 const CELL_VALUES = ['contains', 'does not contain'];
 const cellValue = (value) => {
   const found = standard(value.replace(/ +/g, ' '), CELL_VALUES);
-  return CELL_VALUES.includes(found) ? { value: found }
-    : { error: `is neither ${CELL_VALUES[0]} nor ${CELL_VALUES[1]}: write one of the two, or leave it empty while it is not known; a ` +
-      'precautionary statement such as may contain, or any other note, goes in Notes' };
+  if (CELL_VALUES.includes(found)) return { value: found };
+  // A character that is not a plain printable one (a no-break space, a tab, a line break, a letter of another alphabet
+  // that looks like ours) can make a value look exactly like one of the two when it is not, so the message names it by
+  // its code point, as the message for a character that cannot be seen does: otherwise it would seem to refuse the very
+  // words it asks for.
+  const odd = [...new Set(value.match(/[^\x20-\x7E]/gu) ?? [])].map(codePoint);
+  const holds = odd.length ? ` (it holds ${andList(odd)}, which ${odd.length === 1 ? 'is not a plain letter or space' : 'are not plain letters or ' +
+    'spaces'}: type it again)` : '';
+  return { error: `is neither ${CELL_VALUES[0]} nor ${CELL_VALUES[1]}${holds}: write one of the two, or leave it empty while it is not known; ` +
+    'a precautionary statement such as may contain, or any other note, goes in Notes' };
 };
 // Whether a dish is prepacked for direct sale: yes or no, in any letter case, or nothing yet.
 const PPDS_VALUES = ['yes', 'no'];
+// What a dish's row shows, by the one rule the document and status both follow, so that they cannot come to disagree:
+// a cell's value only when it is exactly one of the two, null otherwise (printed as not confirmed); the cells a dish has
+// not filled in with one of the two (left empty, or with no line at all); and whether its PPDS is recorded. A dish not
+// confirmed shows none of its cells at all: that is decided where the row is made, from `answered`.
+const confirmedCell = (entry, field) => (CELL_VALUES.includes(entry[fieldKey(field)]) ? entry[fieldKey(field)] : null);
+const cellsNotFilled = (entry) => ALLERGEN_FIELDS.filter((field) => confirmedCell(entry, field) === null);
+const ppdsRecorded = (entry) => PPDS_VALUES.includes(entry.ppds);
 const ANSWER_COUNTS = 'an answer counts when its State is confirmed and By and On are filled in';
 // The lines status gives when the allergen information shows how customers are told as not yet answered, from the
 // Management worksheet as status read it (`sheets`, every worksheet read): not started, or one or more of the three
@@ -362,9 +376,12 @@ export const LISTS = {
       'contacts document is printed from: a supplier\'s box, then the environmental health team\'s box with its list of what the team ' +
       'advises on, and another contact\'s box')
   },
-  // The business's dishes, each against the pack's fourteen allergens. A cell is filled only from what a person checked
-  // (a label, a specification, a supplier's statement, or, for an ingredient with none, their own knowledge, which
-  // Checked-against then says), and the dish counts only once a named person confirms its row as a whole. Kept elsewhere
+  // The business's dishes, each against the pack's fourteen allergens. A cell is filled only from what was checked: a
+  // label, a product specification or a supplier's statement for each ingredient; or, for an ingredient with no label that
+  // is a single whole food with nothing added (a loose tomato, a fresh egg), a named person's own look at it, which
+  // Checked-against then records with who looked. Anything made of more than one thing needs one of the three. The helper
+  // cannot tell which an ingredient is, so the guidance says it plainly, and never what a cell should hold. The dish
+  // counts only once a named person confirms its row as a whole. Kept elsewhere
   // says where the business keeps its allergen information for its dishes, if it keeps it somewhere else (the pack's
   // MG-04-Q01 asks where it is kept).
   allergens: {
@@ -404,41 +421,48 @@ export const LISTS = {
     guidance: () => [
       'Ingredients is what goes into the dish, in your own words. PPDS is yes when the dish is prepacked for direct',
       'sale, and no when it is not.',
-      `${ALLERGEN_FIELDS[0]} to ${ALLERGEN_FIELDS.at(-1)} are the fourteen allergens. Write contains or does not contain in each, as the`,
-      'labels, specifications or supplier statements checked say. For an ingredient that has none, such as loose',
-      'vegetables or fresh eggs, write what the person checking knows, and say so in Checked-against.',
-      'Leave one empty while it is not known: the document shows it as not confirmed. Never fill one in from the name',
-      'of a dish or of an ingredient.',
+      `${ALLERGEN_FIELDS[0]} to ${ALLERGEN_FIELDS.at(-1)} are the fourteen allergens. Write contains or does not contain in each, as what was`,
+      'checked says: a label, a product specification or a supplier\'s statement for each ingredient.',
+      'An ingredient with no label may rest on a named person\'s own check only when it is a single whole food with',
+      'nothing added, such as a loose tomato or a fresh egg: Checked-against then says what was looked at, and by whom.',
+      'Anything made of more than one thing, such as a mix, a sauce, bread, or a dressed or prepared product, needs a',
+      'label, a specification or a supplier\'s statement.',
+      'Leave a cell empty while it is not known: the document shows it as not confirmed. Never fill one in from the',
+      'name of a dish or of an ingredient.',
       'Notes is anything else to say, such as a precautionary statement on a label that the food may contain an',
-      'allergen: that is never written in an allergen\'s field.',
-      'Checked-against names what was checked: each label, specification or supplier statement. Checked-on is the day',
-      'it was checked, written YYYY-MM-DD, and is not after today or after On.',
+      'allergen: that is never written in an allergen\'s field. The document marks each dish that has Notes, so that',
+      'its notes are read.',
+      'Checked-against names what was checked: each label, specification or supplier\'s statement, and each single',
+      'whole food looked at, with who looked. Checked-on is the day it was checked, written YYYY-MM-DD, and is not',
+      'after today or after On.',
       'Free-from-claim is any claim the business makes that the dish is free from an allergen, in its own words.',
       'An entry needs Checked-against and Checked-on before it can be proposed or confirmed.',
+      'When an empty cell of a confirmed dish is filled in later, bring the dish\'s Checked-against, Checked-on, By',
+      'and On up to date.',
       'When a recipe, an ingredient, a brand or a supplier changes, set the dish\'s State to unanswered and clear By',
       'and On until it has been checked again.'
     ],
     quoted: null,
-    // What else the document shows unfinished, each in the words of what to do: a cell a confirmed dish left empty, a
-    // confirmed dish with no PPDS, and the Management worksheet's answers on how customers are told not yet confirmed
-    // (customerLines). A dish not confirmed is told by status's count of entries not confirmed.
+    // What else the document shows unfinished, each in the words of what to do: a cell a confirmed dish has not filled in
+    // (left empty, or its line not there at all: both are read as nothing), a confirmed dish with no PPDS, and the
+    // Management worksheet's answers on how customers are told not yet confirmed (customerLines). A dish not confirmed is
+    // told by status's count of entries not confirmed. The cells and PPDS are judged by the same helpers the body uses.
     outstanding: (parsed, data, sheets) => {
       const file = `food-safety/${worksheetName('allergens')}`;
       const confirmed = [...parsed.entries.values()].filter((entry) => entry.answered);
-      const empty = confirmed.map((entry) => ({ id: entry.id, fields: ALLERGEN_FIELDS.filter((field) => !CELL_VALUES.includes(entry[fieldKey(field)])) }))
-        .filter(({ fields }) => fields.length);
+      const empty = confirmed.map((entry) => ({ id: entry.id, fields: cellsNotFilled(entry) })).filter(({ fields }) => fields.length);
       const n = empty.reduce((sum, { fields }) => sum + fields.length, 0);
       // Each dish's empty cells, as "Mustard and Soya in DISH-01"; the dishes a comma apart, the last after ", and", so
       // that no reader can take one dish's cells for another's.
       const where = empty.map(({ id, fields }) => `${andList(fields)} in ${id}`);
       const named = where.length < 2 ? where.join('') : `${where.slice(0, -1).join(', ')}, and ${where.at(-1)}`;
-      const noPpds = confirmed.filter((entry) => !PPDS_VALUES.includes(entry.ppds)).map((entry) => entry.id);
+      const noPpds = confirmed.filter((entry) => !ppdsRecorded(entry)).map((entry) => entry.id);
       return [
-        ...(n ? [`${counted(n, 'allergen cell', 'allergen cells')} of confirmed dishes in ${file} ${isAre(n)} empty, so the document shows ` +
+        ...(n ? [`${counted(n, 'allergen cell', 'allergen cells')} of confirmed dishes in ${file} ${isAre(n)} not filled in, so the document shows ` +
           `${n === 1 ? 'it' : 'them'} as not confirmed (${named}): ` +
           `${n === 1 ? 'fill it in' : 'fill in each'} as ${CELL_VALUES[0]} or ${CELL_VALUES[1]} from what was checked, then update ` +
           `${empty.length === 1 ? 'that dish\'s' : 'each of those dishes\''} Checked-against, Checked-on, By and On`] : []),
-        ...(noPpds.length ? [`PPDS is empty in ${counted(noPpds.length, 'confirmed dish', 'confirmed dishes')} in ${file} (${andList(noPpds)}), so ` +
+        ...(noPpds.length ? [`PPDS is not filled in for ${counted(noPpds.length, 'confirmed dish', 'confirmed dishes')} in ${file} (${andList(noPpds)}), so ` +
           `the document shows ${noPpds.length === 1 ? 'it' : 'them'} as not confirmed under Prepacked for direct sale: write yes or no in ` +
           `${noPpds.length === 1 ? 'its' : 'each one\'s'} PPDS, for whether it is prepacked for direct sale, then update its By and On`] : []),
         ...customerLines(sheets)
@@ -749,8 +773,16 @@ const ALLERGEN_HEADINGS = {
   table: '### The fourteen allergens', dishes: '### Dishes', checked: '### What each row was checked against', ppds: '### Prepacked for direct sale',
   freeFrom: '### The business\'s own "free from" statements', customers: '### How customers are told'
 };
-const DISHES_LEAD = 'A confirmed row records what a named person at the business agreed after checking the labels, specifications or ' +
-  'statements named in the next section.';
+// The mark a confirmed dish's row carries in its Dish cell when the dish has Notes, on a line of its own there, so that a
+// reader of the Dishes table (the part a customer is shown) is sent to the note, which may be a label's precautionary
+// statement. It says nothing about allergens itself. It is bold, which no business's words can be (businessText escapes
+// the asterisks), so a dish's name can never imitate it. A dish not confirmed never carries it: its notes are not yet the
+// business's.
+export const NOTES_MARK = '**see notes**';
+// What a confirmed row is, in the words of what Checked-against may hold, and what the notes mark sends a reader to.
+const DISHES_LEAD = 'A confirmed row records what a named person at the business agreed after checking what the next section names for ' +
+  `it: labels, specifications or suppliers' statements, or a single whole food that person looked at. A row marked ${NOTES_MARK} has a ` +
+  'note there, which may be a label\'s statement that the food may contain an allergen.';
 const CHECKED_COLUMNS = ['Dish', 'Ingredients', 'Checked against', 'Checked on', 'Notes', 'Agreed by'];
 const PACK_SAYS = 'What the pack says:';
 const PACK_SAYS_TWICE = 'What the pack says, in a safety point and then in the reason it gives:';
@@ -760,7 +792,8 @@ const PACK_SAYS_TWICE = 'What the pack says, in a safety point and then in the r
 //    that what is written about that is not confirmed.
 // 2. The pack's table of the fourteen allergens, unchanged.
 // 3. The Dishes table: a row to each entry, its cells under the fourteen names cut short. A confirmed dish's row is its
-//    identifier and name, then each cell as confirmed, or NOT_CONFIRMED_CELL for one left empty. A dish not confirmed
+//    identifier and name (with NOTES_MARK under them when it has Notes), then each cell as confirmed, or NOT_CONFIRMED_CELL
+//    for one not filled in. A dish not confirmed
 //    shows its identifier alone (its name is not yet the business's) and NOT_CONFIRMED_CELL in every cell, whatever its
 //    worksheet holds: nothing of a row nobody confirmed is printed. A cell is printed only when it is exactly one of the
 //    two values, so nothing else a worksheet could hold can reach a cell. With no entry and Kept elsewhere not confirmed,
@@ -768,13 +801,17 @@ const PACK_SAYS_TWICE = 'What the pack says, in a safety point and then in the r
 // 4. What each confirmed dish was checked against, and when, its ingredients and notes, and who agreed it and when; then
 //    the dishes not confirmed, by identifier.
 // 5. The pack's sentence on prepacked for direct sale food, then the confirmed dishes the business records as such, and
-//    those whose PPDS is not recorded, as NOT_CONFIRMED_CELL. With neither, a line saying none is recorded: true only
-//    because every confirmed dish said no.
+//    those whose PPDS is not recorded, as NOT_CONFIRMED_CELL. With neither, but some dish confirmed, a line saying none in
+//    the document is recorded as such: true only because every confirmed dish said no. With no dish confirmed at all (Kept
+//    elsewhere alone, say), a line saying so instead, so that the document never reads as saying the business has no such
+//    food when it has said nothing about any dish.
 // 6. Each confirmed dish's own claim, in the business's words, then the pack's conditions for such a claim, its safety
-//    point's paragraph and its reason's. With no claim, a line saying none is recorded.
+//    point's paragraph and its reason's. With no claim, a line saying no confirmed dish has one; with no dish confirmed, a
+//    line saying none is recorded for that reason, never one that reads as the business making no such statement.
 // 7. The three questions on how customers are told, with the Management worksheet's answers, each printed by questionCell
-//    exactly as the Management document prints it; or that worksheet's not-relevant line for MG-04, as that document
-//    prints it; or, with no Management worksheet, UNANSWERED on a line naming it.
+//    exactly as the Management document prints it, and MG-04's variation line when it is adapted, as that document prints
+//    it; or MG-04's not-relevant line, as that document prints it; or, with no Management worksheet, UNANSWERED on a line
+//    naming it.
 // Every word of a business's is escaped (businessText, said); tableLines escapes a pipe and turns a line break into <br>.
 export function allergenChunks(sources, data) {
   const list = LISTS.allergens;
@@ -787,8 +824,8 @@ export function allergenChunks(sources, data) {
   // A confirmed dish named in a line of the helper's, and in a table cell (where tableLines makes its line breaks <br>).
   const named = (entry) => `${entry.id} ${said(entry.title)}`;
   const inCell = (entry) => `${entry.id} ${businessText(entry.title)}`;
-  const cellOf = (entry, field) => (CELL_VALUES.includes(entry[fieldKey(field)]) ? entry[fieldKey(field)] : NOT_CONFIRMED_CELL);
-  const row = (entry) => (entry.answered ? [inCell(entry), ...allergens.map(({ field }) => cellOf(entry, field))]
+  const row = (entry) => (entry.answered
+    ? [`${inCell(entry)}${entry.notes ? `\n${NOTES_MARK}` : ''}`, ...allergens.map(({ field }) => confirmedCell(entry, field) ?? NOT_CONFIRMED_CELL)]
     : [entry.id, ...allergens.map(() => NOT_CONFIRMED_CELL)]);
   const dishes = entries.length
     ? [[ALLERGEN_HEADINGS.dishes], [DISHES_LEAD], tableLines(['Dish', ...allergens.map(({ name }) => shortName(name))], entries.map(row))]
@@ -798,16 +835,18 @@ export function allergenChunks(sources, data) {
       ...[entry.ingredients, entry.checkedAgainst, entry.checkedOn, entry.notes].map(businessText), `${businessText(entry.by)}, ${businessText(entry.on)}`]))] : []),
     ...notConfirmed(entries)] : [];
   const prepacked = confirmed.filter((entry) => entry.ppds === 'yes');
-  const unrecorded = confirmed.filter((entry) => !PPDS_VALUES.includes(entry.ppds));
+  const unrecorded = confirmed.filter((entry) => !ppdsRecorded(entry));
+  const noneConfirmed = 'No dish is confirmed in this document, so';
   const ppds = [[ALLERGEN_HEADINGS.ppds], [PACK_SAYS], [`> ${quotes.ppds}`],
     ...(prepacked.length ? [['The business records these dishes as prepacked for direct sale:'], prepacked.map((entry) => `- ${named(entry)}`)] : []),
     ...(unrecorded.length ? [['Whether these dishes are prepacked for direct sale is not yet recorded:'],
       unrecorded.map((entry) => `- ${named(entry)}: ${NOT_CONFIRMED_CELL}`)] : []),
-    ...(prepacked.length || unrecorded.length ? [] : [['No dish in this document is recorded as prepacked for direct sale.']])];
+    ...(prepacked.length || unrecorded.length ? [] : [[confirmed.length ? 'No dish in this document is recorded as prepacked for direct sale.'
+      : `${noneConfirmed} it does not say which dishes are prepacked for direct sale.`]])];
   const claims = confirmed.filter((entry) => entry.freeFromClaim);
   const freeFrom = [[ALLERGEN_HEADINGS.freeFrom],
     ...(claims.length ? [['The business\'s own words, as confirmed for each dish:'], claims.map((entry) => `- ${named(entry)}: ${said(entry.freeFromClaim)}`)]
-      : [['None is recorded in this document.']]),
+      : [[confirmed.length ? 'No confirmed dish has one recorded.' : `${noneConfirmed} none of the business's statements is recorded here.`]]),
     [PACK_SAYS_TWICE], ...quotes.freeFrom.map((paragraph) => [`> ${paragraph}`])];
   return [[`## ${list.title}`], ...kept, ...elsewhereNotConfirmed(list, parsed.elsewhere),
     [ALLERGEN_HEADINGS.table], ...packBlockChunks(allergenBlock(data)),
@@ -820,11 +859,16 @@ function customerChunks(sources, { method, questions }) {
   const heading = [ALLERGEN_HEADINGS.customers];
   const mg = sources.get('MG')?.parsed;
   if (!mg) return [heading, [`How customers are told is answered in the Management safe methods worksheet, which has not been started yet: ${UNANSWERED}`]];
-  const lead = [`From ${method.id} ${method.title}, in the business's Management safe methods worksheet:`];
+  // A reader of the document knows the Management safe methods document, not the worksheet behind it, so the lead names
+  // the document; its words here are that document's.
+  const lead = [`From ${method.id} ${method.title}, in the business's Management safe methods document:`];
   const record = mg.methods.get(method.id);
   if (record?.status === 'not-relevant') return [heading, lead, [notRelevantLine(record)]];
   const view = sectionView(mg);
-  return [heading, lead, tableLines([''], questions.map((question) => [questionCell(question, view)]))];
+  // An adapted MG-04 has a variation of the business's, which may bear on these answers ("we take no phone orders"): it
+  // is printed after them, as the Management document prints it.
+  return [heading, lead, tableLines([''], questions.map((question) => [questionCell(question, view)])),
+    ...(record?.status === 'adapted' ? [[variationLine(record)]] : [])];
 }
 
 // The allergen information's last line: what it quotes, which is the pack's table and its three paragraphs in every state,

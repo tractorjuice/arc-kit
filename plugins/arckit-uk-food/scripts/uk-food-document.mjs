@@ -15,7 +15,7 @@ import {
 export {
   BEFORE_RENDER, bodyText, businessText, closingNotice, COMPLETION_STALE, coverageChunks, DOC_OF_SECTION, extraCareDone,
   failure, misplaced, NAME_QUESTION, NOT_CONFIRMED, notConfirmed, notRelevantLine, otherText, packBlockChunks, paragraphs, questionCell,
-  readWorksheets, said, sectionView, sha256, sourcesOf, tableLines, worksheetFile, worksheetName
+  readWorksheets, said, sectionView, sha256, sourcesOf, tableLines, variationLine, worksheetFile, worksheetName
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -533,20 +533,21 @@ function blockChunks(block, view) {
   return [...heading, ...paragraphs(block.text)];
 }
 
+// The lines a document prints from a method's record in the business's worksheet, in the business's words: for a method
+// marked not relevant, the reason and who decided; for an adapted one, its variation, why, how it was shown to be safe and
+// who decided. The allergen information prints them too, for MG-04, exactly as the Management document does.
+const notRelevantLine = (record) => `Not relevant to this business: ${said(record.reason)} (decided by ${said(record.decidedBy)}).`;
+const variationLine = (record) => `Our variation: ${said(record.variation)} Reason: ${said(record.reason)} Shown to be safe by: ` +
+  `${said(record.provedSafe)} Decided by: ${said(record.decidedBy)}`;
+
 // A safe method. `view.method` gives the business's record of it (null in the reference, which
 // prints no status and no variation line); `view.parts` and `view.answer` what to print of a question.
-// The line a document prints for a method the business has marked not relevant, from the method's record in its
-// worksheet: the reason and who decided, in the business's words. The allergen information prints it too, for MG-04.
-const notRelevantLine = (record) => `Not relevant to this business: ${said(record.reason)} (decided by ${said(record.decidedBy)}).`;
-
 function methodChunks(method, view) {
   const heading = [`### ${method.id} ${method.title}`];
   const record = view.method(method.id);
   if (record?.status === 'not-relevant') return [heading, [notRelevantLine(record)]];
   const chunks = [heading, ...paragraphs(method.summary), ...method.blocks.flatMap((block) => blockChunks(block, view))];
-  if (record?.status !== 'adapted') return chunks;
-  return [...chunks, [`Our variation: ${said(record.variation)} Reason: ${said(record.reason)} Shown to be safe by: ` +
-    `${said(record.provedSafe)} Decided by: ${said(record.decidedBy)}`]];
+  return record?.status === 'adapted' ? [...chunks, [variationLine(record)]] : chunks;
 }
 
 function sectionChunks(file, view) {

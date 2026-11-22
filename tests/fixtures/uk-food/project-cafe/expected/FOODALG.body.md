@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODALG data=sfbb-caterers-2026-11-17 body=90d3df7befe1e9ac10aa58e11cd87f0776f189a3220edcb5e99ae98c34da0ed4 -->
+<!-- UK-FOOD:BEGIN doc=FOODALG data=sfbb-caterers-2026-11-17 body=d97f3258b30a428b4949849822e808bf94172e0dfc57799b45800b4310aea68f -->
 
 ## Allergen information
 
@@ -23,22 +23,22 @@
 
 ### Dishes
 
-A confirmed row records what a named person at the business agreed after checking the labels, specifications or statements named in the next section.
+A confirmed row records what a named person at the business agreed after checking what the next section names for it: labels, specifications or suppliers' statements, or a single whole food that person looked at. A row marked **see notes** has a note there, which may be a label's statement that the food may contain an allergen.
 
 | Dish | Nuts | Peanuts | Eggs | Milk | Fish | Crustaceans | Molluscs | Cereals containing gluten | Celery | Lupin | Mustard | Sesame seeds | Soya | Sulphur dioxide |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| DISH-01 Cheese and tomato toastie | does not contain | does not contain | does not contain | contains | does not contain | does not contain | does not contain | contains | does not contain | does not contain | does not contain | does not contain | does not contain | does not contain |
-| DISH-02 Vegetable quiche | does not contain | does not contain | contains | contains | does not contain | does not contain | does not contain | contains | **NOT CONFIRMED** | does not contain | **NOT CONFIRMED** | does not contain | does not contain | does not contain |
+| DISH-01 Cheese and tomato toastie<br>**see notes** | does not contain | does not contain | does not contain | contains | does not contain | does not contain | does not contain | contains | does not contain | does not contain | does not contain | does not contain | does not contain | does not contain |
+| DISH-02 Vegetable quiche<br>**see notes** | does not contain | does not contain | contains | contains | does not contain | does not contain | does not contain | contains | **NOT CONFIRMED** | does not contain | **NOT CONFIRMED** | does not contain | does not contain | does not contain |
 | DISH-03 | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** | **NOT CONFIRMED** |
-| DISH-04 Cheese and pickle sandwich | does not contain | does not contain | does not contain | contains | does not contain | does not contain | does not contain | contains | does not contain | does not contain | contains | does not contain | contains | does not contain |
+| DISH-04 Cheese and pickle sandwich<br>**see notes** | does not contain | does not contain | does not contain | contains | does not contain | does not contain | does not contain | contains | does not contain | does not contain | contains | does not contain | contains | does not contain |
 
 ### What each row was checked against
 
 | Dish | Ingredients | Checked against | Checked on | Notes | Agreed by |
 | --- | --- | --- | --- | --- | --- |
-| DISH-01 Cheese and tomato toastie | White bloomer from Mill Lane Bakery, mature cheddar, salted butter and tomatoes | Mill Lane Bakery white bloomer specification sheet;<br>Larkspur Dairy mature cheddar label;<br>Larkspur Dairy salted butter label;<br>tomatoes bought loose from Hartley's Greengrocers, on Sam Okafor's own knowledge | 2026-11-18 | The bread specification says the bakery also handles sesame. | Sam Okafor, 2026-11-18 |
-| DISH-02 Vegetable quiche | Pastry made here with plain flour and butter, eggs, whole milk, mature cheddar, onion, peppers and stock powder | Fenwick plain flour bag;<br>Larkspur Dairy salted butter label;<br>Larkspur Dairy whole milk label;<br>Larkspur Dairy mature cheddar label;<br>Copperleaf vegetable stock powder tub, label torn;<br>eggs, onion and peppers from Hartley's Greengrocers, on Sam Okafor's own knowledge | 2026-11-18 | The stock powder tub's label is torn where it lists allergens. A new specification has been asked for from the cash and carry. | Sam Okafor, 2026-11-18 |
-| DISH-04 Cheese and pickle sandwich | Wholemeal loaf from Mill Lane Bakery, mature cheddar, ploughman's pickle, salted butter and salad leaves | Mill Lane Bakery wholemeal loaf specification sheet;<br>Larkspur Dairy mature cheddar label;<br>Copperleaf ploughman's pickle jar label;<br>Larkspur Dairy salted butter label;<br>salad leaves bought loose from Hartley's Greengrocers, on Sam Okafor's own knowledge | 2026-11-18 | Made and wrapped each morning. The wrapper label gives the sandwich's name and its full ingredients, with the allergens in bold. | Sam Okafor, 2026-11-18 |
+| DISH-01 Cheese and tomato toastie | White bloomer from Mill Lane Bakery, mature cheddar, salted butter and tomatoes | Mill Lane Bakery white bloomer specification sheet;<br>Larkspur Dairy mature cheddar label;<br>Larkspur Dairy salted butter label;<br>whole loose tomatoes, nothing added, seen by Sam Okafor | 2026-11-18 | The bread specification says the bakery also handles sesame. | Sam Okafor, 2026-11-18 |
+| DISH-02 Vegetable quiche | Pastry made here with plain flour and butter, eggs, whole milk, mature cheddar, onion, peppers and stock powder | Fenwick plain flour bag;<br>Larkspur Dairy salted butter label;<br>Larkspur Dairy whole milk label;<br>Larkspur Dairy mature cheddar label;<br>Copperleaf vegetable stock powder tub, label torn;<br>whole fresh eggs, onions and peppers, nothing added, seen by Sam Okafor | 2026-11-18 | The stock powder tub's label is torn where it lists allergens. A new specification has been asked for from the cash and carry. | Sam Okafor, 2026-11-18 |
+| DISH-04 Cheese and pickle sandwich | Wholemeal loaf from Mill Lane Bakery, mature cheddar, ploughman's pickle, salted butter and salad leaves | Mill Lane Bakery wholemeal loaf specification sheet;<br>Larkspur Dairy mature cheddar label;<br>Copperleaf ploughman's pickle jar label;<br>Larkspur Dairy salted butter label;<br>Hartley's Greengrocers' written statement for its mixed salad leaves | 2026-11-18 | Made and wrapped each morning. The wrapper label gives the sandwich's name and its full ingredients, with the allergens in bold.<br>The bread specification says the bakery also handles sesame. | Sam Okafor, 2026-11-18 |
 
 Not yet confirmed, so not shown: DISH-03.
 
@@ -56,7 +56,7 @@ The business records these dishes as prepacked for direct sale:
 
 The business's own words, as confirmed for each dish:
 
-- DISH-04 Cheese and pickle sandwich: The wrapper label says “Made without nuts”. We do not call it nut free, as carrot cake with walnuts is cut on the same counter.
+- DISH-04 Cheese and pickle sandwich: We do not describe this sandwich as free from any allergen, on its label or anywhere else.
 
 What the pack says, in a safety point and then in the reason it gives:
 
@@ -66,7 +66,7 @@ What the pack says, in a safety point and then in the reason it gives:
 
 ### How customers are told
 
-From MG-04 MANAGING FOOD ALLERGEN INFORMATION, in the business's Management safe methods worksheet:
+From MG-04 MANAGING FOOD ALLERGEN INFORMATION, in the business's Management safe methods document:
 
 |  |
 | --- |

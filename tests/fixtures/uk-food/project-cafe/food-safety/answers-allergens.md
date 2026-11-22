@@ -8,17 +8,24 @@ Kept elsewhere block, number the entries DISH-01, DISH-02 and so on, and write e
 after its number.
 Ingredients is what goes into the dish, in your own words. PPDS is yes when the dish is prepacked for direct
 sale, and no when it is not.
-Nuts to Sulphur-dioxide are the fourteen allergens. Write contains or does not contain in each, as the
-labels, specifications or supplier statements checked say. For an ingredient that has none, such as loose
-vegetables or fresh eggs, write what the person checking knows, and say so in Checked-against.
-Leave one empty while it is not known: the document shows it as not confirmed. Never fill one in from the name
-of a dish or of an ingredient.
+Nuts to Sulphur-dioxide are the fourteen allergens. Write contains or does not contain in each, as what was
+checked says: a label, a product specification or a supplier's statement for each ingredient.
+An ingredient with no label may rest on a named person's own check only when it is a single whole food with
+nothing added, such as a loose tomato or a fresh egg: Checked-against then says what was looked at, and by whom.
+Anything made of more than one thing, such as a mix, a sauce, bread, or a dressed or prepared product, needs a
+label, a specification or a supplier's statement.
+Leave a cell empty while it is not known: the document shows it as not confirmed. Never fill one in from the
+name of a dish or of an ingredient.
 Notes is anything else to say, such as a precautionary statement on a label that the food may contain an
-allergen: that is never written in an allergen's field.
-Checked-against names what was checked: each label, specification or supplier statement. Checked-on is the day
-it was checked, written YYYY-MM-DD, and is not after today or after On.
+allergen: that is never written in an allergen's field. The document marks each dish that has Notes, so that
+its notes are read.
+Checked-against names what was checked: each label, specification or supplier's statement, and each single
+whole food looked at, with who looked. Checked-on is the day it was checked, written YYYY-MM-DD, and is not
+after today or after On.
 Free-from-claim is any claim the business makes that the dish is free from an allergen, in its own words.
 An entry needs Checked-against and Checked-on before it can be proposed or confirmed.
+When an empty cell of a confirmed dish is filled in later, bring the dish's Checked-against, Checked-on, By
+and On up to date.
 When a recipe, an ingredient, a brand or a supplier changes, set the dish's State to unanswered and clear By
 and On until it has been checked again.
 If the business keeps its allergen information for its dishes somewhere else, write where in Where, under Kept elsewhere.
@@ -90,7 +97,7 @@ Notes: The bread specification says the bakery also handles sesame.
 Checked-against: Mill Lane Bakery white bloomer specification sheet;
   Larkspur Dairy mature cheddar label;
   Larkspur Dairy salted butter label;
-  tomatoes bought loose from Hartley's Greengrocers, on Sam Okafor's own knowledge
+  whole loose tomatoes, nothing added, seen by Sam Okafor
 Checked-on: 2026-11-18
 Free-from-claim:
 State: confirmed
@@ -122,7 +129,7 @@ Checked-against: Fenwick plain flour bag;
   Larkspur Dairy whole milk label;
   Larkspur Dairy mature cheddar label;
   Copperleaf vegetable stock powder tub, label torn;
-  eggs, onion and peppers from Hartley's Greengrocers, on Sam Okafor's own knowledge
+  whole fresh eggs, onions and peppers, nothing added, seen by Sam Okafor
 Checked-on: 2026-11-18
 Free-from-claim:
 State: confirmed
@@ -150,9 +157,12 @@ Soya: does not contain
 Sulphur-dioxide: does not contain
 Notes: The walnut pieces bag says the nuts are packed where peanuts are handled.
 Checked-against: Fenwick self-raising flour bag;
+  Fenwick caster sugar bag;
+  Copperleaf sunflower oil bottle label;
   Ashgrove walnut pieces bag;
   Larkspur Dairy cream cheese label;
-  Larkspur Dairy salted butter label
+  Larkspur Dairy salted butter label;
+  whole carrots and fresh eggs, nothing added, seen by Priya Shah
 Checked-on: 2026-11-19
 Free-from-claim:
 State: proposed
@@ -179,13 +189,14 @@ Sesame-seeds: does not contain
 Soya: contains
 Sulphur-dioxide: does not contain
 Notes: Made and wrapped each morning. The wrapper label gives the sandwich's name and its full ingredients, with the allergens in bold.
+  The bread specification says the bakery also handles sesame.
 Checked-against: Mill Lane Bakery wholemeal loaf specification sheet;
   Larkspur Dairy mature cheddar label;
   Copperleaf ploughman's pickle jar label;
   Larkspur Dairy salted butter label;
-  salad leaves bought loose from Hartley's Greengrocers, on Sam Okafor's own knowledge
+  Hartley's Greengrocers' written statement for its mixed salad leaves
 Checked-on: 2026-11-18
-Free-from-claim: The wrapper label says “Made without nuts”. We do not call it nut free, as carrot cake with walnuts is cut on the same counter.
+Free-from-claim: We do not describe this sandwich as free from any allergen, on its label or anywhere else.
 State: confirmed
 By: Sam Okafor
 On: 2026-11-18

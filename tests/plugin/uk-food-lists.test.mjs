@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
   ALLERGEN_TABLE, CLEANING_FORM, CONTACTS_FORM, CUSTOMER_QUESTIONS, DATA_ID, DEFAULT_DATA_DIR, DOCUMENTS, FREE_FROM_POINT, LIST_SECTIONS, LISTS,
-  NOT_CONFIRMED_CELL, PPDS_PARAGRAPH, RENDERED_CODES, SUPPLIERS_FORM, UNANSWERED, WORKSHEET_SECTIONS, allergensOf, beginReading, blankWorksheet,
+  NOT_CONFIRMED_CELL, NOTES_MARK, PPDS_PARAGRAPH, RENDERED_CODES, SUPPLIERS_FORM, UNANSWERED, WORKSHEET_SECTIONS, allergensOf, beginReading, blankWorksheet,
   checkDocument, documentOf, emitWorksheet, listOutstanding, loadData, main, parseWorksheet, projectStatus, readList, renderDocument,
   signOffDocument, upgradeWorksheet, withDocuments
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
@@ -1116,9 +1116,9 @@ const ALG_KEPT_OPEN = `Kept elsewhere in ${ALG_FILE} has something written in it
 const algCountLine = (n, ids, how) => `${n} ${n === 1 ? 'dish' : 'dishes'} in ${ALG_FILE} ${n === 1 ? 'is' : 'are'} ${how} (${ids}): an entry counts ` +
   'when its State is confirmed and By and On are filled in';
 const cellsLine = (n, where, dishes = 1) => `${n} allergen ${n === 1 ? 'cell' : 'cells'} of confirmed dishes in ${ALG_FILE} ${n === 1 ? 'is' : 'are'} ` +
-  `empty, so the document shows ${n === 1 ? 'it' : 'them'} as not confirmed (${where}): ${n === 1 ? 'fill it in' : 'fill in each'} as contains or ` +
+  `not filled in, so the document shows ${n === 1 ? 'it' : 'them'} as not confirmed (${where}): ${n === 1 ? 'fill it in' : 'fill in each'} as contains or ` +
   `does not contain from what was checked, then update ${dishes === 1 ? 'that dish\'s' : 'each of those dishes\''} Checked-against, Checked-on, By and On`;
-const ppdsLine = (ids, n = 1) => `PPDS is empty in ${n} confirmed ${n === 1 ? 'dish' : 'dishes'} in ${ALG_FILE} (${ids}), so the document shows ` +
+const ppdsLine = (ids, n = 1) => `PPDS is not filled in for ${n} confirmed ${n === 1 ? 'dish' : 'dishes'} in ${ALG_FILE} (${ids}), so the document shows ` +
   `${n === 1 ? 'it' : 'them'} as not confirmed under Prepacked for direct sale: write yes or no in ${n === 1 ? 'its' : 'each one\'s'} PPDS, for ` +
   'whether it is prepacked for direct sale, then update its By and On';
 const MG_MISSING = 'food-safety/answers-MG.md, the Management safe methods worksheet, is not started yet, and this document repeats its answers ' +
@@ -1237,8 +1237,10 @@ test('Review Focus 2: an allergen cell reads only contains or does not contain, 
   for (const typed of ['no', 'none', 'n/a', 'may contain', 'yes', 'free', '-', 'x', '\u2713', 'contain', 'doesnt contain', 'does not contains']) {
     const text = algSheet(dish('DISH-01', 'Toastie', { ...DONE, Fish: typed }));
     const parsed = algParse(text);
+    // A tick is not a plain character, so it is named by its code point (M6, tested below).
+    const holds = typed === '\u2713' ? ' (it holds U+2713, which is not a plain letter or space: type it again)' : '';
     assert.deepEqual(parsed.problems.map((p) => [p.line, p.message]), [[lineOf(text, `\nFish: ${typed}\n`) + 1, `DISH-01: Fish "${typed}" is neither ` +
-      'contains nor does not contain: write one of the two, or leave it empty while it is not known; a precautionary statement such as may contain, ' +
+      `contains nor does not contain${holds}: write one of the two, or leave it empty while it is not known; a precautionary statement such as may contain, ` +
       'or any other note, goes in Notes']], typed);
     assert.equal(parsed.entries.get('DISH-01').answered, false, typed);
   }
@@ -1363,8 +1365,10 @@ test('a dish proposed, or unanswered, with every cell filled shows NOT CONFIRMED
     // No cell anywhere in the body says contains or does not contain, and the dish is named as not confirmed.
     assert.ok(!tablesOf(body).flat(2).some((cell) => ['contains', 'does not contain'].includes(cell)), state.State);
     assert.ok(body.includes(`\n${NOT_CONFIRMED_LINE}DISH-01.\n`), body);
-    assert.ok(body.includes('\nNo dish in this document is recorded as prepacked for direct sale.\n'), body);
-    assert.ok(body.includes('\nNone is recorded in this document.\n'), body);
+    assert.ok(body.includes('\nNo dish is confirmed in this document, so it does not say which dishes are prepacked for direct sale.\n'), body);
+    assert.ok(body.includes('\nNo dish is confirmed in this document, so none of the business\'s statements is recorded here.\n'), body);
+    // Not confirmed, its notes are not the business's yet, so its row carries no notes mark.
+    assert.ok(!rows.flat().some((cell) => cell.includes(NOTES_MARK)), state.State);
   }
 });
 
@@ -1401,22 +1405,108 @@ test('the pack\'s PPDS sentence and its two paragraphs on advertising food as fr
   for (const line of quoted) assert.ok(DATA_TEXT.has(line.slice(2)), line);
 });
 
-test('no line of the helper\'s own says "free from" but the heading, nor that a dish is safe, compliant, approved or suitable for anyone', () => {
-  const claims = algSheet(dish('DISH-01', 'Free from bread', { ...DONE, 'Free-from-claim': 'Free from nuts, free-from gluten, \u2018free from\u2019 milk',
-    Notes: 'free of sesame' }), dish('DISH-02', 'Scone', { ...DONE, PPDS: 'yes', 'Free-from-claim': 'Suitable for vegans' }));
+test('no line of the helper\'s own says "free from" but the heading, nor that a dish is safe, compliant, approved, free of an allergen, without risk, or suitable for anyone', () => {
+  const claims = algSheet(dish('DISH-01', 'Free from bread', { ...DONE, 'Free-from-claim': 'Free from nuts, free-from gluten, ‘free from’ milk',
+    Notes: 'free of sesame, no risk, anyone can eat it, nut free' }), dish('DISH-02', 'Scone', { ...DONE, PPDS: 'yes', 'Free-from-claim': 'Suitable for vegans' }));
+  const adapted = (() => {
+    const parsed = parse(MG_ANSWERED());
+    Object.assign(parsed.methods.get(CUSTOMER_QUESTIONS.method), { status: 'adapted', variation: 'We take no phone orders.', reason: 'We have no phone.',
+      provedSafe: 'Nobody can order by phone.', decidedBy: 'Sam Okafor' });
+    return emitWorksheet(parsed, data);
+  })();
   const states = [CAFE, cafeAlg(claims, MG_ANSWERED()), cafeAlg(claims, null), cafeAlg(algSheet(), mgText({ notRelevant: true })),
-    cafeAlg(withElsewhere(algSheet(), ALG_KEPT), MG_ANSWERED())];
+    cafeAlg(withElsewhere(algSheet(), ALG_KEPT), MG_ANSWERED()), cafeAlg(algSheet(dish('DISH-01', 'Toastie', DONE)), adapted),
+    cafeAlg(algSheet(dish('DISH-01', 'Toastie', { ...DONE, State: 'proposed', By: '', On: '', Source: 'A label' })), MG_ANSWERED())];
+  // "<allergen> free" in any spelling, for each of the fourteen as the Dishes table names it: the name, its last word, each without
+  // a final s too ("Sesame seeds", "seeds", "seed"; "Cereals containing gluten", "gluten").
+  const names = allergensOf(data).map(({ name }) => shortName(name).toLowerCase()).flatMap((short) => [short, short.split(' ').at(-1)])
+    .flatMap((word) => [word, word.replace(/s$/, '')]);
+  const freeOf = [...new Set(names)].map((word) => new RegExp(`\\b${word.replace(/ /g, '\\W+')}\\W{0,3}free\\b`, 'i'));
+  // "safe" is allowed in two of the helper's names alone: the pack's "safe method(s)", and the Management document's label for how a
+  // business showed its variation to be safe, printed with that document's variation line.
+  const banned = [/(?<!Shown to be )\bsafe\b(?! methods?\b)/i, /\bcompliant\b/i, /\bapproved\b/i, /allergen\W?free/i, /\bfree of\b/i, /suitable for/i,
+    /\bno risk\b/i, /\bcan eat\b/i, ...freeOf];
   for (const dir of states) {
     const words = helperWords(renderedAlg(dir), valuesOf(dir));
     assert.deepEqual(words.filter((piece) => /free\W{0,3}from/i.test(piece)), ['### The business\'s own "free from" statements'], dir);
-    for (const banned of [/\bsafe\b(?! methods?\b)/i, /\bcompliant\b/i, /\bapproved\b/i, /allergen\W?free/i, /\bfree of\b/i, /suitable for/i]) {
-      assert.deepEqual(words.filter((piece) => banned.test(piece)), [], `${banned} in ${dir}`);
-    }
+    for (const ban of banned) assert.deepEqual(words.filter((piece) => ban.test(piece)), [], `${ban} in ${dir}`);
+  }
+  // The scan catches what it is meant to: each banned spelling, written into a line of the helper's own, is found.
+  for (const sample of ['Nuts free', 'nut-free', 'Gluten free', 'sesame seed free', 'Celery-free', 'safe to eat', 'no risk', 'anyone can eat', 'suitable for all',
+    'free of milk', 'allergen-free']) {
+    assert.ok(banned.some((ban) => ban.test(sample)), sample);
   }
   // The business's own words are printed, as its own, under that heading.
   const body = renderedAlg(states[1]);
   assert.ok(body.includes('\nThe business\'s own words, as confirmed for each dish:\n\n- DISH-01 Free from bread: Free from nuts, free-from gluten, ' +
-    '\u2018free from\u2019 milk\n- DISH-02 Scone: Suitable for vegans\n'), body);
+    '‘free from’ milk\n- DISH-02 Scone: Suitable for vegans\n'), body);
+});
+
+test('I3: a confirmed dish with Notes carries the notes mark in its own row of the Dishes table; one without does not, nor does a dish not confirmed', () => {
+  const dir = cafeAlg(algSheet(dish('DISH-01', 'Toastie', { ...DONE, Notes: 'The bread label says it may contain sesame.' }), dish('DISH-02', 'Scone', DONE),
+    dish('DISH-03', 'Cake', { ...DONE, Notes: 'The box says it may contain nuts.', State: 'proposed', By: '', On: '', Source: 'The box' })), MG_ANSWERED());
+  const body = renderedAlg(dir);
+  const rows = dishesTable(body);
+  assert.deepEqual(rows.slice(1).map((row) => row[0]), [`DISH-01 Toastie<br>${NOTES_MARK}`, 'DISH-02 Scone', 'DISH-03']);
+  // The cells keep their three states; the mark is in the Dish cell alone.
+  assert.ok(rows.slice(1).every((row) => row.slice(1).every((cell) => ['contains', 'does not contain', NOT_CONFIRMED_CELL].includes(cell))));
+  assert.equal(NOTES_MARK, '**see notes**');
+  // The mark says nothing about allergens; the lead line says what a marked row has.
+  assert.ok(!allergensOf(data).some(({ name }) => NOTES_MARK.toLowerCase().includes(shortName(name).toLowerCase())));
+  assert.ok(body.includes(`\nA confirmed row records what a named person at the business agreed after checking what the next section names for it: ` +
+    `labels, specifications or suppliers' statements, or a single whole food that person looked at. A row marked ${NOTES_MARK} has a note there, ` +
+    'which may be a label\'s statement that the food may contain an allergen.\n'), body);
+  // A dish's own name cannot imitate the mark: its asterisks are escaped.
+  const imitation = renderedAlg(cafeAlg(algSheet(dish('DISH-01', `Toastie ${NOTES_MARK}`, DONE)), MG_ANSWERED()));
+  assert.equal(dishesTable(imitation)[1][0], 'DISH-01 Toastie \\*\\*see notes\\*\\*');
+});
+
+test('M3: an adapted MG-04 prints its variation line after the three questions, exactly as the Management document prints it', () => {
+  const parsed = parse(MG_ANSWERED());
+  Object.assign(parsed.methods.get(CUSTOMER_QUESTIONS.method), { status: 'adapted', variation: 'We take no phone or online orders.',
+    reason: 'We have no phone line or website.', provedSafe: 'Every order is taken at the counter.', decidedBy: 'Sam Okafor' });
+  const dir = cafeAlg(algSheet(dish('DISH-01', 'Toastie', DONE)), emitWorksheet(parsed, data));
+  const body = renderedAlg(dir);
+  const management = renderDocument('FOODMGT', dir, data, { today: TODAY }).text;
+  const variation = management.split('\n').find((line, i, all) => line.startsWith('Our variation: ') &&
+    all.slice(0, i).reverse().find((l) => l.startsWith('### ')).startsWith('### MG-04 '));
+  assert.ok(variation, management);
+  const part = body.slice(body.indexOf('### How customers are told'));
+  assert.ok(part.includes(` |\n\n${variation}\n\n`), part);
+  assert.equal(tablesOf(part)[0].length, 4, 'the three questions are printed too');
+  assert.deepEqual(algUnfinished(dir), [NOT_WRITTEN, NOT_SIGNED]);
+});
+
+test('M4: with no dish confirmed, the PPDS and free-from parts say so, and never that the business has no such food or statement; with dishes confirmed they speak of those', () => {
+  const kept = renderedAlg(cafeAlg(withElsewhere(algSheet(), ALG_KEPT), MG_ANSWERED()));
+  assert.ok(kept.includes('\nNo dish is confirmed in this document, so it does not say which dishes are prepacked for direct sale.\n'), kept);
+  assert.ok(kept.includes('\nNo dish is confirmed in this document, so none of the business\'s statements is recorded here.\n'), kept);
+  assert.ok(!kept.includes('No dish in this document is recorded as prepacked') && !kept.includes('No confirmed dish has one recorded.'), kept);
+  const confirmed = renderedAlg(cafeAlg(algSheet(dish('DISH-01', 'Toastie', DONE)), MG_ANSWERED()));
+  assert.ok(confirmed.includes('\nNo dish in this document is recorded as prepacked for direct sale.\n'), confirmed);
+  assert.ok(confirmed.includes('\nNo confirmed dish has one recorded.\n'), confirmed);
+  assert.ok(!confirmed.includes('No dish is confirmed in this document'), confirmed);
+});
+
+test('M6: a cell holding a character that is not a plain letter or space is named by its code point, so the message never seems to refuse the words it asks for', () => {
+  for (const [typed, held] of [['does not contain', 'U+00A0'], ['dоes not contain', 'U+043E'], ['does\tnot contain', 'U+0009'], ['✓', 'U+2713']]) {
+    const text = algSheet(dish('DISH-01', 'Toastie', { ...DONE, Fish: typed }));
+    const [problem] = algParse(text).problems;
+    assert.equal(problem.message, `DISH-01: Fish "${typed}" is neither contains nor does not contain (it holds ${held}, which is not a plain letter or space: ` +
+      'type it again): write one of the two, or leave it empty while it is not known; a precautionary statement such as may contain, or any other ' +
+      'note, goes in Notes', typed);
+  }
+  // A plain wrong word names nothing.
+  assert.doesNotMatch(algParse(algSheet(dish('DISH-01', 'Toastie', { ...DONE, Fish: 'n/a' }))).problems[0].message, /U\+/);
+});
+
+test('a confirmed dish with a cell line left out altogether shows it as not confirmed, and status calls it not filled in', () => {
+  const text = algSheet(dish('DISH-01', 'Toastie', DONE)).replace('\nLupin: does not contain\n', '\n');
+  assert.deepEqual(algParse(text).problems, []);
+  const dir = cafeAlg(text, MG_ANSWERED());
+  const [header, row] = dishesTable(renderedAlg(dir));
+  assert.equal(row[header.indexOf(headingOf('Lupin'))], NOT_CONFIRMED_CELL);
+  assert.deepEqual(algUnfinished(dir), [cellsLine(1, 'Lupin in DISH-01'), NOT_WRITTEN, NOT_SIGNED]);
 });
 
 test('Review Focus 5: a dish named Fish | chips and a note reading **NOT CONFIRMED** keep every table\'s columns, pass check and mark nothing unfinished', () => {
@@ -1436,7 +1526,7 @@ test('Review Focus 5: a dish named Fish | chips and a note reading **NOT CONFIRM
   const body = renderedAlg(dir);
   const dishes = dishesTable(body);
   for (const row of dishes) assert.equal(row.length, 15, row.join(' | '));
-  assert.equal(dishes[1][0], 'DISH-01 Fish \\| chips');
+  assert.equal(dishes[1][0], `DISH-01 Fish \\| chips<br>${NOTES_MARK}`);
   assert.equal(dishes[2][0], 'DISH-02 \\*\\*NOT CONFIRMED\\*\\* soup');
   const checked = tablesOf(body).find((rows) => rows[0][0] === 'Dish' && rows[0].length === 6);
   for (const row of checked) assert.equal(row.length, 6, row.join(' | '));
@@ -1473,7 +1563,7 @@ test('the three questions on how customers are told print exactly as the Managem
   const management = renderDocument('FOODMGT', dir, data, { today: TODAY }).text;
   const part = body.slice(body.indexOf('### How customers are told'));
   assert.ok(part.startsWith(`### How customers are told\n\nFrom MG-04 ${mgMethod().title}, in the business's Management safe methods ` +
-    'worksheet:\n\n'), part);
+    'document:\n\n'), part);
   // What the Management document prints for one question: in its table, a cell holds each question of its row with its answer, a
   // blank line (<br><br>) apart, so the question's own part of its cell is the part that starts with its text.
   const cellOf = (text, question) => text.split('\n').filter((line) => line.startsWith('| ')).flatMap(cellsOf).flatMap((cell) => cell.split('<br><br>'))
@@ -1506,7 +1596,7 @@ test('MG-04 marked not relevant: its not-relevant line, as the Management docume
   assert.ok(notRelevant, management);
   const part = body.slice(body.indexOf('### How customers are told'));
   assert.ok(part.startsWith(`### How customers are told\n\nFrom MG-04 ${mgMethod().title}, in the business's Management safe methods ` +
-    `worksheet:\n\n${notRelevant}\n\n`), part);
+    `document:\n\n${notRelevant}\n\n`), part);
   for (const id of CUSTOMER_QUESTIONS.questions) assert.ok(!body.includes(askedQuestion(id).text), id);
   assert.deepEqual(algUnfinished(dir), [NOT_WRITTEN, NOT_SIGNED]);
   assert.equal(writtenAlg(dir).unfinished, false);
@@ -1601,10 +1691,19 @@ test('the allergen information says truly what it quotes from the pack, in each 
 
 test('the allergens guidance says how a cell is filled and that a change to a dish takes it back to unanswered', () => {
   const guidance = blankWorksheet('allergens', data).replace(/\s+/g, ' ');
-  for (const words of ['Never fill one in from the name of a dish or of an ingredient.', 'Leave one empty while it is not known: the document shows it as not confirmed.',
+  for (const words of ['Never fill one in from the name of a dish or of an ingredient.', 'Leave a cell empty while it is not known: the document shows it as not confirmed.',
+    'as what was checked says: a label, a product specification or a supplier\'s statement for each ingredient.',
+    'An ingredient with no label may rest on a named person\'s own check only when it is a single whole food with nothing added, such as a loose ' +
+      'tomato or a fresh egg: Checked-against then says what was looked at, and by whom.',
+    'Anything made of more than one thing, such as a mix, a sauce, bread, or a dressed or prepared product, needs a label, a specification or a ' +
+      'supplier\'s statement.',
     'An entry needs Checked-against and Checked-on before it can be proposed or confirmed.',
+    'When an empty cell of a confirmed dish is filled in later, bring the dish\'s Checked-against, Checked-on, By and On up to date.',
     'When a recipe, an ingredient, a brand or a supplier changes, set the dish\'s State to unanswered and clear By and On until it has been checked again.']) {
     assert.ok(guidance.includes(words), words);
   }
+  // No cell rests on what a person merely knows, and the guidance suggests no answer for any cell.
+  assert.doesNotMatch(guidance, /\bknows?\b/);
+  assert.doesNotMatch(guidance, /(write|is|are) (contains|does not contain) (for|in) (a|an|the) /i);
   assert.ok(!guidance.includes('quoted from'), 'the guidance quotes nothing of the pack');
 });
