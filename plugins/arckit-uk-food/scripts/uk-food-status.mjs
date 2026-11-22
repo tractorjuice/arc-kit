@@ -5,7 +5,7 @@ import { andList, counted, isAre, isIsoDate, unseenIn } from './uk-food-workshee
 import {
   BEFORE_RENDER, bodyText, businessText, checkDocument, closingNotice, COMPLETION_RECORD, coverageChunks, DOC_CODES,
   DOC_OF_SECTION, documentOf, extraCareDone, failure, misplaced, NAME_QUESTION, otherText, paragraphs, readWorksheets,
-  sourceLine, STATUS_ORDER, tableLines, worksheetFile, worksheetName
+  SHEET_ORDER, sourceLine, STATUS_ORDER, tableLines, worksheetFile, worksheetName
 } from './uk-food-document.mjs';
 import { loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
 export { completionRecordDocument, DOCUMENT_FILE, readSignOffs };
@@ -55,6 +55,9 @@ const COMPLETION_FORM = 'completionRecord';
 const DOCUMENT_FILE = /^ARC-\d{3}-([A-Z]+)-v(\d+(?:\.\d+)*)\.md$/;
 // What the completion record and status call a document: the name its row gives.
 const docName = (code, data) => documentOf(code).name(data);
+// The worksheets a document reads, as status lists them: its own first, then the others in SHEET_ORDER.
+const worksheetsOf = (row) => [...(row.sheet === null ? [] : [row.sheet]),
+  ...SHEET_ORDER.filter((section) => section !== row.sheet && row.uses.includes(section))];
 // A sign-off's name or role: some text, on one line, with no tab and none of the UNSEEN characters.
 const isPersonText = (value) => isString(value) && value.trim() !== '' && !/[\t\n\r]/.test(value) && !unseenIn(value);
 const signOffsFile = (project) => join(project, 'food-safety', 'sign-offs.json');
@@ -315,11 +318,13 @@ function collectStatus(project, data) {
   const documents = STATUS_ORDER.map((code) => {
     const row = documentOf(code);
     // The worksheets the document reads, its own first, and those it cannot be rendered without.
-    const { uses: reads, needs } = row;
+    const reads = worksheetsOf(row);
+    const { needs } = row;
     const current = files.get(code) ?? null;
     const check = current ? checkDocument(code, project, join(project, current.file), data, signOffs) : null;
     const inSync = check?.exit === 0;
-    const counts = countsOf(row, sheets.get(reads[0]), data);
+    // Counted from its own worksheet: none, for a document with no worksheet of its own (sheet null).
+    const counts = countsOf(row, sheets.get(row.sheet), data);
     const missing = reads.filter((section) => needs.includes(section) && !sheets.get(section));
     // A worksheet for other data or in the wrong file is told by what to do about it; any other with
     // problems by how many parse-worksheet lists.
@@ -358,7 +363,7 @@ function collectStatus(project, data) {
     // the header that sign-off would rewrite and that holds something else keeps the document from
     // being signed off, so that marking it as signed off changes nothing a person signed.
     const docLines = [
-      ...(sheets.get(reads[0])?.clean ? countLines(row, counts, reads[0]) : []),
+      ...(sheets.get(row.sheet)?.clean ? countLines(row, counts, row.sheet) : []),
       ...fileLines,
       // (After a sign-off, check tells such a cell itself, one at a time, with what a signed document has there.)
       ...(check?.cell ? [] : check?.unwritten ?? []).map((cell) => cellLine(current.file, cell))
@@ -392,11 +397,12 @@ function collectStatus(project, data) {
     blockers.set(code, held);
     return doc;
   });
-  // The unfinished list tells each worksheet's state once, under the document it belongs to, then the
-  // special processes with no entry and the entries awaiting review, under the document whose row says
-  // it holds them (specialProcesses).
+  // The unfinished list tells each worksheet's state once, under the document whose own worksheet it is
+  // (its row's sheet), then the special processes with no entry and the entries awaiting review, under
+  // the document whose row says it holds them (specialProcesses). A document with no worksheet of its
+  // own has only its own lines there.
   const unfinished = documents.flatMap((doc) => {
-    const [mine] = documentOf(doc.code).uses;
+    const mine = documentOf(doc.code).sheet;
     const lines = blockers.get(doc.code).filter(({ sheet, after }) => !after && (sheet === null || sheet === mine)).map(({ what }) => what);
     if (signLines.get(doc.code)) lines.push(signLines.get(doc.code));
     return lines.map((what) => ({ code: doc.code, what }));

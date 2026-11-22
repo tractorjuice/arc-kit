@@ -70,8 +70,9 @@ const END_MARKER = '<!-- UK-FOOD:END -->';
 // The BEGIN marker names the document, the data and the hash of the body: see bodyHash.
 const BEGIN_MARKER = /^<!-- UK-FOOD:BEGIN doc=(\S+) data=(\S+) body=(\S+) -->$/;
 const beginMarker = (doc, hash) => `<!-- UK-FOOD:BEGIN doc=${doc} data=${DATA_ID} body=${hash} -->`;
-// The worksheets in the order they are read.
-const SHEET_ORDER = ['profile', ...SECTION_IDS, 'own'];
+// The worksheets the documents read, in the order they are read: the one list a new worksheet is added
+// to. Let, not const, only so that withDocuments can give a test's list in its place.
+export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own'];
 
 // ---------------------------------------------------------------------------------------------
 // The documents, one row each, in the order status lists them, the completion record last. Adding a
@@ -81,8 +82,10 @@ const SHEET_ORDER = ['profile', ...SECTION_IDS, 'own'];
 // what is particular to a document from its row. A row's fields:
 // - code: the document's code, as in its file name.
 // - name(data): what status and the completion record call it.
-// - uses: the worksheets it is rendered from, its own first: the one whose questions or entries status
-//   counts for it. status lists them in this order.
+// - sheet: its own worksheet, whose questions or entries status counts for it and whose state status
+//   tells under it; null for a document with none.
+// - uses: the worksheets it is rendered from, in any order: status lists its own first, then the
+//   others in SHEET_ORDER.
 // - needs: those of `uses` it cannot be rendered without: render refuses while one is missing. Any other
 //   it uses may be missing, and the document says so; one there with problems stops render all the same.
 // - dataNeeded: the section whose data file it cannot be rendered without, or null.
@@ -96,12 +99,15 @@ const SHEET_ORDER = ['profile', ...SECTION_IDS, 'own'];
 // - source(data): the body's last line, which says where its words come from.
 // - unfinishedLine(line): whether a line of its body shows it unfinished (see showsUnfinished).
 // - asks(sheet, data): what a person answers for it, from its own worksheet (`sheet`, as readWorksheets
-//   reads it, or null when it is missing): { items }, an [identifier, record] for each question or entry
-//   in order, and for a section document `notRelevant` and `adapted`, the methods marked so. No method's
-//   status is read from a worksheet with problems: each method then counts as applying, as in a blank
-//   worksheet.
+//   reads it, or undefined when it is missing or the document has none): { items }, an [identifier,
+//   record] for each question or entry in order, and for a section document `notRelevant` and
+//   `adapted`, the methods marked so. No method's status is read from a worksheet with problems: each
+//   method then counts as applying, as in a blank worksheet.
 // - nouns: what status calls those, one and many.
 // - entries: whether they are entries a person confirms, rather than questions a person answers.
+// - section: set by sectionDocument alone, on a document that prints a section of the pack; the
+//   section, which is also its own worksheet. SECTION_DOCS and DOC_OF_SECTION come from it, and the
+//   usage text and each "--doc is one of" message list these documents first.
 // A rule that belongs to one document alone is a field of its row and no other:
 // - lacking(data), the profile's: what the data lacks that the document quotes, beyond its data file,
 //   as render says it, or null.
@@ -110,8 +116,13 @@ const SHEET_ORDER = ['profile', ...SECTION_IDS, 'own'];
 //   environmental health review, under this document.
 // - render(project, data), the completion record's: its own renderer, in uk-food-status.mjs, used in
 //   place of chunks and source. It is rendered from the project's status, so check reads any difference
-//   from a fresh render as out of date, in the words of `outOfDate`, never as an edit. Nobody signs it,
-//   and `nobodySigns` and `signOffRefusal` are how a header claim and sign-off say so.
+//   from a fresh render as out of date, in the words of `outOfDate`, never as an edit.
+// - nobodySigns and signOffRefusal, on every row nobody signs: how a header claim and sign-off say so.
+// A new worksheet is added to SHEET_ORDER, at the place it is to be read (and to the worksheet module,
+// which makes and parses it). A row may use only worksheets SHEET_ORDER lists; status reads each
+// worksheet some row uses, and no other; and a document reads only the worksheets of its own `uses`, so
+// a worksheet another document adds never reaches the profile. tableProblems checks every row as the
+// helper loads, so a row that is not whole stops it then, naming the row and the field.
 // ---------------------------------------------------------------------------------------------
 
 const QUESTIONS = ['question', 'questions'];
@@ -126,11 +137,11 @@ const COMPLETION_STALE = 'this completion record is out of date: it no longer ma
 // A section document: the pack's section `section`, with the business's answers from its worksheet.
 function sectionDocument(code, section) {
   return {
-    code, name: (data) => sentenceCase(data.sections.get(section).section.title), uses: [section, 'profile'],
+    code, name: (data) => sentenceCase(data.sections.get(section).section.title), sheet: section, uses: ['profile', section],
     needs: ['profile', section], dataNeeded: section, signable: true, inStatus: true,
     chunks: (sources, data) => sectionChunks(data.sections.get(section), sectionView(sources.get(section).parsed)),
     source: packSource, unfinishedLine: unanswered, asks: (sheet, data) => methodsAsked(sheet, data.sections.get(section)),
-    nouns: QUESTIONS, entries: false
+    nouns: QUESTIONS, entries: false, section
   };
 }
 
@@ -152,9 +163,11 @@ function methodsAsked(sheet, file) {
 // Let, not const, only so that withDocuments can put a test's table in its place.
 export let DOCUMENTS = [
   {
-    // It quotes the special-processes paragraph from CK.json.
-    code: 'FOODPROF', name: () => 'Business profile', uses: SHEET_ORDER, needs: ['profile'], dataNeeded: 'CK', signable: true,
-    inStatus: true, chunks: profileChunks, source: packSource, unfinishedLine: unanswered,
+    // It reads the five sections' worksheets and the own worksheet, for the status of each safe method
+    // and the list of own methods, and quotes the special-processes paragraph from CK.json.
+    code: 'FOODPROF', name: () => 'Business profile', sheet: 'profile', uses: ['profile', ...SECTION_IDS, 'own'],
+    needs: ['profile'], dataNeeded: 'CK', signable: true, inStatus: true, chunks: profileChunks, source: packSource,
+    unfinishedLine: unanswered,
     asks: (sheet) => ({ items: PROFILE_QUESTIONS.map((question) => [question.id, sheet?.parsed?.answers.get(question.id)]) }),
     nouns: QUESTIONS, entries: false,
     lacking: (data) => (extraCareParagraph(data) ? null : `the data's CK.json has no text box in ${EXTRA_CARE_BOX.method} on page ` +
@@ -166,7 +179,7 @@ export let DOCUMENTS = [
   sectionDocument('FOODCOOK', 'CK'),
   sectionDocument('FOODMGT', 'MG'),
   {
-    code: 'FOODOWN', name: () => 'Own methods', uses: ['own', 'profile'], needs: ['profile', 'own'], dataNeeded: null,
+    code: 'FOODOWN', name: () => 'Own methods', sheet: 'own', uses: ['profile', 'own'], needs: ['profile', 'own'], dataNeeded: null,
     signable: true, inStatus: true, chunks: ownChunks,
     // It quotes nothing from the pack, and its last line says so.
     source: () => OWN_SOURCE_LINE,
@@ -178,9 +191,9 @@ export let DOCUMENTS = [
     nouns: ['own entry', 'own entries'], entries: true, specialProcesses: true
   },
   {
-    // It reads no worksheet of its own: status, which it is rendered from, reads them all.
-    code: 'FOODCMP', name: () => 'Completion record', uses: [], needs: [], dataNeeded: null, signable: false, inStatus: false,
-    chunks: null, source: null, unfinishedLine: unanswered, asks: null, nouns: null, entries: false,
+    // It reads no worksheet itself: status, which it is rendered from, reads them all.
+    code: 'FOODCMP', name: () => 'Completion record', sheet: null, uses: [], needs: [], dataNeeded: null, signable: false,
+    inStatus: false, chunks: null, source: null, unfinishedLine: unanswered, asks: null, nouns: null, entries: false,
     render: (project, data) => completionRecordDocument(project, data),
     outOfDate: { message: COMPLETION_STALE, reason: 'is out of date, as it no longer matches the project: render it again' },
     nobodySigns: 'the completion record is a report that nobody signs',
@@ -188,6 +201,52 @@ export let DOCUMENTS = [
       'sign off each of them'
   }
 ];
+
+// What is wrong with a table of documents and its list of worksheets: one message for each field that
+// render, check, status or sign-off reads and could not, naming the row and the field, or none.
+function tableProblems(rows, sheets) {
+  const problems = [];
+  const isText = (value) => typeof value === 'string' && value !== '';
+  const isFunction = (value) => typeof value === 'function';
+  rows.forEach((row, i) => {
+    const fault = (field, what) => problems.push(`${isText(row.code) ? row.code : `row ${i + 1}`}: ${field} ${what}`);
+    if (!/^[A-Z]+$/.test(row.code ?? '')) fault('code', 'is not capital letters, as a document\'s file name holds them');
+    else if (rows.findIndex((other) => other.code === row.code) !== i) fault('code', 'is another row\'s too');
+    for (const field of ['name', 'unfinishedLine']) if (!isFunction(row[field])) fault(field, 'is not a function');
+    for (const field of ['signable', 'inStatus']) if (typeof row[field] !== 'boolean') fault(field, 'is not true or false');
+    if (!Array.isArray(row.uses) || !Array.isArray(row.needs)) return fault('uses and needs', 'are not both lists of worksheets');
+    for (const name of row.uses) if (!sheets.includes(name)) fault('uses', `names ${name}, which is not in SHEET_ORDER, so nothing reads it`);
+    for (const name of row.needs) if (!row.uses.includes(name)) fault('needs', `names ${name}, which is not in its uses`);
+    if (row.sheet !== null && !row.uses.includes(row.sheet)) fault('sheet', 'is neither null nor one of its uses');
+    if (row.section !== undefined && (!SECTION_IDS.includes(row.section) || row.section !== row.sheet)) {
+      fault('section', 'is not a section of the pack that is also its own worksheet');
+    } else if (row.section !== undefined && rows.findIndex((other) => other.section === row.section) !== i) {
+      fault('section', `is ${row.section}, which another row prints too`);
+    }
+    if (row.dataNeeded !== null && !SECTION_IDS.includes(row.dataNeeded)) fault('dataNeeded', 'is neither null nor a section of the pack');
+    if (row.render === undefined) {
+      for (const field of ['chunks', 'source']) if (!isFunction(row[field])) fault(field, 'is not a function, and the row has no render of its own');
+      if (!row.needs.includes('profile')) fault('needs', 'leaves out profile, which render reads for the coverage sentence and the closing notice');
+    } else {
+      if (!isFunction(row.render)) fault('render', 'is not a function');
+      if (!isText(row.outOfDate?.message) || !isText(row.outOfDate?.reason)) fault('outOfDate', 'does not give the message and the reason check prints');
+    }
+    if (row.inStatus) {
+      if (!isFunction(row.asks)) fault('asks', 'is not a function, and status counts what a document in it asks');
+      if (!Array.isArray(row.nouns) || row.nouns.length !== 2 || !row.nouns.every(isText)) fault('nouns', 'is not the two words status uses, one and many');
+      if (typeof row.entries !== 'boolean') fault('entries', 'is not true or false');
+    }
+    if (row.signable === false) {
+      for (const field of ['nobodySigns', 'signOffRefusal']) if (!isText(row[field])) fault(field, 'is not given, and a document nobody signs needs its words');
+    }
+    if (row.lacking !== undefined && !isFunction(row.lacking)) fault('lacking', 'is not a function');
+    if (row.specialProcesses !== undefined && row.specialProcesses !== true) fault('specialProcesses', 'is neither true nor left out');
+    else if (row.specialProcesses && rows.findIndex((other) => other.specialProcesses) !== i) {
+      fault('specialProcesses', 'is another row\'s too: one document holds the special processes and own entries');
+    }
+  });
+  return problems;
+}
 
 // The lists derived from DOCUMENTS, by deriveLists. Let, not const, only so that withDocuments can
 // derive them again from a test's table: nothing else assigns them.
@@ -197,39 +256,51 @@ export let STATUS_ORDER;
 export let SECTION_DOCS;
 let DOC_OF_SECTION;
 export let COMPLETION_RECORD;
+// The worksheets status reads: each one some document uses, in SHEET_ORDER.
+let SHEETS_USED;
+// Checks the table, and derives the lists above from it. A table that is not whole is refused.
 function deriveLists() {
-  // A section document is one whose own worksheet is a section of the pack.
-  const sections = DOCUMENTS.filter((row) => SECTION_IDS.includes(row.uses[0]));
+  const problems = tableProblems(DOCUMENTS, SHEET_ORDER);
+  if (problems.length) throw new Error(`the table of documents in uk-food-document.mjs is not whole:\n${problems.join('\n')}`);
+  const sections = DOCUMENTS.filter((row) => row.section !== undefined);
   // The usage text and each "--doc is one of" message list the section documents first.
-  const listed = [...sections, ...DOCUMENTS.filter((row) => !sections.includes(row))];
+  const listed = [...sections, ...DOCUMENTS.filter((row) => row.section === undefined)];
   // Every document render and check take, and those a named person signs off.
   RENDERED_CODES = listed.map((row) => row.code);
   DOC_CODES = listed.filter((row) => row.signable).map((row) => row.code);
   // The documents status lists, in its order.
   STATUS_ORDER = DOCUMENTS.filter((row) => row.inStatus).map((row) => row.code);
   // Each section document's section, and each section's document.
-  SECTION_DOCS = Object.fromEntries(sections.map((row) => [row.code, row.uses[0]]));
-  DOC_OF_SECTION = Object.fromEntries(sections.map((row) => [row.uses[0], row.code]));
+  SECTION_DOCS = Object.fromEntries(sections.map((row) => [row.code, row.section]));
+  DOC_OF_SECTION = Object.fromEntries(sections.map((row) => [row.section, row.code]));
   // The completion record: rendered and checked like the documents above, but it reports on them, so it
   // is neither in their status nor signed off itself. Its renderer and its line in status are in
   // uk-food-status.mjs.
   COMPLETION_RECORD = DOCUMENTS.find((row) => !row.inStatus)?.code;
+  SHEETS_USED = SHEET_ORDER.filter((name) => DOCUMENTS.some((row) => row.uses.includes(name)));
 }
 deriveLists();
 
 // The row of the document `code`, or undefined when there is none.
 export const documentOf = (code) => DOCUMENTS.find((row) => row.code === code);
 
-// For tests only: runs `fn`, synchronously, with `rows` in place of the table and every list derived
-// from them, then puts the table and its lists back, however `fn` ends. Returns what `fn` returns.
-export function withDocuments(rows, fn) {
-  const kept = DOCUMENTS;
-  DOCUMENTS = rows;
-  deriveLists();
+// For tests only: runs `fn` with `rows` in place of the table, and `sheets`, when given, in place of
+// SHEET_ORDER, every list derived from them, then puts the table, SHEET_ORDER and the lists back, however
+// `fn` ends. Returns what `fn` returns. `fn` runs synchronously, so one that returns a promise (an async
+// function) is refused: the part after its first await would run against the real table.
+export function withDocuments(rows, fn, sheets = SHEET_ORDER) {
+  const kept = [DOCUMENTS, SHEET_ORDER];
   try {
-    return fn();
+    [DOCUMENTS, SHEET_ORDER] = [rows, sheets];
+    deriveLists();
+    const result = fn();
+    if (typeof result?.then === 'function') {
+      throw new Error('withDocuments runs fn synchronously and puts the table back as soon as it returns: give it a function that ' +
+        'is not async and returns no promise');
+    }
+    return result;
   } finally {
-    DOCUMENTS = kept;
+    [DOCUMENTS, SHEET_ORDER] = kept;
     deriveLists();
   }
 }
@@ -553,13 +624,14 @@ function misplaced(file, found, wanted, project) {
     `${makeWorksheet(wanted, file)}.`;
 }
 
-// Reads and parses a project's worksheets: those of `sections`, every one unless given, in SHEET_ORDER.
+// Reads and parses a project's worksheets: those of `sections`, unless given each one a document uses
+// (SHEETS_USED), in SHEET_ORDER.
 // This is the one place a worksheet is read. Returns a Map from section to null when its file does not
 // exist; to { section, name, file, readError } when it cannot be read; or to { section, name, file,
 // text, parsed, problems, wrongData, belongsTo, clean }. `problems` are the parser's, exactly what
 // parse-worksheet lists, as file:line: message. A worksheet for other data has `wrongData`; one in the
 // wrong file has `belongsTo`, the section it is the worksheet of. Neither is clean.
-function readWorksheets(project, data, sections = SHEET_ORDER) {
+function readWorksheets(project, data, sections = SHEETS_USED) {
   const sheets = new Map();
   for (const section of SHEET_ORDER.filter((name) => sections.includes(name))) {
     const file = worksheetFile(project, section);
