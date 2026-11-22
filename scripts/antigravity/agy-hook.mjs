@@ -24,13 +24,41 @@
  */
 
 import { spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync, statSync } from 'node:fs';
 import { basename, dirname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PLUGIN_ROOT = resolve(HERE, '..');
-const GATE_TIMEOUT_MS = 20000;
+// Antigravity gives the whole hook 30 seconds before a write and 15 after
+// (hooks.json). Each gate gets a share, so this script can always answer
+// before it is stopped: stopped mid-run it would print nothing, and a write
+// with no answer goes ahead.
+const BUDGET_MS = { pre: 24000, post: 10000 };
+
+/** The real path of a file or folder, or of its nearest parent that exists. */
+export function canonical(p) {
+  let head = resolve(p);
+  const tail = [];
+  for (;;) {
+    try {
+      return join(realpathSync(head), ...tail.reverse());
+    } catch {
+      const parent = dirname(head);
+      if (parent === head) return resolve(p);
+      tail.push(basename(head));
+      head = parent;
+    }
+  }
+}
+
+function isDirectory(p) {
+  try {
+    return statSync(p).isDirectory();
+  } catch {
+    return false;
+  }
+}
 
 /** Antigravity's file-writing tools, as the Claude Code tool each one stands for. */
 const TOOL_MAP = {
@@ -52,14 +80,17 @@ export function toClaudeInput(payload, eventName) {
   const target = typeof args.TargetFile === 'string' ? args.TargetFile : '';
   if (!tool || !target) return null;
 
-  const workspaces = Array.isArray(payload.workspacePaths) ? payload.workspacePaths.filter((p) => typeof p === 'string') : [];
-  // The workspace the file is in, or the first one, or the file's own folder.
-  const cwd =
-    workspaces.find((w) => isAbsolute(target) && resolve(target).startsWith(resolve(w) + '/')) ||
-    workspaces[0] ||
-    (isAbsolute(target) ? dirname(target) : process.cwd());
+  // Real paths throughout: a workspace given as /tmp/x and a file given as
+  // /private/tmp/x/... are the same place, and the gates compare paths as text.
+  const workspaces = (Array.isArray(payload.workspacePaths) ? payload.workspacePaths : [])
+    .filter((p) => typeof p === 'string' && p && isDirectory(p))
+    .map(canonical);
+  const filePath = canonical(isAbsolute(target) ? target : resolve(workspaces[0] || process.cwd(), target));
+  // The workspace the file is in, or the first one, or the nearest folder above the file that exists.
+  let cwd = workspaces.find((w) => filePath.startsWith(w + '/')) || workspaces[0] || dirname(filePath);
+  while (!isDirectory(cwd) && dirname(cwd) !== cwd) cwd = dirname(cwd);
 
-  const toolInput = { file_path: isAbsolute(target) ? target : resolve(cwd, target) };
+  const toolInput = { file_path: filePath };
   if (call.name === 'write_to_file') {
     toolInput.content = typeof args.CodeContent === 'string' ? args.CodeContent : '';
   } else if (call.name === 'replace_file_content') {
@@ -97,12 +128,12 @@ export function readVerdict(stdout) {
   return { blocked: false };
 }
 
-function runHook(name, input) {
+function runHook(name, input, timeoutMs) {
   if (!/^[a-z0-9-]+$/.test(name)) return { status: 1, stdout: '', error: 'bad hook name' };
   const res = spawnSync(process.execPath, [join(HERE, `${name}.mjs`)], {
     input: JSON.stringify(input),
     encoding: 'utf8',
-    timeout: GATE_TIMEOUT_MS,
+    timeout: timeoutMs,
     cwd: input.cwd,
     env: { ...process.env, CLAUDE_PLUGIN_ROOT: PLUGIN_ROOT, CLAUDE_PROJECT_DIR: input.cwd },
   });
@@ -124,14 +155,15 @@ function main() {
 
   const isArtefact = basename(input.tool_input.file_path).startsWith('ARC-');
 
+  const perGate = Math.floor((BUDGET_MS[mode] || BUDGET_MS.post) / Math.max(hooks.length, 1));
   for (const name of hooks) {
-    const res = runHook(name, input);
+    const res = runHook(name, input, perGate);
     if (mode !== 'pre') continue;
     if (res.status !== 0) {
       if (isArtefact) {
         out({
           decision: 'deny',
-          reason: `ArcKit: the ${name} check could not run (${res.error || 'exit ' + res.status}), so this write to an ARC artefact was stopped. Check that Node.js 18 or later is installed, then retry.`,
+          reason: `ArcKit: the ${name} check could not run (${res.error || 'exit ' + res.status}), so this write to an ARC artefact was stopped. Retry; if it happens again, check that Node.js 18 or later is installed.`,
         });
       }
       continue;
@@ -144,4 +176,6 @@ function main() {
 }
 
 // Run only when Node was asked to run this file, so tests can import it.
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+// Real paths on both sides: through a linked plugin folder a plain comparison is false,
+// and the script would print nothing, which Antigravity reads as no objection.
+if (process.argv[1] && canonical(process.argv[1]) === canonical(fileURLToPath(import.meta.url))) main();

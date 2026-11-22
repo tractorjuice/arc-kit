@@ -2539,10 +2539,9 @@ def generate_antigravity_agents(agents_dir, skills_dir, extension_dir):
             with open(instructions, "r", encoding="utf-8") as f:
                 body = f.read()
         body = body.lstrip("\n")
-        description = ""
-        for line in front.splitlines():
-            if line.startswith("description:"):
-                description = line[len("description:"):].strip().strip('"')
+        # A skill is given what the user typed in place of this; a subagent is given it by the main agent.
+        agent_body = body.replace("$ARGUMENTS", "the request you were given")
+        description = str(yaml.safe_load(front).get("description") or "").strip().rstrip(".")
         agent = antigravity_agent_name(command_filename)
         agent_front = "\n".join([
             "---",
@@ -2558,7 +2557,7 @@ def generate_antigravity_agents(agents_dir, skills_dir, extension_dir):
             "",
         ])
         with open(os.path.join(out_dir, agent + ".md"), "w", encoding="utf-8") as f:
-            f.write(agent_front + "\n" + body)
+            f.write(agent_front + "\n" + agent_body)
         with open(instructions, "w", encoding="utf-8") as f:
             f.write(body)
         with open(skill_md, "w", encoding="utf-8") as f:

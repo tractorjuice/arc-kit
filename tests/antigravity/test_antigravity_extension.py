@@ -242,7 +242,9 @@ def test_a_subagent_is_in_the_documented_shape_and_carries_the_whole_prompt(agen
     assert front["inheritMcp"] is True
     skill = agent[: -len("-agent")]
     kept = (SKILLS / skill / converter.ANTIGRAVITY_INSTRUCTIONS_FILE).read_text(encoding="utf-8")
-    assert body.strip() == kept.strip(), "the agent and the fallback beside the skill must carry the same prompt"
+    # The same prompt, except that a skill is handed the user's text and a subagent is given it by the main agent.
+    assert body.strip() == kept.strip().replace("$ARGUMENTS", "the request you were given")
+    assert not front["description"].endswith("..") and ". Does the reading" in front["description"]
     assert len(body) > 2000
     assert "Claude Code" not in body and "CLAUDE_PLUGIN_ROOT" not in body
 
@@ -356,8 +358,66 @@ def test_a_check_that_cannot_run_stops_an_artefact_and_nothing_else(workspace):
 
 
 @needs_node
-def test_the_hook_after_a_write_returns_an_empty_object(workspace):
-    assert run_hook("post update-manifest", write_call(workspace, "projects/001-demo/ARC-001-REQ-v1.0.md")) == {}
+def test_the_hook_after_a_write_records_the_document_in_the_manifest(workspace):
+    doc = workspace / "projects" / "001-demo" / "ARC-001-REQ-v1.0.md"
+    doc.write_text("# Requirements\n\n| **Document ID** | ARC-001-REQ-v1.0 |\n", encoding="utf-8")
+    manifest = workspace / "docs" / "manifest.json"
+    manifest.parent.mkdir()
+    manifest.write_text(json.dumps({"projects": []}), encoding="utf-8")
+    assert run_hook("post update-manifest", write_call(workspace, "projects/001-demo/ARC-001-REQ-v1.0.md", doc.read_text())) == {}
+    assert "ARC-001-REQ-v1.0.md" in manifest.read_text(encoding="utf-8")
+
+
+@needs_node
+def test_a_workspace_and_a_file_spelt_through_different_links_are_the_same_place(workspace, tmp_path_factory):
+    """/tmp/x and /private/tmp/x on a Mac, or a repository reached through a link: the gates compare paths as text."""
+    link = tmp_path_factory.mktemp("links") / "ws"
+    link.symlink_to(workspace, target_is_directory=True)
+    bad = "projects/001-demo/ARC-001-ZZZZ-v1.0.md"
+    for ws, target in [(link, workspace / bad), (workspace, link / bad)]:
+        payload = json.dumps({"toolCall": {"name": "write_to_file", "args": {"TargetFile": str(target), "CodeContent": "# x"}},
+                              "workspacePaths": [str(ws)]})
+        assert run_hook(ALL_GATES, payload)["decision"] == "deny", (ws, target)
+
+
+@needs_node
+def test_a_relative_target_is_read_against_the_workspace(workspace):
+    payload = json.dumps({"toolCall": {"name": "write_to_file", "args": {
+        "TargetFile": "projects/001-demo/ARC-001-ZZZZ-v1.0.md", "CodeContent": "# x"}}, "workspacePaths": [str(workspace)]})
+    assert run_hook(ALL_GATES, payload)["decision"] == "deny"
+
+
+@needs_node
+def test_a_workspace_that_is_not_there_does_not_switch_the_gates_off(workspace):
+    payload = json.dumps({"toolCall": {"name": "write_to_file", "args": {"TargetFile": str(workspace / ".env"), "CodeContent": "A=1"}},
+                          "workspacePaths": ["/nonexistent/arckit-test-dir"]})
+    verdict = run_hook("pre file-protection secret-file-scanner", payload)
+    assert verdict["decision"] == "deny" and "Protected" in verdict["reason"]
+
+
+@needs_node
+def test_the_adapter_answers_when_reached_through_a_linked_folder(workspace, tmp_path_factory):
+    """Run by a path that is a link, a plain main-module comparison is false and the script prints nothing."""
+    link = tmp_path_factory.mktemp("plugin") / "arckit"
+    link.symlink_to(EXT, target_is_directory=True)
+    res = subprocess.run(["node", str(link / "hooks" / "agy-hook.mjs"), *ALL_GATES.split()], capture_output=True, text=True,
+                         input=write_call(workspace, "projects/001-demo/ARC-001-ZZZZ-v1.0.md"), timeout=60)
+    assert res.returncode == 0 and json.loads(res.stdout)["decision"] == "deny"
+
+
+def test_the_gates_share_a_budget_inside_the_time_antigravity_allows():
+    """Stopped by Antigravity's timeout the adapter prints nothing, and a write with no answer goes ahead."""
+    adapter = (REPO / "scripts" / "antigravity" / "agy-hook.mjs").read_text(encoding="utf-8")
+    budget = {k: int(v) for k, v in re.findall(r"(pre|post): (\d+)", adapter.split("const BUDGET_MS")[1].split(";")[0])}
+    hooks = json.loads((EXT / "hooks.json").read_text(encoding="utf-8"))
+    for entry in hooks["arckit-gates"]["PreToolUse"]:
+        assert budget["pre"] < entry["hooks"][0]["timeout"] * 1000
+    assert budget["post"] < hooks["arckit-manifest"]["PostToolUse"][0]["hooks"][0]["timeout"] * 1000
+
+
+def test_a_subagent_is_not_left_with_a_placeholder_nothing_fills():
+    for agent in DELEGATED:
+        assert "$ARGUMENTS" not in (EXT / "agents" / f"{agent}.md").read_text(encoding="utf-8"), agent
 
 
 def test_the_rule_is_triggered_by_artefacts_not_always_on():
