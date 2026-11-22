@@ -1,7 +1,7 @@
 {
   "articles.html": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "791de856bb54ae092ce4742701fc3428c085e8846583631b4b7be2c100d3d015"
+    "lastmod": "2026-11-22",
+    "text_sha256": "33293a2f7864b672e729277192c2ce30758141de8b70f4f474e3e57444cc4bed"
   },
   "certification/awareness.html": {
     "lastmod": "2026-10-14",
@@ -41,7 +41,7 @@
   },
   "getting-started.html": {
     "lastmod": "2026-11-22",
-    "text_sha256": "cdbf5fc5390c5edde1074d939bda387c90a1f156e9f23501f380bfe78ed4d4e2"
+    "text_sha256": "0aca2e0141390c01d607c2a600f6e3cdb2476c741e5aa1341a728caf2766afa1"
   },
   "guide/adm-preliminary.html": {
     "lastmod": "2026-07-01",
@@ -1124,8 +1124,8 @@
     "text_sha256": "e42390cdfd8061df64281a2d66dff9d605ee440af5e271a90d9def25c963f7fd"
   },
   "index.html": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "ca9a3929485f06a5c689672b7dd945e135327fe1966dd0dba035d776d178ef8f"
+    "lastmod": "2026-11-22",
+    "text_sha256": "01d2e07757708de9e1296f7c6ca5053a9f2bf2f43e6966dd1e144124bcf35705"
   },
   "llms.txt": {
     "lastmod": "2026-11-22",

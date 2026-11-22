@@ -2,7 +2,7 @@
 
 ArcKit's enterprise architecture governance commands, packaged as an Antigravity plugin.
 
-> **Experimental.** This plugin passes Antigravity's own check (`agy plugin validate --strict`) and installs with `agy plugin install`. One command, `/arckit-start`, has been run in Antigravity's command line (agy 1.5.13) and received the text typed after it. The other 189 have not been run there yet. Please [open an issue](https://github.com/tractorjuice/arc-kit/issues) with what you find.
+> **Experimental.** This plugin passes Antigravity's own check (`agy plugin validate --strict`) and installs with `agy plugin install`. Eight core commands have been run in Antigravity (start, init, principles, stakeholders, requirements, devops, secure and aws-research, on 22 November 2026) and each wrote its document from its template. The other 182 have not been run there yet. Please [open an issue](https://github.com/tractorjuice/arc-kit/issues) with what you find.
 
 ## Install
 
