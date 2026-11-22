@@ -70,6 +70,10 @@ Recipe: `uk-food-sfbb` (the business profile, the five sections of safe methods,
 - It does not change the pack's wording to settle differences inside the pack. Where the pack says two things in two places, the documents print each place as the pack prints it: in CK-06 HOT HOLDING, one limit is worded two slightly different ways, and CH-01 CHILLED STORAGE AND DISPLAYING CHILLED FOOD and CK-07 READY-TO-EAT FOOD describe differently which ready-to-eat foods one of their limits covers. Maintainers can find both places, with their pages, in the limits check sheet printed by `scripts/uk-food/render-limits-check.py` in the ArcKit source repository.
 - Its build recipe, `uk-food-sfbb`, passes the repository's recipe checks, and ArcKit's build has planned it in a dry run, but it has not yet been run end to end.
 
+## For maintainers
+
+The bundled data under a data identifier never changes once it has shipped, and neither does the wording a worksheet or document prints from it. A business holds worksheets and signed-off documents made from that data, and a change would quietly make them out of date. A correction ships under a new data identifier, together with the upgrade a business then needs to bring its own worksheets across. `tests/plugin/uk-food-frozen.test.mjs` holds the first release's blank worksheets and documents to this.
+
 ## Not legal advice
 
 This overlay is not legal advice. The food business operator is responsible for the safety of the food it sells and for keeping its own records. The council's environmental health team is the authority for a business's premises: ask them if you are not sure. Nothing this overlay produces has been approved, inspected or endorsed by the FSA or by any council.
