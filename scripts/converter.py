@@ -243,6 +243,20 @@ def kimi_skill_invocation(command_name):
     return f"/skill:{kimi_skill_name(command_name)}"
 
 
+def antigravity_skill_name(command_name):
+    """Return the Antigravity skill name for an ArcKit command name.
+
+    Antigravity does not namespace a plugin's skills, so the name carries the
+    prefix, and it must match the skill's folder name.
+    """
+    return f"arckit-{command_name.replace('.', '-')}"
+
+
+def antigravity_skill_invocation(command_name):
+    """Return the invocation string for an Antigravity skill-backed command."""
+    return f"/{antigravity_skill_name(command_name)}"
+
+
 def titleize_arckit_name(name):
     """Return a human-readable ArcKit display name."""
     stem = name.replace("arckit-", "", 1).replace(".", "-")
@@ -421,6 +435,25 @@ AGENT_CONFIG = {
         "format": "kimi_skill",
         "path_prefix": ".arckit",
         "extension_dir": "extensions/arckit-kimi",
+        "copy_commands_to_extension": False,
+        "copy_agents_to_extension": False,
+        "copy_scripts_to_extension": True,
+        "copy_references_to_extension": True,
+        "copy_schemas_to_extension": True,
+        "clean_output_dir": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
+    },
+    "antigravity": {
+        "name": "Antigravity",
+        "output_dir": "extensions/arckit-antigravity/skills",
+        "format": "antigravity_skill",
+        # A skill in an Antigravity plugin can read only its own folder by a
+        # relative path, and a plugin-level folder is not documented as
+        # reachable, so templates and scripts come from the project's .arckit/
+        # (scaffolded by `arckit init --ai antigravity`), as they do for Kimi.
+        "path_prefix": ".arckit",
+        "extension_dir": "extensions/arckit-antigravity",
         "copy_commands_to_extension": False,
         "copy_agents_to_extension": False,
         "copy_scripts_to_extension": True,
@@ -799,6 +832,8 @@ def convert(commands_dirs, agents_dir):
                 cmd_fmt = lambda cmd: f"/{vibe_skill_name(cmd)}"
             elif config["format"] == "kimi_skill":
                 cmd_fmt = kimi_skill_invocation
+            elif config["format"] == "antigravity_skill":
+                cmd_fmt = antigravity_skill_invocation
             else:
                 cmd_fmt = "/arckit:{cmd}"
 
@@ -872,8 +907,16 @@ def convert(commands_dirs, agents_dir):
                     f.write(skill_md)
                 print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
                 counts[agent_id] += 1
-            elif config["format"] == "kimi_skill":
-                skill_name = kimi_skill_name(base_name)
+            elif config["format"] in ("kimi_skill", "antigravity_skill"):
+                # Antigravity reads the same Agent Skills layout. Its plugin
+                # loader requires `name` to equal the folder name and accepts
+                # name, description, disable-model-invocation, license and
+                # compatibility: the two fields written here are legal in both.
+                skill_name = (
+                    kimi_skill_name(base_name)
+                    if config["format"] == "kimi_skill"
+                    else antigravity_skill_name(base_name)
+                )
                 skill_dir = os.path.join(config["output_dir"], skill_name)
                 os.makedirs(skill_dir, exist_ok=True)
 
@@ -2220,6 +2263,94 @@ def rewrite_codex_skills(skills_dir):
         print(f"  Rewrote {count} skill files for Codex skill invocation format")
 
 
+ANTIGRAVITY_PLUGIN_DESCRIPTION = (
+    "Enterprise architecture governance: commands that draft requirements, business cases, design "
+    "reviews and UK government assessments from templates."
+)
+
+
+def generate_antigravity_plugin(mcp_json_path, version, extension_dir):
+    """Write the Antigravity plugin manifest and its MCP configuration.
+
+    `plugin.json` sits at the plugin root. Its schema allows no unknown key, so
+    only documented fields are written. Skills are found in `skills/` without
+    being listed.
+
+    `mcp_config.json` takes the keyless remote servers only. A server that needs
+    a key has to declare it under `variables`, and a plugin with an unset
+    variable installs disabled until the user fills it in: two optional servers
+    would switch off all of ArcKit. The README says how to add them by hand.
+    """
+    servers, left_out = {}, []
+    if os.path.isfile(mcp_json_path):
+        with open(mcp_json_path, "r", encoding="utf-8") as f:
+            mcp_config = json.load(f)
+        for name, entry in mcp_config.get("mcpServers", {}).items():
+            if "user_config" in json.dumps(entry):
+                left_out.append(name)
+            elif entry.get("url"):
+                servers[name] = {"url": entry["url"]}
+            elif entry.get("command"):
+                mapped = {"command": entry["command"]}
+                for key in ("args", "env"):
+                    if entry.get(key):
+                        mapped[key] = entry[key]
+                servers[name] = mapped
+
+    manifest = {
+        "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+        "name": "arckit",
+        "displayName": "ArcKit",
+        "version": version,
+        "description": ANTIGRAVITY_PLUGIN_DESCRIPTION,
+        "suggestedPrompts": [
+            "/arckit-start",
+            "/arckit-requirements Build a payment processing system",
+            "/arckit-navigator",
+        ],
+        "author": {"name": "ArcKit", "url": "https://arckit.org"},
+        "homepage": "https://arckit.org",
+        "repository": "https://github.com/tractorjuice/arckit-antigravity",
+        "license": "MIT AND CC-BY-SA-4.0",
+        "keywords": ["enterprise-architecture", "governance", "procurement", "public-sector", "uk-government"],
+    }
+    os.makedirs(extension_dir, exist_ok=True)
+    with open(os.path.join(extension_dir, "plugin.json"), "w", encoding="utf-8") as f:
+        f.write(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
+    with open(os.path.join(extension_dir, "mcp_config.json"), "w", encoding="utf-8") as f:
+        f.write(json.dumps({"mcpServers": servers}, indent=2, ensure_ascii=False) + "\n")
+    print(f"  Generated: {extension_dir}/plugin.json and mcp_config.json "
+          f"({len(servers)} MCP servers; left out, they need a key: {', '.join(left_out) or 'none'})")
+    return servers, left_out
+
+
+def rewrite_antigravity_skills(skills_dir):
+    """Rewrite Claude Code-specific references for the Antigravity plugin."""
+    if not os.path.isdir(skills_dir):
+        return
+    count = 0
+    for root, _dirs, files in os.walk(skills_dir):
+        for filename in files:
+            if not filename.endswith(".md"):
+                continue
+            filepath = os.path.join(root, filename)
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+            rewritten = _rewrite_skill_content(
+                content,
+                skill_dir_name=os.path.basename(root),
+                invocation_fn=antigravity_skill_invocation,
+                platform_label="Antigravity",
+                plugin_root_prefix=".arckit",
+            )
+            if rewritten != content:
+                with open(filepath, "w", encoding="utf-8") as f:
+                    f.write(rewritten)
+                count += 1
+    if count:
+        print(f"  Rewrote {count} skill files for Antigravity skill invocation format")
+
+
 def rewrite_kimi_skills(skills_dir):
     """Rewrite Claude Code-specific references for the Kimi extension.
 
@@ -2762,6 +2893,24 @@ if __name__ == "__main__":
     print()
     print("Rewriting Kimi extension skills for Kimi command format...")
     rewrite_kimi_skills("extensions/arckit-kimi/skills")
+
+    print()
+    print("Generating Antigravity plugin config...")
+    antigravity_version = "0.0.0"
+    antigravity_version_path = "extensions/arckit-antigravity/VERSION"
+    if os.path.isfile(antigravity_version_path):
+        with open(antigravity_version_path, "r", encoding="utf-8") as f:
+            antigravity_version = f.read().strip() or antigravity_version
+    generate_antigravity_plugin(
+        os.path.join(plugin_dir, ".mcp.json"),
+        antigravity_version,
+        "extensions/arckit-antigravity",
+    )
+    copy_reference_skills(
+        os.path.join(plugin_dir, "skills"),
+        "extensions/arckit-antigravity/skills",
+    )
+    rewrite_antigravity_skills("extensions/arckit-antigravity/skills")
 
     print()
     total = sum(counts.values())

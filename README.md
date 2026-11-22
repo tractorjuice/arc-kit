@@ -397,6 +397,35 @@ kimi
 
 </details>
 
+<details>
+<summary><strong>Google Antigravity (experimental)</strong></summary>
+
+Built from Antigravity's published plugin format and not yet run in Antigravity. Build the plugin from this repository and install the folder:
+
+```bash
+git clone https://github.com/tractorjuice/arc-kit.git
+cd arc-kit
+uv run --no-project --with pyyaml python scripts/converter.py
+agy plugin install ./extensions/arckit-antigravity
+```
+
+Create a project with the ArcKit CLI (install it as for Codex CLI):
+
+```bash
+arckit init payment-modernization --ai antigravity
+```
+
+Every ArcKit command is an Agent Skill whose name starts `arckit-`:
+
+```text
+/arckit-principles Create principles for a financial services company
+/arckit-requirements Build a payment processing system...
+```
+
+See [the plugin's README](extensions/arckit-antigravity/README.md) for the MCP servers and what is not there yet. **Updating:** pull this repository, run the converter and install the folder again.
+
+</details>
+
 **Latest Release**: [v6.24.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.24.0)
 
 If upgrading from v0.x, you may also need to migrate legacy filenames — see the [upgrading guide](docs/guides/upgrading.md) for full details.
@@ -909,6 +938,7 @@ claude agent recipes/togaf-agent-full.yaml
 | [OpenCode CLI](https://opencode.net/cli) | ✅ Core | CLI with commands and templates |
 | Mistral Vibe CLI | ✅ Full | Extension with skills, agents, and MCP servers ([arckit-vibe](https://github.com/tractorjuice/arckit-vibe)) |
 | Kimi Code CLI | ✅ Full | Plugin with Agent Skills and MCP servers ([arckit-kimi](https://github.com/tractorjuice/arckit-kimi)) |
+| Google Antigravity | 🧪 Experimental | Plugin with Agent Skills and MCP servers, built from this repository and not yet run in Antigravity ([arckit-antigravity](extensions/arckit-antigravity/README.md)) |
 
 ### Platform support
 

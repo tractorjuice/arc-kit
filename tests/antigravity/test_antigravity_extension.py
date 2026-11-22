@@ -1,0 +1,136 @@
+"""The Antigravity plugin is generated in the shape Antigravity's plugin loader documents.
+
+Read from antigravity.google/docs (build-plugins, skills, mcp) on 22 November 2026:
+
+- `plugin.json` at the plugin root; its schema requires `name` and allows no unknown key;
+- a skill is `skills/<name>/SKILL.md`, with `name` (kebab-case, 1 to 64 characters, equal to its folder)
+  and `description` (1 to 1,024 characters); skills are invoked `/<name>` and are not namespaced by plugin;
+- `mcp_config.json` at the plugin root; a server that declares `variables` leaves the plugin disabled
+  until they are filled in, so servers that need a key are left out;
+- a skill can read its own folder by relative path, and nothing else in the plugin is documented as
+  reachable, so templates and scripts come from the project's `.arckit/`.
+
+Nobody has run the plugin in Antigravity. These tests hold it to the documented format only.
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import sys
+from pathlib import Path
+
+import pytest
+import yaml
+
+REPO = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO / "scripts"))
+import converter  # noqa: E402
+
+EXT = REPO / "extensions" / "arckit-antigravity"
+SKILLS = EXT / "skills"
+MANIFEST_KEYS = {"$schema", "name", "displayName", "description", "version", "disabled", "logo", "suggestedPrompts", "skills",
+                 "author", "homepage", "repository", "license", "keywords", "extensions"}
+SKILL_KEYS = {"name", "description", "disable-model-invocation", "license", "compatibility"}
+KEBAB = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+
+pytestmark = pytest.mark.skipif(not (EXT / "plugin.json").is_file(), reason="run scripts/converter.py to generate the plugin")
+
+
+def skills() -> list[Path]:
+    return sorted(SKILLS.glob("*/SKILL.md"))
+
+
+def front(path: Path) -> dict:
+    return yaml.safe_load(path.read_text(encoding="utf-8").split("---", 2)[1])
+
+
+def test_names_and_invocations():
+    assert converter.antigravity_skill_name("requirements") == "arckit-requirements"
+    assert converter.antigravity_skill_name("wardley.value-chain") == "arckit-wardley-value-chain"
+    assert converter.antigravity_skill_invocation("requirements") == "/arckit-requirements"
+
+
+def test_the_manifest_has_only_documented_keys():
+    manifest = json.loads((EXT / "plugin.json").read_text(encoding="utf-8"))
+    assert set(manifest) <= MANIFEST_KEYS, set(manifest) - MANIFEST_KEYS
+    assert manifest["name"] == "arckit" and KEBAB.match(manifest["name"])
+    assert manifest["version"] == (EXT / "VERSION").read_text(encoding="utf-8").strip()
+    assert 120 <= len(manifest["description"]) <= 160, len(manifest["description"])
+    assert len(manifest["suggestedPrompts"]) <= 3
+    # The marketplace refuses a display name that opens with another product's name.
+    assert not manifest["displayName"].startswith(("Antigravity", "Gemini", "Claude", "Cursor"))
+
+
+def test_suggested_prompts_name_skills_that_exist():
+    manifest = json.loads((EXT / "plugin.json").read_text(encoding="utf-8"))
+    for prompt in manifest["suggestedPrompts"]:
+        name = prompt.split()[0].lstrip("/")
+        assert (SKILLS / name / "SKILL.md").is_file(), prompt
+
+
+def test_every_convertible_command_has_a_skill():
+    names = {p.parent.name for p in skills()}
+    core = {p.stem for p in (REPO / "plugins" / "arckit-claude" / "commands").glob("*.md")} - {"build"}
+    missing = {converter.antigravity_skill_name(c) for c in core} - names
+    assert not missing, sorted(missing)[:5]
+    # Antigravity gets what the other skill-based target gets.
+    kimi = {p.parent.name for p in (REPO / "extensions" / "arckit-kimi" / "skills").glob("*/SKILL.md")}
+    assert names == kimi
+
+
+@pytest.mark.parametrize("path", skills(), ids=lambda p: p.parent.name)
+def test_a_skill_is_in_the_documented_shape(path):
+    fm = front(path)
+    assert set(fm) <= SKILL_KEYS, set(fm) - SKILL_KEYS
+    assert fm["name"] == path.parent.name and KEBAB.match(fm["name"]) and len(fm["name"]) <= 64
+    assert 1 <= len(fm["description"]) <= 1024
+
+
+@pytest.mark.parametrize("path", skills(), ids=lambda p: p.parent.name)
+def test_a_skill_names_nothing_only_claude_code_has(path):
+    text = path.read_text(encoding="utf-8")
+    assert "${CLAUDE_PLUGIN_ROOT}" not in text
+    assert "AskUserQuestion" not in text
+    assert not re.search(r"(?<![\w/])/arckit[.:]", text), "a command in another assistant's form"
+
+
+def test_the_bulk_build_harness_is_left_out():
+    assert not (SKILLS / "arckit-build").exists()
+
+
+def test_mcp_servers_need_no_key():
+    """A server with a key would have to declare it under `variables`, and the plugin would install disabled."""
+    servers = json.loads((EXT / "mcp_config.json").read_text(encoding="utf-8"))["mcpServers"]
+    assert set(servers) == {"aws-knowledge", "microsoft-learn", "govreposcrape", "uk-tenders", "trello"}
+    for name, entry in servers.items():
+        assert set(entry) == {"url"}, (name, entry)
+        assert entry["url"].startswith("https://")
+    assert "user_config" not in json.dumps(servers) and "${" not in json.dumps(servers)
+
+
+def test_the_generator_leaves_out_keyed_servers(tmp_path):
+    source = tmp_path / ".mcp.json"
+    source.write_text(json.dumps({"mcpServers": {
+        "open": {"type": "http", "url": "https://example.org/mcp", "alwaysLoad": True},
+        "keyed": {"type": "http", "url": "https://example.org/k", "headers": {"X-Key": "${user_config.KEY}"}},
+        "local": {"command": "node", "args": ["server.mjs"]},
+    }}), encoding="utf-8")
+    servers, left_out = converter.generate_antigravity_plugin(str(source), "1.2.3", str(tmp_path / "out"))
+    assert servers == {"open": {"url": "https://example.org/mcp"}, "local": {"command": "node", "args": ["server.mjs"]}}
+    assert left_out == ["keyed"]
+    assert json.loads((tmp_path / "out" / "plugin.json").read_text())["version"] == "1.2.3"
+
+
+def test_nothing_the_validator_would_flag_as_ignored_is_shipped():
+    """`agy plugin validate --strict` fails on files the loader ignores: a `commands/` folder, `.mcp.json`,
+    a root `AGENTS.md` and `hooks/hooks.json`."""
+    for ignored in ["commands", ".mcp.json", "AGENTS.md", "hooks/hooks.json"]:
+        assert not (EXT / ignored).exists(), ignored
+
+
+def test_the_readme_says_it_has_not_been_run():
+    readme = (EXT / "README.md").read_text(encoding="utf-8")
+    assert "Experimental and not yet run in Antigravity" in readme
+    assert "arckit init my-project --ai antigravity" in readme
+    assert "agy plugin install ./extensions/arckit-antigravity" in readme

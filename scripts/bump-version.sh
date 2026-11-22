@@ -270,6 +270,11 @@ update_file "extensions/arckit-vibe/VERSION" "overwrite"
 echo "$NEW_VERSION" > extensions/arckit-kimi/VERSION
 update_file "extensions/arckit-kimi/VERSION" "overwrite"
 
+# ── 16b. extensions/arckit-antigravity/VERSION ────────────────────────────────────
+
+echo "$NEW_VERSION" > extensions/arckit-antigravity/VERSION
+update_file "extensions/arckit-antigravity/VERSION" "overwrite"
+
 # ── 17. extensions/arckit-paperclip/package.json ─────────────────────────────────────
 
 if [[ -f extensions/arckit-paperclip/package.json ]]; then
