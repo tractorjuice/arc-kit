@@ -14,7 +14,7 @@ Read from antigravity.google/docs (build-plugins, skills, mcp) on 22 November 20
   reachable, so templates and scripts come from the project's `.arckit/`.
 
 The generated plugin passes `agy plugin validate --strict` (agy 1.5.13, 22 November 2026); the last test here runs
-it where `agy` is installed. No command has yet been run in an Antigravity session.
+it where `agy` is installed. One command, `/arckit-start`, was run in `agy -p` that day and received its arguments.
 """
 
 from __future__ import annotations
@@ -202,9 +202,10 @@ def test_nothing_the_validator_would_flag_as_ignored_is_shipped():
         assert not (EXT / ignored).exists(), ignored
 
 
-def test_the_readme_says_it_has_not_been_run():
+def test_the_readme_says_how_far_it_has_been_tried():
     readme = (EXT / "README.md").read_text(encoding="utf-8")
-    assert "Experimental and not yet run in Antigravity" in readme
+    assert "> **Experimental.**" in readme
+    assert "The other 189 have not been run there yet." in readme
     assert "arckit init my-project --ai antigravity" in readme
     assert "agy plugin install ./extensions/arckit-antigravity" in readme
 

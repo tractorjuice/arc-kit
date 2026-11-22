@@ -400,7 +400,7 @@ kimi
 <details>
 <summary><strong>Google Antigravity (experimental)</strong></summary>
 
-It passes Antigravity's own plugin check; no command has yet been run in an Antigravity session. Build the plugin from this repository and install the folder:
+It passes Antigravity's own plugin check and one command has been run there; the rest are untried. Build the plugin from this repository and install the folder:
 
 ```bash
 git clone https://github.com/tractorjuice/arc-kit.git
@@ -938,7 +938,7 @@ claude agent recipes/togaf-agent-full.yaml
 | [OpenCode CLI](https://opencode.net/cli) | ✅ Core | CLI with commands and templates |
 | Mistral Vibe CLI | ✅ Full | Extension with skills, agents, and MCP servers ([arckit-vibe](https://github.com/tractorjuice/arckit-vibe)) |
 | Kimi Code CLI | ✅ Full | Plugin with Agent Skills and MCP servers ([arckit-kimi](https://github.com/tractorjuice/arckit-kimi)) |
-| Google Antigravity | 🧪 Experimental | Plugin with Agent Skills and MCP servers, built from this repository and not yet run in Antigravity ([arckit-antigravity](extensions/arckit-antigravity/README.md)) |
+| Google Antigravity | 🧪 Experimental | Plugin with Agent Skills and MCP servers, built from this repository; it passes Antigravity's own check and most commands are untried there ([arckit-antigravity](extensions/arckit-antigravity/README.md)) |
 
 ### Platform support
 

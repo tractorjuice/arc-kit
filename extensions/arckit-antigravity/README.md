@@ -2,7 +2,7 @@
 
 ArcKit's enterprise architecture governance commands, packaged as an Antigravity plugin.
 
-> **Experimental and not yet run in Antigravity.** This plugin passes Antigravity's own check (`agy plugin validate --strict`, agy 1.5.13). No command has yet been run in an Antigravity session. Please [open an issue](https://github.com/tractorjuice/arc-kit/issues) with what you find.
+> **Experimental.** This plugin passes Antigravity's own check (`agy plugin validate --strict`) and installs with `agy plugin install`. One command, `/arckit-start`, has been run in Antigravity's command line (agy 1.5.13) and received the text typed after it. The other 189 have not been run there yet. Please [open an issue](https://github.com/tractorjuice/arc-kit/issues) with what you find.
 
 ## Install
 
@@ -15,7 +15,7 @@ uv run --no-project --with pyyaml python scripts/converter.py
 agy plugin install ./extensions/arckit-antigravity
 ```
 
-Check it loaded with `agy plugin list`. Without the `agy` command, copy the `arckit-antigravity` folder into `~/.gemini/config/plugins/` or your workspace's `.agents/plugins/`.
+Check it loaded with `agy plugin list`. If your shell can't find `agy`, it is at `~/.gemini/bin/agy`. Without the `agy` command, copy the `arckit-antigravity` folder into `~/.gemini/config/plugins/` or your workspace's `.agents/plugins/`.
 
 ## Set up a project
 
@@ -53,7 +53,6 @@ Two more need a key and are left out, because a plugin with an unfilled key inst
 - **Agents and hooks.** The plugin ships skills and MCP servers only. Research commands run in the main conversation.
 - **A published repository.** You install from a build of this folder, as above.
 - **Long commands.** Antigravity loads the first 24,000 bytes of a skill. Twenty-nine ArcKit commands are longer, so each of those tells the agent to read the rest from a file in the skill's folder first.
-- **What you type after the command.** Antigravity's documentation does not say how a skill receives it. If a command ignores your text, say what you want in the next message.
 
 ## Licence
 
