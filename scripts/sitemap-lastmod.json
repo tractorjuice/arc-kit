@@ -975,6 +975,10 @@
     "lastmod": "2026-11-18",
     "text_sha256": "cfe51d1376b90f0d96b8f16f1025c6f4d67aa5041633a1b22826a04b88a4e97a"
   },
+  "guide/uk-food-cleaning-schedule.html": {
+    "lastmod": "2026-11-23",
+    "text_sha256": "699a843b7c4fd4b594705a141ba1120e82749ee07672470615035c1162de5c48"
+  },
   "guide/uk-food-own-methods.html": {
     "lastmod": "2026-11-19",
     "text_sha256": "645ce5b32a59fc13d7a622b7196f01ce62b8e30bf009935dcd94ea697f137cbc"
@@ -994,6 +998,10 @@
   "guide/uk-food-sign-off.html": {
     "lastmod": "2026-11-18",
     "text_sha256": "a5fc665a6d6df8303d88b38424262c9f309307a6486f4f7624d035a3077907a1"
+  },
+  "guide/uk-food-suppliers.html": {
+    "lastmod": "2026-11-23",
+    "text_sha256": "d2a3155a7832a4341ebbf277ae58bd6a8c83f916c61ff8f8e45c71e879c64d9c"
   },
   "guide/uk-fs-consumer-duty.html": {
     "lastmod": "2026-10-27",
@@ -1120,8 +1128,8 @@
     "text_sha256": "be6b6290becf0a78637c292145655bc8bc9ec5fa61253f32b2cd0939330a008e"
   },
   "guides.html": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "e42390cdfd8061df64281a2d66dff9d605ee440af5e271a90d9def25c963f7fd"
+    "lastmod": "2026-11-23",
+    "text_sha256": "0e06237e326f1ee048df239b8b1ab93951b39ea9afed39ceb6bcca5d5562d941"
   },
   "index.html": {
     "lastmod": "2026-11-22",
