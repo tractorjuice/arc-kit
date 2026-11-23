@@ -222,6 +222,12 @@ const outsideChangedLine = (record) => `signed off by ${record.name} on ${record
 const unsoundLine = (record) => `the sign-off recorded for this file in ${record.name}'s name, on ${record.date}, cannot be ` +
   'right: the document still shows a question not yet answered or an entry not yet confirmed, and one that does is never ' +
   'signed off. Once it is finished and written again, a named person signs it off';
+// The same, when no line above says what is unfinished, as nothing counted explains the mark: then the record may have
+// been sound when it was made (a later release can read a line as unfinished that an earlier one did not), so it is
+// not called wrong, and the person is sent to the document to find what it shows.
+const unexplainedLine = (record) => `signed off by ${record.name} on ${record.date}, but it still shows something not yet answered ` +
+  'or not yet confirmed, and a document that does is never signed off: finish that in its worksheet, then write the document ' +
+  'again, which makes a new version for a named person to sign off';
 // A cell sign-off rewrites that holds something the commands do not write there (unwrittenCells).
 const cellLine = (file, { line, field, typed, want }) => `document ${file} has ${typed === '' ? 'nothing' : `"${typed}"`} in ` +
   `${field}, at line ${line}, a cell the sign-off step rewrites: write ${want} there first, so that marking the document as ` +
@@ -231,12 +237,13 @@ const otherVersionLine = (record, current) => `this is version ${current.version
 const goneLine = (record) => `${record.file}, which ${record.name} signed off on ${record.date}, is not in the project folder: ` +
   'put it back, or sign the document off again once it is written';
 // The line for a document that is not signed off: null when the lines before it already say everything.
-// `asSigned` is true when the newest sign-off names the current file and holds the hashes it has now.
-function signLine(record, current, check, asSigned) {
+// `asSigned` is true when the newest sign-off names the current file and holds the hashes it has now;
+// `unexplained`, when its body shows something unfinished and no line before this one says what.
+function signLine(record, current, check, asSigned, unexplained) {
   if (!record) return NOT_SIGNED;
   if (!current) return goneLine(record);
   if (record.file !== current.file || record.version !== current.version) return otherVersionLine(record, current);
-  if (check.unfinished && check.hashes?.body === record.body) return unsoundLine(record);
+  if (check.unfinished && check.hashes?.body === record.body) return unexplained ? unexplainedLine(record) : unsoundLine(record);
   // A fault outside the body that check tells on a line of its own is put right as that line says, and
   // nothing is added to it: a header that claims a sign-off the file has outlived, a header cell that
   // is not what the record bears out (a slip while a sign-off is marked, which changes the file outside
@@ -427,12 +434,19 @@ function collectStatus(project, data, options = {}) {
     // hashes the file has now: what was signed is what is there, inside the markers and outside them.
     const asSigned = Boolean(record && current && check.hashes && record.file === current.file &&
       record.version === current.version && record.body === check.hashes.body && record.outside === check.hashes.outside);
-    doc.signedOff = held.length === 0 && asSigned;
+    // Sign-off never records a body that shows something not yet answered or not yet confirmed, whatever status
+    // counts (its backstop), so status does not take a recorded sign-off of one either. Nothing is held only when the
+    // file is in step with a fresh render, so the body check read (`unfinished`) is the fresh body the backstop reads.
+    // For every document today each such mark has a line of its own above (a count, or its row's outstanding), so
+    // this changes nothing any of them says: it keeps status and sign-off in agreement should a body ever show a mark
+    // that nothing counts, such as a line a later release reads as unfinished.
+    const unexplained = held.length === 0 && Boolean(check?.unfinished);
+    doc.signedOff = held.length === 0 && asSigned && !unexplained;
     doc.signOff = record;
     doc.headerShowsSignOff = headerShowsSignOff;
     // A document nobody signs (its row's signable is false) is never told that it is not signed off: nothing is
     // waiting for a signature, and sign-off refuses it in its own words.
-    signLines.set(code, doc.signedOff || !row.signable ? null : signLine(record, current, check, asSigned));
+    signLines.set(code, doc.signedOff || !row.signable ? null : signLine(record, current, check, asSigned, unexplained));
     checks.set(code, check);
     hashes.set(code, check?.hashes ?? null);
     blockers.set(code, held);

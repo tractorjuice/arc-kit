@@ -544,6 +544,34 @@ test('sign-off refuses a document whose body shows something unfinished even whe
   });
 });
 
+test('item 4: status does not take a recorded sign-off of a document whose fresh body shows a mark no count explains, as sign-off would refuse it, and says why', () => {
+  const dir = cafeWith(sheet(BOARDS));
+  // A row whose body prints a line that a later release reads as not yet confirmed. The business signed the document off
+  // when nothing in it was read that way, so the sign-off it holds names this very file, and nothing it counts has moved.
+  const chunks = () => [['## A test list'], ['Waiting on the supplier: a new price list']];
+  const waiting = (line) => line.startsWith('Waiting on the supplier:');
+  withDocuments(withRow(listRow({ chunks })), () => {
+    writtenAs(dir, 'FOODTESTLIST');
+    assert.equal(signOffDocument('FOODTESTLIST', dir, PERSON, data).exit, 0);
+    assert.equal(projectStatus(dir, data).documents.find((d) => d.code === 'FOODTESTLIST').signedOff, true);
+  });
+  const said = 'signed off by Sam Okafor on 2026-11-17, but it still shows something not yet answered or not yet confirmed, and a document ' +
+    'that does is never signed off: finish that in its worksheet, then write the document again, which makes a new version for a named person ' +
+    'to sign off';
+  withDocuments(withRow(listRow({ chunks, unfinishedLine: (line) => line.includes(UNANSWERED) || waiting(line) })), () => {
+    const result = projectStatus(dir, data);
+    const doc = result.documents.find((d) => d.code === 'FOODTESTLIST');
+    // In step, with its sign-off recorded for this file, and nothing counted outstanding: yet not signed off.
+    assert.deepEqual([doc.inSync, doc.questions, doc.signOff.name, doc.signedOff], [true, 0, 'Sam Okafor', false]);
+    assert.deepEqual(result.unfinished.filter((line) => line.code === 'FOODTESTLIST').map((line) => line.what), [said]);
+    assert.match(mainSays('status', '--project', dir).out, /^FOODTESTLIST \(Test list\): [^\n]*; not signed off$/m);
+    assert.ok(renderDocument('FOODCMP', dir, data).text.includes(`\n- Test list (FOODTESTLIST): ${said}\n`));
+    // Sign-off refuses it with its backstop, never as a sign-off already recorded: the two agree.
+    assert.deepEqual(signOffDocument('FOODTESTLIST', dir, PERSON, data).messages, ['FOODTESTLIST is not signed off, and nothing was written, because:',
+      '- FOODTESTLIST still shows something not yet answered or not yet confirmed: finish its worksheet first, then write the document again']);
+  });
+});
+
 test('what sign-off says of each Plan 1 document, in each state it was tried in, is what it said before list documents came', () => {
   const said = JSON.parse(readFileSync('tests/fixtures/uk-food/plan-1-sign-off.json', 'utf8'));
   const SECTIONS = ['profile', 'XC', 'CL', 'CH', 'CK', 'MG', 'own'];
