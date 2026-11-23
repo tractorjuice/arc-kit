@@ -110,7 +110,8 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'allergens', 'cleani
 //   what readWorksheets reads from it.
 // - source(data, sources): the body's last line, which says where its words come from. `sources` is as for
 //   chunks, for a document whose words from the pack depend on what its worksheet holds.
-// - unfinishedLine(line): whether a line of its body shows it unfinished (see showsUnfinished).
+// - unfinishedLine(line): whether a line of its body shows it unfinished (see showsUnfinished). Whatever status
+//   counts, sign-off refuses any document whose body rendered afresh shows a line this marks (see freshlyUnfinished).
 // - asks(sheet, data): what a person answers for it, from its own worksheet (`sheet`, as readWorksheets
 //   reads it, or undefined when it is missing or the document has none): { items }, an [identifier,
 //   record] for each question or entry in order, and for a section document `notRelevant` and
@@ -135,8 +136,6 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'allergens', 'cleani
 // A rule that belongs to one document alone is a field of its row and no other:
 // - lacking(data), the profile's and the list documents': what the data lacks that the document quotes,
 //   beyond its data file, as render says it, or null.
-// sign-off also refuses, whatever status counts, any document whose body rendered afresh shows a line its row's
-// unfinishedLine marks (see freshlyUnfinished).
 // - specialProcesses, the own methods document's: a special process the profile confirms that has no
 //   own entry keeps it from being signed off, and status lists that, and each own entry awaiting
 //   environmental health review, under this document.

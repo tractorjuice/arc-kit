@@ -290,8 +290,8 @@ export const DOC_TYPES = {
   // A small caterer's food safety documents built from the FSA's "Safer food, better business for caterers"
   // pack. None carries a severity and none repeats within a project. The pack's wording reaches a document
   // only through the overlay's helper script. Documents stay DRAFT until a named person signs them off with
-  // uk-food-sign-off; the completion record, which uk-food-check writes, is never signed and stays DRAFT,
-  // and neither is the diary and record sheets document, which uk-food-record-sheets writes.
+  // uk-food-sign-off. Two are never signed and always stay DRAFT: the completion record, which uk-food-check
+  // writes, and the diary and record sheets document, which uk-food-record-sheets writes.
   'FOODPROF':  { name: 'Food Business Profile',                           category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
   'FOODXC':    { name: 'Cross-contamination Safe Methods',                category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
   'FOODCLN':   { name: 'Cleaning Safe Methods',                           category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
