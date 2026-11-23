@@ -836,6 +836,23 @@ def test_the_new_folders_explanation_is_the_helpers_alone():
     assert step.index("create-project.sh --json --force") < step.index("set-up-folder --project <project_dir>")
 
 
+def test_the_new_folders_readme_names_every_command_in_the_guides_order():
+    """Final review A1: the README every new project gets lists the nine commands, in the order the overview guide's
+    table gives them, by their bare names (a file the helper writes cannot know a tool's namespace), and says which two
+    documents nobody signs."""
+    helper = FOLDER_MODULE.read_text(encoding="utf-8")
+    readme = helper[helper.index("const folderReadme"):helper.index("const EARLIER_READMES")]
+    listed = re.findall(r"^\d\. \\`(uk-food-[a-z-]+)\\`: ", readme, re.M)
+    table = (ROOT_GUIDES / OVERVIEW_GUIDE).read_text(encoding="utf-8").split("## The order to work in", 1)[1].split("\n## ", 1)[0]
+    ordered = re.findall(r"^\| [^|]+ \| `/arckit-uk-food:(uk-food-[a-z-]+)` \|", table, re.M)
+    assert listed == ordered and sorted(listed) == sorted(COMMANDS), (listed, ordered)
+    assert "Steps 4 to 6 can come in any order once the profile is started." in readme
+    assert "Steps 4 to 6 can come in any order once the profile is started." in table
+    assert ("except two that nobody signs: the completion record (\\`ARC-${number}-FOODCMP-v1.0.md\\`), which reports where the "
+            "others stand, and the diary and record sheets (\\`ARC-${number}-FOODREC-v1.0.md\\`), which are blank forms whose "
+            "pages are signed by the people who fill them in.") in readme
+
+
 def test_the_own_methods_document_has_one_name_everywhere():
     """H4: FOODOWN is Food Business Own Methods in the registry, the pages table and the Gemini hook's list."""
     registry = (ROOT / "plugins/arckit-claude/config/doc-types.mjs").read_text(encoding="utf-8")

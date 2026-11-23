@@ -8,6 +8,8 @@
 
 - In Claude Code, the profile, safe methods and own methods commands put the questions that take yes or no in a selector, up to four at a time, each with the pack's wording. Choose an answer for each, or type what you do instead. An answer may be marked as recommended only where the pack sets out a method and asks whether you follow it, and nothing is recorded unless you choose it. Questions answered in your own words, and every other assistant, are unchanged (#1135).
 
+- The README a new project folder is given lists all nine commands, in the order the overview guide gives them, and says that the diary and record sheets, like the completion record, are never signed off. A folder an earlier version set up is still taken as set up, and its README is left as it is.
+
 ### Fixed
 
 - An error about a wrong value, such as a sign-off date still to come, prints its one-line message without the script's full usage text (#1132).

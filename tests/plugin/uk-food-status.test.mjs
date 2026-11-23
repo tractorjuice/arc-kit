@@ -2349,7 +2349,9 @@ test('H1: a project folder the shared script has just made becomes the business\
   assert.ok(readme.startsWith('# Bramble Cafe: food safety records\n\n'), readme.slice(0, 80));
   // What the folder is, where things are, what to run next, and that it is kept private.
   for (const needed of ['This folder holds the food safety records of Bramble Cafe.', '`food-safety/`', '`ARC-001-FOOD', '`external/`',
-    '1. `uk-food-profile`', '2. `uk-food-safe-methods`', '3. `uk-food-own-methods`', '4. `uk-food-check`', '5. `uk-food-sign-off`',
+    '1. `uk-food-profile`', '2. `uk-food-safe-methods`', '3. `uk-food-own-methods`', '4. `uk-food-allergens`', '5. `uk-food-cleaning-schedule`',
+    '6. `uk-food-suppliers`', '7. `uk-food-record-sheets`', '8. `uk-food-check`', '9. `uk-food-sign-off`',
+    'There is one too for each of three lists: your allergen information, your cleaning schedule, and your suppliers and contacts.',
     '`/arckit-uk-food:uk-food-profile`', PRIVATE, 'They are not legal advice.',
     'The Food Standards Agency has not reviewed or endorsed the overlay or anything made with it.']) {
     assert.ok(readme.includes(needed), needed);
@@ -3007,10 +3009,57 @@ test('J1: a folder made with no business name reads well, and the folder\'s text
   const named = newProject('Hartley Food Safety Kitchen');
   assert.equal(setUp(named).status, 0);
   assert.ok(readFileSync(join(named, 'README.md'), 'utf8').startsWith('# Hartley Food Safety Kitchen: food safety records\n'));
-  // The completion record is the one document nobody signs, and the folder's text says so.
+  // The completion record and the diary and record sheets are the two documents nobody signs, and the folder's text says so.
   const readme = readFileSync(join(named, 'README.md'), 'utf8');
   assert.doesNotMatch(readme, /Each is a draft until a named person at the business signs it off\.\n/);
-  assert.match(readme, /Each is a draft until a named person at the business signs it off, except the completion record \(`ARC-001-FOODCMP-v1\.0\.md`\): it reports where the others stand, and nobody signs it\./);
+  assert.match(readme, /Each is a draft until a named person at the business signs it off, except two that nobody signs: the completion record \(`ARC-001-FOODCMP-v1\.0\.md`\), which reports where the others stand, and the diary and record sheets \(`ARC-001-FOODREC-v1\.0\.md`\), which are blank forms whose pages are signed by the people who fill them in\./);
+});
+
+// ---- A folder an earlier release set up (final review A1) ----
+
+const README_6_23_0 = JSON.parse(readFileSync(resolve('tests/fixtures/uk-food/folder-readme-6.23.0.json'), 'utf8'));
+
+test('A1: a folder the 6.23.0 helper set up is one this helper made: already set up, left as it is, whatever its name and number', () => {
+  // The fixture is 6.23.0's text, which names five commands; this version's names nine.
+  for (const text of [README_6_23_0.named, README_6_23_0.unnamed]) {
+    assert.match(text, /5\. `uk-food-sign-off`/);
+    assert.doesNotMatch(text, /uk-food-allergens/);
+  }
+  const cases = [
+    ['Bramble Cafe', README_6_23_0.named],
+    ['Food safety', README_6_23_0.unnamed],
+    ['The Old Mill Tea-Room 2', README_6_23_0.named.replaceAll('Bramble Cafe', 'The Old Mill Tea-Room 2')]
+  ];
+  for (const [name, text] of cases) {
+    const dir = newProject(name);
+    assert.equal(setUp(dir).status, 0);
+    writeFileSync(join(dir, 'README.md'), text);
+    const before = snapshot(dir);
+    const result = setUp(dir);
+    assert.equal(result.status, 0, `${name}: ${result.stderr}`);
+    assert.match(result.stdout, /is already set up: nothing has been changed/, name);
+    assert.deepEqual(snapshot(dir), before, name);
+  }
+  // Another folder number: the number in its file names is the folder's own.
+  const root = dirname(newProject());
+  for (const n of ['002', '003', '004', '005', '006', '007']) {
+    const made = spawnSync('bash', [CREATE_PROJECT, '--json', '--force', '--name', `Cafe ${n}`], { cwd: dirname(root), encoding: 'utf8' });
+    assert.equal(made.status, 0, made.stderr);
+  }
+  const seventh = realpathSync(join(root, readdirSync(root).find((entry) => entry.startsWith('007-'))));
+  assert.equal(setUp(seventh).status, 0);
+  writeFileSync(join(seventh, 'README.md'), README_6_23_0.named.replaceAll('Bramble Cafe', 'Cafe 007').replaceAll('ARC-001-', 'ARC-007-'));
+  assert.match(setUp(seventh).stdout, /is already set up: nothing has been changed/);
+  // But only as it was written: a line changed, or another folder's number, is a README someone has changed.
+  for (const text of [`${README_6_23_0.named}Our own note.\n`, README_6_23_0.named.replace('5. `uk-food-sign-off`', '5. `uk-food-allergens`'),
+    README_6_23_0.named.replaceAll('Bramble Cafe', 'Cafe 007')]) {
+    writeFileSync(join(seventh, 'README.md'), text);
+    const before = snapshot(seventh);
+    const result = setUp(seventh);
+    assert.equal(result.status, 1, result.stdout);
+    assert.match(result.stderr, NOT_AS_EXPECTED);
+    assert.deepEqual(snapshot(seventh), before);
+  }
 });
 
 // ---- What the re-review of the seven fixes found (H8, H9) ----

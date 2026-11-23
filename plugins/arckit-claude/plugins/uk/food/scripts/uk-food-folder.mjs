@@ -42,8 +42,8 @@ This folder holds ${name ? `the food safety records of ${name}` : 'a food busine
 
 ## What is here
 
-- \`food-safety/\`: the worksheets. There is one for the business profile, one for each of the pack's five sections and one for the business's own methods. Each holds the answers given, who gave each one and when. \`sign-offs.json\`, in the same folder, records who has signed each document off.
-- \`ARC-${number}-FOOD...md\`, in this folder: the documents themselves, written from the worksheets. Each is a draft until a named person at the business signs it off, except the completion record (\`ARC-${number}-FOODCMP-v1.0.md\`): it reports where the others stand, and nobody signs it.
+- \`food-safety/\`: the worksheets. There is one for the business profile, one for each of the pack's five sections and one for the business's own methods. Each holds the answers given, who gave each one and when. There is one too for each of three lists: your allergen information, your cleaning schedule, and your suppliers and contacts. Each holds an entry for each dish, each thing you clean or each supplier and contact, with who confirmed it and when. \`sign-offs.json\`, in the same folder, records who has signed each document off.
+- \`ARC-${number}-FOOD...md\`, in this folder: the documents themselves, written from the worksheets. Each is a draft until a named person at the business signs it off, except two that nobody signs: the completion record (\`ARC-${number}-FOODCMP-v1.0.md\`), which reports where the others stand, and the diary and record sheets (\`ARC-${number}-FOODREC-v1.0.md\`), which are blank forms whose pages are signed by the people who fill them in.
 - \`external/\`: a place for documents of your own that you want the assistant to read, such as a written procedure for a special process. The note in that folder says more.
 
 ## What to do next
@@ -53,8 +53,14 @@ Run the overlay's commands in this order. Each can be run as often as you like, 
 1. \`uk-food-profile\`: the business profile.
 2. \`uk-food-safe-methods\`: the pack's five sections of safe methods, one section at a time.
 3. \`uk-food-own-methods\`: your own methods, and your written procedure for any special process.
-4. \`uk-food-check\`: what is finished and what is still waiting. Run it at any time.
-5. \`uk-food-sign-off\`: a named person signs each finished document off, the profile last.
+4. \`uk-food-allergens\`: each dish against the fourteen allergens, from the labels, product specifications and suppliers' statements you give.
+5. \`uk-food-cleaning-schedule\`: what you clean, how often, what to take care over and how.
+6. \`uk-food-suppliers\`: your suppliers, your council's environmental health team and your other contacts.
+7. \`uk-food-record-sheets\`: the pack's blank diary and record sheets, to print or copy and fill in by hand.
+8. \`uk-food-check\`: what is finished and what is still waiting. Run it at any time.
+9. \`uk-food-sign-off\`: a named person signs each finished document off, the profile last.
+
+Steps 4 to 6 can come in any order once the profile is started.
 
 In Claude Code these are typed \`/arckit-uk-food:uk-food-profile\` and so on. Other tools write the names their own way.
 
@@ -66,6 +72,17 @@ ${KEEP_PRIVATE}
 
 They are the business's own record. They are not legal advice. The food business operator is responsible for the business's food safety and for these records, and the local council's environmental health team is the authority on whether they are adequate. The Food Standards Agency has not reviewed or endorsed the overlay or anything made with it.
 `;
+// The README a released version of this helper wrote, as it reads with the two things that vary taken out
+// (readmeShape): 6.23.0's, for a business with a name and for one without. A folder one of them set up is a
+// folder this helper made, so it is left as it is: never refused as not the one a new project is given, and
+// never rewritten unasked. When a release changes the README's wording, the wording it replaces is added
+// here, as FRAME_NOTES keeps the template notes of earlier releases.
+const EARLIER_READMES = ['452902619c610837bcdffdb27a3eac461ec342afc92990cdc75aac8938f89222', '04ba4c6702349b7c2fe7afe9b132aa53a76ee482158523676af646d8195652b8'];
+// A README with the business's name taken out of its title and first sentence, and the folder's number out
+// of the file names it gives; a README that already holds either stand-in is nobody's shape.
+const readmeShape = (text, name, number) => (/[\u0000\u0001]/.test(text) ? null : (name ? text
+  .replace(`# ${name}: food safety records\n`, '# \u0000: food safety records\n')
+  .replace(`the food safety records of ${name}. `, 'the food safety records of \u0000. ') : text).replaceAll(`ARC-${number}-FOOD`, 'ARC-\u0001-FOOD'));
 const FOLDER_NOTE = `# Documents of your own
 
 Put here any document of your own that you want the assistant to read while it helps with these records: a written procedure for a special process, for example, or a supplier's instructions for a piece of equipment.
@@ -82,7 +99,8 @@ These documents may hold names and other details of the business, so keep them a
 // that holds a file of its own, work already started, or a README or note with a line added, taken out
 // or changed is refused, with nothing in it changed (exit 1). The refusal says only what the helper
 // knows: that the folder is not as this version expects a new one to be, which is also what a later
-// version of the script would bring about. A folder already set up is left as it is (exit 0).
+// version of the script would bring about. A folder already set up, by this version or by an earlier
+// release (EARLIER_READMES), is left as it is (exit 0).
 export function setUpFolderCommand(args, io = { out: console.log, err: console.error }) {
   const { options, error } = readOptions(args, ['project']);
   if (error) return usageError(io, error);
@@ -102,7 +120,9 @@ export function setUpFolderCommand(args, io = { out: console.log, err: console.e
   const folder = basename(realpathSync(project));
   const number = /^\d{3}/.exec(folder)?.[0] ?? '';
   const mine = /^# (.+): food safety records\n/.exec(readme);
-  if (readme === folderReadme('', number) || (mine && readme === folderReadme(mine[1], number))) {
+  const earlier = readmeShape(readme, mine?.[1] ?? '', number);
+  if (readme === folderReadme('', number) || (mine && readme === folderReadme(mine[1], number)) ||
+    (earlier !== null && EARLIER_READMES.includes(sha256(earlier)))) {
     io.out(`${project} is already set up: nothing has been changed.`);
     return 0;
   }
