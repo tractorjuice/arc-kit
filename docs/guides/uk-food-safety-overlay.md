@@ -132,7 +132,7 @@ A document that is already there is taken as done, whatever has been answered si
 
 Do not expect a finished pack from a build: the answers come from running the commands above with the person who knows the business.
 
-The recipe builds the profile, the five sections, your own methods, your allergen information, your cleaning schedule, your suppliers and contacts, the blank diary and record sheets, and the completion record. A build writes nothing over a copy of the diary and record sheets that someone has typed into.
+The recipe builds the profile, the five sections, your own methods, your allergen information, your cleaning schedule, your suppliers and contacts, the blank diary and record sheets, and the completion record. A build writes nothing over the diary and record sheets' file once someone has typed into it.
 
 Run the profile command once first, so the project exists. The build saves its work with a git commit after each wave of documents; a records folder is rarely a git repository, so add `--no-commit` unless yours is one. For project `001`:
 
