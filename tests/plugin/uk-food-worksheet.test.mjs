@@ -2197,9 +2197,10 @@ test('V1: the dry run shows, for each question it changes, its own line as it st
   const other = run('upgrade-worksheet', '--file', sheetIn('CK', guided.join('\n')).file);
   assert.doesNotMatch(other.stdout, /its own line|held the pack's words/);
   assert.match(other.stdout, /Every answer, state, name, date and entry is under the same identifier as before, unchanged\.\n/);
-  // The usage text says what the command refuses.
+  // The usage text says what the command refuses. A list worksheet has no questions, so it names the questions' wording
+  // as what a worksheet of questions has besides its guidance.
   const usage = run('upgrade-worksheet').stderr.replace(/\s+/g, ' ');
-  assert.match(usage, /print each line of its guidance and question wording that would be taken out or put in, and with --write do so/);
+  assert.match(usage, /print each line of its guidance, or of its questions' wording, that would be taken out or put in, and with --write do so/);
   assert.match(usage, /or one whose lines under a question's heading do not hold the words that identify that question \(a heading that has been moved, lines typed over, or wording this version does not know\)/);
   assert.doesNotMatch(usage, /would be replaced|replace them|another question's \(a heading/);
 });

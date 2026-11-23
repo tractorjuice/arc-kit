@@ -8,8 +8,8 @@ commands:
                                                      exit 1, changing nothing, for a folder that is
                                                      not exactly as a new project is made
   validate-data [--data DIR]                         check the data files; exit 0 when valid, 1 when not
-  worksheet --section SECTION [--data DIR]           print a blank answer worksheet; SECTION is one of
-                                                     XC, CL, CH, CK, MG, profile, own, allergens,
+  worksheet --section SECTION [--data DIR]           print a blank answer worksheet; SECTION is one
+                                                     of XC, CL, CH, CK, MG, profile, own, allergens,
                                                      cleaning, suppliers
   parse-worksheet --file FILE [--data DIR] [--json]  check a worksheet: print its problems (or, with
                                                      --json, what was read); exit 0 with no problems,
@@ -17,48 +17,55 @@ commands:
   upgrade-worksheet --file FILE [--data DIR] [--write]
                                                      bring a worksheet made by a different version of
                                                      the overlay up to date: print each line of its
-                                                     guidance and question wording that would be
-                                                     taken out or put in, and with --write do so,
-                                                     keeping the worksheet as it was beside it; exit
-                                                     1, changing nothing, for a worksheet for other
-                                                     data, one with any other problem, or one whose
-                                                     lines under a question's heading do not hold
-                                                     the words that identify that question (a
-                                                     heading that has been moved, lines typed
+                                                     guidance, or of its questions' wording, that
+                                                     would be taken out or put in, and with --write
+                                                     do so, keeping the worksheet as it was beside
+                                                     it; exit 1, changing nothing, for a worksheet
+                                                     for other data, one with any other problem, or
+                                                     one whose lines under a question's heading do
+                                                     not hold the words that identify that question
+                                                     (a heading that has been moved, lines typed
                                                      over, or wording this version does not know)
   render --doc DOC --project DIR [--data DIR]        print a document's body, from the worksheets in
                                                      DIR/food-safety; DOC is one of FOODXC, FOODCLN,
                                                      FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN,
                                                      FOODALG, FOODCS, FOODSUP, FOODREC, or FOODCMP,
                                                      the completion record; exit 1, printing nothing,
-                                                     when a worksheet a document needs has problems
+                                                     when a worksheet it is written from has problems
   check --doc DOC --project DIR --report FILE        exit 0 when the body between the UK-FOOD markers
-        [--data DIR] [--json]                        in FILE equals a fresh render and the file claims
-                                                     no sign-off that is not recorded, 1 when not
+        [--data DIR] [--json]                        in FILE equals a fresh render and the file
+                                                     claims no sign-off that is not recorded, 1 when
+                                                     not; DOC is any document render takes
   reference --section SECTION [--data DIR]           print a section's text from the pack, with no
                                                      answers; SECTION is one of XC, CL, CH, CK, MG
   status --project DIR [--data DIR] [--json]         say what is finished and what is not, for each
-                                                     document, and whether the completion record is
-                                                     up to date; exit 0 whenever the project can be
-                                                     read
+                                                     document, whether the record sheets (FOODREC)
+                                                     are written and in step, and whether the
+                                                     completion record is up to date; exit 0 whenever
+                                                     the project can be read
   sign-off --doc DOC --project DIR --name NAME       record that a named person has confirmed a
-           --role ROLE --version VERSION             finished document, in DIR/food-safety/
-           [--paper-signed yes|no] [--date DATE]     sign-offs.json; exit 1, writing nothing, when
-           [--other-text-read yes|no] [--data DIR]   a worksheet it needs is missing or has
-                                                     problems, an answer is not confirmed, it is
-                                                     not written, is not that version or does not
-                                                     pass check, a cell of its header that the
-                                                     sign-off step rewrites holds something else,
-                                                     it holds text outside its checked part and
-                                                     --other-text-read yes is not given, (for
-                                                     FOODOWN) a special process the profile
-                                                     confirms has no own entry, or it is the
-                                                     newest sign-off over again with nothing in
-                                                     the file changed. DATE is
-                                                     YYYY-MM-DD, today when not given, and never
-                                                     after today. The sign-off covers the whole
-                                                     file as it then reads: it ends when a line of
-                                                     it changes, inside the UK-FOOD markers or
-                                                     outside them, unless the change is the
-                                                     sign-off step marking the header or core's
+           --role ROLE --version VERSION             finished document, in
+           [--paper-signed yes|no] [--date DATE]     DIR/food-safety/sign-offs.json; DOC is one of
+           [--other-text-read yes|no] [--data DIR]   FOODXC, FOODCLN, FOODCHL, FOODCOOK, FOODMGT,
+                                                     FOODPROF, FOODOWN, FOODALG, FOODCS, FOODSUP;
+                                                     FOODREC and FOODCMP are refused, as nobody signs
+                                                     them; exit 1, writing nothing, when a worksheet
+                                                     it needs is missing or has problems, or another
+                                                     it is written from has problems, an answer is
+                                                     not confirmed, an entry is not confirmed, the
+                                                     document shows anything else not yet answered or
+                                                     not yet confirmed, it is not written, is not
+                                                     that version or does not pass check, a cell of
+                                                     its header that the sign-off step rewrites holds
+                                                     something else, it holds text outside its
+                                                     checked part and --other-text-read yes is not
+                                                     given, (for FOODOWN) a special process the
+                                                     profile confirms has no own entry, or it is the
+                                                     newest sign-off over again with nothing in the
+                                                     file changed. DATE is YYYY-MM-DD, today when not
+                                                     given, and never after today. The sign-off
+                                                     covers the whole file as it then reads: it ends
+                                                     when a line of it changes, inside the UK-FOOD
+                                                     markers or outside them, unless the change is
+                                                     the sign-off step marking the header or core's
                                                      hook rewriting its Build Provenance section

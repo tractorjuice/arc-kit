@@ -1218,6 +1218,42 @@ test('a document is added in one place: one row in DOCUMENTS renders, is counted
   assert.equal(usageNow(), `unknown command: --help\n${readFileSync(USAGE_TEXT, 'utf8')}`);
 });
 
+// What the usage text says of a command, from its description column alone: the lines of its entry from the description's
+// column on, joined, so that no line of its options on the left is read among its words. A line of options too long for
+// the left column stands alone, and holds no description.
+const describedIn = (usage, name) => {
+  const lines = usage.split('\n');
+  const start = lines.findIndex((line) => line.startsWith(`  ${name} `));
+  const length = lines.slice(start + 1).findIndex((line) => /^ {2}\S/.test(line)) + 1;
+  return lines.slice(start, length > 0 ? start + length : undefined).map((line) => (line.length <= 53 || /^.{51} {2}/.test(line) ? line.slice(53) : ''))
+    .join(' ').replace(/\s+/g, ' ').trim();
+};
+
+test('item 9: every list in the usage text is read from where the helper keeps it, and what it says of the documents is true of the new ones', () => {
+  const said = (name) => describedIn(usageNow(), name);
+  // The worksheets, the pack's sections, and the documents sign-off takes and those it refuses, each from its source.
+  assert.ok(said('worksheet').endsWith(`; SECTION is one of ${SECTION_IDS.join(', ')}, profile, own, ${LIST_SECTIONS.join(', ')}`), said('worksheet'));
+  assert.ok(said('reference').endsWith(`; SECTION is one of ${SECTION_IDS.join(', ')}`), said('reference'));
+  assert.ok(said('sign-off').includes(`; DOC is one of ${DOC_CODES.join(', ')}; FOODREC and FOODCMP are refused, as nobody signs them; `), said('sign-off'));
+  assert.ok(said('sign-off').includes(' (for FOODOWN) a special process the profile confirms has no own entry,'), said('sign-off'));
+  // What sign-off refuses for a list document, what render and check take, what status reports, and what upgrade-worksheet
+  // shows of a list worksheet, which has no questions.
+  for (const [name, words] of [['sign-off', 'an entry is not confirmed'], ['sign-off', 'the document shows anything else not yet answered or not yet confirmed'],
+    ['sign-off', 'a worksheet it needs is missing or has problems, or another it is written from has problems'],
+    ['render', 'exit 1, printing nothing, when a worksheet it is written from has problems'], ['check', 'DOC is any document render takes'],
+    ['status', 'whether the record sheets (FOODREC) are written and in step'],
+    ['upgrade-worksheet', 'print each line of its guidance, or of its questions\' wording, that would be taken out or put in']]) {
+    assert.ok(said(name).includes(words), `${name}: ${words}`);
+  }
+  // A document added to the table is named among those sign-off takes, or, if nobody signs it, among those it refuses.
+  withDocuments(withRow(testRow()), () => {
+    assert.match(said('sign-off'), /; DOC is one of FOODXC, [A-Z, ]*FOODSUP, FOODTEST; FOODREC and FOODCMP are refused, /);
+  });
+  withDocuments(withRow(testRow({ signable: false, nobodySigns: 'the test document is not signed', signOffRefusal: 'FOODTEST is not signed off' })), () => {
+    assert.match(said('sign-off'), /; DOC is one of FOODXC, [A-Z, ]*FOODSUP; FOODREC, FOODTEST and FOODCMP are refused, /);
+  });
+});
+
 test('the profile reads only the worksheets it prints from: one another document adds, with problems, changes nothing of the profile', () => {
   const dir = cafe({ extra: 'This is not a worksheet.\n' });
   // Outside the seam no document uses the extra worksheet, so nothing reads it.
