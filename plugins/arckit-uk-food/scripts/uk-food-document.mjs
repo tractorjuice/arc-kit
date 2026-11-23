@@ -168,7 +168,8 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'allergens', 'cleani
 //   list (RECORD_SHEETS). One row at most, never in status, never signed off, with no render of its own.
 // - remedies, on the blank forms' row and no other: what check says to do about a fault, where the shared words
 //   would send a person to a worksheet of the document's own, which it has none of: { advice, the line check's
-//   message ends with in place of CHECK_ADVICE; stale, edited(line) and markers(detail), the reason for each kind }.
+//   message ends with in place of CHECK_ADVICE, as { stale, edited, markers }, one for each kind of fault; stale,
+//   edited(line) and markers(detail), the reason for each kind }.
 // - nobodySigns and signOffRefusal, on every row nobody signs: how a header claim and sign-off say so.
 // A new worksheet is added to SHEET_ORDER, at the place it is to be read (and to the worksheet module,
 // which makes and parses it). A row may use only worksheets SHEET_ORDER lists; status reads each
@@ -187,20 +188,30 @@ const COMPLETION_STALE = 'this completion record is out of date: it no longer ma
   'and sign-offs, or it was edited. It is generated, so it is not changed by hand: render it again.';
 // What check says to do about a fault in the record sheets, in place of the shared words, which send a person to the
 // document's own worksheet: the record sheets have none. What a person changes there by hand is most likely a form filled
-// in, or a check of the pack's taken out, and neither can be made in any worksheet; and writing the document again, the
-// only remedy, replaces everything between the markers, so what was typed there is copied out first. The business's own
-// checks are the one thing in them a worksheet holds. FORMS_AFRESH says why, and FORMS_REMEDY what to do instead, in the
-// words a status line and check's message share.
+// in, or a check of the pack's taken out, and neither can be made in any worksheet; and writing the document again
+// replaces everything between the markers, so what was typed there is copied out first. The business's own checks are the
+// one thing in them a worksheet holds. Each remedy says what the record sheets command then accepts: it prints the forms
+// afresh over forms typed into only once a person running it says that what was typed has been copied or is not wanted,
+// and never over a file whose markers are damaged, whatever anyone says. FORMS_AFRESH says why, and FORMS_REMEDY and
+// MARKERS_REMEDY what to do instead, in the words a status line and check's message share; advice is check's message's
+// last line, for each kind of fault.
 const FORMS_AFRESH = 'its forms are printed afresh each time it is written, and writing it again replaces everything between its UK-FOOD markers';
-const FORMS_REMEDY = 'fill in a printed page, or a copy kept apart from this file, never this file itself; copy anything already filled in it ' +
-  'to such a copy first; add or change the business\'s own opening and closing checks in the Management safe methods worksheet; then ' +
-  'write the document again';
+const KEEP_APART = 'fill in a printed page, or a copy kept apart from this file, never this file itself; copy anything already filled in it ' +
+  'to such a copy first; add or change the business\'s own opening and closing checks in the Management safe methods worksheet';
+const FORMS_REMEDY = `${KEEP_APART}; then run the record sheets command again and say that what was typed has been copied or is not ` +
+  'wanted: until a person running it says so, it writes nothing over this file';
+const MARKERS_REMEDY = `${KEEP_APART}; then put the UK-FOOD marker lines back as they were, or move this file out of the project folder ` +
+  'so that the record sheets command writes the document new: it writes nothing over a file whose markers are damaged, whatever anyone says';
+const ADVICE_LEAD = 'This document is printed afresh each time it is written, and writing it again replaces everything between its UK-FOOD markers';
 const RECORD_SHEETS_REMEDIES = {
-  advice: 'This document is printed afresh each time it is written, and writing it again replaces everything between its UK-FOOD markers: ' +
-    `${FORMS_REMEDY}.`,
+  advice: {
+    stale: `${ADVICE_LEAD}: run the record sheets command again, which prints it afresh.`,
+    edited: `${ADVICE_LEAD}: ${FORMS_REMEDY}.`,
+    markers: `${ADVICE_LEAD}: ${MARKERS_REMEDY}.`
+  },
   stale: 'is out of date, as a worksheet it is written from has changed since: write it again',
   edited: (line) => `was changed between its UK-FOOD markers, at line ${line}, but ${FORMS_AFRESH}: ${FORMS_REMEDY}`,
-  markers: (detail) => `has its UK-FOOD markers missing or damaged (${detail}), and ${FORMS_AFRESH}: ${FORMS_REMEDY}`
+  markers: (detail) => `has its UK-FOOD markers missing or damaged (${detail}), and ${FORMS_AFRESH}: ${MARKERS_REMEDY}`
 };
 
 // A section document: the pack's section `section`, with the business's answers from its worksheet.
@@ -380,7 +391,8 @@ function tableProblems(rows, sheets) {
     // Blank forms have no worksheet of their own, so check's shared words for a fault would send a person to one.
     const remedies = row.remedies;
     if (remedies !== undefined && !row.blankForms) fault('remedies', 'is given on a row that is not blank forms, whose own worksheet check\'s words name');
-    else if (row.blankForms && !(isText(remedies?.advice) && isText(remedies?.stale) && isFunction(remedies?.edited) && isFunction(remedies?.markers))) {
+    else if (row.blankForms && !(['stale', 'edited', 'markers'].every((kind) => isText(remedies?.advice?.[kind])) && isText(remedies?.stale) &&
+      isFunction(remedies?.edited) && isFunction(remedies?.markers))) {
       fault('remedies', 'does not give the advice, stale, edited and markers words check gives blank forms, which have no worksheet of their own');
     }
     // Status lists every document but these two, and says nothing of any other row left out of it.
@@ -1192,11 +1204,12 @@ const RULE_LINE = /^ {0,3}([-*_])(?:[ \t]*\1){2,}[ \t]*$/;
 // share one, and the check template and the record sheets template each have their own). A test reads
 // the templates, so a comment changed there shows. The third is the signed templates' note as it read
 // before it said what a sign-off leaves out: a document written then keeps it, and it stays part of
-// that document's frame. The fourth is the record sheets template's, which says that nobody signs them.
+// that document's frame. The fourth is the record sheets template's, which says that nobody signs them and when a
+// later run writes nothing over them; no release has shipped an earlier wording of it, so none is kept.
 const FRAME_COMMENTS = ['<!-- DOC-CONTROL-HEADER -->', '<!-- Resolved at command-execution time per _partials/RENDERING.md. -->',
   '<!-- UK-FOOD-BODY -->', PROVENANCE.start, PROVENANCE.end];
 const FRAME_NOTES = ['6fe5a55718f40fbb5aeb1fc5e03f5caf629c07c15985ce122b9899ca8737f8d3', 'a9b0cbc3f58b12aca743acb7e344f5b2a998e6231116b621ddd6cfa3d8e8d3d9',
-  '33f1bc78a00361c791b1a3651a9c23e5607d926a4ca07af57592625991e1908d', '853212c86046bac9aeabb925159045c7cacdb6df48462c34de20702ffc7e4587'];
+  '33f1bc78a00361c791b1a3651a9c23e5607d926a4ca07af57592625991e1908d', 'aece9a24d200ce5e819d364636a789c7b987d138c6233073ca4af2d748080d6f'];
 function otherText(lines, body) {
   const stamp = stampedBlock(lines, body);
   const once = new Set();
@@ -1483,7 +1496,7 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
   if (body.problem) {
     const detail = `${body.problem}${body.line ? `, at line ${body.line}` : ''}`;
     return { exit: 1, ok: false, kind: 'markers', line: body.line,
-      message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}${remedies ? `\n${remedies.advice}` : ''}`,
+      message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}${remedies ? `\n${remedies.advice.markers}` : ''}`,
       reason: remedies ? remedies.markers(detail) : `has its UK-FOOD markers missing or damaged (${detail}): write the document again from its worksheet` };
   }
   const header = headerOf(lines, body);
@@ -1566,7 +1579,7 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
     const [want, got] = [expected[at] ?? '', region[at] ?? ''];
     const { column, expectedChar, foundChar } = firstDifference(want, got);
     return failed(kind, line, `${what} The lines first differ at column ${column}, where the render has ${expectedChar} ` +
-      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}` + (outOfDate ? '' : `\n${remedies?.advice ?? CHECK_ADVICE}`),
+      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}` + (outOfDate ? '' : `\n${remedies?.advice[kind] ?? CHECK_ADVICE}`),
     reason, { column, expected: want, found: got, expectedChar, foundChar });
   }
   const lapsed = lapsedClaim(doc, basename(report), header, hashes, signOffs.records);

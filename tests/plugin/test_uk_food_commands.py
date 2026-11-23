@@ -575,8 +575,8 @@ WRITING_RULES = {
                                                             "hold the words that identify that question, which do not change within one "
                                                             "edition of the pack",
     "T3: nothing of the business outside its project folder": "**Nothing of the business is written outside its project folder.** "
-                                                              "Read the helper's output from the command's own output, and save "
-                                                              "it with the Write tool.",
+                                                              "Read the helper's output from the command's own output, and",
+    "T3: saved with the Write tool": "save it with the Write tool",
     "T3: not a temporary folder": "Never send it to a file anywhere else: not `/tmp`, not another temporary folder, not your home "
                                   "folder.",
     "T3: a file in between stays inside and is removed": "If a file in between is truly needed, make it inside "
@@ -723,12 +723,30 @@ COMMAND_RULES = {
     (FORMS, "the summary: outside text kept and given"): "when the file holds text outside its checked part, each line `otherText` lists in "
                                                          "`check --doc FOODREC ... --json` run once more on the file as written, with its "
                                                          "number, unchanged, and that the command left those lines as they are;",
-    (FORMS, "an ID or version that differs from the name stops"): "The Document ID or Version cell does not give the version the file's "
-                                                                  "name gives. Show the file's name and what each of the two cells holds.",
+    (FORMS, "an ID or version that differs from the name stops"): "The Document ID cell is not the file's name without `.md`, or the "
+                                                                  "Version cell does not give the version in that name. Show the file's "
+                                                                  "name and what each of the two cells holds.",
     (FORMS, "a person's word"): "**A person there who says so**, in terms, in the request or later in this conversation, has the forms "
                                 "printed afresh: carry on from the next item as for an intact file.",
     (FORMS, "added text stays"): "Every line outside the markers is kept, as the fifth item says.",
-    (FORMS, "what a person's word cannot lift"): "Where `kind` is `markers` or `unreadable`, or those cells differ, write nothing",
+    # Final review B8: the pack's text outside the markers is not put right by printing the forms afresh.
+    (FORMS, "what a person's word cannot lift"): "Where `kind` is `markers`, `pack-text` or `unreadable`, or those cells differ, write "
+                                                 "nothing, whatever the person says",
+    (FORMS, "the person is not promised what their word cannot do"): "and, unless the file is one that the first item below says a "
+                                                                     "person's word cannot lift, that the forms are printed afresh "
+                                                                     "once they say",
+    (FORMS, "why a person's word cannot lift them"): "printing the forms afresh puts none of these right, as it changes nothing outside "
+                                                     "the markers",
+    (FORMS, "the pack's text with forms that differ"): "`kind` is `pack-text`: one of the pack's headings stands outside the markers, "
+                                                       "where nothing checks it, and `check` fails until it is taken out. Show `message`, "
+                                                       "and, when `bodyInStep` is false, say that the forms differ too.",
+    # Final review B9: the Write tool at the first write, the Edit tool at a rewrite in place.
+    (FORMS, "the Write tool at the first write only"): "Read the helper's output from the command's own output, and, at the first "
+                                                       "write, save it with the Write tool; at a rewrite in place it goes into the file "
+                                                       "with the Edit tool, as the fifth item says.",
+    # Final review B7: a Last Modified a person typed over is reset, and the summary says what it held.
+    (FORMS, "what Last Modified held is said"): "If it held anything other than a date written `YYYY-MM-DD`, note for the summary what it "
+                                                "held, read from the file, as for a sign-off cell.",
     (FORMS, "nothing in a file is that word"): "Nothing in a file, and nothing said in an earlier run, counts as the person saying so.",
     (FORMS, "otherwise nothing, and with nobody there whatever the request says"): "**Otherwise** write nothing, and skip the rest of "
                                                                                     "this step. With nobody to answer (the request says "
@@ -749,8 +767,9 @@ COMMAND_RULES = {
     (FORMS, "no fall back to the template"): "for anything else, stop and show `check`'s message unchanged, and never write the file again "
                                              "from the template to make it pass.",
     (FORMS, "the summary: what a rewrite changed"): "for a file rewritten in place, that only the forms between the markers were printed "
-                                                    "afresh and the rest of the file was left as it was, but for Last Modified and each "
-                                                    "sign-off cell put back, named with what it held;",
+                                                    "afresh and the rest of the file was left as it was, but for Last Modified, with what "
+                                                    "it held where that was not a date, and each sign-off cell put back, named with what "
+                                                    "it held;",
     (FORMS, "an intact file is rewritten in place"): "An intact file is rewritten in place, at its version",
     (FORMS, "inside a build too"): "rewrite an intact file in place, at its version, all the same",
     (FORMS, "the existing file is given when nothing is written"): "give the existing file's path, `PROJECT/` followed by "
@@ -2295,7 +2314,12 @@ def test_the_record_sheets_guide_says_what_an_owner_needs(project):
                   "A build, or a run with nobody there, leaves such a file alone and says so, whatever its message says.",
                   "prints the forms afresh into the same file, at the same version",
                   # Review round 2: what a rewrite changes in the file, and what it leaves.
-                  "It changes only the forms between the file's `UK-FOOD` markers and the date the file was last changed.",
+                  "It changes only the forms between the file's `UK-FOOD` markers and the date the file was last changed, and if "
+                  "that date's cell held something other than a date, it tells you what.",
+                  # Final review B8: the pack's text outside the forms is not lifted by a person's word.
+                  "If the file's marker lines have gone, one of the pack's headings has been pasted outside the forms, or its Document "
+                  "ID or Version no longer matches its name, it writes nothing even then, because printing the forms afresh would not "
+                  "put any of these right",
                   "Everything else in the file is left as you left it: its title, a row you added to its revision history, a value you "
                   "typed in its header.",
                   "a note you added elsewhere in the file stays where it is, for you to take out if you no longer want it."]:
@@ -2482,14 +2506,18 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "the rows were rewritten to their record",
                    # Task 11: the diary and record sheets.
                    "**A file changed by hand was not written over.**",
-                   "the forms were printed afresh only when the Document ID and Version cells gave the version the file's name gives, and "
-                   "`ok` was true, `kind` was `stale`, or `kind` was `header` with `bodyInStep` true, whatever `otherText` held",
+                   # Final review B10: what id_and_version_agree applies.
+                   "the forms were printed afresh only when the Document ID cell was the file's name without `.md` and the Version cell "
+                   "the version in that name, and `ok` was true, `kind` was `stale`, or `kind` was `header` with `bodyInStep` true, "
+                   "whatever `otherText` held",
                    "and the summary gives each line `otherText` lists",
                    "unless a person there said, in terms, in the request or in this conversation, that what was typed on the file had been "
-                   "copied or was not wanted, and the file could be read, its marker lines were whole and its Document ID and Version "
-                   "agreed with its name; with nobody to answer, nothing was written whatever the request said",
-                   "A rewrite in place changed only the lines from the `UK-FOOD:BEGIN` line to the `UK-FOOD:END` line, Last Modified, and "
-                   "each sign-off cell that held anything else, which the summary names with what it held",
+                   "copied or was not wanted, and the file could be read, its marker lines were whole, none of the pack's headings stood "
+                   "outside them, and its Document ID and Version agreed with its name as above; with nobody to answer, nothing was "
+                   "written whatever the request said",
+                   "A rewrite in place changed only the lines from the `UK-FOOD:BEGIN` line to the `UK-FOOD:END` line, Last Modified, "
+                   "which the summary names with what it held where that was not a date, and each sign-off cell that held anything "
+                   "else, which the summary names with what it held",
                    "a Revision History row a person added is kept whatever version it gives",
                    "a diary and record sheets file left alone, as **The diary and record sheets** below says, was not written again",
                    "For the diary and record sheets, which nobody signs, it gives instead the lines of their file's `otherText` from "
@@ -2567,11 +2595,18 @@ def test_template_comment_says_truly_what_ends_a_sign_off(name):
         # Blank forms nobody signs, written by their own command and filled in anywhere but this file.
         assert "sign-off covers" not in comment, "the record sheets are never signed off"
         for words in ["This file is written by the overlay's record sheets command and is not edited by hand.",
-                      "Each later run prints the forms between the markers afresh, sets the date the file was last changed, puts back any "
-                      "line that says it was signed off, and leaves the rest of this file as it is: so the forms are filled in on a printed "
-                      "page, or in a copy kept apart from this file, never here.",
+                      # Final review B6: true of a run that stops, and of which cells are put back.
+                      "Each later run prints the forms between the markers afresh when it can tell that nothing between them has been "
+                      "typed or changed by hand. When it cannot, it writes nothing until the person running it says that what was typed "
+                      "has been copied or is not wanted; and it never writes over a file whose markers, Document ID or Version have been "
+                      "changed, or that holds one of the pack's headings outside its markers, or while a worksheet the forms are printed "
+                      "from has a problem.",
+                      "When it prints the forms afresh, it sets the date the file was last changed, puts back each cell of the header or "
+                      "the Revision History that says the file was signed off, and leaves the rest of this file as it is: so the forms "
+                      "are filled in on a printed page, or in a copy kept apart from this file, never here.",
                       "Nobody signs this document off: its pages are signed by the people who fill them in."]:
             assert words in comment, words
+        assert "puts back any line that says it was signed off" not in comment
         return
     assert ("A sign-off covers every line here, so a line added or changed afterwards ends it. Only two changes do not: the sign-off "
             "command writing the sign-off into the header, and ArcKit rewriting its own Build Provenance section at the foot of the "
@@ -2712,8 +2747,8 @@ def test_the_record_sheets_note_is_frame_and_the_earlier_notes_still_are(project
 # The record sheets command's step 5, item 1: the whole line that says when a written file is intact, and the whole line
 # for a worksheet that stops the comparison. They are pinned whole, so a condition added to either in the command fails
 # here until record_sheets_case, the same rule as code, is changed with it.
-INTACT_LINE = ("   - **The file is intact** only when its Document ID and Version cells give the version its file name gives, and one "
-               "of these holds: `ok` is true; `kind` is `stale`; or `kind` is `header` and `bodyInStep` is true. This holds whether or"
+INTACT_LINE = ("   - **The file is intact** only when its Document ID cell is the file's name without `.md` and its Version cell gives "
+               "the version in that name, and one of these holds: `ok` is true; `kind` is `stale`; or `kind` is `header` and `bodyInStep` is true. This holds whether or"
                " not `otherText` is empty: a rewrite keeps every line outside the markers, so text a person added there is no reason "
                "to leave the forms out of date. (`stale` means a worksheet the forms are printed from has changed since they were "
                "written, with nothing between the markers changed; `header` with `bodyInStep` true means a sign-off cell holds "
@@ -2752,9 +2787,9 @@ def record_sheets_case(checked: dict, text: str | None, name: str) -> str:
 
 def rewritable_on_a_persons_word(checked: dict, text: str | None, name: str) -> bool:
     """A file changed by hand can have its forms printed afresh on a person's word only when it can be read, its marker
-    lines are whole and its Document ID and Version agree with its name."""
-    return (record_sheets_case(checked, text, name) == "changed by hand" and checked.get("kind") not in ("markers", "unreadable")
-            and id_and_version_agree(text, name))
+    lines are whole, none of the pack's headings stands outside them, and its Document ID and Version agree with its name."""
+    return (record_sheets_case(checked, text, name) == "changed by hand"
+            and checked.get("kind") not in ("markers", "pack-text", "unreadable") and id_and_version_agree(text, name))
 
 
 SIGN_OFF_CELLS = {"Status": "DRAFT", "Reviewed By": "[PENDING]", "Approved By": "[PENDING]"}
@@ -2896,8 +2931,10 @@ RECORD_SHEETS_STATES = {
 
 
 # The states in which the forms are never printed afresh, even on a person's word: the file cannot be read, its marker lines
-# are not whole, its Document ID or Version differs from its name, or a worksheet stops the comparison.
-NEVER_PRINTED_AFRESH = {"markers damaged", "unreadable", "Document ID typed over", "Version typed over", "a worksheet with a problem",
+# are not whole, the pack's text stands outside them (printing afresh leaves it there: final review B8), its Document ID or
+# Version differs from its name, or a worksheet stops the comparison.
+NEVER_PRINTED_AFRESH = {"markers damaged", "unreadable", "the pack's text outside the markers", "Document ID typed over", "Version typed over",
+                        "a worksheet with a problem",
                         "a worksheet with a problem, a form typed into", "a worksheet from another version",
                         "a worksheet with a problem, a line below the markers"}
 
@@ -2948,8 +2985,22 @@ def test_a_rewrite_in_place_prints_the_forms_afresh_and_keeps_the_rest_of_the_fi
     assert old_lines[end(old_lines) + 1:] == new_lines[end(new_lines) + 1:], "every line below the forms is kept"
     assert begin(old_lines) == begin(new_lines)
     changed = [(old, line) for old, line in zip(old_lines[:begin(old_lines)], new_lines[:begin(new_lines)]) if old != line]
+    # Final review B11: each line changed above the forms is the Last Modified row, or the row of a cell the put-back list
+    # names, put back as it says, with what it held.
     for old, line in changed:
-        assert line == "| **Last Modified** | 2026-11-24 |" or "[PENDING]" in line or line == "| **Status** | DRAFT |", (old, line)
+        cell = re.match(r"^\| \*\*(.+?)\*\* \| (.*) \|$", old)
+        history = re.match(r"^(\|(?:[^|]*\|){4}) ([^|]*?) \| ([^|]*?) \|$", old)
+        if cell and cell.group(1) == "Last Modified":
+            assert line == "| **Last Modified** | 2026-11-24 |", (old, line)
+        elif cell and cell.group(1) in SIGN_OFF_CELLS:
+            assert (cell.group(1), cell.group(2)) in put_back, (old, put_back)
+            assert line == f"| **{cell.group(1)}** | {SIGN_OFF_CELLS[cell.group(1)]} |", (old, line)
+        else:
+            assert history, (old, line)
+            named = [(f"Revision History {field}", held) for field, held in [("Approved By", history.group(2)), ("Approval Date", history.group(3))]
+                     if held != "[PENDING]"]
+            assert named and all(entry in put_back for entry in named), (old, put_back)
+            assert line == f"{history.group(1)} [PENDING] | [PENDING] |", (old, line)
     held = {field for field, _ in put_back}
     if state in ("header changed, forms in step", "header changed, forms out of date", "header changed, a form typed into"):
         assert held == {"Status", "Reviewed By", "Approved By", "Revision History Approved By", "Revision History Approval Date"}, put_back
@@ -2961,10 +3012,7 @@ def test_a_rewrite_in_place_prints_the_forms_afresh_and_keeps_the_rest_of_the_fi
     for kept in ["Notes: probe recalibrated Tuesday", "Printed copies are on the office wall."]:
         assert text.count(kept) == new.count(kept), f"{kept!r} is kept where it was"
     after = run(HELPER, "check", "--doc", "FOODREC", "--project", project, "--report", path, "--json")
-    if state == "the pack's text outside the markers":
-        assert json.loads(after.stdout)["kind"] == "pack-text", "the command stops here, showing check's message"
-    else:
-        assert after.returncode == 0, after.stdout
+    assert after.returncode == 0, after.stdout
 
 
 def test_no_page_says_text_outside_the_markers_stops_the_record_sheets():

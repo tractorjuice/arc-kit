@@ -456,6 +456,11 @@ test('status reports the record sheets apart: not written, then written and in s
   assert.deepEqual(linesOf(), [staleLine('ARC-001-FOODREC-v1.0.md')]);
   assert.ok(statusText(dir).includes('FOODREC (Diary and record sheets): ARC-001-FOODREC-v1.0.md out of date'));
   assert.ok(completionList(dir).includes(`\n- Diary and record sheets (FOODREC): ${staleLine('ARC-001-FOODREC-v1.0.md')}\n`));
+  // check's message says only that the command prints it afresh: nothing was typed, so nobody need say anything was copied.
+  const stale = checkDocument('FOODREC', dir, file, data, undefined, { today: TODAY });
+  assert.equal(stale.kind, 'stale');
+  assert.ok(stale.message.endsWith('\nThis document is printed afresh each time it is written, and writing it again replaces everything between its ' +
+    'UK-FOOD markers: run the record sheets command again, which prints it afresh.'), stale.message);
   // Nowhere is it told that it is not signed off.
   for (const said of [JSON.stringify(status(dir)), statusText(dir).filter((line) => line.includes('FOODREC')).join('\n'), completionList(dir)]) {
     assert.ok(!/FOODREC[^\n]*not signed off/.test(said), said);
@@ -471,11 +476,20 @@ test('status reports the record sheets apart: not written, then written and in s
 });
 
 // What check and status say of a FOODREC changed by hand: the forms are printed afresh, so a filled-in copy is kept apart,
-// the business's own checks are changed in the Management worksheet, and then it is written again. Never "its worksheet".
+// and the business's own checks are changed in the Management worksheet. Never "its worksheet". Then, as the record sheets
+// command accepts it (final review B5): forms typed into are printed afresh once a person running the command says that what
+// was typed has been copied or is not wanted; a file whose markers are damaged never is, so they are put back or the file
+// moved out of the project folder.
 const AFRESH = 'its forms are printed afresh each time it is written, and writing it again replaces everything between its UK-FOOD markers';
-const REMEDY = 'fill in a printed page, or a copy kept apart from this file, never this file itself; copy anything already filled in it to such ' +
-  'a copy first; add or change the business\'s own opening and closing checks in the Management safe methods worksheet; then write the document again';
-const ADVICE = `This document is printed afresh each time it is written, and writing it again replaces everything between its UK-FOOD markers: ${REMEDY}.`;
+const KEEP_APART = 'fill in a printed page, or a copy kept apart from this file, never this file itself; copy anything already filled in it to such ' +
+  'a copy first; add or change the business\'s own opening and closing checks in the Management safe methods worksheet';
+const REMEDY = `${KEEP_APART}; then run the record sheets command again and say that what was typed has been copied or is not wanted: until a ` +
+  'person running it says so, it writes nothing over this file';
+const MARKERS_REMEDY = `${KEEP_APART}; then put the UK-FOOD marker lines back as they were, or move this file out of the project folder so that ` +
+  'the record sheets command writes the document new: it writes nothing over a file whose markers are damaged, whatever anyone says';
+const LEAD = 'This document is printed afresh each time it is written, and writing it again replaces everything between its UK-FOOD markers';
+const ADVICE = { edited: `${LEAD}: ${REMEDY}.`, markers: `${LEAD}: ${MARKERS_REMEDY}.`,
+  stale: `${LEAD}: run the record sheets command again, which prints it afresh.` };
 
 test('a FOODREC filled in or cut by hand between its markers, or with its markers damaged, is told to keep a filled-in copy apart, never to use a worksheet', () => {
   const dir = cafe();
@@ -498,9 +512,12 @@ test('a FOODREC filled in or cut by hand between its markers, or with its marker
     assert.equal(checked.kind, kind);
     const reason = kind === 'edited'
       ? `was changed between its UK-FOOD markers, at line ${checked.line}, but ${AFRESH}: ${REMEDY}`
-      : `has its UK-FOOD markers missing or damaged (there is no UK-FOOD:END marker line, so there is no rendered body to check), and ${AFRESH}: ${REMEDY}`;
+      : `has its UK-FOOD markers missing or damaged (there is no UK-FOOD:END marker line, so there is no rendered body to check), and ${AFRESH}: ` +
+        MARKERS_REMEDY;
     assert.equal(checked.reason, reason);
-    assert.ok(checked.message.endsWith(`\n${ADVICE}`), checked.message);
+    assert.ok(checked.message.endsWith(`\n${ADVICE[kind]}`), checked.message);
+    // Nothing tells a person to write the document again without saying what the record sheets command then needs.
+    for (const said of [checked.message, reason]) assert.doesNotMatch(said, /then write the document again/);
     if (kind === 'edited') assert.equal(checked.line, lineOf(text, text.includes('Fridge door') ? `| ${firstDay} ` : `| ${checksOf(CHECK_FORMS.forms[0].form)[1]} `));
     // The same in status, the readable lines and the business's completion record; nothing sends a person to a worksheet of its own.
     assert.deepEqual(linesOf(), [`document ARC-001-FOODREC-v1.0.md ${reason}`]);
