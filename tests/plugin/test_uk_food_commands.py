@@ -1381,13 +1381,20 @@ LIST_RULES = {
                                                                           "fourteen you did not find named",
         "ruling: asked in plain text, after checking the evidence": "then ask, in plain text, which of those not found the dish does not "
                                                                     "contain, having checked the evidence in `Checked-against`",
-        "ruling: no suggested answer, no choice covering them all": "Suggest no answer, offer no choice that covers them all, and do not "
-                                                                    "prompt them to clear the rest.",
-        "ruling: only what the reply names": "Record `does not contain` for each allergen not found that their reply names, and leave every "
-                                             "other one empty, as any they are unsure of is.",
-        "ruling: a reply naming none is asked once more": "A reply that names none of them, such as one about all of them together, is "
-                                                          "asked about once more: ask which of the listed allergens they are stating; if "
-                                                          "the reply still names none, record nothing.",
+        "ruling: no suggested answer, no choice covering them all": "Suggest no answer, offer no choice that covers them all, never put "
+                                                                    "this question to the selector, and do not prompt them to clear the "
+                                                                    "rest.",
+        # Ruling 27: a reply that answers for every allergen listed counts for each; one that names some, for those; a reply that
+        # does not answer the question is asked once more, then records nothing.
+        "ruling 27: a reply for every listed allergen counts for each": "A reply that plainly answers for every allergen in the list "
+                                                                        "counts as their statement for each of them",
+        "ruling 27: a reply naming some counts for those": "and a reply that names some counts for those it names: record `does not "
+                                                           "contain` for each, and leave every other one empty, as any they are unsure "
+                                                           "of is.",
+        "ruling 27: a reply that does not answer is asked once more": "A reply that does not answer the question is asked about once "
+                                                                      "more: say that you need them to say which of the listed allergens "
+                                                                      "the dish does not contain; if the reply is still not an answer to "
+                                                                      "that, record nothing.",
         "ruling: a found allergen is not cleared by a reply": "show them again the words it came from: that cell changes only as new "
                                                               "evidence allows",
         "ruling: one nobody stated does not stand": "Before you show a dish for confirmation, treat each `does not contain` in it that no "
@@ -1419,6 +1426,10 @@ LIST_RULES = {
         "2: named in Checked-against only once it is evidence": "only once it is evidence, and record each `contains` it names",
         "2: a dish read from wording is proposed with its source": "Once the dish has `Checked-against` and `Checked-on`, it is held as "
                                                                    "`proposed`, with `Source:` saying what was read",
+        # Ruling 26: a cell read from wording, wherever the wording arrived, waits for the show-back.
+        "ruling 26: a read cell waits for the show-back": "A dish with a cell read from wording, whether the wording was pasted in a "
+                                                          "reply, held in a file or quoted in the request, is never `confirmed` until it "
+                                                          "is shown whole and a named person agrees it.",
         "2: may contain goes in Notes": "Put any statement in it that the food may contain an allergen, or that it is made where an "
                                         "allergen is handled, in `Notes`, in its own words",
         "2: and is never a cell": "such a statement is never a cell, and decides nothing in one",
@@ -1521,14 +1532,23 @@ LIST_RULES = {
                                                                                "request gives its value together with what it rests on; an "
                                                                                "allergen the request gives no value for stays empty, "
                                                                                "whatever else the request holds.",
-        "request: a does not contain only from a named person, every ingredient checked": "A `does not contain` is given only where a "
-                                                                                          "person who gives their name in the request "
-                                                                                          "states it, in those words, in any letter case, "
-                                                                                          "for that allergen, with `Checked-against` "
-                                                                                          "naming evidence for every ingredient in "
-                                                                                          "`Ingredients`",
-        "request: confirmed with exactly the cells given": "the dish is `confirmed` with exactly the cells the request gives and every "
-                                                           "other cell empty",
+        "request: a value stated in terms": "The request states a value in terms where it says `contains` or `does not contain`, in "
+                                            "those words, in any letter case, for that allergen, with `Checked-against` naming what it "
+                                            "rests on, and `Checked-on`.",
+        "request: a does not contain only from a named person, every ingredient checked": "A `does not contain` counts only from a "
+                                                                                          "person who gives their name in the request, "
+                                                                                          "with `Checked-against` naming evidence for "
+                                                                                          "every ingredient in `Ingredients`",
+        "ruling 26: confirmed only with every cell stated in terms": "Only a cell stated in terms is recorded without being shown back: a "
+                                                                     "dish stated whole by a person who gives their name, every cell it "
+                                                                     "records stated in terms, is `confirmed` with exactly those cells and "
+                                                                     "every other cell empty",
+        "ruling 26: quoted wording is pasted text, never confirmed": "and it is text pasted into the request, which is not stated whole, "
+                                                                     "as the paragraph above says: the dish it is quoted for is recorded "
+                                                                     "`proposed`, its read cells with it",
+        "ruling 26: in the step-4 rule's words": "and is never `confirmed` from the request, however plainly its words fall into fields; "
+                                                 "with nobody there it stays `proposed`, and the summary says it is waiting to be shown "
+                                                 "and agreed.",
         "request: any other does not contain holds the dish back": "So is any other `does not contain` the request gives.",
         "request: other words fill no cell": "Any other words the request uses about an allergen, such as \"no\" or \"free from\", fill in no "
                                              "cell",
@@ -1592,6 +1612,11 @@ def test_the_allergens_guide_says_where_an_answer_comes_from():
                   "Anything made of more than one thing needs a label, a specification or a supplier's statement",
                   "It never decides an allergen's answer.",
                   "A dish that does not use what changed is simply agreed again as it was.",
+                  # Rulings 26 and 27, and the price of the strict reading.
+                  "If the message quotes a label's wording, the command reads it as it reads any label, but what it read is only a "
+                  "proposal: the dish waits until it has been shown to you and you have agreed it",
+                  "You can answer for all of the ones it listed at once, or name the ones you are sure of.",
+                  "So expect a few questions about a label's words",
                   "If you cannot say, that allergen stays NOT CONFIRMED and the summary says it is waiting.",
                   "It does not say whether your statement is justified",
                   "A new brand's label is checked afresh: nothing is carried over from the old one.",
@@ -1603,7 +1628,8 @@ def test_the_allergens_guide_says_where_an_answer_comes_from():
     # Round 1: what the guide said before the ruling is untrue now, and so is a request's label wording being shown to nobody.
     for gone in ["none of it names that allergen", "the allergens it could change", "which goes by the ingredients alone",
                  "the dish is shown to you to confirm", "stops counting until it has been checked again",
-                 "for a dish you have just given, come up as a selector"]:
+                 "for a dish you have just given, come up as a selector",
+                 "Name each one you are sure of", "\"contains\" where label wording quoted in the message names it"]:
         assert gone not in text, gone
     # The invented conversation: every "contains" comes from label wording quoted in it, and every "does not contain" is stated
     # by the owner in it, after being told what was found and what was not.
@@ -1625,7 +1651,10 @@ def test_the_allergens_command_never_works_out_a_does_not_contain():
                      "the cells that depend on it", "the cells it decides", "set the cells it decides",
                      "and none of it says its ingredient holds the allergen",
                      "makes the dish not stated whole",
-                     "and is never `confirmed` from the request"]:
+                     # Ruling 26 overturned the round's first reading: quoted wording no longer lets a dish be confirmed unseen.
+                     "does not keep a dish from being stated whole",
+                     # Ruling 27 relaxed the reply: one about all of them together is no longer asked again as naming none.
+                     "if the reply still names none"]:
             assert gone not in text, f"{path.name} still says {gone!r}"
 
 
@@ -2171,6 +2200,7 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "Every `does not contain` written in this run is the named person's own statement for that dish and that allergen",
                    "none was worked out from what the evidence does not say",
                    "holds no `does not contain` the person did not state in it",
+                   "A dish with a cell read from wording, wherever the wording came from, was `proposed` until it was shown and agreed.",
                    "is in `Notes` in the label's own words, and in no cell",
                    "`Checked-on` is the day the person gave, never assumed to be today.",
                    "every dish the search found or the person named was stepped back to `unanswered`",
