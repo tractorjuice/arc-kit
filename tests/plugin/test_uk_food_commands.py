@@ -686,7 +686,12 @@ def test_no_command_keeps_the_wording_the_review_found_wrong(name):
                  "a new version is written only when a file a person signed is out of step",
                  # V3: a refusal or an early stop can leave a header that reads APPROVED, which the not-marked end now puts back.
                  "nothing was recorded and the header was never touched", "reads `DRAFT` and `[PENDING]` again",
-                 "leave the header exactly as it is", "a fault of item 5 that is still there or was not of your making"]:
+                 "leave the header exactly as it is", "a fault of item 5 that is still there or was not of your making",
+                 # 10A's last review, carried to 10B: a difference in the request about an entry already recorded was "a change
+                 # the person asks for", so a request run again could write old words over a correction; and pasted text in
+                 # the request was proposed only "where you would have to decide", leaving pasted text with no state.
+                 "that is a change the person asks for, recorded as **Changing an entry** says",
+                 "where you would have to decide which words belong to which field, record the entry `proposed`"]:
         assert gone not in body, f"{name} still says {gone!r}"
     if name == "uk-food-profile":
         assert "For each of them that does not exist yet" not in body, "M9: the profile command makes one worksheet"
@@ -1223,6 +1228,20 @@ LIST_RULES = {
                                    "is named there as not yet confirmed, with its contents left out.",
         "no recommended mark here": "No option it shows is marked as recommended, and an option the person did not choose is never "
                                     "recorded.",
+        # 10A's last review, fixed in 10B (1): the request's rule for a difference is the file's, so a request run again never
+        # writes old words over a correction; with nobody there the entry is left as it is, and the summary says so.
+        "a difference in the request is put to the person": "where the request says something different about it, put the difference to "
+                                                            "the person as a change in step 8, as **Changing an entry** says; with nobody "
+                                                            "there, leave the entry as it is, and say in the summary what the request says "
+                                                            "differently.",
+        "step 8 puts the request's difference": "and each difference the request gave about an entry already in the worksheet, as a "
+                                                "change, as **Changing an entry** says",
+        "the summary says what the request said differently": "anything the request says differently about an entry already in the "
+                                                              "worksheet",
+        # 10B (4): pasted text in the request is always proposed, or held while it lacks a field, and never confirmed.
+        "pasted request text is recorded proposed": "record each entry they give `proposed`, in those words",
+        "pasted request text is never confirmed": "Such an entry is never `confirmed` from the request, however plainly its words fall "
+                                                  "into fields.",
     },
     "uk-food-cleaning-schedule": {
         "never suggest": "Never suggest an item, a method, a chemical, a product, a frequency, a dilution or a contact time, and "
@@ -1259,6 +1278,12 @@ LIST_RULES = {
         "or it is asked": "For any other entry, including one from the request or a file that does not say which it is, ask whether",
         "no second team from the request": "A second entry for the environmental health team is not added, as **The environmental "
                                            "health team** in step 8 says.",
+        # 10B (3): a second team in the request is not dropped without a word.
+        "a second team in the request is asked about or reported": "With the person there, step 8 asks whether they want to change the "
+                                                                   "one already recorded; with nobody there, the summary says that the "
+                                                                   "request gave another, and that what it gave for it was not recorded.",
+        "the summary names the second team": "a second environmental health team the request gave, with what it gave for it, which was "
+                                             "not recorded",
         "the helper names Kept elsewhere in two cases": "The helper's lines for a list with nothing recorded yet, and for one whose "
                                                         "entries hold no supplier, name Kept elsewhere as one way to finish",
         "details in the request as given": "A name, a telephone number, an email address or an address in the request is recorded "
@@ -1277,6 +1302,22 @@ def test_a_list_command_states_the_rule(name, rule):
 def test_each_list_command_has_its_own_rules():
     """A list command added to LISTING without rules of its own fails here, not silently."""
     assert set(LIST_RULES) == {"all", *LISTING}
+
+
+def test_the_list_guides_say_when_a_request_counts():
+    """10B's fixes to the two list commands, as the person running the business reads them: a frequency in the opening message
+    counts only when it is one on the form's list (2); a difference about an entry already recorded is asked about, never
+    written over it (1); and a second environmental health team is not dropped without a word (3)."""
+    cleaning = (ROOT_GUIDES / "uk-food-cleaning-schedule.md").read_text(encoding="utf-8")
+    suppliers = (ROOT_GUIDES / "uk-food-suppliers.md").read_text(encoding="utf-8")
+    assert "saying how often it is cleaned, using one of the frequencies on the form's list, and how" in cleaning
+    assert ("If it says how often in other words, the command keeps the item as not yet finished and asks you which of the form's "
+            "frequencies it is.") in cleaning
+    assert "saying how often it is cleaned and how, it is recorded" not in cleaning
+    for name, text in [("cleaning", cleaning), ("suppliers", suppliers)]:
+        assert "the command asks you about the change; if nobody is there to ask, it leaves the" in text, name
+    assert ("A second environmental health team in that message is not added: the command asks whether you want to change the one "
+            "already recorded, or, if nobody is there, tells you it was not recorded.") in suppliers
 
 
 @pytest.mark.parametrize("name", LISTING)
