@@ -60,9 +60,10 @@ description: >
   the Food Standards Agency's Safer food, better business for caterers pack:
   the business profile, the five sections of safe methods (cross-contamination,
   cleaning, chilling, cooking, management), the business's own methods and the
-  completion record. A build has nobody to answer, so it confirms nothing: it
-  makes the worksheets that are missing and writes each document that does not
-  exist yet as a draft, from the answers a named person has already confirmed.
+  completion record. A build has nobody to answer, and its prompts give no named
+  person's answers, so it confirms nothing: it makes the worksheets that are
+  missing and writes each document that does not exist yet as a draft, from
+  the answers a named person has already confirmed.
   A document that is already there is taken as done and left as it is, unless
   its target is named with --refresh. On a new project every answer reads NOT
   YET ANSWERED. It does not sign anything off.

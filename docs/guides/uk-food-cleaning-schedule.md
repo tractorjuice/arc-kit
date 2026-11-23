@@ -31,7 +31,7 @@ This is not the Cleaning section of the safe methods (`CL`). That section asks h
 3. **It asks who is answering**, and your role, once, at the start.
 4. **It writes the cleaning schedule document as it stands**, before asking anything.
 5. **It asks about one item at a time, and one part of an item at a time**: the item, how often, what to take care over, and how you clean it. For how often, it shows you the form's list of frequencies and you choose one. In Claude Code, "is there another item?", and "is this right as shown?" for an item you have just given, come up as a selector, with nothing chosen for you; what you say about an item is always typed in your own words.
-6. **It shows you the whole item and asks whether it is right as shown.** The item counts only when you confirm it, and it is then recorded with your name and today's date. An item you give in full in the message that starts the command, having said who you are, is recorded in your name as you gave it, and is not asked about again.
+6. **It shows you the whole item and asks whether it is right as shown.** An item given in conversation counts only when you confirm it, and it is then recorded with your name and today's date. If the message that starts the command says who you are and sets out an item in so many words, saying how often it is cleaned and how, it is recorded in your name as you gave it, and is not asked about again. A list pasted into that message, or several items run together, is shown to you one item at a time to confirm, as a file is.
 7. **It keeps what you give.** If you stop part-way through an item, it keeps what you said as not yet finished. The document names that item as not yet confirmed and leaves its details out.
 8. **It writes the document again** after each item, and runs the document check on it.
 9. **It shows a summary**: the items confirmed and waiting, and what to do next.
@@ -42,7 +42,7 @@ Point the command to the file, such as a cleaning rota you keep in the project f
 
 ### If you keep your cleaning schedule somewhere else
 
-If your business already keeps its cleaning schedule somewhere else, such as a folder in the kitchen, tell the command where. This is what "kept elsewhere" means. The command records where, in your words, and once you confirm it the document says so, with your name and the date. The command never asks you about this or assumes it: it is recorded only when you say so. The list of what is still waiting, which the command shows you as the helper script prints it, does name it as one of two ways to finish a schedule with nothing in it. You can list items here as well, and the document prints both.
+If your business already keeps its cleaning schedule somewhere else, such as a folder in the kitchen, tell the command where. This is what "kept elsewhere" means. The command records where, in your words, with your name and the date: straight away if you say it, having said who you are, in the message that starts the command, and otherwise once you confirm it as shown. The document then says so. The command never asks you about this or assumes it: it is recorded only when you say so. The list of what is still waiting, which the command shows you as the helper script prints it, does name it as one of two ways to finish a schedule with nothing in it. You can list items here as well, and the document prints both.
 
 ### Changing an item later
 
@@ -97,7 +97,7 @@ A named person at the business signs the schedule off with `/arckit-uk-food:uk-f
 
 - **It will not suggest what to clean, how, how often, or with what.** No item, method, chemical, product, amount or contact time comes from the tool. A schedule it suggested would be a way of cleaning that nobody at your business chose.
 - **It will not judge whether your cleaning is good enough**, and gives no food safety advice. Your council's environmental health team is the authority.
-- **It will not count an item until a named person confirms it.**
+- **It will not count an item until a named person has agreed it**, by confirming it as shown, or by setting it out in full in the message that starts the command.
 - **It will not sign anything off.** That is `/arckit-uk-food:uk-food-sign-off`.
 
 ## If the document check fails

@@ -17,6 +17,8 @@ A document can be signed off only when it is finished. The overlay's helper scri
 - the document is written, at the version you are signing, and passes its document check;
 - the lines of its header that a sign-off rewrites hold only what the overlay's commands write there (`DRAFT` and `[PENDING]`, or an earlier sign-off, and a date), because signing off rewrites those lines and must change nothing else;
 - for your own methods, every special process the profile confirms has its own entry;
+- for your cleaning schedule, at least one item is confirmed, or a confirmed note says where you keep your schedule;
+- for your suppliers and contacts, your environmental health team's entry is confirmed, and at least one supplier is confirmed or a confirmed note says where you keep your suppliers' list;
 - if the file holds anything outside the part the helper checks, such as a note or a section of your own, you have been shown it and have said you have read it.
 
 ## Before you start
@@ -29,7 +31,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 ## What happens when you run it
 
 1. **It finds the project.**
-2. **It works out what is to be signed, and by whom.** Name one document, or several to sign each in turn. If you say "cleaning", it asks whether you mean the Cleaning section of safe methods or your cleaning schedule. A general request such as "sign everything off" is not enough: the command lists each document not yet signed off, with its file and version and the name and role it would record, and asks which ones.
+2. **It works out what is to be signed, and by whom.** Name one document, or several to sign each in turn. If you say just "cleaning", it asks whether you mean the Cleaning section of safe methods or your cleaning schedule; if nobody is there to answer, it records nothing. A general request such as "sign everything off" is not enough: the command lists each document not yet signed off, with its file and version and the name and role it would record, and asks which ones.
 3. **It signs only in the name of the person asking.** If you ask it to sign for someone else, it tells you that person has to do it themselves, and records nothing.
 4. **It tells you the file and version it is about to record, and waits for your yes**, unless you named the version yourself. A sign-off says you read that version, so you need to know which one it is.
 5. **It shows you the document's header, and any text in the file that the helper has not checked.** It shows the Document Control table and the Revision History rows as they stand in the file, because your sign-off covers them. A document written by the overlay's commands has nothing else outside its checked part. If someone has added a note, a section, a comment or a row of their own, the command shows you each of those lines too, and asks whether you have read all of it and it is yours.

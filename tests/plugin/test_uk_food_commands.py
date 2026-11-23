@@ -332,8 +332,9 @@ def test_frontmatter(name):
     assert isinstance(front["argument-hint"], str) and front["argument-hint"].strip(), name
     assert front["effort"] == "high", name
     assert front["keep-coding-instructions"] is True, name
-    # Review round 1, M10: the suppliers command looks nobody up, and where the runtime takes the field it cannot. The converter
-    # strips the field for other tools, which rely on the sentence in the body.
+    # Review round 1, M10: the suppliers command looks nobody up. Claude Code takes the two tools away only while the command is
+    # active, until the person sends their next message, so in a later turn, and in the other tools (the converter strips the
+    # field), the sentence in the body is what holds; the field adds to it and never stands in for it.
     if name == "uk-food-suppliers":
         assert front["disallowed-tools"] == ["WebSearch", "WebFetch"], name
     else:
@@ -508,8 +509,8 @@ GATHERING_RULES = {
     "J3: nothing is recorded in a worksheet not brought up to date": "Record nothing in a worksheet that has not been brought up to "
                                                                      "date, and write no document from it",
     "10A review, I2: with nobody to answer, only a named request is confirmed": "With nobody to answer, nothing is confirmed except "
-                                                                               "what the request itself gives in the words of a "
-                                                                               "person it names, as **Answers in the request** says.",
+                                                                               "what the request itself states by a person who gives "
+                                                                               "their name there, as **Answers in the request** says.",
     "J3: what is left unrecorded is said": "say which of the request's answers that leaves unrecorded, and carry on with whatever "
                                            "does not need that worksheet",
 }
@@ -680,6 +681,8 @@ def test_no_command_keeps_the_wording_the_review_found_wrong(name):
                  "must now be true",
                  # 10A review, I2: the shared sentence that said nothing is confirmed, against Answers in the request.
                  "With nobody to answer, nothing is confirmed.",
+                 # 10A re-review, small point 1: "a person it names" could be a third party; Answers in the request means the author.
+                 "in the words of a person it names", "in the words of a person the request names", "in the name of a person it names",
                  "a new version is written only when a file a person signed is out of step",
                  # V3: a refusal or an early stop can leave a header that reads APPROVED, which the not-marked end now puts back.
                  "nothing was recorded and the header was never touched", "reads `DRAFT` and `[PENDING]` again",
@@ -1160,8 +1163,8 @@ LIST_RULES = {
         "the entry shown whole": "show it whole, as the worksheet now holds it, each field by its name, and ask whether it is right "
                                  "as shown",
         "only Confirm confirms": "Only `Confirm`, chosen or said by the named person answering, confirms it",
-        "until then it waits": "Until it is confirmed, the entry stays `unanswered`, or `proposed` if it came from a file or from a "
-                               "request that names nobody",
+        "until then it waits": "Until it is confirmed, the entry stays `unanswered`, or `proposed` if it came from a file, or from "
+                               "the request as step 4 says",
         "kept elsewhere only when the person says so": "Record **Kept elsewhere** only when the person says the business keeps this "
                                                        "list somewhere else, with where, in their words",
         "never offered": "Never offer it as a way to finish",
@@ -1180,25 +1183,38 @@ LIST_RULES = {
         # Review round 1, M2: recorded in step 4, which a model working in order reaches before the first write.
         "the request's own entries": "**What the request gives is recorded now**, before the document is first written under **Write "
                                      "the document as it stands**, whether or not anybody is there to answer",
-        "a named request's whole entry is confirmed": "An entry the request gives whole, with everything **What each entry needs** "
-                                                      "lists, in the words of a person the request names, counts as given and agreed by "
-                                                      "that person",
+        # Re-review, Important 1: one statement of when an entry in the request is given whole.
+        "an entry stated whole, in terms": "**An entry stated whole in the request** is one for which the request states, in terms, each "
+                                           "field **What each entry needs** lists, so that nothing has to be decided about which of its "
+                                           "words belong to which field.",
+        "a named request's whole entry is confirmed": "Stated whole by a person who gives their name in the request, it counts as given "
+                                                      "and agreed by that person",
+        "pasted or run-together request text is proposed": "Text pasted into the request, such as a list copied in, and words that run "
+                                                           "several entries or fields together are not stated whole",
+        "with nobody there it stays proposed": "with nobody there it stays `proposed`, and the summary says it is waiting",
+        "the file rules hold for the request": "Step 8's rules for an entry from a file hold here too: an entry already in the worksheet "
+                                               "under the same name is not added again",
+        "a helper line is never a reason to confirm": "is never a reason to confirm anything yourself: an entry, or Kept elsewhere, is "
+                                                      "confirmed only as step 4 and **Showing an entry and confirming it** in step 8 say",
         "kept elsewhere from the request only as said": "Kept elsewhere is recorded from the request only where the request itself "
                                                         "says the business keeps this list somewhere else, with where",
-        "and is not asked again": "was recorded `confirmed` in step 4 and is not asked about again",
+        "and is not asked again": "An entry stated whole in the request by a person who gives their name there was recorded "
+                                  "`confirmed` in step 4, and is not asked about again.",
         "step 8 does not record it again": "What the request itself gave was recorded in step 4.",
         # Review round 1, I1: confirming is stated one way.
-        "one way of confirming": "Only an entry a named person at the business agreed as a whole in this conversation, or gave whole "
-                                 "in the request, is `confirmed`",
+        "one way of confirming": "Only an entry a named person at the business agreed as a whole in this conversation, or stated whole "
+                                 "in the request as step 4 says, is `confirmed`",
         # Review round 1, I3: the helper's line that names Kept elsewhere is shown, never offered.
-        "the helper's line is shown, not offered": "show that line unchanged where the summary says, and never put it to the person as "
-                                                   "a question or an offer",
+        "the helper's line is shown, not offered": "unchanged where the summary says, and never put it to the person as a question or "
+                                                   "an offer",
         "following the helper never offers it": "except that a line naming Kept elsewhere as a way to finish is only shown, never put "
                                                 "to the person",
         # Review round 1, M3, M4 and M8.
-        "several entries at once": "If the person gives several entries at once, typed or pasted, take them one entry at a time, in "
-                                   "the order given.",
-        "pasted text is shown and confirmed": "Either way, each entry is shown whole and confirmed before it counts.",
+        "several entries in a reply": "If the person, replying in this conversation, gives several entries at once, typed or pasted, "
+                                      "take them one entry at a time, in the order given.",
+        "an entry given in a reply is shown and confirmed": "Either way, each entry given in a reply is shown whole and confirmed before "
+                                                            "it counts.",
+        "the request's entries are step 4's": "Entries in the request are recorded as step 4 says.",
         "a file pointed to again": "already in the worksheet under the same name is not added again: where the file says something "
                                    "different about it, put the difference to the person as a change",
         "no safe method to mark": "a list entry has no safe method to mark as not applying",
@@ -1219,7 +1235,8 @@ LIST_RULES = {
         "not typed out": "Do not list them yourself, and never suggest one.",
         "Other in the person's words": "If it is `Other`, ask next how often, in their words, for `Other-frequency`",
         "a frequency from a file only as spelt": "A frequency in a file is recorded only where it is one of the frequencies spelt as "
-                                                 "the guidance comment spells them, whatever the letter case",
+                                                 "the guidance comment spells them, whatever the letter case, and then as the guidance "
+                                                 "comment spells it",
         # Review round 1, I4: the same for a frequency in the request.
         "a frequency from the request only as spelt": "A frequency in the request is recorded as one in a file is: only where it is one "
                                                       "of the frequencies spelt as the guidance comment spells them",
@@ -1240,6 +1257,10 @@ LIST_RULES = {
         "a kind from the request only as said": "An entry from the request takes a `Kind` only where the request itself says which of "
                                                 "the three it is",
         "or it is asked": "For any other entry, including one from the request or a file that does not say which it is, ask whether",
+        "no second team from the request": "A second entry for the environmental health team is not added, as **The environmental "
+                                           "health team** in step 8 says.",
+        "the helper names Kept elsewhere in two cases": "The helper's lines for a list with nothing recorded yet, and for one whose "
+                                                        "entries hold no supplier, name Kept elsewhere as one way to finish",
         "details in the request as given": "A name, a telephone number, an email address or an address in the request is recorded "
                                            "exactly as it stands there",
     },
@@ -1273,7 +1294,8 @@ def test_a_list_command_asks_its_fields_in_plain_text_and_never_types_the_packs_
     assert len(fields) >= 4, fields
     for sentence in sentences(step):
         if "selector" in sentence.lower():
-            named = [f for f in fields if f"`{f}`" in sentence or f.lower() in sentence.lower().split()]
+            # Whatever the letter case, and with punctuation around it ("frequency." or "`Kind`,").
+            named = [f for f in fields if re.search(rf"(?<![A-Za-z-]){re.escape(f)}(?![A-Za-z-])", sentence, re.I)]
             assert not named, f"{name}: a sentence on the selector names a field: {named}: {sentence[:160]}"
     for frequency in ["After use", "Every shift"]:
         assert frequency not in command(name).read_text(encoding="utf-8"), f"{name} types the pack's frequency {frequency!r}"
@@ -1379,18 +1401,18 @@ def test_no_command_sends_its_reader_to_the_interview_pattern(name):
 
 @pytest.mark.parametrize("name", GATHERING)
 def test_the_note_on_the_pattern_says_what_the_selector_may_and_may_not_do(name):
-    """A command that puts a question on which the pack sets out a method (its worksheet has a hint the recommended mark may
-    go on) says the selector may mark the pack's method. A list command puts no such question, so it says no option is
-    marked, and never that one may be (review round 1, M1). The rest may say either."""
+    """Each gathering command's note says what is true of it (review rounds 1 and 2). A command that puts a question on which
+    the pack sets out a method (its worksheet has a hint the recommended mark may go on) says the selector may mark the pack's
+    method. Every other command puts no such question, so its note says no option is marked, and never that one may be."""
     _, body = split(command(name))
-    note = "It may mark the pack's own method as recommended, and an option the person did not choose is never recorded."
+    may = "It may mark the pack's own method as recommended, and an option the person did not choose is never recorded."
+    never = "No option it shows is marked as recommended, and an option the person did not choose is never recorded."
     hints = ("(yes if you do this / no)", "(yes, or say what you do instead)")
     puts_one = any(hint in worksheet(section) for section in SECTIONS_ASKED[name] for hint in hints)
     if puts_one:
-        assert note in body
-    if name in LISTING:
-        assert not puts_one and "pack's own method as recommended" not in body
-        assert "No option it shows is marked as recommended, and an option the person did not choose is never recorded." in body
+        assert may in body and never not in body, name
+    else:
+        assert never in body and "pack's own method as recommended" not in body, name
 
 
 @pytest.mark.parametrize("name", COMMANDS)
@@ -1613,11 +1635,16 @@ def test_the_sign_off_command_names_every_document_the_helper_signs_and_the_comm
             "off either") in body
     front, _ = split(command("uk-food-sign-off"))
     assert "allergens, cleaning schedule or suppliers" in front["argument-hint"]
-    assert "Cleaning on its own is the Cleaning safe methods, `FOODCLN`; the cleaning schedule is `FOODCS`." in body
-    # Review round 1, M6 and M9: the two-way question goes to the selector in the wording this command uses for a choice, and the
-    # record sheets' reason is the true one.
-    assert ("If it is not clear which of the two the person means, ask which (where you have a tool that shows a question with its "
-            "options to choose from, use it, with the two documents as the options and none marked as recommended)") in body
+    # Re-review, Important 2: two documents are about cleaning, so "cleaning" alone is asked about; the two-way question goes to
+    # the selector in the wording this command uses for a choice (round 1, M6); with nobody to answer nothing is recorded.
+    assert ("`CL`, the Cleaning safe methods, the cleaning section and the like mean `FOODCLN`, and the cleaning schedule means "
+            "`FOODCS`.") in body
+    assert ("A request to sign off \"cleaning\", with nothing else that settles which of the two is meant, is asked about: ask which "
+            "(where you have a tool that shows a question with its options to choose from, use it, with the two documents as the "
+            "options and none marked as recommended).") in body
+    assert "With nobody to answer, stop without recording anything, as for any document the request does not make clear." in body
+    assert "Cleaning on its own is the Cleaning safe methods" not in body and "cleaning or `CL`" not in body
+    # Round 1, M9: the record sheets' reason is the true one.
     assert "they are blank forms, which people at the business fill in and sign themselves as they use them" in body
     assert "hold nothing of the business's" not in body
 
@@ -1764,7 +1791,9 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "It was never offered as a way to finish, and never taken from a file.",
                    "For the suppliers and contacts, the environmental health team's entry was still asked for.",
                    "came from you, or from a search",
-                   "A `Frequency` is one of the frequencies exactly as the worksheet's guidance comment spells them",
+                   "A `Frequency` is recorded spelt exactly as the worksheet's guidance comment spells it: the one the person chose, "
+                   "or one the request or a file gave in those words, whatever the letter case.",
+                   "or the request stated it whole, each field it needs in terms, by a person who gives their name there",
                    "for own methods and for a list, entries confirmed, proposed and unanswered",
                    # G1, G4 and G6: the cells a sign-off rewrites, the version rule and the newest record.
                    "the helper records no sign-off while one holds anything else",

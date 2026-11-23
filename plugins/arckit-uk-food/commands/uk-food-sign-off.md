@@ -65,7 +65,7 @@ It never ends with a header that reads `APPROVED` on a document that `status` do
 |---|---|---|
 | Business profile | `FOODPROF` | `/arckit:uk-food-profile` |
 | Cross-contamination | `FOODXC` | `/arckit:uk-food-safe-methods XC` |
-| Cleaning | `FOODCLN` | `/arckit:uk-food-safe-methods CL` |
+| Cleaning safe methods | `FOODCLN` | `/arckit:uk-food-safe-methods CL` |
 | Chilling | `FOODCHL` | `/arckit:uk-food-safe-methods CH` |
 | Cooking | `FOODCOOK` | `/arckit:uk-food-safe-methods CK` |
 | Management | `FOODMGT` | `/arckit:uk-food-safe-methods MG` |
@@ -88,7 +88,7 @@ Use, in this order: the project the request names, by number (`001`) or by name;
 
 ### 3. Know what is to be signed, and by whom
 
-- **The document**, by code or by name (profile; cross-contamination or `XC`; cleaning or `CL`; chilling or `CH`; cooking or `CK`; management or `MG`; own methods or `own`; allergen information or allergens; cleaning schedule; suppliers and contacts, or suppliers). Cleaning on its own is the Cleaning safe methods, `FOODCLN`; the cleaning schedule is `FOODCS`. If it is not clear which of the two the person means, ask which (where you have a tool that shows a question with its options to choose from, use it, with the two documents as the options and none marked as recommended); with nobody to answer, stop without recording anything. One document per run, unless the person names several; then sign each in turn, as below.
+- **The document**, by code or by name (profile; cross-contamination or `XC`; the Cleaning safe methods, the cleaning section or `CL`; chilling or `CH`; cooking or `CK`; management or `MG`; own methods or `own`; allergen information or allergens; cleaning schedule; suppliers and contacts, or suppliers). Two documents are about cleaning. `CL`, the Cleaning safe methods, the cleaning section and the like mean `FOODCLN`, and the cleaning schedule means `FOODCS`. A request to sign off "cleaning", with nothing else that settles which of the two is meant, is asked about: ask which (where you have a tool that shows a question with its options to choose from, use it, with the two documents as the options and none marked as recommended). With nobody to answer, stop without recording anything, as for any document the request does not make clear. One document per run, unless the person names several; then sign each in turn, as below.
 - **A general request** ("sign everything off") is not enough. Run `node "${CLAUDE_PLUGIN_ROOT}/scripts/uk-food.mjs" status --project PROJECT --json` and list each document not yet signed off, with its file and version, and the name and role you would record for each; then ask which to record. With nobody to answer, stop without recording anything.
 - **The person's name and role** must be in the request that runs this command. If either is missing, ask for it. With nobody to answer, stop without recording anything. Never take a name or role from git, from the plugin's configuration (`organisation_name` names an organisation, not a person), from a document or from a worksheet: a sign-off records what that person says, so only they can give it.
 - **Whose sign-off.** Record a sign-off only in the name of the person making the request. If the request asks you to sign for someone else ("sign it off for Sam"), say that Sam has to do it themselves, because a sign-off is that person's own statement that they have read the document, and record nothing.
