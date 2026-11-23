@@ -1064,6 +1064,52 @@ test('when everything is finished, every row shows its signer and the list says 
   assert.equal(run('status', '--project', dir).stdout.split('\n').filter((line) => line.startsWith('- ')).length, 0);
 });
 
+test('item 3: with every document finished and signed off, a change ends the sign-off of each document whose body it changes, and of no other', () => {
+  const dir = cafe();
+  // Lists that hold entries: the cafe's first dish, every cell filled in; its cleaning items, the proposed one confirmed;
+  // and its suppliers as they are. MG-04 applies, every question confirmed, so the allergen information repeats its answers.
+  const allergens = `${sheet(dir, 'allergens').split('\n\n## DISH-02 ')[0]}\n`;
+  const cleaning = swap(sheet(dir, 'cleaning'), 'State: proposed\nBy:\nOn:\nSource: Tom Reid\'s notes from the kitchen walk-round',
+    'State: confirmed\nBy: Sam Okafor\nOn: 2026-11-17\nSource:');
+  finishEverything(dir, { applying: ['MG-04'], lists: { allergens, cleaning } });
+  for (const doc of STATUS_ORDER) {
+    writeDocument(dir, doc);
+    assert.equal(signOff(dir, doc).status, 0, doc);
+  }
+  writeDocument(dir, 'FOODREC');
+  const signed = () => Object.fromEntries(status(dir).documents.map((d) => [d.code, d.signedOff]));
+  const ended = (...codes) => Object.fromEntries(STATUS_ORDER.map((code) => [code, !codes.includes(code)]));
+  assert.deepEqual(signed(), ended());
+  assert.deepEqual(status(dir).unfinished, []);
+  // Each change, then the change taken out again: the body is what was signed once more, so the sign-off stands again.
+  const tryChange = (section, from, to, ...codes) => {
+    const before = sheet(dir, section);
+    setSheet(dir, section, swap(before, from, to));
+    assert.deepEqual(parseWorksheet(sheet(dir, section), data, { today: TODAY }).problems, [], section);
+    assert.deepEqual(signed(), ended(...codes), `${section}: ${from}`);
+    // Nothing else is unfinished: not even the record sheets, which print none of these.
+    assert.deepEqual([...new Set(status(dir).unfinished.map((line) => line.code))], codes, `${section}: ${from}`);
+    setSheet(dir, section, before);
+    assert.deepEqual(signed(), ended(), `${section}: ${from}, taken out again`);
+  };
+  tryChange('cleaning', 'Method: Run its cleaning programme with a cleaning tablet', 'Method: Run its cleaning programme with two cleaning tablets', 'FOODCS');
+  tryChange('MG', 'Answer: Our way for MG-04-Q01', 'Answer: In the red folder by the till', 'FOODMGT', 'FOODALG');
+  tryChange('suppliers', 'Telephone: 01632 960118', 'Telephone: 01632 960119', 'FOODSUP');
+  // A cell of a confirmed dish left empty ends the allergen information's sign-off alone. Written again, as a new version,
+  // it shows that cell as not confirmed, and sign-off refuses it with status's own line as the reason.
+  setSheet(dir, 'allergens', swap(allergens, 'Celery: does not contain\n', 'Celery:\n'));
+  assert.deepEqual(signed(), ended('FOODALG'));
+  const newer = writeDocument(dir, 'FOODALG', '1.1');
+  assert.ok(readFileSync(newer, 'utf8').includes('| **NOT CONFIRMED** |'));
+  const cells = linesFor(dir, 'FOODALG').find((line) => line.includes('allergen cell'));
+  assert.equal(cells, '1 allergen cell of confirmed dishes in food-safety/answers-allergens.md is not filled in, so the document shows it as not confirmed ' +
+    '(Celery in DISH-01): fill it in as contains or does not contain from what was checked, then update that dish\'s Checked-against, Checked-on, By and On');
+  const refused = signOff(dir, 'FOODALG', '--version', '1.1');
+  assert.equal(refused.status, 1);
+  assert.deepEqual(reasons(refused.stderr), [cells]);
+  assert.deepEqual(signed(), ended('FOODALG'));
+});
+
 test('check --doc FOODCMP passes on a fresh completion record, and once the project changes says it is out of date: render it again', () => {
   const dir = cafe();
   const record = writeDocument(dir, 'FOODCMP');
