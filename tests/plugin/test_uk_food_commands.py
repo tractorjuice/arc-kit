@@ -1382,8 +1382,21 @@ LIST_RULES = {
                                                                           "which are not found.",
         # Round 2, Important 2: an allergen recorded as contains is never put to the person as not found.
         "round 2: what counts as not found": "Only an allergen with no `contains` on the dish, and named in none of the evidence recorded for "
-                                             "it, is not found; one whose `contains` was emptied because its evidence was taken out is listed "
-                                             "apart, as recorded before and needing evidence again, and is not asked about here.",
+                                             "it, is not found. One whose `contains` was emptied because its evidence was taken out is listed "
+                                             "apart, as recorded before and needing evidence again, until every ingredient the change touched "
+                                             "has its evidence recorded in this check.",
+        # Round 2 ruling: an emptied contains the new evidence does not name is asked about by name, apart and first, and never
+        # covered by a whole-list reply.
+        "round 2: an emptied contains is asked by name": "Then, if the evidence now recorded does not name it, put it to the person by "
+                                                         "name, before the question on those not found and apart from it",
+        "round 2: what the by-name question says": "say that it was recorded as `contains` before the change, on evidence that has been "
+                                                   "taken out, and that the evidence now recorded does not name it, and ask whether, as the "
+                                                   "dish is now made, it contains it or does not contain it.",
+        "round 2: the by-name answer, or not sure": "Record `contains` only where they name evidence still recorded that lists it, and "
+                                                    "`does not contain` as their statement for the dish; if they are not sure, it stays "
+                                                    "empty.",
+        "round 2: never in a whole-list reply": "A reply to the question on those not found never covers it.",
+        "round 2: the re-check asks it first": "Ask about any allergen listed apart, then about the allergens not found",
         "ruling: asked in plain text, after checking the evidence": "Then ask, in plain text, which of those not found the dish does not "
                                                                     "contain, having checked the evidence in `Checked-against`",
         "ruling: no suggested answer, no choice covering them all": "Suggest no answer, offer no choice that covers them all, never put "
@@ -1649,6 +1662,7 @@ def test_the_allergens_guide_says_where_an_answer_comes_from():
                   "CONFIRMED.",
                   "every \"does not contain\" is cleared and asked again",
                   "An allergen it had already recorded as contains is never put to you as not found.",
+                  "it asks you about by name: whether the dish contains it as it is now made, does not contain it, or you are not sure",
                   "So expect a few questions about a label's words",
                   "If you cannot say, that allergen stays NOT CONFIRMED and the summary says it is waiting.",
                   "It does not say whether your statement is justified",
