@@ -2,7 +2,7 @@
 
 > **Command**: `/arckit-uk-food:uk-food-allergens` | **Overlay**: [UK Food Safety Overlay](https://arckit.org/guide/uk-food-safety-overlay.html) | **Status**: Experimental, community-maintained
 
-This command records your allergen information: each dish your business serves, what goes into it, and, for each of the fourteen allergens in the Food Standards Agency's pack, whether the dish contains it. Each of those answers comes from a label, a product specification or a supplier's statement that you give the command, or, for a single whole food with nothing added, from what the person who looked at it says. The command never works out an allergen from the name of a dish or an ingredient, never looks a product up, and never says a dish is free from anything.
+This command records your allergen information: each dish your business serves, what goes into it, and, for each of the fourteen allergens in the Food Standards Agency's pack, whether the dish contains it. "Contains" comes only from a label, a product specification or a supplier's statement that you give the command, or, for a single whole food with nothing added, from what the person who looked at it says. "Does not contain" is only ever your own statement: once every ingredient has been checked against something, the command tells you which allergens it found named and which it did not, and asks you which of those not found the dish does not contain. The command never works out an allergen from the name of a dish or an ingredient, never looks a product up, and never says a dish is free from anything.
 
 This overlay is for small catering businesses in England and Wales. It is not legal advice. The Food Standards Agency has not reviewed or endorsed it. Your allergen information is your business's own record, and the food business operator is responsible for it.
 
@@ -34,27 +34,28 @@ In a confirmed dish's row, each allergen reads "contains", "does not contain" or
 2. **It looks at where things stand**: how many dishes are recorded, which are waiting for someone to confirm them, and how many allergens in confirmed dishes are still not filled in.
 3. **It asks who is answering**, and your role, once, at the start.
 4. **It writes the allergen information document as it stands**, before asking anything.
-5. **It first asks you to confirm anything waiting for you**, then offers to check again any dish that needs it, then asks for each dish to add. It takes one dish at a time, and asks one thing at a time: the dish's name, what goes into it, whether it is prepacked for direct sale, what each ingredient was checked against, one ingredient at a time, the day it was checked, any other notes, and any "free from" statement your business already makes. In Claude Code, "is there another dish?", and "is this right as shown?" for a dish you have just given, come up as a selector, with nothing chosen for you; everything else is typed in your own words.
-6. **It fills in each allergen from what you gave it**, by the rules below.
-7. **It shows you the whole dish and asks whether it is right as shown**: all fourteen allergens, with any not yet filled in shown as such, and what the dish was checked against and when. A dish given in conversation counts only when you confirm it, and it is then recorded with your name and today's date.
+5. **It first asks you to confirm anything waiting for you**, then offers to check again any dish that needs it, then asks for each dish to add. It takes one dish at a time, and asks one thing at a time: the dish's name, what goes into it, whether it is prepacked for direct sale, what each ingredient was checked against, one ingredient at a time, the day it was checked, any other notes, and any "free from" statement your business already makes. In Claude Code, "is there another dish?" and "check this dish again now?" come up as a selector, with nothing chosen for you, and so does "is this right as shown?" for a dish you gave without pasting or pointing to any label wording. A dish checked against label wording is shown with where that wording came from, and you answer in your own words, as you do everything else.
+6. **It marks "contains" where the evidence names an allergen**, then, once every ingredient is checked, tells you which allergens it found and which it did not, and asks you which of those not found the dish does not contain, by the rules below.
+7. **It shows you the whole dish and asks whether it is right as shown**: all fourteen allergens, with the words each "contains" was read from, any not yet filled in shown as such, and what the dish was checked against and when. A dish given in conversation counts only when you confirm it, and it is then recorded with your name and today's date.
 8. **It writes the document again** after each dish, and runs the document check on it.
 9. **It shows a summary**: the dishes confirmed and waiting, the allergens still not filled in, anything you said that it could not record and what that needs, and what to do next.
 
-If the message that starts the command says who you are and sets out a dish with what it was checked against and when, the dish is recorded in your name as you gave it. An allergen in that message counts only where it says "contains" or "does not contain" for that allergen, and only with what it was checked against. Label wording pasted into that message is read as a label is, and the dish is shown to you to confirm. A dish you have already recorded is never written over: if the message says anything different about it, the dish stops counting until it is checked again, and the command asks you about the change, or, if nobody is there to ask, tells you what the message said.
+If the message that starts the command says who you are and sets out a dish, with what each ingredient was checked against and when, the dish is recorded in your name as you gave it, without being shown to you. An allergen in that message counts only with what it rests on: "contains" where label wording quoted in the message names it, or where you say "contains" for it with what it was checked against; "does not contain" only where you say "does not contain" for that allergen, by name, and the message gives what every ingredient was checked against. Every allergen the message gives no answer for stays NOT CONFIRMED. If the message says something about an allergen in other words, such as "no nuts", or gives an answer with nothing behind it, nothing is recorded for that allergen, the dish does not count yet, and the command asks you about it, or, if nobody is there to ask, tells you in its summary. A dish you have already recorded is never written over: if the message says anything different about it, the dish stops counting until you agree it again, and the command asks you about the change, or, if nobody is there to ask, tells you what the message said.
 
 ### Where each answer comes from
 
-- **A label, a specification or a supplier's statement you give it.** It records "contains" for an allergen the wording names as something in the ingredient. It records "does not contain" only when every ingredient of the dish has been checked against something and none of it names that allergen. If one ingredient has not been checked yet, the allergens it could change stay NOT CONFIRMED: the command never assumes that an unchecked ingredient is clear. If the wording uses a word it is not sure about, it asks you what the label says about it rather than deciding.
-- **You tell it what a label says.** It asks which allergens the label names for that ingredient, and records your answer as what you say the label says.
-- **No label at all.** It asks whether the ingredient is a single whole food with nothing added, and shows you what the worksheet says about that. If it is, it asks who looked at it and what they found, and records that. Anything made of more than one thing needs a label, a specification or a supplier's statement: until you have one, the allergens it could change stay NOT CONFIRMED. If you make something yourself, it asks what you make it from, and checks each of those.
-- **"May contain" warnings.** A label's statement that a food may contain an allergen, or is made where one is handled, goes in the dish's notes, word for word. It never decides an allergen's answer, which goes by the ingredients alone. The document marks a dish that has notes, so that they are read.
-- **You say a dish has an allergen in it, without saying how you know.** It asks what that comes from: which label, specification or statement, or which whole food someone looked at. If you cannot say, that allergen stays NOT CONFIRMED and the summary says it is waiting.
+- **A label, a specification or a supplier's statement you give it.** It records "contains" for an allergen the wording names on its own: by the allergen's name, or by one of the kinds the pack lists for it, as an ingredient, picked out in capitals, bold or brackets, or in the label's list of allergens. If the wording uses a word it is not sure about, or names an allergen only as part of a longer word or name, it asks you what the label says about it rather than deciding. Wording that gives neither the ingredient's own ingredients nor its list of allergens, such as a product's name or a "may contain" line on its own, is not enough: the command says so and asks you for the rest.
+- **You tell it what a label says.** It asks which of the fourteen allergens the label lists for that ingredient, and records your answer as what you say the label lists.
+- **No label at all.** It asks whether the ingredient is a single whole food with nothing added, and shows you what the worksheet says about that. If it is, it asks who looked at it and what they found, and records that. Anything made of more than one thing needs a label, a specification or a supplier's statement: until you have one, every allergen not already marked contains stays NOT CONFIRMED. If you make something yourself, it asks what you make it from, and checks each of those.
+- **"Does not contain" is yours to say.** It records "does not contain" only when you say so, for that dish and that allergen, after every ingredient has been checked against something. It tells you first which of the fourteen it found named, with the words it read each from, and which it did not, then asks which of those not found the dish does not contain, having checked the labels yourself. Name each one you are sure of: a reply such as "all fine" or "none of them" is asked about once more, and records nothing if it still names none. Any you do not name, or are unsure of, stay NOT CONFIRMED. While one ingredient has not been checked, it does not ask at all, because the command never assumes that an unchecked ingredient is clear.
+- **"May contain" warnings.** A label's statement that a food may contain an allergen, or is made where one is handled, goes in the dish's notes, word for word. It never decides an allergen's answer. The document marks a dish that has notes, so that they are read.
+- **You give an answer without saying how you know.** If you say a dish has, or has not, an allergen in it, or that none of your food has it, the command asks what that comes from: which label, specification or statement, or which whole food someone looked at. If you cannot say, that allergen stays NOT CONFIRMED and the summary says it is waiting.
 
 It never fills an allergen in from the name of a dish or an ingredient, from what a dish or a food usually has in it, or from anything it knows, and it never looks a product up. If you ask it what something contains, it asks you for the label instead.
 
 ### A dish with an allergen not yet filled in
 
-You can confirm a dish with some allergens not yet filled in, such as while you wait for a supplier's statement. Those print as NOT CONFIRMED, and the document stays unfinished until they are filled in. When you have what you need, run the command again: it offers to check the dish again, fills in the allergen from what you give it, shows you the dish, and records the day of the new check with your confirmation.
+You can confirm a dish with some allergens not yet filled in, such as while you wait for a supplier's statement. Those print as NOT CONFIRMED, and the document stays unfinished until they are filled in. When you have what you need, run the command again: it offers to check the dish again, takes the new label through, asks you again which of the allergens not found the dish does not contain, shows you the dish, and records the day of the new check with your confirmation. In a check, every "does not contain" is asked again, for the labels as they now stand.
 
 ### "Free from" statements
 
@@ -62,7 +63,7 @@ The command never describes a dish as free from anything, never suggests making 
 
 ### When something changes
 
-If a recipe, an ingredient, a brand or a supplier changes, tell the command. It searches your worksheet for what you name, shows you the dishes it found, and asks whether any other dish uses it. Each of those dishes stops counting until it has been checked again, and its words are kept so you can see what it said. A new brand's label is checked afresh: nothing is carried over from the old one. If the message that starts the command says something has changed and nobody is there to answer, it still stops those dishes counting, and tells you which.
+If a recipe, an ingredient, a brand or a supplier changes, tell the command. It searches your worksheet for what you name, shows you the dishes it found, and asks whether any other dish uses it. Each of those dishes stops counting until you agree it again, and its words are kept so you can see what it said. A dish that does not use what changed is simply agreed again as it was. A dish that does is checked again first: the command asks whether the new product replaces each label it found, takes out each one it replaces, asks for the new product's label, specification or statement, and asks you again which allergens the dish does not contain. A new brand's label is checked afresh: nothing is carried over from the old one. "It's the same" is not enough on its own, and a dish with nothing new to check it against yet waits. If the message that starts the command says something has changed and nobody is there to answer, it still stops those dishes counting, and tells you which.
 
 ### If your dishes are in a file
 
@@ -96,13 +97,17 @@ Sam Okafor owns Bramble Cafe, an invented café. The products and their labels b
 >
 > **Claude:** What is the bloomer checked against? Give the label, specification or supplier's statement by the name you list it under, and paste its wording or tell me where it is.
 >
-> **Sam:** The Mill Lane bloomer label: "Ingredients: wheat flour, water, yeast, salt. May contain sesame."
+> **Sam:** The Mill Lane bloomer label: "Ingredients: WHEAT flour, water, yeast, salt. May contain sesame."
 >
-> **Claude:** I've put "May contain sesame" in the dish's notes, word for word. It doesn't decide the sesame answer, which goes by the ingredients, and the document marks the dish so that its notes are read. What is the cheddar checked against?
+> **Claude:** I've put "May contain sesame" in the dish's notes, word for word. It doesn't decide the sesame answer, and the document marks the dish so that its notes are read. What is the cheddar checked against?
 >
-> **Sam:** The Larkspur cheddar label: "Ingredients: cheddar cheese (milk), salt."
+> **Sam:** The Larkspur cheddar label: "Ingredients: cheddar cheese (MILK), salt."
 >
-> **Claude:** On what day were these labels checked?
+> **Claude:** Both ingredients are now checked against a label. I found two of the fourteen allergens named: cereals containing gluten, from "WHEAT flour" on the Mill Lane bloomer label, and milk, from "cheddar cheese (MILK)" on the Larkspur cheddar label. I did not find the other twelve named: nuts, peanuts, eggs, fish, crustaceans, molluscs, celery, lupin, mustard, sesame seeds, soya and sulphur dioxide. Having checked those two labels yourself, which of these twelve does the dish not contain?
+>
+> **Sam:** I've checked both. It doesn't contain nuts, peanuts, eggs, fish, crustaceans, molluscs, celery, lupin, mustard, soya or sulphur dioxide. I'm not sure about sesame, with that warning.
+>
+> **Claude:** I've recorded those eleven as "does not contain", as you said, and left sesame seeds not filled in. On what day were these labels checked?
 >
 > **Sam:** Today.
 >
@@ -114,7 +119,7 @@ Sam Okafor owns Bramble Cafe, an invented café. The products and their labels b
 >
 > **Sam:** No.
 >
-> **Claude:** Here is DISH-01 Cheese toastie as it stands: *[what goes into it; prepacked for direct sale: no; cereals containing gluten: contains, from "wheat flour" on the bloomer label; milk: contains, from "cheddar cheese (milk)" on the cheddar label; the other twelve: does not contain, because both ingredients are checked and neither label names them; the notes, the two labels and today's date]*. Is it right as shown?
+> **Claude:** Here is DISH-01 Cheese toastie as it stands: *[what goes into it; prepacked for direct sale: no; cereals containing gluten: contains, from "WHEAT flour" on the bloomer label; milk: contains, from "cheddar cheese (MILK)" on the cheddar label; the eleven you named: does not contain, as you said today; sesame seeds: not yet filled in, which prints as NOT CONFIRMED and keeps the document unfinished; the notes, the two labels and today's date]*. I read only the fourteen names and the kinds the pack lists, so check each label against this row. Is it right as shown?
 >
 > **Sam:** Yes. Can you tell me what's in the chutney we serve with it?
 >
@@ -134,6 +139,7 @@ A named person at the business signs the document off with `/arckit-uk-food:uk-f
 ## What it will not do, and why
 
 - **It will not fill in an allergen from a dish's name, an ingredient's name, what a food usually has in it or anything it knows**, and it will not look a product up. A wrong answer could tell a customer with an allergy that a dish does not contain what it does.
+- **It will not record "does not contain" unless you say it**, for that dish, after every ingredient has been checked against something. It never works it out from what a label leaves out.
 - **It will not say a dish is free from anything, or suitable for anyone**, suggest a "free from" statement, or reword yours.
 - **It will not judge your allergen information**, and gives no food safety advice. Your council's environmental health team is the authority.
 - **It will not count a dish until a named person has agreed it**, by confirming it as shown, or by setting it out, with what it was checked against and when, in the message that starts the command.
