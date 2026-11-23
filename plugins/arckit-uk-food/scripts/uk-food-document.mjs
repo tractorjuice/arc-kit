@@ -9,8 +9,8 @@ import {
 import { completionRecordDocument, DOCUMENT_FILE, PENDING, readSignOffs } from './uk-food-status.mjs';
 import { HELPER, loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
 import {
-  allergenChunks, allergenSource, cleaningScheduleChunks, cleaningScheduleSource, listAsked, listCountsWhen, listNotStarted, listOutstanding, LISTS,
-  listSummary, suppliersChunks, suppliersSource
+  allergenChunks, allergenSource, cleaningScheduleChunks, cleaningScheduleSource, listAsked, listCounts, listCountsWhen, listNotStarted,
+  listOutstanding, LISTS, listSummary, suppliersChunks, suppliersSource
 } from './uk-food-lists.mjs';
 import { recordSheetsChunks, recordSheetsLacking, recordSheetsSource } from './uk-food-sheets.mjs';
 export {
@@ -138,6 +138,11 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'allergens', 'cleani
 //   counts when its State is confirmed and By and On are filled in"); `sheet` is the document's own worksheet, with no
 //   problems. A list document's names the worksheet's guidance too, and what each entry named still lacks, since an
 //   entry confirmed without a field its list needs is not read at all.
+// - tally(sheet, counts), when given: what status --json gives as the document's `counts`, from its own worksheet and
+//   status's count for it (`counts`: questions, confirmed and the rest). A list document's gives its entries and those
+//   confirmed, under the names a list uses, and whatever its list counts besides (the allergen information's empty
+//   cells of confirmed dishes). A document without it has no `counts`, so the fields the seven before the lists give
+//   are what they always were.
 // - section: set by sectionDocument alone, on a document that prints a section of the pack; the
 //   section, which is also its own worksheet. SECTION_DOCS and DOC_OF_SECTION come from it, and the
 //   usage text and each "--doc is one of" message list these documents first.
@@ -242,6 +247,7 @@ function listDocument(section, overrides) {
     summary: (doc, sheet) => listSummary(LISTS[section], doc, sheet),
     notStarted: () => listNotStarted(LISTS[section]),
     countsWhen: (ids, sheet, data) => listCountsWhen(LISTS[section], ids, sheet, data),
+    tally: (sheet, counts) => listCounts(LISTS[section], sheet, counts),
     lacking: (data) => LISTS[section].lacking(data),
     ...overrides
   };
@@ -390,7 +396,7 @@ function tableProblems(rows, sheets) {
     if (row.signable === false) {
       for (const field of ['nobodySigns', 'signOffRefusal']) if (!isText(row[field])) fault(field, 'is not given, and a document nobody signs needs its words');
     }
-    for (const field of ['lacking', 'outstanding', 'summary', 'notStarted', 'countsWhen']) {
+    for (const field of ['lacking', 'outstanding', 'summary', 'notStarted', 'countsWhen', 'tally']) {
       if (row[field] !== undefined && !isFunction(row[field])) fault(field, 'is not a function');
     }
     if (row.specialProcesses !== undefined && row.specialProcesses !== true) fault('specialProcesses', 'is neither true nor left out');

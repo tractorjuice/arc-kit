@@ -199,6 +199,9 @@ const PPDS_VALUES = ['yes', 'no'];
 // confirmed shows none of its cells at all: that is decided where the row is made, from `answered`.
 const confirmedCell = (entry, field) => (CELL_VALUES.includes(entry[fieldKey(field)]) ? entry[fieldKey(field)] : null);
 const cellsNotFilled = (entry) => ALLERGEN_FIELDS.filter((field) => confirmedCell(entry, field) === null);
+// Each confirmed dish with a cell not filled in, as { id, fields }, in the worksheet's order: what status names and counts.
+const emptyCells = (parsed) => [...parsed.entries.values()].filter((entry) => entry.answered)
+  .map((entry) => ({ id: entry.id, fields: cellsNotFilled(entry) })).filter(({ fields }) => fields.length);
 const ppdsRecorded = (entry) => PPDS_VALUES.includes(entry.ppds);
 const ANSWER_COUNTS = 'an answer counts when its State is confirmed and By and On are filled in';
 // The lines status gives when the allergen information shows how customers are told as not yet answered, from the
@@ -260,6 +263,10 @@ function customerLines(sheets) {
 //   plain lines for status, the completion record and sign-off, from a worksheet with no problems: no entry
 //   for the environmental health team, say, or cells not confirmed in confirmed rows. `sheets` is every worksheet
 //   status read, for a document that prints from another worksheet too (or undefined when not given). None by default.
+// - counts(parsed), when a list needs it: what status --json gives in the document's `counts` besides its entries
+//   and those confirmed (listCounts), from a worksheet with no problems, or from none (parsed null) when it has
+//   problems or is not there: the empty cells of confirmed dishes, say. Each number is then 0, as nothing in such a
+//   worksheet counts.
 // - lacking(data, where): what the data lacks that the list is read or printed from, as a sentence
 //   starting with `where` ('the data' unless given), or null.
 export const LISTS = {
@@ -462,7 +469,7 @@ export const LISTS = {
     outstanding: (parsed, data, sheets) => {
       const file = `food-safety/${worksheetName('allergens')}`;
       const confirmed = [...parsed.entries.values()].filter((entry) => entry.answered);
-      const empty = confirmed.map((entry) => ({ id: entry.id, fields: cellsNotFilled(entry) })).filter(({ fields }) => fields.length);
+      const empty = emptyCells(parsed);
       const n = empty.reduce((sum, { fields }) => sum + fields.length, 0);
       // Each dish's empty cells, as "Mustard and Soya in DISH-01"; the dishes a comma apart, the last after ", and", so
       // that no reader can take one dish's cells for another's.
@@ -480,6 +487,9 @@ export const LISTS = {
         ...customerLines(sheets)
       ];
     },
+    // The cells the document shows as not confirmed in the rows of confirmed dishes, counted by the rule its line above
+    // names them by. A dish not confirmed shows every cell so, and is counted as a dish not confirmed instead.
+    counts: (parsed) => ({ cellsNotConfirmed: parsed ? emptyCells(parsed).reduce((sum, { fields }) => sum + fields.length, 0) : 0 }),
     lacking: (data, where = 'the data') => (!allergensOf(data) ? `${where} has no table in ${ALLERGEN_TABLE.method} on page ${ALLERGEN_TABLE.page} ` +
       `of XC.json in the layout the allergen information is made from: ${ALLERGEN_FIELDS.length} rows of two cells, each an allergen and where it may ` +
       'be found, in the order of the allergens worksheet\'s fields'
@@ -694,6 +704,13 @@ export function listCountsWhen(list, ids, sheet, data) {
   return 'an entry counts when it has what the worksheet\'s guidance says it needs, its State is confirmed and By and On are filled in' +
     lacking.map(([id, says]) => `; ${id} still needs ${andList(says)}`).join('');
 }
+
+// What status --json gives as a list document's `counts`: how many entries its worksheet holds and how many of them are
+// confirmed (status's own counts, the same as the document's `questions` and `confirmed`, under the names a list uses),
+// then whatever its list counts besides (its `counts`), from the worksheet only when it has no problems. `counted` is
+// status's count for the document, `sheet` the worksheet as readWorksheets reads it, or missing.
+export const listCounts = (list, sheet, counted) => ({ entries: counted.questions, confirmed: counted.confirmed,
+  ...(list.counts?.(sheet?.clean ? sheet.parsed : null) ?? {}) });
 
 // What status's line for a list document says of its worksheet: how many entries are confirmed, and that the
 // business keeps the list elsewhere when that is confirmed; with no entry, that, or that there are none yet.

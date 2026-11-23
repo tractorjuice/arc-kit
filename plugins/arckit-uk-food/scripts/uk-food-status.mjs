@@ -391,6 +391,9 @@ function collectStatus(project, data, options = {}) {
       unanswered: counts.unanswered,
       notRelevantMethods: counts.notRelevantMethods,
       adaptedMethods: counts.adaptedMethods,
+      // A document whose row tallies its own counts (a list document's entries, those confirmed and what its list
+      // counts besides) gives them here; no other has the field.
+      ...(row.tally ? { counts: row.tally(sheets.get(row.sheet), counts) } : {}),
       file: current?.file ?? null,
       version: current?.version ?? null,
       rendered: Boolean(current),
