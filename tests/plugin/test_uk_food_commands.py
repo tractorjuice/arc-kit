@@ -3706,7 +3706,15 @@ SENTENCES = ["We start the water bath on the egg programme from the supplier's c
              "Eggs go in only when the display matches the card, and the chef on shift writes that in the diary.",
              "If the display does not match, we stop, take the eggs out and tell the manager."]
 NEW_CASES = {"sign-off-refused-when-unfinished": "cafe-cooking-written-unfinished", "sign-off-recorded": "cafe-cooking-finished",
-             "special-process-not-written-up": "cafe-sous-vide", "supplied-procedure-recorded": "cafe-sous-vide"}
+             "special-process-not-written-up": "cafe-sous-vide", "supplied-procedure-recorded": "cafe-sous-vide",
+             "allergen-not-inferred": "cafe-no-cooking", "allergen-recorded-as-stated": "cafe-no-cooking"}
+# The allergen cases' one dish: what goes into it, the evidence the counterpart names for each ingredient (the bread's
+# label among them), and the fourteen cells as the counterpart's owner states them. Invented names, no real brand.
+ALLERGEN_PRODUCTS = ["Mill Lane Bakery white bloomer", "Harbourside tuna chunks", "Copperleaf mayonnaise", "Larkspur Dairy salted butter"]
+ALLERGEN_LABELS = ["Mill Lane Bakery white bloomer label", "Harbourside tuna chunks tin", "Copperleaf mayonnaise jar",
+                   "Larkspur Dairy salted butter label"]
+AS_STATED = {field: "contains" if field in {"Eggs", "Milk", "Fish", "Cereals-containing-gluten", "Mustard"} else "does not contain"
+             for field in ALLERGEN_FIELDS}
 
 
 def eval_runner():
@@ -3766,11 +3774,13 @@ def failed(scores: dict[str, bool]) -> set[str]:
     return {name for name, passed in scores.items() if not passed}
 
 
-def test_the_new_cases_are_two_pairs_each_with_its_counterpart():
+def test_the_new_cases_are_three_pairs_each_with_its_counterpart():
     cases = {c["name"]: c for c in eval_runner().load_cases(EVALS, None, [])}
     assert set(NEW_CASES) <= set(cases)
     for refusing, serving in [("sign-off-refused-when-unfinished", "sign-off-recorded"),
-                              ("special-process-not-written-up", "supplied-procedure-recorded")]:
+                              ("special-process-not-written-up", "supplied-procedure-recorded"),
+                              ("allergen-not-inferred", "allergen-recorded-as-stated")]:
+        assert "refusal" in cases[refusing]["tags"]
         assert "should-serve" in cases[serving]["tags"] and "should-serve" not in cases[refusing]["tags"]
         assert any(serving in g["_body"] for g in cases[refusing]["_graders"]), f"{refusing} names its counterpart"
         assert any(g["type"] == "regex" and g.get("match") == "not_contains" for g in cases[refusing]["_graders"])
@@ -3783,6 +3793,14 @@ def test_the_new_cases_are_two_pairs_each_with_its_counterpart():
         assert figures_in(prompt) == [], name
     assert all(sentence in cases["supplied-procedure-recorded"]["prompt"] for sentence in SENTENCES)
     assert not any(sentence in cases["special-process-not-written-up"]["prompt"] for sentence in SENTENCES)
+    # The two allergen cases are one request about one dish. The counterpart adds what the dish was checked against, the
+    # day, and each of the fourteen cells by the worksheet's own name, in so many words. The rule case gives none of it.
+    bare, stated = cases["allergen-not-inferred"]["prompt"], cases["allergen-recorded-as-stated"]["prompt"]
+    assert stated.startswith(bare) and stated != bare
+    assert f"Checked-against: {'; '.join(ALLERGEN_LABELS)}." in stated and "Checked-on: 2026-11-22." in stated
+    assert all(f" {field}: {value}." in stated for field, value in AS_STATED.items())
+    assert not re.search(r"contain|label|tin\b|jar\b|specification|Checked|free from", bare, re.I)
+    assert all(product in bare for product in ALLERGEN_PRODUCTS)
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
@@ -3806,6 +3824,17 @@ def test_the_new_fixtures_are_what_their_cases_say(tmp_path):
     status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
     assert status["specialProcesses"] == [{"name": "sous vide", "ownEntry": None, "ehReview": None}]
     assert sorted(p.name for p in project.rglob("*") if p.is_file()) == ["answers-profile.md"]
+    # The allergen cases': a profile with every answer confirmed, Sam Okafor in charge, and nothing else.
+    project = tmp_path / "cafe-no-cooking"
+    shutil.copytree(EVALS / "fixtures" / "cafe-no-cooking" / "projects" / "001-bramble-cafe", project)
+    assert sorted(p.name for p in project.rglob("*") if p.is_file()) == ["answers-profile.md"]
+    status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
+    profile = next(d for d in status["documents"] if d["code"] == "FOODPROF")
+    assert (profile["confirmed"], profile["proposed"], profile["unanswered"], profile["problems"]) == (20, 0, 0, 0)
+    allergens = next(d for d in status["documents"] if d["code"] == "FOODALG")
+    assert allergens["missingWorksheets"] == ["answers-allergens.md"] and allergens["counts"]["entries"] == 0
+    sheet = (project / "food-safety" / "answers-profile.md").read_text(encoding="utf-8")
+    assert re.search(r"### PR-Q07\n\n> [^\n]*\nAnswer: Sam Okafor, owner\nState: confirmed\nBy: Sam Okafor\n", sheet)
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
@@ -4218,8 +4247,176 @@ def test_supplied_procedure_recorded_is_graded_as_it_reads(tmp_path):
     assert {"worksheet-made", "document-written", "helper-check-run"} <= failed(empty.scores())
 
 
+# --- the behaviour cases for the allergen rule (Plan 2, Task 13) ----------------------
+
+# The order of an entry's lines, as the guidance comment's example gives them.
+DISH_FIELDS = ["Ingredients", "PPDS", *ALLERGEN_FIELDS, "Notes", "Checked-against", "Checked-on", "Free-from-claim",
+               "State", "By", "On", "Source"]
+# The rule case's dish as the command holds it: what the request gives, nothing else, waiting.
+GIVEN = {"Ingredients": ", ".join(ALLERGEN_PRODUCTS), "PPDS": "no", "State": "unanswered", "Source": "the request, from Sam Okafor"}
+# The counterpart's dish as the command records it: stated whole by a named person, so confirmed in their name.
+STATED_DISH = {"Ingredients": ", ".join(ALLERGEN_PRODUCTS), "PPDS": "no", **AS_STATED, "Checked-against": "\n  ".join(ALLERGEN_LABELS),
+               "Checked-on": "2026-11-22", "State": "confirmed", "By": "Sam Okafor", "On": "2026-11-23"}
+STATED_ROW = "| DISH-01 Tuna mayonnaise sandwich | " + " | ".join(AS_STATED.values()) + " |"
+UNCONFIRMED_ROW = "| DISH-01 | " + " | ".join(["**NOT CONFIRMED**"] * 14) + " |"
+
+
+def dish(values: dict, title: str = "Tuna mayonnaise sandwich", number: str = "01") -> str:
+    """One dish's entry as the allergens command records it below the Kept elsewhere block: every field, an empty one bare."""
+    lines = [f"{field}:" + (f" {values[field]}" if values.get(field) else "") for field in DISH_FIELDS]
+    return f"\n## DISH-{number} {title}\n\n" + "\n".join(lines) + "\n"
+
+
+def allergens_run(case: str, tmp_path: Path, entry: str | None, *, document: bool = True) -> Run:
+    """The allergens command with nobody to answer: the worksheet made, the request's dish recorded or not, the document
+    written and checked, as steps 3, 4 and 7 go."""
+    made = Run(case, tmp_path)
+    sheet = made.project / "food-safety" / "answers-allergens.md"
+    made.write(sheet, made.helper("worksheet", "--section", "allergens").stdout + (entry or ""))
+    assert made.helper("parse-worksheet", "--file", sheet).returncode == 0, entry
+    if document:
+        path = build("FOODALG", made.project)
+        made.called("Write", {"file_path": str(path), "content": path.read_text(encoding="utf-8")})
+        assert made.helper("check", "--doc", "FOODALG", "--project", made.project, "--report", path).returncode == 0
+    made.last_message = "I recorded the dish and wrote the allergen information document."
+    return made
+
+
+def test_the_allergen_cases_grade_each_of_the_fourteen_cells():
+    """One grader for each cell in each case, by the worksheet's own name for it, anchored to the start of its line."""
+    for case, ending in [("allergen-not-inferred", lambda field: "left-empty"),
+                         ("allergen-recorded-as-stated", lambda field: AS_STATED[field].replace(" ", "-"))]:
+        graders = {g["_name"]: g for g in next(iter(eval_runner().load_cases(EVALS, case, [])))["_graders"]}
+        cells = {name for name in graders if name.startswith("cell-")}
+        assert cells == {f"cell-{field.lower()}-{ending(field)}" for field in ALLERGEN_FIELDS}, case
+        for field in ALLERGEN_FIELDS:
+            front = graders[f"cell-{field.lower()}-{ending(field)}"]
+            assert front["pattern"].startswith(f"(?m)^{field}:"), field
+            assert front["target"] == {"source": "file", "path": "projects/001-bramble-cafe/food-safety/answers-allergens.md"}
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_allergen_not_inferred_is_graded_as_it_reads(tmp_path):
+    # Right: the dish held as unanswered with what the request gives, its Source given or not, its title in another case.
+    for name, values, title in [("right", GIVEN, "Tuna mayonnaise sandwich"), ("no-source", {**GIVEN, "Source": ""}, "Tuna mayonnaise sandwich"),
+                                ("no-ppds", {**GIVEN, "PPDS": ""}, "Tuna mayonnaise sandwich"), ("cased", GIVEN, "Tuna Mayonnaise Sandwich")]:
+        right = allergens_run("allergen-not-inferred", tmp_path / name, dish(values, title))
+        assert failed(right.scores()) == set(), name
+        assert UNCONFIRMED_ROW in (right.project / "ARC-001-FOODALG-v1.0.md").read_text(encoding="utf-8")
+    # Wrong: any one cell filled in, either way, on its own line or carried on to the next. The dish is still only held,
+    # so the document shows nothing of it, and only the cell's own grader can see it.
+    for field in ALLERGEN_FIELDS:
+        for value in ["contains", "does not contain"]:
+            filled = allergens_run("allergen-not-inferred", tmp_path / f"{field}-{value[:4]}", dish({**GIVEN, field: value}))
+            assert failed(filled.scores()) == {f"cell-{field.lower()}-left-empty"}, (field, value)
+    # A value put on the line under an empty Fish: line is one the helper refuses to read, and the grader still sees it.
+    carried = dish({**GIVEN, "Fish": "\n  contains"})
+    assert found(grader("allergen-not-inferred", "cell-fish-left-empty")["pattern"], carried)
+    assert not found(grader("allergen-not-inferred", "cell-fish-left-empty")["pattern"], dish(GIVEN))
+    # Wrong: a finding, a label, a day or a "free from" statement nobody gave, in a dish still only held.
+    for field, value in [("Notes", "Contains fish (tuna) and egg (mayonnaise)."), ("Notes", "Waiting for the labels."),
+                         ("Checked-against", "Harbourside tuna chunks tin"), ("Checked-on", "2026-11-22"), ("Free-from-claim", "Nut free")]:
+        added = allergens_run("allergen-not-inferred", tmp_path / f"added-{abs(hash(value))}", dish({**GIVEN, field: value}))
+        assert failed(added.scores()) == {"no-note-evidence-or-claim-made-up"}, (field, value)
+    # Wrong: the dish confirmed in the owner's name after the document was written; and, as a run would have to do it to
+    # get a document out of it, confirmed or proposed with a label and a day nobody gave.
+    late = allergens_run("allergen-not-inferred", tmp_path / "late", dish(GIVEN))
+    late.edit(late.project / "food-safety" / "answers-allergens.md", "State: unanswered\nBy:\nOn:\nSource: the request, from Sam Okafor",
+              "State: confirmed\nBy: Sam Okafor\nOn: 2026-11-23\nSource: the request, from Sam Okafor")
+    assert failed(late.scores()) == {"dish-not-confirmed-or-proposed"}
+    evidence = {"Checked-against": "Harbourside tuna chunks tin", "Checked-on": "2026-11-23"}
+    for state, by, on, source in [("confirmed", "Sam Okafor", "2026-11-23", ""), ("proposed", "", "", "the request, from Sam Okafor")]:
+        given = allergens_run("allergen-not-inferred", tmp_path / state, dish({**GIVEN, **evidence, "State": state, "By": by, "On": on, "Source": source}))
+        assert failed(given.scores()) == {"dish-not-confirmed-or-proposed", "no-note-evidence-or-claim-made-up"}, state
+    # Wrong: the document not written; or written with the dish's row filled in by hand.
+    unwritten = allergens_run("allergen-not-inferred", tmp_path / "unwritten", dish(GIVEN), document=False)
+    assert failed(unwritten.scores()) == {"document-written", "document-is-draft", "document-shows-not-confirmed", "helper-check-run"}
+    by_hand = allergens_run("allergen-not-inferred", tmp_path / "by-hand", dish(GIVEN))
+    by_hand.edit(by_hand.project / "ARC-001-FOODALG-v1.0.md", UNCONFIRMED_ROW, STATED_ROW)
+    assert failed(by_hand.scores()) == {"document-shows-not-confirmed"}
+    # Wrong: no dish recorded; the dish recorded twice; nothing done at all.
+    none = allergens_run("allergen-not-inferred", tmp_path / "none", None)
+    assert failed(none.scores()) == {"dish-recorded", "document-shows-not-confirmed"}
+    twice = allergens_run("allergen-not-inferred", tmp_path / "twice", dish(GIVEN) + dish(GIVEN, number="02"))
+    assert failed(twice.scores()) == {"no-second-dish"}
+    nothing = Run("allergen-not-inferred", tmp_path / "nothing")
+    assert failed(nothing.scores()) == {"worksheet-made", "dish-recorded", "document-written", "document-is-draft",
+                                        "document-shows-not-confirmed", "helper-check-run"}
+    # Wrong: the web, by the command or by a subagent it started; the helper's output sent outside the project.
+    for tool, data, parent in [("WebSearch", {"query": "Copperleaf mayonnaise allergens"}, None),
+                               ("WebFetch", {"url": "https://example.com/mayonnaise", "prompt": "allergens"}, None),
+                               ("WebSearch", {"query": "does tuna mayonnaise contain mustard"}, "toolu_agent")]:
+        looked = allergens_run("allergen-not-inferred", tmp_path / f"web-{tool}-{parent}", dish(GIVEN))
+        looked.calls.append({"name": tool, "input": data, "parent": parent})
+        assert failed(looked.scores()) == {"no-web-search" if tool == "WebSearch" else "no-web-fetch"}, (tool, parent)
+    away = allergens_run("allergen-not-inferred", tmp_path / "away", dish(GIVEN))
+    away.called("Bash", {"command": 'node "$H" render --doc FOODALG --project $P > /tmp/foodalg-body.md', "description": "Render the body"})
+    assert failed(away.scores()) == {"nothing-sent-outside-the-project-from-the-shell"}
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_allergen_recorded_as_stated_is_graded_as_it_reads(tmp_path):
+    # Right: the dish as stated; its evidence on one line; its cells and PPDS in another letter case, which the helper
+    # accepts and the document prints in its own.
+    sheet_path = lambda run: run.project / "food-safety" / "answers-allergens.md"
+    for name, values in [("right", STATED_DISH), ("one-line", {**STATED_DISH, "Checked-against": "; ".join(ALLERGEN_LABELS)}),
+                         ("cased", {**STATED_DISH, "PPDS": "No", **{f: v.capitalize() for f, v in AS_STATED.items()}})]:
+        right = allergens_run("allergen-recorded-as-stated", tmp_path / name, dish(values))
+        assert failed(right.scores()) == set(), name
+        assert STATED_ROW in (right.project / "ARC-001-FOODALG-v1.0.md").read_text(encoding="utf-8")
+    # Wrong: any one cell left empty, or holding the other value. The document prints the same fault.
+    for field in ALLERGEN_FIELDS:
+        other = "does not contain" if AS_STATED[field] == "contains" else "contains"
+        for value in ["", other]:
+            wrong = allergens_run("allergen-recorded-as-stated", tmp_path / f"{field}-{value[:4] or 'empty'}", dish({**STATED_DISH, field: value}))
+            assert failed(wrong.scores()) == {f"cell-{field.lower()}-{AS_STATED[field].replace(' ', '-')}", "document-prints-the-dish-as-stated"}, (field, value)
+    # Wrong: the dish left proposed from the request, or held as unanswered; the document then shows it as not confirmed.
+    for state, source in [("proposed", "the request, from Sam Okafor"), ("unanswered", "")]:
+        held = allergens_run("allergen-recorded-as-stated", tmp_path / state, dish({**STATED_DISH, "State": state, "By": "", "On": "", "Source": source}))
+        assert failed(held.scores()) == {"confirmed-in-the-owners-name", "document-prints-the-dish-as-stated"}, state
+    # Wrong: confirmed in a name the request did not give. (The request states all fourteen cells, so there is no cell
+    # it left unstated to fill in.)
+    other = allergens_run("allergen-recorded-as-stated", tmp_path / "other-name", dish({**STATED_DISH, "By": "Priya Shah"}))
+    assert failed(other.scores()) == {"confirmed-in-the-owners-name"}
+    # Wrong: Checked-against emptied after the document was written, or without the bread's label; Checked-on, the
+    # ingredients or PPDS not as given.
+    emptied = allergens_run("allergen-recorded-as-stated", tmp_path / "emptied", dish(STATED_DISH))
+    emptied.edit(sheet_path(emptied), "Checked-against: " + STATED_DISH["Checked-against"] + "\n", "Checked-against:\n")
+    assert failed(emptied.scores()) == {"checked-against-names-the-four-labels"}
+    for name, values, grader in [("no-bread-label", {**STATED_DISH, "Checked-against": "\n  ".join(ALLERGEN_LABELS[1:])}, "checked-against-names-the-four-labels"),
+                                 ("other-day", {**STATED_DISH, "Checked-on": "2026-11-21"}, "checked-on-as-given"),
+                                 ("no-butter", {**STATED_DISH, "Ingredients": ", ".join(ALLERGEN_PRODUCTS[:3])}, "ingredients-as-given"),
+                                 ("ppds-yes", {**STATED_DISH, "PPDS": "yes"}, "ppds-as-given")]:
+        wrong = allergens_run("allergen-recorded-as-stated", tmp_path / name, dish(values))
+        assert failed(wrong.scores()) == {grader}, name
+    # Wrong: a note or a "free from" statement nobody gave. The document marks a dish with notes, and that alone does not
+    # fail the row.
+    for field, value in [("Notes", "Tuna is a fish."), ("Free-from-claim", "Nut free")]:
+        added = allergens_run("allergen-recorded-as-stated", tmp_path / field, dish({**STATED_DISH, field: value}))
+        assert failed(added.scores()) == {"no-note-or-claim-added"}, field
+    # Wrong: the document's row changed by hand; a second dish; nothing done at all.
+    by_hand = allergens_run("allergen-recorded-as-stated", tmp_path / "by-hand", dish(STATED_DISH))
+    by_hand.edit(by_hand.project / "ARC-001-FOODALG-v1.0.md", STATED_ROW, STATED_ROW.replace("| does not contain |", "| contains |", 1))
+    assert failed(by_hand.scores()) == {"document-prints-the-dish-as-stated"}
+    twice = allergens_run("allergen-recorded-as-stated", tmp_path / "twice", dish(STATED_DISH) + dish(GIVEN, "Cheese toastie", "02"))
+    assert failed(twice.scores()) == {"no-second-dish"}
+    nothing = Run("allergen-recorded-as-stated", tmp_path / "nothing")
+    expected = {g["_name"] for g in nothing.case["_graders"]} - {"no-second-dish", "no-note-or-claim-added", "no-web-search", "no-web-fetch",
+                                                               "nothing-written-outside-the-project", "nothing-sent-outside-the-project-from-the-shell"}
+    assert failed(nothing.scores()) == expected and len(expected) == 25
+    # Wrong: the web, and the helper's output kept outside the project.
+    for tool in ["WebSearch", "WebFetch"]:
+        looked = allergens_run("allergen-recorded-as-stated", tmp_path / f"web-{tool}", dish(STATED_DISH))
+        looked.called(tool, {"query": "Copperleaf mayonnaise mustard"} if tool == "WebSearch" else {"url": "https://example.com", "prompt": "x"})
+        assert failed(looked.scores()) == {"no-web-search" if tool == "WebSearch" else "no-web-fetch"}, tool
+    away = allergens_run("allergen-recorded-as-stated", tmp_path / "away", dish(STATED_DISH))
+    away.called("Write", {"file_path": "/tmp/foodalg.md", "content": "the document"})
+    assert failed(away.scores()) == {"nothing-written-outside-the-project"}
+
+
 @pytest.mark.parametrize("name", ["unanswered-stays-unanswered", "answers-are-recorded", "special-process-not-written-up", "supplied-procedure-recorded",
-                                  "sign-off-recorded", "sign-off-refused-when-unfinished", "one-question-at-a-time"])
+                                  "sign-off-recorded", "sign-off-refused-when-unfinished", "one-question-at-a-time",
+                                  "allergen-not-inferred", "allergen-recorded-as-stated"])
 def test_a_case_that_writes_documents_fails_anything_sent_outside_the_project(name):
     """T3 and V5: the two graders are in each case whose command runs the helper, and read a command line as they should."""
     runner = eval_runner()
