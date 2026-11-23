@@ -74,7 +74,7 @@ It never ends with a header that reads `APPROVED` on a document that `status` do
 | Cleaning schedule | `FOODCS` | `/arckit:uk-food-cleaning-schedule` |
 | Suppliers and contacts | `FOODSUP` | `/arckit:uk-food-suppliers` |
 
-The completion record, `FOODCMP`, is a report and is not signed off: each document it lists is signed off on its own. The diary and record sheets, `FOODREC`, written by the record sheets command, `uk-food-record-sheets`, are never signed off either: they are blank forms for people at the business to print and fill in by hand, so they hold nothing of the business's for anyone to confirm. The helper refuses both.
+The completion record, `FOODCMP`, is a report and is not signed off: each document it lists is signed off on its own. The diary and record sheets, `FOODREC`, written by the record sheets command, `uk-food-record-sheets`, are never signed off either: they are blank forms, which people at the business fill in and sign themselves as they use them. The helper refuses both.
 
 ## Process
 
@@ -88,7 +88,7 @@ Use, in this order: the project the request names, by number (`001`) or by name;
 
 ### 3. Know what is to be signed, and by whom
 
-- **The document**, by code or by name (profile; cross-contamination or `XC`; cleaning or `CL`; chilling or `CH`; cooking or `CK`; management or `MG`; own methods or `own`; allergen information or allergens; cleaning schedule; suppliers and contacts, or suppliers). Cleaning on its own is the Cleaning safe methods, `FOODCLN`; the cleaning schedule is `FOODCS`. If it is not clear which of the two the person means, ask; with nobody to answer, stop without recording anything. One document per run, unless the person names several; then sign each in turn, as below.
+- **The document**, by code or by name (profile; cross-contamination or `XC`; cleaning or `CL`; chilling or `CH`; cooking or `CK`; management or `MG`; own methods or `own`; allergen information or allergens; cleaning schedule; suppliers and contacts, or suppliers). Cleaning on its own is the Cleaning safe methods, `FOODCLN`; the cleaning schedule is `FOODCS`. If it is not clear which of the two the person means, ask which (where you have a tool that shows a question with its options to choose from, use it, with the two documents as the options and none marked as recommended); with nobody to answer, stop without recording anything. One document per run, unless the person names several; then sign each in turn, as below.
 - **A general request** ("sign everything off") is not enough. Run `node "${CLAUDE_PLUGIN_ROOT}/scripts/uk-food.mjs" status --project PROJECT --json` and list each document not yet signed off, with its file and version, and the name and role you would record for each; then ask which to record. With nobody to answer, stop without recording anything.
 - **The person's name and role** must be in the request that runs this command. If either is missing, ask for it. With nobody to answer, stop without recording anything. Never take a name or role from git, from the plugin's configuration (`organisation_name` names an organisation, not a person), from a document or from a worksheet: a sign-off records what that person says, so only they can give it.
 - **Whose sign-off.** Record a sign-off only in the name of the person making the request. If the request asks you to sign for someone else ("sign it off for Sam"), say that Sam has to do it themselves, because a sign-off is that person's own statement that they have read the document, and record nothing.

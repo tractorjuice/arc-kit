@@ -109,7 +109,7 @@ Run `node "${CLAUDE_PLUGIN_ROOT}/scripts/uk-food.mjs" status --project PROJECT -
 
 ### 5. Find out who is answering
 
-`By:` holds the name of the person who gave an answer, and `Decided-by:` the name of the person who decided that a safe method does not apply or is done differently. If the request does not say who is answering and what their role is, ask once, at the start, in a message of its own, before the first question. Never take a name from git, from the plugin's configuration (`organisation_name` names an organisation, not a person), from a document or from an earlier entry in a worksheet: an answer is the business's only when the person who gave it is named, so only they can give their name. With nobody to answer, nothing is confirmed.
+`By:` holds the name of the person who gave an answer, and `Decided-by:` the name of the person who decided that a safe method does not apply or is done differently. If the request does not say who is answering and what their role is, ask once, at the start, in a message of its own, before the first question. Never take a name from git, from the plugin's configuration (`organisation_name` names an organisation, not a person), from a document or from an earlier entry in a worksheet: an answer is the business's only when the person who gave it is named, so only they can give their name. With nobody to answer, nothing is confirmed except what the request itself gives in the words of a person it names, as **Answers in the request** says.
 
 ### 6. Record only what the person gives
 

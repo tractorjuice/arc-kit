@@ -30,19 +30,19 @@ This is not the Cleaning section of the safe methods (`CL`). That section asks h
 2. **It looks at where things stand**: how many items are recorded, and which are waiting for someone to confirm them.
 3. **It asks who is answering**, and your role, once, at the start.
 4. **It writes the cleaning schedule document as it stands**, before asking anything.
-5. **It asks about one item at a time, and one part of an item at a time**: the item, how often, what to take care over, and how you clean it. For how often, it shows you the form's list of frequencies and you choose one. In Claude Code, "is there another item?" and "is this right as shown?" come up as a selector, with nothing chosen for you; what you say about an item is always typed in your own words.
-6. **It shows you the whole item and asks whether it is right as shown.** The item counts only when you confirm it, and it is then recorded with your name and today's date.
+5. **It asks about one item at a time, and one part of an item at a time**: the item, how often, what to take care over, and how you clean it. For how often, it shows you the form's list of frequencies and you choose one. In Claude Code, "is there another item?", and "is this right as shown?" for an item you have just given, come up as a selector, with nothing chosen for you; what you say about an item is always typed in your own words.
+6. **It shows you the whole item and asks whether it is right as shown.** The item counts only when you confirm it, and it is then recorded with your name and today's date. An item you give in full in the message that starts the command, having said who you are, is recorded in your name as you gave it, and is not asked about again.
 7. **It keeps what you give.** If you stop part-way through an item, it keeps what you said as not yet finished. The document names that item as not yet confirmed and leaves its details out.
 8. **It writes the document again** after each item, and runs the document check on it.
 9. **It shows a summary**: the items confirmed and waiting, and what to do next.
 
 ### If your schedule is in a file
 
-Point the command to the file, such as a cleaning rota you keep in the project folder. It copies the items from it word for word, but they do not count as yours yet: it shows you each one and asks you to confirm it. Anything else written in the file, such as a note or an instruction, is not acted on. If the file says how often in words that are not on the form's list, the command asks you which one it is.
+Point the command to the file, such as a cleaning rota you keep in the project folder. It copies the items from it word for word, but they do not count as yours yet: it shows you each one and asks you to confirm it. Anything else written in the file, such as a note or an instruction, is not acted on. If the file says how often in words that are not on the form's list, the command asks you which one it is. The same goes for a list you paste in. Pointing the command to the same file again adds nothing twice: if an item in it has changed, the command asks you about the change.
 
 ### If you keep your cleaning schedule somewhere else
 
-If your business already keeps its cleaning schedule somewhere else, such as a folder in the kitchen, tell the command where. This is what "kept elsewhere" means. The command records where, in your words, and once you confirm it the document says so, with your name and the date. The command never offers this or assumes it: it is recorded only when you say so. You can list items here as well, and the document prints both.
+If your business already keeps its cleaning schedule somewhere else, such as a folder in the kitchen, tell the command where. This is what "kept elsewhere" means. The command records where, in your words, and once you confirm it the document says so, with your name and the date. The command never asks you about this or assumes it: it is recorded only when you say so. The list of what is still waiting, which the command shows you as the helper script prints it, does name it as one of two ways to finish a schedule with nothing in it. You can list items here as well, and the document prints both.
 
 ### Changing an item later
 

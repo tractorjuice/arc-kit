@@ -11,7 +11,7 @@ may need to contact.
 Kind is supplier, contact or environmental-health. There is one environmental-health entry at most.
 Write the business's or service's name after the entry's number: for the environmental health team, what
 you call it, such as the council's name. Contact-name is the person to ask for.
-Delivery-days is the days a supplier delivers, in your own words, such as Monday and Thursday. Lead-time is
+Delivery-days is the days a supplier delivers, in your own words. Lead-time is
 how far ahead an order has to be placed, in your own words. Goods-supplied is what the supplier supplies.
 Useful-for is what a contact is useful for advice on, in your own words. The environmental health team's
 box lists what the pack says the team advises on, so its Useful-for stays empty.

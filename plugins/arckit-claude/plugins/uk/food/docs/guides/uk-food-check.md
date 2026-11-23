@@ -10,7 +10,7 @@ This overlay is for small catering businesses in England and Wales. It is not le
 
 It tells you, for each document:
 
-- how many of its questions are confirmed, out of how many, and how many are proposed and waiting for a named person to confirm them;
+- how many of its questions, or for a list such as the cleaning schedule its entries, are confirmed, out of how many, and how many are proposed and waiting for a named person to confirm them;
 - whether the document has been written, and whether it is in step with its worksheet, or what is wrong with it;
 - whether it has been signed off, and if so by whom, in what role and on what date.
 
@@ -71,6 +71,8 @@ What moves each item on:
 | Profile questions not yet answered or only proposed | `/arckit-uk-food:uk-food-profile` |
 | Section questions not yet answered or only proposed | `/arckit-uk-food:uk-food-safe-methods` with the section's code, such as `XC` |
 | Own entries, special processes, environmental health reviews | `/arckit-uk-food:uk-food-own-methods` |
+| Cleaning schedule items not yet confirmed, or none recorded | `/arckit-uk-food:uk-food-cleaning-schedule` |
+| Suppliers and contacts not yet confirmed, or none recorded, or no environmental health team | `/arckit-uk-food:uk-food-suppliers` |
 | A document not written yet, or out of date | The command that writes that document |
 | A finished document not yet signed off | `/arckit-uk-food:uk-food-sign-off` |
 

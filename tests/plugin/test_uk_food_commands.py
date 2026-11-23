@@ -47,6 +47,9 @@ COMMANDS = {
 LISTING = ["uk-food-cleaning-schedule", "uk-food-suppliers"]
 # The commands that gather answers and write a rendered document from them.
 GATHERING = ["uk-food-profile", "uk-food-safe-methods", "uk-food-own-methods", *LISTING]
+# The worksheets each gathering command puts to the person.
+SECTIONS_ASKED = {"uk-food-profile": ["profile"], "uk-food-safe-methods": ["XC", "CL", "CH", "CK", "MG"], "uk-food-own-methods": ["own"],
+                  "uk-food-cleaning-schedule": ["cleaning"], "uk-food-suppliers": ["suppliers"]}
 # The commands that write a rendered document.
 WRITING = [*GATHERING, "uk-food-check"]
 # Each document code, and the template its command builds it from.
@@ -329,6 +332,14 @@ def test_frontmatter(name):
     assert isinstance(front["argument-hint"], str) and front["argument-hint"].strip(), name
     assert front["effort"] == "high", name
     assert front["keep-coding-instructions"] is True, name
+    # Review round 1, M10: the suppliers command looks nobody up, and where the runtime takes the field it cannot. The converter
+    # strips the field for other tools, which rely on the sentence in the body.
+    if name == "uk-food-suppliers":
+        assert front["disallowed-tools"] == ["WebSearch", "WebFetch"], name
+    else:
+        assert "disallowed-tools" not in front, name
+    # Review round 1, I3: Kept elsewhere is never offered, the argument hint included.
+    assert "keeps its" not in front["argument-hint"] and "where it keeps" not in front["argument-hint"], name
 
 
 @pytest.mark.parametrize("name", COMMANDS)
@@ -496,6 +507,9 @@ GATHERING_RULES = {
                                                                "record it afterwards as **The person's own words** says.",
     "J3: nothing is recorded in a worksheet not brought up to date": "Record nothing in a worksheet that has not been brought up to "
                                                                      "date, and write no document from it",
+    "10A review, I2: with nobody to answer, only a named request is confirmed": "With nobody to answer, nothing is confirmed except "
+                                                                               "what the request itself gives in the words of a "
+                                                                               "person it names, as **Answers in the request** says.",
     "J3: what is left unrecorded is said": "say which of the request's answers that leaves unrecorded, and carry on with whatever "
                                            "does not need that worksheet",
 }
@@ -664,6 +678,8 @@ def test_no_command_keeps_the_wording_the_review_found_wrong(name):
                  # H8: the clause that led a marking slip to a signed document whose header read DRAFT.
                  "your edit changed something other than those rows: put it back exactly as it was",
                  "must now be true",
+                 # 10A review, I2: the shared sentence that said nothing is confirmed, against Answers in the request.
+                 "With nobody to answer, nothing is confirmed.",
                  "a new version is written only when a file a person signed is out of step",
                  # V3: a refusal or an early stop can leave a header that reads APPROVED, which the not-marked end now puts back.
                  "nothing was recorded and the header was never touched", "reads `DRAFT` and `[PENDING]` again",
@@ -1161,12 +1177,36 @@ LIST_RULES = {
                                   "your own.",
         "with nobody to answer": "With nobody to answer (the request says the run is unattended, or you are working inside a build), "
                                  "skip this step: the document already written is the result.",
-        "the request's own entries": "an entry or a Kept elsewhere that the request itself gives is recorded before the document is "
-                                     "first written under **Write the document as it stands**",
+        # Review round 1, M2: recorded in step 4, which a model working in order reaches before the first write.
+        "the request's own entries": "**What the request gives is recorded now**, before the document is first written under **Write "
+                                     "the document as it stands**, whether or not anybody is there to answer",
+        "a named request's whole entry is confirmed": "An entry the request gives whole, with everything **What each entry needs** "
+                                                      "lists, in the words of a person the request names, counts as given and agreed by "
+                                                      "that person",
+        "kept elsewhere from the request only as said": "Kept elsewhere is recorded from the request only where the request itself "
+                                                        "says the business keeps this list somewhere else, with where",
+        "and is not asked again": "was recorded `confirmed` in step 4 and is not asked about again",
+        "step 8 does not record it again": "What the request itself gave was recorded in step 4.",
+        # Review round 1, I1: confirming is stated one way.
+        "one way of confirming": "Only an entry a named person at the business agreed as a whole in this conversation, or gave whole "
+                                 "in the request, is `confirmed`",
+        # Review round 1, I3: the helper's line that names Kept elsewhere is shown, never offered.
+        "the helper's line is shown, not offered": "show that line unchanged where the summary says, and never put it to the person as "
+                                                   "a question or an offer",
+        "following the helper never offers it": "except that a line naming Kept elsewhere as a way to finish is only shown, never put "
+                                                "to the person",
+        # Review round 1, M3, M4 and M8.
+        "several entries at once": "If the person gives several entries at once, typed or pasted, take them one entry at a time, in "
+                                   "the order given.",
+        "pasted text is shown and confirmed": "Either way, each entry is shown whole and confirmed before it counts.",
+        "a file pointed to again": "already in the worksheet under the same name is not added again: where the file says something "
+                                   "different about it, put the difference to the person as a change",
+        "no safe method to mark": "a list entry has no safe method to mark as not applying",
         "written after each entry": "After each entry, and when the person stops part-way through one, write the document again.",
         "what the document shows": "Only a confirmed entry, and a confirmed Kept elsewhere, is printed in the document; any other "
                                    "is named there as not yet confirmed, with its contents left out.",
-        "no recommended mark here": "This command puts no such question, so nothing it asks is marked as recommended.",
+        "no recommended mark here": "No option it shows is marked as recommended, and an option the person did not choose is never "
+                                    "recorded.",
     },
     "uk-food-cleaning-schedule": {
         "never suggest": "Never suggest an item, a method, a chemical, a product, a frequency, a dilution or a contact time, and "
@@ -1178,8 +1218,12 @@ LIST_RULES = {
                                                               "comment lists them, and ask which one it is",
         "not typed out": "Do not list them yourself, and never suggest one.",
         "Other in the person's words": "If it is `Other`, ask next how often, in their words, for `Other-frequency`",
-        "a frequency from a file only as spelt": "A frequency in a file is recorded only where it is one of the frequencies exactly as "
-                                                 "the guidance comment spells them",
+        "a frequency from a file only as spelt": "A frequency in a file is recorded only where it is one of the frequencies spelt as "
+                                                 "the guidance comment spells them, whatever the letter case",
+        # Review round 1, I4: the same for a frequency in the request.
+        "a frequency from the request only as spelt": "A frequency in the request is recorded as one in a file is: only where it is one "
+                                                      "of the frequencies spelt as the guidance comment spells them",
+        "otherwise it waits": "Otherwise `Frequency` stays empty, and the entry is held as `unanswered` until the person chooses one.",
     },
     "uk-food-suppliers": {
         "the team is its own entry": "**The environmental health team** is asked for as an entry of its own",
@@ -1192,6 +1236,12 @@ LIST_RULES = {
         "one team entry": "a second is not added",
         "kind is the person's": "record `supplier`, `contact` or `environmental-health` as the person says, never choosing it for them",
         "fields of another kind": "A field that is not for the entry's kind is never asked for and stays empty",
+        # Review round 1, I4: a Kind from the request, and the field's question covers it.
+        "a kind from the request only as said": "An entry from the request takes a `Kind` only where the request itself says which of "
+                                                "the three it is",
+        "or it is asked": "For any other entry, including one from the request or a file that does not say which it is, ask whether",
+        "details in the request as given": "A name, a telephone number, an email address or an address in the request is recorded "
+                                           "exactly as it stands there",
     },
 }
 
@@ -1211,9 +1261,20 @@ def test_each_list_command_has_its_own_rules():
 @pytest.mark.parametrize("name", LISTING)
 def test_a_list_command_asks_its_fields_in_plain_text_and_never_types_the_packs_choices(name):
     """The shared block asks every field of an entry in plain text. Nothing in a list command's own step may say a field
-    goes to the selector, and the cleaning schedule's frequencies are the pack's words, read from the guidance comment."""
+    goes to the selector: no sentence of the step that names the selector names one of the list's fields. The cleaning
+    schedule's frequencies are the pack's words, read from the guidance comment."""
     step = block(split(command(name))[1], ASKING_STEP[name])
     assert "`Confirm` and `Not yet`" in step and "`Yes` and `No`" in step
+    section = "cleaning" if name == "uk-food-cleaning-schedule" else "suppliers"
+    sheet = worksheet(section)
+    example = re.search(rf"^## {'CS' if section == 'cleaning' else 'SUP'}-01 .*?^-->", sheet, re.M | re.S).group(0)
+    fields = re.findall(r"^([A-Z][A-Za-z-]+):", example, re.M)
+    fields = [f for f in fields if f not in {"State", "By", "On", "Source"}]
+    assert len(fields) >= 4, fields
+    for sentence in sentences(step):
+        if "selector" in sentence.lower():
+            named = [f for f in fields if f"`{f}`" in sentence or f.lower() in sentence.lower().split()]
+            assert not named, f"{name}: a sentence on the selector names a field: {named}: {sentence[:160]}"
     for frequency in ["After use", "Every shift"]:
         assert frequency not in command(name).read_text(encoding="utf-8"), f"{name} types the pack's frequency {frequency!r}"
 
@@ -1318,8 +1379,18 @@ def test_no_command_sends_its_reader_to_the_interview_pattern(name):
 
 @pytest.mark.parametrize("name", GATHERING)
 def test_the_note_on_the_pattern_says_what_the_selector_may_and_may_not_do(name):
+    """A command that puts a question on which the pack sets out a method (its worksheet has a hint the recommended mark may
+    go on) says the selector may mark the pack's method. A list command puts no such question, so it says no option is
+    marked, and never that one may be (review round 1, M1). The rest may say either."""
     _, body = split(command(name))
-    assert "It may mark the pack's own method as recommended, and an option the person did not choose is never recorded." in body
+    note = "It may mark the pack's own method as recommended, and an option the person did not choose is never recorded."
+    hints = ("(yes if you do this / no)", "(yes, or say what you do instead)")
+    puts_one = any(hint in worksheet(section) for section in SECTIONS_ASKED[name] for hint in hints)
+    if puts_one:
+        assert note in body
+    if name in LISTING:
+        assert not puts_one and "pack's own method as recommended" not in body
+        assert "No option it shows is marked as recommended, and an option the person did not choose is never recorded." in body
 
 
 @pytest.mark.parametrize("name", COMMANDS)
@@ -1543,6 +1614,12 @@ def test_the_sign_off_command_names_every_document_the_helper_signs_and_the_comm
     front, _ = split(command("uk-food-sign-off"))
     assert "allergens, cleaning schedule or suppliers" in front["argument-hint"]
     assert "Cleaning on its own is the Cleaning safe methods, `FOODCLN`; the cleaning schedule is `FOODCS`." in body
+    # Review round 1, M6 and M9: the two-way question goes to the selector in the wording this command uses for a choice, and the
+    # record sheets' reason is the true one.
+    assert ("If it is not clear which of the two the person means, ask which (where you have a tool that shows a question with its "
+            "options to choose from, use it, with the two documents as the options and none marked as recommended)") in body
+    assert "they are blank forms, which people at the business fill in and sign themselves as they use them" in body
+    assert "hold nothing of the business's" not in body
 
 
 def test_the_check_command_names_the_record_sheets_and_the_list_commands():

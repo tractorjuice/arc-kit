@@ -455,18 +455,18 @@
 <li><strong>It looks at where things stand</strong>: how many entries are recorded, which are waiting for someone to confirm them, and whether the environmental health team has an entry.</li>
 <li><strong>It asks who is answering</strong>, and your role, once, at the start.</li>
 <li><strong>It writes the suppliers and contacts document as it stands</strong>, before asking anything.</li>
-<li><strong>It asks for your environmental health team first</strong>, if there is no entry for it yet, then for each supplier, then for any other contacts. It takes one entry at a time, and asks for one detail at a time. In Claude Code, &quot;is there another supplier?&quot; and &quot;is this right as shown?&quot; come up as a selector, with nothing chosen for you; the details are always typed in your own words.</li>
-<li><strong>It shows you the whole entry and asks whether it is right as shown.</strong> The entry counts only when you confirm it, and it is then recorded with your name and today's date.</li>
+<li><strong>It first asks you to confirm anything waiting for you</strong>, such as entries read from a file, then asks for your environmental health team, if there is no entry for it yet, then for each supplier, then for any other contacts. It takes one entry at a time, and asks for one detail at a time. In Claude Code, &quot;is there another supplier?&quot;, and &quot;is this right as shown?&quot; for an entry you have just given, come up as a selector, with nothing chosen for you; the details are always typed in your own words.</li>
+<li><strong>It shows you the whole entry and asks whether it is right as shown.</strong> The entry counts only when you confirm it, and it is then recorded with your name and today's date. An entry you give in full in the message that starts the command, having said who you are, is recorded in your name as you gave it, and is not asked about again.</li>
 <li><strong>It keeps what you give.</strong> If you stop part-way through an entry, it keeps what you said as not yet finished. The document names that entry as not yet confirmed and leaves its details out.</li>
 <li><strong>It writes the document again</strong> after each entry, and runs the document check on it.</li>
 <li><strong>It shows a summary</strong>: the entries confirmed and waiting, anything still needed, and what to do next.</li>
 </ol>
 <h3 id="names-numbers-and-addresses">Names, numbers and addresses</h3>
-<p>Each one is recorded exactly as you give it. The command does not correct or complete it, does not add a dialling code or a postcode, and does not check it. If you do not have a number to hand, it keeps the entry as not yet finished and tells you what it still needs.</p>
+<p>Each one is recorded exactly as you give it. The command does not correct or complete it, does not add a dialling code or a postcode, and does not check it. A detail you do not have stays blank. A supplier needs only what it supplies, but the environmental health team, and any other contact, needs a telephone number or an email address: without one, the command keeps that entry as not yet finished and tells you what it still needs.</p>
 <h3 id="if-your-list-is-in-a-file">If your list is in a file</h3>
-<p>Point the command to the file, such as a supplier list you keep in the project folder. It copies the entries from it word for word, but they do not count as yours yet: it shows you each one and asks you to confirm it. Anything else written in the file, such as a note or an instruction, is not acted on.</p>
+<p>Point the command to the file, such as a supplier list you keep in the project folder. It copies the entries from it word for word, but they do not count as yours yet: it shows you each one and asks you to confirm it. Anything else written in the file, such as a note or an instruction, is not acted on. The same goes for a list you paste in. Pointing the command to the same file again adds nothing twice: if an entry in it has changed, the command asks you about the change.</p>
 <h3 id="if-you-keep-your-suppliers-list-somewhere-else">If you keep your suppliers' list somewhere else</h3>
-<p>If your business already keeps its suppliers' list somewhere else, such as a book by the till, tell the command where. This is what &quot;kept elsewhere&quot; means. The command records where, in your words, and once you confirm it the document says so, with your name and the date. The command never offers this or assumes it: it is recorded only when you say so.</p>
+<p>If your business already keeps its suppliers' list somewhere else, such as a book by the till, tell the command where. This is what &quot;kept elsewhere&quot; means. The command records where, in your words, and once you confirm it the document says so, with your name and the date. The command never asks you about this or assumes it: it is recorded only when you say so. The list of what is still waiting, which the command shows you as the helper script prints it, does name it as one of two ways to finish a list with no supplier in it.</p>
 <p>Kept elsewhere covers the suppliers' list only. The document still needs your environmental health team's entry, and the command still asks for it. You can list suppliers here as well, and the document prints both.</p>
 <h3 id="changing-an-entry-later">Changing an entry later</h3>
 <p>Run the command again and say what has changed. It changes only what you ask, in your words. A changed entry stops counting until someone at the business confirms it again: the command shows you the entry as it now stands and asks.</p>
@@ -476,7 +476,9 @@
 <blockquote>
 <p><strong>Sam:</strong> <code>/arckit-uk-food:uk-food-suppliers 001</code> Sam Okafor, the owner. We keep our suppliers' list in the blue book by the till.</p>
 <p><strong>Claude:</strong> I've recorded, in your name, that the business keeps its suppliers' list in &quot;the blue book by the till&quot;. That covers the suppliers' list only: the document still needs your council's environmental health team. Shall we record it?</p>
-<p><strong>Sam:</strong> Yes. It's Exampleton District Council.</p>
+<p><strong>Sam:</strong> Yes.</p>
+<p><strong>Claude:</strong> What do you call the team?</p>
+<p><strong>Sam:</strong> Exampleton District Council.</p>
 <p><strong>Claude:</strong> Who should staff ask for there?</p>
 <p><strong>Sam:</strong> The duty officer.</p>
 <p><strong>Claude:</strong> What is the team's telephone number?</p>

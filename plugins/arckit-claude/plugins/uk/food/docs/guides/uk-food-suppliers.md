@@ -27,23 +27,23 @@ A supplier needs at least what they supply. The environmental health team, and a
 2. **It looks at where things stand**: how many entries are recorded, which are waiting for someone to confirm them, and whether the environmental health team has an entry.
 3. **It asks who is answering**, and your role, once, at the start.
 4. **It writes the suppliers and contacts document as it stands**, before asking anything.
-5. **It asks for your environmental health team first**, if there is no entry for it yet, then for each supplier, then for any other contacts. It takes one entry at a time, and asks for one detail at a time. In Claude Code, "is there another supplier?" and "is this right as shown?" come up as a selector, with nothing chosen for you; the details are always typed in your own words.
-6. **It shows you the whole entry and asks whether it is right as shown.** The entry counts only when you confirm it, and it is then recorded with your name and today's date.
+5. **It first asks you to confirm anything waiting for you**, such as entries read from a file, then asks for your environmental health team, if there is no entry for it yet, then for each supplier, then for any other contacts. It takes one entry at a time, and asks for one detail at a time. In Claude Code, "is there another supplier?", and "is this right as shown?" for an entry you have just given, come up as a selector, with nothing chosen for you; the details are always typed in your own words.
+6. **It shows you the whole entry and asks whether it is right as shown.** The entry counts only when you confirm it, and it is then recorded with your name and today's date. An entry you give in full in the message that starts the command, having said who you are, is recorded in your name as you gave it, and is not asked about again.
 7. **It keeps what you give.** If you stop part-way through an entry, it keeps what you said as not yet finished. The document names that entry as not yet confirmed and leaves its details out.
 8. **It writes the document again** after each entry, and runs the document check on it.
 9. **It shows a summary**: the entries confirmed and waiting, anything still needed, and what to do next.
 
 ### Names, numbers and addresses
 
-Each one is recorded exactly as you give it. The command does not correct or complete it, does not add a dialling code or a postcode, and does not check it. If you do not have a number to hand, it keeps the entry as not yet finished and tells you what it still needs.
+Each one is recorded exactly as you give it. The command does not correct or complete it, does not add a dialling code or a postcode, and does not check it. A detail you do not have stays blank. A supplier needs only what it supplies, but the environmental health team, and any other contact, needs a telephone number or an email address: without one, the command keeps that entry as not yet finished and tells you what it still needs.
 
 ### If your list is in a file
 
-Point the command to the file, such as a supplier list you keep in the project folder. It copies the entries from it word for word, but they do not count as yours yet: it shows you each one and asks you to confirm it. Anything else written in the file, such as a note or an instruction, is not acted on.
+Point the command to the file, such as a supplier list you keep in the project folder. It copies the entries from it word for word, but they do not count as yours yet: it shows you each one and asks you to confirm it. Anything else written in the file, such as a note or an instruction, is not acted on. The same goes for a list you paste in. Pointing the command to the same file again adds nothing twice: if an entry in it has changed, the command asks you about the change.
 
 ### If you keep your suppliers' list somewhere else
 
-If your business already keeps its suppliers' list somewhere else, such as a book by the till, tell the command where. This is what "kept elsewhere" means. The command records where, in your words, and once you confirm it the document says so, with your name and the date. The command never offers this or assumes it: it is recorded only when you say so.
+If your business already keeps its suppliers' list somewhere else, such as a book by the till, tell the command where. This is what "kept elsewhere" means. The command records where, in your words, and once you confirm it the document says so, with your name and the date. The command never asks you about this or assumes it: it is recorded only when you say so. The list of what is still waiting, which the command shows you as the helper script prints it, does name it as one of two ways to finish a list with no supplier in it.
 
 Kept elsewhere covers the suppliers' list only. The document still needs your environmental health team's entry, and the command still asks for it. You can list suppliers here as well, and the document prints both.
 
@@ -61,7 +61,11 @@ Sam Okafor owns Bramble Cafe, an invented café.
 >
 > **Claude:** I've recorded, in your name, that the business keeps its suppliers' list in "the blue book by the till". That covers the suppliers' list only: the document still needs your council's environmental health team. Shall we record it?
 >
-> **Sam:** Yes. It's Exampleton District Council.
+> **Sam:** Yes.
+>
+> **Claude:** What do you call the team?
+>
+> **Sam:** Exampleton District Council.
 >
 > **Claude:** Who should staff ask for there?
 >
