@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODREC data=sfbb-caterers-2026-11-17 body=68b0879a592f8720bbb9ad26dc6315517103a4a1ff729f9b4055e8ae7c723fb6 -->
+<!-- UK-FOOD:BEGIN doc=FOODREC data=sfbb-caterers-2026-11-17 body=f45d7e677f4d7267d39ea2204e7b7df99b8d208fc3ce239cd9d60c2e83aed803 -->
 
 ## Diary
 
@@ -24,6 +24,9 @@
 | Probe thermometer is working and probe wipes are available. |  |
 | Allergen information is accurate for all items on sale. |  |
 | Has cleaning been carried out according to the cleaning schedule |  |
+|  |  |
+|  |  |
+|  |  |
 
 ## Closing checks
 
@@ -38,6 +41,9 @@
 | Floors are swept and clean. |  |
 | ‘Prove it’ checks have been recorded. |  |
 | Has cleaning been carried out according to the cleaning schedule |  |
+|  |  |
+|  |  |
+|  |  |
 
 ## Extra checks
 
@@ -49,61 +55,15 @@ Extra checks are less frequent than the opening and closing checks. See the ‘E
 | --- | --- |
 | Week commencing: |  |
 
-| Monday |  |
-| --- | --- |
-| Any problems or changes – what did you do? |  |
-| Opening checks |  |
-| Closing checks |  |
-| Name |  |
-| Signed<br>Our safe methods were followed and effectively supervised today. |  |
-
-| Tuesday |  |
-| --- | --- |
-| Any problems or changes – what did you do? |  |
-| Opening checks |  |
-| Closing checks |  |
-| Name |  |
-| Signed<br>Our safe methods were followed and effectively supervised today. |  |
-
-| Wednesday |  |
-| --- | --- |
-| Any problems or changes – what did you do? |  |
-| Opening checks |  |
-| Closing checks |  |
-| Name |  |
-| Signed<br>Our safe methods were followed and effectively supervised today. |  |
-
-| Thursday |  |
-| --- | --- |
-| Any problems or changes – what did you do? |  |
-| Opening checks |  |
-| Closing checks |  |
-| Name |  |
-| Signed<br>Our safe methods were followed and effectively supervised today. |  |
-
-| Friday |  |
-| --- | --- |
-| Any problems or changes – what did you do? |  |
-| Opening checks |  |
-| Closing checks |  |
-| Name |  |
-| Signed<br>Our safe methods were followed and effectively supervised today. |  |
-
-| Saturday |  |
-| --- | --- |
-| Any problems or changes – what did you do? |  |
-| Opening checks |  |
-| Closing checks |  |
-| Name |  |
-| Signed<br>Our safe methods were followed and effectively supervised today. |  |
-
-| Sunday |  |
-| --- | --- |
-| Any problems or changes – what did you do? |  |
-| Opening checks |  |
-| Closing checks |  |
-| Name |  |
-| Signed<br>Our safe methods were followed and effectively supervised today. |  |
+|  | Any problems or changes – what did you do? | Opening checks | Closing checks | Name | Signed<br>Our safe methods were followed and effectively supervised today. |
+| --- | --- | --- | --- | --- | --- |
+| Monday |  |  |  |  |  |
+| Tuesday |  |  |  |  |  |
+| Wednesday |  |  |  |  |  |
+| Thursday |  |  |  |  |  |
+| Friday |  |  |  |  |  |
+| Saturday |  |  |  |  |  |
+| Sunday |  |  |  |  |  |
 
 | EXTRA CHECKS |  |
 | --- | --- |
@@ -132,7 +92,7 @@ You can record details of these checks below.
 |  |  |  |
 |  |  |  |
 
-One week page is printed here: print or copy it for each week. These pages are for people at the business to fill in, sign and keep: this tool does not keep the diary.
+One week page is printed here: print or copy it for each week. These pages are for people at the business to fill in, sign and keep, on paper or in a copy kept apart from this document, as writing this document again prints these forms afresh and anything filled in here would be lost. This tool does not keep the diary.
 
 This is Bramble Cafe's own food safety record. It is not legal advice. The food business operator is responsible for it, and the local council's environmental health team is the authority on whether it is adequate.
 

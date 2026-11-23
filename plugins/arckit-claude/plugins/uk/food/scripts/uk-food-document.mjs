@@ -148,6 +148,9 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'allergens', 'cleani
 //   in by hand. Nobody signs it and it asks nothing, so it is not in status among the documents to finish;
 //   status says only whether it is written and in step, in its own key (recordSheets) and in the unfinished
 //   list (RECORD_SHEETS). One row at most, never in status, never signed off, with no render of its own.
+// - remedies, on the blank forms' row and no other: what check says to do about a fault, where the shared words
+//   would send a person to a worksheet of the document's own, which it has none of: { advice, the line check's
+//   message ends with in place of CHECK_ADVICE; stale, edited(line) and markers(detail), the reason for each kind }.
 // - nobodySigns and signOffRefusal, on every row nobody signs: how a header claim and sign-off say so.
 // A new worksheet is added to SHEET_ORDER, at the place it is to be read (and to the worksheet module,
 // which makes and parses it). A row may use only worksheets SHEET_ORDER lists; status reads each
@@ -164,6 +167,23 @@ const unanswered = (line) => line.includes(UNANSWERED);
 const packSource = (data) => sourceLine(data.source);
 const COMPLETION_STALE = 'this completion record is out of date: it no longer matches the project\'s worksheets, documents ' +
   'and sign-offs, or it was edited. It is generated, so it is not changed by hand: render it again.';
+// What check says to do about a fault in the record sheets, in place of the shared words, which send a person to the
+// document's own worksheet: the record sheets have none. What a person changes there by hand is most likely a form filled
+// in, or a check of the pack's taken out, and neither can be made in any worksheet; and writing the document again, the
+// only remedy, replaces everything between the markers, so what was typed there is copied out first. The business's own
+// checks are the one thing in them a worksheet holds. FORMS_AFRESH says why, and FORMS_REMEDY what to do instead, in the
+// words a status line and check's message share.
+const FORMS_AFRESH = 'its forms are printed afresh each time it is written, and writing it again replaces everything between its UK-FOOD markers';
+const FORMS_REMEDY = 'fill in a printed page, or a copy kept apart from this file, never this file itself; copy anything already filled in it ' +
+  'to such a copy first; add or change the business\'s own opening and closing checks in the Management safe methods worksheet; then ' +
+  'write the document again';
+const RECORD_SHEETS_REMEDIES = {
+  advice: 'This document is printed afresh each time it is written, and writing it again replaces everything between its UK-FOOD markers: ' +
+    `${FORMS_REMEDY}.`,
+  stale: 'is out of date, as a worksheet it is written from has changed since: write it again',
+  edited: (line) => `was changed between its UK-FOOD markers, at line ${line}, but ${FORMS_AFRESH}: ${FORMS_REMEDY}`,
+  markers: (detail) => `has its UK-FOOD markers missing or damaged (${detail}), and ${FORMS_AFRESH}: ${FORMS_REMEDY}`
+};
 
 // A section document: the pack's section `section`, with the business's answers from its worksheet.
 function sectionDocument(code, section) {
@@ -275,6 +295,7 @@ export let DOCUMENTS = [
     code: 'FOODREC', name: () => 'Diary and record sheets', sheet: null, uses: ['profile', 'MG'], needs: ['profile'], dataNeeded: null,
     signable: false, inStatus: false, chunks: (sources, data) => recordSheetsChunks(sources, data), source: (data) => recordSheetsSource(data),
     unfinishedLine: () => false, asks: null, nouns: null, entries: false, blankForms: true, lacking: (data) => recordSheetsLacking(data),
+    remedies: RECORD_SHEETS_REMEDIES,
     nobodySigns: 'the diary and record sheets are blank forms for people at the business to fill in and sign, so the document itself ' +
       'is never signed off',
     signOffRefusal: 'FOODREC, the diary and record sheets, is not signed off: it is a set of blank forms, for people at the business to ' +
@@ -330,6 +351,12 @@ function tableProblems(rows, sheets) {
       fault('blankForms', 'is on a row in status, signed off or with a renderer of its own, where blank forms are none of these');
     } else if (row.blankForms && rows.findIndex((other) => other.blankForms) !== i) {
       fault('blankForms', 'is another row\'s too: status reports one document of blank forms, as the record sheets');
+    }
+    // Blank forms have no worksheet of their own, so check's shared words for a fault would send a person to one.
+    const remedies = row.remedies;
+    if (remedies !== undefined && !row.blankForms) fault('remedies', 'is given on a row that is not blank forms, whose own worksheet check\'s words name');
+    else if (row.blankForms && !(isText(remedies?.advice) && isText(remedies?.stale) && isFunction(remedies?.edited) && isFunction(remedies?.markers))) {
+      fault('remedies', 'does not give the advice, stale, edited and markers words check gives blank forms, which have no worksheet of their own');
     }
     // Status lists every document but these two, and says nothing of any other row left out of it.
     if (!row.inStatus && row.render === undefined && !row.blankForms) {
@@ -1247,8 +1274,8 @@ function claimsOf(header) {
 
 // The first thing a document says about sign-off, outside its body, that no sign-off record bears out,
 // as { line, message, reason }, or null. The file is `name`, a document of code `doc`.
-// - A document nobody signs (its row's signable is false: the completion record, a report) says nothing
-//   but DRAFT and [PENDING]. Its row's nobodySigns says why.
+// - A document nobody signs (its row's signable is false: the completion record, a report, and the record
+//   sheets, blank forms) says nothing but DRAFT and [PENDING]. Its row's nobodySigns says why.
 // - With no sign-off recorded for this file and version, so does any other document. This is what
 //   stops a document reading as approved, with a name, when nobody signed it: a status promoted by
 //   hand, or a signed version's header copied into the next version.
@@ -1268,7 +1295,7 @@ function headerClaim(doc, name, header, records, unfinished = false) {
   const mine = unfinished ? null : recorded;
   const claims = claimsOf(header);
   const { signable, nobodySigns: nobody } = documentOf(doc) ?? {};
-  const report = signable === false;
+  const unsigned = signable === false;
   // Why a claim on this file has no sign-off behind it, as a message says it and as a reason does.
   const [none, noneOfIt] = recorded
     ? ['the document still shows a question not yet answered or an entry not yet confirmed, and one that does is never signed off',
@@ -1276,7 +1303,7 @@ function headerClaim(doc, name, header, records, unfinished = false) {
     : ['no sign-off is recorded for this file', 'no sign-off is recorded for it'];
   for (const { field, line, value, typed } of claims.rows) {
     const says = `${field} is "${value}"`;
-    if (report) {
+    if (unsigned) {
       return { line, message: `this line says ${says}, but ${nobody}. ${sentence(PUT_BACK)}.`,
         reason: `says in its header, at line ${line}, that ${says}, though ${nobody}: ${PUT_BACK}` };
     }
@@ -1310,10 +1337,10 @@ function headerClaim(doc, name, header, records, unfinished = false) {
     const { line } = row;
     const which = row.version ? `version ${row.version}` : 'a version';
     const untaken = unfinished && row.version === version;
-    const signed = report || untaken ? null : signings.filter((record) => record.version === row.version).at(-1) ?? null;
+    const signed = unsigned || untaken ? null : signings.filter((record) => record.version === row.version).at(-1) ?? null;
     const back = 'put that row\'s Approved By and Approval Date back to [PENDING]';
     if (!signed) {
-      const why = report ? nobody : untaken && recorded ? none : 'no sign-off is recorded for that version';
+      const why = unsigned ? nobody : untaken && recorded ? none : 'no sign-off is recorded for that version';
       return { line, message: `this row of the Revision History says ${which} was approved ("${row.value}"), but ${why}. ` +
         `${sentence(back)}.`,
       reason: `says in its Revision History, at line ${line}, that ${which} was approved ("${row.value}"), though ${why}: ${back}` };
@@ -1422,10 +1449,14 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
   }
   const lines = documentLines(text);
   const body = findBody(lines, doc);
+  // A document of blank forms (its row's remedies) has no worksheet to write it again from, and is told what to do in its
+  // own words, in the message as in the reason; any other is sent to its worksheet.
+  const remedies = documentOf(doc)?.remedies;
   if (body.problem) {
-    return { exit: 1, ok: false, kind: 'markers', line: body.line, message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}`,
-      reason: `has its UK-FOOD markers missing or damaged (${body.problem}${body.line ? `, at line ${body.line}` : ''}): write the ` +
-        'document again from its worksheet' };
+    const detail = `${body.problem}${body.line ? `, at line ${body.line}` : ''}`;
+    return { exit: 1, ok: false, kind: 'markers', line: body.line,
+      message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}${remedies ? `\n${remedies.advice}` : ''}`,
+      reason: remedies ? remedies.markers(detail) : `has its UK-FOOD markers missing or damaged (${detail}): write the document again from its worksheet` };
   }
   const header = headerOf(lines, body);
   const inner = lines.slice(body.begin, body.end - 1);
@@ -1492,8 +1523,8 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
     const { outOfDate } = documentOf(doc);
     let kind = 'edited';
     let what = `this line is not what a fresh render of ${doc} gives.`;
-    let reason = `was changed between its UK-FOOD markers, at line ${line}: make the change in its worksheet instead, and write ` +
-      'the document again from its worksheet';
+    let reason = remedies ? remedies.edited(line) : `was changed between its UK-FOOD markers, at line ${line}: make the change in its ` +
+      'worksheet instead, and write the document again from its worksheet';
     if (outOfDate) {
       kind = 'stale';
       what = outOfDate.message;
@@ -1501,12 +1532,13 @@ export function checkDocument(doc, project, report, data, signOffs = readSignOff
     } else if (intact) {
       kind = 'stale';
       what = 'the worksheets have changed since this body was rendered: render the document again.';
-      reason = 'is out of date, as its worksheets have changed since it was written: write the document again from its worksheet';
+      reason = remedies ? remedies.stale : 'is out of date, as its worksheets have changed since it was written: write the document again from ' +
+        'its worksheet';
     }
     const [want, got] = [expected[at] ?? '', region[at] ?? ''];
     const { column, expectedChar, foundChar } = firstDifference(want, got);
     return failed(kind, line, `${what} The lines first differ at column ${column}, where the render has ${expectedChar} ` +
-      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}` + (outOfDate ? '' : `\n${CHECK_ADVICE}`),
+      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}` + (outOfDate ? '' : `\n${remedies?.advice ?? CHECK_ADVICE}`),
     reason, { column, expected: want, found: got, expectedChar, foundChar });
   }
   const lapsed = lapsedClaim(doc, basename(report), header, hashes, signOffs.records);

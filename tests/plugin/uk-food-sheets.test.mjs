@@ -82,6 +82,11 @@ const confirmed = (...answer) => [typed(answer), 'State: confirmed', 'By: Sam Ok
 const proposed = (...answer) => [typed(answer), 'State: proposed', 'By:', 'On:', 'Source: Walk-round notes'];
 const OWN = ['Ice machine scoop is in its holder', 'Extractor fan is switched on'];
 const mgWith = (id, lines) => answered(cafeText('MG'), id, lines);
+// Ruling B: each checks form ends with three empty rows for checks written in by hand, where the pack's form leaves a list.
+const ROOM = Array.from({ length: 3 }, () => ['', '']);
+// The labels of a week page box, a note joined to the label before it as a table cell prints it.
+const labelsOf = (box) => box.questions.reduce((labels, q) => (q.type === 'note' ? [...labels.slice(0, -1), `${labels.at(-1)}<br>${q.text}`]
+  : [...labels, q.text]), []);
 
 // ---- The forms, tied to the data ----
 
@@ -148,7 +153,9 @@ test('every check on page 82 appears once in its form\'s section, in order, besi
   const text = rendered(CAFE);
   for (const { form } of CHECK_FORMS.forms) {
     const rows = rowsOf(sectionOf(text, headingOf(form)));
-    assert.deepEqual(rows, [[checkBlock(form).columns[0], ''], ...checksOf(form).map((check) => [check, ''])], form);
+    // Then the room the form's empty list leaves for checks written in by hand.
+    assert.ok(checkBlock(form).questions.some((q) => q.type === 'list' && q.text === ''), form);
+    assert.deepEqual(rows, [[checkBlock(form).columns[0], ''], ...checksOf(form).map((check) => [check, '']), ...ROOM], form);
   }
   // Each heading is the form's, and the sections come in the page's order.
   const lines = inner(text);
@@ -156,28 +163,50 @@ test('every check on page 82 appears once in its form\'s section, in order, besi
   assert.ok(at[0] > 0 && at[1] > at[0], at.join(' '));
 });
 
-test('the week section prints page 95\'s boxes in order: each heading, each label beside an empty cell, the day\'s statement in the cell of its signature', () => {
+test('the week section is page 95: Week commencing, then one table of the seven days under the page\'s labels, then the extra checks box', () => {
   const text = rendered(CAFE);
-  const tables = [];
-  for (const line of sectionOf(text, 'Week')) {
-    if (!line.startsWith('| ')) continue;
-    if (/^\|( --- \|)+$/.test(line)) continue;
-    const cells = cellsOf(line);
-    assert.equal(cells.length, 2, line);
-    assert.equal(cells[1], '', line);
-    // A header row starts a table: the row after a blank line.
-    tables.push(cells[0]);
-  }
-  // What the page holds, in order: each box's heading (or nothing), then its labels, a note joined to the label before it.
-  const want = weekBoxes().flatMap((box) => [box.heading ?? '', ...box.questions.reduce((labels, q) =>
-    (q.type === 'note' ? [...labels.slice(0, -1), `${labels.at(-1)}<br>${q.text}`] : [...labels, q.text]), [])]);
-  assert.deepEqual(tables, want);
-  // The statement is never a line of its own: only ever in a cell, after a label.
-  const notes = weekBoxes().flatMap((box) => box.questions.filter((q) => q.type === 'note').map((q) => q.text));
-  assert.ok(notes.length > 0);
-  for (const note of new Set(notes)) {
-    for (const line of inner(text).filter((l) => l.includes(note))) assert.match(line, new RegExp(`^\\| [^|]+<br>${note.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\|  \\|$`), line);
-  }
+  const [start, ...days] = weekBoxes();
+  const extra = days.pop();
+  // The tables of the section, each as its rows of cells, the header row first.
+  const grouped = sectionOf(text, 'Week').join('\n').split('\n\n').map((part) => part.trim()).filter((part) => part.startsWith('| ')).map((part) => rowsOf(part.split('\n')));
+  assert.equal(grouped.length, 3);
+  const [first, week, last] = grouped;
+  // Week commencing, and the extra checks box, each a label beside an empty cell under its heading (or none).
+  assert.deepEqual(first, [['', ''], ...labelsOf(start).map((label) => [label, ''])]);
+  assert.deepEqual(last, [[extra.heading, ''], ...labelsOf(extra).map((label) => [label, ''])]);
+  assert.ok(!extra.questions.some((q) => q.type === 'note'), 'the extra checks box has no statement');
+  // The week: seven rows and six columns; each heading label is page 95's; every day once, in order, every cell empty.
+  const [header, ...rows] = week;
+  assert.equal(rows.length, 7);
+  assert.ok(week.every((cells) => cells.length === 6));
+  const words = new Set(weekBoxes().flatMap((box) => box.questions.map((q) => q.text)));
+  assert.equal(header[0], '');
+  for (const label of header.slice(1)) assert.ok(label.split('<br>').every((part) => words.has(part)), label);
+  assert.deepEqual(header.slice(1), labelsOf(days[0]));
+  assert.deepEqual(rows.map(([day]) => day), days.map((day) => day.heading));
+  assert.ok(rows.every((cells) => cells.slice(1).every((cell) => cell === '')));
+  // The statement is never a line of its own: it is only in the signature column's heading, after its label.
+  const notes = new Set(days.flatMap((day) => day.questions.filter((q) => q.type === 'note').map((q) => q.text)));
+  assert.equal(notes.size, 1);
+  const [note] = notes;
+  assert.equal(header.at(-1), `${days[0].questions.find((q, i, all) => all[i + 1]?.type === 'note').text}<br>${note}`);
+  assert.deepEqual(inner(text).filter((line) => line.includes(note)), [`| ${header.join(' | ')} |`]);
+});
+
+test('the seven days on page 95 carry the same labels, so the one table loses no word; a day that differed would show its own words', () => {
+  const [, ...days] = weekBoxes();
+  days.pop();
+  for (const day of days) assert.deepEqual(labelsOf(day), labelsOf(days[0]), day.heading);
+  // Data in which one day's prompt differs: that day's cell holds its own words, and every other cell stays empty.
+  const copy = structuredClone(data);
+  const page = copy.diary.pages.find((p) => p.page === WEEK_PAGE.page);
+  const friday = page.blocks.filter((block) => block.form === WEEK_PAGE.form)[5];
+  friday.questions[0].text = 'Anything else to note today?';
+  const text = render(CAFE, copy).text;
+  const week = sectionOf(text, 'Week').join('\n').split('\n\n').map((part) => part.trim()).filter((part) => part.startsWith('| '))[1];
+  const rows = rowsOf(week.split('\n')).slice(1);
+  assert.deepEqual(rows[4], [friday.heading, 'Anything else to note today?', '', '', '', '']);
+  assert.ok(rows.filter((_, i) => i !== 4).every((cells) => cells.slice(1).every((cell) => cell === '')));
 });
 
 test('nothing of a filled-in example is printed: no text read from a picture, nor the prove it example row; the blank rows are the form\'s own count', () => {
@@ -204,7 +233,10 @@ test('own checks confirmed in MG-01-Q11 are printed, both lines, under the own-c
   const own = section.indexOf(`| The business's own ${checkBlock(opening.form).heading.toLowerCase()} |  |`);
   const last = section.indexOf(`| ${checksOf(opening.form).at(-1)} |  |`);
   assert.ok(last > 0 && own > last, section.join('\n'));
-  assert.deepEqual(rowsOf(section.slice(own)), [[`The business's own ${checkBlock(opening.form).heading.toLowerCase()}`, ''], ...OWN.map((check) => [check, ''])]);
+  assert.deepEqual(rowsOf(section.slice(own)), [[`The business's own ${checkBlock(opening.form).heading.toLowerCase()}`, ''], ...OWN.map((check) => [check, '']),
+    ...ROOM]);
+  // The room for checks written in by hand follows the business's own, and is not printed twice.
+  assert.deepEqual(rowsOf(section.slice(0, own)).slice(-1), [[checksOf(opening.form).at(-1), '']]);
   // The closing checks gain nothing from the opening checks' answer.
   assert.deepEqual(sectionOf(text, headingOf(closing.form)), sectionOf(rendered(CAFE), headingOf(closing.form)));
   // Proposed, it adds nothing and leaves no mark: the body is the fixture's.
@@ -213,8 +245,8 @@ test('own checks confirmed in MG-01-Q11 are printed, both lines, under the own-c
   for (const check of OWN) assert.ok(!fixture.includes(check));
   // The closing checks' own, from MG-01-Q21, go under the closing checks.
   const shut = rendered(cafe({ MG: mgWith(closing.own, confirmed('Back door is locked')) }));
-  assert.deepEqual(rowsOf(sectionOf(shut, headingOf(closing.form))).slice(-2),
-    [[`The business's own ${checkBlock(closing.form).heading.toLowerCase()}`, ''], ['Back door is locked', '']]);
+  assert.deepEqual(rowsOf(sectionOf(shut, headingOf(closing.form))).slice(-5),
+    [[`The business's own ${checkBlock(closing.form).heading.toLowerCase()}`, ''], ['Back door is locked', ''], ...ROOM]);
   assert.deepEqual(sectionOf(shut, headingOf(opening.form)), sectionOf(fixture, headingOf(opening.form)));
 });
 
@@ -268,7 +300,7 @@ test('an own check holding a pipe or an unfinished mark is escaped, keeps its ta
   const text = rendered(dir);
   const rows = rowsOf(sectionOf(text, headingOf(opening.form)));
   assert.ok(rows.every((cells) => cells.length === 2));
-  assert.deepEqual(rows.slice(-4).map(([check]) => check), ['Ice machine \\| scoop', '\\*\\*NOT YET ANSWERED\\*\\*', `${NOT_CONFIRMED}x`,
+  assert.deepEqual(rows.slice(-7, -3).map(([check]) => check), ['Ice machine \\| scoop', '\\*\\*NOT YET ANSWERED\\*\\*', `${NOT_CONFIRMED}x`,
     '\\*\\*NOT CONFIRMED\\*\\*']);
   // No line is one that any document's row reads as unfinished, and this one reads none so.
   const marks = DOCUMENTS.map((row) => row.unfinishedLine);
@@ -305,6 +337,8 @@ test('data that lacks a form, or lays it out otherwise, is refused with a messag
       /diary cover on page 80/],
     // A check form with a question of a kind it does not print.
     [(pages) => { page(pages, CHECK_FORMS.page).blocks[0].questions[0].type = 'text'; }, /openingChecks and closingChecks forms on page 82/],
+    // A day whose questions are not the other days' kinds in their order, so a label would stand over the wrong cell.
+    [(pages) => { page(pages, WEEK_PAGE.page).blocks[3].questions.reverse(); }, /weekPage form on page 95/],
     // No text box on extra checks.
     [(pages) => { page(pages, CHECK_FORMS.page).blocks = page(pages, CHECK_FORMS.page).blocks.filter((b) => b.kind !== 'text'); }, /extra checks on page 82/]
   ];
@@ -370,6 +404,10 @@ test('the table refuses a row left out of status that is neither the completion 
   refused(withRow(testRow({ inStatus: false, render: () => ({ exit: 0, text: '' }), outOfDate: { message: 'm', reason: 'r' } })),
     /render is another row's too: one document is the completion record/);
   refused(withRow(testRow({ blankForms: 'yes' })), /FOODTEST: blankForms is neither true nor left out/);
+  // Blank forms have no worksheet of their own, so check needs their own words; no other row takes them.
+  refused(withRow(testRow({ remedies: documentOf('FOODREC').remedies })), /FOODTEST: remedies is given on a row that is not blank forms/);
+  refused(DOCUMENTS.map((row) => (row.code === 'FOODREC' ? { ...row, remedies: undefined } : row)),
+    /FOODREC: remedies does not give the advice, stale, edited and markers words/);
   assert.equal(documentOf('FOODTEST'), undefined);
   assert.equal(RECORD_SHEETS, 'FOODREC');
 });
@@ -427,6 +465,62 @@ test('status reports the record sheets apart: not written, then written and in s
   assert.deepEqual(status(dir).recordSheets, { written: true, inStep: false, file: 'ARC-001-FOODREC-v1.0.md' });
   assert.deepEqual(linesOf(), []);
   assert.ok(status(dir).unfinished.some((line) => line.code === 'FOODMGT' && line.what.startsWith('worksheet food-safety/answers-MG.md has 1 problem')));
+});
+
+// What check and status say of a FOODREC changed by hand: the forms are printed afresh, so a filled-in copy is kept apart,
+// the business's own checks are changed in the Management worksheet, and then it is written again. Never "its worksheet".
+const AFRESH = 'its forms are printed afresh each time it is written, and writing it again replaces everything between its UK-FOOD markers';
+const REMEDY = 'fill in a printed page, or a copy kept apart from this file, never this file itself; copy anything already filled in it to such ' +
+  'a copy first; add or change the business\'s own opening and closing checks in the Management safe methods worksheet; then write the document again';
+const ADVICE = `This document is printed afresh each time it is written, and writing it again replaces everything between its UK-FOOD markers: ${REMEDY}.`;
+
+test('a FOODREC filled in or cut by hand between its markers, or with its markers damaged, is told to keep a filled-in copy apart, never to use a worksheet', () => {
+  const dir = cafe();
+  const file = join(dir, 'ARC-001-FOODREC-v1.0.md');
+  const body = rendered(dir);
+  const firstDay = weekBoxes()[1].heading;
+  const lineOf = (text, needle) => text.split('\n').findIndex((line) => line.startsWith(needle)) + 1;
+  const linesOf = () => status(dir).unfinished.filter((line) => line.code === 'FOODREC').map((line) => line.what);
+  const cases = [
+    // A cell of the week filled in.
+    ['edited', `Header text.\n\n${swap(body, `| ${firstDay} |  |`, `| ${firstDay} | Fridge door left open |`)}\n`],
+    // A check of the pack's taken out.
+    ['edited', `Header text.\n\n${swap(body, `| ${checksOf(CHECK_FORMS.forms[0].form)[0]} |  |\n`, '')}\n`],
+    // The END marker gone.
+    ['markers', `Header text.\n\n${swap(body, '\n<!-- UK-FOOD:END -->', '')}\n`]
+  ];
+  for (const [kind, text] of cases) {
+    writeFileSync(file, text);
+    const checked = checkDocument('FOODREC', dir, file, data, undefined, { today: TODAY });
+    assert.equal(checked.kind, kind);
+    const reason = kind === 'edited'
+      ? `was changed between its UK-FOOD markers, at line ${checked.line}, but ${AFRESH}: ${REMEDY}`
+      : `has its UK-FOOD markers missing or damaged (there is no UK-FOOD:END marker line, so there is no rendered body to check), and ${AFRESH}: ${REMEDY}`;
+    assert.equal(checked.reason, reason);
+    assert.ok(checked.message.endsWith(`\n${ADVICE}`), checked.message);
+    if (kind === 'edited') assert.equal(checked.line, lineOf(text, text.includes('Fridge door') ? `| ${firstDay} ` : `| ${checksOf(CHECK_FORMS.forms[0].form)[1]} `));
+    // The same in status, the readable lines and the business's completion record; nothing sends a person to a worksheet of its own.
+    assert.deepEqual(linesOf(), [`document ARC-001-FOODREC-v1.0.md ${reason}`]);
+    assert.ok(completionList(dir).includes(`\n- Diary and record sheets (FOODREC): document ARC-001-FOODREC-v1.0.md ${reason.replace(/[\\`*_[\]~$]/g, '\\$&')}\n`));
+    const cli = run('check', '--doc', 'FOODREC', '--project', dir, '--report', file);
+    assert.equal(cli.status, 1);
+    const recordLines = completionList(dir).split('\n').filter((line) => line.includes('FOODREC')).join('\n');
+    for (const said of [checked.message, reason, cli.stdout + cli.stderr, recordLines]) assert.ok(!/its worksheet/.test(said), said);
+  }
+  // The body itself says where a filled-in copy is kept, and why.
+  assert.ok(inner(body).at(-6).startsWith('One week page is printed here: print or copy it for each week. These pages are for people at the business to fill ' +
+    'in, sign and keep, on paper or in a copy kept apart from this document, as writing this document again prints these forms afresh and ' +
+    'anything filled in here would be lost.'), inner(body).at(-6));
+});
+
+test('the readable status of a FOODREC whose header claims a sign-off says nobody signs it off, not that no sign-off bears it out', () => {
+  const dir = cafe();
+  const file = join(dir, 'ARC-001-FOODREC-v1.0.md');
+  writeFileSync(file, `| Field | Value |\n| --- | --- |\n| **Status** | APPROVED |\n\n${rendered(dir)}\n`);
+  const line = statusText(dir).find((l) => l.startsWith('FOODREC ('));
+  assert.equal(line, 'FOODREC (Diary and record sheets): ARC-001-FOODREC-v1.0.md with a header that says it is signed off or approved, though nobody ' +
+    'signs it off');
+  assert.ok(!statusText(dir).join('\n').includes('no recorded sign-off bears out'));
 });
 
 test('a document nobody signs that is in status is never told it is not signed off, in status, its readable lines or the completion record', () => {

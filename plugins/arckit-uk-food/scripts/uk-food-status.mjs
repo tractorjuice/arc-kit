@@ -252,10 +252,10 @@ const uncoveredLine = (name) => `${name} has no own entry: add an own entry of k
   'and confirm it';
 const awaitingLine = (entry) => `own entry ${entry.id} (${entry.title}) is awaiting environmental health review: once the ` +
   'council has replied, record the review\'s date and outcome in the entry\'s EH-review field';
-// What the unfinished list says of the record sheets when they are not written, and when what is written is out of
-// date. They have no worksheet of their own and nothing to sign, so the remedy is to write them, and nothing else.
+// What the unfinished list says of the record sheets when they are not written. They have no worksheet of their own and
+// nothing to sign, so the remedy is to write them. (Once they are written, check's own reason is given for any fault, in
+// the words their row gives check: see remedies in the table.)
 const FORMS_NOT_WRITTEN = 'document not written yet: write it, so that people at the business have the blank forms to print and fill in';
-const formsStaleLine = (file) => `document ${file} is out of date, as a worksheet it is written from has changed since: write it again`;
 // The line for a worksheet for other data, or in the wrong file: what to do, and for one in the wrong
 // file where it probably belongs. Null for any other worksheet.
 function misplacedLine(section, sheet, project) {
@@ -287,8 +287,8 @@ function countLines(row, counts, section) {
 // Where the record sheets stand: { state, check, lines }. `state` is what status --json gives as recordSheets:
 // { written, inStep, file }, inStep being whether the file passes check (false when it is not written). `check`
 // is check's result, or null with no file. `lines` are the record sheets' lines in the unfinished list: that
-// they are not written; that they are out of date, when what is written is no longer what they would print now;
-// or check's own first reason for any other fault, as for a document. A worksheet they are written from that is
+// they are not written, or check's own first reason for a fault, as for a document; check words it for blank
+// forms, which have no worksheet of their own to send a person to (remedies). A worksheet they are written from that is
 // missing, in the wrong place or with problems is told once, under the document whose worksheet it is, and while
 // it is so the record sheets are not called out of date, as they cannot be compared with a fresh print; only what
 // check finds before it prints anything (BEFORE_RENDER) is told all the same.
@@ -298,7 +298,7 @@ function recordSheetsState(row, current, project, data, sheets, signOffs, option
   const inStep = check.exit === 0;
   const comparable = row.uses.every((section) => (sheets.get(section) ? sheets.get(section).clean : !row.needs.includes(section)));
   let lines = [];
-  if (!inStep && (comparable || BEFORE_RENDER.includes(check.kind))) lines = [check.kind === 'stale' ? formsStaleLine(current.file) : checkLine(current.file, check)];
+  if (!inStep && (comparable || BEFORE_RENDER.includes(check.kind))) lines = [checkLine(current.file, check)];
   return { state: { written: true, inStep, file: current.file }, check, lines };
 }
 
@@ -660,6 +660,11 @@ const FAULT_WORDS = {
   'not-as-signed': 'changed since it was signed off'
 };
 const NOT_CHECKED = 'not checked, as a worksheet it needs is missing or has problems';
+// What the readable status says of a fault in a written document: FAULT_WORDS for its kind, but for a header that
+// claims a sign-off on a document nobody signs, which no sign-off could ever bear out. The unfinished list says what
+// to do.
+const UNSIGNED_HEADER = 'with a header that says it is signed off or approved, though nobody signs it off';
+const faultWords = (row, kind) => (kind === 'header' && !row.signable ? UNSIGNED_HEADER : FAULT_WORDS[kind]);
 // A slip in a header cell of a file whose sign-off is recorded: the record is there, so no claim lacks one, and the
 // line under Unfinished says what to write.
 const CELL_FAULT = 'with a sign-off recorded, and a cell of its header that is not what a signed document has there: write in it what ' +
@@ -689,7 +694,7 @@ function statusLines(status, data, sheets, checks) {
       ...(doc.notRelevantMethods.length ? [`not relevant: ${doc.notRelevantMethods.join(', ')}`] : []),
       ...(doc.adaptedMethods.length ? [`adapted: ${doc.adaptedMethods.join(', ')}`] : []),
       doc.rendered ? `${doc.file} ${doc.inSync ? 'in step with its worksheets' : checks.get(doc.code)?.cell ? CELL_FAULT
-        : FAULT_WORDS[checks.get(doc.code)?.kind] ?? NOT_CHECKED}` : 'not written',
+        : faultWords(row, checks.get(doc.code)?.kind) ?? NOT_CHECKED}` : 'not written',
       ...(doc.otherText.length ? [`${counted(doc.otherText.length, 'line', 'lines')} outside its checked part`] : []),
       // Nothing about signing for a document nobody signs.
       ...(!row.signable ? [] : [doc.signedOff ? `signed off by ${doc.signOff.name}, ${doc.signOff.role}, on ${doc.signOff.date}` +
@@ -702,7 +707,7 @@ function statusLines(status, data, sheets, checks) {
   const forms = status.recordSheets;
   if (forms) {
     lines.push(`${RECORD_SHEETS} (${docName(RECORD_SHEETS, data)}): ${!forms.written ? 'not written' : `${forms.file} ${forms.inStep
-      ? 'in step with its worksheets' : FAULT_WORDS[checks.get(RECORD_SHEETS)?.kind] ?? NOT_CHECKED}`}`);
+      ? 'in step with its worksheets' : faultWords(documentOf(RECORD_SHEETS), checks.get(RECORD_SHEETS)?.kind) ?? NOT_CHECKED}`}`);
   }
   const record = status.completionRecord;
   lines.push(`${COMPLETION_RECORD} (${docName(COMPLETION_RECORD, data)}): ${!record ? 'not written' : record.problem ?? `${record.file} up to date`}`);
