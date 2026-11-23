@@ -649,6 +649,39 @@ test('M5: what a list worksheet is told of a ### heading and of wording from ano
   assert.doesNotMatch(older.problems[0].message, /own entry|Answer:/);
 });
 
+test('item 7: a list worksheet has entries, not questions or answers, and every message about one says so; the seven others print what they did', () => {
+  // The parser's problem: the only wording of the tool's in a list worksheet is its guidance.
+  const older = sheet(BOARDS, FRIDGE).replace('\nAdd an entry for each item', '\nAdd one entry for each item');
+  const [problem] = parse(older).problems;
+  assert.match(problem.message, /^this worksheet was made by a different version of the overlay: 1 line of its guidance wording is not what this version prints, the first at line 6\. /);
+  assert.doesNotMatch(problem.message, /question|answer/i);
+  // Status, and so the completion record and sign-off: nothing written in a list worksheet counts until it is brought up to date,
+  // or until its problems are fixed.
+  const dir = cafeWith(older);
+  const file = 'food-safety/answers-cleaning.md';
+  assert.deepEqual(unfinishedOf(dir), [`worksheet ${file} was made by a different version of the overlay (1 line of its guidance wording is not what ` +
+    `this version prints), so nothing written in it counts until it is brought up to date: upgrade-worksheet --file ${file} shows each line it ` +
+    'would take out or put in, and with --write does so and keeps a copy. Anything a person typed on a line it takes out cannot be told from ' +
+    'old wording, so a person reads what it shows first', NOT_WRITTEN, NOT_SIGNED]);
+  const troubled = cafeWith(`${sheet(BOARDS)}a stray line\n`);
+  assert.deepEqual(unfinishedOf(troubled), [`worksheet ${file} has 1 problem, so nothing written in it counts until it is fixed: parse-worksheet ` +
+    `--file ${file} lists it`, NOT_WRITTEN, NOT_SIGNED]);
+  // upgrade-worksheet's report names the lines it takes out as the worksheet's guidance.
+  const shown = run('upgrade-worksheet', '--file', join(dir, file));
+  assert.equal(shown.status, 0, shown.stderr);
+  assert.match(shown.stdout, /was made by a different version of the overlay\. Bringing it up to date takes out and puts in these lines of its guidance wording, and changes no other line:\n/);
+  // A worksheet of questions keeps its words, character for character.
+  const ck = readFileSync(join(CAFE, 'food-safety', 'answers-CK.md'), 'utf8').replace('\n<!--\n', '\n<!--\n(an older remark)\n');
+  assert.match(parse(ck).problems[0].message, /: 1 line of its guidance or question wording is not what this version prints, the first at line \d+\. /);
+  const tmp = mkdtempSync(join(tmpdir(), 'uk-food-lists-'));
+  writeFileSync(join(tmp, 'answers-CK.md'), ck);
+  assert.match(run('upgrade-worksheet', '--file', join(tmp, 'answers-CK.md')).stdout, / takes out and puts in these lines of its guidance and question wording, /);
+  const cook = cafeWith();
+  writeFileSync(join(cook, 'food-safety', 'answers-CK.md'), ck);
+  assert.match(projectStatus(cook, data).unfinished.find((line) => line.code === 'FOODCOOK').what,
+    /\(1 line of its guidance or question wording is not what this version prints\), so none of its answers counts until it is brought up to date: /);
+});
+
 // ---- Suppliers and contacts (Task 6) ----
 
 // The pack's two forms, found in the data the way the helper finds them: the boxes of each form on its page that are
@@ -817,7 +850,7 @@ test('a second environmental-health entry is a problem whatever the states of th
   const text = supSheet(GROCER, supEntry('SUP-02', 'Exampleton council', { Kind: 'environmental-health', State: 'unanswered' }),
     supEntry('SUP-03', 'Exampleton District Council food team', { Kind: 'environmental-health', Telephone: '01632 960300', ...agreed }));
   const dir = cafeSuppliers(text);
-  assert.deepEqual(supUnfinished(dir), [`worksheet ${SUP_FILE} has 1 problem, so none of its answers counts until it is fixed: parse-worksheet ` +
+  assert.deepEqual(supUnfinished(dir), [`worksheet ${SUP_FILE} has 1 problem, so nothing written in it counts until it is fixed: parse-worksheet ` +
     `--file ${SUP_FILE} lists it`, NOT_WRITTEN, NOT_SIGNED]);
   assert.equal(renderDocument('FOODSUP', dir, data).exit, 1);
   // Following that problem's remedy literally, either way, gives a worksheet with no problem.

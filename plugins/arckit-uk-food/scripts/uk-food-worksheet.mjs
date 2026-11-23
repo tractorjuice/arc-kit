@@ -24,13 +24,20 @@ export let WORKSHEET_SECTIONS = [...SECTION_IDS, 'profile', 'own'];
 let LIST_WORKSHEETS = { sections: [] };
 const isListSection = (section) => LIST_WORKSHEETS.sections.includes(section);
 // For uk-food-lists.mjs alone, as it loads: `lists` is { sections, read(reading, data), emit(parsed, data),
-// guidance(section, data), placed }, which readWorksheet, emitWorksheet and guidanceFor call for a list section;
-// `placed` is the sentence that ends the problem about another version's wording, saying where a person's own
-// lines belong in a list worksheet.
+// guidance(section, data), placed, wording, counts }, which readWorksheet, emitWorksheet and guidanceFor call for a
+// list section; `placed` is the sentence that ends the problem about another version's wording, saying where a
+// person's own lines belong in a list worksheet; `wording` and `counts` are what worksheetTerms gives for one.
 export function addListWorksheets(lists) {
   LIST_WORKSHEETS = lists;
   WORKSHEET_SECTIONS = [...SECTION_IDS, 'profile', 'own', ...lists.sections];
 }
+// The words every worksheet's messages share that a list worksheet has words of its own for, as it has entries where
+// the others have questions and answers: `wording`, what the tool's own wording in it is, as the problem about another
+// version's wording and upgrade-worksheet's report name it, or null for a worksheet of questions, whose words for it
+// those messages give themselves (its guidance, and its questions' lines); and `counts`, what of it counts for nothing
+// while it has a problem, as status says it. A worksheet of questions keeps the words it has always printed.
+export const worksheetTerms = (section) => (isListSection(section) ? { wording: LIST_WORKSHEETS.wording, counts: LIST_WORKSHEETS.counts }
+  : { wording: null, counts: 'none of its answers counts' });
 export const STATES = ['unanswered', 'proposed', 'confirmed'];
 export const STATUSES = ['applies', 'adapted', 'not-relevant'];
 export const OWN_KINDS = ['additional', 'special-process'];
@@ -998,16 +1005,18 @@ function readWorksheet(text, data, options = {}) {
 }
 
 // What is not this helper's in a worksheet's own wording, in a few words: how many lines differ, and
-// whether its guidance comment is missing altogether. '' when nothing is.
-const otherWording = ({ wording, noGuidance }, where = false) => {
+// whether its guidance comment is missing altogether. '' when nothing is. A list worksheet's wording is
+// named as its module names it (worksheetTerms): it has no questions, so only its guidance can differ.
+const otherWording = ({ wording, noGuidance }, section, where = false) => {
   const n = wording.length;
-  const lines = n ? `${counted(n, 'line', 'lines')} of its ${noGuidance ? '' : 'guidance or '}question wording ${isAre(n)} not what this ` +
+  const whose = worksheetTerms(section).wording ?? `${noGuidance ? '' : 'guidance or '}question wording`;
+  const lines = n ? `${counted(n, 'line', 'lines')} of its ${whose} ${isAre(n)} not what this ` +
     `version prints${where ? `, the first at line ${Math.min(...wording)}` : ''}` : '';
   return noGuidance ? `its guidance comment is missing${n ? `, and ${lines}` : ''}` : lines;
 };
 // What the strict parser says, once for the whole worksheet, of wording that is not this helper's. It ends by
 // saying where a person's own lines belong: in a list worksheet, as its module words it.
-const wordingProblem = (layout, section) => `this worksheet was made by a different version of the overlay: ${otherWording(layout, true)}. ` +
+const wordingProblem = (layout, section) => `this worksheet was made by a different version of the overlay: ${otherWording(layout, section, true)}. ` +
   `${layout.wording.length ? 'Nothing typed on such lines is read. ' : ''}Run upgrade-worksheet --file on this worksheet: it shows each ` +
   'line it would take out or put in and writes nothing, and with --write it brings the worksheet up to date, keeping a copy of it as it ' +
   'is. Anything a person typed on a line it takes out cannot be told from old wording, so a person reads what it shows before it is ' +
@@ -1020,7 +1029,7 @@ const wordingProblem = (layout, section) => `this worksheet was made by a differ
 // A worksheet that could not be read as far as its section has no wording to compare.
 function strictWorksheet(text, data, options = {}) {
   const { parsed, layout } = readWorksheet(text, data, options);
-  const otherVersion = parsed.section === null ? '' : otherWording(layout);
+  const otherVersion = parsed.section === null ? '' : otherWording(layout, parsed.section);
   if (otherVersion) {
     parsed.problems.push({ line: Math.min(...layout.wording, ...(layout.noGuidance ? [layout.marker] : [])),
       message: wordingProblem(layout, parsed.section) });
@@ -1200,7 +1209,7 @@ export function upgradeWorksheet(text, data, options = {}) {
     ...(before.get(i) ?? []).map((added) => added + ending(i)), ...(gone.has(i) ? [] : [line + (pieces[2 * i + 1] ?? '')])]),
   ...(before.get(last) ?? []).map((added) => ending(last - 1) + added)].join('');
   const after = readWorksheet(upgraded, data, options);
-  if (after.parsed.problems.length || otherWording(after.layout) || typedIn(after.parsed) !== typedIn(parsed)) {
+  if (after.parsed.problems.length || otherWording(after.layout, section) || typedIn(after.parsed) !== typedIn(parsed)) {
     return { exit: 1, messages: ['brought up to date, the worksheet would not read the same as it does now, so it is not ' +
       `written: ${after.parsed.problems[0]?.message ?? 'an answer, state, name, date or entry would differ'}. ${leave}`] };
   }

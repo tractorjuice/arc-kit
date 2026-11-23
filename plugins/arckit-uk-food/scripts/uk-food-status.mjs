@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { DATA_ID, DEFAULT_DATA_DIR, isObject, isString, SECTION_IDS } from './uk-food-data.mjs';
-import { andList, counted, isAre, isIsoDate, localToday, unseenIn } from './uk-food-worksheet.mjs';
+import { andList, counted, isAre, isIsoDate, localToday, unseenIn, worksheetTerms } from './uk-food-worksheet.mjs';
 import {
   BEFORE_RENDER, bodyText, businessText, checkDocument, closingNotice, COMPLETION_RECORD, coverageChunks, DOC_CODES,
   DOC_OF_SECTION, documentOf, extraCareDone, failure, freshlyUnfinished, misplaced, NAME_QUESTION, otherText, paragraphs,
@@ -192,12 +192,14 @@ const NOT_WRITTEN = 'document not written yet: write the document from its works
 const NOT_SIGNED = 'document not signed off yet: once it is finished, a named person signs it off';
 const notStartedLine = (section) => `worksheet ${sheetPath(section)} is not started yet: make it with worksheet --section ` +
   `${section} and fill it in`;
-const problemsLine = (section, n) => `worksheet ${sheetPath(section)} has ${counted(n, 'problem', 'problems')}, so none of ` +
-  `its answers counts until ${n === 1 ? 'it is' : 'they are'} fixed: parse-worksheet --file ${sheetPath(section)} lists ` +
+// Of a worksheet with problems, what counts for nothing until they are put right is said as its kind of worksheet
+// has it (worksheetTerms): its answers, or everything written in a list worksheet, which has entries instead.
+const problemsLine = (section, n) => `worksheet ${sheetPath(section)} has ${counted(n, 'problem', 'problems')}, so ` +
+  `${worksheetTerms(section).counts} until ${n === 1 ? 'it is' : 'they are'} fixed: parse-worksheet --file ${sheetPath(section)} lists ` +
   `${n === 1 ? 'it' : 'them'}`;
 // A worksheet whose only problem is that its wording is another version's: what to run, by its path.
 const otherWordingLine = (section, what) => `worksheet ${sheetPath(section)} was made by a different version of the overlay ` +
-  `(${what}), so none of its answers counts until it is brought up to date: upgrade-worksheet --file ${sheetPath(section)} shows ` +
+  `(${what}), so ${worksheetTerms(section).counts} until it is brought up to date: upgrade-worksheet --file ${sheetPath(section)} shows ` +
   'each line it would take out or put in, and with --write does so and keeps a copy. Anything a person typed on a line it takes out ' +
   'cannot be told from old wording, so a person reads what it shows first';
 // A written document that fails check: check's own first reason, with its next step.

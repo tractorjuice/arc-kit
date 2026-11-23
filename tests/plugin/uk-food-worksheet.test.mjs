@@ -1623,9 +1623,11 @@ const asOlder = (text) => {
   return { text: lines.join('\n'), prompts: changed };
 };
 const upgradeProblem = /^this worksheet was made by a different version of the overlay: (\d+) (?:line|lines) of its guidance or question wording (?:is|are) not what this version prints, the first at line (\d+)\. Nothing typed on such lines is read\. Run upgrade-worksheet --file on this worksheet: it shows each line it would take out or put in and writes nothing, and with --write it brings the worksheet up to date, keeping a copy of it as it is\. Anything a person typed on a line it takes out cannot be told from old wording, so a person reads what it shows before it is written\. An answer belongs after Answer:, and an own entry below the opening comment\.$/;
-// A list worksheet's ends by saying where its own lines belong, as a list worksheet holds them.
-const listUpgradeProblem = new RegExp(upgradeProblem.source.replace('An answer belongs after Answer:, and an own entry below the opening comment',
-  'Each entry, and anything written under Kept elsewhere, belongs below the opening comment'));
+// A list worksheet's names its wording as its guidance alone, as it has no questions, and ends by saying where its own
+// lines belong, as a list worksheet holds them.
+const listUpgradeProblem = new RegExp(upgradeProblem.source.replace('its guidance or question wording', 'its guidance wording')
+  .replace('An answer belongs after Answer:, and an own entry below the opening comment',
+    'Each entry, and anything written under Kept elsewhere, belongs below the opening comment'));
 // The name a worksheet is kept under before it is brought up to date (ruling J3): no pattern for worksheets matches it.
 const keptAs = (section, n = 1) => `before-upgrade-${n === 1 ? '' : `${n}-`}answers-${section}.md`;
 const sheetIn = (section, text) => {

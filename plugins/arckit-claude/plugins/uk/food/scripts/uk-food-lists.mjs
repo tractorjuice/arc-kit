@@ -623,10 +623,14 @@ function emitList(parsed, data) {
   return `${blocks.map((block) => block.join('\n')).join('\n\n')}\n`;
 }
 
+// A list worksheet has entries where the others have questions and answers, so the messages every worksheet shares
+// take these words for one (worksheetTerms): the only wording of the tool's in it is its guidance comment, and while it
+// has a problem nothing written in it counts, its entries and Kept elsewhere alike.
 addListWorksheets({
   sections: LIST_SECTIONS, read: (reading, data) => readList(LISTS[reading.section], reading, data), emit: emitList,
   guidance: (section, data) => guidanceOf(LISTS[section], data),
-  placed: 'Each entry, and anything written under Kept elsewhere, belongs below the opening comment.'
+  placed: 'Each entry, and anything written under Kept elsewhere, belongs below the opening comment.',
+  wording: 'guidance wording', counts: 'nothing written in it counts'
 });
 
 // ---------------------------------------------------------------------------------------------

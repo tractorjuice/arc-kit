@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { DEFAULT_DATA_DIR, loadData, SECTION_IDS, validateData } from './uk-food-data.mjs';
 import {
   blankWorksheet, counted, identifying, localToday, parseWorksheet, readWorksheet, typedIn, upgradeWorksheet, WORKSHEET_SECTIONS,
-  worksheetJson
+  worksheetJson, worksheetTerms
 } from './uk-food-worksheet.mjs';
 import {
   checkCommand, COMPLETION_RECORD, failure, referenceCommand, renderCommand, RENDERED_CODES
@@ -236,8 +236,9 @@ export function upgradeWorksheetCommand(args, io = { out: console.log, err: cons
   }
   const kept = keptName(options.file);
   const [out, put] = [result.changes.flatMap((change) => change.out), result.changes.flatMap((change) => change.put)];
+  // A list worksheet's own wording is its guidance alone, as it has no questions (worksheetTerms).
   const lines = [`${options.file} was made by a different version of the overlay. Bringing it up to date takes out and puts in these lines ` +
-    'of its guidance and question wording, and changes no other line:'];
+    `of its ${worksheetTerms(result.section).wording ?? 'guidance and question wording'}, and changes no other line:`];
   for (const change of result.changes) {
     lines.push(`${change.what}${change.back ? '' : `, ${change.from === change.to ? `line ${change.from}` : `lines ${change.from} to ${change.to}`}`}:`,
       ...(change.own ? [`  its own line as it stands: ${change.own[0]}`, `  its own line in this version: ${change.own[1]}`] : []),
