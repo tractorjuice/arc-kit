@@ -85,6 +85,8 @@ Recipe: `uk-food-sfbb` (the business profile, the five sections of safe methods,
 
 The bundled data under a data identifier never changes once it has shipped, and neither does the wording a worksheet or document prints from it. A business holds worksheets and signed-off documents made from that data, and a change would quietly make them out of date. A correction ships under a new data identifier, together with the upgrade a business then needs to bring its own worksheets across. `tests/plugin/uk-food-frozen.test.mjs` holds the first release's blank worksheets and documents to this.
 
+The three list worksheets (`allergens`, `cleaning` and `suppliers`) and the four documents added since the first release (`FOODALG`, `FOODCS`, `FOODSUP` and `FOODREC`) are not in that test yet. No release has shipped them, and a ruling that changes their wording may still be overturned before one does. Their wording freezes the day a release first ships them, for the same reasons, so they are added to the test in the last commit before that release.
+
 ## Not legal advice
 
 This overlay is not legal advice. The food business operator is responsible for the safety of the food it sells and for keeping its own records. The council's environmental health team is the authority for a business's premises: ask them if you are not sure. Nothing this overlay produces has been approved, inspected or endorsed by the FSA or by any council.

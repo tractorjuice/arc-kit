@@ -3447,6 +3447,19 @@ def test_the_readme_lists_each_command_as_claude_code_names_it():
     assert "It needs Claude Code " in text
 
 
+def test_the_maintainers_are_told_when_the_new_wording_freezes():
+    """Final review A4 and ruling 33: the new worksheets and documents join the frozen set in the last commit before the
+    release that first ships them, and the README and the frozen test both say so, naming each one."""
+    readme = (OVERLAY / "README.md").read_text(encoding="utf-8")
+    maintainers = readme.split("## For maintainers", 1)[1].split("\n## ", 1)[0]
+    frozen = (ROOT / "tests" / "plugin" / "uk-food-frozen.test.mjs").read_text(encoding="utf-8")
+    for text in [maintainers, frozen]:
+        for name in ["allergens", "cleaning", "suppliers", "FOODALG", "FOODCS", "FOODSUP", "FOODREC"]:
+            assert name in text, name
+        assert "the last commit before" in text
+    assert "so they are added to the test in the last commit before that release." in maintainers
+
+
 def test_the_readme_and_guides_say_truly_what_ends_a_sign_off():
     """I2: a sign-off lasts until what the document says changes. The profile goes last because it lists
     each safe method's status and the own methods; a profile change no longer un-signs everything."""

@@ -8,6 +8,13 @@ import { DEFAULT_DATA_DIR, blankWorksheet, loadData, renderDocument } from '../.
 // What the first release ships, pinned so that nothing a business already holds can change:
 // a changed blank worksheet makes a business's worksheet "another version's", and a changed
 // document body ends its sign-off. The fixtures are never edited to make a later change pass.
+//
+// Not here yet, on purpose: the three list worksheets (allergens, cleaning, suppliers) and the four
+// documents Plan 2 adds (FOODALG, FOODCS, FOODSUP, FOODREC). No release has shipped them, and the
+// owner may still overturn a ruling that changes their wording. Their wording freezes the day a
+// release first ships them, for the same reasons as the seven above, so they are added to frozen.json
+// and to SECTIONS and DOCS in the last commit before the release that first ships them. Until then
+// nothing stops a change to them, and nothing needs to.
 const FIXTURES = 'tests/fixtures/uk-food';
 const CAFE = join(FIXTURES, 'project-cafe');
 const data = loadData(DEFAULT_DATA_DIR);
