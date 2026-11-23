@@ -255,8 +255,8 @@ test('the unfinished list says, for each document in order, what is outstanding 
     { code: 'FOODMGT', what: NOT_SIGNED },
     { code: 'FOODOWN', what: NOT_WRITTEN },
     { code: 'FOODOWN', what: NOT_SIGNED },
-    { code: 'FOODALG', what: '1 dish in food-safety/answers-allergens.md is proposed but not confirmed (DISH-03): an entry counts when its ' +
-      'State is confirmed and By and On are filled in' },
+    { code: 'FOODALG', what: '1 dish in food-safety/answers-allergens.md is proposed but not confirmed (DISH-03): an entry counts when it has ' +
+      'what the worksheet\'s guidance says it needs, its State is confirmed and By and On are filled in' },
     { code: 'FOODALG', what: '2 allergen cells of confirmed dishes in food-safety/answers-allergens.md are not filled in, so the document shows them ' +
       'as not confirmed (Celery and Mustard in DISH-02): fill in each as contains or does not contain from what was checked, then update that ' +
       'dish\'s Checked-against, Checked-on, By and On' },
@@ -266,7 +266,7 @@ test('the unfinished list says, for each document in order, what is outstanding 
     { code: 'FOODALG', what: NOT_WRITTEN },
     { code: 'FOODALG', what: NOT_SIGNED },
     { code: 'FOODCS', what: '1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an ' +
-      'entry counts when its State is confirmed and By and On are filled in' },
+      'entry counts when it has what the worksheet\'s guidance says it needs, its State is confirmed and By and On are filled in' },
     { code: 'FOODCS', what: NOT_WRITTEN },
     { code: 'FOODCS', what: NOT_SIGNED },
     { code: 'FOODSUP', what: NOT_WRITTEN },

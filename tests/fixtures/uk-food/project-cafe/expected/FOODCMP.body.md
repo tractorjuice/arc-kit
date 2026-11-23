@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODCMP data=sfbb-caterers-2026-11-17 body=c18335ac5a9c4a9d368b1218fcdaa3e2c10cb74d79e6578a2fd6382a4a94fe45 -->
+<!-- UK-FOOD:BEGIN doc=FOODCMP data=sfbb-caterers-2026-11-17 body=6f10d47c0e4ec2526b1bd77db56cc6c344401ba0a753c89965dde61439bf96b6 -->
 
 ## SAFE METHOD COMPLETION RECORD
 
@@ -66,12 +66,12 @@ It does not matter in what order you work through the safe methods. As you compl
 - Management (FOODMGT): document not signed off yet: once it is finished, a named person signs it off
 - Own methods (FOODOWN): document not written yet: write the document from its worksheet
 - Own methods (FOODOWN): document not signed off yet: once it is finished, a named person signs it off
-- Allergen information (FOODALG): 1 dish in food-safety/answers-allergens.md is proposed but not confirmed (DISH-03): an entry counts when its State is confirmed and By and On are filled in
+- Allergen information (FOODALG): 1 dish in food-safety/answers-allergens.md is proposed but not confirmed (DISH-03): an entry counts when it has what the worksheet's guidance says it needs, its State is confirmed and By and On are filled in
 - Allergen information (FOODALG): 2 allergen cells of confirmed dishes in food-safety/answers-allergens.md are not filled in, so the document shows them as not confirmed (Celery and Mustard in DISH-02): fill in each as contains or does not contain from what was checked, then update that dish's Checked-against, Checked-on, By and On
 - Allergen information (FOODALG): MG-04-Q01, MG-04-Q06 and MG-04-Q14 in food-safety/answers-MG.md have no confirmed answer yet, and this document repeats them under How customers are told: answer them in the Management safe methods worksheet; an answer counts when its State is confirmed and By and On are filled in
 - Allergen information (FOODALG): document not written yet: write the document from its worksheet
 - Allergen information (FOODALG): document not signed off yet: once it is finished, a named person signs it off
-- Cleaning schedule (FOODCS): 1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an entry counts when its State is confirmed and By and On are filled in
+- Cleaning schedule (FOODCS): 1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an entry counts when it has what the worksheet's guidance says it needs, its State is confirmed and By and On are filled in
 - Cleaning schedule (FOODCS): document not written yet: write the document from its worksheet
 - Cleaning schedule (FOODCS): document not signed off yet: once it is finished, a named person signs it off
 - Suppliers and contacts (FOODSUP): document not written yet: write the document from its worksheet

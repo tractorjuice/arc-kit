@@ -9,8 +9,8 @@ import {
 import { completionRecordDocument, DOCUMENT_FILE, PENDING, readSignOffs } from './uk-food-status.mjs';
 import { HELPER, loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
 import {
-  allergenChunks, allergenSource, cleaningScheduleChunks, cleaningScheduleSource, listAsked, listNotStarted, listOutstanding, LISTS, listSummary,
-  suppliersChunks, suppliersSource
+  allergenChunks, allergenSource, cleaningScheduleChunks, cleaningScheduleSource, listAsked, listCountsWhen, listNotStarted, listOutstanding, LISTS,
+  listSummary, suppliersChunks, suppliersSource
 } from './uk-food-lists.mjs';
 import { recordSheetsChunks, recordSheetsLacking, recordSheetsSource } from './uk-food-sheets.mjs';
 export {
@@ -133,6 +133,11 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'allergens', 'cleani
 // - notStarted(), when given: the line status gives, in place of the one every worksheet shares, while the document's
 //   own worksheet is not started. A list document's says what the document is for and which worksheet to make, as a
 //   business that kept its documents before the list documents came meets each of them there first.
+// - countsWhen(ids, sheet, data), when given: what status's count lines say, after naming the questions or entries
+//   `ids` (those a line shows), that they need in order to count, in place of the words the others share ("an answer
+//   counts when its State is confirmed and By and On are filled in"); `sheet` is the document's own worksheet, with no
+//   problems. A list document's names the worksheet's guidance too, and what each entry named still lacks, since an
+//   entry confirmed without a field its list needs is not read at all.
 // - section: set by sectionDocument alone, on a document that prints a section of the pack; the
 //   section, which is also its own worksheet. SECTION_DOCS and DOC_OF_SECTION come from it, and the
 //   usage text and each "--doc is one of" message list these documents first.
@@ -230,6 +235,7 @@ function listDocument(section, overrides) {
     outstanding: (sheet, data, sheets) => listOutstanding(LISTS[section], sheet, data, sheets),
     summary: (doc, sheet) => listSummary(LISTS[section], doc, sheet),
     notStarted: () => listNotStarted(LISTS[section]),
+    countsWhen: (ids, sheet, data) => listCountsWhen(LISTS[section], ids, sheet, data),
     lacking: (data) => LISTS[section].lacking(data),
     ...overrides
   };
@@ -374,7 +380,9 @@ function tableProblems(rows, sheets) {
     if (row.signable === false) {
       for (const field of ['nobodySigns', 'signOffRefusal']) if (!isText(row[field])) fault(field, 'is not given, and a document nobody signs needs its words');
     }
-    for (const field of ['lacking', 'outstanding', 'summary', 'notStarted']) if (row[field] !== undefined && !isFunction(row[field])) fault(field, 'is not a function');
+    for (const field of ['lacking', 'outstanding', 'summary', 'notStarted', 'countsWhen']) {
+      if (row[field] !== undefined && !isFunction(row[field])) fault(field, 'is not a function');
+    }
     if (row.specialProcesses !== undefined && row.specialProcesses !== true) fault('specialProcesses', 'is neither true nor left out');
     else if (row.specialProcesses && rows.findIndex((other) => other.specialProcesses) !== i) {
       fault('specialProcesses', 'is another row\'s too: one document holds the special processes and own entries');

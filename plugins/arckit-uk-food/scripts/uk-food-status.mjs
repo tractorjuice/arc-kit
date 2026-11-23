@@ -285,15 +285,18 @@ function sheetLine(section, sheet, project, row) {
 
 // The lines for a document's questions not yet answered and its answers only proposed, or its entries
 // not yet confirmed and only proposed (its row's entries), naming the worksheet and up to five identifiers.
-function countLines(row, counts, section) {
+// Each ends with what those named need in order to count: the row's own words for them (countsWhen, given
+// the identifiers the line shows), or the words the others share. `sheet` is the worksheet, with no problems.
+function countLines(row, counts, section, sheet, data) {
   const { entries, nouns: [one, many] } = row;
-  const how = `${entries ? 'an entry' : 'an answer'} counts when its State is confirmed and By and On are filled in`;
+  const how = (ids) => row.countsWhen?.(ids.slice(0, 5), sheet, data) ??
+    `${entries ? 'an entry' : 'an answer'} counts when its State is confirmed and By and On are filled in`;
   const { unansweredIds: open, proposedIds: proposed } = counts;
   return [
     ...(open.length ? [`${counted(open.length, one, many)} in ${sheetPath(section)} ${isAre(open.length)} not yet ` +
-      `${entries ? 'confirmed' : 'answered'} (${someOf(open)}): ${how}`] : []),
+      `${entries ? 'confirmed' : 'answered'} (${someOf(open)}): ${how(open)}`] : []),
     ...(proposed.length ? [`${counted(proposed.length, entries ? one : 'answer', entries ? many : 'answers')} in ` +
-      `${sheetPath(section)} ${isAre(proposed.length)} proposed but not confirmed (${someOf(proposed)}): ${how}`] : [])
+      `${sheetPath(section)} ${isAre(proposed.length)} proposed but not confirmed (${someOf(proposed)}): ${how(proposed)}`] : [])
   ];
 }
 
@@ -402,7 +405,7 @@ function collectStatus(project, data, options = {}) {
     // read too, for a document that prints from another (the allergen information, from the Management worksheet).
     const clean = sheets.get(row.sheet)?.clean;
     const docLines = [
-      ...(clean ? countLines(row, counts, row.sheet) : []),
+      ...(clean ? countLines(row, counts, row.sheet, sheets.get(row.sheet), data) : []),
       ...(clean && row.outstanding ? row.outstanding(sheets.get(row.sheet), data, sheets) : []),
       ...fileLines,
       // (After a sign-off, check tells such a cell itself, one at a time, with what a signed document has there.)

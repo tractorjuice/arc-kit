@@ -681,6 +681,19 @@ export function listOutstanding(list, sheet, data, sheets) {
   ];
 }
 
+// What status's count lines say a list document's entries need in order to count, after the entries a line names
+// (`ids`, those it shows): what the worksheet's guidance says an entry needs, as well as State, By and On, since an
+// entry confirmed without a field its list needs is a problem and is not read at all; then, for each entry named that
+// still lacks a field its list needs as it now stands (needs), what it lacks. A field needed only once another is
+// filled in (a supplier's Goods-supplied, once Kind says supplier) cannot be named before then: the guidance, named
+// first, says it. `sheet` is the worksheet as readWorksheets reads it, with no problems, as status gives count lines
+// only from such a worksheet.
+export function listCountsWhen(list, ids, sheet, data) {
+  const lacking = ids.map((id) => [id, list.needs(sheet.parsed.entries.get(id), data).map(({ says }) => says)]).filter(([, says]) => says.length);
+  return 'an entry counts when it has what the worksheet\'s guidance says it needs, its State is confirmed and By and On are filled in' +
+    lacking.map(([id, says]) => `; ${id} still needs ${andList(says)}`).join('');
+}
+
 // What status's line for a list document says of its worksheet: how many entries are confirmed, and that the
 // business keeps the list elsewhere when that is confirmed; with no entry, that, or that there are none yet.
 // `doc` is the document's status entry, `sheet` its worksheet as readWorksheets reads it, or missing.

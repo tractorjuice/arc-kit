@@ -458,6 +458,8 @@ test('status lists the cleaning schedule after the own methods document and the 
 
 const NOT_WRITTEN = 'document not written yet: write the document from its worksheet';
 const NOT_SIGNED = 'document not signed off yet: once it is finished, a named person signs it off';
+// The words a list document's count lines end with, before what each entry named still lacks (item 5).
+const COUNTS_WHEN = 'an entry counts when it has what the worksheet\'s guidance says it needs, its State is confirmed and By and On are filled in';
 const statusLine = (dir) => mainSays('status', '--project', dir).out.split('\n').find((line) => line.startsWith('FOODCS '));
 const unfinishedOf = (dir) => projectStatus(dir, data).unfinished.filter((line) => line.code === 'FOODCS').map((line) => line.what);
 const without = (dir) => {
@@ -482,8 +484,7 @@ test('status tells each state of a cleaning schedule in its own true words, coun
       '2 of 2 cleaning items confirmed; the business also keeps its cleaning schedule elsewhere', 2, []],
     ['all confirmed', cafeWith(sheet(BOARDS, FRIDGE)), '2 of 2 cleaning items confirmed', 2, []],
     ['one not confirmed', cafeWith(), '3 of 4 cleaning items confirmed, 1 proposed', 4,
-      ['1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an entry counts when its State is ' +
-        'confirmed and By and On are filled in']]
+      [`1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): ${COUNTS_WHEN}`]]
   ];
   for (const [state, dir, summary, entries, lines] of states) {
     assert.equal(statusLine(dir), `FOODCS (Cleaning schedule): ${summary}; not written; not signed off`, state);
@@ -926,7 +927,7 @@ test('status tells each state of a suppliers and contacts list in its own true w
     ['Kept elsewhere confirmed alone', withElsewhere(supSheet(), SUP_KEPT), 'the business keeps its suppliers\' list elsewhere', [NO_TEAM]],
     ['Kept elsewhere not confirmed', withElsewhere(supSheet(), KEPT_UNCONFIRMED), 'no entries yet', [SUP_KEPT_OPEN, NO_SUPPLIER, NO_TEAM]],
     ['a supplier proposed, the team confirmed', supSheet(proposedGrocer, TEAM), '1 of 2 entries confirmed, 1 proposed',
-      [`1 entry in ${SUP_FILE} is proposed but not confirmed (SUP-01): an entry counts when its State is confirmed and By and On are filled in`]],
+      [`1 entry in ${SUP_FILE} is proposed but not confirmed (SUP-01): ${COUNTS_WHEN}`]],
     ['Kept elsewhere and the team confirmed', withElsewhere(supSheet(TEAM), SUP_KEPT),
       '1 of 1 entries confirmed; the business also keeps its suppliers\' list elsewhere', []],
     ['everything confirmed', supSheet(GROCER, TEAM, PESTS), '3 of 3 entries confirmed', []]
@@ -989,8 +990,7 @@ test('Kept elsewhere confirmed with a supplier still unconfirmed: the suppliers\
   assert.ok(text.includes('\n## Suppliers\' list\n\nThe business keeps its suppliers\' list elsewhere: The blue book by the till (said by Sam Okafor, ' +
     `2026-11-17).\n\n${NOT_CONFIRMED_LINE}SUP-01.\n\n## Contacts list\n`), text);
   assert.equal(text.split(NOT_CONFIRMED_LINE).length, 2, 'named once, and nothing under the contacts list');
-  assert.deepEqual(supUnfinished(dir), [`1 entry in ${SUP_FILE} is proposed but not confirmed (SUP-01): an entry counts when its State is ` +
-    'confirmed and By and On are filled in', NOT_WRITTEN, NOT_SIGNED]);
+  assert.deepEqual(supUnfinished(dir), [`1 entry in ${SUP_FILE} is proposed but not confirmed (SUP-01): ${COUNTS_WHEN}`, NOT_WRITTEN, NOT_SIGNED]);
 });
 
 test('an entry with no Kind of the three yet is named in the line that would otherwise say only to add one, so following it adds nothing twice', () => {
@@ -998,7 +998,8 @@ test('an entry with no Kind of the three yet is named in the line that would oth
   const guessed = supEntry('SUP-02', 'Exampleton council', { Kind: 'council', Telephone: '01632 960300', State: 'unanswered' });
   const dir = cafeSuppliers(supSheet(unkinded, guessed));
   assert.deepEqual(supUnfinished(dir), [
-    `2 entries in ${SUP_FILE} are not yet confirmed (SUP-01 and SUP-02): an entry counts when its State is confirmed and By and On are filled in`,
+    // SUP-02's Kind is not one of the three, which the guidance says it must be; SUP-01 has no Kind at all.
+    `2 entries in ${SUP_FILE} are not yet confirmed (SUP-01 and SUP-02): ${COUNTS_WHEN}; SUP-01 still needs Kind`,
     `${SUP_FILE} has no entry whose Kind is supplier: add and confirm one for each supplier (if SUP-01 or SUP-02 is a supplier, set its Kind ` +
       'to supplier instead of adding it again), or confirm under Kept elsewhere where the business keeps its suppliers\' list',
     `${SUP_FILE} has no entry whose Kind is environmental-health: add and confirm one for the environmental health team, with its Telephone ` +
@@ -1148,8 +1149,8 @@ const ALG_NOTHING_YET = `${ALG_FILE} has no dish yet, and nothing under Kept els
   'serves, or confirm under Kept elsewhere where the business keeps its allergen information for its dishes';
 const ALG_KEPT_OPEN = `Kept elsewhere in ${ALG_FILE} has something written in it but is not confirmed: fill in Where, set State to confirmed ` +
   'and fill in By and On, or clear it';
-const algCountLine = (n, ids, how) => `${n} ${n === 1 ? 'dish' : 'dishes'} in ${ALG_FILE} ${n === 1 ? 'is' : 'are'} ${how} (${ids}): an entry counts ` +
-  'when its State is confirmed and By and On are filled in';
+const algCountLine = (n, ids, how, still = '') => `${n} ${n === 1 ? 'dish' : 'dishes'} in ${ALG_FILE} ${n === 1 ? 'is' : 'are'} ${how} (${ids}): ` +
+  `${COUNTS_WHEN}${still}`;
 const cellsLine = (n, where, dishes = 1) => `${n} allergen ${n === 1 ? 'cell' : 'cells'} of confirmed dishes in ${ALG_FILE} ${n === 1 ? 'is' : 'are'} ` +
   `not filled in, so the document shows ${n === 1 ? 'it' : 'them'} as not confirmed (${where}): ${n === 1 ? 'fill it in' : 'fill in each'} as contains or ` +
   `does not contain from what was checked, then update ${dishes === 1 ? 'that dish\'s' : 'each of those dishes\''} Checked-against, Checked-on, By and On`;
@@ -1705,7 +1706,8 @@ test('Kept elsewhere confirmed alone: the document is finished, prints where, th
   const both = cafeAlg(withElsewhere(algSheet(dish('DISH-01', 'Toastie', DONE), dish('DISH-02', 'Scone', { State: 'unanswered' })), ALG_KEPT), MG_ANSWERED());
   const bothBody = renderedAlg(both);
   assert.deepEqual(dishesTable(bothBody).map((row) => row[0]), ['Dish', 'DISH-01 Toastie', 'DISH-02']);
-  assert.deepEqual(algUnfinished(both), [algCountLine(1, 'DISH-02', 'not yet confirmed'), NOT_WRITTEN, NOT_SIGNED]);
+  assert.deepEqual(algUnfinished(both), [algCountLine(1, 'DISH-02', 'not yet confirmed', '; DISH-02 still needs Checked-against and Checked-on'),
+    NOT_WRITTEN, NOT_SIGNED]);
 });
 
 test('status tells each state of the allergen information in its own true words; whatever the body shows unfinished, status says why, and sign-off refuses with those words', () => {
@@ -1776,4 +1778,80 @@ test('the allergens guidance says how a cell is filled and that a change to a di
   assert.doesNotMatch(guidance, /\bknows?\b/);
   assert.doesNotMatch(guidance, /(write|is|are) (contains|does not contain) (for|in) (a|an|the) /i);
   assert.ok(!guidance.includes('quoted from'), 'the guidance quotes nothing of the pack');
+});
+
+// ---- What a list document's count lines say an entry needs (item 5) ----
+
+// The count lines status gives for a document: those naming entries not yet confirmed and entries only proposed.
+const countLinesOf = (dir, code) => projectStatus(dir, data, { today: TODAY }).unfinished
+  .filter((line) => line.code === code && / (?:is|are) (?:not yet confirmed|proposed but not confirmed) \(/.test(line.what)).map((line) => line.what);
+// A worksheet with one entry's lines replaced: its State, By and On set as a confirmation sets them, and each field in
+// `fill` filled in, the way a person following a count line does.
+const followed = (text, id, fill) => {
+  // Below the guidance comment, which holds an entry to copy under the same heading as the first entry.
+  const end = text.indexOf('\n-->\n') + '\n-->\n'.length;
+  const [head, ...blocks] = text.slice(end).split('\n## ');
+  return text.slice(0, end) + [head, ...blocks.map((block) => {
+    if (!block.startsWith(`${id} `)) return block;
+    let out = block.replace(/^State: .*$/m, 'State: confirmed').replace(/^By:.*$/m, 'By: Sam Okafor').replace(/^On:.*$/m, 'On: 2026-11-20');
+    for (const [field, value] of Object.entries(fill)) out = out.replace(new RegExp(`^${field}:.*$`, 'm'), `${field}: ${value}`);
+    return out;
+  })].join('\n## ');
+};
+
+test('item 5: a list document\'s count lines say what an entry needs, naming what each entry named still lacks; followed literally, the worksheet has no problem and the line is gone', () => {
+  // The cleaning schedule: an entry with nothing filled in, and one proposed with everything it needs.
+  const blank = entry('CS-01', 'Walk-in fridge', { State: 'unanswered' });
+  const cleaning = sheet(blank, FLOOR.replace('## CS-03', '## CS-02'));
+  const csDir = cafeWith(cleaning);
+  assert.deepEqual(countLinesOf(csDir, 'FOODCS'), [
+    `1 cleaning item in food-safety/answers-cleaning.md is not yet confirmed (CS-01): ${COUNTS_WHEN}; CS-01 still needs Frequency and Method`,
+    `1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-02): ${COUNTS_WHEN}`
+  ]);
+  // Why the line says more than State, By and On: an entry confirmed with only those is not read, for what it lacks.
+  assert.deepEqual(algParse(followed(cleaning, 'CS-01', {})).problems.map((p) => p.message), ['CS-01 is confirmed, so it needs Frequency',
+    'CS-01 is confirmed, so it needs Method']);
+  const csDone = followed(followed(cleaning, 'CS-01', { Frequency: FREQUENCIES[1], Method: 'Empty it, then wipe the shelves with the sanitiser.' }), 'CS-02', {});
+  assert.deepEqual(algParse(csDone).problems, []);
+  assert.deepEqual(countLinesOf(cafeWith(csDone), 'FOODCS'), []);
+
+  // The suppliers and contacts: an entry with nothing filled in lacks Kind. The guidance, which the line names first, says
+  // what each Kind needs besides: a contact a Telephone or an Email.
+  const nameless = supEntry('SUP-03', 'Swift Pest Control', { State: 'unanswered' });
+  const suppliers = supSheet(GROCER, TEAM, nameless);
+  assert.deepEqual(countLinesOf(cafeSuppliers(suppliers), 'FOODSUP'), [
+    `1 entry in food-safety/answers-suppliers.md is not yet confirmed (SUP-03): ${COUNTS_WHEN}; SUP-03 still needs Kind`
+  ]);
+  assert.ok(blankWorksheet('suppliers', data).replace(/\s+/g, ' ').includes('A supplier needs Goods-supplied too, and a contact or the environmental ' +
+    'health team a Telephone or an Email, or both.'));
+  const supDone = followed(suppliers, 'SUP-03', { Kind: 'contact', Telephone: '01632 960477' });
+  assert.deepEqual(algParse(supDone).problems, []);
+  assert.deepEqual(countLinesOf(cafeSuppliers(supDone), 'FOODSUP'), []);
+  // Once its Kind is given, what that Kind needs is named too.
+  const kinded = supSheet(GROCER, TEAM, supEntry('SUP-03', 'Swift Pest Control', { Kind: 'contact', State: 'unanswered' }));
+  assert.deepEqual(countLinesOf(cafeSuppliers(kinded), 'FOODSUP'), [
+    `1 entry in food-safety/answers-suppliers.md is not yet confirmed (SUP-03): ${COUNTS_WHEN}; SUP-03 still needs Telephone or Email`
+  ]);
+
+  // The allergen information: a dish with nothing filled in lacks what it was checked against, and when.
+  const allergens = algSheet(dish('DISH-01', 'Toastie', DONE), dish('DISH-02', 'Soup of the day', { State: 'unanswered' }),
+    dish('DISH-03', 'Scone', { ...DONE, 'Checked-on': '', State: 'unanswered', By: '', On: '' }));
+  const algDir = cafeAlg(allergens, MG_ANSWERED());
+  assert.deepEqual(countLinesOf(algDir, 'FOODALG'), [
+    `2 dishes in food-safety/answers-allergens.md are not yet confirmed (DISH-02 and DISH-03): ${COUNTS_WHEN}; DISH-02 still needs Checked-against ` +
+      'and Checked-on; DISH-03 still needs Checked-on'
+  ]);
+  const algDone = followed(followed(allergens, 'DISH-02', { 'Checked-against': 'The soup base label', 'Checked-on': '2026-11-19' }), 'DISH-03',
+    { 'Checked-on': '2026-11-19' });
+  assert.deepEqual(algParse(algDone).problems, []);
+  assert.deepEqual(countLinesOf(cafeAlg(algDone, MG_ANSWERED()), 'FOODALG'), []);
+
+  // Up to five entries are named, and what each of those lacks; the rest are counted.
+  const many = sheet(...[1, 2, 3, 4, 5, 6, 7].map((n) => entry(`CS-0${n}`, `Item ${n}`, { State: 'unanswered', Method: n === 2 ? 'Wipe it.' : '' })));
+  assert.deepEqual(countLinesOf(cafeWith(many), 'FOODCS'), [`7 cleaning items in food-safety/answers-cleaning.md are not yet confirmed (CS-01, CS-02, ` +
+    `CS-03, CS-04, CS-05 and 2 more): ${COUNTS_WHEN}; CS-01 still needs Frequency and Method; CS-02 still needs Frequency; CS-03 still needs ` +
+    'Frequency and Method; CS-04 still needs Frequency and Method; CS-05 still needs Frequency and Method']);
+  // A worksheet of questions, and the own methods worksheet, keep the words they always had.
+  const cafeLines = projectStatus(CAFE, data, { today: TODAY }).unfinished;
+  assert.ok(cafeLines.some(({ code, what }) => code === 'FOODXC' && what.endsWith(': an answer counts when its State is confirmed and By and On are filled in')));
 });
