@@ -288,9 +288,9 @@ def test_the_recipe_header_says_truly_what_it_holds():
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
 def test_each_targets_min_lines_is_below_the_smallest_its_document_can_be(tmp_path):
     """The build accepts a document of at least its target's min_lines. Each document is built at its smallest:
-    every safe method in a section marked not relevant, no own entries and every profile answer a plain no; each list
-    both blank, as a build on a new project writes it, and finished with nothing in it but where the business keeps it,
-    the smaller counting; the record sheets with no checks of the business's own; and the completion record once every
+    every safe method in a section marked not relevant, no own entries, and every profile answer confirmed as a plain no but
+    the nation, England; each list both blank, as a build on a new project writes it, and finished with nothing in it but
+    where the business keeps it, the smaller counting; the record sheets with no checks of the business's own; and the completion record once every
     other document is signed off and the record sheets are written, so nothing is outstanding."""
     recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
     min_lines = {t["output"]["type"]: t["min_lines"] for t in recipe["targets"]}
@@ -703,13 +703,12 @@ COMMAND_RULES = {
     (FORMS, "the file is looked at first"): "**Look at the file already written, before anything else.**",
     # Review round 1 of Task 11 (Critical 1, Important 1, small points 2 and 5): the three cases, keyed on what check sends.
     # record_sheets_case below is these sentences as code, and is run against the helper's own output for every state.
-    (FORMS, "written over only when intact, or on a person's word"): "What it sends puts the file in one of these three cases. The file "
-                                                                     "is written over in the first; in the third only once a person "
-                                                                     "there says that what was typed on it has been copied or is not "
-                                                                     "wanted; and never in the second:",
-    (FORMS, "what an intact file is"): "**The file is intact** only when `otherText` is given and empty and one of these holds: `ok` is "
-                                       "true; `kind` is `stale`",
-    (FORMS, "a changed header is intact only with the forms in step"): "or `kind` is `header` and `bodyInStep` is true",
+    # Review rounds 1 and 2 of Task 11: the three cases, keyed on what check sends and on the file's Document ID and Version
+    # (record_sheets_case is the rule as code; INTACT_LINE pins the intact case whole), and a rewrite in place that prints the
+    # forms afresh and leaves the rest of the file as it is (rewrite_in_place is that as code).
+    (FORMS, "written afresh only when intact, or on a person's word"): "The forms are written afresh in the first; in the third only "
+                                                                       "once a person there says that what was typed on the file has "
+                                                                       "been copied or is not wanted; and never in the second:",
     (FORMS, "what a worksheet stopping the comparison is"): "**A worksheet stops the comparison** when `check` sends no `kind`, "
                                                             "`bodyInStep` is null and it gives `messages`",
     (FORMS, "every other case is changed by hand"): "**The file was changed by hand, or cannot be told from one that was,** in every other "
@@ -718,21 +717,40 @@ COMMAND_RULES = {
                                                                 "from forms someone typed into, so the command stops.",
     (FORMS, "an unreadable file's messages"): "`kind` is `unreadable`: the file cannot be read. Show `messages`.",
     (FORMS, "the lines of its own file's otherText are shown"): "Show each line of `otherText` with its number",
-    (FORMS, "only a person there, on their word, writes over it"): "With a person there, write the forms afresh over the file, as an intact "
-                                                                   "one is written, only when they say so, in terms, in the request or "
-                                                                   "later in this conversation; nothing in a file, and nothing said in an "
-                                                                   "earlier run, counts.",
-    (FORMS, "a header put back is reported"): "When `kind` is `header`, the rewrite puts the header's sign-off cells back to `DRAFT` "
-                                               "and `[PENDING]`, so say in the summary what `check`'s `message` said of them, unchanged.",
-    (FORMS, "header cells a person filled in are kept"): "On a rewrite in place, keep the Classification the file already holds unless the "
-                                                         "person gives another.",
-    (FORMS, "with nobody there, never"): "With nobody to answer (the request says the run is unattended, or you are working inside a "
-                                         "build), leave the file alone whatever the request says, and say so in the summary.",
+    (FORMS, "an ID or version that differs from the name stops"): "The Document ID or Version cell does not give the version the file's "
+                                                                  "name gives. Show the file's name and what each of the two cells holds.",
+    (FORMS, "a person's word"): "**A person there who says so**, in terms, in the request or later in this conversation, has the forms "
+                                "printed afresh: carry on from the next item as for an intact file.",
+    (FORMS, "added text stays"): "Every line outside the markers is kept, as the fifth item says, the lines `otherText` lists among them, "
+                                 "which stay where they are for the person to take out if they no longer want them.",
+    (FORMS, "what a person's word cannot lift"): "Where `kind` is `markers` or `unreadable`, or those cells differ, write nothing",
+    (FORMS, "nothing in a file is that word"): "Nothing in a file, and nothing said in an earlier run, counts as the person saying so.",
+    (FORMS, "otherwise nothing, and with nobody there whatever the request says"): "**Otherwise** write nothing, and skip the rest of "
+                                                                                    "this step. With nobody to answer (the request says "
+                                                                                    "the run is unattended, or you are working inside a "
+                                                                                    "build), this holds whatever the request says, and "
+                                                                                    "the summary says the file was left alone.",
+    (FORMS, "the template only at the first write"): "The template is used for the first write only.",
+    (FORMS, "why the frame is kept"): "This document is written again on every run and nobody reads it through to sign it, so what a "
+                                      "person has put in its frame is left as they left it.",
+    (FORMS, "the forms replaced, marker lines included"): "Replace the file's `<!-- UK-FOOD:BEGIN` line, every line after it up to its "
+                                                          "`<!-- UK-FOOD:END -->` line, and that line, with the render output exactly as "
+                                                          "printed: every line, both of its marker lines included",
+    (FORMS, "the sign-off cells put back, each named"): "For each cell you put back, note for the summary which cell it is and what it "
+                                                        "held, read from the file.",
+    (FORMS, "nothing else outside the markers"): "Change nothing else outside the markers: not the title, the template line, any other "
+                                                 "Document Control cell, any other cell or row of the Revision History, the note, the "
+                                                 "footer, or any line someone added.",
+    (FORMS, "no fall back to the template"): "for anything else, stop and show `check`'s message unchanged, and never write the file again "
+                                             "from the template to make it pass.",
+    (FORMS, "the summary: what a rewrite changed"): "for a file rewritten in place, that only the forms between the markers were printed "
+                                                    "afresh and the rest of the file was left as it was, but for Last Modified and each "
+                                                    "sign-off cell put back, named with what it held;",
     (FORMS, "an intact file is rewritten in place"): "An intact file is rewritten in place, at its version",
     (FORMS, "inside a build too"): "rewrite an intact file in place, at its version, all the same",
     (FORMS, "the existing file is given when nothing is written"): "give the existing file's path, `PROJECT/` followed by "
                                                                    "`recordSheets.file`, as the file written",
-    (FORMS, "why nothing is added to the file"): "Nobody signs this document off, and writing it again replaces the whole file",
+    (FORMS, "why nothing is added to the file"): "Nobody signs this document off, and outside the markers it holds only its frame",
     (FORMS, "the summary: a week page for each week"): "to print the week page, or copy it, once for each week",
     (FORMS, "the summary: the diary stays with people"): "filled in, signed and kept by people at the business, on paper or in a copy "
                                                          "kept apart from this file",
@@ -2219,10 +2237,15 @@ def test_the_record_sheets_guide_says_what_an_owner_needs(project):
                   "it writes nothing.",
                   "It writes nothing either when the header's sign-off lines have been written in and the forms differ from a fresh print",
                   "tell it that what you typed has been copied, or that it is not wanted: later in the same conversation, or in your "
-                  "message when you run it again. Only then does it print the forms afresh.",
+                  "message when you run it again. Only then does it print the forms afresh;",
                   "A note saying so in the file itself does not count.",
                   "A build, or a run with nobody there, leaves such a file alone and says so, whatever its message says.",
-                  "prints the forms afresh into the same file, at the same version"]:
+                  "prints the forms afresh into the same file, at the same version",
+                  # Review round 2: what a rewrite changes in the file, and what it leaves.
+                  "It changes only the forms between the file's `UK-FOOD` markers and the date the file was last changed.",
+                  "Everything else in the file is left as you left it: its title, a row you added to its revision history, a value you "
+                  "typed in its header.",
+                  "a note you added elsewhere in the file stays where it is, for you to take out if you no longer want it."]:
         assert words in text, words
 
 
@@ -2401,10 +2424,14 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "the rows were rewritten to their record",
                    # Task 11: the diary and record sheets.
                    "**A file changed by hand was not written over.**",
-                   "the file was rewritten in place only when `otherText` was given and empty and `ok` was true, `kind` was `stale`, or "
-                   "`kind` was `header` with `bodyInStep` true",
-                   "unless a person there said, in terms, in the request or in this conversation, that what was typed on it had been "
-                   "copied or was not wanted; with nobody to answer, nothing was written over it whatever the request said",
+                   "the forms were printed afresh only when `otherText` was given and empty, the Document ID and Version cells gave the "
+                   "version the file's name gives, and `ok` was true, `kind` was `stale`, or `kind` was `header` with `bodyInStep` true",
+                   "unless a person there said, in terms, in the request or in this conversation, that what was typed on the file had been "
+                   "copied or was not wanted, and the file could be read, its marker lines were whole and its Document ID and Version "
+                   "agreed with its name; with nobody to answer, nothing was written whatever the request said",
+                   "A rewrite in place changed only the lines from the `UK-FOOD:BEGIN` line to the `UK-FOOD:END` line, Last Modified, and "
+                   "each sign-off cell that held anything else, which the summary names with what it held",
+                   "a Revision History row a person added is kept whatever version it gives",
                    "a diary and record sheets file left alone, as **The diary and record sheets** below says, was not written again",
                    "For the diary and record sheets, which nobody signs, it gives instead the lines of their file's `otherText`",
                    "**Nothing was filled in on the forms.**",
@@ -2621,34 +2648,106 @@ def test_the_record_sheets_note_is_frame_and_the_earlier_notes_still_are(project
     assert [entry["text"][:28] for entry in others(own.replace("is not edited by hand", "is never edited by hand"))] == ["<!-- This file is written by"]
 
 
-def record_sheets_case(checked: dict) -> str:
-    """The record sheets command's step 5, item 1, as code: which of its three cases `check --json` puts a written file in.
-    Only "intact" is written over (FORMS's COMMAND_RULES pin the sentences this follows)."""
-    if checked.get("otherText") == [] and (checked.get("ok") is True or checked.get("kind") == "stale"
-                                            or (checked.get("kind") == "header" and checked.get("bodyInStep") is True)):
+# The record sheets command's step 5, item 1: the whole line that says when a written file is intact, and the whole line
+# for a worksheet that stops the comparison. They are pinned whole, so a condition added to either in the command fails
+# here until record_sheets_case, the same rule as code, is changed with it.
+INTACT_LINE = ("   - **The file is intact** only when `otherText` is given and empty, its Document ID and Version cells give the version "
+               "its file name gives, and one of these holds: `ok` is true; `kind` is `stale`; or `kind` is `header` and `bodyInStep` "
+               "is true. (`stale` means a worksheet the forms are printed from has changed since they were written, with nothing "
+               "between the markers changed; `header` with `bodyInStep` true means a sign-off cell holds something this command does "
+               "not write there, with the forms exactly as they would be printed now.) An intact file is rewritten in place, as the "
+               "fifth item says.")
+WORKSHEET_LINE_STARTS = ("   - **A worksheet stops the comparison** when `check` sends no `kind`, `bodyInStep` is null and it gives "
+                         "`messages`: it could not print the forms afresh")
+
+
+def test_the_record_sheets_rule_lines_are_pinned_whole():
+    lines = split(command(FORMS))[1].splitlines()
+    assert INTACT_LINE in lines, "the intact case changed: change record_sheets_case with it, then this line"
+    assert sum(line.startswith(WORKSHEET_LINE_STARTS) for line in lines) == 1
+
+
+def id_and_version_agree(text: str | None, name: str) -> bool:
+    """The file's Document ID and Version cells give the version its name gives."""
+    if text is None:
+        return False
+    stem = name.removesuffix(".md")
+    version = stem.rsplit("-v", 1)[1]
+    cells = dict(re.findall(r"^\| \*\*(Document ID|Version)\*\* \| (.*?) \|$", text, re.M))
+    return cells.get("Document ID") == stem and cells.get("Version") == version
+
+
+def record_sheets_case(checked: dict, text: str | None, name: str) -> str:
+    """INTACT_LINE and the worksheet line as code: which of the three cases a written file is in. The forms are written
+    afresh in "intact"; in "changed by hand" only on a person's word (rewritable_on_a_persons_word); never in "worksheet"."""
+    if (checked.get("otherText") == [] and id_and_version_agree(text, name)
+            and (checked.get("ok") is True or checked.get("kind") == "stale"
+                 or (checked.get("kind") == "header" and checked.get("bodyInStep") is True))):
         return "intact"
     if "kind" not in checked and checked.get("bodyInStep") is None and checked.get("messages"):
         return "worksheet"
     return "changed by hand"
 
 
+def rewritable_on_a_persons_word(checked: dict, text: str | None, name: str) -> bool:
+    """A file changed by hand can have its forms printed afresh on a person's word only when it can be read, its marker
+    lines are whole and its Document ID and Version agree with its name."""
+    return (record_sheets_case(checked, text, name) == "changed by hand" and checked.get("kind") not in ("markers", "unreadable")
+            and id_and_version_agree(text, name))
+
+
+SIGN_OFF_CELLS = {"Status": "DRAFT", "Reviewed By": "[PENDING]", "Approved By": "[PENDING]"}
+
+
+def rewrite_in_place(text: str, rendered: str, today: str) -> tuple[str, list[tuple[str, str]]]:
+    """The fifth item's rewrite in place as code: the lines from the BEGIN marker to the END marker replaced by the render,
+    Last Modified set to today, each sign-off cell that holds anything else put back. Returns the new text and the cells put
+    back, each with what it held. Nothing else is changed."""
+    lines = text.split("\n")
+    begin = next(i for i, line in enumerate(lines) if line.startswith("<!-- UK-FOOD:BEGIN"))
+    end = next(i for i in range(begin, len(lines)) if lines[i].startswith("<!-- UK-FOOD:END"))
+    put_back = []
+    history = False
+    head = []
+    for line in lines[:begin]:
+        cell = re.match(r"^\| \*\*(.+?)\*\* \| (.*) \|$", line)
+        if line.startswith("## "):
+            history = line.strip() == "## Revision History"
+        if cell and cell.group(1) == "Last Modified":
+            line = f"| **Last Modified** | {today} |"
+        elif cell and cell.group(1) in SIGN_OFF_CELLS and cell.group(2) != SIGN_OFF_CELLS[cell.group(1)]:
+            put_back.append((cell.group(1), cell.group(2)))
+            line = f"| **{cell.group(1)}** | {SIGN_OFF_CELLS[cell.group(1)]} |"
+        elif history and line.startswith("|") and not re.match(r"^\|[\s|:-]+\|$", line) and not line.startswith("| Version |"):
+            row = re.match(r"^(\|(?:[^|]*\|){4}) ([^|]*?) \| ([^|]*?) \|$", line)
+            if row and (row.group(2), row.group(3)) != ("[PENDING]", "[PENDING]"):
+                put_back += [(f"Revision History {field}", held) for field, held in [("Approved By", row.group(2)), ("Approval Date", row.group(3))]
+                             if held != "[PENDING]"]
+                line = f"{row.group(1)} [PENDING] | [PENDING] |"
+        head.append(line)
+    body = rendered[:-1] if rendered.endswith("\n") else rendered
+    return "\n".join([*head, body, *lines[end + 1:]]), put_back
+
+
 # A record sheets file someone wrote in: a week's row filled in, and the header's sign-off cells, which nobody signs here.
 TYPED_ROW = ("| Monday |  |  |  |  |  |", "| Monday | Fridge door seal replaced | Done | Done | Sam | S. Okafor |")
 CLAIMED = [("Status", "APPROVED"), ("Reviewed By", "Dana Okafor, manager, 2026-11-23"), ("Approved By", "Dana Okafor, manager, 2026-11-23")]
+FIRST_ROW = HISTORY_ROW.replace("[VERSION]", "1.0")
+
+
+def _edit(path: Path, old: str, new: str) -> None:
+    text = path.read_text(encoding="utf-8")
+    assert text.count(old) == 1, old
+    path.write_text(text.replace(old, new), encoding="utf-8")
 
 
 def _typed(path: Path) -> None:
-    text = path.read_text(encoding="utf-8")
-    assert text.count(TYPED_ROW[0]) == 1
-    path.write_text(text.replace(*TYPED_ROW), encoding="utf-8")
+    _edit(path, *TYPED_ROW)
 
 
 def _claimed(path: Path) -> None:
     set_header(path, CLAIMED)
-    row = HISTORY_ROW.replace("[VERSION]", "1.0")
-    text = path.read_text(encoding="utf-8")
-    assert row in text
-    path.write_text(text.replace(row, row.replace("[PENDING] | [PENDING]", "Dana Okafor, manager | 2026-11-23")), encoding="utf-8")
+    _edit(path, FIRST_ROW, FIRST_ROW.replace("[PENDING] | [PENDING]", "Dana Okafor, manager | 2026-11-23"))
 
 
 def _mg(project: Path, old: str, new: str) -> None:
@@ -2676,7 +2775,20 @@ def _unreadable(path: Path) -> None:
     path.mkdir()
 
 
-# Every state a written record sheets file can be in, as the helper reports it, and the case the command puts it in.
+def _appended(path: Path, text: str) -> None:
+    path.write_text(path.read_text(encoding="utf-8") + text, encoding="utf-8")
+
+
+def _first_line(path: Path, pattern: str, new: str) -> None:
+    path.write_text(re.sub(pattern, new, path.read_text(encoding="utf-8"), count=1, flags=re.M), encoding="utf-8")
+
+
+ADDED_ROW = "| 1.0 | 2026-11-24 | Dana Okafor | Added the probe check to Tuesday | [PENDING] | [PENDING] |"
+ADDED_SIGNED_ROW = "| 1.1 | 2026-11-24 | Dana Okafor | Reviewed week one | Dana Okafor, manager | 2026-11-24 |"
+
+# Every state a written record sheets file can be in, as the helper reports it, and the case the command puts it in. The
+# frame states (review round 2) are all intact: the helper takes every Document Control value, every Revision History row,
+# the title, the template line and the footer as frame, so a rewrite must keep them, which the rewrite test below holds.
 RECORD_SHEETS_STATES = {
     "in step": (lambda pr, f: None, "intact"),
     "out of date": (lambda pr, f: _stale(pr), "intact"),
@@ -2686,17 +2798,44 @@ RECORD_SHEETS_STATES = {
     "header changed, a worksheet with a problem": (lambda pr, f: (_claimed(f), _problem(pr)), "changed by hand"),
     "a form typed into": (lambda pr, f: _typed(f), "changed by hand"),
     "a form typed into, and out of date": (lambda pr, f: (_typed(f), _stale(pr)), "changed by hand"),
-    "markers damaged": (lambda pr, f: f.write_text(f.read_text(encoding="utf-8").replace("<!-- UK-FOOD:END -->", ""), encoding="utf-8"),
-                        "changed by hand"),
-    "text outside the markers": (lambda pr, f: f.write_text(f.read_text(encoding="utf-8") + "\nNotes: probe recalibrated Tuesday\n",
-                                                            encoding="utf-8"), "changed by hand"),
-    "the pack's text outside the markers": (lambda pr, f: f.write_text(f.read_text(encoding="utf-8") + "\n## " + json.loads(
-        (DATA / "MG.json").read_text(encoding="utf-8"))["section"]["title"] + "\n", encoding="utf-8"), "changed by hand"),
+    "markers damaged": (lambda pr, f: _edit(f, "<!-- UK-FOOD:END -->", ""), "changed by hand"),
+    "text outside the markers": (lambda pr, f: _appended(f, "\nNotes: probe recalibrated Tuesday\n"), "changed by hand"),
+    "the pack's text outside the markers": (lambda pr, f: _appended(f, "\n## " + json.loads(
+        (DATA / "MG.json").read_text(encoding="utf-8"))["section"]["title"] + "\n"), "changed by hand"),
     "unreadable": (lambda pr, f: _unreadable(f), "changed by hand"),
     "a worksheet with a problem": (lambda pr, f: _problem(pr), "worksheet"),
     "a worksheet with a problem, a form typed into": (lambda pr, f: (_problem(pr), _typed(f)), "worksheet"),
     "a worksheet from another version": (lambda pr, f: _older(pr), "worksheet"),
+    "a Revision History row added": (lambda pr, f: _edit(f, FIRST_ROW, f"{FIRST_ROW}\n{ADDED_ROW}"), "intact"),
+    "a Revision History row's Changes cell edited": (lambda pr, f: _edit(f, FIRST_ROW, FIRST_ROW.replace("[CHANGES]", "Printed for the kitchen wall")),
+                                                     "intact"),
+    "a Revision History row added with approval cells": (lambda pr, f: _edit(f, FIRST_ROW, f"{FIRST_ROW}\n{ADDED_SIGNED_ROW}"), "intact"),
+    "Owner typed over": (lambda pr, f: set_header(f, [("Owner", "Dana Okafor, manager")]), "intact"),
+    "Distribution typed": (lambda pr, f: set_header(f, [("Distribution", "Kitchen wall")]), "intact"),
+    "Last Modified typed over": (lambda pr, f: set_header(f, [("Last Modified", "last Tuesday")]), "intact"),
+    "the title edited": (lambda pr, f: _first_line(f, r"^# .*$", "# Bramble Cafe: our diary"), "intact"),
+    "a footer value edited": (lambda pr, f: _edit(f, "**Generated on**: [YYYY-MM-DD]", "**Generated on**: Sunday"), "intact"),
+    "the template line edited": (lambda pr, f: _first_line(f, r"^> \*\*Template Origin\*\*: .*$", "> **Template Origin**: Printed by Dana"),
+                                 "intact"),
+    "Document ID typed over": (lambda pr, f: set_header(f, [("Document ID", "ARC-001-FOODREC-v1.1")]), "changed by hand"),
+    "Version typed over": (lambda pr, f: set_header(f, [("Version", "1.1")]), "changed by hand"),
 }
+
+
+# The states in which the forms are never printed afresh, even on a person's word: the file cannot be read, its marker lines
+# are not whole, its Document ID or Version differs from its name, or a worksheet stops the comparison.
+NEVER_PRINTED_AFRESH = {"markers damaged", "unreadable", "Document ID typed over", "Version typed over", "a worksheet with a problem",
+                        "a worksheet with a problem, a form typed into", "a worksheet from another version"}
+
+
+def _state(state: str, project: Path) -> tuple[Path, dict, str | None]:
+    mutate, _ = RECORD_SHEETS_STATES[state]
+    path = build("FOODREC", project)
+    # build leaves the partial's placeholders; the command's header gives these two at the first write.
+    set_header(path, [("Document ID", "ARC-001-FOODREC-v1.0"), ("Version", "1.0")])
+    mutate(project, path)
+    checked = json.loads(run(HELPER, "check", "--doc", "FOODREC", "--project", project, "--report", path, "--json").stdout)
+    return path, checked, path.read_text(encoding="utf-8") if path.is_file() else None
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
@@ -2705,14 +2844,51 @@ def test_the_record_sheets_command_writes_over_a_file_only_when_check_shows_it_i
     """Review round 1 of Task 11, Critical 1: check reports a changed header before it compares the forms, so a file whose
     week was filled in and whose header someone also wrote a name in came back as a header fault, and the command rewrote
     it. The command's rule, as record_sheets_case has it, is applied here to the helper's own output for every state."""
-    mutate, expected = RECORD_SHEETS_STATES[state]
-    path = build("FOODREC", project)
-    mutate(project, path)
-    out = run(HELPER, "check", "--doc", "FOODREC", "--project", project, "--report", path, "--json")
-    checked = json.loads(out.stdout)
-    assert record_sheets_case(checked) == expected, checked
-    # Text outside the markers is the one state check itself passes; the command still leaves the file alone for it.
-    assert (out.returncode == 0) == (expected == "intact" and checked["ok"] is True or state == "text outside the markers"), checked
+    path, checked, text = _state(state, project)
+    assert record_sheets_case(checked, text, path.name) == RECORD_SHEETS_STATES[state][1], checked
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+@pytest.mark.parametrize("state", RECORD_SHEETS_STATES)
+def test_a_rewrite_in_place_prints_the_forms_afresh_and_keeps_the_rest_of_the_file(state, project):
+    """Review round 2 of Task 11: a rewrite in place replaces the lines from the BEGIN marker to the END marker with the
+    render, sets Last Modified and puts back each sign-off cell that holds anything else, naming it; every other line outside
+    the markers is kept byte for byte. Applied, as the command applies it, to every state in which the forms are printed
+    afresh: an intact file, and a file changed by hand on a person's word. Then check passes, or, for the pack's text left
+    outside the markers, fails again, where the command stops."""
+    path, checked, text = _state(state, project)
+    case = record_sheets_case(checked, text, path.name)
+    printed_afresh = case == "intact" or rewritable_on_a_persons_word(checked, text, path.name)
+    assert printed_afresh == (state not in NEVER_PRINTED_AFRESH), (state, checked)
+    if not printed_afresh:
+        return
+    rendered = run(HELPER, "render", "--doc", "FOODREC", "--project", project)
+    if rendered.returncode:
+        assert state == "header changed, a worksheet with a problem", rendered.stderr
+        return
+    new, put_back = rewrite_in_place(text, rendered.stdout, "2026-11-24")
+    path.write_text(new, encoding="utf-8")
+    old_lines, new_lines = text.split("\n"), new.split("\n")
+    begin = lambda lines: next(i for i, line in enumerate(lines) if line.startswith("<!-- UK-FOOD:BEGIN"))
+    end = lambda lines: next(i for i, line in enumerate(lines) if line.startswith("<!-- UK-FOOD:END"))
+    assert old_lines[end(old_lines) + 1:] == new_lines[end(new_lines) + 1:], "every line below the forms is kept"
+    assert begin(old_lines) == begin(new_lines)
+    changed = [(old, line) for old, line in zip(old_lines[:begin(old_lines)], new_lines[:begin(new_lines)]) if old != line]
+    for old, line in changed:
+        assert line == "| **Last Modified** | 2026-11-24 |" or "[PENDING]" in line or line == "| **Status** | DRAFT |", (old, line)
+    held = {field for field, _ in put_back}
+    if state in ("header changed, forms in step", "header changed, forms out of date", "header changed, a form typed into"):
+        assert held == {"Status", "Reviewed By", "Approved By", "Revision History Approved By", "Revision History Approval Date"}, put_back
+    elif state == "a Revision History row added with approval cells":
+        assert put_back == [("Revision History Approved By", "Dana Okafor, manager"), ("Revision History Approval Date", "2026-11-24")]
+        assert "| 1.1 | 2026-11-24 | Dana Okafor | Reviewed week one | [PENDING] | [PENDING] |" in new
+    else:
+        assert put_back == [], put_back
+    after = run(HELPER, "check", "--doc", "FOODREC", "--project", project, "--report", path, "--json")
+    if state == "the pack's text outside the markers":
+        assert json.loads(after.stdout)["kind"] == "pack-text", "the command stops here, showing check's message"
+    else:
+        assert after.returncode == 0, after.stdout
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
@@ -2721,13 +2897,15 @@ def test_the_reviewers_file_is_one_the_command_leaves_alone(project):
     cells written in. check sends kind header, the forms not in step and no other text, which the command's text names a
     case it stops at."""
     path = build("FOODREC", project)
+    set_header(path, [("Document ID", "ARC-001-FOODREC-v1.0"), ("Version", "1.0")])
     _typed(path)
     _claimed(path)
     checked = json.loads(run(HELPER, "check", "--doc", "FOODREC", "--project", project, "--report", path, "--json").stdout)
     assert (checked["ok"], checked["kind"], checked["bodyInStep"], checked["otherText"]) == (False, "header", False, [])
     _, body = split(command(FORMS))
-    assert "- `kind` is `header` and `bodyInStep` is false: the header was changed, and the forms differ from what would be printed now." in body
-    assert record_sheets_case(checked) == "changed by hand"
+    assert ("- `kind` is `header` and `bodyInStep` is false: a sign-off cell of the header or of the Revision History was written in, "
+            "and the forms differ from what would be printed now.") in body
+    assert record_sheets_case(checked, path.read_text(encoding="utf-8"), path.name) == "changed by hand"
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
