@@ -469,7 +469,8 @@ const KEPT_UNCONFIRMED = ['Where: The red folder', 'State: unanswered', 'By:', '
 test('status tells each state of a cleaning schedule in its own true words, counting entries and nothing else', () => {
   const states = [
     ['not started', without(cafeWith()), 'not started: answers-cleaning.md; no cleaning items yet', 0,
-      ['worksheet food-safety/answers-cleaning.md is not started yet: make it with worksheet --section cleaning and fill it in']],
+      ['this document lists what the business cleans, how often and how, from its worksheet food-safety/answers-cleaning.md, which is not ' +
+        'started yet: make it with worksheet --section cleaning and fill it in']],
     ['blank', cafeWith(sheet()), 'no cleaning items yet', 0,
       ['food-safety/answers-cleaning.md has no cleaning item yet, and nothing under Kept elsewhere: add and confirm an entry for each item ' +
         'the business cleans, or confirm under Kept elsewhere where the business keeps its cleaning schedule']],
@@ -948,8 +949,9 @@ test('status tells each state of a suppliers and contacts list in its own true w
   // Not started: status says how to make the worksheet, and render refuses, saying the same.
   const none = cafeSuppliers(null);
   assert.equal(supStatusLine(none), 'FOODSUP (Suppliers and contacts): not started: answers-suppliers.md; no entries yet; not written; not signed off');
-  assert.deepEqual(supUnfinished(none), ['worksheet food-safety/answers-suppliers.md is not started yet: make it with worksheet --section ' +
-    'suppliers and fill it in', NOT_WRITTEN, NOT_SIGNED]);
+  assert.deepEqual(supUnfinished(none), ['this document lists the business\'s suppliers, its environmental health team and its other contacts, from ' +
+    'its worksheet food-safety/answers-suppliers.md, which is not started yet: make it with worksheet --section suppliers and fill it in',
+    NOT_WRITTEN, NOT_SIGNED]);
   const refused = renderDocument('FOODSUP', none, data);
   assert.equal(refused.exit, 2);
   assert.match(refused.messages.join('\n'), /answers-suppliers\.md does not exist\. Make it with: .* worksheet --section suppliers /);
@@ -1738,8 +1740,8 @@ test('status tells each state of the allergen information in its own true words;
   // Not started: status says how to make the worksheet, and render refuses, saying the same.
   const none = cafeAlg(null, MG_ANSWERED());
   assert.equal(algStatusLine(none), 'FOODALG (Allergen information): not started: answers-allergens.md; no dishes yet; not written; not signed off');
-  assert.deepEqual(algUnfinished(none), ['worksheet food-safety/answers-allergens.md is not started yet: make it with worksheet --section allergens ' +
-    'and fill it in', NOT_WRITTEN, NOT_SIGNED]);
+  assert.deepEqual(algUnfinished(none), ['this document records each dish the business serves against the fourteen allergens, from its worksheet ' +
+    'food-safety/answers-allergens.md, which is not started yet: make it with worksheet --section allergens and fill it in', NOT_WRITTEN, NOT_SIGNED]);
   const refused = renderDocument('FOODALG', none, data, { today: TODAY });
   assert.equal(refused.exit, 2);
   assert.match(refused.messages.join('\n'), /answers-allergens\.md does not exist\. Make it with: .* worksheet --section allergens /);

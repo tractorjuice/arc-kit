@@ -248,6 +248,8 @@ function customerLines(sheets) {
 //   field }. An entry is answered only when it is confirmed, its By and On are valid and this is empty.
 // - guidance(data): the guidance lines particular to the list, which guidanceOf puts with those every list
 //   shares; quoted: what the line naming the pack says of them (null when they quote nothing of the pack).
+// - purpose: what the list's document is for, in a few words after "this document", as status says it while the
+//   worksheet is not started (listNotStarted): a business that has just updated meets the document there first.
 // - elsewhereLabel: the list as "the business keeps its ... elsewhere" names it. With `each`, it gives the two
 //   ways a list with nothing in it is finished, as status says them (listOutstanding).
 // - keptElsewhere: the words the document's line opens with when Kept elsewhere is confirmed, before the colon and
@@ -262,6 +264,7 @@ function customerLines(sheets) {
 export const LISTS = {
   cleaning: {
     section: 'cleaning', nouns: ['cleaning item', 'cleaning items'], prefix: 'CS', title: 'Cleaning schedule', entryTitle: 'Name of the item',
+    purpose: 'lists what the business cleans, how often and how',
     elsewhereLabel: 'cleaning schedule', keptElsewhere: 'The business keeps a cleaning schedule elsewhere',
     fields: ['Frequency', 'Other-frequency', 'Precautions', 'Method'],
     values: {
@@ -306,6 +309,7 @@ export const LISTS = {
   // team's box is the contact every business keeps.
   suppliers: {
     section: 'suppliers', nouns: ['entry', 'entries'], prefix: 'SUP', title: 'Suppliers and contacts', entryTitle: 'Business or service name',
+    purpose: 'lists the business\'s suppliers, its environmental health team and its other contacts',
     elsewhereLabel: 'suppliers\' list', keptElsewhere: 'The business keeps its suppliers\' list elsewhere',
     fields: ['Kind', 'Contact-name', 'Telephone', 'Email', 'Address', 'Delivery-days', 'Lead-time', 'Goods-supplied', 'Useful-for'],
     // Kind is read in any letter case, with a space for the hyphen ("environmental health"), and kept in its own
@@ -392,6 +396,7 @@ export const LISTS = {
   // MG-04-Q01 asks where it is kept).
   allergens: {
     section: 'allergens', nouns: ['dish', 'dishes'], prefix: 'DISH', title: 'Allergen information', entryTitle: 'Name of the dish',
+    purpose: 'records each dish the business serves against the fourteen allergens',
     elsewhereLabel: 'allergen information for its dishes', keptElsewhere: 'The business keeps its allergen information for its dishes elsewhere',
     fields: ['Ingredients', 'PPDS', ...ALLERGEN_FIELDS, 'Notes', 'Checked-against', 'Checked-on', 'Free-from-claim'],
     values: {
@@ -649,6 +654,13 @@ const elsewhereGiven = (elsewhere) => Boolean(elsewhere.where || elsewhere.by ||
 // refuses on both, and also, whatever they say, on any document whose body shows something unfinished
 // (freshlyUnfinished in the document module).
 export const listAsked = (sheet) => ({ items: [...(sheet?.parsed?.entries.values() ?? [])].map((entry) => [entry.id, entry]) });
+
+// What status says of a list document whose worksheet is not started, in place of the line every worksheet shares: what
+// the document is for, then the worksheet to make. A business that kept its documents before the list documents came
+// meets each of them here first, so the line says what it is, and nothing in it reads as a fault in what the business
+// already has: the worksheet is simply not started yet.
+export const listNotStarted = (list) => `this document ${list.purpose}, from its worksheet food-safety/${worksheetName(list.section)}, which is ` +
+  `not started yet: make it with worksheet --section ${list.section} and fill it in`;
 
 // What keeps a list document from being finished besides its entries not yet confirmed, as lines for status's
 // unfinished list: nothing recorded at all, with the two ways to finish; what is written under Kept elsewhere

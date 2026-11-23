@@ -272,6 +272,17 @@ function misplacedLine(section, sheet, project) {
     `it is not overwritten, as it probably belongs in ${sheetPath(found)}${taken}, then make the ${section} worksheet with ` +
     `worksheet --section ${section}`;
 }
+// The one line that tells the state of a worksheet that keeps a document of `row` from being finished: not started (in
+// the row's own words when it is the row's own worksheet and the row has them, notStarted), for other data or in the
+// wrong file, made by a different version and nothing else wrong, or with problems. `sheet` is as readWorksheets read
+// it, null when it is not there.
+function sheetLine(section, sheet, project, row) {
+  if (!sheet) return section === row.sheet && row.notStarted ? row.notStarted() : notStartedLine(section);
+  const misplacedNow = misplacedLine(section, sheet, project);
+  if (misplacedNow) return misplacedNow;
+  return sheet.otherVersion && sheet.problems.length === 1 ? otherWordingLine(section, sheet.otherVersion) : problemsLine(section, sheet.problems.length);
+}
+
 // The lines for a document's questions not yet answered and its answers only proposed, or its entries
 // not yet confirmed and only proposed (its row's entries), naming the worksheet and up to five identifiers.
 function countLines(row, counts, section) {
@@ -397,16 +408,9 @@ function collectStatus(project, data, options = {}) {
       // (After a sign-off, check tells such a cell itself, one at a time, with what a signed document has there.)
       ...(check?.cell ? [] : check?.unwritten ?? []).map((cell) => cellLine(current.file, cell))
     ];
-    const lineFor = (section) => {
-      const sheet = sheets.get(section);
-      if (!sheet) return notStartedLine(section);
-      if (advice.get(section)) return advice.get(section);
-      return sheet.otherVersion && sheet.problems.length === 1 ? otherWordingLine(section, sheet.otherVersion)
-        : problemsLine(section, sheet.problems.length);
-    };
     const held = [
       ...reads.filter((section) => missing.includes(section) || wrong.includes(section) || troubled.includes(section))
-        .map((section) => ({ what: lineFor(section), sheet: section })),
+        .map((section) => ({ what: sheetLine(section, sheets.get(section), project, row), sheet: section })),
       // A file that is no longer the one signed is put right by signing it again, so that line is
       // told, and keeps the document from counting as signed off, but does not stop a new sign-off.
       ...docLines.map((what) => ({ what, sheet: null, resign: check?.kind === 'not-as-signed' && what === fileLines[0] })),
