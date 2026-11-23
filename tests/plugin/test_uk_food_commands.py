@@ -1389,7 +1389,14 @@ LIST_RULES = {
         "kept elsewhere from the request only as said": "Kept elsewhere is recorded from the request only where the request itself "
                                                         "says the business keeps this list somewhere else, with where",
         "and is not asked again": "An entry stated whole in the request by a person who gives their name there was recorded "
-                                  "`confirmed` in step 4, and is not asked about again.",
+                                  "`confirmed` in step 4, and is not asked about again here: the summary reads it back, as step 10 "
+                                  "says.",
+        # Final review A3: nobody saw an entry confirmed from the request before it was recorded, so the summary reads it back
+        # whole and asks the person to check it.
+        "the summary reads back what the request confirmed": "recorded `confirmed` in step 4 in this run, read back whole, because "
+                                                             "nobody saw it before it was recorded",
+        "and asks the person to check it": "then ask the person to check it against what they sent and to say if any line is wrong. A "
+                                           "line they say is wrong is changed as **Changing an entry** says;",
         "step 8 does not record it again": "What the request itself gave was recorded in step 4.",
         # Review round 1, I1: confirming is stated one way.
         "one way of confirming": "Only an entry a named person at the business agreed as a whole in this conversation, or stated whole "
@@ -1560,7 +1567,19 @@ LIST_RULES = {
                                                                          "where the person names evidence still recorded",
         "ruling: one nobody stated does not stand": "Before you show a dish for confirmation, empty each `does not contain` in it that no "
                                                     "named person stated in this conversation, its request included, such as one in a dish "
-                                                    "held as `proposed` from an earlier run",
+                                                    "held as `proposed` from an earlier run or one typed into the worksheet by hand",
+        # Final review A2: the cells emptied are named to the person first, with what they held and why, and any left empty is in
+        # the summary.
+        "A2: the person is told what is emptied, and why": "Before you empty them, tell the person which cells you are emptying, by "
+                                                           "allergen, that each held `does not contain`, and why: a `does not "
+                                                           "contain` counts only as a named person's statement made for the dish as it "
+                                                           "now stands, so it is asked again.",
+        "A2: one left empty is in the summary": "that is still empty because the person did not answer for it: the dish, by number and "
+                                                "name, the allergen, and that it held `does not contain`",
+        # Final review A3: a dish confirmed from the request is read back with every cell.
+        "A3: the read-back holds every cell": "its number and name, `Ingredients`, `PPDS`, every one of the fourteen cells as recorded, "
+                                              "in the worksheet's order, an empty one shown as not filled in, `Notes`, `Checked-against`, "
+                                              "`Checked-on` and `Free-from-claim`",
         # Round 2, Minor 7: the exception is only for a dish confirmed when the run began, its lists unchanged.
         "round 2: the exception is a dish confirmed before, lists unchanged": "The one exception is a dish that was `confirmed` when this "
                                                                               "run began and is agreed again with its `Ingredients` and "
@@ -1793,6 +1812,10 @@ def test_the_allergens_guide_says_where_an_answer_comes_from():
                   "You say which of the listed allergens the dish does not contain; any you leave out, or are unsure of, stay NOT "
                   "CONFIRMED.",
                   "every \"does not contain\" is cleared and asked again",
+                  # Final review A2: one nobody said in the conversation is cleared aloud, then asked about.
+                  "So is a \"does not contain\" nobody said in the conversation, such as one typed into the worksheet by hand, or one "
+                  "from a run that stopped before the dish was confirmed: before it shows you the dish, the command tells you which "
+                  "allergens it is clearing and why, then asks you about them.",
                   "An allergen it had already recorded as contains is never put to you as not found.",
                   "it asks you about by name: whether the dish contains it as it is now made, does not contain it, or you are not sure",
                   "So expect a few questions about a label's words",
@@ -1857,6 +1880,13 @@ def test_the_list_guides_say_when_a_request_counts():
         assert "the command asks you about the change; if nobody is there to ask, it leaves the" in text, name
     assert ("A second environmental health team in that message is not added: the command asks whether you want to change the one "
             "already recorded, or, if nobody is there, tells you it was not recorded.") in suppliers
+    # Final review A3: an entry confirmed from the opening message is read back whole, in all three list guides.
+    for name, text in [("cleaning", cleaning), ("suppliers", suppliers)]:
+        assert ("it is recorded in your name as you gave it, and is not asked about again: the summary reads it back to you whole, so "
+                "that you can check it against what you sent and say if any line is wrong.") in text, name
+    allergens = (ROOT_GUIDES / "uk-food-allergens.md").read_text(encoding="utf-8")
+    assert ("the dish is recorded in your name as you gave it, without being shown to you. The summary then reads the dish back to you "
+            "whole, every allergen as recorded, so that you can check it against what you sent and say if any line is wrong.") in allergens
 
 
 @pytest.mark.parametrize("name", LISTING)
@@ -2430,6 +2460,11 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "is in `Notes` in the label's own words, and in no cell",
                    "`Checked-on` is the day the person gave, never assumed to be today.",
                    "every dish the search found or the person named was stepped back to `unanswered`",
+                   # Final review A2 and A3.
+                   "A `does not contain` that no named person stated in this conversation was emptied before its dish was shown only "
+                   "after the person was told which cells were being emptied, that each held `does not contain`, and why",
+                   "**An entry confirmed from the request is read back.**",
+                   "and the person is asked to check it against what they sent and to say if any line is wrong.",
                    # G1, G4 and G6: the cells a sign-off rewrites, the version rule and the newest record.
                    "the helper records no sign-off while one holds anything else",
                    "with `bodyInStep` true or null and `signedOff` false nothing was written and the document's `unfinished` "

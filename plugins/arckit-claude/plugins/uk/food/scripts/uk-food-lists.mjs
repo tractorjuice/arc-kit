@@ -442,6 +442,8 @@ export const LISTS = {
       'sale, and no when it is not.',
       `${ALLERGEN_FIELDS[0]} to ${ALLERGEN_FIELDS.at(-1)} are the fourteen allergens. Write contains or does not contain in each, as what was`,
       'checked says: a label, a product specification or a supplier\'s statement for each ingredient.',
+      'A does not contain counts only as a named person\'s statement for the dish as it now stands: when the allergens',
+      'command is next run, it asks a named person to state each one again before the dish is confirmed.',
       'An ingredient with no label may rest on a named person\'s own check only when it is a single whole food with',
       'nothing added, such as a loose tomato or a fresh egg: Checked-against then says what was looked at, and by whom.',
       'Anything made of more than one thing, such as a mix, a sauce, bread, or a dressed or prepared product, needs a',
