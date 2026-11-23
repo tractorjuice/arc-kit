@@ -1533,8 +1533,16 @@ LIST_RULES = {
                                         "when a named person who is there has been shown it whole and agreed it.",
         "E1: Kept elsewhere is not a dish": "It is not a dish: stated by a person who gives their name in the request, it is `confirmed`, "
                                             "with that name and today's date, as **Answers in the request** says of an answer",
-        "E1: the cells as stated, in a proposed dish": "A dish stated whole, every cell it records stated in terms, is recorded `proposed` "
-                                                       "with exactly those cells",
+        # Closing fixes, Important 1: only a named person's request records the cells it states; one that names nobody records no
+        # does not contain, and says so once.
+        "E1: the cells as stated, in a proposed dish": "A dish stated whole by a person who gives their name there, every cell it "
+                                                       "records stated in terms, is recorded `proposed` with exactly those cells, with "
+                                                       "`Source:` naming that person.",
+        "E1: a request that names nobody records no does not contain": "In a request that names nobody, no `does not contain` is "
+                                                                       "recorded: a dish there is recorded `proposed`, with `Source: "
+                                                                       "the request (no name given)`, holding only the `contains` the "
+                                                                       "request gives, or, where the request states a `does not "
+                                                                       "contain` for it, held as `unanswered`, with that cell empty",
         "E1: no dish confirmed from the request": "No dish is `confirmed` from the request; with nobody there it stays `proposed`, and "
                                                   "the summary says it is waiting to be shown and agreed.",
         "E1: shown and confirmed like any proposed dish": "A dish from the request, even one a named person stated whole there, was "
@@ -1634,10 +1642,11 @@ LIST_RULES = {
                                                     "held as `proposed` from an earlier run",
         # Final review A2: the cells emptied are named to the person first, with what they held and why, and any left empty is in
         # the summary.
+        # Closing fixes, point 7: the reason told is the rule that empties them.
         "A2: the person is told what is emptied, and why": "Before you empty them, tell the person which cells you are emptying, by "
-                                                           "allergen, that each held `does not contain`, and why: a `does not "
-                                                           "contain` counts only as a named person's statement made for the dish as it "
-                                                           "now stands, so it is asked again.",
+                                                           "allergen, that each held `does not contain`, and why: before a dish is "
+                                                           "confirmed, each `does not contain` in it must be stated by a named person in "
+                                                           "this conversation, and these were not, so they are asked again.",
         "A2: one left empty is in the summary": "that is still empty because the person did not answer for it: the dish, by number and "
                                                 "name, the allergen, and that it held `does not contain`",
         # Final review A3: a dish confirmed from the request is read back with every cell.
@@ -1878,7 +1887,10 @@ def test_the_allergens_guide_says_where_an_answer_comes_from():
                   "it was stepped back. If it was stepped back in an earlier run, such as one nobody was there to answer, the command "
                   "first asks you again for each of its \"does not contain\" answers.",
                   # Final review B2: the selector goes by whether wording was read, not by what it named.
-                  "for a dish for which no label wording was read. A dish for which label wording was read, whatever that wording named,",
+                  # Closing fixes, point 5: the selector only for a dish just given with no wording read, as the command's step 8.
+                  "for a dish you have just given in the conversation, with no label wording read for it. Any other dish, such as one "
+                  "read from a file or set out in the message that starts the command, or one for which label wording was read, whatever "
+                  "that wording named, is shown with where each answer came from",
                   # Rulings 26 and 27, and the price of the strict reading.
                   # Final review E1: every dish in the opening message waits, a label quoted there as well.
                   "If the message quotes a label's wording, the command reads it as it reads any label, and the dish waits in the same "
@@ -1984,8 +1996,14 @@ def test_the_list_guides_say_when_a_request_counts():
     assert ("A dish counts only once a named person who is there has been shown it whole and agreed it, and that holds for a dish set out "
             "in the message that starts the command too.") in allergens
     assert ("If nobody is there, the summary reads it back whole, every allergen as recorded, as waiting, and the next time you run the "
-            "command with someone there it is shown to agree") in allergens
+            "command with someone there it is shown to you to agree") in allergens
     assert "without being shown to you" not in allergens
+    # Closing fixes, point 6: the overview guide says the same, and its definition of proposed is true of such a dish.
+    overview = (ROOT_GUIDES / OVERVIEW_GUIDE).read_text(encoding="utf-8")
+    assert ("- **A dish counts only once a named person who is there has been shown it whole and agreed it**, even one set out in full "
+            "in the message that starts the command, which is recorded as given and waits until then.") in overview
+    assert ("- *proposed*: it came from a file you pointed to, or from a message that named nobody, or, for a dish in your allergen "
+            "information, from the message that starts the command or from a label's wording, and nobody has agreed it yet;") in overview
 
 
 @pytest.mark.parametrize("name", LISTING)
@@ -2568,6 +2586,10 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "A `does not contain` that no named person stated in this conversation was emptied before its dish was shown only "
                    "after the person was told which cells were being emptied, that each held `does not contain`, and why",
                    "**An entry recorded from the request is read back.**",
+                   # Closing fixes, point 9: what the allergens summary gives, field by field.
+                   "its number and name, `Ingredients`, `PPDS`, all fourteen cells in the worksheet's order, an empty one shown as not "
+                   "filled in, `Notes`, `Checked-against`, `Checked-on` and `Free-from-claim`, with the statement that it counts only once "
+                   "a named person at the business who is there has been shown it whole and agreed it.",
                    "Nothing you said suggests that the record kept elsewhere is held in the document or was checked",
                    # Final review E1.
                    "A dish of the allergen information is the exception: it is `confirmed` only in the first way, and one from the "
@@ -3051,8 +3073,9 @@ def test_a_rewrite_in_place_prints_the_forms_afresh_and_keeps_the_rest_of_the_fi
     """Review round 2 of Task 11: a rewrite in place replaces the lines from the BEGIN marker to the END marker with the
     render, sets Last Modified and puts back each sign-off cell that holds anything else, naming it; every other line outside
     the markers is kept byte for byte. Applied, as the command applies it, to every state in which the forms are printed
-    afresh: an intact file, and a file changed by hand on a person's word. Then check passes, or, for the pack's text left
-    outside the markers, fails again, where the command stops."""
+    afresh: an intact file, and a file changed by hand on a person's word. Then check passes. (A file with the pack's text
+    outside its markers is never printed afresh, as printing the forms afresh would leave that text where it is: final
+    review B8.)"""
     path, checked, text = _state(state, project)
     case = record_sheets_case(checked, text, path.name)
     printed_afresh = case == "intact" or rewritable_on_a_persons_word(checked, text, path.name)
@@ -3819,40 +3842,63 @@ def bash(command_line: str, description: str = "Run the helper") -> str:
     return json.dumps({"command": command_line, "description": description})
 
 
-@pytest.mark.parametrize("case", ["unanswered-stays-unanswered", "answers-are-recorded"])
+# The document each case's helper-check-run grader looks for a check of.
+CHECK_GRADER_DOC = {"unanswered-stays-unanswered": "FOODCOOK", "answers-are-recorded": "FOODCOOK", "sign-off-recorded": "FOODCOOK",
+                    "one-question-at-a-time": "FOODXC", "supplied-procedure-recorded": "FOODOWN", "allergen-not-inferred": "FOODALG",
+                    "allergen-recorded-as-stated": "FOODALG", "allergen-wording-stays-proposed": "FOODALG"}
+
+
+def test_every_case_that_checks_a_document_has_its_grader_here():
+    have = {path.parent.parent.name for path in EVALS.glob("*/graders/helper-check-run.md")}
+    assert have == set(CHECK_GRADER_DOC)
+
+
+@pytest.mark.parametrize("case", sorted(CHECK_GRADER_DOC))
 def test_the_check_grader_reads_the_call_not_the_words_around_it(case):
+    code = CHECK_GRADER_DOC[case]
     front = grader(case, "helper-check-run")
     assert front["type"] == "tool_used" and front["tool"] == "Bash" and front["min"] == 1
     pattern = front["input_match"]
     # However the runner writes the call's input as JSON, with a space after the key's colon or without.
-    assert found(pattern, json.dumps({"command": 'node "$H" check --doc FOODCOOK --report $F'}, separators=(",", ":")))
+    assert found(pattern, json.dumps({"command": f'node "$H" check --doc {code} --report $F'}, separators=(",", ":")))
     for call in [
-        'node "/plugins/arckit-uk-food/scripts/uk-food.mjs" check --doc FOODCOOK --project projects/001-bramble-cafe '
-        '--report projects/001-bramble-cafe/ARC-001-FOODCOOK-v1.0.md',
+        f'node "/plugins/arckit-uk-food/scripts/uk-food.mjs" check --doc {code} --project projects/001-bramble-cafe '
+        f'--report projects/001-bramble-cafe/ARC-001-{code}-v1.0.md',
         # The helper's path in a shell variable, as both recorded runs wrote it, among other commands.
-        'H=/plugins/arckit-uk-food/scripts/uk-food.mjs; P=projects/001-bramble-cafe; node "$H" status --project $P --json; '
-        'node "$H" check --doc FOODCOOK --project $P --report $P/ARC-001-FOODCOOK-v1.0.md; echo "check exit $?"',
-        # The flags in another order, the call ending at FOODCOOK.
-        'node "$H" check --project $P --report $F --doc FOODCOOK',
-        'node "$H" check --report $F --project $P --doc FOODCOOK && echo ok',
+        f'H=/plugins/arckit-uk-food/scripts/uk-food.mjs; P=projects/001-bramble-cafe; node "$H" status --project $P --json; '
+        f'node "$H" check --doc {code} --project $P --report $P/ARC-001-{code}-v1.0.md; echo "check exit $?"',
+        # Closing fixes, Important 2: the check on a later line of a command of several lines, the path in a variable and
+        # more commands after it, as the live run of 23 November 2026 (20261123T095240Z) wrote it. The JSON holds the line
+        # break as backslash-n, so the call starts after an "n" with no word boundary before "node".
+        f'H="/plugins/arckit-uk-food/scripts/uk-food.mjs"; P=projects/001-bramble-cafe\nnode "$H" check --doc {code} --project $P '
+        f'--report $P/ARC-001-{code}-v1.0.md; echo "check exit $?"\necho ---; tail -n 25 $P/ARC-001-{code}-v1.0.md',
+        f'cd projects/001-bramble-cafe\n\tnode "$H" check --report ARC-001-{code}-v1.0.md --doc {code} --project .',
+        # The flags in another order, the call ending at the code.
+        f'node "$H" check --project $P --report $F --doc {code}',
+        f'node "$H" check --report $F --project $P --doc {code} && echo ok',
         # An equals sign after each flag.
-        'node "$H" check --doc=FOODCOOK --project=$P --report=$F',
-        "node scripts/uk-food.mjs check  --doc  FOODCOOK --report x.md --project p",
+        f'node "$H" check --doc={code} --project=$P --report=$F',
+        f"node scripts/uk-food.mjs check  --doc  {code} --report x.md --project p",
     ]:
         assert found(pattern, bash(call)), call
     for call, description in [
         # The check named only in the description of another command.
-        ("ls projects/001-bramble-cafe", "Run check --doc FOODCOOK --report on the document"),
-        ('node "$H" status --project $P --json', 'Then node "$H" check --doc FOODCOOK --report $F'),
+        ("ls projects/001-bramble-cafe", f"Run check --doc {code} --report on the document"),
+        ('node "$H" status --project $P --json', f'Then node "$H" check --doc {code} --report $F'),
         # Another document, another subcommand, or a code that only starts the same.
         ('node "$H" check --doc FOODCMP --project $P --report $F', "Check the record"),
-        ('node "$H" render --doc FOODCOOK --project $P', "Render"),
-        ('node "$H" check --doc FOODCOOKED --project $P --report $F', "Check"),
+        (f'node "$H" render --doc {code} --project $P', "Render"),
+        (f'node "$H" check --doc {code}ED --project $P --report $F', "Check"),
+        # Another document checked on a later line, as the run above wrote it.
+        ('H="/plugins/arckit-uk-food/scripts/uk-food.mjs"; P=projects/001-bramble-cafe\nnode "$H" check --doc FOODCMP --project $P '
+         '--report $P/ARC-001-FOODCMP-v1.0.md; echo "check exit $?"', "Check the record"),
         # The flags in a later command, not the check's own.
-        ('node "$H" check --project $P; node "$H" render --doc FOODCOOK --report x', "Two commands"),
-        ('node "$H" check --project $P\nnode "$H" render --doc FOODCOOK --report x', "Two lines"),
-        ("grep -c check --doc FOODCOOK --report x", "No helper call"),
-        ('node "$H" check --doc FOODCOOK --project $P', "No file to check"),
+        (f'node "$H" check --project $P; node "$H" render --doc {code} --report x', "Two commands"),
+        (f'node "$H" check --project $P\nnode "$H" render --doc {code} --report x', "Two lines"),
+        (f"grep -c check --doc {code} --report x", "No helper call"),
+        (f'node "$H" check --doc {code} --project $P', "No file to check"),
+        # A word ending in "node" is not the call.
+        (f'mynode "$H" check --doc {code} --report $F', "Another program"),
     ]:
         assert not found(pattern, bash(call, description)), call
 

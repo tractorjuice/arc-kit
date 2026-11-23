@@ -34,7 +34,7 @@ The pack's wording is bundled with the overlay, so the documents are built on yo
 **An answer counts only when a named person gives it.** Each answer is in one of three states:
 
 - *unanswered*: nobody has answered it yet;
-- *proposed*: it came from a file you pointed to, or from a message that named nobody, and nobody has agreed it yet;
+- *proposed*: it came from a file you pointed to, or from a message that named nobody, or, for a dish in your allergen information, from the message that starts the command or from a label's wording, and nobody has agreed it yet;
 - *confirmed*: a named person at the business gave it or agreed it, and their name and the date are recorded.
 
 Only a confirmed answer is printed in your documents as the business's answer. A proposed answer is shown beside **NOT YET ANSWERED**, with where it came from, so you can see what is waiting for you, and a question nobody has answered reads **NOT YET ANSWERED** on its own. In your allergen information, cleaning schedule and suppliers and contacts, a dish or an entry nobody has confirmed is named as not yet confirmed, with its details left out, and in a confirmed dish an allergen that nothing you have given settles reads **NOT CONFIRMED**. Nothing ever takes a default, and the assistant never suggests an answer: a document built from the worksheets is the business's own statement of what it does.
@@ -127,6 +127,7 @@ The assistant may point out that a safe method sounds not relevant from what you
 - **"Contains"** comes only from those labels, specifications and statements, or, for a single whole food with nothing added, from what the person who looked at it says.
 - **"Does not contain"** is only ever your own statement. Once every ingredient of a dish has been checked against a label, a specification, a statement or a look at a whole food, the command tells you which allergens it found named and which it did not, and asks you which of those not found the dish does not contain.
 - **An allergen that nothing settles reads NOT CONFIRMED**, and the document stays unfinished until it is filled in.
+- **A dish counts only once a named person who is there has been shown it whole and agreed it**, even one set out in full in the message that starts the command, which is recorded as given and waits until then.
 
 The command never works an allergen out from the name of a dish or an ingredient, never looks a product up, and never says a dish is free from anything or suitable for anyone. If your business already makes a "free from" statement, it records your exact words and prints the pack's conditions for making one beside them; it does not suggest one or reword yours. A label's "may contain" warning goes in the dish's notes, word for word. The [allergen information guide](uk-food-allergens.md) says how each answer is recorded, and what happens when a recipe or a supplier changes.
 

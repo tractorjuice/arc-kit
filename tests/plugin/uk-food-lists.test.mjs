@@ -1904,8 +1904,8 @@ test('item 5: a list document\'s count lines say what an entry needs, naming wha
 
 // ---- Kept elsewhere alone says that nothing of the record is held here (final review E2) ----
 
-const CMP_KEPT_LEAD = 'Each of these documents says only where the business keeps that record elsewhere. It holds nothing of the record, and ' +
-  'nothing in it was checked against the record.';
+const CMP_KEPT_LEAD = 'Each line below names a record the business keeps elsewhere. The document named holds nothing of that record, and ' +
+  'nothing in it was checked against that record.';
 // The completion record's list of documents kept elsewhere, from its heading to the closing notice, or null when it has none.
 const keptElsewherePart = (dir) => {
   const text = renderDocument('FOODCMP', dir, data, { today: TODAY }).text;

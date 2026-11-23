@@ -53,8 +53,8 @@ const NOT_RELEVANT = 'Not relevant';
 const UNFINISHED_HEADING = '## Unfinished';
 // The completion record's list of documents that say only where the business keeps a record, and the line it opens with.
 const KEPT_ELSEWHERE_HEADING = '## Kept elsewhere';
-const KEPT_ELSEWHERE_LEAD = 'Each of these documents says only where the business keeps that record elsewhere. It holds nothing of the record, ' +
-  'and nothing in it was checked against the record.';
+const KEPT_ELSEWHERE_LEAD = 'Each line below names a record the business keeps elsewhere. The document named holds nothing of that record, and ' +
+  'nothing in it was checked against that record.';
 const NOTHING_OUTSTANDING = 'Nothing is outstanding.';
 // The rows of the pack's completion record whose wording differs from their safe method's title,
 // spelt as printed on page 78. A test ties each to the data.
