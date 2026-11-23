@@ -6,6 +6,13 @@ effort: high
 keep-coding-instructions: true
 runtime-assets:
   - scripts/uk-food.mjs
+  - scripts/uk-food-data.mjs
+  - scripts/uk-food-worksheet.mjs
+  - scripts/uk-food-document.mjs
+  - scripts/uk-food-status.mjs
+  - scripts/uk-food-folder.mjs
+  - scripts/uk-food-lists.mjs
+  - scripts/uk-food-sheets.mjs
   - scripts/generate-document-id.mjs
   - schemas/uk-food-sfbb-data-1.0.schema.json
   - data/sfbb-caterers-2026-11-17/source.json
@@ -119,7 +126,7 @@ If the profile worksheet was missing, say that `/arckit-uk-food:uk-food-profile`
 
 ### 5. Find out who is answering
 
-`By:` holds the name of the person who gave an answer, and `Decided-by:` the name of the person who decided that a safe method does not apply or is done differently. If the request does not say who is answering and what their role is, ask once, at the start, in a message of its own, before the first question. Never take a name from git, from the plugin's configuration (`organisation_name` names an organisation, not a person), from a document or from an earlier entry in a worksheet: an answer is the business's only when the person who gave it is named, so only they can give their name. With nobody to answer, nothing is confirmed.
+`By:` holds the name of the person who gave an answer, and `Decided-by:` the name of the person who decided that a safe method does not apply or is done differently. If the request does not say who is answering and what their role is, ask once, at the start, in a message of its own, before the first question. Never take a name from git, from the plugin's configuration (`organisation_name` names an organisation, not a person), from a document or from an earlier entry in a worksheet: an answer is the business's only when the person who gave it is named, so only they can give their name. With nobody to answer, nothing is confirmed except what the request itself states by a person who gives their name there, as **Answers in the request** says.
 
 ### 6. Record only what the person gives
 

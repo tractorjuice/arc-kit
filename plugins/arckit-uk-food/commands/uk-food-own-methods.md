@@ -6,6 +6,13 @@ effort: high
 keep-coding-instructions: true
 runtime-assets:
   - scripts/uk-food.mjs
+  - scripts/uk-food-data.mjs
+  - scripts/uk-food-worksheet.mjs
+  - scripts/uk-food-document.mjs
+  - scripts/uk-food-status.mjs
+  - scripts/uk-food-folder.mjs
+  - scripts/uk-food-lists.mjs
+  - scripts/uk-food-sheets.mjs
   - scripts/generate-document-id.mjs
   - schemas/uk-food-sfbb-data-1.0.schema.json
   - data/sfbb-caterers-2026-11-17/source.json
@@ -102,7 +109,7 @@ Run `node "${CLAUDE_PLUGIN_ROOT}/scripts/uk-food.mjs" status --project PROJECT -
 
 ### 5. Find out who is answering
 
-`By:` holds the name of the person who gave an answer, and `Decided-by:` the name of the person who decided that a safe method does not apply or is done differently. If the request does not say who is answering and what their role is, ask once, at the start, in a message of its own, before the first question. Never take a name from git, from the plugin's configuration (`organisation_name` names an organisation, not a person), from a document or from an earlier entry in a worksheet: an answer is the business's only when the person who gave it is named, so only they can give their name. With nobody to answer, nothing is confirmed.
+`By:` holds the name of the person who gave an answer, and `Decided-by:` the name of the person who decided that a safe method does not apply or is done differently. If the request does not say who is answering and what their role is, ask once, at the start, in a message of its own, before the first question. Never take a name from git, from the plugin's configuration (`organisation_name` names an organisation, not a person), from a document or from an earlier entry in a worksheet: an answer is the business's only when the person who gave it is named, so only they can give their name. With nobody to answer, nothing is confirmed except what the request itself states by a person who gives their name there, as **Answers in the request** says.
 
 ### 6. Record only what the person gives
 
@@ -222,6 +229,6 @@ Show only a summary:
 
 ## Important Notes
 
-- **A deliberate exception to ArcKit's interview pattern.** Other ArcKit commands ask everything in one round and take a default for anything left unanswered. Here nothing takes a default, because a default would be a statement about the business that nobody made. And each message asks one thing, because an answer goes into a food safety record against one question: a message that holds a safe method's worth of questions gets shorthand replies that have to be matched back to the right question. A field nobody gave stays empty, and the person can add it on a later run. Where the question selector is there, it takes up to four closed questions in a call, because there each answer is attached to its own question. It may mark the pack's own method as recommended, and an option the person did not choose is never recorded.
+- **A deliberate exception to ArcKit's interview pattern.** Other ArcKit commands ask everything in one round and take a default for anything left unanswered. Here nothing takes a default, because a default would be a statement about the business that nobody made. And each message asks one thing, because an answer goes into a food safety record against one question: a message that holds a safe method's worth of questions gets shorthand replies that have to be matched back to the right question. A field nobody gave stays empty, and the person can add it on a later run. Where the question selector is there, it takes up to four closed questions in a call, because there each answer is attached to its own question. No option it shows is marked as recommended, and an option the person did not choose is never recorded.
 - **A run with nobody to answer** never blocks and never invents. It makes the worksheets that are missing, records what the request says as **Record only what the person gives** allows, writes the document from what is confirmed, and reports what is still unanswered.
 - **Never call the business, its food, a method or a document "compliant", "approved", "safe" or "inspected"**, and never say or suggest that the Food Standards Agency or a council has reviewed, approved or endorsed anything. An `EH-review` outcome is recorded in the business's words, exactly as the person gives it.

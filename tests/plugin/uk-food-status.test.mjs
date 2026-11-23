@@ -28,12 +28,21 @@ const sheetFile = (dir, section) => join(dir, 'food-safety', `answers-${section}
 const sheet = (dir, section) => readFileSync(sheetFile(dir, section), 'utf8');
 const setSheet = (dir, section, text) => writeFileSync(sheetFile(dir, section), text);
 const signOffsFile = (dir) => join(dir, 'food-safety', 'sign-offs.json');
+// A cleaning worksheet that is finished with no entry: it says where the business keeps its schedule, confirmed.
+const KEPT_ELSEWHERE = () => swap(blankWorksheet('cleaning', data), '## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:',
+  '## Kept elsewhere\n\nWhere: The red folder in the office\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17');
+// An allergens worksheet that is finished with no dish: it says where the business keeps its allergen information, confirmed.
+const ALLERGENS_KEPT = () => swap(blankWorksheet('allergens', data), '## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:',
+  '## Kept elsewhere\n\nWhere: The recipe folder in the kitchen\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17');
 const swap = (text, from, to) => {
   assert.ok(text.includes(from), `${JSON.stringify(from)} is not in the text`);
   return text.replace(from, to);
 };
+// The date the commands would give as today. A worksheet with dated entries (the allergens worksheet's Checked-on) is read
+// with it, as every command reads one: a reading given no date refuses such a date rather than take it unchecked.
+const TODAY = '2026-11-22';
 const rendered = (doc, dir) => {
-  const result = renderDocument(doc, dir, data);
+  const result = renderDocument(doc, dir, data, { today: TODAY });
   assert.equal(result.exit, 0, (result.messages ?? []).join('\n'));
   return result.text;
 };
@@ -45,7 +54,7 @@ const writeDocument = (dir, doc, version = '1.0', body = rendered(doc, dir)) => 
   return file;
 };
 const status = (dir) => {
-  const result = projectStatus(dir, data);
+  const result = projectStatus(dir, data, { today: TODAY });
   assert.equal(result.exit, undefined, (result.messages ?? []).join('\n'));
   return result;
 };
@@ -190,15 +199,20 @@ test('the status JSON has the documented shape: the seven documents in order, th
   const dir = cafe();
   const result = status(dir);
   assert.deepEqual(Object.keys(result), ['data', 'documents', 'specialProcesses', 'ownAwaitingReview', 'unfinished', 'completionRecord',
-    'foodSafetyFolder']);
+    'recordSheets', 'foodSafetyFolder']);
   assert.deepEqual([result.completionRecord, result.foodSafetyFolder], [null, true]);
+  // The record sheets are blank forms, reported apart from the documents: here, not written.
+  assert.deepEqual(result.recordSheets, { written: false, inStep: false, file: null });
   assert.equal(result.data, DATA_ID);
-  assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN']);
+  assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN', 'FOODALG',
+    'FOODCS', 'FOODSUP']);
   assert.deepEqual(STATUS_ORDER, result.documents.map((d) => d.code));
   for (const doc of result.documents) {
+    // A list document gives its `counts` too (item 8); every other has exactly the fields it always had.
+    const listed = ['FOODALG', 'FOODCS', 'FOODSUP'].includes(doc.code);
     assert.deepEqual(Object.keys(doc), ['code', 'worksheets', 'missingWorksheets', 'problems', 'misplaced', 'questions', 'confirmed', 'proposed',
-      'unanswered', 'notRelevantMethods', 'adaptedMethods', 'file', 'version', 'rendered', 'inSync', 'bodyInStep', 'otherText', 'signedOff', 'signOff',
-      'headerShowsSignOff'], doc.code);
+      'unanswered', 'notRelevantMethods', 'adaptedMethods', ...(listed ? ['counts'] : []), 'file', 'version', 'rendered', 'inSync', 'bodyInStep',
+      'otherText', 'signedOff', 'signOff', 'headerShowsSignOff'], doc.code);
     assert.deepEqual([doc.file, doc.version, doc.rendered, doc.inSync, doc.signedOff, doc.signOff], [null, null, false, false, false, null], doc.code);
     assert.deepEqual([doc.bodyInStep, doc.otherText, doc.headerShowsSignOff], [null, [], null], doc.code);
     assert.deepEqual([doc.missingWorksheets, doc.problems, doc.misplaced], [[], 0, null], doc.code);
@@ -216,6 +230,36 @@ test('the status JSON has the documented shape: the seven documents in order, th
   const cli = run('status', '--project', dir, '--json');
   assert.equal(cli.status, 0, cli.stderr);
   assert.deepEqual(JSON.parse(cli.stdout), result);
+});
+
+test('item 8: each list document\'s counts in status --json give its entries and those confirmed, and for the allergen information the empty cells of confirmed dishes', () => {
+  const dir = cafe();
+  const counts = (code) => docStatus(dir, code).counts;
+  // The cafe: four dishes, three confirmed, two of whose cells (Celery and Mustard in DISH-02) are empty; four cleaning
+  // items, three confirmed; four entries, all confirmed. Each is the same as the document's questions and confirmed.
+  // keptElsewhereOnly (final review E2) is false for each: nothing in the cafe's lists is kept elsewhere.
+  assert.deepEqual(counts('FOODALG'), { entries: 4, confirmed: 3, keptElsewhereOnly: false, cellsNotConfirmed: 2 });
+  assert.deepEqual(counts('FOODCS'), { entries: 4, confirmed: 3, keptElsewhereOnly: false });
+  assert.deepEqual(counts('FOODSUP'), { entries: 4, confirmed: 4, keptElsewhereOnly: false });
+  for (const code of ['FOODALG', 'FOODCS', 'FOODSUP']) {
+    const doc = docStatus(dir, code);
+    assert.deepEqual([doc.counts.entries, doc.counts.confirmed], [doc.questions, doc.confirmed], code);
+  }
+  // The own methods document, whose entries are counted too, and the six others keep exactly the fields they had.
+  for (const code of PLAN_1_DOCS) assert.equal(docStatus(dir, code).counts, undefined, code);
+  const json = JSON.parse(run('status', '--project', dir, '--json').stdout);
+  assert.deepEqual(json.documents.find((d) => d.code === 'FOODALG').counts, { entries: 4, confirmed: 3, keptElsewhereOnly: false, cellsNotConfirmed: 2 });
+  // One of those cells filled in: one left.
+  setSheet(dir, 'allergens', swap(sheet(dir, 'allergens'), 'Cereals-containing-gluten: contains\nCelery:\n',
+    'Cereals-containing-gluten: contains\nCelery: does not contain\n'));
+  assert.deepEqual(counts('FOODALG'), { entries: 4, confirmed: 3, keptElsewhereOnly: false, cellsNotConfirmed: 1 });
+  // In a worksheet with a problem nothing counts as confirmed, so no cell of a confirmed dish is counted either.
+  setSheet(dir, 'allergens', `${sheet(dir, 'allergens')}a stray line\n`);
+  assert.deepEqual(counts('FOODALG'), { entries: 4, confirmed: 0, keptElsewhereOnly: false, cellsNotConfirmed: 0 });
+  // Not started: nothing to count.
+  rmSync(sheetFile(dir, 'allergens'));
+  rmSync(sheetFile(dir, 'cleaning'));
+  assert.deepEqual([counts('FOODALG'), counts('FOODCS')], [{ entries: 0, confirmed: 0, keptElsewhereOnly: false, cellsNotConfirmed: 0 }, { entries: 0, confirmed: 0, keptElsewhereOnly: false }]);
 });
 
 test('the unfinished list says, for each document in order, what is outstanding and what to do next, then each special process with no own entry and each own entry awaiting review', () => {
@@ -243,6 +287,23 @@ test('the unfinished list says, for each document in order, what is outstanding 
     { code: 'FOODMGT', what: NOT_SIGNED },
     { code: 'FOODOWN', what: NOT_WRITTEN },
     { code: 'FOODOWN', what: NOT_SIGNED },
+    { code: 'FOODALG', what: '1 dish in food-safety/answers-allergens.md is proposed but not confirmed (DISH-03): an entry counts when it has ' +
+      'what the worksheet\'s guidance says it needs, its State is confirmed and By and On are filled in' },
+    { code: 'FOODALG', what: '2 allergen cells of confirmed dishes in food-safety/answers-allergens.md are not filled in, so the document shows them ' +
+      'as not confirmed (Celery and Mustard in DISH-02): fill in each as contains or does not contain from what was checked, then update that ' +
+      'dish\'s Checked-against, Checked-on, By and On' },
+    { code: 'FOODALG', what: 'MG-04-Q01, MG-04-Q06 and MG-04-Q14 in food-safety/answers-MG.md have no confirmed answer yet, and this document ' +
+      'repeats them under How customers are told: answer them in the Management safe methods worksheet; an answer counts when its State is ' +
+      'confirmed and By and On are filled in' },
+    { code: 'FOODALG', what: NOT_WRITTEN },
+    { code: 'FOODALG', what: NOT_SIGNED },
+    { code: 'FOODCS', what: '1 cleaning item in food-safety/answers-cleaning.md is proposed but not confirmed (CS-04): an ' +
+      'entry counts when it has what the worksheet\'s guidance says it needs, its State is confirmed and By and On are filled in' },
+    { code: 'FOODCS', what: NOT_WRITTEN },
+    { code: 'FOODCS', what: NOT_SIGNED },
+    { code: 'FOODSUP', what: NOT_WRITTEN },
+    { code: 'FOODSUP', what: NOT_SIGNED },
+    { code: 'FOODREC', what: 'document not written yet: write it, so that people at the business have the blank forms to print and fill in' },
     { code: 'FOODOWN', what: UNCOVERED },
     { code: 'FOODOWN', what: AWAITING }
   ]);
@@ -292,6 +353,46 @@ test('P1: a worksheet with problems gives one line, under its own document, nami
   assert.equal(status(other).unfinished.filter((line) => line.what === problemsLine('profile', 1)).length, 1);
   assert.equal(linesFor(other, 'FOODPROF')[0], problemsLine('profile', 1));
   assert.deepEqual(reasons(signOff(other, 'FOODCOOK').stderr), [problemsLine('profile', 1)]);
+});
+
+test('item 6: a problem in the Management worksheet is told under the two documents that print from it too, as neither can be written; one in the profile is told once, under the profile, for every document', () => {
+  const FORMS_NOT_WRITTEN = 'document not written yet: write it, so that people at the business have the blank forms to print and fill in';
+  const dir = cafe();
+  const forms = writeDocument(dir, 'FOODREC');
+  setSheet(dir, 'MG', `${sheet(dir, 'MG')}a stray line\n`);
+  const mg = problemsLine('MG', 1);
+  // Neither the allergen information nor the record sheets can be written while that worksheet has a problem.
+  for (const doc of ['FOODALG', 'FOODREC']) assert.equal(renderDocument(doc, dir, data, { today: TODAY }).exit, 1, doc);
+  assert.deepEqual(linesFor(dir, 'FOODMGT'), [mg, NOT_WRITTEN, NOT_SIGNED]);
+  assert.equal(linesFor(dir, 'FOODALG')[0], mg);
+  assert.equal(linesFor(dir, 'FOODALG').filter((line) => line.includes('answers-MG.md')).length, 1, 'told once there');
+  // The record sheets, written before the problem, cannot be compared with a fresh print, so only the worksheet is told.
+  assert.deepEqual(linesFor(dir, 'FOODREC'), [mg]);
+  const said = run('status', '--project', dir).stdout;
+  assert.ok(said.includes(`\n- FOODALG: ${mg}\n`) && said.includes(`\n- FOODREC: ${mg}\n`), said);
+  assert.match(said, /\nFOODALG \(Allergen information\): 1 worksheet problem; /);
+  assert.match(said, new RegExp(`\\nFOODREC \\(Diary and record sheets\\): 1 worksheet problem; ${basename(forms)} not checked, `));
+  assert.ok(rendered('FOODCMP', dir).includes(`\n- Diary and record sheets (FOODREC): ${mg}\n`));
+  // Not written, the record sheets are told the worksheet first, then that they are not written.
+  rmSync(forms);
+  assert.deepEqual(linesFor(dir, 'FOODREC'), [mg, FORMS_NOT_WRITTEN]);
+  // The profile document reads that worksheet too, for each safe method's status, and says what it always said: the
+  // worksheet's line is under its own document, which follows.
+  assert.deepEqual(linesFor(dir, 'FOODPROF'), [NOT_WRITTEN, NOT_SIGNED]);
+  // Followed, the line is gone from all three.
+  setSheet(dir, 'MG', sheet(dir, 'MG').replace(/a stray line\n$/, ''));
+  for (const doc of ['FOODMGT', 'FOODALG', 'FOODREC']) assert.ok(!linesFor(dir, doc).includes(mg), doc);
+
+  // A problem in the profile, which every document reads: one line, under the profile document at the head of the list.
+  // Every other document, the new ones and the record sheets among them, counts it in its own line and says no more.
+  const other = cafe();
+  setSheet(other, 'profile', `${sheet(other, 'profile')}a stray line\n`);
+  const profile = problemsLine('profile', 1);
+  assert.deepEqual(status(other).unfinished.filter((line) => line.what === profile).map((line) => line.code), ['FOODPROF']);
+  const out = run('status', '--project', other).stdout;
+  for (const code of STATUS_ORDER.slice(1)) assert.match(out, new RegExp(`\\n${code} \\([^)]+\\): 1 worksheet problem; `), code);
+  assert.match(out, /\nFOODREC \(Diary and record sheets\): 1 worksheet problem; not written\n/);
+  assert.deepEqual(linesFor(other, 'FOODREC'), [FORMS_NOT_WRITTEN]);
 });
 
 test('I1: a status read from a worksheet with problems is not used: the method counts as applying, and the record leaves its tick empty', () => {
@@ -801,6 +902,33 @@ test('the cafe\'s completion record, with no document written, equals the golden
   assert.equal(cli.stdout, golden);
 });
 
+test('item 2: the cafe\'s completion record differs from the one Plan 1 printed only by lines added under ## Unfinished, and the pack\'s table is byte-identical', () => {
+  // The lines between the markers: the marker's hash differs whenever the body does, so it is left out.
+  const inner = (text) => text.replace(/\n$/, '').split('\n').slice(1, -1);
+  const before = inner(readFileSync(join(CAFE, 'expected', 'FOODCMP.plan-1.body.md'), 'utf8'));
+  const now = inner(rendered('FOODCMP', cafe()));
+  // Everything up to and including the heading is as it was: the coverage sentence, the pack's title and text, and its table.
+  const [was, is] = [before, now].map((lines) => lines.indexOf('## Unfinished'));
+  assert.ok(was > 0 && is > 0);
+  assert.deepEqual(now.slice(0, is + 1), before.slice(0, was + 1));
+  const table = (lines) => {
+    const start = lines.indexOf(`| ${recordTables[0].columns.join(' | ')} |`);
+    const length = lines.slice(start).findIndex((line) => !line.startsWith('|'));
+    return lines.slice(start, start + length).join('\n');
+  };
+  assert.ok(table(before).split('\n').length > recordRows.length);
+  assert.equal(table(now), table(before));
+  // After the heading, every line Plan 1 printed is there, in its order, with lines added among them and nothing taken out.
+  const rest = now.slice(is + 1);
+  let at = 0;
+  for (const line of before.slice(was + 1)) {
+    const found = rest.indexOf(line, at);
+    assert.ok(found >= 0, `missing or out of order: ${line}`);
+    at = found + 1;
+  }
+  assert.ok(now.length > before.length, 'the new documents add lines under ## Unfinished');
+});
+
 test('the completion record prints the pack\'s title, introduction, columns and rows in printed order, all pending until signed off', () => {
   const text = rendered('FOODCMP', cafe());
   const [page] = data.diary.pages.filter((p) => p.blocks.some((b) => b.form === 'completionRecord'));
@@ -853,19 +981,105 @@ test('the completion record lists what is unfinished, the sous vide entry awaiti
   assert.doesNotMatch(changed, /<b>|(?<!\\)\*Okafor/);
 });
 
-test('when everything is finished, every row shows its signer and the list says nothing is outstanding', () => {
-  const dir = cafe();
-  // Every method not relevant, each with its reason and decider; no special process; no own entries.
+// Makes the cafe's worksheets finished: every safe method not relevant, each with its reason and decider, but those
+// `applying` names, which apply with every question confirmed; no special process; no own entries; and the allergen
+// information and the cleaning schedule kept elsewhere, unless `lists` gives a worksheet of entries for one. The cafe's
+// suppliers' worksheet is finished as it is. Nothing is written or signed.
+const finishEverything = (dir, { applying = [], lists = {} } = {}) => {
   for (const section of SECTION_IDS) {
-    const methods = new Map(data.sections.get(section).methods.map((m) => [m.id, { status: 'not-relevant', reason: `No need of ${m.id}.`, decidedBy: 'Sam Okafor' }]));
-    setSheet(dir, section, emitWorksheet({ data: DATA_ID, section, methods, answers: new Map(), entries: new Map(), problems: [] }, data));
+    const parsed = parseWorksheet(blankWorksheet(section, data), data);
+    for (const method of data.sections.get(section).methods) {
+      if (!applying.includes(method.id)) {
+        Object.assign(parsed.methods.get(method.id), { status: 'not-relevant', reason: `No need of ${method.id}.`, decidedBy: 'Sam Okafor' });
+        continue;
+      }
+      for (const question of askedOf(method)) {
+        Object.assign(parsed.answers.get(question.id), { answer: question.type === 'text' ? `Our way for ${question.id}` : 'yes', state: 'confirmed',
+          by: 'Sam Okafor', on: '2026-11-17' });
+      }
+    }
+    setSheet(dir, section, emitWorksheet(parsed, data));
+    assert.deepEqual(parseWorksheet(sheet(dir, section), data).problems, [], section);
   }
   setSheet(dir, 'profile', sheet(dir, 'profile').replace(/(### PR-Q1[23]\n\n[^\n]*\nAnswer: )yes/g, '$1no'));
   setSheet(dir, 'own', blankWorksheet('own', data));
+  setSheet(dir, 'allergens', lists.allergens ?? ALLERGENS_KEPT());
+  setSheet(dir, 'cleaning', lists.cleaning ?? KEPT_ELSEWHERE());
+};
+// The seven documents a business could hold before the list documents came.
+const PLAN_1_DOCS = ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN'];
+const NEW_SHEETS = ['allergens', 'cleaning', 'suppliers'];
+// What status says of a list document whose worksheet is not started: what the document is for, and the worksheet to make.
+const START_LINES = {
+  FOODALG: 'this document records each dish the business serves against the fourteen allergens, from its worksheet ' +
+    'food-safety/answers-allergens.md, which is not started yet: make it with worksheet --section allergens and fill it in',
+  FOODCS: 'this document lists what the business cleans, how often and how, from its worksheet food-safety/answers-cleaning.md, which is ' +
+    'not started yet: make it with worksheet --section cleaning and fill it in',
+  FOODSUP: 'this document lists the business\'s suppliers, its environmental health team and its other contacts, from its worksheet ' +
+    'food-safety/answers-suppliers.md, which is not started yet: make it with worksheet --section suppliers and fill it in'
+};
+
+test('Review Focus 3: a project opened after the upgrade, with none of the new worksheets, is told what each new document is for and the worksheet to make; the seven keep their sign-offs', () => {
+  // The cafe as a business kept it before the upgrade: its seven worksheets and none of the new ones.
+  const dir = cafe();
+  for (const section of NEW_SHEETS) rmSync(sheetFile(dir, section));
+  const said = run('status', '--project', dir);
+  assert.equal(said.status, 0, said.stderr);
+  for (const [code, line] of Object.entries(START_LINES)) {
+    assert.deepEqual(linesFor(dir, code), [line, NOT_WRITTEN, NOT_SIGNED], code);
+    assert.ok(said.stdout.includes(`\n- ${code}: ${line}\n`), said.stdout);
+    // Following the line's first step makes a worksheet that parses with no problem, and the line is gone.
+    const section = /--section (\w+)/.exec(line)[1];
+    const made = run('worksheet', '--section', section);
+    assert.equal(made.status, 0, made.stderr);
+    setSheet(dir, section, made.stdout);
+    assert.deepEqual(parseWorksheet(made.stdout, data).problems, [], section);
+    assert.ok(!linesFor(dir, code).includes(line), code);
+    rmSync(sheetFile(dir, section));
+  }
+  assert.ok(said.stdout.includes('\nFOODALG (Allergen information): not started: answers-allergens.md; no dishes yet; not written; not signed off\n'));
+  const record = run('render', '--doc', 'FOODCMP', '--project', dir);
+  assert.equal(record.status, 0, record.stderr);
+  assert.ok(record.stdout.includes(`\n- Cleaning schedule (FOODCS): ${START_LINES.FOODCS}\n`), record.stdout);
+
+  // A business that had finished its seven documents and signed them off before it updated.
+  const signed = cafe();
+  finishEverything(signed);
+  for (const section of NEW_SHEETS) rmSync(sheetFile(signed, section));
+  const files = Object.fromEntries(PLAN_1_DOCS.map((doc) => [doc, writeDocument(signed, doc)]));
+  for (const doc of PLAN_1_DOCS) assert.equal(signOff(signed, doc).status, 0, doc);
+  const after = run('status', '--project', signed);
+  assert.equal(after.status, 0, after.stderr);
+  const result = status(signed);
+  for (const doc of PLAN_1_DOCS) {
+    const entry = result.documents.find((d) => d.code === doc);
+    assert.deepEqual([entry.signedOff, entry.inSync, entry.signOff.name], [true, true, 'Sam Okafor'], doc);
+    assert.match(after.stdout, new RegExp(`\\n${doc} \\([^)]+\\): .*; signed off by Sam Okafor, Owner, on 2026-11-17`), doc);
+    // The sign-off recorded still names the file as it now reads, and check passes on it.
+    assert.deepEqual({ body: entry.signOff.body, outside: entry.signOff.outside }, hashesOf(files[doc], doc), doc);
+    assert.equal(run('check', '--doc', doc, '--project', signed, '--report', files[doc]).status, 0, doc);
+  }
+  // What is unfinished is the new documents and the record sheets, nothing of the seven.
+  assert.deepEqual(result.unfinished, [
+    ...Object.entries(START_LINES).flatMap(([code, line]) => [line, NOT_WRITTEN, NOT_SIGNED].map((what) => ({ code, what }))),
+    { code: 'FOODREC', what: 'document not written yet: write it, so that people at the business have the blank forms to print and fill in' }
+  ]);
+  const signedRecord = run('render', '--doc', 'FOODCMP', '--project', signed);
+  assert.equal(signedRecord.status, 0, signedRecord.stderr);
+  for (const [i, row] of tableRows(signedRecord.stdout).entries()) {
+    assert.deepEqual(row, [recordRows[i][0], '2026-11-17', 'Sam Okafor', targets[i].method ? 'Not relevant' : ''], row[0]);
+  }
+});
+
+test('when everything is finished, every row shows its signer and the list says nothing is outstanding', () => {
+  const dir = cafe();
+  finishEverything(dir);
   for (const doc of STATUS_ORDER) {
     writeDocument(dir, doc);
     assert.equal(signOff(dir, doc).status, 0, doc);
   }
+  // The record sheets are written too: nobody signs them, but until they are written the business has no diary pages.
+  writeDocument(dir, 'FOODREC');
   const result = status(dir);
   assert.deepEqual(result.unfinished, []);
   assert.deepEqual(result.specialProcesses, []);
@@ -878,22 +1092,68 @@ test('when everything is finished, every row shows its signer and the list says 
   assert.equal(run('status', '--project', dir).stdout.split('\n').filter((line) => line.startsWith('- ')).length, 0);
 });
 
+test('item 3: with every document finished and signed off, a change ends the sign-off of each document whose body it changes, and of no other', () => {
+  const dir = cafe();
+  // Lists that hold entries: the cafe's first dish, every cell filled in; its cleaning items, the proposed one confirmed;
+  // and its suppliers as they are. MG-04 applies, every question confirmed, so the allergen information repeats its answers.
+  const allergens = `${sheet(dir, 'allergens').split('\n\n## DISH-02 ')[0]}\n`;
+  const cleaning = swap(sheet(dir, 'cleaning'), 'State: proposed\nBy:\nOn:\nSource: Tom Reid\'s notes from the kitchen walk-round',
+    'State: confirmed\nBy: Sam Okafor\nOn: 2026-11-17\nSource:');
+  finishEverything(dir, { applying: ['MG-04'], lists: { allergens, cleaning } });
+  for (const doc of STATUS_ORDER) {
+    writeDocument(dir, doc);
+    assert.equal(signOff(dir, doc).status, 0, doc);
+  }
+  writeDocument(dir, 'FOODREC');
+  const signed = () => Object.fromEntries(status(dir).documents.map((d) => [d.code, d.signedOff]));
+  const ended = (...codes) => Object.fromEntries(STATUS_ORDER.map((code) => [code, !codes.includes(code)]));
+  assert.deepEqual(signed(), ended());
+  assert.deepEqual(status(dir).unfinished, []);
+  // Each change, then the change taken out again: the body is what was signed once more, so the sign-off stands again.
+  const tryChange = (section, from, to, ...codes) => {
+    const before = sheet(dir, section);
+    setSheet(dir, section, swap(before, from, to));
+    assert.deepEqual(parseWorksheet(sheet(dir, section), data, { today: TODAY }).problems, [], section);
+    assert.deepEqual(signed(), ended(...codes), `${section}: ${from}`);
+    // Nothing else is unfinished: not even the record sheets, which print none of these.
+    assert.deepEqual([...new Set(status(dir).unfinished.map((line) => line.code))], codes, `${section}: ${from}`);
+    setSheet(dir, section, before);
+    assert.deepEqual(signed(), ended(), `${section}: ${from}, taken out again`);
+  };
+  tryChange('cleaning', 'Method: Run its cleaning programme with a cleaning tablet', 'Method: Run its cleaning programme with two cleaning tablets', 'FOODCS');
+  tryChange('MG', 'Answer: Our way for MG-04-Q01', 'Answer: In the red folder by the till', 'FOODMGT', 'FOODALG');
+  tryChange('suppliers', 'Telephone: 01632 960118', 'Telephone: 01632 960119', 'FOODSUP');
+  // A cell of a confirmed dish left empty ends the allergen information's sign-off alone. Written again, as a new version,
+  // it shows that cell as not confirmed, and sign-off refuses it with status's own line as the reason.
+  setSheet(dir, 'allergens', swap(allergens, 'Celery: does not contain\n', 'Celery:\n'));
+  assert.deepEqual(signed(), ended('FOODALG'));
+  const newer = writeDocument(dir, 'FOODALG', '1.1');
+  assert.ok(readFileSync(newer, 'utf8').includes('| **NOT CONFIRMED** |'));
+  const cells = linesFor(dir, 'FOODALG').find((line) => line.includes('allergen cell'));
+  assert.equal(cells, '1 allergen cell of confirmed dishes in food-safety/answers-allergens.md is not filled in, so the document shows it as not confirmed ' +
+    '(Celery in DISH-01): fill it in as contains or does not contain from what was checked, then update that dish\'s Checked-against, Checked-on, By and On');
+  const refused = signOff(dir, 'FOODALG', '--version', '1.1');
+  assert.equal(refused.status, 1);
+  assert.deepEqual(reasons(refused.stderr), [cells]);
+  assert.deepEqual(signed(), ended('FOODALG'));
+});
+
 test('check --doc FOODCMP passes on a fresh completion record, and once the project changes says it is out of date: render it again', () => {
   const dir = cafe();
   const record = writeDocument(dir, 'FOODCMP');
-  assert.equal(checkDocument('FOODCMP', dir, record, data).exit, 0);
+  assert.equal(checkDocument('FOODCMP', dir, record, data, undefined, { today: TODAY }).exit, 0);
   assert.equal(run('check', '--doc', 'FOODCMP', '--project', dir, '--report', record).status, 0);
   // The completion record is not a document status lists.
   assert.ok(!status(dir).documents.some((d) => d.code === 'FOODCMP'));
   writeDocument(dir, 'FOODCOOK');
-  const written = checkDocument('FOODCMP', dir, record, data);
+  const written = checkDocument('FOODCMP', dir, record, data, undefined, { today: TODAY });
   assert.equal(written.exit, 1);
   assert.match(written.message, /out of date/);
   assert.match(written.message, /render it again/);
   const fresh = writeDocument(dir, 'FOODCMP');
-  assert.equal(checkDocument('FOODCMP', dir, fresh, data).exit, 0);
+  assert.equal(checkDocument('FOODCMP', dir, fresh, data, undefined, { today: TODAY }).exit, 0);
   assert.equal(signOff(dir, 'FOODCOOK').status, 0);
-  const signed = checkDocument('FOODCMP', dir, fresh, data);
+  const signed = checkDocument('FOODCMP', dir, fresh, data, undefined, { today: TODAY });
   assert.equal(signed.exit, 1);
   assert.equal(signed.line, readFileSync(fresh, 'utf8').split('\n').findIndex((line) => line.startsWith('<!-- UK-FOOD:BEGIN')) + 1);
   assert.match(signed.message, /render it again/);
@@ -953,7 +1213,7 @@ const lineNumber = (file, needle) => {
   assert.ok(at >= 0, needle);
   return at + 1;
 };
-const check = (dir, doc, file) => checkDocument(doc, dir, file, data);
+const check = (dir, doc, file) => checkDocument(doc, dir, file, data, undefined, { today: TODAY });
 const overClaimLine = (file, line, field, value) => `document ${file} says in its header, at line ${line}, that ${field} is ` +
   `"${value}", though no sign-off is recorded for it: put Status back to DRAFT and Reviewed By and Approved By back to [PENDING], ` +
   'and have a named person sign the document off once it is finished';
@@ -1303,7 +1563,7 @@ test('M4: status says where the completion record stands, in its own place: not 
   // Written again, it is up to date, and still passes its own check.
   writeFileSync(record, readFileSync(writeDocument(dir, 'FOODCMP'), 'utf8'));
   assert.equal(recordLine(), 'FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date');
-  assert.equal(checkDocument('FOODCMP', dir, record, data).exit, 0);
+  assert.equal(checkDocument('FOODCMP', dir, record, data, undefined, { today: TODAY }).exit, 0);
   // A header that claims a sign-off is told the same way.
   const claimed = templated(dir, 'FOODCMP', { status: 'APPROVED' });
   assert.match(recordLine(), /^FOODCMP \(Completion record\): document ARC-001-FOODCMP-v1\.0\.md says in its header, at line \d+, that Status is "APPROVED", though the completion record is a report that nobody signs/);
@@ -1804,6 +2064,8 @@ test('G8 does not touch a properly signed file whose answers are later withdrawn
   }
   setSheet(done, 'profile', sheet(done, 'profile').replace(/(### PR-Q1[23]\n\n[^\n]*\nAnswer: )yes/g, '$1no'));
   setSheet(done, 'own', blankWorksheet('own', data));
+  setSheet(done, 'allergens', ALLERGENS_KEPT());
+  setSheet(done, 'cleaning', KEPT_ELSEWHERE());
   for (const doc of STATUS_ORDER) {
     const written = templated(done, doc);
     assert.ok(!/\*\*NOT YET ANSWERED\*\*|\nNot yet confirmed, so not shown: /.test(readFileSync(written, 'utf8')), doc);
@@ -1811,6 +2073,9 @@ test('G8 does not touch a properly signed file whose answers are later withdrawn
     mark(written);
     assert.equal(check(done, doc, written).exit, 0, doc);
   }
+  // The record sheets are written too, in a DRAFT header: nobody signs them, but until they are written the business has
+  // no diary pages.
+  templated(done, 'FOODREC');
   assert.ok(status(done).documents.every((d) => d.signedOff));
   assert.deepEqual(status(done).unfinished, []);
 });
@@ -2085,7 +2350,9 @@ test('H1: a project folder the shared script has just made becomes the business\
   assert.ok(readme.startsWith('# Bramble Cafe: food safety records\n\n'), readme.slice(0, 80));
   // What the folder is, where things are, what to run next, and that it is kept private.
   for (const needed of ['This folder holds the food safety records of Bramble Cafe.', '`food-safety/`', '`ARC-001-FOOD', '`external/`',
-    '1. `uk-food-profile`', '2. `uk-food-safe-methods`', '3. `uk-food-own-methods`', '4. `uk-food-check`', '5. `uk-food-sign-off`',
+    '1. `uk-food-profile`', '2. `uk-food-safe-methods`', '3. `uk-food-own-methods`', '4. `uk-food-allergens`', '5. `uk-food-cleaning-schedule`',
+    '6. `uk-food-suppliers`', '7. `uk-food-record-sheets`', '8. `uk-food-check`', '9. `uk-food-sign-off`',
+    'There is one too for each of three lists: your allergen information, your cleaning schedule, and your suppliers and contacts.',
     '`/arckit-uk-food:uk-food-profile`', PRIVATE, 'They are not legal advice.',
     'The Food Standards Agency has not reviewed or endorsed the overlay or anything made with it.']) {
     assert.ok(readme.includes(needed), needed);
@@ -2155,14 +2422,14 @@ test('H1: set-up-folder changes nothing in a project that already existed: one w
 const TEMPLATES = 'plugins/arckit-uk-food/templates';
 // The template each document is written from, as the commands name them.
 const templateOf = (doc) => readFileSync(join(TEMPLATES, `uk-food-${doc === 'FOODPROF' ? 'profile' : doc === 'FOODOWN' ? 'own-methods'
-  : doc === 'FOODCMP' ? 'check' : 'safe-methods'}-template.md`), 'utf8');
+  : doc === 'FOODCMP' ? 'check' : doc === 'FOODREC' ? 'record-sheets' : 'safe-methods'}-template.md`), 'utf8');
 const fromItsTemplate = (dir, doc, regime = 'uk') => templated(dir, doc, { regime, template: templateOf(doc) });
 const otherOf = (dir, doc, file) => check(dir, doc, file).otherText.map((entry) => entry.text);
 const records = (dir) => JSON.parse(readFileSync(signOffsFile(dir), 'utf8')).signOffs;
 
-test('J4: each of the eight documents, written from its own template with a header from each regime\'s partial, lists no other text, with or without the hook\'s block', () => {
+test('J4: each document, the record sheets among them, written from its own template with a header from each regime\'s partial, lists no other text, with or without the hook\'s block', () => {
   const dir = cafe();
-  for (const doc of [...STATUS_ORDER, 'FOODCMP']) {
+  for (const doc of [...STATUS_ORDER, 'FOODREC', 'FOODCMP']) {
     for (const regime of REGIMES) {
       const file = fromItsTemplate(dir, doc, regime);
       assert.deepEqual(otherOf(dir, doc, file), [], `${doc} ${regime}`);
@@ -2743,10 +3010,57 @@ test('J1: a folder made with no business name reads well, and the folder\'s text
   const named = newProject('Hartley Food Safety Kitchen');
   assert.equal(setUp(named).status, 0);
   assert.ok(readFileSync(join(named, 'README.md'), 'utf8').startsWith('# Hartley Food Safety Kitchen: food safety records\n'));
-  // The completion record is the one document nobody signs, and the folder's text says so.
+  // The completion record and the diary and record sheets are the two documents nobody signs, and the folder's text says so.
   const readme = readFileSync(join(named, 'README.md'), 'utf8');
   assert.doesNotMatch(readme, /Each is a draft until a named person at the business signs it off\.\n/);
-  assert.match(readme, /Each is a draft until a named person at the business signs it off, except the completion record \(`ARC-001-FOODCMP-v1\.0\.md`\): it reports where the others stand, and nobody signs it\./);
+  assert.match(readme, /Each is a draft until a named person at the business signs it off, except two that nobody signs: the completion record \(`ARC-001-FOODCMP-v1\.0\.md`\), which reports where the others stand, and the diary and record sheets \(`ARC-001-FOODREC-v1\.0\.md`\), which are blank forms whose pages are signed by the people who fill them in\./);
+});
+
+// ---- A folder an earlier release set up (final review A1) ----
+
+const README_6_23_0 = JSON.parse(readFileSync(resolve('tests/fixtures/uk-food/folder-readme-6.23.0.json'), 'utf8'));
+
+test('A1: a folder the 6.23.0 helper set up is one this helper made: already set up, left as it is, whatever its name and number', () => {
+  // The fixture is 6.23.0's text, which names five commands; this version's names nine.
+  for (const text of [README_6_23_0.named, README_6_23_0.unnamed]) {
+    assert.match(text, /5\. `uk-food-sign-off`/);
+    assert.doesNotMatch(text, /uk-food-allergens/);
+  }
+  const cases = [
+    ['Bramble Cafe', README_6_23_0.named],
+    ['Food safety', README_6_23_0.unnamed],
+    ['The Old Mill Tea-Room 2', README_6_23_0.named.replaceAll('Bramble Cafe', 'The Old Mill Tea-Room 2')]
+  ];
+  for (const [name, text] of cases) {
+    const dir = newProject(name);
+    assert.equal(setUp(dir).status, 0);
+    writeFileSync(join(dir, 'README.md'), text);
+    const before = snapshot(dir);
+    const result = setUp(dir);
+    assert.equal(result.status, 0, `${name}: ${result.stderr}`);
+    assert.match(result.stdout, /is already set up: nothing has been changed/, name);
+    assert.deepEqual(snapshot(dir), before, name);
+  }
+  // Another folder number: the number in its file names is the folder's own.
+  const root = dirname(newProject());
+  for (const n of ['002', '003', '004', '005', '006', '007']) {
+    const made = spawnSync('bash', [CREATE_PROJECT, '--json', '--force', '--name', `Cafe ${n}`], { cwd: dirname(root), encoding: 'utf8' });
+    assert.equal(made.status, 0, made.stderr);
+  }
+  const seventh = realpathSync(join(root, readdirSync(root).find((entry) => entry.startsWith('007-'))));
+  assert.equal(setUp(seventh).status, 0);
+  writeFileSync(join(seventh, 'README.md'), README_6_23_0.named.replaceAll('Bramble Cafe', 'Cafe 007').replaceAll('ARC-001-', 'ARC-007-'));
+  assert.match(setUp(seventh).stdout, /is already set up: nothing has been changed/);
+  // But only as it was written: a line changed, or another folder's number, is a README someone has changed.
+  for (const text of [`${README_6_23_0.named}Our own note.\n`, README_6_23_0.named.replace('5. `uk-food-sign-off`', '5. `uk-food-allergens`'),
+    README_6_23_0.named.replaceAll('Bramble Cafe', 'Cafe 007')]) {
+    writeFileSync(join(seventh, 'README.md'), text);
+    const before = snapshot(seventh);
+    const result = setUp(seventh);
+    assert.equal(result.status, 1, result.stdout);
+    assert.match(result.stderr, NOT_AS_EXPECTED);
+    assert.deepEqual(snapshot(seventh), before);
+  }
 });
 
 // ---- What the re-review of the seven fixes found (H8, H9) ----

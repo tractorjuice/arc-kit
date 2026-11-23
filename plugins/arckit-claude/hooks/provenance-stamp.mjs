@@ -201,8 +201,8 @@ function findBuildContext(filePath, repoRoot) {
 // ── Block construction ────────────────────────────────────────────────
 //
 // THE EXACT FORM OF THIS BLOCK IS RELIED ON. The UK food safety overlay's
-// helper (plugins/arckit-uk-food/scripts/uk-food.mjs, PROVENANCE_OPENS and
-// PROVENANCE_ROWS) recognises the block line for line, so that a stamp does
+// helper (plugins/arckit-uk-food/scripts/uk-food-document.mjs, PROVENANCE_OPENS
+// and PROVENANCE_ROWS) recognises the block line for line, so that a stamp does
 // not end a signed food document's sign-off while any other text added to the
 // file does. A change to what buildProvenanceBlock writes (a marker, the
 // heading, the note, the table's heading rows, a row's label, order or value

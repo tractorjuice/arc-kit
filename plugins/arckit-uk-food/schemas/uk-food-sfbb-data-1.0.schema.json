@@ -261,7 +261,7 @@
         94,
         99
       ],
-      "$comment": "The diary pages whose blocks may carry fromImage: true. It must equal FROM_IMAGE_PAGES in uk-food.mjs; a Node test ties the two."
+      "$comment": "The diary pages whose blocks may carry fromImage: true. It must equal FROM_IMAGE_PAGES in uk-food-data.mjs; a Node test ties the two."
     },
     "pagesFile": {
       "type": "object",

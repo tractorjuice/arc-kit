@@ -290,7 +290,8 @@ export const DOC_TYPES = {
   // A small caterer's food safety documents built from the FSA's "Safer food, better business for caterers"
   // pack. None carries a severity and none repeats within a project. The pack's wording reaches a document
   // only through the overlay's helper script. Documents stay DRAFT until a named person signs them off with
-  // uk-food-sign-off; the completion record, which uk-food-check writes, is never signed and stays DRAFT.
+  // uk-food-sign-off. Two are never signed and always stay DRAFT: the completion record, which uk-food-check
+  // writes, and the diary and record sheets document, which uk-food-record-sheets writes.
   'FOODPROF':  { name: 'Food Business Profile',                           category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
   'FOODXC':    { name: 'Cross-contamination Safe Methods',                category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
   'FOODCLN':   { name: 'Cleaning Safe Methods',                           category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
@@ -299,6 +300,10 @@ export const DOC_TYPES = {
   'FOODMGT':   { name: 'Management Safe Methods',                         category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
   'FOODOWN':   { name: 'Food Business Own Methods',                       category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
   'FOODCMP':   { name: 'Safe Method Completion and Readiness Record',     category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-check' },
+  'FOODALG':   { name: 'Allergen Information',                            category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
+  'FOODCS':    { name: 'Cleaning Schedule',                               category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
+  'FOODSUP':   { name: 'Suppliers and Contacts',                          category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-sign-off' },
+  'FOODREC':   { name: 'Diary and Record Sheets',                         category: 'Compliance', regime: 'UK', statusSetBy: '/arckit-uk-food:uk-food-record-sheets' },
   'MMOD':      { name: 'Maturity Model Assessment',       category: 'Governance', severity: 'HIGH' },
 };
 

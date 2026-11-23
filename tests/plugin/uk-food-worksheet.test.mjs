@@ -6,7 +6,7 @@ import { mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  DATA_ID, DEFAULT_DATA_DIR, EXTRA_CARE, PROFILE_QUESTIONS, SECTION_IDS, WORKSHEET_SECTIONS,
+  DATA_ID, DEFAULT_DATA_DIR, EXTRA_CARE, LIST_SECTIONS, PROFILE_QUESTIONS, SECTION_IDS, WORKSHEET_SECTIONS,
   blankWorksheet, emitWorksheet, identifiedBy, loadData, parseWorksheet, upgradeWorksheet, wordingOf
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
@@ -58,7 +58,12 @@ const promptOf = (text, qid) => {
 const shows = (prompt, text) => text.split('\n').every((paragraph) => prompt.includes(`> ${paragraph}`.trimEnd()));
 const askedOf = (rowId) => rowOf(rowId).questions.filter((q) => q.type !== 'note').map((q) => q.id);
 const messages = (parsed) => parsed.problems.map((p) => p.message).join('\n');
-const parse = (text) => parseWorksheet(text, data);
+// The date the commands would give as today. A worksheet with dated entries (the allergens worksheet's Checked-on) is read
+// with it, as every command reads one: a reading given no date refuses such a date rather than take it unchecked.
+const TODAY = '2026-11-22';
+const parse = (text) => parseWorksheet(text, data, { today: TODAY });
+// The worksheets that ask no questions: the own worksheet and the list worksheets hold entries a person adds.
+const ASKS_NOTHING = ['own', ...LIST_SECTIONS];
 
 // ---- Blank worksheets ----
 
@@ -1618,6 +1623,11 @@ const asOlder = (text) => {
   return { text: lines.join('\n'), prompts: changed };
 };
 const upgradeProblem = /^this worksheet was made by a different version of the overlay: (\d+) (?:line|lines) of its guidance or question wording (?:is|are) not what this version prints, the first at line (\d+)\. Nothing typed on such lines is read\. Run upgrade-worksheet --file on this worksheet: it shows each line it would take out or put in and writes nothing, and with --write it brings the worksheet up to date, keeping a copy of it as it is\. Anything a person typed on a line it takes out cannot be told from old wording, so a person reads what it shows before it is written\. An answer belongs after Answer:, and an own entry below the opening comment\.$/;
+// A list worksheet's names its wording as its guidance alone, as it has no questions, and ends by saying where its own
+// lines belong, as a list worksheet holds them.
+const listUpgradeProblem = new RegExp(upgradeProblem.source.replace('its guidance or question wording', 'its guidance wording')
+  .replace('An answer belongs after Answer:, and an own entry below the opening comment',
+    'Each entry, and anything written under Kept elsewhere, belongs below the opening comment'));
 // The name a worksheet is kept under before it is brought up to date (ruling J3): no pattern for worksheets matches it.
 const keptAs = (section, n = 1) => `before-upgrade-${n === 1 ? '' : `${n}-`}answers-${section}.md`;
 const sheetIn = (section, text) => {
@@ -1635,10 +1645,10 @@ test('H3: wording that is another version\'s gives one problem for the whole wor
     const original = fixture(section);
     assert.deepEqual(parse(original).problems, [], section);
     const older = asOlder(original);
-    assert.equal(older.prompts, section === 'own' ? 0 : 2, section);
+    assert.equal(older.prompts, ASKS_NOTHING.includes(section) ? 0 : 2, section);
     const parsed = parse(older.text);
     assert.equal(parsed.problems.length, 1, `${section}: ${messages(parsed)}`);
-    const found = upgradeProblem.exec(parsed.problems[0].message);
+    const found = (LIST_SECTIONS.includes(section) ? listUpgradeProblem : upgradeProblem).exec(parsed.problems[0].message);
     assert.ok(found, parsed.problems[0].message);
     assert.equal(Number(found[1]), 1 + older.prompts, section);
     assert.equal(parsed.problems[0].line, older.text.split('\n').indexOf('<!--') + 2, section);
@@ -1962,7 +1972,7 @@ const wordingsOf = (text) => {
   });
   return found;
 };
-const SECTIONS_ASKED = WORKSHEET_SECTIONS.filter((section) => section !== 'own');
+const SECTIONS_ASKED = WORKSHEET_SECTIONS.filter((section) => !ASKS_NOTHING.includes(section));
 // The notes in brackets the helper prints after a question, saying what form an answer takes. They are the helper's
 // own words, and, with which lines of context it prints, what another version of the overlay may word otherwise.
 const FORM_NOTES = ['(England / Wales / Scotland / Northern Ireland / other)', '(yes, or say what you do instead)',
@@ -2024,7 +2034,8 @@ test('V1: each question is known by the pack\'s own words for it, the fewest tha
   // What was chosen, by worksheet: own words only ('start'); own words and one line of context, a paragraph or more
   // ('start+context'); in the profile, the pack's name of a special process or food ('within').
   assert.deepEqual(made, { XC: { start: 42, 'start+context': 8 }, CL: { start: 23 }, CH: { start: 16, 'start+context': 29 },
-    CK: { start: 26, 'start+context': 20 }, MG: { start: 35, 'start+context': 14 }, profile: { start: 10, within: 10 }, own: {} });
+    CK: { start: 26, 'start+context': 20 }, MG: { start: 35, 'start+context': 14 }, profile: { start: 10, within: 10 }, own: {}, allergens: {},
+    cleaning: {}, suppliers: {} });
   // Two questions are the lead-in of the next, whose wording holds all their words: they are told apart all the same.
   assert.deepEqual(nested, ['CH-03-Q13 in CH-03-Q14', 'CK-03-Q01 in CK-03-Q02']);
   assert.deepEqual(alike, [], 'no two questions of one worksheet that nothing tells apart');
@@ -2096,7 +2107,7 @@ test('V1: a worksheet whose every form note reads another way, with nothing move
       const before = original.split('\n');
       const differ = older.split('\n').filter((line, i) => line !== before[i]).length;
       assert.equal(differ, how ? wordingsOf(original).size : 1, `${section}, ${form}: one line of each question differs`);
-      const result = upgradeWorksheet(older, data);
+      const result = upgradeWorksheet(older, data, { today: TODAY });
       assert.equal(result.exit, 0, `${section}, ${form}: ${result.messages?.join(' ')}`);
       assert.equal(result.text, original, `${section}, ${form}`);
       assert.deepEqual(typed(parse(result.text)), typed(parse(older)), `${section}, ${form}`);
@@ -2186,9 +2197,10 @@ test('V1: the dry run shows, for each question it changes, its own line as it st
   const other = run('upgrade-worksheet', '--file', sheetIn('CK', guided.join('\n')).file);
   assert.doesNotMatch(other.stdout, /its own line|held the pack's words/);
   assert.match(other.stdout, /Every answer, state, name, date and entry is under the same identifier as before, unchanged\.\n/);
-  // The usage text says what the command refuses.
+  // The usage text says what the command refuses. A list worksheet has no questions, so it names the questions' wording
+  // as what a worksheet of questions has besides its guidance.
   const usage = run('upgrade-worksheet').stderr.replace(/\s+/g, ' ');
-  assert.match(usage, /print each line of its guidance and question wording that would be taken out or put in, and with --write do so/);
+  assert.match(usage, /print each line of its guidance, or of its questions' wording, that would be taken out or put in, and with --write do so/);
   assert.match(usage, /or one whose lines under a question's heading do not hold the words that identify that question \(a heading that has been moved, lines typed over, or wording this version does not know\)/);
   assert.doesNotMatch(usage, /would be replaced|replace them|another question's \(a heading/);
 });
@@ -2284,7 +2296,7 @@ test('parse-worksheet --json prints the parsed worksheet', () => {
 
 // ---- The project-cafe fixture ----
 
-const FIXTURE_SECTIONS = ['profile', ...SECTION_IDS, 'own'];
+const FIXTURE_SECTIONS = ['profile', ...SECTION_IDS, 'own', ...LIST_SECTIONS];
 
 test('the cafe fixture: every worksheet parses with no problems and is in the helper\'s own layout', () => {
   for (const section of FIXTURE_SECTIONS) {

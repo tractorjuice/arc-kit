@@ -58,7 +58,7 @@ The protected-file check applies in every workspace while the plugin is enabled,
 ## What is not here yet
 
 - **Session context, provenance stamps and the other Claude Code hooks.** Antigravity has no event for some of them, and the stamp records settings only Claude Code has.
-- **Long commands.** Antigravity loads the first 24,000 bytes of a skill. Twenty-nine ArcKit commands are longer, so each of those tells the agent to read the rest from a file in the skill's folder first.
+- **Long commands.** Antigravity loads the first 24,000 bytes of a skill. Thirty-three ArcKit commands are longer, so each of those tells the agent to read the rest from a file in the skill's folder first.
 
 ## Licence
 

@@ -234,6 +234,10 @@ DOC_TYPES = {
     "FOODMGT":   {"name": "Management Safe Methods", "category": "Compliance"},
     "FOODOWN":   {"name": "Food Business Own Methods", "category": "Compliance"},
     "FOODCMP":   {"name": "Safe Method Completion and Readiness Record", "category": "Compliance"},
+    "FOODALG":   {"name": "Allergen Information", "category": "Compliance"},
+    "FOODCS":    {"name": "Cleaning Schedule", "category": "Compliance"},
+    "FOODSUP":   {"name": "Suppliers and Contacts", "category": "Compliance"},
+    "FOODREC":   {"name": "Diary and Record Sheets", "category": "Compliance"},
     "MMOD":       {"name": "Maturity Model Assessment",                                     "category": "Governance"},
 }
 

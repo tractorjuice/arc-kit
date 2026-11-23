@@ -35,7 +35,7 @@ max_report=10
 # runs at every session start, starts no Node to read the registry;
 # tests/plugin/test_bash_portability.py fails when the two differ and prints
 # the line to write.
-status_set_by_command=" FOODPROF FOODXC FOODCLN FOODCHL FOODCOOK FOODMGT FOODOWN FOODCMP "
+status_set_by_command=" FOODPROF FOODXC FOODCLN FOODCHL FOODCOOK FOODMGT FOODOWN FOODCMP FOODALG FOODCS FOODSUP FOODREC "
 
 # Resolve the date threshold for draft staleness (30 days ago): GNU `date -d`,
 # then BSD `date -v` (macOS, where -d means something else). If neither

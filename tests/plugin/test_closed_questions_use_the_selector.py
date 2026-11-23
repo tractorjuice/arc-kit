@@ -127,7 +127,7 @@ PLAIN_TEXT_CHOICE = re.compile(
     r"|ask which\)", re.I)
 # Commands that ask this for a reason the selector does not serve, with the reason.
 ASKED_IN_PLAIN_TEXT = {
-    # The five food safety commands say "ask which" with their own wording for a runtime that can offer
+    # The food safety commands say "ask which" with their own wording for a runtime that can offer
     # choices; tests/plugin/test_uk_food_commands.py holds them to it.
     "arckit-uk-food",
 }

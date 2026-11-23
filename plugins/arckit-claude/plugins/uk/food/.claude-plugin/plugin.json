@@ -4,7 +4,7 @@
   "displayName": "ArcKit UK Food Safety Overlay",
   "version": "6.25.0",
   "defaultEnabled": false,
-  "description": "UK Food Safety Overlay for ArcKit. Experimental and community-maintained. Covers England and Wales. Builds a small caterer's food safety documents from the Food Standards Agency's Safer food, better business for caterers pack: a business profile, the five sections of safe methods, the business's own methods, a completion record, and sign-off by a named person. Requires arckit core plugin.",
+  "description": "UK Food Safety Overlay for ArcKit. Experimental and community-maintained. Covers England and Wales. Builds a small caterer's food safety documents from the Food Standards Agency's Safer food, better business for caterers pack: a business profile, the five sections of safe methods, the business's own methods, its allergen information, cleaning schedule and suppliers and contacts, the pack's blank diary and record sheets, a completion record, and sign-off by a named person. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"

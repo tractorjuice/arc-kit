@@ -10,7 +10,7 @@ This overlay is for small catering businesses in England and Wales. It is not le
 
 It tells you, for each document:
 
-- how many of its questions are confirmed, out of how many, and how many are proposed and waiting for a named person to confirm them;
+- how many of its questions, or for a list such as the cleaning schedule its entries, are confirmed, out of how many, and how many are proposed and waiting for a named person to confirm them;
 - whether the document has been written, and whether it is in step with its worksheet, or what is wrong with it;
 - whether it has been signed off, and if so by whom, in what role and on what date.
 
@@ -51,6 +51,7 @@ FOODXC (Cross-contamination): 23 of 50 questions confirmed, 2 proposed; not writ
 FOODCLN (Cleaning): 0 of 23 questions confirmed; adapted: CL-04; not written; not signed off
 FOODCOOK (Cooking): 41 of 41 questions confirmed; not relevant: CK-06; ARC-001-FOODCOOK-v1.0.md in step with its worksheets; signed off by Sam Okafor, Owner, on 2026-11-18
 FOODOWN (Own methods): 2 of 2 own entries confirmed; not written; not signed off
+FOODREC (Diary and record sheets): not written
 FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date
 ```
 
@@ -71,6 +72,11 @@ What moves each item on:
 | Profile questions not yet answered or only proposed | `/arckit-uk-food:uk-food-profile` |
 | Section questions not yet answered or only proposed | `/arckit-uk-food:uk-food-safe-methods` with the section's code, such as `XC` |
 | Own entries, special processes, environmental health reviews | `/arckit-uk-food:uk-food-own-methods` |
+| Dishes in your allergen information not yet confirmed, or none recorded, or an allergen not filled in | `/arckit-uk-food:uk-food-allergens` |
+| Your answers on how customers are told about allergens, which the allergen information repeats | `/arckit-uk-food:uk-food-safe-methods MG` |
+| Cleaning schedule items not yet confirmed, or none recorded | `/arckit-uk-food:uk-food-cleaning-schedule` |
+| Suppliers and contacts not yet confirmed, or none recorded, or no environmental health team | `/arckit-uk-food:uk-food-suppliers` |
+| The diary and record sheets not written yet, or out of date | `/arckit-uk-food:uk-food-record-sheets` |
 | A document not written yet, or out of date | The command that writes that document |
 | A finished document not yet signed off | `/arckit-uk-food:uk-food-sign-off` |
 
@@ -82,7 +88,7 @@ What moves each item on:
 
 - **It will not change your answers or other documents.** The record is only as true as what it reads, so anything wrong is put right at its source, with the command that owns it.
 - **It will not judge your answers.** It reports what the helper script says.
-- **It will not cover the daily diary.** The diary stays with you, on paper or however the business keeps it today.
+- **It will not cover the daily diary.** The diary stays with you, on paper or however the business keeps it today. Its blank pages come from `/arckit-uk-food:uk-food-record-sheets`.
 
 ## If the document check fails
 

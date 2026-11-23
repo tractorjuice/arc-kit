@@ -8,16 +8,21 @@ This overlay is for small catering businesses in England and Wales. It is not le
 
 ## What it is for
 
-You can sign off these documents, each on its own: the business profile, the five sections of safe methods (cross-contamination, cleaning, chilling, cooking and management) and your own methods. The completion record is a report, and is not signed off.
+You can sign off these documents, each on its own: the business profile, the five sections of safe methods (cross-contamination, cleaning, chilling, cooking and management), your own methods, your allergen information, your cleaning schedule, and your suppliers and contacts. Two are never signed off: the completion record, which is a report, and the diary and record sheets, which are blank forms that people at the business fill in and sign themselves as they use them.
 
 A document can be signed off only when it is finished. The overlay's helper script decides that, not the command:
 
 - every worksheet the document needs is there, with no problems;
-- every question in it is confirmed by a named person;
+- every question or entry in it is confirmed by a named person, and it shows nothing else as not yet answered or not yet confirmed;
 - the document is written, at the version you are signing, and passes its document check;
 - the lines of its header that a sign-off rewrites hold only what the overlay's commands write there (`DRAFT` and `[PENDING]`, or an earlier sign-off, and a date), because signing off rewrites those lines and must change nothing else;
 - for your own methods, every special process the profile confirms has its own entry;
+- for your allergen information, at least one dish is confirmed, or a confirmed note says where you keep it; every confirmed dish has all fourteen allergens, and whether it is prepacked for direct sale, filled in, so nothing in it reads NOT CONFIRMED; and your answers on how customers are told about allergens, which you give in the Management section of safe methods, are confirmed there, unless that safe method is marked not relevant;
+- for your cleaning schedule, at least one item is confirmed, or a confirmed note says where you keep your schedule;
+- for your suppliers and contacts, your environmental health team's entry is confirmed, and at least one supplier is confirmed or a confirmed note says where you keep your suppliers' list;
 - if the file holds anything outside the part the helper checks, such as a note or a section of your own, you have been shown it and have said you have read it.
+
+A list finished only by a confirmed note of where you keep it, with nothing of the list confirmed in the document (for your suppliers and contacts, no supplier), can be signed off. The document then says that it holds nothing of that record and that nothing in it was checked against it, and the completion record lists it under Kept elsewhere.
 
 ## Before you start
 
@@ -29,7 +34,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 ## What happens when you run it
 
 1. **It finds the project.**
-2. **It works out what is to be signed, and by whom.** Name one document, or several to sign each in turn. A general request such as "sign everything off" is not enough: the command lists each document not yet signed off, with its file and version and the name and role it would record, and asks which ones.
+2. **It works out what is to be signed, and by whom.** Name one document, or several to sign each in turn. If you say just "cleaning", it asks whether you mean the Cleaning section of safe methods or your cleaning schedule; if nobody is there to answer, it records nothing. A general request such as "sign everything off" is not enough: the command lists each document not yet signed off, with its file and version and the name and role it would record, and asks which ones.
 3. **It signs only in the name of the person asking.** If you ask it to sign for someone else, it tells you that person has to do it themselves, and records nothing.
 4. **It tells you the file and version it is about to record, and waits for your yes**, unless you named the version yourself. A sign-off says you read that version, so you need to know which one it is.
 5. **It shows you the document's header, and any text in the file that the helper has not checked.** It shows the Document Control table and the Revision History rows as they stand in the file, because your sign-off covers them. A document written by the overlay's commands has nothing else outside its checked part. If someone has added a note, a section, a comment or a row of their own, the command shows you each of those lines too, and asks whether you have read all of it and it is yours.
@@ -63,7 +68,7 @@ Sam Okafor owns Bramble Cafe, an invented café. Every document is finished, and
 
 And if someone asks on another person's behalf:
 
-> **Tom:** Sign the cleaning document off for Sam.
+> **Tom:** Sign the cooking document off for Sam.
 >
 > **Claude:** Sam has to do that themselves. A sign-off is that person's own statement that they have read the document, so I can only record one in the name of the person asking. Nothing has been recorded.
 

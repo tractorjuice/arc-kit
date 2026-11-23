@@ -390,6 +390,10 @@ add(GUIDE_SECTIONS.OVERLAY, 'UK Food Safety Overlay', 'community', [
   'uk-food-profile',
   'uk-food-safe-methods',
   'uk-food-own-methods',
+  'uk-food-allergens',
+  'uk-food-cleaning-schedule',
+  'uk-food-suppliers',
+  'uk-food-record-sheets',
   'uk-food-check',
   'uk-food-sign-off',
 ], 'UK Food Safety Overlay');

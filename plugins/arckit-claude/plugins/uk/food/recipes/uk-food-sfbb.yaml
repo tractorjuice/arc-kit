@@ -14,13 +14,20 @@
 #
 # A document that already exists is taken as done. The harness dispatches a
 # target again only when it is named with --refresh (PROFILE, XC, CL, CH, CK,
-# MG, OWN or CHECK), or when a document it is built after has changed since the
-# last build. So a build does not bring an existing document up to date with
-# answers confirmed since: its own command does that.
+# MG, CS, SUP, OWN, ALG, REC or CHECK), or when a document it is built after
+# has changed since the last build. So a build does not bring an existing
+# document up to date with answers confirmed since: its own command does that.
 #
 # A build never signs anything off: /arckit-uk-food:uk-food-sign-off is not a
 # target. For a document that is signed off and in step, the commands write
-# nothing, inside a build too.
+# nothing, inside a build too. Nor does the record sheets command, inside a
+# build, print the forms afresh over a diary and record sheets file whose forms
+# someone has changed by hand, whatever the build's request says: only a person
+# running the command can say that what was typed there has been copied or is
+# not wanted. When it does print them afresh, outside the forms it changes only
+# the file's Last Modified date and any sign-off cell holding something else,
+# which it puts back to DRAFT or [PENDING]; everything else outside the forms it
+# keeps as it is, a line someone added there included.
 #
 # The project must exist before a build. Running
 # /arckit-uk-food:uk-food-profile once creates it.
@@ -31,14 +38,22 @@
 # No post-build step: ArcKit's health scan is written for architecture
 # documents. Only the overlay's own commands set these documents' status, as
 # statusSetBy in core's config/doc-types.mjs records:
-# /arckit-uk-food:uk-food-sign-off for each document a person signs, and
-# /arckit-uk-food:uk-food-check for the completion record, which always stays a
-# draft. So the health scan and the session-start monitor leave their drafts
-# out of their stale-draft rules.
+# /arckit-uk-food:uk-food-sign-off for each document a person signs,
+# /arckit-uk-food:uk-food-check for the completion record and
+# /arckit-uk-food:uk-food-record-sheets for the diary and record sheets, both of
+# which always stay drafts. So the health scan and the session-start monitor
+# leave their drafts out of their stale-draft rules.
 #
-# This recipe passes the repository's recipe checks, and the build harness has
-# planned it in a dry run (--plan, 18 November 2026): the profile, then the five
-# sections together, then own methods, then the completion record. It has not
+# The first eight targets (PROFILE, the five sections, OWN and CHECK) pass the
+# repository's recipe checks, and the build harness planned them in a dry run
+# (--plan, 18 November 2026): the profile, then the five sections together,
+# then own methods, then the completion record. The four targets added on 23
+# November 2026 (ALG, CS, SUP and REC) pass the repository's recipe checks, and
+# have not been planned or run through the build harness. By the repository's
+# own wave count (compute_waves in scripts/check_recipes.py), the twelve targets
+# build in four waves: the profile; the five sections, the cleaning schedule and
+# the suppliers and contacts together; own methods, the allergen information and
+# the diary and record sheets; then the completion record. The recipe has not
 # yet been run end to end through the build harness.
 #
 # Every target writes `output:` on one line: check-doc-type-registry.py reads
@@ -46,11 +61,18 @@
 #
 # Every target sets min_lines, the fewest lines the build accepts in the
 # document it writes (without it the build wants more than 100). Each is about
-# a fifth below the smallest the document can be, measured on 18 November 2026
-# without the provenance block the hook adds: the profile 117 lines, blank;
-# each section with every safe method in it marked not relevant, XC 100, CL 70,
-# CH 70, CK 86 and MG 92; own methods 52, with no entries; the completion
-# record 97, with nothing outstanding. tests/plugin/test_uk_food_commands.py
+# a fifth below the smallest the document can be, measured on 23 November 2026
+# without the provenance block the hook adds: the profile 117 lines, with every
+# answer confirmed as a plain no but the nation, England; each section with
+# every safe method in it marked not relevant, XC 100, CL 70, CH 70, CK 86 and
+# MG 92; own methods 52, with no entries; the cleaning schedule 52, blank, as a
+# build on a new project writes it, or with nothing in it but where the
+# business keeps it; the suppliers and contacts 58, blank (66 at its smallest
+# finished, with where the business keeps its suppliers' list and the
+# environmental health team's entry); the allergen information 95, with nothing
+# in it but where the business keeps it (97 blank); the diary and record sheets
+# 142, with none of the business's own checks; the completion record 97, with
+# nothing outstanding. tests/plugin/test_uk_food_commands.py
 # builds those documents and fails if one is shorter than its min_lines.
 
 recipe: uk-food-sfbb
@@ -59,10 +81,13 @@ description: >
   UK food safety for a small catering business in England or Wales, from
   the Food Standards Agency's Safer food, better business for caterers pack:
   the business profile, the five sections of safe methods (cross-contamination,
-  cleaning, chilling, cooking, management), the business's own methods and the
-  completion record. A build has nobody to answer, so it confirms nothing: it
-  makes the worksheets that are missing and writes each document that does not
-  exist yet as a draft, from the answers a named person has already confirmed.
+  cleaning, chilling, cooking, management), the business's own methods, the
+  allergen information, the cleaning schedule, the suppliers and contacts, the
+  blank diary and record sheets, and the completion record. A build has nobody
+  to answer, and its prompts give no named person's answers, so it confirms
+  nothing: it makes the worksheets that are missing and writes each document
+  that does not exist yet as a draft, from the answers a named person has
+  already confirmed.
   A document that is already there is taken as done and left as it is, unless
   its target is named with --refresh. On a new project every answer reads NOT
   YET ANSWERED. It does not sign anything off.
@@ -118,6 +143,22 @@ targets:
     min_lines: 70
     deps: [PROFILE]
 
+  # --- The cleaning schedule and the suppliers and contacts, beside the
+  # sections: each reads only its own worksheet and the profile.
+  - id: CS
+    skill: arckit-uk-food:uk-food-cleaning-schedule
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FOODCS }
+    min_lines: 40
+    deps: [PROFILE]
+
+  - id: SUP
+    skill: arckit-uk-food:uk-food-suppliers
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FOODSUP }
+    min_lines: 45
+    deps: [PROFILE]
+
   # --- The business's own methods, after the sections.
   - id: OWN
     skill: arckit-uk-food:uk-food-own-methods
@@ -126,10 +167,29 @@ targets:
     min_lines: 40
     deps: [XC, CL, CH, CK, MG]
 
-  # --- The completion record, last: it reports on every other document.
+  # --- The allergen information and the diary and record sheets, after the
+  # Management section: the first repeats its answers on how customers are
+  # told, and the second prints the business's own opening and closing checks
+  # from it.
+  - id: ALG
+    skill: arckit-uk-food:uk-food-allergens
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FOODALG }
+    min_lines: 75
+    deps: [MG]
+
+  - id: REC
+    skill: arckit-uk-food:uk-food-record-sheets
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FOODREC }
+    min_lines: 110
+    deps: [MG]
+
+  # --- The completion record, last: it reports on every other document, the
+  # diary and record sheets among them.
   - id: CHECK
     skill: arckit-uk-food:uk-food-check
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FOODCMP }
     min_lines: 75
-    deps: [PROFILE, XC, CL, CH, CK, MG, OWN]
+    deps: [PROFILE, XC, CL, CH, CK, MG, CS, SUP, OWN, ALG, REC]

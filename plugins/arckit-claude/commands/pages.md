@@ -449,6 +449,10 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | FOODMGT | `ARC-*-FOODMGT-*.md` | Management Safe Methods |
 | | FOODOWN | `ARC-*-FOODOWN-*.md` | Food Business Own Methods |
 | | FOODCMP | `ARC-*-FOODCMP-*.md` | Safe Method Completion and Readiness Record |
+| | FOODALG | `ARC-*-FOODALG-*.md` | Allergen Information |
+| | FOODCS | `ARC-*-FOODCS-*.md` | Cleaning Schedule |
+| | FOODSUP | `ARC-*-FOODSUP-*.md` | Suppliers and Contacts |
+| | FOODREC | `ARC-*-FOODREC-*.md` | Diary and Record Sheets |
 
 > **Single source of truth**: this table mirrors [`arckit-claude/config/doc-types.mjs`](../config/doc-types.mjs). When adding new commands, register the type code in `doc-types.mjs` first (so the hook resolves category + display name) and then add the row here so `/arckit:pages` includes the artifact in the dashboard.
 
