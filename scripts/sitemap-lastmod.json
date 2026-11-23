@@ -971,9 +971,13 @@
     "lastmod": "2026-10-28",
     "text_sha256": "2210533774b3945f8ace46fee73494ff815e94dabe82f85692000a2211c157a0"
   },
+  "guide/uk-food-allergens.html": {
+    "lastmod": "2026-11-23",
+    "text_sha256": "f519438ee8a3d1a3aa4fd9ef80761f679c734f1f4decfcf9cc60dc6eb85e0934"
+  },
   "guide/uk-food-check.html": {
     "lastmod": "2026-11-23",
-    "text_sha256": "f884896e596dd14e860a3e523603e558378da0e45dd3a3f391e38d9733984246"
+    "text_sha256": "89f978ef8ed68a1e6b5e8546e0300722ca3e2894f81edba3b9e90f01ac05ae83"
   },
   "guide/uk-food-cleaning-schedule.html": {
     "lastmod": "2026-11-23",
@@ -992,12 +996,12 @@
     "text_sha256": "a28b638f8183f627e9e649019481d1eeae1d6d73dd9c6aef0710712e109477aa"
   },
   "guide/uk-food-safety-overlay.html": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "8eb3f788ee96b59ea9c74e7625dc615980f3966dbeb0ded7a50d147c21d89b9c"
+    "lastmod": "2026-11-23",
+    "text_sha256": "efb8fee74d724a1b153f0c56b46a64c31c9a41b8f91d5331f473b8a660e94160"
   },
   "guide/uk-food-sign-off.html": {
     "lastmod": "2026-11-23",
-    "text_sha256": "16c8198a5a7431ffe9288c51bbdb1f2444ab096ecb82a253ddf457fa43cadd56"
+    "text_sha256": "1fb4b720bcec88340b6697fd13d09a18dfd338ed5644634de1b37fca969f05b2"
   },
   "guide/uk-food-suppliers.html": {
     "lastmod": "2026-11-23",
@@ -1129,7 +1133,7 @@
   },
   "guides.html": {
     "lastmod": "2026-11-23",
-    "text_sha256": "0e06237e326f1ee048df239b8b1ab93951b39ea9afed39ceb6bcca5d5562d941"
+    "text_sha256": "b7a504b171adee695cf37b5d1e8c90fa7b3b1e0e448a8e6b4f34e7e2d87939a4"
   },
   "index.html": {
     "lastmod": "2026-11-22",

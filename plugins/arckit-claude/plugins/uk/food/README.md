@@ -20,10 +20,7 @@ It is for small caterers (cafes, takeaways, restaurants, pubs, mobile caterers a
 
 Every safe method in the pack is in the five section documents now, including those on allergens (XC-04 FOOD HYPERSENSITIVITY and MG-04 MANAGING FOOD ALLERGEN INFORMATION), the cleaning schedule (CL-04 YOUR CLEANING SCHEDULE), training (MG-05 TRAINING AND SUPERVISION) and suppliers (MG-07 SUPPLIERS AND CONTRACTORS). What is planned is the rest of the pack: its separate sheets and records, filled in for the business. They are not in this overlay yet, and there are no dates.
 
-- The business's allergen information for each dish. The pack has no separate sheet for this.
-- The pack's CLEANING SCHEDULE sheet.
 - Blank copies of the pack's diary pages, its OPENING CHECKS, CLOSING CHECKS and EXTRA CHECKS sheet, and its PROVE IT: RECORDS sheet, to print and fill in.
-- The pack's SUPPLIERS' LIST and CONTACTS LIST.
 - The pack's STAFF TRAINING RECORD, with training material.
 - The pack's regular review of the diary.
 
@@ -40,6 +37,7 @@ In Claude Code the commands carry the overlay's name:
 | `/arckit-uk-food:uk-food-profile` | Records the business's profile: who runs it, where it is, what it sells, its equipment and staff, and whether it does any special process. | Business profile (`FOODPROF`) |
 | `/arckit-uk-food:uk-food-safe-methods` | Works through one section of safe methods with you, one safe method and one question at a time. Name the section by its code (`XC`, `CL`, `CH`, `CK` or `MG`) or by its name; with none, it takes the first one that still needs answers or needs writing. | Cross-contamination (`FOODXC`), cleaning (`FOODCLN`), chilling (`FOODCHL`), cooking (`FOODCOOK`) or management (`FOODMGT`) |
 | `/arckit-uk-food:uk-food-own-methods` | Records the business's own methods, and the written procedure for any special process, word for word. | Own methods (`FOODOWN`) |
+| `/arckit-uk-food:uk-food-allergens` | Records the business's allergen information, one dish and one detail at a time: what goes into each dish and, for each of the fourteen allergens, whether it contains it, taken only from the labels, product specifications and suppliers' statements the business gives, or a named person's look at a single whole food. It never works an allergen out from a dish's name, looks nothing up, and never says a dish is free from anything. | Allergen information (`FOODALG`) |
 | `/arckit-uk-food:uk-food-cleaning-schedule` | Records the business's cleaning schedule on the pack's form, one item and one detail at a time, in the business's own words: how often each item is cleaned, what to take care over and how it is cleaned. It suggests none of it. | Cleaning schedule (`FOODCS`) |
 | `/arckit-uk-food:uk-food-suppliers` | Records the business's suppliers, its council's environmental health team and its other contacts on the pack's forms, one entry and one detail at a time, in the business's own words. It looks nobody up. | Suppliers and contacts (`FOODSUP`) |
 | `/arckit-uk-food:uk-food-check` | Shows what is finished and what is still waiting, and writes the completion record. | Completion record (`FOODCMP`) |

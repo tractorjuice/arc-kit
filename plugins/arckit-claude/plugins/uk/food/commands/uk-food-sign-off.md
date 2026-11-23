@@ -70,7 +70,7 @@ It never ends with a header that reads `APPROVED` on a document that `status` do
 | Cooking | `FOODCOOK` | `/arckit-uk-food:uk-food-safe-methods CK` |
 | Management | `FOODMGT` | `/arckit-uk-food:uk-food-safe-methods MG` |
 | Own methods | `FOODOWN` | `/arckit-uk-food:uk-food-own-methods` |
-| Allergen information | `FOODALG` | the allergens command, `uk-food-allergens` |
+| Allergen information | `FOODALG` | `/arckit-uk-food:uk-food-allergens` |
 | Cleaning schedule | `FOODCS` | `/arckit-uk-food:uk-food-cleaning-schedule` |
 | Suppliers and contacts | `FOODSUP` | `/arckit-uk-food:uk-food-suppliers` |
 

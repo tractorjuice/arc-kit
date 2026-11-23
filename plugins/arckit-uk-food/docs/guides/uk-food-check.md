@@ -71,6 +71,8 @@ What moves each item on:
 | Profile questions not yet answered or only proposed | `/arckit-uk-food:uk-food-profile` |
 | Section questions not yet answered or only proposed | `/arckit-uk-food:uk-food-safe-methods` with the section's code, such as `XC` |
 | Own entries, special processes, environmental health reviews | `/arckit-uk-food:uk-food-own-methods` |
+| Dishes in your allergen information not yet confirmed, or none recorded, or an allergen not filled in | `/arckit-uk-food:uk-food-allergens` |
+| Your answers on how customers are told about allergens, which the allergen information repeats | `/arckit-uk-food:uk-food-safe-methods MG` |
 | Cleaning schedule items not yet confirmed, or none recorded | `/arckit-uk-food:uk-food-cleaning-schedule` |
 | Suppliers and contacts not yet confirmed, or none recorded, or no environmental health team | `/arckit-uk-food:uk-food-suppliers` |
 | A document not written yet, or out of date | The command that writes that document |

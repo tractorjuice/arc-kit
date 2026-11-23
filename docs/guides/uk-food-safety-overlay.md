@@ -160,10 +160,7 @@ Every safe method in the pack is in the five section documents now, including th
 
 What is planned is the rest of the pack: its separate sheets and records, filled in for the business. There are no dates.
 
-- The business's allergen information for each dish. The pack has no separate sheet for this.
-- The pack's CLEANING SCHEDULE sheet.
 - Blank copies of the pack's diary pages, its OPENING CHECKS, CLOSING CHECKS and EXTRA CHECKS sheet, and its PROVE IT: RECORDS sheet, to print and fill in.
-- The pack's SUPPLIERS' LIST and CONTACTS LIST.
 - The pack's STAFF TRAINING RECORD, with training material.
 - The pack's regular review of the diary.
 

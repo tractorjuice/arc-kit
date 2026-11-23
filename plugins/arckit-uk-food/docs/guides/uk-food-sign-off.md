@@ -8,7 +8,7 @@ This overlay is for small catering businesses in England and Wales. It is not le
 
 ## What it is for
 
-You can sign off these documents, each on its own: the business profile, the five sections of safe methods (cross-contamination, cleaning, chilling, cooking and management), your own methods, your cleaning schedule, and your suppliers and contacts. Two are never signed off: the completion record, which is a report, and the diary and record sheets, which are blank forms that people at the business fill in and sign themselves as they use them.
+You can sign off these documents, each on its own: the business profile, the five sections of safe methods (cross-contamination, cleaning, chilling, cooking and management), your own methods, your allergen information, your cleaning schedule, and your suppliers and contacts. Two are never signed off: the completion record, which is a report, and the diary and record sheets, which are blank forms that people at the business fill in and sign themselves as they use them.
 
 A document can be signed off only when it is finished. The overlay's helper script decides that, not the command:
 
@@ -17,6 +17,7 @@ A document can be signed off only when it is finished. The overlay's helper scri
 - the document is written, at the version you are signing, and passes its document check;
 - the lines of its header that a sign-off rewrites hold only what the overlay's commands write there (`DRAFT` and `[PENDING]`, or an earlier sign-off, and a date), because signing off rewrites those lines and must change nothing else;
 - for your own methods, every special process the profile confirms has its own entry;
+- for your allergen information, at least one dish is confirmed, or a confirmed note says where you keep it; every confirmed dish has all fourteen allergens, and whether it is prepacked for direct sale, filled in, so nothing in it reads NOT CONFIRMED; and your answers on how customers are told about allergens, which you give in the Management section of safe methods, are confirmed there, unless that safe method is marked not relevant;
 - for your cleaning schedule, at least one item is confirmed, or a confirmed note says where you keep your schedule;
 - for your suppliers and contacts, your environmental health team's entry is confirmed, and at least one supplier is confirmed or a confirmed note says where you keep your suppliers' list;
 - if the file holds anything outside the part the helper checks, such as a note or a section of your own, you have been shown it and have said you have read it.

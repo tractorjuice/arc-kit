@@ -1508,6 +1508,12 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://arckit.org/guide/uk-food-allergens.html</loc>
+        <lastmod>2026-11-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/guide/uk-food-check.html</loc>
         <lastmod>2026-11-23</lastmod>
         <changefreq>monthly</changefreq>
@@ -1539,7 +1545,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/uk-food-safety-overlay.html</loc>
-        <lastmod>2026-11-19</lastmod>
+        <lastmod>2026-11-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
