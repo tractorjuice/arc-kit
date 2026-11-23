@@ -2434,6 +2434,30 @@
                         <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
                     <tr data-status="experimental" data-category="uk-food-overlay" data-jurisdiction="uk-food" data-tier="community">
+                        <td><code>/arckit-uk-food:uk-food-allergens</code></td>
+                        <td class="description">[COMMUNITY] Record a small caterer's allergen information: each dish against the fourteen allergens, one dish and one detail at a time. A contains only where a label, specification or supplier's statement the person provides names it; a does not contain only as the named person's own statement. Never from a dish's name or what a food usually holds: it looks nothing up, and never says a dish is free from anything or suitable for anyone. <a href="guide/uk-food-allergens.html" class="govuk-link">Guide</a></td>
+                        <td>UK Food Safety Overlay</td><td>UK Food Safety</td><td>Community</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-food-overlay" data-jurisdiction="uk-food" data-tier="community">
+                        <td><code>/arckit-uk-food:uk-food-cleaning-schedule</code></td>
+                        <td class="description">[COMMUNITY] Record a small caterer's cleaning schedule on the Safer food, better business form, one item at a time in the business's own words: how often each item is cleaned, what to take care over and how it is cleaned. It never suggests any of it. <a href="guide/uk-food-cleaning-schedule.html" class="govuk-link">Guide</a></td>
+                        <td>UK Food Safety Overlay</td><td>UK Food Safety</td><td>Community</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-food-overlay" data-jurisdiction="uk-food" data-tier="community">
+                        <td><code>/arckit-uk-food:uk-food-suppliers</code></td>
+                        <td class="description">[COMMUNITY] Record a small caterer's suppliers, its council's environmental health team and its other contacts on the pack's forms, one entry at a time in the business's own words. It never looks anyone up or fills in a detail nobody gave. <a href="guide/uk-food-suppliers.html" class="govuk-link">Guide</a></td>
+                        <td>UK Food Safety Overlay</td><td>UK Food Safety</td><td>Community</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-food-overlay" data-jurisdiction="uk-food" data-tier="community">
+                        <td><code>/arckit-uk-food:uk-food-record-sheets</code></td>
+                        <td class="description">[COMMUNITY] Write the pack's blank diary and record sheets: the diary cover, the opening and closing checks with the business's own added once confirmed, a week page to print or copy for each week, and the prove it records, for people at the business to fill in and sign by hand. It fills in no form and is never signed off. <a href="guide/uk-food-record-sheets.html" class="govuk-link">Guide</a></td>
+                        <td>UK Food Safety Overlay</td><td>UK Food Safety</td><td>Community</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-food-overlay" data-jurisdiction="uk-food" data-tier="community">
                         <td><code>/arckit-uk-food:uk-food-check</code></td>
                         <td class="description">[COMMUNITY] Show what is finished and what is still waiting across the business's food safety documents, and write the completion record. Changes no answer and no other document. <a href="guide/uk-food-check.html" class="govuk-link">Guide</a></td>
                         <td>UK Food Safety Overlay</td><td>UK Food Safety</td><td>Community</td>
@@ -6253,7 +6277,7 @@
             </div>
         </details>
         <details class="govuk-details">
-            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">UK Food Safety Overlay (5 commands)</span></summary>
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">UK Food Safety Overlay (9 commands)</span></summary>
             <div class="govuk-details__text">
                 <p class="govuk-body">The overlay reads no ArcKit core document. Its commands read each other's worksheets and documents; a missing profile is reported and the command carries on.</p>
                 <table class="govuk-table">
@@ -6262,8 +6286,12 @@
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-profile</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td></tr>
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-safe-methods</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile</td><td class="govuk-table__cell">&mdash;</td></tr>
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-own-methods</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile</td><td class="govuk-table__cell">&mdash;</td></tr>
-                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-check</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile, uk-food-safe-methods, uk-food-own-methods</td><td class="govuk-table__cell">uk-food-sign-off</td></tr>
-                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-sign-off</code></td><td class="govuk-table__cell">the document being signed: uk-food-profile, uk-food-safe-methods or uk-food-own-methods</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-allergens</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile, uk-food-safe-methods</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-cleaning-schedule</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-suppliers</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-record-sheets</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile, uk-food-safe-methods</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-check</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uk-food-profile, uk-food-safe-methods, uk-food-own-methods, uk-food-allergens, uk-food-cleaning-schedule, uk-food-suppliers, uk-food-record-sheets</td><td class="govuk-table__cell">uk-food-sign-off</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-uk-food:uk-food-sign-off</code></td><td class="govuk-table__cell">the document being signed: uk-food-profile, uk-food-safe-methods, uk-food-own-methods, uk-food-allergens, uk-food-cleaning-schedule or uk-food-suppliers</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td></tr>
                     </tbody>
                 </table>
             </div>
