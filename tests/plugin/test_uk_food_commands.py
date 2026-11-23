@@ -280,6 +280,11 @@ def test_each_targets_min_lines_is_below_the_smallest_its_document_can_be(tmp_pa
     signed = run(HELPER, "sign-off", "--doc", "FOODALG", "--project", project, "--name", "Sam Okafor", "--role", "owner",
                  "--version", "1.0", "--date", "2026-11-17", "--other-text-read", "yes")
     assert signed.returncode == 0, signed.stderr
+    # The diary and record sheets, which nobody signs: until they are written the completion record lists them as not
+    # written. Written the same way, not counted, until their command and recipe target come.
+    body = run(HELPER, "render", "--doc", "FOODREC", "--project", project)
+    assert body.returncode == 0, body.stderr
+    (project / "ARC-001-FOODREC-v1.0.md").write_text(f"Header text.\n\n{body.stdout}\nFooter text.\n", encoding="utf-8")
     record = build("FOODCMP", project).read_text(encoding="utf-8")
     assert "Nothing is outstanding." in record
     lines["FOODCMP"] = record.count("\n")

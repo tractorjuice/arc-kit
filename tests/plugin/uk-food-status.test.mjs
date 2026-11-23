@@ -199,8 +199,10 @@ test('the status JSON has the documented shape: the seven documents in order, th
   const dir = cafe();
   const result = status(dir);
   assert.deepEqual(Object.keys(result), ['data', 'documents', 'specialProcesses', 'ownAwaitingReview', 'unfinished', 'completionRecord',
-    'foodSafetyFolder']);
+    'recordSheets', 'foodSafetyFolder']);
   assert.deepEqual([result.completionRecord, result.foodSafetyFolder], [null, true]);
+  // The record sheets are blank forms, reported apart from the documents: here, not written.
+  assert.deepEqual(result.recordSheets, { written: false, inStep: false, file: null });
   assert.equal(result.data, DATA_ID);
   assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN', 'FOODALG',
     'FOODCS', 'FOODSUP']);
@@ -269,6 +271,7 @@ test('the unfinished list says, for each document in order, what is outstanding 
     { code: 'FOODCS', what: NOT_SIGNED },
     { code: 'FOODSUP', what: NOT_WRITTEN },
     { code: 'FOODSUP', what: NOT_SIGNED },
+    { code: 'FOODREC', what: 'document not written yet: write it, so that people at the business have the blank forms to print and fill in' },
     { code: 'FOODOWN', what: UNCOVERED },
     { code: 'FOODOWN', what: AWAITING }
   ]);
@@ -894,6 +897,8 @@ test('when everything is finished, every row shows its signer and the list says 
     writeDocument(dir, doc);
     assert.equal(signOff(dir, doc).status, 0, doc);
   }
+  // The record sheets are written too: nobody signs them, but until they are written the business has no diary pages.
+  writeDocument(dir, 'FOODREC');
   const result = status(dir);
   assert.deepEqual(result.unfinished, []);
   assert.deepEqual(result.specialProcesses, []);
@@ -1841,6 +1846,9 @@ test('G8 does not touch a properly signed file whose answers are later withdrawn
     mark(written);
     assert.equal(check(done, doc, written).exit, 0, doc);
   }
+  // The record sheets are written too, in a DRAFT header: nobody signs them, but until they are written the business has
+  // no diary pages.
+  templated(done, 'FOODREC');
   assert.ok(status(done).documents.every((d) => d.signedOff));
   assert.deepEqual(status(done).unfinished, []);
 });

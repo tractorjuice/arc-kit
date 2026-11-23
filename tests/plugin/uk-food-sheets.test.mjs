@@ -373,3 +373,73 @@ test('the table refuses a row left out of status that is neither the completion 
   assert.equal(documentOf('FOODTEST'), undefined);
   assert.equal(RECORD_SHEETS, 'FOODREC');
 });
+
+// ---- Status ----
+
+const status = (dir) => {
+  const result = projectStatus(dir, data, { today: TODAY });
+  assert.equal(result.exit, undefined, (result.messages ?? []).join('\n'));
+  return result;
+};
+const NOT_WRITTEN_LINE = 'document not written yet: write it, so that people at the business have the blank forms to print and fill in';
+const staleLine = (file) => `document ${file} is out of date, as a worksheet it is written from has changed since: write it again`;
+const statusText = (dir) => {
+  const out = [];
+  assert.equal(main(['status', '--project', dir], { out: (text) => out.push(text), err: (text) => out.push(text) }), 0);
+  return out.join('\n').split('\n');
+};
+const completionList = (dir) => {
+  const text = renderDocument('FOODCMP', dir, data, { today: TODAY }).text;
+  return text.slice(text.indexOf('\n## Unfinished\n'), text.indexOf('\nThis is '));
+};
+
+test('status reports the record sheets apart: not written, then written and in step, then out of date once an own check changes', () => {
+  const dir = cafe();
+  const linesOf = () => status(dir).unfinished.filter((line) => line.code === 'FOODREC').map((line) => line.what);
+  // Not written: a line in the unfinished list, in the readable status and the completion record, and none saying it is not signed off.
+  assert.deepEqual(status(dir).recordSheets, { written: false, inStep: false, file: null });
+  assert.deepEqual(linesOf(), [NOT_WRITTEN_LINE]);
+  assert.ok(statusText(dir).includes('FOODREC (Diary and record sheets): not written'));
+  assert.ok(statusText(dir).includes(`- FOODREC: ${NOT_WRITTEN_LINE}`));
+  assert.ok(completionList(dir).includes(`\n- Diary and record sheets (FOODREC): ${NOT_WRITTEN_LINE}\n`));
+  // It comes after the documents' own lines and before the special processes, as in the table.
+  const codes = status(dir).unfinished.map((line) => line.code);
+  assert.equal(codes.indexOf('FOODREC'), codes.lastIndexOf('FOODSUP') + 1);
+  // Written and in step: nothing in any list.
+  const file = join(dir, 'ARC-001-FOODREC-v1.0.md');
+  writeFileSync(file, `Header text.\n\n${rendered(dir)}\n\nFooter text.\n`);
+  assert.deepEqual(status(dir).recordSheets, { written: true, inStep: true, file: 'ARC-001-FOODREC-v1.0.md' });
+  assert.deepEqual(linesOf(), []);
+  assert.ok(statusText(dir).includes('FOODREC (Diary and record sheets): ARC-001-FOODREC-v1.0.md in step with its worksheets'));
+  assert.ok(!completionList(dir).includes('FOODREC'));
+  // An own check confirmed since: out of date, and said so in each place.
+  writeFileSync(join(dir, 'food-safety', 'answers-MG.md'), mgWith(CHECK_FORMS.forms[0].own, confirmed(...OWN)));
+  assert.deepEqual(status(dir).recordSheets, { written: true, inStep: false, file: 'ARC-001-FOODREC-v1.0.md' });
+  assert.deepEqual(linesOf(), [staleLine('ARC-001-FOODREC-v1.0.md')]);
+  assert.ok(statusText(dir).includes('FOODREC (Diary and record sheets): ARC-001-FOODREC-v1.0.md out of date'));
+  assert.ok(completionList(dir).includes(`\n- Diary and record sheets (FOODREC): ${staleLine('ARC-001-FOODREC-v1.0.md')}\n`));
+  // Nowhere is it told that it is not signed off.
+  for (const said of [JSON.stringify(status(dir)), statusText(dir).filter((line) => line.includes('FOODREC')).join('\n'), completionList(dir)]) {
+    assert.ok(!/FOODREC[^\n]*not signed off/.test(said), said);
+  }
+  // While the Management worksheet has problems the document cannot be compared, and that worksheet's own line says so.
+  writeFileSync(join(dir, 'food-safety', 'answers-MG.md'), `${cafeText('MG')}a stray line\n`);
+  assert.deepEqual(status(dir).recordSheets, { written: true, inStep: false, file: 'ARC-001-FOODREC-v1.0.md' });
+  assert.deepEqual(linesOf(), []);
+  assert.ok(status(dir).unfinished.some((line) => line.code === 'FOODMGT' && line.what.startsWith('worksheet food-safety/answers-MG.md has 1 problem')));
+});
+
+test('a document nobody signs that is in status is never told it is not signed off, in status, its readable lines or the completion record', () => {
+  const dir = cafe();
+  const refusal = 'FOODTEST is not signed off: it is a test document';
+  withDocuments(withRow(testRow({ signable: false, nobodySigns: 'the test document is one nobody signs', signOffRefusal: refusal })), () => {
+    const lines = status(dir).unfinished.filter((line) => line.code === 'FOODTEST').map((line) => line.what);
+    assert.ok(lines.length > 0, 'it has lines of its own: its counts, and that it is not written');
+    assert.ok(lines.every((line) => !line.includes('not signed off')), lines.join('\n'));
+    const line = statusText(dir).find((l) => l.startsWith('FOODTEST (Test document): '));
+    assert.ok(line && !line.includes('signed off'), line);
+    assert.ok(!completionList(dir).includes('Test document (FOODTEST): document not signed off'));
+    const person = { name: 'Sam Okafor', role: 'Owner', version: '1.0', date: '2026-11-17', paperSigned: 'no', otherTextRead: 'yes' };
+    assert.deepEqual(signOffDocument('FOODTEST', dir, person, data, { today: TODAY }), { exit: 2, messages: [refusal] });
+  });
+});

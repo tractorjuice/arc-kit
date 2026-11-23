@@ -5,7 +5,7 @@ import { andList, counted, isAre, isIsoDate, localToday, unseenIn } from './uk-f
 import {
   BEFORE_RENDER, bodyText, businessText, checkDocument, closingNotice, COMPLETION_RECORD, coverageChunks, DOC_CODES,
   DOC_OF_SECTION, documentOf, extraCareDone, failure, freshlyUnfinished, misplaced, NAME_QUESTION, otherText, paragraphs,
-  readWorksheets, SHEET_ORDER, sourceLine, STATUS_ORDER, tableLines, worksheetFile, worksheetName
+  readWorksheets, RECORD_SHEETS, SHEET_ORDER, sourceLine, STATUS_ORDER, tableLines, worksheetFile, worksheetName
 } from './uk-food-document.mjs';
 import { loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
 export { completionRecordDocument, DOCUMENT_FILE, readSignOffs };
@@ -14,9 +14,13 @@ export { completionRecordDocument, DOCUMENT_FILE, readSignOffs };
 // Status, the completion record and sign-off.
 //
 // `status` says, for each document, how far its worksheets have got, whether the document is written
-// and in step with them, and whether a named person has signed it off; then whether the completion
-// record is up to date; then the special processes and foods the business does, with the own entries
-// that cover them; then, in plain English, everything that is not finished. The completion record, FOODCMP, is the pack's own record (diary pages 78 and
+// and in step with them, and whether a named person has signed it off (for a document someone signs);
+// then whether the record sheets are written and in step, and whether the completion record is up to
+// date; then the special processes and foods the business does, with the own entries that cover them;
+// then, in plain English, everything that is not finished. The record sheets (RECORD_SHEETS) are blank
+// forms: nobody signs them and they ask nothing, so they are not among the documents, and only their
+// being written and in step is told, in `recordSheets` and in the unfinished list, as the business needs
+// its diary pages. The completion record, FOODCMP, is the pack's own record (diary pages 78 and
 // 79) filled in from that status, followed by the same list. `sign-off` records that a named person
 // has confirmed a finished document, and refuses anything else: it is the only way a document becomes
 // signed off. The helper never edits a document file.
@@ -248,6 +252,10 @@ const uncoveredLine = (name) => `${name} has no own entry: add an own entry of k
   'and confirm it';
 const awaitingLine = (entry) => `own entry ${entry.id} (${entry.title}) is awaiting environmental health review: once the ` +
   'council has replied, record the review\'s date and outcome in the entry\'s EH-review field';
+// What the unfinished list says of the record sheets when they are not written, and when what is written is out of
+// date. They have no worksheet of their own and nothing to sign, so the remedy is to write them, and nothing else.
+const FORMS_NOT_WRITTEN = 'document not written yet: write it, so that people at the business have the blank forms to print and fill in';
+const formsStaleLine = (file) => `document ${file} is out of date, as a worksheet it is written from has changed since: write it again`;
 // The line for a worksheet for other data, or in the wrong file: what to do, and for one in the wrong
 // file where it probably belongs. Null for any other worksheet.
 function misplacedLine(section, sheet, project) {
@@ -274,6 +282,24 @@ function countLines(row, counts, section) {
     ...(proposed.length ? [`${counted(proposed.length, entries ? one : 'answer', entries ? many : 'answers')} in ` +
       `${sheetPath(section)} ${isAre(proposed.length)} proposed but not confirmed (${someOf(proposed)}): ${how}`] : [])
   ];
+}
+
+// Where the record sheets stand: { state, check, lines }. `state` is what status --json gives as recordSheets:
+// { written, inStep, file }, inStep being whether the file passes check (false when it is not written). `check`
+// is check's result, or null with no file. `lines` are the record sheets' lines in the unfinished list: that
+// they are not written; that they are out of date, when what is written is no longer what they would print now;
+// or check's own first reason for any other fault, as for a document. A worksheet they are written from that is
+// missing, in the wrong place or with problems is told once, under the document whose worksheet it is, and while
+// it is so the record sheets are not called out of date, as they cannot be compared with a fresh print; only what
+// check finds before it prints anything (BEFORE_RENDER) is told all the same.
+function recordSheetsState(row, current, project, data, sheets, signOffs, options) {
+  if (!current) return { state: { written: false, inStep: false, file: null }, check: null, lines: [FORMS_NOT_WRITTEN] };
+  const check = checkDocument(row.code, project, join(project, current.file), data, signOffs, options);
+  const inStep = check.exit === 0;
+  const comparable = row.uses.every((section) => (sheets.get(section) ? sheets.get(section).clean : !row.needs.includes(section)));
+  let lines = [];
+  if (!inStep && (comparable || BEFORE_RENDER.includes(check.kind))) lines = [check.kind === 'stale' ? formsStaleLine(current.file) : checkLine(current.file, check)];
+  return { state: { written: true, inStep, file: current.file }, check, lines };
 }
 
 // Everything status reports, with what sign-off and the completion record need besides: { status,
@@ -392,7 +418,9 @@ function collectStatus(project, data, options = {}) {
     doc.signedOff = held.length === 0 && asSigned;
     doc.signOff = record;
     doc.headerShowsSignOff = headerShowsSignOff;
-    signLines.set(code, doc.signedOff ? null : signLine(record, current, check, asSigned));
+    // A document nobody signs (its row's signable is false) is never told that it is not signed off: nothing is
+    // waiting for a signature, and sign-off refuses it in its own words.
+    signLines.set(code, doc.signedOff || !row.signable ? null : signLine(record, current, check, asSigned));
     checks.set(code, check);
     hashes.set(code, check?.hashes ?? null);
     blockers.set(code, held);
@@ -408,6 +436,14 @@ function collectStatus(project, data, options = {}) {
     if (signLines.get(doc.code)) lines.push(signLines.get(doc.code));
     return lines.map((what) => ({ code: doc.code, what }));
   });
+  // The record sheets, after the documents, as they come after them in the table, and before the lines the documents
+  // give last. None in a table without them.
+  const forms = RECORD_SHEETS ? recordSheetsState(documentOf(RECORD_SHEETS), files.get(RECORD_SHEETS) ?? null, project, data, sheets, signOffs,
+    options) : null;
+  if (forms) {
+    checks.set(RECORD_SHEETS, forms.check);
+    unfinished.push(...forms.lines.map((what) => ({ code: RECORD_SHEETS, what })));
+  }
   const holder = STATUS_ORDER.find((code) => documentOf(code).specialProcesses);
   unfinished.push(...uncovered.map((what) => ({ code: holder, what })),
     ...awaiting.map((entry) => ({ code: holder, what: awaitingLine(entry) })));
@@ -418,9 +454,10 @@ function collectStatus(project, data, options = {}) {
     started = false;
   }
   // `completionRecord` is filled in by fullStatus: the record is rendered from this status, so its own
-  // state cannot be part of what it is rendered from.
+  // state cannot be part of what it is rendered from. The record sheets' state is, as the record lists them
+  // when they are not written or not in step.
   const status = { data: DATA_ID, documents, specialProcesses, ownAwaitingReview: awaiting.map((entry) => entry.id), unfinished,
-    completionRecord: null, foodSafetyFolder: started };
+    completionRecord: null, recordSheets: forms?.state ?? null, foodSafetyFolder: started };
   return { status, sheets, hashes, blockers, signOffs, checks, record: files.get(COMPLETION_RECORD) ?? null };
 }
 
@@ -633,9 +670,9 @@ const CELL_FAULT = 'with a sign-off recorded, and a cell of its header that is n
 const MARK_HOW = 'the sign-off command finishes the marking, and no new sign-off is needed';
 const unmarked = (doc) => doc.signedOff && doc.headerShowsSignOff === false;
 
-// The status as short lines a person can read: one for each document, then the completion record, the
-// special processes and the own entries awaiting review, then what is unfinished. `checks` holds
-// check's result for each written document.
+// The status as short lines a person can read: one for each document, then the record sheets, the completion
+// record, the special processes and the own entries awaiting review, then what is unfinished. `checks` holds
+// check's result for each written document, the record sheets included.
 function statusLines(status, data, sheets, checks) {
   const lines = [`Food safety status, data ${status.data}${status.foodSafetyFolder ? '' : ': nothing has been started in this folder, ' +
     'which holds no food-safety folder. Check that it is the business\'s project folder'}`];
@@ -654,10 +691,18 @@ function statusLines(status, data, sheets, checks) {
       doc.rendered ? `${doc.file} ${doc.inSync ? 'in step with its worksheets' : checks.get(doc.code)?.cell ? CELL_FAULT
         : FAULT_WORDS[checks.get(doc.code)?.kind] ?? NOT_CHECKED}` : 'not written',
       ...(doc.otherText.length ? [`${counted(doc.otherText.length, 'line', 'lines')} outside its checked part`] : []),
-      doc.signedOff ? `signed off by ${doc.signOff.name}, ${doc.signOff.role}, on ${doc.signOff.date}` +
-        (unmarked(doc) ? `, with its header not yet marked to show it: ${MARK_HOW}` : '') : 'not signed off'
+      // Nothing about signing for a document nobody signs.
+      ...(!row.signable ? [] : [doc.signedOff ? `signed off by ${doc.signOff.name}, ${doc.signOff.role}, on ${doc.signOff.date}` +
+        (unmarked(doc) ? `, with its header not yet marked to show it: ${MARK_HOW}` : '') : 'not signed off'])
     ];
     lines.push(`${doc.code} (${docName(doc.code, data)}): ${parts.join('; ')}`);
+  }
+  // The record sheets, as they come in the table: written or not, and in step with their worksheets or how not. The
+  // unfinished list says what to do.
+  const forms = status.recordSheets;
+  if (forms) {
+    lines.push(`${RECORD_SHEETS} (${docName(RECORD_SHEETS, data)}): ${!forms.written ? 'not written' : `${forms.file} ${forms.inStep
+      ? 'in step with its worksheets' : FAULT_WORDS[checks.get(RECORD_SHEETS)?.kind] ?? NOT_CHECKED}`}`);
   }
   const record = status.completionRecord;
   lines.push(`${COMPLETION_RECORD} (${docName(COMPLETION_RECORD, data)}): ${!record ? 'not written' : record.problem ?? `${record.file} up to date`}`);
