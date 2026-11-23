@@ -3838,7 +3838,8 @@ SENTENCES = ["We start the water bath on the egg programme from the supplier's c
              "If the display does not match, we stop, take the eggs out and tell the manager."]
 NEW_CASES = {"sign-off-refused-when-unfinished": "cafe-cooking-written-unfinished", "sign-off-recorded": "cafe-cooking-finished",
              "special-process-not-written-up": "cafe-sous-vide", "supplied-procedure-recorded": "cafe-sous-vide",
-             "allergen-not-inferred": "cafe-no-cooking", "allergen-recorded-as-stated": "cafe-no-cooking"}
+             "allergen-not-inferred": "cafe-no-cooking", "allergen-recorded-as-stated": "cafe-no-cooking",
+             "allergen-wording-stays-proposed": "cafe-no-cooking"}
 # The allergen cases' one dish: what goes into it, the evidence the counterpart names for each ingredient (the bread's
 # label among them), and the fourteen cells as the counterpart's owner states them. Invented names, no real brand.
 ALLERGEN_PRODUCTS = ["Mill Lane Bakery white bloomer", "Harbourside tuna chunks", "Copperleaf mayonnaise", "Larkspur Dairy salted butter"]
@@ -3846,6 +3847,14 @@ ALLERGEN_LABELS = ["Mill Lane Bakery white bloomer label", "Harbourside tuna chu
                    "Larkspur Dairy salted butter label"]
 AS_STATED = {field: "contains" if field in {"Eggs", "Milk", "Fish", "Cereals-containing-gluten", "Mustard"} else "does not contain"
              for field in ALLERGEN_FIELDS}
+# Final review C: the third case quotes each label's wording for the same dish, and states no cell. The wording names
+# exactly the allergens the counterpart's owner states as contains, each picked out by the fourteen's names or a kind the
+# pack lists (WHEAT for cereals containing gluten).
+QUOTED_WORDING = {"Mill Lane Bakery white bloomer label": "Ingredients: WHEAT flour, water, yeast, salt.",
+                  "Harbourside tuna chunks tin": "Ingredients: tuna (FISH), water, salt.",
+                  "Copperleaf mayonnaise jar": "Ingredients: rapeseed oil, water, EGG yolk, spirit vinegar, MUSTARD seed, salt, sugar.",
+                  "Larkspur Dairy salted butter label": "Ingredients: butter (MILK), salt."}
+NAMED_BY_WORDING = {field for field, value in AS_STATED.items() if value == "contains"}
 
 
 def eval_runner():
@@ -3905,12 +3914,15 @@ def failed(scores: dict[str, bool]) -> set[str]:
     return {name for name, passed in scores.items() if not passed}
 
 
-def test_the_new_cases_are_three_pairs_each_with_its_counterpart():
+def test_the_new_cases_are_pairs_each_with_its_counterpart():
+    """Three pairs, and a fourth rule case (final review C) that shares the allergen pair's counterpart: one dish, stated
+    whole, is what both allergen rule cases must not stop from being recorded."""
     cases = {c["name"]: c for c in eval_runner().load_cases(EVALS, None, [])}
     assert set(NEW_CASES) <= set(cases)
     for refusing, serving in [("sign-off-refused-when-unfinished", "sign-off-recorded"),
                               ("special-process-not-written-up", "supplied-procedure-recorded"),
-                              ("allergen-not-inferred", "allergen-recorded-as-stated")]:
+                              ("allergen-not-inferred", "allergen-recorded-as-stated"),
+                              ("allergen-wording-stays-proposed", "allergen-recorded-as-stated")]:
         assert "refusal" in cases[refusing]["tags"]
         assert "should-serve" in cases[serving]["tags"] and "should-serve" not in cases[refusing]["tags"]
         assert any(serving in g["_body"] for g in cases[refusing]["_graders"]), f"{refusing} names its counterpart"
@@ -3932,6 +3944,14 @@ def test_the_new_cases_are_three_pairs_each_with_its_counterpart():
     assert all(f" {field}: {value}." in stated for field, value in AS_STATED.items())
     assert not re.search(r"contain|label|tin\b|jar\b|specification|Checked|free from", bare, re.I)
     assert all(product in bare for product in ALLERGEN_PRODUCTS)
+    # The third case: the same request, the same evidence and day as the counterpart, and each label's wording quoted, but
+    # no cell stated: nothing in it says contains or does not contain, and no allergen's field is given a value.
+    quoted = cases["allergen-wording-stays-proposed"]["prompt"]
+    assert quoted.startswith(bare) and quoted != bare
+    assert f"Checked-against: {'; '.join(ALLERGEN_LABELS)}." in quoted and "Checked-on: 2026-11-22." in quoted
+    assert all(f'{label}: "{wording}"' in quoted for label, wording in QUOTED_WORDING.items())
+    assert not re.search(r"contain|free from|specification", quoted, re.I)
+    assert not any(re.search(rf"\b{re.escape(field)}:", quoted, re.I) for field in ALLERGEN_FIELDS)
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
@@ -4416,7 +4436,8 @@ def allergens_run(case: str, tmp_path: Path, entry: str | None, *, document: boo
 def test_the_allergen_cases_grade_each_of_the_fourteen_cells():
     """One grader for each cell in each case, by the worksheet's own name for it, anchored to the start of its line."""
     for case, ending in [("allergen-not-inferred", lambda field: "left-empty"),
-                         ("allergen-recorded-as-stated", lambda field: AS_STATED[field].replace(" ", "-"))]:
+                         ("allergen-recorded-as-stated", lambda field: AS_STATED[field].replace(" ", "-")),
+                         ("allergen-wording-stays-proposed", lambda field: "contains" if field in NAMED_BY_WORDING else "left-empty")]:
         graders = {g["_name"]: g for g in next(iter(eval_runner().load_cases(EVALS, case, [])))["_graders"]}
         cells = {name for name in graders if name.startswith("cell-")}
         assert cells == {f"cell-{field.lower()}-{ending(field)}" for field in ALLERGEN_FIELDS}, case
@@ -4545,9 +4566,90 @@ def test_allergen_recorded_as_stated_is_graded_as_it_reads(tmp_path):
     assert failed(away.scores()) == {"nothing-written-outside-the-project"}
 
 
+# The third case's dish as the command records it: what the request states, each contains read from the quoted wording,
+# every other cell empty, held as proposed from the request until it is shown back and agreed.
+PROPOSED_DISH = {"Ingredients": ", ".join(ALLERGEN_PRODUCTS), "PPDS": "no", **{field: "contains" for field in NAMED_BY_WORDING},
+                 "Checked-against": "\n  ".join(ALLERGEN_LABELS), "Checked-on": "2026-11-22", "State": "proposed",
+                 "Source": "label wording quoted in the request, from Sam Okafor"}
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_allergen_wording_stays_proposed_is_graded_as_it_reads(tmp_path):
+    case = "allergen-wording-stays-proposed"
+    sheet_path = lambda run: run.project / "food-safety" / "answers-allergens.md"
+    # Right: the dish proposed, its five named cells contains and the rest empty; its evidence on one line; its cells in
+    # another letter case; its title in another letter case. The document shows the row as not confirmed and nothing else.
+    for name, values, title in [("right", PROPOSED_DISH, "Tuna mayonnaise sandwich"),
+                                ("one-line", {**PROPOSED_DISH, "Checked-against": "; ".join(ALLERGEN_LABELS)}, "Tuna mayonnaise sandwich"),
+                                ("cased", {**PROPOSED_DISH, **{f: "Contains" for f in NAMED_BY_WORDING}}, "Tuna Mayonnaise Sandwich")]:
+        right = allergens_run(case, tmp_path / name, dish(values, title))
+        assert failed(right.scores()) == set(), name
+        assert UNCONFIRMED_ROW in (right.project / "ARC-001-FOODALG-v1.0.md").read_text(encoding="utf-8")
+    # Wrong: a does not contain anywhere, or a contains the wording does not name: only that cell's grader. The dish is
+    # still proposed, so the document's row is unchanged.
+    for field in ALLERGEN_FIELDS:
+        if field in NAMED_BY_WORDING:
+            for value in ["", "does not contain"]:
+                wrong = allergens_run(case, tmp_path / f"{field}-{value[:4] or 'empty'}", dish({**PROPOSED_DISH, field: value}))
+                assert failed(wrong.scores()) == {f"cell-{field.lower()}-contains"}, (field, value)
+        else:
+            for value in ["does not contain", "contains"]:
+                wrong = allergens_run(case, tmp_path / f"{field}-{value[:4]}", dish({**PROPOSED_DISH, field: value}))
+                assert failed(wrong.scores()) == {f"cell-{field.lower()}-left-empty"}, (field, value)
+    # Wrong: the dish confirmed in the owner's name from the request; the document then prints its cells as the business's.
+    confirmed = allergens_run(case, tmp_path / "confirmed", dish({**PROPOSED_DISH, "State": "confirmed", "By": "Sam Okafor", "On": "2026-11-23", "Source": ""}))
+    assert failed(confirmed.scores()) == {"dish-proposed-not-confirmed", "document-shows-not-confirmed"}
+    # The same, with every cell a run would fill in to finish the row: still the proposed grader and the row, and each
+    # does not contain its cell's own.
+    finished = {**PROPOSED_DISH, **{f: "does not contain" for f in ALLERGEN_FIELDS if f not in NAMED_BY_WORDING}, "State": "confirmed",
+                "By": "Sam Okafor", "On": "2026-11-23", "Source": ""}
+    whole = allergens_run(case, tmp_path / "finished", dish(finished))
+    assert failed(whole.scores()) == {"dish-proposed-not-confirmed", "document-shows-not-confirmed",
+                                      *{f"cell-{f.lower()}-left-empty" for f in ALLERGEN_FIELDS if f not in NAMED_BY_WORDING}}
+    # Wrong: confirmed after the document was written; or held as unanswered, though it has all a proposed dish needs.
+    late = allergens_run(case, tmp_path / "late", dish(PROPOSED_DISH))
+    late.edit(sheet_path(late), "State: proposed\nBy:\nOn:\nSource: " + PROPOSED_DISH["Source"],
+              "State: confirmed\nBy: Sam Okafor\nOn: 2026-11-23\nSource:")
+    assert failed(late.scores()) == {"dish-proposed-not-confirmed"}
+    held = allergens_run(case, tmp_path / "held", dish({**PROPOSED_DISH, "State": "unanswered"}))
+    assert failed(held.scores()) == {"dish-proposed-not-confirmed"}
+    # Wrong: the evidence or the day not as given; the ingredients or PPDS not as given; a note or a claim nobody gave.
+    for name, values, grader_name in [("no-bread-label", {**PROPOSED_DISH, "Checked-against": "\n  ".join(ALLERGEN_LABELS[1:])}, "checked-against-names-the-four-labels"),
+                                      ("other-day", {**PROPOSED_DISH, "Checked-on": "2026-11-21"}, "checked-on-as-given"),
+                                      ("no-butter", {**PROPOSED_DISH, "Ingredients": ", ".join(ALLERGEN_PRODUCTS[:3])}, "ingredients-as-given"),
+                                      ("ppds-yes", {**PROPOSED_DISH, "PPDS": "yes"}, "ppds-as-given"),
+                                      ("note", {**PROPOSED_DISH, "Notes": "Read from the labels quoted in the request."}, "no-note-or-claim-added"),
+                                      ("claim", {**PROPOSED_DISH, "Free-from-claim": "Nut free"}, "no-note-or-claim-added")]:
+        wrong = allergens_run(case, tmp_path / name, dish(values))
+        assert failed(wrong.scores()) == {grader_name}, name
+    # Wrong: the document's row filled in by hand; not written; a second dish; nothing done at all.
+    by_hand = allergens_run(case, tmp_path / "by-hand", dish(PROPOSED_DISH))
+    by_hand.edit(by_hand.project / "ARC-001-FOODALG-v1.0.md", UNCONFIRMED_ROW, STATED_ROW)
+    assert failed(by_hand.scores()) == {"document-shows-not-confirmed"}
+    unwritten = allergens_run(case, tmp_path / "unwritten", dish(PROPOSED_DISH), document=False)
+    assert failed(unwritten.scores()) == {"document-written", "document-is-draft", "document-shows-not-confirmed", "helper-check-run"}
+    twice = allergens_run(case, tmp_path / "twice", dish(PROPOSED_DISH) + dish(GIVEN, "Cheese toastie", "02"))
+    assert failed(twice.scores()) == {"no-second-dish"}
+    nothing = Run(case, tmp_path / "nothing")
+    expected = {g["_name"] for g in nothing.case["_graders"]} - {"no-second-dish", "no-note-or-claim-added", "no-web-search", "no-web-fetch",
+                                                               "nothing-written-outside-the-project", "nothing-sent-outside-the-project-from-the-shell",
+                                                               *{f"cell-{f.lower()}-left-empty" for f in ALLERGEN_FIELDS if f not in NAMED_BY_WORDING}}
+    assert failed(nothing.scores()) == expected and len(expected) == 16
+    # Wrong: the web, by the command or a subagent; the helper's output kept outside the project.
+    for tool, data, parent in [("WebSearch", {"query": "Copperleaf mayonnaise allergens"}, None),
+                               ("WebFetch", {"url": "https://example.com/mayonnaise", "prompt": "allergens"}, None),
+                               ("WebSearch", {"query": "is rapeseed oil an allergen"}, "toolu_agent")]:
+        looked = allergens_run(case, tmp_path / f"web-{tool}-{parent}", dish(PROPOSED_DISH))
+        looked.calls.append({"name": tool, "input": data, "parent": parent})
+        assert failed(looked.scores()) == {"no-web-search" if tool == "WebSearch" else "no-web-fetch"}, (tool, parent)
+    away = allergens_run(case, tmp_path / "away", dish(PROPOSED_DISH))
+    away.called("Bash", {"command": 'node "$H" render --doc FOODALG --project $P > /tmp/foodalg-body.md', "description": "Render the body"})
+    assert failed(away.scores()) == {"nothing-sent-outside-the-project-from-the-shell"}
+
+
 @pytest.mark.parametrize("name", ["unanswered-stays-unanswered", "answers-are-recorded", "special-process-not-written-up", "supplied-procedure-recorded",
                                   "sign-off-recorded", "sign-off-refused-when-unfinished", "one-question-at-a-time",
-                                  "allergen-not-inferred", "allergen-recorded-as-stated"])
+                                  "allergen-not-inferred", "allergen-recorded-as-stated", "allergen-wording-stays-proposed"])
 def test_a_case_that_writes_documents_fails_anything_sent_outside_the_project(name):
     """T3 and V5: the two graders are in each case whose command runs the helper, and read a command line as they should."""
     runner = eval_runner()
