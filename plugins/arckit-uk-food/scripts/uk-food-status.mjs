@@ -186,8 +186,9 @@ function specialProcessesOf(sheets) {
 // one sentence that says what is outstanding and what to do next. A worksheet is named by its path in
 // the project folder, so that the completion record holds no path of this computer's.
 const sheetPath = (section) => `food-safety/${worksheetName(section)}`;
-// Up to five identifiers, then how many more.
-const someOf = (ids) => (ids.length <= 5 ? andList(ids) : `${ids.slice(0, 5).join(', ')} and ${ids.length - 5} more`);
+// Up to five identifiers, then how many more: `shown` gives those named.
+const shown = (ids) => ids.slice(0, 5);
+const someOf = (ids) => (ids.length <= 5 ? andList(ids) : `${shown(ids).join(', ')} and ${ids.length - 5} more`);
 const NOT_WRITTEN = 'document not written yet: write the document from its worksheet';
 const NOT_SIGNED = 'document not signed off yet: once it is finished, a named person signs it off';
 const notStartedLine = (section) => `worksheet ${sheetPath(section)} is not started yet: make it with worksheet --section ` +
@@ -287,7 +288,8 @@ function sheetLine(section, sheet, project, row) {
   if (!sheet) return section === row.sheet && row.notStarted ? row.notStarted() : notStartedLine(section);
   const misplacedNow = misplacedLine(section, sheet, project);
   if (misplacedNow) return misplacedNow;
-  return sheet.otherVersion && sheet.problems.length === 1 ? otherWordingLine(section, sheet.otherVersion) : problemsLine(section, sheet.problems.length);
+  return sheet.otherVersion && sheet.problems.length === 1 ? otherWordingLine(section, sheet.otherVersion)
+    : problemsLine(section, sheet.problems.length);
 }
 
 // The lines for a document's questions not yet answered and its answers only proposed, or its entries
@@ -296,7 +298,7 @@ function sheetLine(section, sheet, project, row) {
 // the identifiers the line shows), or the words the others share. `sheet` is the worksheet, with no problems.
 function countLines(row, counts, section, sheet, data) {
   const { entries, nouns: [one, many] } = row;
-  const how = (ids) => row.countsWhen?.(ids.slice(0, 5), sheet, data) ??
+  const how = (ids) => row.countsWhen?.(shown(ids), sheet, data) ??
     `${entries ? 'an entry' : 'an answer'} counts when its State is confirmed and By and On are filled in`;
   const { unansweredIds: open, proposedIds: proposed } = counts;
   return [

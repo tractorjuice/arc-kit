@@ -40,9 +40,9 @@ const wrapped = (text) => text.split(' ').reduce((lines, word) => {
 }, []);
 // A command in the usage text: its lines of options down the left, and its description wrapped beside them from
 // COLUMN. Options too long for the left column stand on a line of their own, with the description below them.
-const command = (options, text) => {
+const commandLines = (options, text) => {
   const [first, ...more] = options;
-  if (first.length >= COLUMN) return `${first}\n${command(more.length ? more : [''], text)}`;
+  if (first.length >= COLUMN) return `${first}\n${commandLines(more.length ? more : [''], text)}`;
   const lines = wrapped(text);
   return Array.from({ length: Math.max(options.length, lines.length) },
     (_, i) => `${(options[i] ?? '').padEnd(COLUMN)}${lines[i] ?? ''}`.trimEnd()).join('\n');
@@ -67,23 +67,23 @@ commands:
                                                      exit 1, changing nothing, for a folder that is
                                                      not exactly as a new project is made
   validate-data [--data DIR]                         check the data files; exit 0 when valid, 1 when not
-${command(['  worksheet --section SECTION [--data DIR]'], `print a blank answer worksheet; SECTION is one of ${WORKSHEET_SECTIONS.join(', ')}`)}
+${commandLines(['  worksheet --section SECTION [--data DIR]'], `print a blank answer worksheet; SECTION is one of ${WORKSHEET_SECTIONS.join(', ')}`)}
   parse-worksheet --file FILE [--data DIR] [--json]  check a worksheet: print its problems (or, with
                                                      --json, what was read); exit 0 with no problems,
                                                      1 with problems
-${command(['  upgrade-worksheet --file FILE [--data DIR] [--write]'], 'bring a worksheet made by a different version of the overlay up to date: ' +
+${commandLines(['  upgrade-worksheet --file FILE [--data DIR] [--write]'], 'bring a worksheet made by a different version of the overlay up to date: ' +
     'print each line of its guidance, or of its questions\' wording, that would be taken out or put in, and with --write do so, keeping the ' +
     'worksheet as it was beside it; exit 1, changing nothing, for a worksheet for other data, one with any other problem, or one whose lines ' +
     'under a question\'s heading do not hold the words that identify that question (a heading that has been moved, lines typed over, or ' +
     'wording this version does not know)')}
-${command(['  render --doc DOC --project DIR [--data DIR]'], `print a document's body, from the worksheets in DIR/food-safety; DOC is one of ` +
+${commandLines(['  render --doc DOC --project DIR [--data DIR]'], `print a document's body, from the worksheets in DIR/food-safety; DOC is one of ` +
     `${documents}; exit 1, printing nothing, when a worksheet it is written from has problems`)}
-${command(['  check --doc DOC --project DIR --report FILE', '        [--data DIR] [--json]'], 'exit 0 when the body between the UK-FOOD ' +
+${commandLines(['  check --doc DOC --project DIR --report FILE', '        [--data DIR] [--json]'], 'exit 0 when the body between the UK-FOOD ' +
     'markers in FILE equals a fresh render and the file claims no sign-off that is not recorded, 1 when not; DOC is any document render takes')}
-${command(['  reference --section SECTION [--data DIR]'], `print a section's text from the pack, with no answers; SECTION is one of ${SECTION_IDS.join(', ')}`)}
-${command(['  status --project DIR [--data DIR] [--json]'], 'say what is finished and what is not, for each document, whether the record sheets ' +
+${commandLines(['  reference --section SECTION [--data DIR]'], `print a section's text from the pack, with no answers; SECTION is one of ${SECTION_IDS.join(', ')}`)}
+${commandLines(['  status --project DIR [--data DIR] [--json]'], 'say what is finished and what is not, for each document, whether the record sheets ' +
     `(${RECORD_SHEETS}) are written and in step, and whether the completion record is up to date; exit 0 whenever the project can be read`)}
-${command(['  sign-off --doc DOC --project DIR --name NAME', '           --role ROLE --version VERSION',
+${commandLines(['  sign-off --doc DOC --project DIR --name NAME', '           --role ROLE --version VERSION',
     '           [--paper-signed yes|no] [--date DATE]', '           [--other-text-read yes|no] [--data DIR]'], 'record that a named person ' +
     `has confirmed a finished document, in DIR/food-safety/sign-offs.json; DOC is one of ${DOC_CODES.join(', ')}; ${andList(unsigned)} ` +
     'are refused, as nobody signs them; exit 1, writing nothing, when a worksheet it needs is missing or has problems, or another it is written ' +
