@@ -1355,6 +1355,25 @@ def test_the_profile_command_writes_the_document_at_two_points_and_only_when_som
 # command asks its Kind that way, so a list command does too: the brief's closed choices that are fields (a cleaning
 # entry's frequency, a supplier's kind) are shown as the worksheet's guidance comment lists them, or named, and asked in
 # plain text, and what goes to the selector is the step's offers and whether an entry is right as shown.
+# The cleaning schedule's and the suppliers' rule for an entry stated whole in a named request: it is confirmed, and read
+# back in the summary (final review A3). The allergen information confirms no dish from the request (final review E1),
+# and holds its own rules for that under its own name below.
+REQUEST_CONFIRMS = {
+        "a named request's whole entry is confirmed": "Stated whole by a person who gives their name in the request, it counts as given "
+                                                      "and agreed by that person",
+        "and is not asked again": "An entry stated whole in the request by a person who gives their name there was recorded "
+                                  "`confirmed` in step 4, and is not asked about again here: the summary reads it back, as step 10 "
+                                  "says.",
+        # Final review A3: nobody saw an entry confirmed from the request before it was recorded, so the summary reads it back
+        # whole and asks the person to check it.
+        "the summary reads back what the request confirmed": "recorded `confirmed` in step 4 in this run, read back whole, because "
+                                                             "nobody saw it before it was recorded",
+        "and asks the person to check it": "then ask the person to check it against what they sent and to say if any line is wrong. A "
+                                           "line they say is wrong is changed as **Changing an entry** says;",
+        # Review round 1, I1: confirming is stated one way.
+        "one way of confirming": "Only an entry a named person at the business agreed as a whole in this conversation, or stated whole "
+                                 "in the request as step 4 says, is `confirmed`",
+}
 LIST_RULES = {
     "all": {
         "one entry at a time": "Take one entry at a time, and within an entry ask for one field at a time, as **Record only what "
@@ -1396,8 +1415,6 @@ LIST_RULES = {
         "an entry stated whole, in terms": "**An entry stated whole in the request** is one for which the request states, in terms, each "
                                            "field **What each entry needs** lists, so that nothing has to be decided about which of its "
                                            "words belong to which field.",
-        "a named request's whole entry is confirmed": "Stated whole by a person who gives their name in the request, it counts as given "
-                                                      "and agreed by that person",
         "pasted or run-together request text is proposed": "Text pasted into the request, such as a list copied in, and words that run "
                                                            "several entries or fields together are not stated whole",
         "with nobody there it stays proposed": "with nobody there it stays `proposed`, and the summary says it is waiting",
@@ -1407,19 +1424,7 @@ LIST_RULES = {
                                                       "confirmed only as step 4 and **Showing an entry and confirming it** in step 8 say",
         "kept elsewhere from the request only as said": "Kept elsewhere is recorded from the request only where the request itself "
                                                         "says the business keeps this list somewhere else, with where",
-        "and is not asked again": "An entry stated whole in the request by a person who gives their name there was recorded "
-                                  "`confirmed` in step 4, and is not asked about again here: the summary reads it back, as step 10 "
-                                  "says.",
-        # Final review A3: nobody saw an entry confirmed from the request before it was recorded, so the summary reads it back
-        # whole and asks the person to check it.
-        "the summary reads back what the request confirmed": "recorded `confirmed` in step 4 in this run, read back whole, because "
-                                                             "nobody saw it before it was recorded",
-        "and asks the person to check it": "then ask the person to check it against what they sent and to say if any line is wrong. A "
-                                           "line they say is wrong is changed as **Changing an entry** says;",
         "step 8 does not record it again": "What the request itself gave was recorded in step 4.",
-        # Review round 1, I1: confirming is stated one way.
-        "one way of confirming": "Only an entry a named person at the business agreed as a whole in this conversation, or stated whole "
-                                 "in the request as step 4 says, is `confirmed`",
         # Review round 1, I3: the helper's line that names Kept elsewhere is shown, never offered.
         "the helper's line is shown, not offered": "unchanged where the summary says, and never put it to the person as a question or "
                                                    "an offer",
@@ -1455,6 +1460,10 @@ LIST_RULES = {
                                                   "into fields.",
     },
     "uk-food-cleaning-schedule": {
+        **REQUEST_CONFIRMS,
+        # Final review E2: a document finished by Kept elsewhere alone says it holds nothing of the record.
+        "E2: kept elsewhere alone holds nothing here": "With no cleaning item confirmed beside it,"
+                                                       " the document then says that it holds nothing of that schedule and that nothing in it was checked against it.",
         "never suggest": "Never suggest an item, a method, a chemical, a product, a frequency, a dilution or a contact time, and "
                          "never say whether a method is good enough.",
         "chemicals and equipment go in the method": "with any chemicals and equipment it is cleaned with, in the person's words: "
@@ -1473,6 +1482,10 @@ LIST_RULES = {
         "otherwise it waits": "Otherwise `Frequency` stays empty, and the entry is held as `unanswered` until the person chooses one.",
     },
     "uk-food-suppliers": {
+        **REQUEST_CONFIRMS,
+        # Final review E2: a document finished by Kept elsewhere alone says it holds nothing of the record.
+        "E2: kept elsewhere alone holds nothing here": "With no supplier confirmed beside it,"
+                                                       " the document then says that it holds nothing of that suppliers' list and that nothing in it was checked against it.",
         "the team is its own entry": "**The environmental health team** is asked for as an entry of its own",
         "kept elsewhere is the suppliers' list only": "it covers the suppliers' list only: the environmental health team's entry is "
                                                       "still needed, and is still asked for",
@@ -1503,6 +1516,35 @@ LIST_RULES = {
     # 10B: the allergens command, where a wrong "does not contain" shown to a customer with an allergy could hurt them. The
     # numbers are the dispatch's rules.
     "uk-food-allergens": {
+        # Final review E2: a document finished by Kept elsewhere alone says it holds nothing of the record.
+        "E2: kept elsewhere alone holds nothing here": "With no dish confirmed beside it,"
+                                                       " the document then says that it holds nothing of that allergen information and that nothing in it was checked against it.",
+        # Final review E1, the owner's decision: no dish is confirmed from the request, however whole and by whomever stated;
+        # it is recorded proposed with the request and the person in its Source, and waits to be shown whole and agreed. The
+        # command's own step narrows the shared step 5 in so many words.
+        "E1: one way of confirming a dish": "Only a dish a named person at the business agreed as a whole in this conversation, having "
+                                            "been shown it whole, is `confirmed`: a dish in the request, even one a named person states "
+                                            "whole there, is recorded `proposed`, as step 4 says.",
+        "E1: a named request's whole dish is proposed": "Stated whole by a person who gives their name in the request, a dish is recorded "
+                                                        "as they state it, `proposed`, with `Source:` saying it came from the request and "
+                                                        "naming that person, and it waits to be shown whole and agreed.",
+        "E1: the shared rule narrowed": "For a dish this command goes further than **Answers in the request** and step 5: it confirms no "
+                                        "dish from the request, however whole and by whomever stated, because a dish is confirmed only "
+                                        "when a named person who is there has been shown it whole and agreed it.",
+        "E1: Kept elsewhere is not a dish": "It is not a dish: stated by a person who gives their name in the request, it is `confirmed`, "
+                                            "with that name and today's date, as **Answers in the request** says of an answer",
+        "E1: the cells as stated, in a proposed dish": "A dish stated whole, every cell it records stated in terms, is recorded `proposed` "
+                                                       "with exactly those cells",
+        "E1: no dish confirmed from the request": "No dish is `confirmed` from the request; with nobody there it stays `proposed`, and "
+                                                  "the summary says it is waiting to be shown and agreed.",
+        "E1: shown and confirmed like any proposed dish": "A dish from the request, even one a named person stated whole there, was "
+                                                          "recorded `proposed` in step 4, and is shown and confirmed here like any "
+                                                          "proposed dish.",
+        "E1: an earlier run's request is not this conversation": "such as one in a dish held as `proposed` from an earlier run, even one "
+                                                                 "a named person stated in so many words in that run's request, or one "
+                                                                 "typed into the worksheet by hand",
+        "E1: the summary reads back a dish from the request as waiting": "each dish recorded from the request in this run that is still "
+                                                                         "`proposed`, read back whole as waiting to be shown and agreed",
         # 1: the model is never the source of a cell, and never looks one up (13).
         "1: a cell only by the rule": "A cell, `contains` or `does not contain`, is recorded only as **Filling in a cell** in step 8 says",
         # Round 1 ruling (i), in the opening list: a does not contain is never worked out from what evidence leaves out.
@@ -1589,7 +1631,7 @@ LIST_RULES = {
                                                                          "where the person names evidence still recorded",
         "ruling: one nobody stated does not stand": "Before you show a dish for confirmation, empty each `does not contain` in it that no "
                                                     "named person stated in this conversation, its request included, such as one in a dish "
-                                                    "held as `proposed` from an earlier run or one typed into the worksheet by hand",
+                                                    "held as `proposed` from an earlier run",
         # Final review A2: the cells emptied are named to the person first, with what they held and why, and any left empty is in
         # the summary.
         "A2: the person is told what is emptied, and why": "Before you empty them, tell the person which cells you are emptying, by "
@@ -1765,14 +1807,10 @@ LIST_RULES = {
                                                                                           "person who gives their name in the request, "
                                                                                           "with `Checked-against` naming evidence for "
                                                                                           "every ingredient in `Ingredients`",
-        "ruling 26: confirmed only with every cell stated in terms": "A dish stated whole by a person who gives their name, every cell it "
-                                                                     "records stated in terms, is `confirmed` with exactly those cells",
+        # Ruling 26, and final review E1 after it: quoted wording makes the dish proposed, as a dish stated whole now is too.
         "ruling 26: quoted wording is pasted text, never confirmed": "Quoted wording is text pasted into the request, which is not stated "
                                                                      "whole, as the paragraph above says: the dish it is quoted for is "
-                                                                     "recorded `proposed`",
-        "ruling 26: in the step-4 rule's words": "and is never `confirmed` from the request, however plainly its words fall into fields; "
-                                                 "with nobody there it stays `proposed`, and the summary says it is waiting to be shown "
-                                                 "and agreed.",
+                                                                     "recorded `proposed` too",
         "request: any other does not contain holds the dish back": "So is any other `does not contain` the request gives.",
         "request: other words fill no cell": "Any other words the request uses about an allergen, such as \"no\" or \"free from\", fill in no "
                                              "cell",
@@ -1842,8 +1880,9 @@ def test_the_allergens_guide_says_where_an_answer_comes_from():
                   # Final review B2: the selector goes by whether wording was read, not by what it named.
                   "for a dish for which no label wording was read. A dish for which label wording was read, whatever that wording named,",
                   # Rulings 26 and 27, and the price of the strict reading.
-                  "If the message quotes a label's wording, the command reads it as it reads any label, but what it read is only a "
-                  "proposal: the dish waits until it has been shown to you and you have agreed it",
+                  # Final review E1: every dish in the opening message waits, a label quoted there as well.
+                  "If the message quotes a label's wording, the command reads it as it reads any label, and the dish waits in the same "
+                  "way.",
                   "You say which of the listed allergens the dish does not contain; any you leave out, or are unsure of, stay NOT "
                   "CONFIRMED.",
                   "every \"does not contain\" is cleared and asked again",
@@ -1903,6 +1942,25 @@ def test_the_allergens_command_never_works_out_a_does_not_contain():
             assert gone not in text, f"{path.name} still says {gone!r}"
 
 
+def test_the_guides_say_a_list_kept_elsewhere_is_not_held_here():
+    """Final review E2: a list finished by Kept elsewhere alone is signed off, and says that it holds nothing of the record and
+    nothing in it was checked against it; each guide a person reads about it says so, and the sign-off guide's conditions."""
+    for name, words in [("uk-food-cleaning-schedule", "if no item is confirmed in it, that it holds nothing of that schedule and that nothing in it "
+                                                      "was checked against it"),
+                        ("uk-food-suppliers", "if no supplier is confirmed in it, that it holds nothing of that suppliers' list and that nothing "
+                                              "in it was checked against it"),
+                        ("uk-food-allergens", "if no dish is confirmed in it, that it holds nothing of that allergen information and that nothing "
+                                              "in it was checked against it")]:
+        assert words in (ROOT_GUIDES / f"{name}.md").read_text(encoding="utf-8"), name
+    sign_off = (ROOT_GUIDES / "uk-food-sign-off.md").read_text(encoding="utf-8")
+    assert ("A list finished only by a confirmed note of where you keep it, with nothing of the list confirmed in the document (for your "
+            "suppliers and contacts, no supplier), can be signed off. The document then says that it holds nothing of that record and that "
+            "nothing in it was checked against it, and the completion record lists it under Kept elsewhere.") in sign_off
+    # The helper holds the words, with the lists' other words.
+    lists = (OVERLAY / "scripts" / "uk-food-lists.mjs").read_text(encoding="utf-8")
+    assert lists.count("elsewhereOnly: { body: ") == 3
+
+
 def test_the_list_guides_say_when_a_request_counts():
     """10B's fixes to the two list commands, as the person running the business reads them: a frequency in the opening message
     counts only when it is one on the form's list (2); a difference about an entry already recorded is asked about, never
@@ -1922,8 +1980,12 @@ def test_the_list_guides_say_when_a_request_counts():
         assert ("it is recorded in your name as you gave it, and is not asked about again: the summary reads it back to you whole, so "
                 "that you can check it against what you sent and say if any line is wrong.") in text, name
     allergens = (ROOT_GUIDES / "uk-food-allergens.md").read_text(encoding="utf-8")
-    assert ("the dish is recorded in your name as you gave it, without being shown to you. The summary then reads the dish back to you "
-            "whole, every allergen as recorded, so that you can check it against what you sent and say if any line is wrong.") in allergens
+    # Final review E1: a dish set out in the opening message is recorded as given and waits to be shown and agreed.
+    assert ("A dish counts only once a named person who is there has been shown it whole and agreed it, and that holds for a dish set out "
+            "in the message that starts the command too.") in allergens
+    assert ("If nobody is there, the summary reads it back whole, every allergen as recorded, as waiting, and the next time you run the "
+            "command with someone there it is shown to agree") in allergens
+    assert "without being shown to you" not in allergens
 
 
 @pytest.mark.parametrize("name", LISTING)
@@ -2505,7 +2567,13 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    # Final review A2 and A3.
                    "A `does not contain` that no named person stated in this conversation was emptied before its dish was shown only "
                    "after the person was told which cells were being emptied, that each held `does not contain`, and why",
-                   "**An entry confirmed from the request is read back.**",
+                   "**An entry recorded from the request is read back.**",
+                   "Nothing you said suggests that the record kept elsewhere is held in the document or was checked",
+                   # Final review E1.
+                   "A dish of the allergen information is the exception: it is `confirmed` only in the first way, and one from the "
+                   "request, however stated, is `proposed`.",
+                   "A dish from the request, even one a named person stated whole with every cell in terms, was recorded `proposed`, with "
+                   "those cells as stated, and was not confirmed until it was shown and agreed.",
                    "and the person is asked to check it against what they sent and to say if any line is wrong.",
                    # G1, G4 and G6: the cells a sign-off rewrites, the version rule and the newest record.
                    "the helper records no sign-off while one holds anything else",
@@ -4405,9 +4473,13 @@ DISH_FIELDS = ["Ingredients", "PPDS", *ALLERGEN_FIELDS, "Notes", "Checked-agains
                "State", "By", "On", "Source"]
 # The rule case's dish as the command holds it: what the request gives, nothing else, waiting.
 GIVEN = {"Ingredients": ", ".join(ALLERGEN_PRODUCTS), "PPDS": "no", "State": "unanswered", "Source": "the request, from Sam Okafor"}
-# The counterpart's dish as the command records it: stated whole by a named person, so confirmed in their name.
+# The counterpart's dish as the command records it: stated whole by a named person, every cell as stated, and proposed,
+# with the request and the owner in its Source, as no dish is confirmed from the request (final review E1).
 STATED_DISH = {"Ingredients": ", ".join(ALLERGEN_PRODUCTS), "PPDS": "no", **AS_STATED, "Checked-against": "\n  ".join(ALLERGEN_LABELS),
-               "Checked-on": "2026-11-22", "State": "confirmed", "By": "Sam Okafor", "On": "2026-11-23"}
+               "Checked-on": "2026-11-22", "State": "proposed", "Source": "the request, from Sam Okafor"}
+# What a right run of the counterpart says: the dish is recorded, and waits to be shown and agreed.
+WAITING_REPLY = ("I recorded DISH-01 Tuna mayonnaise sandwich as you stated it, but it is proposed: a dish counts only once a named "
+                 "person who is there has been shown it whole and agreed it, so it is waiting to be shown to you.")
 STATED_ROW = "| DISH-01 Tuna mayonnaise sandwich | " + " | ".join(AS_STATED.values()) + " |"
 UNCONFIRMED_ROW = "| DISH-01 | " + " | ".join(["**NOT CONFIRMED**"] * 14) + " |"
 
@@ -4508,60 +4580,76 @@ def test_allergen_not_inferred_is_graded_as_it_reads(tmp_path):
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
 def test_allergen_recorded_as_stated_is_graded_as_it_reads(tmp_path):
-    # Right: the dish as stated; its evidence on one line; its cells and PPDS in another letter case, which the helper
-    # accepts and the document prints in its own.
+    case = "allergen-recorded-as-stated"
     sheet_path = lambda run: run.project / "food-safety" / "answers-allergens.md"
+
+    def stated(name: str, entry: str | None, **kwargs) -> Run:
+        made = allergens_run(case, tmp_path / name, entry, **kwargs)
+        made.last_message = WAITING_REPLY
+        return made
+
+    # Right: the dish proposed with every cell as stated; its evidence on one line; its cells and PPDS in another letter
+    # case, which the helper accepts. The document shows the row as not confirmed and nothing else.
     for name, values in [("right", STATED_DISH), ("one-line", {**STATED_DISH, "Checked-against": "; ".join(ALLERGEN_LABELS)}),
-                         ("cased", {**STATED_DISH, "PPDS": "No", **{f: v.capitalize() for f, v in AS_STATED.items()}})]:
-        right = allergens_run("allergen-recorded-as-stated", tmp_path / name, dish(values))
+                         ("cased", {**STATED_DISH, "PPDS": "No", **{f: v.capitalize() for f, v in AS_STATED.items()}}),
+                         ("source-worded", {**STATED_DISH, "Source": "Sam Okafor, owner, in the request that started this run"})]:
+        right = stated(name, dish(values))
         assert failed(right.scores()) == set(), name
-        assert STATED_ROW in (right.project / "ARC-001-FOODALG-v1.0.md").read_text(encoding="utf-8")
-    # Wrong: any one cell left empty, or holding the other value. The document prints the same fault.
+        assert UNCONFIRMED_ROW in (right.project / "ARC-001-FOODALG-v1.0.md").read_text(encoding="utf-8")
+    # Wrong: any one cell left empty, or holding the other value: only that cell's grader, as the row prints none of them.
     for field in ALLERGEN_FIELDS:
         other = "does not contain" if AS_STATED[field] == "contains" else "contains"
         for value in ["", other]:
-            wrong = allergens_run("allergen-recorded-as-stated", tmp_path / f"{field}-{value[:4] or 'empty'}", dish({**STATED_DISH, field: value}))
-            assert failed(wrong.scores()) == {f"cell-{field.lower()}-{AS_STATED[field].replace(' ', '-')}", "document-prints-the-dish-as-stated"}, (field, value)
-    # Wrong: the dish left proposed from the request, or held as unanswered; the document then shows it as not confirmed.
-    for state, source in [("proposed", "the request, from Sam Okafor"), ("unanswered", "")]:
-        held = allergens_run("allergen-recorded-as-stated", tmp_path / state, dish({**STATED_DISH, "State": state, "By": "", "On": "", "Source": source}))
-        assert failed(held.scores()) == {"confirmed-in-the-owners-name", "document-prints-the-dish-as-stated"}, state
-    # Wrong: confirmed in a name the request did not give. (The request states all fourteen cells, so there is no cell
-    # it left unstated to fill in.)
-    other = allergens_run("allergen-recorded-as-stated", tmp_path / "other-name", dish({**STATED_DISH, "By": "Priya Shah"}))
-    assert failed(other.scores()) == {"confirmed-in-the-owners-name"}
+            wrong = stated(f"{field}-{value[:4] or 'empty'}", dish({**STATED_DISH, field: value}))
+            assert failed(wrong.scores()) == {f"cell-{field.lower()}-{AS_STATED[field].replace(' ', '-')}"}, (field, value)
+    # Wrong: the dish confirmed in the owner's name from the request, as before final review E1; the document then prints
+    # its cells as the business's. Confirmed after the document was written; held as unanswered; proposed with a Source
+    # that names nobody, or names the owner but not the request.
+    confirmed = stated("confirmed", dish({**STATED_DISH, "State": "confirmed", "By": "Sam Okafor", "On": "2026-11-23", "Source": ""}))
+    assert failed(confirmed.scores()) == {"dish-proposed-from-the-request", "document-shows-not-confirmed"}
+    assert STATED_ROW in (confirmed.project / "ARC-001-FOODALG-v1.0.md").read_text(encoding="utf-8")
+    late = stated("late", dish(STATED_DISH))
+    late.edit(sheet_path(late), "State: proposed\nBy:\nOn:\nSource: the request, from Sam Okafor", "State: confirmed\nBy: Sam Okafor\nOn: 2026-11-23\nSource:")
+    assert failed(late.scores()) == {"dish-proposed-from-the-request"}
+    for name, values in [("unanswered", {**STATED_DISH, "State": "unanswered"}), ("nobody", {**STATED_DISH, "Source": "the request (no name given)"}),
+                         ("no-request", {**STATED_DISH, "Source": "Sam Okafor"})]:
+        wrong = stated(name, dish(values))
+        assert failed(wrong.scores()) == {"dish-proposed-from-the-request"}, name
     # Wrong: Checked-against emptied after the document was written, or without the bread's label; Checked-on, the
     # ingredients or PPDS not as given.
-    emptied = allergens_run("allergen-recorded-as-stated", tmp_path / "emptied", dish(STATED_DISH))
+    emptied = stated("emptied", dish(STATED_DISH))
     emptied.edit(sheet_path(emptied), "Checked-against: " + STATED_DISH["Checked-against"] + "\n", "Checked-against:\n")
     assert failed(emptied.scores()) == {"checked-against-names-the-four-labels"}
-    for name, values, grader in [("no-bread-label", {**STATED_DISH, "Checked-against": "\n  ".join(ALLERGEN_LABELS[1:])}, "checked-against-names-the-four-labels"),
-                                 ("other-day", {**STATED_DISH, "Checked-on": "2026-11-21"}, "checked-on-as-given"),
-                                 ("no-butter", {**STATED_DISH, "Ingredients": ", ".join(ALLERGEN_PRODUCTS[:3])}, "ingredients-as-given"),
-                                 ("ppds-yes", {**STATED_DISH, "PPDS": "yes"}, "ppds-as-given")]:
-        wrong = allergens_run("allergen-recorded-as-stated", tmp_path / name, dish(values))
-        assert failed(wrong.scores()) == {grader}, name
-    # Wrong: a note or a "free from" statement nobody gave. The document marks a dish with notes, and that alone does not
-    # fail the row.
+    for name, values, grader_name in [("no-bread-label", {**STATED_DISH, "Checked-against": "\n  ".join(ALLERGEN_LABELS[1:])}, "checked-against-names-the-four-labels"),
+                                      ("other-day", {**STATED_DISH, "Checked-on": "2026-11-21"}, "checked-on-as-given"),
+                                      ("no-butter", {**STATED_DISH, "Ingredients": ", ".join(ALLERGEN_PRODUCTS[:3])}, "ingredients-as-given"),
+                                      ("ppds-yes", {**STATED_DISH, "PPDS": "yes"}, "ppds-as-given")]:
+        wrong = stated(name, dish(values))
+        assert failed(wrong.scores()) == {grader_name}, name
+    # Wrong: a note or a "free from" statement nobody gave.
     for field, value in [("Notes", "Tuna is a fish."), ("Free-from-claim", "Nut free")]:
-        added = allergens_run("allergen-recorded-as-stated", tmp_path / field, dish({**STATED_DISH, field: value}))
+        added = stated(field, dish({**STATED_DISH, field: value}))
         assert failed(added.scores()) == {"no-note-or-claim-added"}, field
-    # Wrong: the document's row changed by hand; a second dish; nothing done at all.
-    by_hand = allergens_run("allergen-recorded-as-stated", tmp_path / "by-hand", dish(STATED_DISH))
-    by_hand.edit(by_hand.project / "ARC-001-FOODALG-v1.0.md", STATED_ROW, STATED_ROW.replace("| does not contain |", "| contains |", 1))
-    assert failed(by_hand.scores()) == {"document-prints-the-dish-as-stated"}
-    twice = allergens_run("allergen-recorded-as-stated", tmp_path / "twice", dish(STATED_DISH) + dish(GIVEN, "Cheese toastie", "02"))
+    # Wrong: a reply that says the dish is recorded as the business's, with no word of its waiting to be shown.
+    quiet = stated("quiet", dish(STATED_DISH))
+    quiet.last_message = "I recorded the dish with its allergens and wrote the allergen information document."
+    assert failed(quiet.scores()) == {"reply-says-the-dish-is-waiting"}
+    # Wrong: the document's row filled in by hand; a second dish; nothing done at all.
+    by_hand = stated("by-hand", dish(STATED_DISH))
+    by_hand.edit(by_hand.project / "ARC-001-FOODALG-v1.0.md", UNCONFIRMED_ROW, STATED_ROW)
+    assert failed(by_hand.scores()) == {"document-shows-not-confirmed"}
+    twice = stated("twice", dish(STATED_DISH) + dish(GIVEN, "Cheese toastie", "02"))
     assert failed(twice.scores()) == {"no-second-dish"}
-    nothing = Run("allergen-recorded-as-stated", tmp_path / "nothing")
+    nothing = Run(case, tmp_path / "nothing")
     expected = {g["_name"] for g in nothing.case["_graders"]} - {"no-second-dish", "no-note-or-claim-added", "no-web-search", "no-web-fetch",
                                                                "nothing-written-outside-the-project", "nothing-sent-outside-the-project-from-the-shell"}
-    assert failed(nothing.scores()) == expected and len(expected) == 25
+    assert failed(nothing.scores()) == expected and len(expected) == 26
     # Wrong: the web, and the helper's output kept outside the project.
     for tool in ["WebSearch", "WebFetch"]:
-        looked = allergens_run("allergen-recorded-as-stated", tmp_path / f"web-{tool}", dish(STATED_DISH))
+        looked = stated(f"web-{tool}", dish(STATED_DISH))
         looked.called(tool, {"query": "Copperleaf mayonnaise mustard"} if tool == "WebSearch" else {"url": "https://example.com", "prompt": "x"})
         assert failed(looked.scores()) == {"no-web-search" if tool == "WebSearch" else "no-web-fetch"}, tool
-    away = allergens_run("allergen-recorded-as-stated", tmp_path / "away", dish(STATED_DISH))
+    away = stated("away", dish(STATED_DISH))
     away.called("Write", {"file_path": "/tmp/foodalg.md", "content": "the document"})
     assert failed(away.scores()) == {"nothing-written-outside-the-project"}
 

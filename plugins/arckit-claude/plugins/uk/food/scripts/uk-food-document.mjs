@@ -9,8 +9,8 @@ import {
 import { completionRecordDocument, DOCUMENT_FILE, PENDING, readSignOffs } from './uk-food-status.mjs';
 import { HELPER, loadValidData, optionError, readOptions, usageError, valueError } from './uk-food.mjs';
 import {
-  allergenChunks, allergenSource, cleaningScheduleChunks, cleaningScheduleSource, listAsked, listCounts, listCountsWhen, listNotStarted,
-  listOutstanding, LISTS, listSummary, suppliersChunks, suppliersSource
+  allergenChunks, allergenSource, cleaningScheduleChunks, cleaningScheduleSource, keptElsewhereLine, listAsked, listCounts, listCountsWhen,
+  listNotStarted, listOutstanding, LISTS, listSummary, suppliersChunks, suppliersSource
 } from './uk-food-lists.mjs';
 import { recordSheetsChunks, recordSheetsLacking, recordSheetsSource } from './uk-food-sheets.mjs';
 export {
@@ -249,6 +249,8 @@ function methodsAsked(sheet, file) {
 // - An entry or a Kept elsewhere not yet confirmed shows it unfinished, as an own entry does FOODOWN; so does
 //   UNANSWERED, which a list document prints wherever it is unfinished in any other way.
 // - Its entries, and nothing else, are counted; listOutstanding and listSummary say the rest in its list's words.
+// - elsewhereOnlyLine(sheet): what the completion record says of it when it says only where the business keeps the
+//   list (keptElsewhereLine), or null. Only a list document has it.
 function listDocument(section, overrides) {
   return {
     name: () => LISTS[section].title, sheet: section, uses: ['profile', section], needs: ['profile', section], dataNeeded: null,
@@ -259,6 +261,7 @@ function listDocument(section, overrides) {
     notStarted: () => listNotStarted(LISTS[section]),
     countsWhen: (ids, sheet, data) => listCountsWhen(LISTS[section], ids, sheet, data),
     tally: (sheet, counts) => listCounts(LISTS[section], sheet, counts),
+    elsewhereOnlyLine: (sheet) => keptElsewhereLine(LISTS[section], sheet),
     lacking: (data) => LISTS[section].lacking(data),
     ...overrides
   };

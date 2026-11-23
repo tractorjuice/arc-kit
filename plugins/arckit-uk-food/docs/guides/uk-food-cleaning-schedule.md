@@ -42,7 +42,7 @@ Point the command to the file, such as a cleaning rota you keep in the project f
 
 ### If you keep your cleaning schedule somewhere else
 
-If your business already keeps its cleaning schedule somewhere else, such as a folder in the kitchen, tell the command where. This is what "kept elsewhere" means. The command records where, in your words, with your name and the date: straight away if you say it, having said who you are, in the message that starts the command, and otherwise once you confirm it as shown. The document then says so. The command never asks you about this or assumes it: it is recorded only when you say so. The list of what is still waiting, which the command shows you as the helper script prints it, does name it as one of two ways to finish a schedule with nothing in it. You can list items here as well, and the document prints both.
+If your business already keeps its cleaning schedule somewhere else, such as a folder in the kitchen, tell the command where. This is what "kept elsewhere" means. The command records where, in your words, with your name and the date: straight away if you say it, having said who you are, in the message that starts the command, and otherwise once you confirm it as shown. The document then says so, and, if no item is confirmed in it, that it holds nothing of that schedule and that nothing in it was checked against it. The command never asks you about this or assumes it: it is recorded only when you say so. The list of what is still waiting, which the command shows you as the helper script prints it, does name it as one of two ways to finish a schedule with nothing in it. You can list items here as well, and the document prints both.
 
 ### Changing an item later
 

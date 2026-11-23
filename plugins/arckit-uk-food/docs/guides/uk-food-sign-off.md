@@ -22,6 +22,8 @@ A document can be signed off only when it is finished. The overlay's helper scri
 - for your suppliers and contacts, your environmental health team's entry is confirmed, and at least one supplier is confirmed or a confirmed note says where you keep your suppliers' list;
 - if the file holds anything outside the part the helper checks, such as a note or a section of your own, you have been shown it and have said you have read it.
 
+A list finished only by a confirmed note of where you keep it, with nothing of the list confirmed in the document (for your suppliers and contacts, no supplier), can be signed off. The document then says that it holds nothing of that record and that nothing in it was checked against it, and the completion record lists it under Kept elsewhere.
+
 ## Before you start
 
 - **A finished document.** Run `/arckit-uk-food:uk-food-check` to see which documents are finished.

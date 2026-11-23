@@ -237,9 +237,10 @@ test('item 8: each list document\'s counts in status --json give its entries and
   const counts = (code) => docStatus(dir, code).counts;
   // The cafe: four dishes, three confirmed, two of whose cells (Celery and Mustard in DISH-02) are empty; four cleaning
   // items, three confirmed; four entries, all confirmed. Each is the same as the document's questions and confirmed.
-  assert.deepEqual(counts('FOODALG'), { entries: 4, confirmed: 3, cellsNotConfirmed: 2 });
-  assert.deepEqual(counts('FOODCS'), { entries: 4, confirmed: 3 });
-  assert.deepEqual(counts('FOODSUP'), { entries: 4, confirmed: 4 });
+  // keptElsewhereOnly (final review E2) is false for each: nothing in the cafe's lists is kept elsewhere.
+  assert.deepEqual(counts('FOODALG'), { entries: 4, confirmed: 3, keptElsewhereOnly: false, cellsNotConfirmed: 2 });
+  assert.deepEqual(counts('FOODCS'), { entries: 4, confirmed: 3, keptElsewhereOnly: false });
+  assert.deepEqual(counts('FOODSUP'), { entries: 4, confirmed: 4, keptElsewhereOnly: false });
   for (const code of ['FOODALG', 'FOODCS', 'FOODSUP']) {
     const doc = docStatus(dir, code);
     assert.deepEqual([doc.counts.entries, doc.counts.confirmed], [doc.questions, doc.confirmed], code);
@@ -247,18 +248,18 @@ test('item 8: each list document\'s counts in status --json give its entries and
   // The own methods document, whose entries are counted too, and the six others keep exactly the fields they had.
   for (const code of PLAN_1_DOCS) assert.equal(docStatus(dir, code).counts, undefined, code);
   const json = JSON.parse(run('status', '--project', dir, '--json').stdout);
-  assert.deepEqual(json.documents.find((d) => d.code === 'FOODALG').counts, { entries: 4, confirmed: 3, cellsNotConfirmed: 2 });
+  assert.deepEqual(json.documents.find((d) => d.code === 'FOODALG').counts, { entries: 4, confirmed: 3, keptElsewhereOnly: false, cellsNotConfirmed: 2 });
   // One of those cells filled in: one left.
   setSheet(dir, 'allergens', swap(sheet(dir, 'allergens'), 'Cereals-containing-gluten: contains\nCelery:\n',
     'Cereals-containing-gluten: contains\nCelery: does not contain\n'));
-  assert.deepEqual(counts('FOODALG'), { entries: 4, confirmed: 3, cellsNotConfirmed: 1 });
+  assert.deepEqual(counts('FOODALG'), { entries: 4, confirmed: 3, keptElsewhereOnly: false, cellsNotConfirmed: 1 });
   // In a worksheet with a problem nothing counts as confirmed, so no cell of a confirmed dish is counted either.
   setSheet(dir, 'allergens', `${sheet(dir, 'allergens')}a stray line\n`);
-  assert.deepEqual(counts('FOODALG'), { entries: 4, confirmed: 0, cellsNotConfirmed: 0 });
+  assert.deepEqual(counts('FOODALG'), { entries: 4, confirmed: 0, keptElsewhereOnly: false, cellsNotConfirmed: 0 });
   // Not started: nothing to count.
   rmSync(sheetFile(dir, 'allergens'));
   rmSync(sheetFile(dir, 'cleaning'));
-  assert.deepEqual([counts('FOODALG'), counts('FOODCS')], [{ entries: 0, confirmed: 0, cellsNotConfirmed: 0 }, { entries: 0, confirmed: 0 }]);
+  assert.deepEqual([counts('FOODALG'), counts('FOODCS')], [{ entries: 0, confirmed: 0, keptElsewhereOnly: false, cellsNotConfirmed: 0 }, { entries: 0, confirmed: 0, keptElsewhereOnly: false }]);
 });
 
 test('the unfinished list says, for each document in order, what is outstanding and what to do next, then each special process with no own entry and each own entry awaiting review', () => {

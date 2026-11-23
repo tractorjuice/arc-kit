@@ -11,6 +11,18 @@ import {
   signOffDocument, upgradeWorksheet, withDocuments
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
+// Final review E2: what a list document, its status line and the completion record add when Kept elsewhere is confirmed
+// and no entry it stands for is: that nothing of the record kept elsewhere is held or checked here.
+const CS_ONLY = ', and no cleaning item is confirmed here, so nothing of that schedule is held or checked here';
+const SUP_ONLY = ', and no supplier is confirmed here, so nothing of that list is held or checked here';
+const ALG_ONLY = ', and no dish is confirmed here, so nothing of that record is held or checked here';
+const CS_ONLY_BODY = 'No cleaning item is confirmed in this document, so it holds nothing of that cleaning schedule, and nothing in it was checked ' +
+  'against that schedule.';
+const SUP_ONLY_BODY = 'No supplier is confirmed in this document, so it holds nothing of that suppliers\' list, and nothing in it was checked ' +
+  'against that list.';
+const ALG_ONLY_BODY = 'No dish is confirmed in this document, so it holds nothing of that allergen information, and nothing in it was checked ' +
+  'against that record.';
+
 // The list worksheets and the list documents. The pack's words are never typed here: the cleaning
 // schedule's frequencies and columns are read from the data, as the helper reads them.
 
@@ -479,7 +491,7 @@ test('status tells each state of a cleaning schedule in its own true words, coun
     ['Kept elsewhere not confirmed', cafeWith(withElsewhere(sheet(), KEPT_UNCONFIRMED)), 'no cleaning items yet', 0,
       ['Kept elsewhere in food-safety/answers-cleaning.md has something written in it but is not confirmed: fill in Where, set State to ' +
         'confirmed and fill in By and On, or clear it']],
-    ['Kept elsewhere confirmed alone', cafeWith(withElsewhere(sheet(), KEPT)), 'the business keeps its cleaning schedule elsewhere', 0, []],
+    ['Kept elsewhere confirmed alone', cafeWith(withElsewhere(sheet(), KEPT)), `the business keeps its cleaning schedule elsewhere${CS_ONLY}`, 0, []],
     ['entries and Kept elsewhere', cafeWith(withElsewhere(sheet(BOARDS, FRIDGE), KEPT)),
       '2 of 2 cleaning items confirmed; the business also keeps its cleaning schedule elsewhere', 2, []],
     ['all confirmed', cafeWith(sheet(BOARDS, FRIDGE)), '2 of 2 cleaning items confirmed', 2, []],
@@ -952,12 +964,12 @@ test('status tells each state of a suppliers and contacts list in its own true w
     ['blank', supSheet(), 'no entries yet', [NOTHING_YET, NO_TEAM]],
     ['a supplier confirmed, no environmental health entry', supSheet(GROCER), '1 of 1 entries confirmed', [NO_TEAM]],
     ['the team confirmed, no supplier', supSheet(TEAM), '1 of 1 entries confirmed', [NO_SUPPLIER]],
-    ['Kept elsewhere confirmed alone', withElsewhere(supSheet(), SUP_KEPT), 'the business keeps its suppliers\' list elsewhere', [NO_TEAM]],
+    ['Kept elsewhere confirmed alone', withElsewhere(supSheet(), SUP_KEPT), `the business keeps its suppliers' list elsewhere${SUP_ONLY}`, [NO_TEAM]],
     ['Kept elsewhere not confirmed', withElsewhere(supSheet(), KEPT_UNCONFIRMED), 'no entries yet', [SUP_KEPT_OPEN, NO_SUPPLIER, NO_TEAM]],
     ['a supplier proposed, the team confirmed', supSheet(proposedGrocer, TEAM), '1 of 2 entries confirmed, 1 proposed',
       [`1 entry in ${SUP_FILE} is proposed but not confirmed (SUP-01): ${COUNTS_WHEN}`]],
     ['Kept elsewhere and the team confirmed', withElsewhere(supSheet(TEAM), SUP_KEPT),
-      '1 of 1 entries confirmed; the business also keeps its suppliers\' list elsewhere', []],
+      `1 of 1 entries confirmed; the business also keeps its suppliers' list elsewhere${SUP_ONLY}`, []],
     ['everything confirmed', supSheet(GROCER, TEAM, PESTS), '3 of 3 entries confirmed', []]
   ];
   for (const [state, text, summary, lines] of states) {
@@ -998,7 +1010,7 @@ test('the document shows each part not yet answered in its own place: no confirm
   // Kept elsewhere confirmed covers the suppliers' list, in the business's words, and the team's box still asks.
   const kept = renderedSup(cafeSuppliers(withElsewhere(supSheet(), SUP_KEPT)));
   assert.ok(kept.includes('\n## Suppliers\' list\n\nThe business keeps its suppliers\' list elsewhere: The blue book by the till (said by Sam Okafor, ' +
-    '2026-11-17).\n\n## Contacts list\n'), kept);
+    `2026-11-17).\n\n${SUP_ONLY_BODY}\n\n## Contacts list\n`), kept);
   assert.ok(kept.includes(`\n\n${box}\n\n`), kept);
   // An entry not confirmed is named by its identifier, and nothing of it is printed: a supplier in the suppliers' part,
   // any other (a contact, the team, an entry with no Kind yet) at the end.
@@ -1016,7 +1028,7 @@ test('Kept elsewhere confirmed with a supplier still unconfirmed: the suppliers\
   const dir = cafeSuppliers(withElsewhere(supSheet(proposed, TEAM, PESTS), SUP_KEPT));
   const text = renderedSup(dir);
   assert.ok(text.includes('\n## Suppliers\' list\n\nThe business keeps its suppliers\' list elsewhere: The blue book by the till (said by Sam Okafor, ' +
-    `2026-11-17).\n\n${NOT_CONFIRMED_LINE}SUP-01.\n\n## Contacts list\n`), text);
+    `2026-11-17).\n\n${SUP_ONLY_BODY}\n\n${NOT_CONFIRMED_LINE}SUP-01.\n\n## Contacts list\n`), text);
   assert.equal(text.split(NOT_CONFIRMED_LINE).length, 2, 'named once, and nothing under the contacts list');
   assert.deepEqual(supUnfinished(dir), [`1 entry in ${SUP_FILE} is proposed but not confirmed (SUP-01): ${COUNTS_WHEN}`, NOT_WRITTEN, NOT_SIGNED]);
 });
@@ -1725,14 +1737,14 @@ test('Kept elsewhere confirmed alone: the document is finished, prints where, th
   const dir = cafeAlg(withElsewhere(algSheet(), ALG_KEPT), MG_ANSWERED());
   const body = renderedAlg(dir);
   assert.ok(body.includes('\n## Allergen information\n\nThe business keeps its allergen information for its dishes elsewhere: The recipe folder in ' +
-    'the kitchen (said by Sam Okafor, 2026-11-17).\n\n### The fourteen allergens\n'), body);
+    `the kitchen (said by Sam Okafor, 2026-11-17).\n\n${ALG_ONLY_BODY}\n\n### The fourteen allergens\n`), body);
   assert.deepEqual(body.split('\n').filter((line) => line.startsWith('#')), ['## Allergen information', '### The fourteen allergens',
     '### Prepacked for direct sale', '### The business\'s own "free from" statements', '### How customers are told']);
   assert.equal(dishesTable(body), undefined);
   assert.deepEqual(algUnfinished(dir), [NOT_WRITTEN, NOT_SIGNED]);
   assert.equal(writtenAlg(dir).unfinished, false);
   assert.equal(signOffAlg(dir).exit, 0);
-  assert.match(algStatusLine(dir), /^FOODALG \(Allergen information\): the business keeps its allergen information for its dishes elsewhere; /);
+  assert.ok(algStatusLine(dir).startsWith(`FOODALG (Allergen information): the business keeps its allergen information for its dishes elsewhere${ALG_ONLY}; `));
   // Entries beside it are printed too, and one not confirmed still leaves the document unfinished.
   const both = cafeAlg(withElsewhere(algSheet(dish('DISH-01', 'Toastie', DONE), dish('DISH-02', 'Scone', { State: 'unanswered' })), ALG_KEPT), MG_ANSWERED());
   const bothBody = renderedAlg(both);
@@ -1746,7 +1758,7 @@ test('status tells each state of the allergen information in its own true words;
   const states = [
     ['blank', algSheet(), MG_ANSWERED(), 'no dishes yet', [ALG_NOTHING_YET]],
     ['Kept elsewhere not confirmed', withElsewhere(algSheet(), KEPT_UNCONFIRMED), MG_ANSWERED(), 'no dishes yet', [ALG_KEPT_OPEN]],
-    ['Kept elsewhere confirmed alone', withElsewhere(algSheet(), ALG_KEPT), MG_ANSWERED(), 'the business keeps its allergen information for its dishes elsewhere', []],
+    ['Kept elsewhere confirmed alone', withElsewhere(algSheet(), ALG_KEPT), MG_ANSWERED(), `the business keeps its allergen information for its dishes elsewhere${ALG_ONLY}`, []],
     ['a dish proposed', algSheet(dish('DISH-01', 'Toastie', { ...DONE, State: 'proposed', By: '', On: '', Source: 'The label' })), MG_ANSWERED(),
       '0 of 1 dishes confirmed, 1 proposed', [algCountLine(1, 'DISH-01', 'proposed but not confirmed')]],
     ['a dish confirmed, every cell filled', algSheet(finished), MG_ANSWERED(), '1 of 1 dishes confirmed', []],
@@ -1888,4 +1900,77 @@ test('item 5: a list document\'s count lines say what an entry needs, naming wha
   // A worksheet of questions, and the own methods worksheet, keep the words they always had.
   const cafeLines = projectStatus(CAFE, data, { today: TODAY }).unfinished;
   assert.ok(cafeLines.some(({ code, what }) => code === 'FOODXC' && what.endsWith(': an answer counts when its State is confirmed and By and On are filled in')));
+});
+
+// ---- Kept elsewhere alone says that nothing of the record is held here (final review E2) ----
+
+const CMP_KEPT_LEAD = 'Each of these documents says only where the business keeps that record elsewhere. It holds nothing of the record, and ' +
+  'nothing in it was checked against the record.';
+// The completion record's list of documents kept elsewhere, from its heading to the closing notice, or null when it has none.
+const keptElsewherePart = (dir) => {
+  const text = renderDocument('FOODCMP', dir, data, { today: TODAY }).text;
+  const at = text.indexOf('\n## Kept elsewhere\n');
+  return at < 0 ? null : text.slice(at + 1, text.indexOf('\n\nThis is ', at));
+};
+
+test('E2: a list finished by Kept elsewhere alone says, in its body, status, status --json and the completion record, that nothing of the record is held here; it is still signed off', () => {
+  const lists = [
+    ['FOODCS', 'Cleaning schedule', cafeWith(withElsewhere(sheet(), KEPT)), CS_ONLY_BODY, `the business keeps its cleaning schedule elsewhere${CS_ONLY}`],
+    // Kept elsewhere stands for the suppliers alone: with the team's entry confirmed and no supplier, it is still all there is of the list.
+    ['FOODSUP', 'Suppliers and contacts', cafeSuppliers(withElsewhere(supSheet(TEAM), SUP_KEPT)), SUP_ONLY_BODY,
+      `the business also keeps its suppliers' list elsewhere${SUP_ONLY}`],
+    ['FOODALG', 'Allergen information', cafeAlg(withElsewhere(algSheet(), ALG_KEPT), MG_ANSWERED()), ALG_ONLY_BODY,
+      `the business keeps its allergen information for its dishes elsewhere${ALG_ONLY}`]
+  ];
+  for (const [code, name, dir, body, words] of lists) {
+    const text = renderDocument(code, dir, data, { today: TODAY }).text;
+    assert.ok(text.includes(`elsewhere: ${code === 'FOODSUP' ? 'The blue book by the till' : code === 'FOODCS' ? 'The red folder on the office shelf'
+      : 'The recipe folder in the kitchen'} (said by Sam Okafor, 2026-11-17).\n\n${body}\n\n`), `${code}: ${text}`);
+    const line = mainSays('status', '--project', dir).out.split('\n').find((l) => l.startsWith(`${code} `));
+    assert.ok(line.includes(words), line);
+    const json = JSON.parse(run('status', '--project', dir, '--json').stdout).documents.find((d) => d.code === code);
+    assert.equal(json.counts.keptElsewhereOnly, true, code);
+    // Not unfinished, so not under Unfinished: a list of its own after it, naming only this document (the cafe's other lists hold entries).
+    assert.equal(keptElsewherePart(dir), `## Kept elsewhere\n\n${CMP_KEPT_LEAD}\n\n- ${name} (${code}): ${words.replace(' also ', ' ')}`);
+    assert.ok(projectStatus(dir, data, { today: TODAY }).unfinished.filter((l) => l.code === code).every((l) => !l.what.includes('elsewhere')), code);
+    if (code === 'FOODALG') writtenAlg(dir);
+    else writtenAs(dir, code);
+    assert.equal(signOffDocument(code, dir, PERSON, data, { today: TODAY }).exit, 0, code);
+  }
+});
+
+test('E2: Kept elsewhere with a confirmed entry it stands for adds none of it; nor does an entry the suppliers\' Kept elsewhere does not stand for, once a supplier is confirmed', () => {
+  const lists = [
+    ['FOODCS', cafeWith(withElsewhere(sheet(BOARDS), KEPT)), CS_ONLY_BODY, CS_ONLY],
+    ['FOODSUP', cafeSuppliers(withElsewhere(supSheet(GROCER, TEAM), SUP_KEPT)), SUP_ONLY_BODY, SUP_ONLY],
+    ['FOODALG', cafeAlg(withElsewhere(algSheet(dish('DISH-01', 'Toastie', DONE)), ALG_KEPT), MG_ANSWERED()), ALG_ONLY_BODY, ALG_ONLY]
+  ];
+  for (const [code, dir, body, words] of lists) {
+    const text = renderDocument(code, dir, data, { today: TODAY }).text;
+    assert.ok(text.includes('elsewhere: ') && !text.includes(body), code);
+    const line = mainSays('status', '--project', dir).out.split('\n').find((l) => l.startsWith(`${code} `));
+    assert.ok(line.includes('also keeps its') && !line.includes(words), line);
+    assert.equal(JSON.parse(run('status', '--project', dir, '--json').stdout).documents.find((d) => d.code === code).counts.keptElsewhereOnly, false);
+    assert.equal(keptElsewherePart(dir), null, code);
+    if (code === 'FOODALG') writtenAlg(dir);
+    else writtenAs(dir, code);
+    assert.equal(signOffDocument(code, dir, PERSON, data, { today: TODAY }).exit, 0, code);
+  }
+  // Kept elsewhere not confirmed, or nothing under it: none of it either.
+  for (const dir of [cafeWith(withElsewhere(sheet(), KEPT_UNCONFIRMED)), cafeWith(sheet())]) {
+    assert.equal(keptElsewherePart(dir), null);
+    assert.equal(JSON.parse(run('status', '--project', dir, '--json').stdout).documents.find((d) => d.code === 'FOODCS').counts.keptElsewhereOnly, false);
+  }
+});
+
+test('E2: a project with none of the three list worksheets gets a completion record with no list of documents kept elsewhere', () => {
+  const dir = cafeWith();
+  for (const section of ['allergens', 'cleaning', 'suppliers']) rmSync(join(dir, 'food-safety', `answers-${section}.md`));
+  const text = renderDocument('FOODCMP', dir, data, { today: TODAY }).text;
+  assert.ok(!text.includes('## Kept elsewhere') && !text.includes(CMP_KEPT_LEAD), text);
+  // After the unfinished list comes the closing notice, as before the list documents came.
+  const lines = text.split('\n');
+  const after = lines.slice(lines.indexOf('## Unfinished') + 1);
+  const notice = after.findIndex((line) => line.startsWith('This is '));
+  assert.ok(after.slice(0, notice).every((line) => line === '' || line.startsWith('- ')), after.slice(0, notice).join('\n'));
 });

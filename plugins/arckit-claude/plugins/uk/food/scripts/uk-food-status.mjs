@@ -51,6 +51,10 @@ const SIGN_OFF_TEXT = SIGN_OFF_FIELDS.filter((name) => name !== 'otherTextRead')
 export const PENDING = '[PENDING]';
 const NOT_RELEVANT = 'Not relevant';
 const UNFINISHED_HEADING = '## Unfinished';
+// The completion record's list of documents that say only where the business keeps a record, and the line it opens with.
+const KEPT_ELSEWHERE_HEADING = '## Kept elsewhere';
+const KEPT_ELSEWHERE_LEAD = 'Each of these documents says only where the business keeps that record elsewhere. It holds nothing of the record, ' +
+  'and nothing in it was checked against the record.';
 const NOTHING_OUTSTANDING = 'Nothing is outstanding.';
 // The rows of the pack's completion record whose wording differs from their safe method's title,
 // spelt as printed on page 78. A test ties each to the data.
@@ -592,6 +596,14 @@ function completionRecordDocument(project, data, options = {}) {
   // A line may quote a sign-off's name and date, which are business text, so each is escaped whole: the
   // helper's own words in it hold no character that businessText changes.
   const unfinished = status.unfinished.map(({ code, what }) => `- ${docName(code, data)} (${code}): ${businessText(what)}`);
+  // Each list document that says only where the business keeps its list, which is not unfinished, so not under Unfinished:
+  // a list of its own after it, so that the record never reads as holding, or having checked, what is kept elsewhere. A
+  // project with no such document prints none of it, so the record reads as it did before the list documents came.
+  const keptElsewhere = status.documents.flatMap((doc) => {
+    const row = documentOf(doc.code);
+    const line = row.elsewhereOnlyLine?.(sheets.get(row.sheet));
+    return line ? [`- ${docName(doc.code, data)} (${doc.code}): ${line}`] : [];
+  });
   const profile = sheets.get('profile');
   const name = profile?.clean ? profile.parsed.answers.get(NAME_QUESTION) : null;
   const chunks = [
@@ -603,6 +615,7 @@ function completionRecordDocument(project, data, options = {}) {
     unfinished.length ? unfinished : [NOTHING_OUTSTANDING],
     ...status.documents.filter(unmarked).map((doc) => [`${docName(doc.code, data)} (${doc.code}) is signed off, and the header of ` +
       `${doc.file} is not yet marked to show it: ${MARK_HOW}.`]),
+    ...(keptElsewhere.length ? [[KEPT_ELSEWHERE_HEADING], [KEPT_ELSEWHERE_LEAD], keptElsewhere] : []),
     [closingNotice(name?.answered ? name.answer : null)],
     [sourceLine(data.source)]
   ];

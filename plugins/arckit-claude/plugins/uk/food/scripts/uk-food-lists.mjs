@@ -258,6 +258,13 @@ function customerLines(sheets) {
 // - keptElsewhere: the words the document's line opens with when Kept elsewhere is confirmed, before the colon and
 //   where: the whole phrase, article and all, so that each list words it as reads right ("a cleaning schedule", "its
 //   suppliers' list"), which no one rule for the article could.
+// - elsewhereOnly: what is said when Kept elsewhere is confirmed and no entry it stands for is (keptElsewhereOnly):
+//   { body, the sentence the document prints after its Kept elsewhere line; status, the words status's line and the
+//   completion record add after "keeps its ... elsewhere" }. Each says that nothing of the record kept elsewhere is
+//   held in the document or was checked here, so that a document finished that way never reads as holding the list.
+// - elsewhereCovers(entry), when Kept elsewhere stands for only some of a list's entries: whether it stands for this
+//   one (for the suppliers, a supplier, and not the environmental health team or another contact). Every entry by
+//   default.
 // - outstanding(parsed, data, sheets), when a list needs it: what else keeps its document from being finished, as
 //   plain lines for status, the completion record and sign-off, from a worksheet with no problems: no entry
 //   for the environmental health team, say, or cells not confirmed in confirmed rows. `sheets` is every worksheet
@@ -273,6 +280,8 @@ export const LISTS = {
     section: 'cleaning', nouns: ['cleaning item', 'cleaning items'], prefix: 'CS', title: 'Cleaning schedule', entryTitle: 'Name of the item',
     purpose: 'lists what the business cleans, how often and how',
     elsewhereLabel: 'cleaning schedule', keptElsewhere: 'The business keeps a cleaning schedule elsewhere',
+    elsewhereOnly: { body: 'No cleaning item is confirmed in this document, so it holds nothing of that cleaning schedule, and nothing in it ' +
+      'was checked against that schedule.', status: 'no cleaning item is confirmed here, so nothing of that schedule is held or checked here' },
     fields: ['Frequency', 'Other-frequency', 'Precautions', 'Method'],
     values: {
       Frequency: (value, data) => {
@@ -318,6 +327,11 @@ export const LISTS = {
     section: 'suppliers', nouns: ['entry', 'entries'], prefix: 'SUP', title: 'Suppliers and contacts', entryTitle: 'Business or service name',
     purpose: 'lists the business\'s suppliers, its environmental health team and its other contacts',
     elsewhereLabel: 'suppliers\' list', keptElsewhere: 'The business keeps its suppliers\' list elsewhere',
+    // Kept elsewhere stands for the suppliers alone, so the words speak of suppliers: the team and other contacts are
+    // printed, or asked for, in the contacts part whatever it says.
+    elsewhereOnly: { body: 'No supplier is confirmed in this document, so it holds nothing of that suppliers\' list, and nothing in it was ' +
+      'checked against that list.', status: 'no supplier is confirmed here, so nothing of that list is held or checked here' },
+    elsewhereCovers: (entry) => entry.kind === 'supplier',
     fields: ['Kind', 'Contact-name', 'Telephone', 'Email', 'Address', 'Delivery-days', 'Lead-time', 'Goods-supplied', 'Useful-for'],
     // Kind is read in any letter case, with a space for the hyphen ("environmental health"), and kept in its own
     // spelling. The days a supplier delivers are the business's own words, printed under the pack's delivery days
@@ -405,6 +419,8 @@ export const LISTS = {
     section: 'allergens', nouns: ['dish', 'dishes'], prefix: 'DISH', title: 'Allergen information', entryTitle: 'Name of the dish',
     purpose: 'records each dish the business serves against the fourteen allergens',
     elsewhereLabel: 'allergen information for its dishes', keptElsewhere: 'The business keeps its allergen information for its dishes elsewhere',
+    elsewhereOnly: { body: 'No dish is confirmed in this document, so it holds nothing of that allergen information, and nothing in it was ' +
+      'checked against that record.', status: 'no dish is confirmed here, so nothing of that record is held or checked here' },
     fields: ['Ingredients', 'PPDS', ...ALLERGEN_FIELDS, 'Notes', 'Checked-against', 'Checked-on', 'Free-from-claim'],
     values: {
       PPDS: (value) => {
@@ -659,6 +675,12 @@ addListWorksheets({
 // Whether a Kept elsewhere holds anything a person wrote.
 const elsewhereGiven = (elsewhere) => Boolean(elsewhere.where || elsewhere.by || elsewhere.on || elsewhere.source) ||
   elsewhere.state !== 'unanswered';
+// Whether a list's document says only where the business keeps the list: Kept elsewhere is confirmed, and no entry it
+// stands for is (elsewhereCovers). Such a document can be finished, and signed off, but holds nothing of the record
+// kept elsewhere, and its body, status's line, status --json and the completion record each say so (elsewhereOnly).
+// `parsed` is a worksheet read with no problems, or null.
+export const keptElsewhereOnly = (list, parsed) => Boolean(parsed?.elsewhere?.answered) &&
+  ![...parsed.entries.values()].some((entry) => entry.answered && (list.elsewhereCovers?.(entry) ?? true));
 
 // What a person confirms for a list document, as status counts it: its entries, and nothing else. What else
 // keeps a list document from being finished (nothing recorded yet, Kept elsewhere not confirmed, and whatever
@@ -711,7 +733,7 @@ export function listCountsWhen(list, ids, sheet, data) {
 // then whatever its list counts besides (its `counts`), from the worksheet only when it has no problems. `counted` is
 // status's count for the document, `sheet` the worksheet as readWorksheets reads it, or missing.
 export const listCounts = (list, sheet, counted) => ({ entries: counted.questions, confirmed: counted.confirmed,
-  ...(list.counts?.(sheet?.clean ? sheet.parsed : null) ?? {}) });
+  keptElsewhereOnly: keptElsewhereOnly(list, sheet?.clean ? sheet.parsed : null), ...(list.counts?.(sheet?.clean ? sheet.parsed : null) ?? {}) });
 
 // What status's line for a list document says of its worksheet: how many entries are confirmed, and that the
 // business keeps the list elsewhere when that is confirmed; with no entry, that, or that there are none yet.
@@ -719,10 +741,16 @@ export const listCounts = (list, sheet, counted) => ({ entries: counted.question
 export function listSummary(list, doc, sheet) {
   const [, many] = list.nouns;
   const kept = Boolean(sheet?.clean && sheet.parsed.elsewhere?.answered);
-  const keeps = `the business ${doc.questions ? 'also ' : ''}keeps its ${list.elsewhereLabel} elsewhere`;
+  const keeps = `the business ${doc.questions ? 'also ' : ''}keeps its ${list.elsewhereLabel} elsewhere` +
+    (kept && keptElsewhereOnly(list, sheet.parsed) ? `, and ${list.elsewhereOnly.status}` : '');
   if (!doc.questions) return [kept ? keeps : `no ${many} yet`];
   return [`${doc.confirmed} of ${doc.questions} ${many} confirmed${doc.proposed ? `, ${doc.proposed} proposed` : ''}`, ...(kept ? [keeps] : [])];
 }
+
+// What the completion record says of a list document that says only where the business keeps the list
+// (keptElsewhereOnly), or null: the same words as status's line, which name nothing of the business's own.
+export const keptElsewhereLine = (list, sheet) => (sheet?.clean && keptElsewhereOnly(list, sheet.parsed)
+  ? `the business keeps its ${list.elsewhereLabel} elsewhere, and ${list.elsewhereOnly.status}` : null);
 
 // A list document's last line, which says truly what it quotes from the pack: `lead` names it, and the source
 // follows as the other documents' source line gives it, read from the data. A document that prints nothing of
@@ -732,9 +760,11 @@ export const quotedSourceLine = (lead, source) => `${lead} the ${source.publishe
 const unquotedSourceLine = (source) => `Nothing in this document is quoted from the ${source.publisher}'s ${source.title}, and the ` +
   `${source.publisher} has not reviewed or endorsed this document.`;
 
-// The line a list document prints when Kept elsewhere is confirmed: where, and who said so and when.
-const elsewhereChunks = (list, elsewhere) => (elsewhere.answered
-  ? [[`${list.keptElsewhere}: ${said(elsewhere.where)} (said by ${said(elsewhere.by)}, ${said(elsewhere.on)}).`]]
+// The line a list document prints when Kept elsewhere is confirmed: where, and who said so and when; then, when no
+// entry it stands for is confirmed, that the document holds nothing of that record (elsewhereOnly).
+const elsewhereChunks = (list, parsed) => (parsed.elsewhere.answered
+  ? [[`${list.keptElsewhere}: ${said(parsed.elsewhere.where)} (said by ${said(parsed.elsewhere.by)}, ${said(parsed.elsewhere.on)}).`],
+    ...(keptElsewhereOnly(list, parsed) ? [[list.elsewhereOnly.body]] : [])]
   : []);
 // Who agreed an entry the document prints, and when, on a line of its own under its table.
 const agreedLine = (entry) => `- ${entry.id} ${said(entry.title)}: ${said(entry.by)}, ${said(entry.on)}`;
@@ -754,7 +784,7 @@ export function cleaningScheduleChunks(sources, data) {
   const { columns, frequencies } = cleaningForm(data);
   const other = frequencies.at(-1);
   const confirmed = [...parsed.entries.values()].filter((entry) => entry.answered);
-  const kept = elsewhereChunks(list, parsed.elsewhere);
+  const kept = elsewhereChunks(list, parsed);
   const cells = (entry) => [businessText(entry.title),
     ...frequencies.map((frequency) => (entry.frequency !== frequency ? '' : frequency === other ? businessText(entry.otherFrequency) : 'X')),
     businessText(entry.precautions), businessText(entry.method)];
@@ -800,7 +830,7 @@ export function suppliersChunks(sources, data) {
     return tableLines([label, value(field)], rest.map(([name, text]) => [text, value(name)]));
   };
   const agreed = (shown) => (shown.length ? [['Agreed by:'], shown.map(agreedLine)] : []);
-  const kept = elsewhereChunks(list, parsed.elsewhere);
+  const kept = elsewhereChunks(list, parsed);
   const supplierPart = suppliers.length ? [...suppliers.map((entry) => box(forms.supplier, entry)), ...agreed(suppliers)]
     : kept.length ? [] : [[`The suppliers' list has no confirmed supplier yet: ${UNANSWERED}`]];
   // The team's heading and its "useful for advice on" heading are its box's first and last labels.
@@ -877,7 +907,7 @@ export function allergenChunks(sources, data) {
   const quotes = allergenQuotes(data);
   const entries = [...parsed.entries.values()];
   const confirmed = entries.filter((entry) => entry.answered);
-  const kept = elsewhereChunks(list, parsed.elsewhere);
+  const kept = elsewhereChunks(list, parsed);
   // A confirmed dish named in a line of the helper's, and in a table cell (where tableLines makes its line breaks <br>).
   const named = (entry) => `${entry.id} ${said(entry.title)}`;
   const inCell = (entry) => `${entry.id} ${businessText(entry.title)}`;
