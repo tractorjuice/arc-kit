@@ -125,8 +125,8 @@ The assistant may point out that a safe method sounds not relevant from what you
 `/arckit-uk-food:uk-food-allergens` records each dish you serve, what goes into it, and, for each of the fourteen allergens in the pack, whether the dish contains it. Have your labels, product specifications and suppliers' statements to hand: you can paste their wording in, or put them in the project folder and point the command to them.
 
 - **"Contains"** comes only from those labels, specifications and statements, or, for a single whole food with nothing added, from what the person who looked at it says.
-- **"Does not contain"** is only ever your own statement. Once every ingredient of a dish has been checked against something, the command tells you which allergens it found named and which it did not, and asks you which of those not found the dish does not contain.
-- **Anything else reads NOT CONFIRMED**, and the document stays unfinished until it is filled in.
+- **"Does not contain"** is only ever your own statement. Once every ingredient of a dish has been checked against a label, a specification, a statement or a look at a whole food, the command tells you which allergens it found named and which it did not, and asks you which of those not found the dish does not contain.
+- **An allergen that nothing settles reads NOT CONFIRMED**, and the document stays unfinished until it is filled in.
 
 The command never works an allergen out from the name of a dish or an ingredient, never looks a product up, and never says a dish is free from anything or suitable for anyone. If your business already makes a "free from" statement, it records your exact words and prints the pack's conditions for making one beside them; it does not suggest one or reword yours. A label's "may contain" warning goes in the dish's notes, word for word. The [allergen information guide](uk-food-allergens.md) says how each answer is recorded, and what happens when a recipe or a supplier changes.
 
@@ -163,7 +163,7 @@ A document that is already there is taken as done, whatever has been answered si
 
 Do not expect a finished pack from a build: the answers come from running the commands above with the person who knows the business.
 
-The recipe builds the profile, the five sections, your own methods, your allergen information, your cleaning schedule, your suppliers and contacts, the blank diary and record sheets, and the completion record. A build writes nothing over the diary and record sheets' file once someone has typed into it.
+The recipe builds the profile, the five sections, your own methods, your allergen information, your cleaning schedule, your suppliers and contacts, the blank diary and record sheets, and the completion record. A build never prints the diary and record sheets afresh over forms someone has typed into.
 
 Run the profile command once first, so the project exists. The build saves its work with a git commit after each wave of documents; a records folder is rarely a git repository, so add `--no-commit` unless yours is one. For project `001`:
 
