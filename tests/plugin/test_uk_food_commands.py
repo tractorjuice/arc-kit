@@ -40,6 +40,7 @@ COMMANDS = {
     "uk-food-allergens": "FOODALG",
     "uk-food-cleaning-schedule": "FOODCS",
     "uk-food-suppliers": "FOODSUP",
+    "uk-food-record-sheets": "FOODREC",
     "uk-food-check": "FOODCMP",
     "uk-food-sign-off": "none",
 }
@@ -56,8 +57,13 @@ LIST_PREFIX = {"cleaning": "CS", "suppliers": "SUP", "allergens": "DISH"}
 # The allergens worksheet's fields for the fourteen allergens, in its order.
 ALLERGEN_FIELDS = ["Nuts", "Peanuts", "Eggs", "Milk", "Fish", "Crustaceans", "Molluscs", "Cereals-containing-gluten", "Celery",
                    "Lupin", "Mustard", "Sesame-seeds", "Soya", "Sulphur-dioxide"]
+# The command that writes the diary and record sheets: blank forms, which it writes asking nothing, and which nobody
+# signs off.
+FORMS = "uk-food-record-sheets"
 # The commands that write a rendered document.
-WRITING = [*GATHERING, "uk-food-check"]
+WRITING = [*GATHERING, FORMS, "uk-food-check"]
+# The commands that find the business's project or make one, in the step the gathering commands share word for word.
+MAKES_A_PROJECT = [*GATHERING, FORMS]
 # Each document code, and the template its command builds it from.
 TEMPLATE_OF = {
     "FOODPROF": "uk-food-profile-template.md",
@@ -70,6 +76,7 @@ TEMPLATE_OF = {
     "FOODALG": "uk-food-allergens-template.md",
     "FOODCS": "uk-food-cleaning-schedule-template.md",
     "FOODSUP": "uk-food-suppliers-template.md",
+    "FOODREC": "uk-food-record-sheets-template.md",
     "FOODCMP": "uk-food-check-template.md",
 }
 TEMPLATES = sorted(set(TEMPLATE_OF.values()))
@@ -80,11 +87,9 @@ TEMPLATE_COMMAND = {
     "uk-food-allergens-template.md": "uk-food-allergens",
     "uk-food-cleaning-schedule-template.md": "uk-food-cleaning-schedule",
     "uk-food-suppliers-template.md": "uk-food-suppliers",
+    "uk-food-record-sheets-template.md": FORMS,
     "uk-food-check-template.md": "uk-food-check",
 }
-# Documents with a command and a template but, until the record sheets command brings the recipe's new targets
-# (Plan 2, Task 11), no target in the recipe.
-NOT_YET_IN_THE_RECIPE = {"FOODALG", "FOODCS", "FOODSUP"}
 # Ruling 12: the helper, the document namer, the schema and the nine data files. Not differences.md.
 RUNTIME_ASSETS = [
     "scripts/uk-food.mjs",
@@ -116,6 +121,7 @@ HANDOFFS = {
     "uk-food-allergens": {"uk-food-check"},
     "uk-food-cleaning-schedule": {"uk-food-check"},
     "uk-food-suppliers": {"uk-food-check"},
+    FORMS: {"uk-food-check"},
     "uk-food-check": {"uk-food-sign-off"},
     "uk-food-sign-off": {"uk-food-check"},
 }
@@ -174,11 +180,10 @@ def run(*args: str, cwd: Path | None = None) -> subprocess.CompletedProcess:
 # --- the files ---------------------------------------------------------------
 
 
-def test_the_overlay_ships_exactly_the_eight_commands():
-    """Plan 1's five, and the three list commands: cleaning schedule, suppliers and allergens. The record sheets
-    command follows in a task of its own (Task 11)."""
+def test_the_overlay_ships_exactly_the_nine_commands():
+    """Plan 1's five, the three list commands (cleaning schedule, suppliers and allergens) and the record sheets."""
     names = {p.stem for p in (OVERLAY / "commands").glob("*.md")}
-    assert len(COMMANDS) == 8
+    assert len(COMMANDS) == 9
     assert names == set(COMMANDS)
     assert not (OVERLAY / "commands" / ".gitkeep").exists(), "the placeholder is not needed once commands exist"
 
@@ -241,18 +246,52 @@ def test_the_recipe_builds_the_drafts_and_has_no_health_step():
     recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
     assert "post_build_hooks" not in recipe, "ruling 35: /arckit:health is written for architecture documents"
     assert "optional_targets" not in recipe, "the own methods document is built like the others"
-    assert sorted(t["output"]["type"] for t in recipe["targets"]) == sorted(set(TEMPLATE_OF) - NOT_YET_IN_THE_RECIPE)
+    assert sorted(t["output"]["type"] for t in recipe["targets"]) == sorted(TEMPLATE_OF)
     skills = {t["skill"] for t in recipe["targets"]}
     assert "arckit:uk-food-sign-off" not in skills
     assert "confirms nothing" in recipe["description"]
     assert "worksheets that are missing" in recipe["description"]
+    # Each target runs the command that writes its document, as that command's doc-type declares it.
+    for target in recipe["targets"]:
+        name = target["skill"].removeprefix("arckit:")
+        declared = COMMANDS[name]
+        assert target["output"]["type"] in (declared if isinstance(declared, list) else [declared]), target["id"]
+    # Plan 2's four documents: the allergen information and the record sheets read the Management worksheet, so they come
+    # after the Management section; the cleaning schedule and the suppliers need only the profile. The completion record
+    # reports on every other document, so it comes last.
+    targets = {t["id"]: t for t in recipe["targets"]}
+    for target_id, name, code, deps in [("ALG", "uk-food-allergens", "FOODALG", ["MG"]), ("CS", "uk-food-cleaning-schedule", "FOODCS", ["PROFILE"]),
+                                        ("SUP", "uk-food-suppliers", "FOODSUP", ["PROFILE"]), ("REC", FORMS, "FOODREC", ["MG"])]:
+        target = targets[target_id]
+        assert (target["skill"], target["args"], target["output"]["type"], target["deps"]) == (f"arckit:{name}", "{P}", code, deps), target_id
+    assert sorted(targets["CHECK"]["deps"]) == sorted(set(targets) - {"CHECK"})
+    # Each target's output is written on one line, which is the only form check-doc-type-registry.py reads.
+    text = RECIPE.read_text(encoding="utf-8")
+    for target_id in targets:
+        block = text.split(f"  - id: {target_id}\n", 1)[1].split("\n\n", 1)[0]
+        assert re.search(r"^    output: \{ project: \"\{P\}-\{NAME\}\", type: FOOD[A-Z]+ \}$", block, re.M), target_id
+
+
+def test_the_recipe_header_says_truly_what_it_holds():
+    """The header's comment names every target --refresh takes, and claims no dry run of the four targets added after it."""
+    recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
+    header = " ".join(line.lstrip("# ").strip() for line in RECIPE.read_text(encoding="utf-8").split("\nrecipe:", 1)[0].splitlines())
+    named = re.search(r"--refresh \(([A-Z, ]+?) or ([A-Z]+)\)", header)
+    assert named, "the header lists the names --refresh takes"
+    assert {*named.group(1).split(", "), named.group(2)} == {t["id"] for t in recipe["targets"]}
+    assert "planned it in a dry run (--plan, 18 November 2026)" not in header, "that dry run covered the first eight targets only"
+    assert ("The four targets added on 23 November 2026 (ALG, CS, SUP and REC) pass the repository's recipe checks, and have not been "
+            "planned or run through the build harness.") in header
+    assert "measured on 23 November 2026" in header
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
 def test_each_targets_min_lines_is_below_the_smallest_its_document_can_be(tmp_path):
-    """The build accepts a document of at least its target's min_lines. Each document is built at its
-    smallest: every safe method in a section marked not relevant, no own entries, every profile answer a
-    plain no, and the completion record once every other document is signed off, so nothing is outstanding."""
+    """The build accepts a document of at least its target's min_lines. Each document is built at its smallest:
+    every safe method in a section marked not relevant, no own entries and every profile answer a plain no; each list
+    both blank, as a build on a new project writes it, and finished with nothing in it but where the business keeps it,
+    the smaller counting; the record sheets with no checks of the business's own; and the completion record once every
+    other document is signed off and the record sheets are written, so nothing is outstanding."""
     recipe = yaml.safe_load(RECIPE.read_text(encoding="utf-8"))
     min_lines = {t["output"]["type"]: t["min_lines"] for t in recipe["targets"]}
     project = tmp_path / "smallest"
@@ -270,53 +309,33 @@ def test_each_targets_min_lines_is_below_the_smallest_its_document_can_be(tmp_pa
         path = build(code, project)
         lines[code] = path.read_text(encoding="utf-8").count("\n")
         sign_and_mark(code, project, path)
-    # The cleaning schedule, finished with no entry, as it says where the business keeps its schedule. It has no
-    # template or recipe target until its command comes, so it is written around its body alone and not counted.
-    cleaning = run(HELPER, "worksheet", "--section", "cleaning").stdout.replace(
-        "## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:",
-        "## Kept elsewhere\n\nWhere: The red folder in the office\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17")
-    (project / "food-safety" / "answers-cleaning.md").write_text(cleaning, encoding="utf-8")
-    body = run(HELPER, "render", "--doc", "FOODCS", "--project", project)
-    assert body.returncode == 0, body.stderr
-    (project / "ARC-001-FOODCS-v1.0.md").write_text(f"Header text.\n\n{body.stdout}\nFooter text.\n", encoding="utf-8")
-    signed = run(HELPER, "sign-off", "--doc", "FOODCS", "--project", project, "--name", "Sam Okafor", "--role", "owner",
-                 "--version", "1.0", "--date", "2026-11-17", "--other-text-read", "yes")
-    assert signed.returncode == 0, signed.stderr
-    # The suppliers and contacts list at its smallest when finished: the suppliers' list kept elsewhere, and the
-    # environmental health team's entry, which Kept elsewhere does not stand in for. Written the same way, not counted.
-    suppliers = run(HELPER, "worksheet", "--section", "suppliers").stdout.replace(
-        "## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:",
-        "## Kept elsewhere\n\nWhere: The blue book by the till\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17")
-    suppliers += ("\n## SUP-01 Exampleton District Council\n\nKind: environmental-health\nContact-name:\nTelephone: 01632 960300\nEmail:\n"
-                  "Address:\nDelivery-days:\nLead-time:\nGoods-supplied:\nUseful-for:\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17\n"
-                  "Source:\n")
-    (project / "food-safety" / "answers-suppliers.md").write_text(suppliers, encoding="utf-8")
-    body = run(HELPER, "render", "--doc", "FOODSUP", "--project", project)
-    assert body.returncode == 0, body.stderr
-    (project / "ARC-001-FOODSUP-v1.0.md").write_text(f"Header text.\n\n{body.stdout}\nFooter text.\n", encoding="utf-8")
-    signed = run(HELPER, "sign-off", "--doc", "FOODSUP", "--project", project, "--name", "Sam Okafor", "--role", "owner",
-                 "--version", "1.0", "--date", "2026-11-17", "--other-text-read", "yes")
-    assert signed.returncode == 0, signed.stderr
-    # The allergen information at its smallest when finished: kept elsewhere, with MG-04 not relevant like every other
-    # safe method here, so how customers are told is its not-relevant line. Written the same way, not counted.
-    allergens = run(HELPER, "worksheet", "--section", "allergens").stdout.replace(
-        "## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:",
-        "## Kept elsewhere\n\nWhere: The recipe folder in the kitchen\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17")
-    (project / "food-safety" / "answers-allergens.md").write_text(allergens, encoding="utf-8")
-    body = run(HELPER, "render", "--doc", "FOODALG", "--project", project)
-    assert body.returncode == 0, body.stderr
-    (project / "ARC-001-FOODALG-v1.0.md").write_text(f"Header text.\n\n{body.stdout}\nFooter text.\n", encoding="utf-8")
-    signed = run(HELPER, "sign-off", "--doc", "FOODALG", "--project", project, "--name", "Sam Okafor", "--role", "owner",
-                 "--version", "1.0", "--date", "2026-11-17", "--other-text-read", "yes")
-    assert signed.returncode == 0, signed.stderr
-    # The diary and record sheets, which nobody signs: until they are written the completion record lists them as not
-    # written. Written the same way, not counted, until their command and recipe target come.
-    body = run(HELPER, "render", "--doc", "FOODREC", "--project", project)
-    assert body.returncode == 0, body.stderr
-    (project / "ARC-001-FOODREC-v1.0.md").write_text(f"Header text.\n\n{body.stdout}\nFooter text.\n", encoding="utf-8")
+    # Each list blank, as a build on a new project writes it: its worksheet as the helper prints it.
+    lists = {"cleaning": "FOODCS", "suppliers": "FOODSUP", "allergens": "FOODALG"}
+    for section, code in lists.items():
+        (project / "food-safety" / f"answers-{section}.md").write_text(run(HELPER, "worksheet", "--section", section).stdout, encoding="utf-8")
+        lines[code] = build(code, project).read_text(encoding="utf-8").count("\n")
+    # Each list finished at its smallest: where the business keeps it, confirmed; for the suppliers and contacts the
+    # environmental health team's entry too, which Kept elsewhere does not stand in for; and for the allergen information,
+    # MG-04 not relevant like every other safe method here, so how customers are told is its not-relevant line.
+    kept = {"cleaning": "The red folder in the office", "suppliers": "The blue book by the till", "allergens": "The recipe folder in the kitchen"}
+    for section, code in lists.items():
+        sheet = run(HELPER, "worksheet", "--section", section).stdout.replace(
+            "## Kept elsewhere\n\nWhere:\nState: unanswered\nBy:\nOn:",
+            f"## Kept elsewhere\n\nWhere: {kept[section]}\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17")
+        if section == "suppliers":
+            sheet += ("\n## SUP-01 Exampleton District Council\n\nKind: environmental-health\nContact-name:\nTelephone: 01632 960300\nEmail:\n"
+                      "Address:\nDelivery-days:\nLead-time:\nGoods-supplied:\nUseful-for:\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17\n"
+                      "Source:\n")
+        (project / "food-safety" / f"answers-{section}.md").write_text(sheet, encoding="utf-8")
+        path = build(code, project)
+        lines[code] = min(lines[code], path.read_text(encoding="utf-8").count("\n"))
+        sign_and_mark(code, project, path)
+    # The diary and record sheets, which nobody signs, with none of the business's own checks: MG-01 is not relevant here.
+    lines["FOODREC"] = build("FOODREC", project).read_text(encoding="utf-8").count("\n")
     record = build("FOODCMP", project).read_text(encoding="utf-8")
     assert "Nothing is outstanding." in record
     lines["FOODCMP"] = record.count("\n")
+    assert set(lines) == set(min_lines), "every target's document is measured"
     for code, smallest in lines.items():
         assert min_lines[code] <= smallest, f"{code}: min_lines {min_lines[code]} but the document can be {smallest} lines"
         # Not so far below that a document cut short would still pass.
@@ -577,10 +596,20 @@ WRITING_RULES = {
 }
 
 
+# Two writing rules that cannot be true of the record sheets command, each with the reason. Nobody signs the record sheets
+# off, so no sign-off covers their file; and status reports them apart (`recordSheets`), with no `otherText`, so the
+# summary cannot go by status for it. The command says neither sentence, and its own true sentences for both, the reason
+# nothing is added to the file and the lines of its own file's `otherText`, are in COMMAND_RULES.
+NOT_TRUE_OF_THE_FORMS = {"I1: a sign-off covers the whole file", "H5: the summary says when a document holds text outside its checked part"}
+
+
 @pytest.mark.parametrize("rule", WRITING_RULES)
 @pytest.mark.parametrize("name", WRITING)
 def test_a_writing_command_states_the_rule(name, rule):
     _, body = split(command(name))
+    if name == FORMS and rule in NOT_TRUE_OF_THE_FORMS:
+        assert WRITING_RULES[rule] not in body, f"{name} says {rule}, which is not true of blank forms nobody signs"
+        return
     assert WRITING_RULES[rule] in body, f"{name} lacks {rule}"
 
 
@@ -657,6 +686,38 @@ COMMAND_RULES = {
     ("uk-food-allergens", "the document's name"): "whose document type is Allergen Information",
     ("uk-food-own-methods", "H4: an own method is never called a safe method"): "A method of the business's own is an own "
                                                                                 "method, never a safe method",
+    # The record sheets command (Task 11): blank forms it writes asking nothing, never fills in and nobody signs.
+    (FORMS, "the document's name"): "its type is Diary and Record Sheets",
+    (FORMS, "it asks nothing about the forms"): "So this command asks the person nothing about the forms",
+    (FORMS, "it never fills in a form or says a check was done"): "Never write a name, a tick, a date, a signature or anything else "
+                                                                  "into a cell of the forms, and never say or suggest that a check has "
+                                                                  "been done, or that the business does one.",
+    (FORMS, "it never suggests a check"): "Never suggest what the business's own opening or closing checks should be",
+    (FORMS, "it never signs"): "Never mark its header as signed, and never run the helper's `sign-off` for it",
+    (FORMS, "it makes only the profile worksheet"): "This command makes no other worksheet",
+    (FORMS, "the header never claims a sign-off"): "The helper's `check` fails a diary and record sheets document whose header says "
+                                                   "anything else.",
+    # Ruling 2 of the review of Task 11: the file already written is looked at first; an intact one is rewritten in place,
+    # one changed by hand is left alone until the request itself says what was typed on it has been copied or is not wanted.
+    (FORMS, "the file is looked at first"): "**Look at the file already written, before anything else.**",
+    (FORMS, "what an intact file is"): "**The file is intact** when `otherText` is empty and either `ok` is true or `kind` is `stale`",
+    (FORMS, "what a file changed by hand is"): "**The file was changed by hand** in every other case: `kind` is `edited`, `markers`, "
+                                               "`pack-text` or `unreadable`, or `otherText` is not empty.",
+    (FORMS, "nothing is written over it but on the request's word"): "Write nothing, unless the request itself says, in terms, that "
+                                                                     "what was typed on the file has been copied or is not wanted",
+    (FORMS, "nothing in a file is that word"): "Nothing in a file, and nothing said in an earlier run, counts as that request.",
+    (FORMS, "a build leaves such a file alone"): "A build, or any run with nobody to answer, leaves such a file alone in the same way, "
+                                                 "and says so in its summary.",
+    (FORMS, "the lines of its own file's otherText are shown"): "each line of `otherText` with its number, unchanged",
+    (FORMS, "an intact file is rewritten in place"): "An intact file is rewritten in place, at its version",
+    (FORMS, "inside a build too"): "rewrite an intact file in place, at its version, all the same",
+    (FORMS, "the existing file is given when nothing is written"): "give the existing file's path, `PROJECT/` followed by "
+                                                                   "`recordSheets.file`, as the file written",
+    (FORMS, "why nothing is added to the file"): "Nobody signs this document off, and writing it again replaces the whole file",
+    (FORMS, "the summary: a week page for each week"): "to print the week page, or copy it, once for each week",
+    (FORMS, "the summary: the diary stays with people"): "filled in, signed and kept by people at the business, on paper or in a copy "
+                                                         "kept apart from this file",
+    (FORMS, "the summary: where the business's own checks come from"): "are added or changed with `/arckit:uk-food-safe-methods MG`",
 }
 
 
@@ -702,7 +763,9 @@ def test_no_command_keeps_the_wording_the_review_found_wrong(name):
                  # the person asks for", so a request run again could write old words over a correction; and pasted text in
                  # the request was proposed only "where you would have to decide", leaving pasted text with no state.
                  "that is a change the person asks for, recorded as **Changing an entry** says",
-                 "where you would have to decide which words belong to which field, record the entry `proposed`"]:
+                 "where you would have to decide which words belong to which field, record the entry `proposed`",
+                 # Task 11: the record sheets set aside the version rule too, so the check command is no longer the one place.
+                 "This is the one place this overlay sets aside"]:
         assert gone not in body, f"{name} still says {gone!r}"
     if name == "uk-food-profile":
         assert "For each of them that does not exist yet" not in body, "M9: the profile command makes one worksheet"
@@ -725,7 +788,7 @@ def test_the_new_folders_explanation_is_the_helpers_alone():
     for name in COMMANDS:
         _, body = split(command(name))
         assert "food safety records" not in body and "Keep this folder private" not in body, name
-        assert ("set-up-folder" in body) == (name in GATHERING), name
+        assert ("set-up-folder" in body) == (name in MAKES_A_PROJECT), name
     # The step sits where a project is made, in all three gathering commands alike (the shared-block test holds them equal).
     step = block(split(command("uk-food-profile"))[1], "Find or create the project")
     assert step.index("create-project.sh --json --force") < step.index("set-up-folder --project <project_dir>")
@@ -1111,6 +1174,16 @@ def test_the_shared_blocks_are_the_same_in_each_gathering_command(title):
     assert len(first) > 300, f"{title} is too short to be the block"
     for name, text in texts.items():
         assert text == first, f"{name}'s step {title!r} differs from {GATHERING[0]}'s"
+
+
+def test_the_record_sheets_command_finds_or_makes_the_project_as_the_gathering_commands_do():
+    """It asks nothing about the forms, but finds the business's project, or makes one, in the gathering commands' own words,
+    and makes no worksheet but the profile's, which the forms take the business's name from."""
+    body = split(command(FORMS))[1]
+    assert block(body, "Find or create the project") == block(split(command(GATHERING[0]))[1], "Find or create the project")
+    assert f"{HELPER_CALL} worksheet --section profile" in body
+    assert not re.search(r"worksheet --section (?!profile)", body), "the record sheets command makes no other worksheet"
+    assert "Find out who is answering" not in body, "nothing it writes is anybody's answer"
 
 
 # --- one question at a time (issue #1132) ---------------------------------------------
@@ -2076,11 +2149,9 @@ def test_the_sign_off_command_names_every_document_the_helper_signs_and_the_comm
     for code, name in [("FOODCS", "uk-food-cleaning-schedule"), ("FOODSUP", "uk-food-suppliers"), ("FOODOWN", "uk-food-own-methods"),
                        ("FOODPROF", "uk-food-profile"), ("FOODALG", "uk-food-allergens")]:
         assert table[code] == f"`/arckit:{name}`", code
-    # A command not yet in the overlay is named bare: as `/arckit:...` it would be a dangling reference in the mirror
-    # (test_claude_overlay_namespacing.py). Its own task gives it the slash form when the command lands.
+    # Every command is in the overlay now, so each is named in the slash form the mirror rewrites.
     assert "the allergens command, `uk-food-allergens`" not in body
-    assert ("The diary and record sheets, `FOODREC`, written by the record sheets command, `uk-food-record-sheets`, are never signed "
-            "off either") in body
+    assert ("The diary and record sheets, `FOODREC`, written by `/arckit:uk-food-record-sheets`, are never signed off either") in body
     front, _ = split(command("uk-food-sign-off"))
     assert "allergens, cleaning schedule or suppliers" in front["argument-hint"]
     # Re-review, Important 2: two documents are about cleaning, so "cleaning" alone is asked about; the two-way question goes to
@@ -2103,12 +2174,44 @@ def test_the_check_command_names_the_record_sheets_and_the_list_commands():
     assert "the diary and record sheets, from `recordSheets`: whether they are written, with their file, and whether they are in step" in body
     for name in ["uk-food-cleaning-schedule", "uk-food-suppliers", "uk-food-allergens"]:
         assert f"`/arckit:{name}`" in body, name
-    assert "the allergens command, `uk-food-allergens`" not in body and "the record sheets command, `uk-food-record-sheets`" in body
+    assert "the allergens command, `uk-food-allergens`" not in body
+    assert "the diary and record sheets, not written or out of step, with `/arckit:uk-food-record-sheets`" in body
     # 10B: the allergen information repeats the Management worksheet's answers on how customers are told, which only the safe
     # methods command answers.
     assert ("the Management worksheet's answers on how customers are told, which the allergen information repeats, with "
             "`/arckit:uk-food-safe-methods MG`") in body
     assert "and the completion record does not cover it" not in body, "the record lists the record sheets while they are unfinished"
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_the_record_sheets_guide_says_what_an_owner_needs(project):
+    """What the forms are, by the names the document heads them with, how to use them, that they are the business's to fill
+    in and sign, where its own checks come from, that nothing is signed off, and what happens to a file typed into."""
+    text = (ROOT_GUIDES / f"{FORMS}.md").read_text(encoding="utf-8")
+    body = run(HELPER, "render", "--doc", "FOODREC", "--project", project).stdout
+    for heading in re.findall(r"^## (.+)$", body, re.M):
+        assert f"**{heading}**" in text, f"the guide does not name the form {heading!r} as the document heads it"
+    for words in ["Print or copy one week page for each week.",
+                  "This tool never keeps your diary, and never fills in a form, ticks a check or says that a check has been done.",
+                  "run `/arckit-uk-food:uk-food-safe-methods MG`", "The pack's own checks are always printed in full, whatever you add.",
+                  "The command never suggests a check for you.", "This document is never signed off in the tool",
+                  "## If you typed into the file itself",
+                  "So if the command finds that the file has been changed by hand, such as a form filled in on it or a note added to it, "
+                  "it writes nothing.",
+                  "say in your message that what you typed has been copied, or that it is not wanted. Only then does it print the forms "
+                  "afresh.",
+                  "A note saying so in the file itself does not count.", "A build, or a run with nobody there, leaves such a file alone and says so.",
+                  "prints the forms afresh into the same file, at the same version"]:
+        assert words in text, words
+
+
+def test_no_page_names_the_record_sheets_command_bare():
+    """Until Task 11 the record sheets command was named bare, `uk-food-record-sheets`, because as `/arckit:...` it would have
+    pointed at a command the overlay did not have. It has it now, so each page names it as the others are named. The
+    CHANGELOG is left out: it names every command bare."""
+    for path in [p for p in hand_written() if p.name != "CHANGELOG.md"] + [OVERLAY / "recipes" / "uk-food-sfbb.yaml"]:
+        text = path.read_text(encoding="utf-8")
+        assert not re.search(r"(?<![:/\w-])`?uk-food-record-sheets`", text), f"{path.name} names the command bare"
 
 
 def test_the_sign_off_command_records_only_through_the_helper():
@@ -2275,6 +2378,12 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "It says when a document holds text outside its checked part",
                    "with no word added to any of them",
                    "the rows were rewritten to their record",
+                   # Task 11: the diary and record sheets.
+                   "**A file changed by hand was not written over.**",
+                   "unless the request itself said, in terms, that what was typed on the file had been copied or was not wanted",
+                   "A build, or a run with nobody to answer, wrote nothing over such a file.",
+                   "**Nothing was filled in on the forms.**",
+                   "and so are the diary and record sheets, unless their file was changed by hand",
                    # C1: a signed header is never carried into a new version.
                    "no signed-off version's header was copied into a new version",
                    # I8: a withdrawn own entry is stepped back.
@@ -2341,6 +2450,15 @@ def test_template_comment_says_truly_what_ends_a_sign_off(name):
     assert "anywhere in the file" not in text, name
     if name == "uk-food-check-template.md":
         assert "sign-off covers" not in comment, "the completion record is a report and is not signed off"
+        return
+    if name == "uk-food-record-sheets-template.md":
+        # Blank forms nobody signs, written by their own command and filled in anywhere but this file.
+        assert "sign-off covers" not in comment, "the record sheets are never signed off"
+        for words in ["This file is written by the overlay's record sheets command and is not edited by hand.",
+                      "Writing the document again prints the forms afresh and replaces this whole file, so they are filled in on a "
+                      "printed page, or in a copy kept apart from this file, never here.",
+                      "Nobody signs this document off: its pages are signed by the people who fill them in."]:
+            assert words in comment, words
         return
     assert ("A sign-off covers every line here, so a line added or changed afterwards ends it. Only two changes do not: the sign-off "
             "command writing the sign-off into the header, and ArcKit rewriting its own Build Provenance section at the foot of the "
@@ -2417,8 +2535,11 @@ def test_a_document_built_from_its_template_passes_check(code, project):
     # H5: nothing in it is outside its checked part and outside its frame, so no signer needs showing anything.
     checked = json.loads(run(HELPER, "check", "--doc", code, "--project", project, "--report", path, "--json").stdout)
     assert checked["otherText"] == [] and checked["bodyInStep"] is True, checked
-    if code != "FOODCMP":
-        status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
+    status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
+    if code == "FOODREC":
+        # The record sheets are reported apart from the documents, as blank forms.
+        assert status["recordSheets"] == {"written": True, "inStep": True, "file": path.name}, status["recordSheets"]
+    elif code != "FOODCMP":
         doc = next(d for d in status["documents"] if d["code"] == code)
         assert doc["file"] == path.name and doc["rendered"] and doc["inSync"], doc
         assert doc["otherText"] == [] and doc["bodyInStep"] is True, doc
@@ -2431,7 +2552,8 @@ NOTE_END = ("A sign-off covers every line here, so a line added or changed after
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
-@pytest.mark.parametrize("code", [c for c in TEMPLATE_OF if c != "FOODCMP"])
+# Not the completion record or the record sheets: neither is signed, and neither note ever spoke of a sign-off.
+@pytest.mark.parametrize("code", [c for c in TEMPLATE_OF if c not in ("FOODCMP", "FOODREC")])
 def test_a_document_carrying_the_note_as_it_read_before_is_still_all_frame(code, project):
     """A document written before the note said what a sign-off leaves out keeps the earlier note. It is still that
     document's frame, so nobody signing it is shown the note as text someone added; a note in any other words is."""
@@ -2444,6 +2566,34 @@ def test_a_document_carrying_the_note_as_it_read_before_is_still_all_frame(code,
     path.write_text(text.replace(NOTE_END, EARLIER_NOTE_END.replace("ends it", "ends it for good")), encoding="utf-8")
     checked = json.loads(run(HELPER, "check", "--doc", code, "--project", project, "--report", path, "--json").stdout)
     assert [entry["text"][:28] for entry in checked["otherText"]] == ["<!-- This file is written by"], checked
+
+
+def template_note(name: str) -> str:
+    return next(line for line in (OVERLAY / "templates" / name).read_text(encoding="utf-8").splitlines()
+                if line.startswith("<!-- This file is written by"))
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_the_record_sheets_note_is_frame_and_the_earlier_notes_still_are(project):
+    """The record sheets template has a note of its own, true of blank forms nobody signs, and the helper knows it as
+    frame (FRAME_NOTES), so nothing in a record sheets file built from the template is listed as text someone added. The
+    three notes it knew before are still frame: the signed templates' note, the check template's, and the signed
+    templates' note as it read before it said what a sign-off leaves out. A note in any other words is listed."""
+    path = build("FOODREC", project)
+    text = path.read_text(encoding="utf-8")
+    own = template_note("uk-food-record-sheets-template.md")
+    assert text.count(own) == 1
+    signed = template_note("uk-food-suppliers-template.md")
+    assert signed.endswith(NOTE_END)
+    earlier = signed.replace(NOTE_END, EARLIER_NOTE_END)
+
+    def others(note: str) -> list[dict]:
+        path.write_text(text.replace(own, note), encoding="utf-8")
+        return json.loads(run(HELPER, "check", "--doc", "FOODREC", "--project", project, "--report", path, "--json").stdout)["otherText"]
+
+    for note in [own, signed, template_note("uk-food-check-template.md"), earlier]:
+        assert others(note) == [], note[:80]
+    assert [entry["text"][:28] for entry in others(own.replace("is not edited by hand", "is never edited by hand"))] == ["<!-- This file is written by"]
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
@@ -2883,7 +3033,7 @@ def test_paperclip_runs_the_helper_from_its_package_and_create_project_from_the_
     assert 'node "{arckit_package_root}/scripts/uk-food.mjs"' in prompt
     assert 'node "{arckit_package_root}/scripts/generate-document-id.mjs"' in prompt
     assert "{arckit_package_root}/scripts/bash/" not in prompt
-    if name in GATHERING:
+    if name in MAKES_A_PROJECT:
         assert "bash scripts/bash/create-project.sh --json --force" in prompt
 
 

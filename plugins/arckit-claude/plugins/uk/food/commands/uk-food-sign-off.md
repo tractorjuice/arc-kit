@@ -74,7 +74,7 @@ It never ends with a header that reads `APPROVED` on a document that `status` do
 | Cleaning schedule | `FOODCS` | `/arckit-uk-food:uk-food-cleaning-schedule` |
 | Suppliers and contacts | `FOODSUP` | `/arckit-uk-food:uk-food-suppliers` |
 
-The completion record, `FOODCMP`, is a report and is not signed off: each document it lists is signed off on its own. The diary and record sheets, `FOODREC`, written by the record sheets command, `uk-food-record-sheets`, are never signed off either: they are blank forms, which people at the business fill in and sign themselves as they use them. The helper refuses both.
+The completion record, `FOODCMP`, is a report and is not signed off: each document it lists is signed off on its own. The diary and record sheets, `FOODREC`, written by `/arckit-uk-food:uk-food-record-sheets`, are never signed off either: they are blank forms, which people at the business fill in and sign themselves as they use them. The helper refuses both.
 
 ## Process
 

@@ -472,6 +472,7 @@ FOODXC (Cross-contamination): 23 of 50 questions confirmed, 2 proposed; not writ
 FOODCLN (Cleaning): 0 of 23 questions confirmed; adapted: CL-04; not written; not signed off
 FOODCOOK (Cooking): 41 of 41 questions confirmed; not relevant: CK-06; ARC-001-FOODCOOK-v1.0.md in step with its worksheets; signed off by Sam Okafor, Owner, on 2026-11-18
 FOODOWN (Own methods): 2 of 2 own entries confirmed; not written; not signed off
+FOODREC (Diary and record sheets): not written
 FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date
 </code></pre>
 <p>The last of those lines is about the completion record itself. Once anything it reports on has changed, that line says the record is out of date, and running this command again brings it up to date. If a document was changed after it was signed off, its line says so in place of &quot;signed off by&quot;, and the unfinished list says what to do. If a document is signed off but its header has not yet been marked to show it, its line says that too: running <code>/arckit-uk-food:uk-food-sign-off</code> for that document finishes the marking, and no new sign-off is needed.</p>
@@ -518,6 +519,10 @@ FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date
 <td><code>/arckit-uk-food:uk-food-suppliers</code></td>
 </tr>
 <tr>
+<td>The diary and record sheets not written yet, or out of date</td>
+<td><code>/arckit-uk-food:uk-food-record-sheets</code></td>
+</tr>
+<tr>
 <td>A document not written yet, or out of date</td>
 <td>The command that writes that document</td>
 </tr>
@@ -533,7 +538,7 @@ FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date
 <ul>
 <li><strong>It will not change your answers or other documents.</strong> The record is only as true as what it reads, so anything wrong is put right at its source, with the command that owns it.</li>
 <li><strong>It will not judge your answers.</strong> It reports what the helper script says.</li>
-<li><strong>It will not cover the daily diary.</strong> The diary stays with you, on paper or however the business keeps it today.</li>
+<li><strong>It will not cover the daily diary.</strong> The diary stays with you, on paper or however the business keeps it today. Its blank pages come from <code>/arckit-uk-food:uk-food-record-sheets</code>.</li>
 </ul>
 <h2 id="if-the-document-check-fails">If the document check fails</h2>
 <p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in the record, and the document check will then fail. Run the command again to write the record afresh. Do not edit those lines by hand.</p>

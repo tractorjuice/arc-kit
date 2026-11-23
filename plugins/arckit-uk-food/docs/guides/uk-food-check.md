@@ -51,6 +51,7 @@ FOODXC (Cross-contamination): 23 of 50 questions confirmed, 2 proposed; not writ
 FOODCLN (Cleaning): 0 of 23 questions confirmed; adapted: CL-04; not written; not signed off
 FOODCOOK (Cooking): 41 of 41 questions confirmed; not relevant: CK-06; ARC-001-FOODCOOK-v1.0.md in step with its worksheets; signed off by Sam Okafor, Owner, on 2026-11-18
 FOODOWN (Own methods): 2 of 2 own entries confirmed; not written; not signed off
+FOODREC (Diary and record sheets): not written
 FOODCMP (Completion record): ARC-001-FOODCMP-v1.0.md up to date
 ```
 
@@ -75,6 +76,7 @@ What moves each item on:
 | Your answers on how customers are told about allergens, which the allergen information repeats | `/arckit-uk-food:uk-food-safe-methods MG` |
 | Cleaning schedule items not yet confirmed, or none recorded | `/arckit-uk-food:uk-food-cleaning-schedule` |
 | Suppliers and contacts not yet confirmed, or none recorded, or no environmental health team | `/arckit-uk-food:uk-food-suppliers` |
+| The diary and record sheets not written yet, or out of date | `/arckit-uk-food:uk-food-record-sheets` |
 | A document not written yet, or out of date | The command that writes that document |
 | A finished document not yet signed off | `/arckit-uk-food:uk-food-sign-off` |
 
@@ -86,7 +88,7 @@ What moves each item on:
 
 - **It will not change your answers or other documents.** The record is only as true as what it reads, so anything wrong is put right at its source, with the command that owns it.
 - **It will not judge your answers.** It reports what the helper script says.
-- **It will not cover the daily diary.** The diary stays with you, on paper or however the business keeps it today.
+- **It will not cover the daily diary.** The diary stays with you, on paper or however the business keeps it today. Its blank pages come from `/arckit-uk-food:uk-food-record-sheets`.
 
 ## If the document check fails
 

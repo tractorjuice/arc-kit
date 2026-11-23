@@ -2419,14 +2419,14 @@ test('H1: set-up-folder changes nothing in a project that already existed: one w
 const TEMPLATES = 'plugins/arckit-uk-food/templates';
 // The template each document is written from, as the commands name them.
 const templateOf = (doc) => readFileSync(join(TEMPLATES, `uk-food-${doc === 'FOODPROF' ? 'profile' : doc === 'FOODOWN' ? 'own-methods'
-  : doc === 'FOODCMP' ? 'check' : 'safe-methods'}-template.md`), 'utf8');
+  : doc === 'FOODCMP' ? 'check' : doc === 'FOODREC' ? 'record-sheets' : 'safe-methods'}-template.md`), 'utf8');
 const fromItsTemplate = (dir, doc, regime = 'uk') => templated(dir, doc, { regime, template: templateOf(doc) });
 const otherOf = (dir, doc, file) => check(dir, doc, file).otherText.map((entry) => entry.text);
 const records = (dir) => JSON.parse(readFileSync(signOffsFile(dir), 'utf8')).signOffs;
 
-test('J4: each of the eight documents, written from its own template with a header from each regime\'s partial, lists no other text, with or without the hook\'s block', () => {
+test('J4: each document, the record sheets among them, written from its own template with a header from each regime\'s partial, lists no other text, with or without the hook\'s block', () => {
   const dir = cafe();
-  for (const doc of [...STATUS_ORDER, 'FOODCMP']) {
+  for (const doc of [...STATUS_ORDER, 'FOODREC', 'FOODCMP']) {
     for (const regime of REGIMES) {
       const file = fromItsTemplate(dir, doc, regime);
       assert.deepEqual(otherOf(dir, doc, file), [], `${doc} ${regime}`);

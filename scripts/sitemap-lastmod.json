@@ -977,7 +977,7 @@
   },
   "guide/uk-food-check.html": {
     "lastmod": "2026-11-23",
-    "text_sha256": "89f978ef8ed68a1e6b5e8546e0300722ca3e2894f81edba3b9e90f01ac05ae83"
+    "text_sha256": "168f193b9aba2b8ffbdd71adb4e3082a0c71940cfc847fe844fa047a8982b6d4"
   },
   "guide/uk-food-cleaning-schedule.html": {
     "lastmod": "2026-11-23",
@@ -991,13 +991,17 @@
     "lastmod": "2026-11-19",
     "text_sha256": "a6d1f6388068ba9760972c994c13531b35cb682e63395d6518b055e77e643b56"
   },
+  "guide/uk-food-record-sheets.html": {
+    "lastmod": "2026-11-23",
+    "text_sha256": "945ec57cabcf9abc675e291206f58d1889ffd52433e0797a62e8aaa6c04c145f"
+  },
   "guide/uk-food-safe-methods.html": {
     "lastmod": "2026-11-19",
     "text_sha256": "a28b638f8183f627e9e649019481d1eeae1d6d73dd9c6aef0710712e109477aa"
   },
   "guide/uk-food-safety-overlay.html": {
     "lastmod": "2026-11-23",
-    "text_sha256": "efb8fee74d724a1b153f0c56b46a64c31c9a41b8f91d5331f473b8a660e94160"
+    "text_sha256": "d25cd53cb71c5a5fc3970c035c9ae1cd585279548f2cb74712671dd09c625cfd"
   },
   "guide/uk-food-sign-off.html": {
     "lastmod": "2026-11-23",
@@ -1133,7 +1137,7 @@
   },
   "guides.html": {
     "lastmod": "2026-11-23",
-    "text_sha256": "b7a504b171adee695cf37b5d1e8c90fa7b3b1e0e448a8e6b4f34e7e2d87939a4"
+    "text_sha256": "607112254b8810281c1ae6f13c2b3203da95c6a77e16992d147075e8b7e38031"
   },
   "index.html": {
     "lastmod": "2026-11-22",

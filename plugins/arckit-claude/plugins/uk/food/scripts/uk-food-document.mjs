@@ -1188,14 +1188,15 @@ const FRAME_ABOVE = [['title', /^# \S/], ['template', /^> \*\*Template Origin\*\
   ['control', /^ {0,3}#{1,6}\s+Document\s+Control[\s#]*$/i], ['history', REVISION_HEADING]];
 const RULE_LINE = /^ {0,3}([-*_])(?:[ \t]*\1){2,}[ \t]*$/;
 // The comment lines the overlay's templates carry: three short ones as they are written, and the note
-// each template has above its body by its fingerprint (the three gathering templates share one, the
-// check template has its own). A test reads the templates, so a comment changed there shows. The
-// last is the gathering templates' note as it read before it said what a sign-off leaves out: a
-// document written then keeps it, and it stays part of that document's frame.
+// each template has above its body by its fingerprint (the templates of the documents a person signs
+// share one, and the check template and the record sheets template each have their own). A test reads
+// the templates, so a comment changed there shows. The third is the signed templates' note as it read
+// before it said what a sign-off leaves out: a document written then keeps it, and it stays part of
+// that document's frame. The fourth is the record sheets template's, which says that nobody signs them.
 const FRAME_COMMENTS = ['<!-- DOC-CONTROL-HEADER -->', '<!-- Resolved at command-execution time per _partials/RENDERING.md. -->',
   '<!-- UK-FOOD-BODY -->', PROVENANCE.start, PROVENANCE.end];
 const FRAME_NOTES = ['6fe5a55718f40fbb5aeb1fc5e03f5caf629c07c15985ce122b9899ca8737f8d3', 'a9b0cbc3f58b12aca743acb7e344f5b2a998e6231116b621ddd6cfa3d8e8d3d9',
-  '33f1bc78a00361c791b1a3651a9c23e5607d926a4ca07af57592625991e1908d'];
+  '33f1bc78a00361c791b1a3651a9c23e5607d926a4ca07af57592625991e1908d', '553af93150f2eafa466d609d1b7b14ee2ce7cbe9cd3d04891127202320e413f9'];
 function otherText(lines, body) {
   const stamp = stampedBlock(lines, body);
   const once = new Set();

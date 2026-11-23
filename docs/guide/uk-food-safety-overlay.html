@@ -588,19 +588,19 @@ claude plugin enable arckit-uk-food
 <p>The own methods document cannot be signed off until each special process the profile confirms has its entry.</p>
 <h2 id="building-the-drafts-in-one-go">Building the drafts in one go</h2>
 <p>The overlay ships a build recipe, <code>uk-food-sfbb</code>, for ArcKit's build command in Claude Code. A build has nobody to answer, and only an answer a named person gives can be confirmed, so <strong>a build confirms nothing</strong>. It makes the worksheets that are missing and writes each document that does not exist yet as a draft, from the answers already confirmed. On a new project, every answer in them reads NOT YET ANSWERED. A build never signs anything off.</p>
-<p>A document that is already there is taken as done, whatever has been answered since. The build writes it again only if you name its target with <code>--refresh</code> (<code>PROFILE</code>, <code>XC</code>, <code>CL</code>, <code>CH</code>, <code>CK</code>, <code>MG</code>, <code>OWN</code> or <code>CHECK</code>), or if a document it is built after has changed since the last build. To bring one document up to date, run its own command.</p>
+<p>A document that is already there is taken as done, whatever has been answered since. The build writes it again only if you name its target with <code>--refresh</code> (<code>PROFILE</code>, <code>XC</code>, <code>CL</code>, <code>CH</code>, <code>CK</code>, <code>MG</code>, <code>CS</code>, <code>SUP</code>, <code>OWN</code>, <code>ALG</code>, <code>REC</code> or <code>CHECK</code>), or if a document it is built after has changed since the last build. To bring one document up to date, run its own command.</p>
 <p>Do not expect a finished pack from a build: the answers come from running the commands above with the person who knows the business.</p>
-<p>The recipe builds the profile, the five sections, your own methods and the completion record.</p>
+<p>The recipe builds the profile, the five sections, your own methods, your allergen information, your cleaning schedule, your suppliers and contacts, the blank diary and record sheets, and the completion record. A build writes nothing over a copy of the diary and record sheets that someone has typed into.</p>
 <p>Run the profile command once first, so the project exists. The build saves its work with a git commit after each wave of documents; a records folder is rarely a git repository, so add <code>--no-commit</code> unless yours is one. For project <code>001</code>:</p>
 <pre><code class="language-text">/arckit:build 001 --recipe uk-food-sfbb --no-commit
 </code></pre>
-<p>The recipe passes ArcKit's recipe checks, and a dry run of the build plans it as it should: the profile first, then the five sections together, then your own methods, then the completion record. Nobody has yet run it end to end through the build.</p>
+<p>The recipe passes ArcKit's recipe checks. A dry run of the build planned its first eight documents as it should: the profile first, then the five sections together, then your own methods, then the completion record. The four added since (the allergen information, the cleaning schedule, the suppliers and contacts, and the diary and record sheets) have not yet been through a dry run. Nobody has yet run the recipe end to end through the build.</p>
 <p>ArcKit's notices about drafts that have not changed for a while leave these documents out, and its general health check does not count them as long-running drafts: only the sign-off command changes a document's status, and the completion record always stays a draft. If you give a document a next review date, ArcKit still says when that date has passed. Its health check is written for architecture documents, so the next step it suggests then does not fit these documents: use the overlay's own commands instead.</p>
 <h2 id="what-it-does-not-cover">What it does not cover</h2>
 <ul>
 <li><strong>Scotland and Northern Ireland.</strong> The pack, and this overlay, cover England and Wales only. If the profile says the business is anywhere else, every document opens by saying so plainly.</li>
 <li><strong>Other kinds of food business.</strong> The overlay uses the pack for caterers only. The Food Standards Agency's other packs, for retailers, childminders, care homes and other cuisines, are not covered.</li>
-<li><strong>The daily diary.</strong> The diary stays with you, on paper or however the business keeps it today. The overlay does not keep it.</li>
+<li><strong>The daily diary.</strong> The diary stays with you, on paper or however the business keeps it today. The overlay does not keep it: <code>/arckit-uk-food:uk-food-record-sheets</code> gives you its blank pages to print or copy, and you fill them in.</li>
 <li><strong>Procedures for special processes.</strong> See above.</li>
 <li><strong>The pack's formatting.</strong> Bold and underlining in the pack are not carried into the documents. The words are.</li>
 <li><strong>One layout detail.</strong> On two pages, the pack prints its line about noting a problem in your diary after a later box. The documents print that line with the box about what to do when things go wrong.</li>
@@ -610,7 +610,6 @@ claude plugin enable arckit-uk-food
 <p>Every safe method in the pack is in the five section documents now, including those on allergens (XC-04 FOOD HYPERSENSITIVITY and MG-04 MANAGING FOOD ALLERGEN INFORMATION), the cleaning schedule (CL-04 YOUR CLEANING SCHEDULE), training (MG-05 TRAINING AND SUPERVISION) and suppliers (MG-07 SUPPLIERS AND CONTRACTORS).</p>
 <p>What is planned is the rest of the pack: its separate sheets and records, filled in for the business. There are no dates.</p>
 <ul>
-<li>Blank copies of the pack's diary pages, its OPENING CHECKS, CLOSING CHECKS and EXTRA CHECKS sheet, and its PROVE IT: RECORDS sheet, to print and fill in.</li>
 <li>The pack's STAFF TRAINING RECORD, with training material.</li>
 <li>The pack's regular review of the diary.</li>
 </ul>
