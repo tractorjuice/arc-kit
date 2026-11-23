@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODREC data=sfbb-caterers-2026-11-17 body=f45d7e677f4d7267d39ea2204e7b7df99b8d208fc3ce239cd9d60c2e83aed803 -->
+<!-- UK-FOOD:BEGIN doc=FOODREC data=sfbb-caterers-2026-11-17 body=518100946a32828265641d68f44d935c2e49b792a41e39c8615fc93c08c19724 -->
 
 ## Diary
 
@@ -96,6 +96,6 @@ One week page is printed here: print or copy it for each week. These pages are f
 
 This is Bramble Cafe's own food safety record. It is not legal advice. The food business operator is responsible for it, and the local council's environmental health team is the authority on whether it is adequate.
 
-The labels, checks, prompts and instructions on the forms, the statement beside each day's signature, and the paragraphs on extra checks and on prove it records are quoted from the Food Standards Agency's Safer food, better business for caterers, retrieved 17 November 2026. Contains public sector information licensed under the Open Government Licence v3.0. The Food Standards Agency has not reviewed or endorsed this document.
+The labels, checks, prompts and instructions on the forms, the statement over the days' signatures, and the paragraphs on extra checks and on prove it records are quoted from the Food Standards Agency's Safer food, better business for caterers, retrieved 17 November 2026. Contains public sector information licensed under the Open Government Licence v3.0. The Food Standards Agency has not reviewed or endorsed this document.
 
 <!-- UK-FOOD:END -->

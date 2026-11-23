@@ -86,7 +86,7 @@ const HAND_ADDED_ROWS = 3;
 const ownHeading = (heading) => `The business's own ${heading.toLowerCase()}`;
 // The source line's account of what is quoted: the forms' words, and the two paragraphs the document
 // prints. The business's name and own checks, and the helper's lines, are not quoted.
-const QUOTED = 'The labels, checks, prompts and instructions on the forms, the statement beside each day\'s signature, and the ' +
+const QUOTED = 'The labels, checks, prompts and instructions on the forms, the statement over the days\' signatures, and the ' +
   'paragraphs on extra checks and on prove it records are quoted from';
 
 const isWords = (value) => typeof value === 'string' && value !== '';
