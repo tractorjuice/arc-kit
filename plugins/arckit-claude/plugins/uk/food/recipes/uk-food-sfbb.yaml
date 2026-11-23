@@ -24,8 +24,10 @@
 # build, print the forms afresh over a diary and record sheets file whose forms
 # someone has changed by hand, whatever the build's request says: only a person
 # running the command can say that what was typed there has been copied or is
-# not wanted. When it does print them afresh, it keeps everything outside the
-# forms as it is, a line someone added there included.
+# not wanted. When it does print them afresh, outside the forms it changes only
+# the file's Last Modified date and any sign-off cell holding something else,
+# which it puts back to DRAFT or [PENDING]; everything else outside the forms it
+# keeps as it is, a line someone added there included.
 #
 # The project must exist before a build. Running
 # /arckit-uk-food:uk-food-profile once creates it.

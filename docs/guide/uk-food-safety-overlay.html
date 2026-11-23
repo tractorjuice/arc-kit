@@ -434,7 +434,7 @@
 <blockquote>
 <p><strong>Overlay</strong>: <code>arckit-uk-food</code> | <strong>Covers</strong>: England and Wales | <strong>Status</strong>: Experimental, community-maintained, switched off until you enable it</p>
 </blockquote>
-<p>The UK Food Safety Overlay helps a small catering business in England or Wales build its food safety documents from the Food Standards Agency's free pack, <em>Safer food, better business for caterers</em>. You answer the pack's questions in ordinary conversation. The overlay puts the pack's own wording, unchanged, beside your answers, and a named person at the business signs each document off.</p>
+<p>The UK Food Safety Overlay helps a small catering business in England or Wales build its food safety documents from the Food Standards Agency's free pack, <em>Safer food, better business for caterers</em>. You answer the pack's questions in ordinary conversation, and list your dishes and their allergens, what you clean, and your suppliers and contacts, in your own words. The overlay puts the pack's own wording, unchanged, beside your answers, and a named person at the business signs the finished documents off. It also gives you the pack's blank diary and record sheets, to print and fill in by hand.</p>
 <p>It is for cafés, takeaways, restaurants, pubs, mobile caterers and similar small food businesses, and for the people who help them. Setting it up is a one-off job for someone comfortable installing software and typing a command in a terminal: see <a href="#getting-started">Getting started</a>. After that, you type to an assistant in ordinary words, and it asks the questions.</p>
 <h2 id="not-legal-advice">Not legal advice</h2>
 <p>This overlay is not legal advice. The food business operator is responsible for the safety of the food the business sells and for keeping its own records. Your council's environmental health team is the authority for your premises: ask them if you are not sure about anything. The Food Standards Agency has not reviewed or endorsed this overlay or anything it produces, and no council has either.</p>
@@ -470,17 +470,17 @@
 <p>The pack's wording is bundled with the overlay, so the documents are built on your own computer with no internet connection needed. The overlay does not use the pack's pictures or the Food Standards Agency's logo. The overlay's own code and files are MIT licensed.</p>
 <h2 id="how-it-works">How it works</h2>
 <p><strong>A few words first.</strong> The pack is in five sections, and each section is made of <em>safe methods</em>: each covers one topic, sets out the pack's safety points, and asks what your business does. ArcKit keeps each business's records in a <em>project</em>: a numbered folder such as <code>projects/001-bramble-cafe/</code>. Your documents are <em>Markdown</em> files: plain text with a little formatting, which any text editor or Markdown viewer can open and print.</p>
-<p><strong>Worksheets hold your answers.</strong> Each section of the pack, the business profile and your own methods has a worksheet in your project's <code>food-safety</code> folder. It lists every question, and under each one the answer, its state, who gave it and when.</p>
+<p><strong>Worksheets hold your answers.</strong> Each section of the pack, the business profile and your own methods has a worksheet in your project's <code>food-safety</code> folder. It lists every question, and under each one the answer, its state, who gave it and when. Your allergen information, your cleaning schedule and your suppliers and contacts each have a worksheet too, which holds an entry for each dish, each thing you clean or each supplier and contact, with who confirmed it and when.</p>
 <p><strong>An answer counts only when a named person gives it.</strong> Each answer is in one of three states:</p>
 <ul>
 <li><em>unanswered</em>: nobody has answered it yet;</li>
 <li><em>proposed</em>: it came from a file you pointed to, or from a message that named nobody, and nobody has agreed it yet;</li>
 <li><em>confirmed</em>: a named person at the business gave it or agreed it, and their name and the date are recorded.</li>
 </ul>
-<p>Only a confirmed answer is printed in your documents as the business's answer. A proposed answer is shown beside <strong>NOT YET ANSWERED</strong>, with where it came from, so you can see what is waiting for you, and a question nobody has answered reads <strong>NOT YET ANSWERED</strong> on its own. Nothing ever takes a default, and the assistant never suggests an answer: a document built from the worksheets is the business's own statement of what it does.</p>
+<p>Only a confirmed answer is printed in your documents as the business's answer. A proposed answer is shown beside <strong>NOT YET ANSWERED</strong>, with where it came from, so you can see what is waiting for you, and a question nobody has answered reads <strong>NOT YET ANSWERED</strong> on its own. In your allergen information, cleaning schedule and suppliers and contacts, a dish or an entry nobody has confirmed is named as not yet confirmed, with its details left out, and in a confirmed dish an allergen that nothing you have given settles reads <strong>NOT CONFIRMED</strong>. Nothing ever takes a default, and the assistant never suggests an answer: a document built from the worksheets is the business's own statement of what it does.</p>
 <p><strong>A script builds each document, and checks it.</strong> The overlay's helper script prints the body of each document from the pack's wording and your answers: a confirmed answer as the business's own, a proposed one beside <strong>NOT YET ANSWERED</strong> with where it came from. The pack's wording was typed into the overlay once, from the pack, and checked against it. After every write, the script runs the <em>document check</em>. It proves that the body of the document, the part between its two <code>UK-FOOD</code> marker lines, still matches a fresh print from that bundled copy and your worksheets, so a change to the pack's wording or to your answers on the way into the document is caught. It also fails a document whose header says it is signed off when no sign-off is recorded. The rest of the file (its title, header and footer) is not compared with anything until the document is signed off; from then on, the sign-off covers the whole file. The script runs on your computer, needs only Node, and sends nothing anywhere.</p>
-<p><strong>A named person signs each document off.</strong> When a document is finished, a named person at the business reads it and signs it off. The sign-off records their name, their role and the version they read. Until then, every document's status is <code>DRAFT</code>. After it, the status is <code>APPROVED</code>, which here means only that a named person at the business signed it off. A sign-off covers the document exactly as it reads when it is signed. If a line of it changes afterwards, in the body or anywhere else in the file, the sign-off no longer counts. <code>/arckit-uk-food:uk-food-check</code> and the completion record then say so. The header inside the changed file may still read <code>APPROVED</code>: the commands that write documents never rewrite a signed file, and only the sign-off command puts such a header back to <code>DRAFT</code>, when it is asked to sign that version and cannot. So go by the check and not by that header.</p>
-<p><strong>You can change what you have recorded.</strong> Run the command again and say what has changed: an answer, a safe method you now do differently, or one of your own methods. The change is recorded in your words, with your name and the date, and nothing else is changed.</p>
+<p><strong>A named person signs each document off.</strong> When a document is finished, a named person at the business reads it and signs it off. The sign-off records their name, their role and the version they read. Until then, every document's status is <code>DRAFT</code>. After it, the status is <code>APPROVED</code>, which here means only that a named person at the business signed it off. Two documents are never signed off, and always stay <code>DRAFT</code>: the completion record, which is a report, and the diary and record sheets, which are blank forms whose pages are signed by the people who fill them in. A sign-off covers the document exactly as it reads when it is signed. If a line of it changes afterwards, in the body or anywhere else in the file, the sign-off no longer counts. <code>/arckit-uk-food:uk-food-check</code> and the completion record then say so. The header inside the changed file may still read <code>APPROVED</code>: the commands that write documents never rewrite a signed file, and only the sign-off command puts such a header back to <code>DRAFT</code>, when it is asked to sign that version and cannot. So go by the check and not by that header.</p>
+<p><strong>You can change what you have recorded.</strong> Run the command again and say what has changed: an answer, a safe method you now do differently, one of your own methods, or a dish, a thing you clean or a supplier or contact. The change is recorded in your words, with your name and the date, and nothing else is changed. A changed dish or entry stops counting until a named person confirms it again. In your allergen information, tell the command when a recipe, an ingredient, a brand or a supplier changes: each dish that may use it stops counting until a named person agrees it again, and a dish that does use it is checked again first.</p>
 <p><strong>The completion record shows where things stand.</strong> It is the pack's own record of which safe methods have been worked through, filled in from your documents and sign-offs, followed by a list of everything still unfinished.</p>
 <h2 id="getting-started">Getting started</h2>
 <p>Setting up is done once, by someone comfortable installing software and typing commands in a terminal. After that, you type to the assistant in ordinary words.</p>
@@ -535,6 +535,30 @@ claude plugin enable arckit-uk-food
 <td><a href="uk-food-own-methods.html">Own methods</a></td>
 </tr>
 <tr>
+<td>4</td>
+<td><code>/arckit-uk-food:uk-food-allergens</code></td>
+<td>Records each dish against the fourteen allergens, one dish and one detail at a time, from the labels, product specifications and suppliers' statements you give</td>
+<td><a href="uk-food-allergens.html">Allergen information</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>/arckit-uk-food:uk-food-cleaning-schedule</code></td>
+<td>Records what you clean, how often, what to take care over and how, one item at a time in your own words</td>
+<td><a href="uk-food-cleaning-schedule.html">Cleaning schedule</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>/arckit-uk-food:uk-food-suppliers</code></td>
+<td>Records your suppliers, your council's environmental health team and your other contacts, one entry at a time in your own words</td>
+<td><a href="uk-food-suppliers.html">Suppliers and contacts</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>/arckit-uk-food:uk-food-record-sheets</code></td>
+<td>Gives you the pack's blank diary and record sheets, to print or copy and fill in by hand</td>
+<td><a href="uk-food-record-sheets.html">Diary and record sheets</a></td>
+</tr>
+<tr>
 <td>Any time</td>
 <td><code>/arckit-uk-food:uk-food-check</code></td>
 <td>Shows what is finished and what is still waiting, and writes the completion record</td>
@@ -548,15 +572,16 @@ claude plugin enable arckit-uk-food
 </tr>
 </tbody>
 </table>
-<p>Start with the profile, then work through the five sections (cross-contamination, cleaning, chilling, cooking and management) in any order, then add your own methods. You can stop at any point and carry on later: nothing confirmed is lost.</p>
-<p>Sign each document off when it is finished, and sign the profile off last. A sign-off lasts until what that document says changes, and changing an answer changes only the documents that print it. Two things are worth knowing. The business's name is printed in every document, so changing it changes them all; so does changing the nation to or from one outside England and Wales, because every document then says so. And the profile lists each safe method's status (whether it applies, is not relevant or is done differently, with the reason and who decided) and your own methods by name, kind and environmental health review, so it changes when any of those does. That is why the profile goes last. Anything else you change in one of your own methods changes the own methods document only. There is one exception to all this: your own methods document needs an entry for every special process or food the profile says you do. If you answer yes to one that has no entry yet, own methods goes back to unfinished, though nothing in it has changed. Record the entry, and the document is written again: in place if nobody had signed it off, and as a new version to sign off if somebody had. A signed-off document whose answers have changed is written again as a new version, and that version needs signing off.</p>
+<p>Start with the profile, then work through the five sections (cross-contamination, cleaning, chilling, cooking and management) in any order, then add your own methods. Steps 4 to 6 can come in any order once the profile is started. Your allergen information repeats your answers in the Management section on how customers are told about allergens, so answer those there. Write the diary and record sheets once the profile has the business's name, and again after you add your own opening and closing checks in the Management section. You can stop at any point and carry on later: nothing confirmed is lost.</p>
+<p>Sign each document off when it is finished, and sign the profile off last. The completion record and the diary and record sheets are never signed off. A sign-off lasts until what that document says changes, and changing an answer changes only the documents that print it. Two things are worth knowing. The business's name is printed in every document, so changing it changes them all; so does changing the nation to or from one outside England and Wales, because every document then says so. And the profile lists each safe method's status (whether it applies, is not relevant or is done differently, with the reason and who decided) and your own methods by name, kind and environmental health review, so it changes when any of those does. That is why the profile goes last. Anything else you change in one of your own methods changes the own methods document only. Your allergen information prints your answers in the Management section on how customers are told about allergens, so it changes when they do. There is one exception to all this: your own methods document needs an entry for every special process or food the profile says you do. If you answer yes to one that has no entry yet, own methods goes back to unfinished, though nothing in it has changed. Record the entry, and the document is written again: in place if nobody had signed it off, and as a new version to sign off if somebody had. A signed-off document whose answers have changed is written again as a new version, and that version needs signing off.</p>
 <p>The documents land in your project folder, for example:</p>
 <pre><code class="language-text">projects/001-bramble-cafe/
   README.md                  what the folder is, and what to run next
   external/                  documents of your own for the assistant to read
   food-safety/
     answers-profile.md  answers-XC.md  answers-CL.md  answers-CH.md
-    answers-CK.md  answers-MG.md  answers-own.md  sign-offs.json
+    answers-CK.md  answers-MG.md  answers-own.md  answers-allergens.md
+    answers-cleaning.md  answers-suppliers.md  sign-offs.json
   ARC-001-FOODPROF-v1.0.md   the business profile
   ARC-001-FOODXC-v1.0.md     cross-contamination
   ARC-001-FOODCLN-v1.0.md    cleaning
@@ -564,6 +589,10 @@ claude plugin enable arckit-uk-food
   ARC-001-FOODCOOK-v1.0.md   cooking
   ARC-001-FOODMGT-v1.0.md    management
   ARC-001-FOODOWN-v1.0.md    your own methods
+  ARC-001-FOODALG-v1.0.md    your allergen information
+  ARC-001-FOODCS-v1.0.md     your cleaning schedule
+  ARC-001-FOODSUP-v1.0.md    your suppliers and contacts
+  ARC-001-FOODREC-v1.0.md    the blank diary and record sheets
   ARC-001-FOODCMP-v1.0.md    the completion record
 </code></pre>
 <p>The first command makes this folder, with a short note in it for you: what the folder is, where the worksheets and documents are, and which command to run next. The project folder holds the names of the people who work in the business. Keep it somewhere private, and if it is a git repository that is pushed anywhere, keep that private too. The assistant you run the commands in also keeps its own record of each session on the computer, outside the project folder. In Claude Code that is the <code>.claude</code> folder in your home folder. The record holds what the commands read and wrote, names included, so treat that computer as private too.</p>
@@ -576,6 +605,20 @@ claude plugin enable arckit-uk-food
 <li><strong>You have a control of your own</strong> that the pack does not cover. <code>/arckit-uk-food:uk-food-own-methods</code> records it: what could go wrong, what you do about it, how you check it and what you do if it fails, and any limit you work to with where that figure comes from.</li>
 </ul>
 <p>The assistant may point out that a safe method sounds not relevant from what you have said, but it never decides for you.</p>
+<h2 id="your-allergen-information">Your allergen information</h2>
+<p><code>/arckit-uk-food:uk-food-allergens</code> records each dish you serve, what goes into it, and, for each of the fourteen allergens in the pack, whether the dish contains it. Have your labels, product specifications and suppliers' statements to hand: you can paste their wording in, or put them in the project folder and point the command to them.</p>
+<ul>
+<li><strong>&quot;Contains&quot;</strong> comes only from those labels, specifications and statements, or, for a single whole food with nothing added, from what the person who looked at it says.</li>
+<li><strong>&quot;Does not contain&quot;</strong> is only ever your own statement. Once every ingredient of a dish has been checked against something, the command tells you which allergens it found named and which it did not, and asks you which of those not found the dish does not contain.</li>
+<li><strong>Anything else reads NOT CONFIRMED</strong>, and the document stays unfinished until it is filled in.</li>
+</ul>
+<p>The command never works an allergen out from the name of a dish or an ingredient, never looks a product up, and never says a dish is free from anything or suitable for anyone. If your business already makes a &quot;free from&quot; statement, it records your exact words and prints the pack's conditions for making one beside them; it does not suggest one or reword yours. A label's &quot;may contain&quot; warning goes in the dish's notes, word for word. The <a href="uk-food-allergens.html">allergen information guide</a> says how each answer is recorded, and what happens when a recipe or a supplier changes.</p>
+<h2 id="your-cleaning-schedule-and-your-suppliers-and-contacts">Your cleaning schedule, and your suppliers and contacts</h2>
+<p><code>/arckit-uk-food:uk-food-cleaning-schedule</code> fills in the pack's cleaning schedule form: each thing you clean, how often, what to take care over and how you clean it. <code>/arckit-uk-food:uk-food-suppliers</code> fills in the pack's suppliers' list and contacts list: your suppliers, your council's environmental health team and the other people you may need to contact.</p>
+<p>Both take one entry at a time, in your own words. An entry counts only once a named person has agreed it: by confirming it as shown, or by setting it out in full, having said who they are, in the message that starts the command. Neither suggests anything: the cleaning schedule command never suggests what to clean, how, how often or with what, and the suppliers command never looks anyone up or fills in a name, number or address you did not give. If you already keep either list somewhere else, such as a folder in the kitchen or a book by the till, tell the command where, and the document says so. See the <a href="uk-food-cleaning-schedule.html">cleaning schedule guide</a> and the <a href="uk-food-suppliers.html">suppliers and contacts guide</a>.</p>
+<h2 id="the-diary-and-record-sheets">The diary and record sheets</h2>
+<p><code>/arckit-uk-food:uk-food-record-sheets</code> gives you the pack's blank pages for the work you record as you go: the diary's cover, the opening and closing checks, a week page and the prove it records. It asks you nothing about them and never fills any of them in. Print the document, or copy its forms into whatever you keep your records in, and print or copy one week page for each week. The pages are yours to fill in, sign and keep.</p>
+<p>Your own opening and closing checks come from your answers in the Management section of safe methods. Once a named person has confirmed them there, run the command again, and they are printed under the pack's own checks. Running it again prints the forms afresh, so fill them in on paper or in a copy kept apart from the file: if someone has typed into the forms in the file, the command writes nothing over them until you say that what was typed has been copied or is not wanted. The <a href="uk-food-record-sheets.html">diary and record sheets guide</a> says exactly what a second run changes.</p>
 <h2 id="special-processes-and-your-council">Special processes and your council</h2>
 <p>The pack names some processes and foods that need extra care, and the profile asks whether the business does each one. This overlay does not write a procedure for any of them, and will not finish, correct or improve one, even if you ask. A procedure written by a tool would be a control that nobody at the business has tested.</p>
 <p>If the business does a special process:</p>
@@ -595,26 +638,28 @@ claude plugin enable arckit-uk-food
 <pre><code class="language-text">/arckit:build 001 --recipe uk-food-sfbb --no-commit
 </code></pre>
 <p>The recipe passes ArcKit's recipe checks. A dry run of the build planned its first eight documents as it should: the profile first, then the five sections together, then your own methods, then the completion record. The four added since (the allergen information, the cleaning schedule, the suppliers and contacts, and the diary and record sheets) have not yet been through a dry run. Nobody has yet run the recipe end to end through the build.</p>
-<p>ArcKit's notices about drafts that have not changed for a while leave these documents out, and its general health check does not count them as long-running drafts: only the sign-off command changes a document's status, and the completion record always stays a draft. If you give a document a next review date, ArcKit still says when that date has passed. Its health check is written for architecture documents, so the next step it suggests then does not fit these documents: use the overlay's own commands instead.</p>
+<p>ArcKit's notices about drafts that have not changed for a while leave these documents out, and its general health check does not count them as long-running drafts: only the sign-off command changes a document's status, and the completion record and the diary and record sheets always stay drafts. If you give a document a next review date, ArcKit still says when that date has passed. Its health check is written for architecture documents, so the next step it suggests then does not fit these documents: use the overlay's own commands instead.</p>
 <h2 id="what-it-does-not-cover">What it does not cover</h2>
 <ul>
 <li><strong>Scotland and Northern Ireland.</strong> The pack, and this overlay, cover England and Wales only. If the profile says the business is anywhere else, every document opens by saying so plainly.</li>
 <li><strong>Other kinds of food business.</strong> The overlay uses the pack for caterers only. The Food Standards Agency's other packs, for retailers, childminders, care homes and other cuisines, are not covered.</li>
 <li><strong>The daily diary.</strong> The diary stays with you, on paper or however the business keeps it today. The overlay does not keep it: <code>/arckit-uk-food:uk-food-record-sheets</code> gives you its blank pages to print or copy, and you fill them in.</li>
 <li><strong>Procedures for special processes.</strong> See above.</li>
+<li><strong>Working out what is in your food.</strong> The allergen information records what your labels, specifications and suppliers' statements say, and what you say a dish does not contain. The overlay never looks a product up, and never says a dish is free from anything or suitable for anyone.</li>
+<li><strong>Suggestions for your lists.</strong> The overlay does not suggest what to clean, how or how often, and does not look up a supplier, your council or any other contact.</li>
 <li><strong>The pack's formatting.</strong> Bold and underlining in the pack are not carried into the documents. The words are.</li>
 <li><strong>One layout detail.</strong> On two pages, the pack prints its line about noting a problem in your diary after a later box. The documents print that line with the box about what to do when things go wrong.</li>
 <li><strong>Places where the pack disagrees with itself.</strong> In two places the pack words the same limit in two different ways. In CK-06 HOT HOLDING, one limit is worded two slightly different ways on the same page. CH-01 CHILLED STORAGE AND DISPLAYING CHILLED FOOD and CK-07 READY-TO-EAT FOOD describe differently which ready-to-eat foods one of their limits covers. The documents print each place exactly as the pack prints it, and the overlay does not choose between them. If one of these matters to you, read both places in your documents and ask your council's environmental health team. Maintainers can find both places, with their pages, in the limits check sheet that <a href="https://github.com/tractorjuice/arc-kit/blob/main/scripts/uk-food/render-limits-check.py"><code>scripts/uk-food/render-limits-check.py</code></a> prints.</li>
 </ul>
 <h2 id="what-is-there-now-and-what-is-planned">What is there now, and what is planned</h2>
-<p>Every safe method in the pack is in the five section documents now, including those on allergens (XC-04 FOOD HYPERSENSITIVITY and MG-04 MANAGING FOOD ALLERGEN INFORMATION), the cleaning schedule (CL-04 YOUR CLEANING SCHEDULE), training (MG-05 TRAINING AND SUPERVISION) and suppliers (MG-07 SUPPLIERS AND CONTRACTORS).</p>
-<p>What is planned is the rest of the pack: its separate sheets and records, filled in for the business. There are no dates.</p>
+<p>Every safe method in the pack is in the five section documents, training (MG-05 TRAINING AND SUPERVISION) among them. Beside them, the overlay records your allergen information, your cleaning schedule and your suppliers and contacts, and prints the pack's blank diary and record sheets.</p>
+<p>Two parts of the pack are still to come, and there are no dates:</p>
 <ul>
 <li>The pack's STAFF TRAINING RECORD, with training material.</li>
 <li>The pack's regular review of the diary.</li>
 </ul>
 <h2 id="if-the-document-check-fails">If the document check fails</h2>
-<p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in a document, and the document check will then fail. The fix is to run the document's command again, not to edit those lines by hand: changes belong in the worksheet.</p>
+<p>A program that tidies Markdown files (a formatter) may rewrite the tables between the <code>UK-FOOD</code> markers in a document, and the document check will then fail. The fix is to run the document's command again, not to edit those lines by hand: changes belong in the worksheet. For the diary and record sheets, say too that nothing typed on the file is wanted, or the command leaves the file alone.</p>
 <p>The documents are not edited by hand anywhere else either. A note added to a signed-off document ends its sign-off, because nobody signed the note. Something the business wants to say about how it works belongs in its own methods, recorded with <code>/arckit-uk-food:uk-food-own-methods</code>.</p>
 <h2 id="other-tools">Other tools</h2>
 <p>Claude Code names the commands as above. The other tools ArcKit supports name them their own way: for example <code>$arckit-uk-food-profile</code> in Codex and <code>/arckit-uk-food-profile</code> in GitHub Copilot.</p>
