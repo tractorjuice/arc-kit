@@ -1238,7 +1238,7 @@ test('Review Focus 2: an allergen cell reads only contains or does not contain, 
     const text = algSheet(dish('DISH-01', 'Toastie', { ...DONE, Fish: typed }));
     const parsed = algParse(text);
     // A tick is not a plain character, so it is named by its code point (M6, tested below).
-    const holds = typed === '\u2713' ? ' (it holds U+2713, which is not a plain letter or space: type it again)' : '';
+    const holds = typed === '\u2713' ? ' (it holds U+2713, which is not a plain letter or space)' : '';
     assert.deepEqual(parsed.problems.map((p) => [p.line, p.message]), [[lineOf(text, `\nFish: ${typed}\n`) + 1, `DISH-01: Fish "${typed}" is neither ` +
       `contains nor does not contain${holds}: write one of the two, or leave it empty while it is not known; a precautionary statement such as may contain, ` +
       'or any other note, goes in Notes']], typed);
@@ -1453,12 +1453,36 @@ test('I3: a confirmed dish with Notes carries the notes mark in its own row of t
   assert.equal(NOTES_MARK, '**see notes**');
   // The mark says nothing about allergens; the lead line says what a marked row has.
   assert.ok(!allergensOf(data).some(({ name }) => NOTES_MARK.toLowerCase().includes(shortName(name).toLowerCase())));
-  assert.ok(body.includes(`\nA confirmed row records what a named person at the business agreed after checking what the next section names for it: ` +
-    `labels, specifications or suppliers' statements, or a single whole food that person looked at. A row marked ${NOTES_MARK} has a note there, ` +
+  assert.ok(body.includes(`\nA confirmed row records what a named person at the business agreed, from what the next section names for it: ` +
+    `labels, specifications or suppliers' statements, or a single whole food looked at by the person named there. A row marked ${NOTES_MARK} has a note there, ` +
     'which may be a label\'s statement that the food may contain an allergen.\n'), body);
   // A dish's own name cannot imitate the mark: its asterisks are escaped.
   const imitation = renderedAlg(cafeAlg(algSheet(dish('DISH-01', `Toastie ${NOTES_MARK}`, DONE)), MG_ANSWERED()));
   assert.equal(dishesTable(imitation)[1][0], 'DISH-01 Toastie \\*\\*see notes\\*\\*');
+});
+
+test('a dish agreed by one person whose whole foods another looked at: nothing in the body says the person who agreed it looked', () => {
+  const dir = cafeAlg(algSheet(dish('DISH-01', 'Carrot cake', { ...DONE, 'Checked-against': 'Fenwick self-raising flour bag;\nwhole carrots and fresh eggs, ' +
+    'nothing added, seen by Priya Shah', By: 'Sam Okafor' })), MG_ANSWERED());
+  const body = renderedAlg(dir);
+  // Each name is printed only in its own column of the checked table: Priya Shah in what was checked, Sam Okafor in who agreed it.
+  const checked = tablesOf(body).find((rows) => rows[0][0] === 'Dish' && rows[0].length === 6);
+  const [header, row] = checked;
+  assert.equal(row[header.indexOf('Checked against')], 'Fenwick self-raising flour bag;<br>whole carrots and fresh eggs, nothing added, seen by Priya Shah');
+  assert.equal(row[header.indexOf('Agreed by')], 'Sam Okafor, 2026-11-17');
+  const lines = body.split('\n');
+  assert.deepEqual(lines.filter((line) => line.includes('Priya Shah')), lines.filter((line) => line.startsWith('| DISH-01 Carrot cake |') &&
+    cellsOf(line).length === 6));
+  // Sam Okafor elsewhere only as the one who answered the Management questions repeated under How customers are told.
+  assert.deepEqual(lines.filter((line) => line.includes('Sam Okafor') && !line.includes('[answered by Sam Okafor, ') && cellsOf(line).length !== 6), []);
+  // No line of the helper's own puts the looking on whoever agreed the row.
+  const words = helperWords(body, valuesOf(dir));
+  for (const said of [/that person (looked|saw|checked)/i, /agreed after (checking|looking)/i, /\b(who agreed|agreeing)\b[^.]*\b(looked|saw|checked)\b/i,
+    /\bthey (looked|saw|checked)\b/i, /\b(looked|seen) (at )?by (that|the same) person\b/i]) {
+    assert.deepEqual(words.filter((piece) => said.test(piece)), [], `${said}`);
+  }
+  // The lead line puts the looking on the person Checked-against names.
+  assert.ok(words.some((piece) => piece.includes('or a single whole food looked at by the person named there.')), words.join('\n'));
 });
 
 test('M3: an adapted MG-04 prints its variation line after the three questions, exactly as the Management document prints it', () => {
@@ -1481,20 +1505,31 @@ test('M4: with no dish confirmed, the PPDS and free-from parts say so, and never
   const kept = renderedAlg(cafeAlg(withElsewhere(algSheet(), ALG_KEPT), MG_ANSWERED()));
   assert.ok(kept.includes('\nNo dish is confirmed in this document, so it does not say which dishes are prepacked for direct sale.\n'), kept);
   assert.ok(kept.includes('\nNo dish is confirmed in this document, so none of the business\'s statements is recorded here.\n'), kept);
-  assert.ok(!kept.includes('No dish in this document is recorded as prepacked') && !kept.includes('No confirmed dish has one recorded.'), kept);
+  assert.ok(!kept.includes('No confirmed dish is recorded as prepacked') && !kept.includes('No confirmed dish has one recorded.'), kept);
   const confirmed = renderedAlg(cafeAlg(algSheet(dish('DISH-01', 'Toastie', DONE)), MG_ANSWERED()));
-  assert.ok(confirmed.includes('\nNo dish in this document is recorded as prepacked for direct sale.\n'), confirmed);
+  assert.ok(confirmed.includes('\nNo confirmed dish is recorded as prepacked for direct sale.\n'), confirmed);
+  // A proposed dish that says yes is listed in the document, so the line speaks of the confirmed dishes alone.
+  const mixed = renderedAlg(cafeAlg(algSheet(dish('DISH-01', 'Toastie', DONE), dish('DISH-02', 'Sandwich', { ...DONE, PPDS: 'yes', State: 'proposed',
+    By: '', On: '', Source: 'A label' })), MG_ANSWERED()));
+  assert.ok(mixed.includes('\nNo confirmed dish is recorded as prepacked for direct sale.\n'), mixed);
+  assert.ok(!mixed.includes('No dish in this document is recorded'), mixed);
   assert.ok(confirmed.includes('\nNo confirmed dish has one recorded.\n'), confirmed);
   assert.ok(!confirmed.includes('No dish is confirmed in this document'), confirmed);
 });
 
 test('M6: a cell holding a character that is not a plain letter or space is named by its code point, so the message never seems to refuse the words it asks for', () => {
-  for (const [typed, held] of [['does not contain', 'U+00A0'], ['dоes not contain', 'U+043E'], ['does\tnot contain', 'U+0009'], ['✓', 'U+2713']]) {
-    const text = algSheet(dish('DISH-01', 'Toastie', { ...DONE, Fish: typed }));
-    const [problem] = algParse(text).problems;
-    assert.equal(problem.message, `DISH-01: Fish "${typed}" is neither contains nor does not contain (it holds ${held}, which is not a plain letter or space: ` +
-      'type it again): write one of the two, or leave it empty while it is not known; a precautionary statement such as may contain, or any other ' +
-      'note, goes in Notes', typed);
+  const message = (typed, held, retype) => `DISH-01: Fish "${typed}" is neither contains nor does not contain (it holds ${held}, which ` +
+    `${held.includes(' and ') ? 'are not plain letters or spaces' : 'is not a plain letter or space'}${retype ? ': type it again' : ''}): write one of the two, ` +
+    'or leave it empty while it is not known; a precautionary statement such as may contain, or any other note, goes in Notes';
+  for (const [typed, held, retype] of [
+    // One of the two once its odd character is a plain space or letter: worth typing again.
+    ['does not contain', 'U+00A0', true], ['dоes not contain', 'U+043E', true], ['does\tnot contain', 'U+0009', true],
+    ['CONTAINЅ', 'U+0405', true], ['does  not contain', 'U+00A0', true],
+    // Wrong in substance: typing it again would not help, and the rest of the message says what to write.
+    ['✓', 'U+2713', false], ['may contain – traces', 'U+2013', false], ['\u{1F95C}', 'U+1F95C', false], ['contains nuts', 'U+00A0', false]
+  ]) {
+    const [problem] = algParse(algSheet(dish('DISH-01', 'Toastie', { ...DONE, Fish: typed }))).problems;
+    assert.equal(problem.message, message(typed, held, retype), typed);
   }
   // A plain wrong word names nothing.
   assert.doesNotMatch(algParse(algSheet(dish('DISH-01', 'Toastie', { ...DONE, Fish: 'n/a' }))).problems[0].message, /U\+/);

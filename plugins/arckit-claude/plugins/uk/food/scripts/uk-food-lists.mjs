@@ -178,10 +178,16 @@ const cellValue = (value) => {
   // A character that is not a plain printable one (a no-break space, a tab, a line break, a letter of another alphabet
   // that looks like ours) can make a value look exactly like one of the two when it is not, so the message names it by
   // its code point, as the message for a character that cannot be seen does: otherwise it would seem to refuse the very
-  // words it asks for.
+  // words it asks for. It says to type the value again only when that is the fault: when the value would be one of the
+  // two with each such character made a plain space, or a plain letter. A value wrong in substance (a tick, "may contain
+  // – traces") would be no better typed again, and the rest of the message says what to write.
+  const plain = /[^\x20-\x7E]/u;
   const odd = [...new Set(value.match(/[^\x20-\x7E]/gu) ?? [])].map(codePoint);
+  const spaced = value.replace(/[^\x20-\x7E]/gu, ' ').replace(/ +/g, ' ').trim().toLowerCase();
+  const lettered = new RegExp(`^${[...value].map((char) => (plain.test(char) ? '[a-z]' : char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))).join('')}$`, 'i');
+  const retype = CELL_VALUES.some((allowed) => allowed === spaced || lettered.test(allowed));
   const holds = odd.length ? ` (it holds ${andList(odd)}, which ${odd.length === 1 ? 'is not a plain letter or space' : 'are not plain letters or ' +
-    'spaces'}: type it again)` : '';
+    'spaces'}${retype ? ': type it again' : ''})` : '';
   return { error: `is neither ${CELL_VALUES[0]} nor ${CELL_VALUES[1]}${holds}: write one of the two, or leave it empty while it is not known; ` +
     'a precautionary statement such as may contain, or any other note, goes in Notes' };
 };
@@ -779,9 +785,11 @@ const ALLERGEN_HEADINGS = {
 // the asterisks), so a dish's name can never imitate it. A dish not confirmed never carries it: its notes are not yet the
 // business's.
 export const NOTES_MARK = '**see notes**';
-// What a confirmed row is, in the words of what Checked-against may hold, and what the notes mark sends a reader to.
-const DISHES_LEAD = 'A confirmed row records what a named person at the business agreed after checking what the next section names for ' +
-  `it: labels, specifications or suppliers' statements, or a single whole food that person looked at. A row marked ${NOTES_MARK} has a ` +
+// What a confirmed row is, in the words of what Checked-against may hold, and what the notes mark sends a reader to. The
+// person who agreed a row is not always the one who looked at a whole food (Checked-against names who did), so the line
+// puts the looking on the person named there, and says only that the row was agreed from what is named.
+const DISHES_LEAD = 'A confirmed row records what a named person at the business agreed, from what the next section names for it: ' +
+  `labels, specifications or suppliers' statements, or a single whole food looked at by the person named there. A row marked ${NOTES_MARK} has a ` +
   'note there, which may be a label\'s statement that the food may contain an allergen.';
 const CHECKED_COLUMNS = ['Dish', 'Ingredients', 'Checked against', 'Checked on', 'Notes', 'Agreed by'];
 const PACK_SAYS = 'What the pack says:';
@@ -801,10 +809,11 @@ const PACK_SAYS_TWICE = 'What the pack says, in a safety point and then in the r
 // 4. What each confirmed dish was checked against, and when, its ingredients and notes, and who agreed it and when; then
 //    the dishes not confirmed, by identifier.
 // 5. The pack's sentence on prepacked for direct sale food, then the confirmed dishes the business records as such, and
-//    those whose PPDS is not recorded, as NOT_CONFIRMED_CELL. With neither, but some dish confirmed, a line saying none in
-//    the document is recorded as such: true only because every confirmed dish said no. With no dish confirmed at all (Kept
-//    elsewhere alone, say), a line saying so instead, so that the document never reads as saying the business has no such
-//    food when it has said nothing about any dish.
+//    those whose PPDS is not recorded, as NOT_CONFIRMED_CELL. With neither, but some dish confirmed, a line saying no
+//    confirmed dish is recorded as such: true only because every confirmed dish said no. It speaks of the confirmed dishes
+//    alone, as a dish not confirmed may say otherwise and is still listed in the document. With no dish confirmed at all
+//    (Kept elsewhere alone, say), a line saying so instead, so that the document never reads as saying the business has
+//    no such food when it has said nothing about any dish.
 // 6. Each confirmed dish's own claim, in the business's words, then the pack's conditions for such a claim, its safety
 //    point's paragraph and its reason's. With no claim, a line saying no confirmed dish has one; with no dish confirmed, a
 //    line saying none is recorded for that reason, never one that reads as the business making no such statement.
@@ -841,7 +850,7 @@ export function allergenChunks(sources, data) {
     ...(prepacked.length ? [['The business records these dishes as prepacked for direct sale:'], prepacked.map((entry) => `- ${named(entry)}`)] : []),
     ...(unrecorded.length ? [['Whether these dishes are prepacked for direct sale is not yet recorded:'],
       unrecorded.map((entry) => `- ${named(entry)}: ${NOT_CONFIRMED_CELL}`)] : []),
-    ...(prepacked.length || unrecorded.length ? [] : [[confirmed.length ? 'No dish in this document is recorded as prepacked for direct sale.'
+    ...(prepacked.length || unrecorded.length ? [] : [[confirmed.length ? 'No confirmed dish is recorded as prepacked for direct sale.'
       : `${noneConfirmed} it does not say which dishes are prepacked for direct sale.`]])];
   const claims = confirmed.filter((entry) => entry.freeFromClaim);
   const freeFrom = [[ALLERGEN_HEADINGS.freeFrom],

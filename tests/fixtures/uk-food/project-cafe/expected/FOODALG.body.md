@@ -1,4 +1,4 @@
-<!-- UK-FOOD:BEGIN doc=FOODALG data=sfbb-caterers-2026-11-17 body=d97f3258b30a428b4949849822e808bf94172e0dfc57799b45800b4310aea68f -->
+<!-- UK-FOOD:BEGIN doc=FOODALG data=sfbb-caterers-2026-11-17 body=3feb5b2c1397132bb2b0d2ad3fbe29f65aeba4982053773561972bf26d7d1faf -->
 
 ## Allergen information
 
@@ -23,7 +23,7 @@
 
 ### Dishes
 
-A confirmed row records what a named person at the business agreed after checking what the next section names for it: labels, specifications or suppliers' statements, or a single whole food that person looked at. A row marked **see notes** has a note there, which may be a label's statement that the food may contain an allergen.
+A confirmed row records what a named person at the business agreed, from what the next section names for it: labels, specifications or suppliers' statements, or a single whole food looked at by the person named there. A row marked **see notes** has a note there, which may be a label's statement that the food may contain an allergen.
 
 | Dish | Nuts | Peanuts | Eggs | Milk | Fish | Crustaceans | Molluscs | Cereals containing gluten | Celery | Lupin | Mustard | Sesame seeds | Soya | Sulphur dioxide |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
