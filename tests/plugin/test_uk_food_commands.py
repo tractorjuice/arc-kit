@@ -1376,10 +1376,15 @@ LIST_RULES = {
                                                                      "nothing about the cells not already `contains`: there is nothing to "
                                                                      "ask yet.",
         "ruling: told what was found, with its words, and what was not": "tell the person, for the dish as recorded, which of the fourteen "
-                                                                          "you found named, each with the words you read it from, or their "
-                                                                          "own word, and the item of evidence it came from, and which of the "
-                                                                          "fourteen you did not find named",
-        "ruling: asked in plain text, after checking the evidence": "then ask, in plain text, which of those not found the dish does not "
+                                                                          "are found named, each with the words you read it from, or their "
+                                                                          "own word, and the item of evidence it came from, or, for a "
+                                                                          "`contains` recorded before this conversation, that it was; and "
+                                                                          "which are not found.",
+        # Round 2, Important 2: an allergen recorded as contains is never put to the person as not found.
+        "round 2: what counts as not found": "Only an allergen with no `contains` on the dish, and named in none of the evidence recorded for "
+                                             "it, is not found; one whose `contains` was emptied because its evidence was taken out is listed "
+                                             "apart, as recorded before and needing evidence again, and is not asked about here.",
+        "ruling: asked in plain text, after checking the evidence": "Then ask, in plain text, which of those not found the dish does not "
                                                                     "contain, having checked the evidence in `Checked-against`",
         "ruling: no suggested answer, no choice covering them all": "Suggest no answer, offer no choice that covers them all, never put "
                                                                     "this question to the selector, and do not prompt them to clear the "
@@ -1397,8 +1402,33 @@ LIST_RULES = {
                                                                       "that, record nothing.",
         "ruling: a found allergen is not cleared by a reply": "show them again the words it came from: that cell changes only as new "
                                                               "evidence allows",
-        "ruling: one nobody stated does not stand": "Before you show a dish for confirmation, treat each `does not contain` in it that no "
-                                                    "named person stated in this conversation, its request included, as not filled in",
+        # Round 2, Important 1: a does not contain stands only for the lists it was stated for; any change to either empties them all.
+        "round 2: a does not contain stands only for its lists": "A `does not contain` stands only as that statement, and only for the "
+                                                                 "`Ingredients` and `Checked-against` it was stated for.",
+        "round 2: any change to either empties them all": "Any change to either, whenever it is made, in a check or before the dish is "
+                                                          "first confirmed, empties every `does not contain` on the dish, and the "
+                                                          "question above is put again once every ingredient has its evidence.",
+        # Round 2, Important 2: a contains is kept after evidence is taken out only on the person's answer.
+        "round 2: a contains is asked about when evidence is taken out": "When an item is taken out of `Checked-against`, ask also, for "
+                                                                         "each `contains` on the dish that new evidence does not name, "
+                                                                         "which of the evidence still recorded lists it: keep it only "
+                                                                         "where the person names evidence still recorded",
+        "ruling: one nobody stated does not stand": "Before you show a dish for confirmation, empty each `does not contain` in it that no "
+                                                    "named person stated in this conversation, its request included, such as one in a dish "
+                                                    "held as `proposed` from an earlier run",
+        # Round 2, Minor 7: the exception is only for a dish confirmed when the run began, its lists unchanged.
+        "round 2: the exception is a dish confirmed before, lists unchanged": "The one exception is a dish that was `confirmed` when this "
+                                                                              "run began and is agreed again with its `Ingredients` and "
+                                                                              "`Checked-against` unchanged",
+        # Round 2, Important 1: the show-back and Changing an entry agree with it.
+        "round 2: Not yet with a changed ingredient list": "and a change to `Ingredients` or `Checked-against` empties every `does not "
+                                                           "contain` and is taken through **The evidence for an ingredient**, as that rule "
+                                                           "says",
+        "round 2: a changed dish is checked again": "and a dish whose `Ingredients` or `Checked-against` the person changes as **Changing an "
+                                                    "entry** says, is checked again",
+        # Round 2, Minor 4.
+        "round 2: a made ingredient has its evidence through its parts": "or, for one made at the business, through its parts, as **Made at "
+                                                                         "the business** says",
         "ruling: a statement with nothing behind it": "A statement about all the business's food, or about a whole dish, with no evidence "
                                                       "for the dish's ingredients behind it, is such a value too.",
         "2: the pack's kinds name an allergen": "or one of the kinds the pack names for that allergen in the first column of its row in the "
@@ -1510,9 +1540,9 @@ LIST_RULES = {
         "7: 'it is the same' is not evidence": "\"It is the same\", or \"just confirm it\", with no evidence named, is a value with "
                                                "nothing it rests on, not new evidence.",
         "7: new evidence first": "Record each `contains` the new evidence names.",
-        "7: a contains kept only on evidence still recorded": "Any other `contains` stays only where nothing was taken out of "
-                                                              "`Checked-against`, or the person names evidence still recorded that lists "
-                                                              "it; otherwise empty it.",
+        "7: a contains kept only on evidence still recorded": "If anything was taken out of `Checked-against`, ask about each other "
+                                                              "`contains`, which of the evidence still recorded lists it, and keep or "
+                                                              "empty it as **Filling in a cell** says.",
         # 8: an empty cell filled in later.
         "8: the dish brought up to date": "bring `Checked-against`, `Checked-on`, `By` and `On` up to date",
         # 9: how customers are told.
@@ -1528,24 +1558,24 @@ LIST_RULES = {
         "11: the business's own record": "the food business operator is responsible for it, as the notice at the top of this command says",
         # The request (the dispatch's ruling for cells in the request).
         "request: cells only by the rule": "**Allergen cells in the request** are recorded only as **Filling in a cell** in step 8 says.",
-        "ruling (iv): an allergen the request gives no value for stays empty": "A cell is recorded from the request only where the "
-                                                                               "request gives its value together with what it rests on; an "
-                                                                               "allergen the request gives no value for stays empty, "
-                                                                               "whatever else the request holds.",
-        "request: a value stated in terms": "The request states a value in terms where it says `contains` or `does not contain`, in "
-                                            "those words, in any letter case, for that allergen, with `Checked-against` naming what it "
-                                            "rests on, and `Checked-on`.",
+        # Round 2, Minor 2: the request's cells stated once: a stated value as stated, a read contains as a proposal, else empty.
+        "ruling (iv): an allergen the request gives no value for stays empty": "a `contains` read from wording of a label, a specification "
+                                                                               "or a supplier's statement that the request quotes is "
+                                                                               "recorded as a proposal, with the request as its `Source`; "
+                                                                               "an allergen with neither stays empty, whatever else the "
+                                                                               "request holds.",
+        "request: a value stated in terms": "A value the request states in terms, `contains` or `does not contain`, in those words, in any "
+                                            "letter case, for that allergen, with `Checked-against` naming what it rests on and "
+                                            "`Checked-on`, is recorded as stated",
         "request: a does not contain only from a named person, every ingredient checked": "A `does not contain` counts only from a "
                                                                                           "person who gives their name in the request, "
                                                                                           "with `Checked-against` naming evidence for "
                                                                                           "every ingredient in `Ingredients`",
-        "ruling 26: confirmed only with every cell stated in terms": "Only a cell stated in terms is recorded without being shown back: a "
-                                                                     "dish stated whole by a person who gives their name, every cell it "
-                                                                     "records stated in terms, is `confirmed` with exactly those cells and "
-                                                                     "every other cell empty",
-        "ruling 26: quoted wording is pasted text, never confirmed": "and it is text pasted into the request, which is not stated whole, "
-                                                                     "as the paragraph above says: the dish it is quoted for is recorded "
-                                                                     "`proposed`, its read cells with it",
+        "ruling 26: confirmed only with every cell stated in terms": "A dish stated whole by a person who gives their name, every cell it "
+                                                                     "records stated in terms, is `confirmed` with exactly those cells",
+        "ruling 26: quoted wording is pasted text, never confirmed": "Quoted wording is text pasted into the request, which is not stated "
+                                                                     "whole, as the paragraph above says: the dish it is quoted for is "
+                                                                     "recorded `proposed`",
         "ruling 26: in the step-4 rule's words": "and is never `confirmed` from the request, however plainly its words fall into fields; "
                                                  "with nobody there it stays `proposed`, and the summary says it is waiting to be shown "
                                                  "and agreed.",
@@ -1615,7 +1645,10 @@ def test_the_allergens_guide_says_where_an_answer_comes_from():
                   # Rulings 26 and 27, and the price of the strict reading.
                   "If the message quotes a label's wording, the command reads it as it reads any label, but what it read is only a "
                   "proposal: the dish waits until it has been shown to you and you have agreed it",
-                  "You can answer for all of the ones it listed at once, or name the ones you are sure of.",
+                  "You say which of the listed allergens the dish does not contain; any you leave out, or are unsure of, stay NOT "
+                  "CONFIRMED.",
+                  "every \"does not contain\" is cleared and asked again",
+                  "An allergen it had already recorded as contains is never put to you as not found.",
                   "So expect a few questions about a label's words",
                   "If you cannot say, that allergen stays NOT CONFIRMED and the summary says it is waiting.",
                   "It does not say whether your statement is justified",
@@ -1629,7 +1662,11 @@ def test_the_allergens_guide_says_where_an_answer_comes_from():
     for gone in ["none of it names that allergen", "the allergens it could change", "which goes by the ingredients alone",
                  "the dish is shown to you to confirm", "stops counting until it has been checked again",
                  "for a dish you have just given, come up as a selector",
-                 "Name each one you are sure of", "\"contains\" where label wording quoted in the message names it"]:
+                 "Name each one you are sure of", "\"contains\" where label wording quoted in the message names it",
+                 # Round 2, Minor 1: the guide never offers the blanket reply.
+                 "You can answer for all of the ones it listed at once",
+                 # Round 2, Minor 6: the selector is decided by whether an allergen was read from wording.
+                 "for a dish you gave without pasting or pointing to any label wording"]:
         assert gone not in text, gone
     # The invented conversation: every "contains" comes from label wording quoted in it, and every "does not contain" is stated
     # by the owner in it, after being told what was found and what was not.
@@ -1654,7 +1691,9 @@ def test_the_allergens_command_never_works_out_a_does_not_contain():
                      # Ruling 26 overturned the round's first reading: quoted wording no longer lets a dish be confirmed unseen.
                      "does not keep a dish from being stated whole",
                      # Ruling 27 relaxed the reply: one about all of them together is no longer asked again as naming none.
-                     "if the reply still names none"]:
+                     "if the reply still names none",
+                     # Round 2: a contains emptied without asking, as the round 1 re-check let it be.
+                     "or the person names evidence still recorded that lists it; otherwise empty it"]:
             assert gone not in text, f"{path.name} still says {gone!r}"
 
 
@@ -2201,6 +2240,9 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "none was worked out from what the evidence does not say",
                    "holds no `does not contain` the person did not state in it",
                    "A dish with a cell read from wording, wherever the wording came from, was `proposed` until it was shown and agreed.",
+                   "none stands for a different `Ingredients` or `Checked-against` than the dish now has",
+                   "No `contains` was emptied because evidence was taken out without the person being asked which evidence still recorded "
+                   "lists it, and no allergen recorded as `contains` was put to the person as not found.",
                    "is in `Notes` in the label's own words, and in no cell",
                    "`Checked-on` is the day the person gave, never assumed to be today.",
                    "every dish the search found or the person named was stepped back to `unanswered`",
