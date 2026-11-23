@@ -1,4 +1,4 @@
-import { DATA_ID, isObject } from './uk-food-data.mjs';
+import { DATA_ID, diaryPage, isObject, isWords } from './uk-food-data.mjs';
 import {
   addListWorksheets, andList, blockTools, codePoint, counted, fieldKey, fieldLines, isAre, isIsoDate, longDate, methodQuestions, quotedBy, readBlocks,
   standard, STATE_WORDS, STATES, WORKSHEET_VERSION
@@ -50,7 +50,7 @@ export const CLEANING_FORM = { form: 'cleaningSchedule', page: 91 };
 // The form's columns and frequencies, or null when the data lacks the form or lays it out otherwise.
 function cleaningForm(data) {
   const { form, page } = CLEANING_FORM;
-  const block = data.diary?.pages?.find((p) => p.page === page)?.blocks?.find((b) => b.form === form);
+  const block = diaryPage(data, page)?.blocks?.find((b) => b.form === form);
   const groups = block?.columnGroups ?? [];
   if (groups.length !== 1 || groups[0].from !== 1 || groups[0].to !== block.columns.length - 3) return null;
   return { columns: block.columns, frequencies: block.columns.slice(groups[0].from, groups[0].to + 1) };
@@ -75,7 +75,6 @@ const SUPPLIER_CELLS = [['title', null, 0], ['deliveryDays', null, 1], ['leadTim
 const CONTACT_CELLS = [['title', null, 0], ['contactName', 0, 0], ['telephone', 1, 0], ['email', 2, 0], ['address', 3, 0], ['usefulFor', null, 1]];
 const TEAM_ADVICE = [0, 1];
 const boxCell = (box, [row, column]) => (row === null ? box?.columns : box?.rows?.[row])?.[column];
-const isWords = (value) => typeof value === 'string' && value !== '';
 // The labels of a box, as [field, label] in the order of `cells`, or null when the box is missing or any of them is
 // not there: the document is then not printed (see lacking), rather than printed with a label left out.
 const labelsOf = (box, cells) => {
@@ -87,7 +86,7 @@ const labelsOf = (box, cells) => {
 // page that the pack prints for a business to fill in: never its filled-in example (blocks marked fromImage), which
 // is an invented business's words and is never printed.
 function supplierForms(data) {
-  const boxes = ({ form, page }) => data.diary?.pages?.find((p) => p.page === page)?.blocks
+  const boxes = ({ form, page }) => diaryPage(data, page)?.blocks
     ?.filter((b) => b.form === form && b.kind === 'table' && !b.fromImage) ?? [];
   const [supplierBox] = boxes(SUPPLIERS_FORM);
   const [teamBox, contactBox] = boxes(CONTACTS_FORM);

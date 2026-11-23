@@ -1,3 +1,4 @@
+import { diaryPage, isWords } from './uk-food-data.mjs';
 import { sentenceCase } from './uk-food-worksheet.mjs';
 import { businessText, NAME_QUESTION, paragraphs, tableLines } from './uk-food-document.mjs';
 import { quotedSourceLine } from './uk-food-lists.mjs';
@@ -89,8 +90,6 @@ const ownHeading = (heading) => `The business's own ${heading.toLowerCase()}`;
 const QUOTED = 'The labels, checks, prompts and instructions on the forms, the statement over the days\' signatures, and the ' +
   'paragraphs on extra checks and on prove it records are quoted from';
 
-const isWords = (value) => typeof value === 'string' && value !== '';
-const pageOf = (data, page) => data.diary?.pages?.find((p) => p.page === page);
 // The blocks of a page that the pack prints for a business to fill in: never one read from its filled-in
 // example's picture (fromImage), which holds an invented business's words.
 const printedBlocks = (page) => (page?.blocks ?? []).filter((block) => !block.fromImage);
@@ -106,7 +105,7 @@ const missing = (what) => ({ error: `the data's diary.json has no ${what}, laid 
 
 // The cover: its title and its labels (the questions of its one table).
 function coverForm(data) {
-  const page = pageOf(data, DIARY_COVER.page);
+  const page = diaryPage(data, DIARY_COVER.page);
   const tables = printedBlocks(page).filter((block) => block.kind === 'table');
   const fits = tables.length === 1 && isWords(page.title) && questionBox(tables[0], ['text']) &&
     tables[0].questions.some((q) => q.id === DIARY_COVER.business);
@@ -119,7 +118,7 @@ function coverForm(data) {
 // are that list, with no words of their own: the business's own checks come from the Management worksheet,
 // and room is left under them for more.
 function checkForms(data) {
-  const blocks = printedBlocks(pageOf(data, CHECK_FORMS.page));
+  const blocks = printedBlocks(diaryPage(data, CHECK_FORMS.page));
   const forms = CHECK_FORMS.forms.map(({ form, own }) => {
     const found = blocks.filter((block) => block.form === form);
     const [block] = found;
@@ -143,7 +142,7 @@ function checkForms(data) {
 // label before it, so a box never starts with one. The days are one table, a column to each label, so each day
 // has the same kinds of question in the same order: otherwise a label would stand over the wrong cell.
 function weekForm(data) {
-  const page = pageOf(data, WEEK_PAGE.page);
+  const page = diaryPage(data, WEEK_PAGE.page);
   const boxes = (page?.blocks ?? []).filter((block) => block.form === WEEK_PAGE.form);
   const [start, ...days] = boxes;
   const extra = days.pop();
@@ -157,7 +156,7 @@ function weekForm(data) {
 // The prove it records: the page's title and text, the form's columns, and how many of its rows are blank.
 // Only blank rows are printed, so the pack's example, the one row that holds words, never is.
 function proveItForm(data) {
-  const page = pageOf(data, PROVE_IT_FORM.page);
+  const page = diaryPage(data, PROVE_IT_FORM.page);
   const blocks = printedBlocks(page);
   const tables = blocks.filter((block) => block.form === PROVE_IT_FORM.form);
   const [table] = tables;

@@ -291,7 +291,7 @@ export let DOCUMENTS = [
     // lists such entries as well, but is finished when its own questions are, so that line counts for
     // nothing there.
     unfinishedLine: (line) => unanswered(line) || line.startsWith(NOT_CONFIRMED),
-    asks: (sheet) => ({ items: [...(sheet?.parsed?.entries.values() ?? [])].map((entry) => [entry.id, entry]) }),
+    asks: (sheet) => listAsked(sheet),
     nouns: ['own entry', 'own entries'], entries: true, specialProcesses: true
   },
   // The business's dishes against the pack's fourteen allergens, with what each was checked against, its prepacked for
@@ -321,8 +321,9 @@ export let DOCUMENTS = [
   // business's name from the profile and its own opening and closing checks from the Management worksheet. It renders
   // without that worksheet (it then adds no checks of the business's own), so the worksheet is in its uses and not its
   // needs; one there with problems stops render, as for any worksheet a document uses, as it does the allergen
-  // information's, and status tells it under this document too (tellsToo). Nobody signs it off, as it is forms whose pages are for people to sign, and it asks nothing, so no
-  // line of it can show it unfinished, and status reports only whether it is written and in step (blankForms).
+  // information's, and status tells it under this document too (tellsToo). Nobody signs it off, as it is forms whose
+  // pages are for people to sign, and it asks nothing, so no line of it can show it unfinished, and status reports
+  // only whether it is written and in step (blankForms).
   {
     code: 'FOODREC', name: () => 'Diary and record sheets', sheet: null, uses: ['profile', 'MG'], needs: ['profile'], tellsToo: ['MG'], dataNeeded: null,
     signable: false, inStatus: false, chunks: (sources, data) => recordSheetsChunks(sources, data), source: (data) => recordSheetsSource(data),

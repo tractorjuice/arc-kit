@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-export { isObject, isString };
+export { diaryPage, isObject, isString, isWords };
 
 export const DATA_ID = 'sfbb-caterers-2026-11-17';
 export const SCHEMA_ID = 'uk-food-sfbb-data-1.0';
@@ -67,6 +67,11 @@ const isString = (value) => typeof value === 'string';
 const isStringOrNull = (value) => value === null || isString(value);
 const isStringArray = (value) => Array.isArray(value) && value.every(isString);
 const isRowsOfStrings = (value) => Array.isArray(value) && value.every(isStringArray);
+// Words to print: a string with something in it. The modules that read the pack's forms (lists and sheets)
+// print a label only when it is words.
+const isWords = (value) => isString(value) && value !== '';
+// A page of the diary and record sheets (diary.json) by its page number, or undefined when the data has none.
+const diaryPage = (data, page) => data.diary?.pages?.find((p) => p.page === page);
 
 export const SOURCE_VALUES = {
   title: isString, url: isString, publication: isString, file: isString,
