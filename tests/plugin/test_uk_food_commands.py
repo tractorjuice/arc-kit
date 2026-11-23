@@ -1539,17 +1539,20 @@ LIST_RULES = {
                                                                           "`contains` recorded before this conversation, that it was; and "
                                                                           "which are not found.",
         # Round 2, Important 2: an allergen recorded as contains is never put to the person as not found.
+        # Final review B1: the trigger names both conditions, the gate's and the change's.
         "round 2: what counts as not found": "Only an allergen with no `contains` on the dish, and named in none of the evidence recorded for "
                                              "it, is not found. One whose `contains` was emptied because its evidence was taken out is listed "
-                                             "apart, as recorded before and needing evidence again, until every ingredient the change touched "
-                                             "has its evidence recorded in this check.",
+                                             "apart, as recorded before and needing evidence again, until every ingredient in `Ingredients` "
+                                             "has its evidence in `Checked-against` and every ingredient the change touched has it recorded "
+                                             "in this check.",
         # Round 2 ruling: an emptied contains the new evidence does not name is asked about by name, apart and first, and never
         # covered by a whole-list reply.
         "round 2: an emptied contains is asked by name": "Then, if the evidence now recorded does not name it, put it to the person by "
                                                          "name, before the question on those not found and apart from it",
         "round 2: what the by-name question says": "say that it was recorded as `contains` before the change, on evidence that has been "
                                                    "taken out, and that the evidence now recorded does not name it, and ask whether, as the "
-                                                   "dish is now made, it contains it or does not contain it.",
+                                                   "dish is now made, it contains it or does not contain it, saying that if they are not sure, "
+                                                   "it stays empty.",
         "round 2: the by-name answer, or not sure": "Record `contains` only where they name evidence still recorded that lists it, and "
                                                     "`does not contain` as their statement for the dish; if they are not sure, it stays "
                                                     "empty.",
@@ -1640,6 +1643,14 @@ LIST_RULES = {
         "2: a dish read from wording is proposed with its source": "Once the dish has `Checked-against` and `Checked-on`, it is held as "
                                                                    "`proposed`, with `Source:` saying what was read",
         # Ruling 26: a cell read from wording, wherever the wording arrived, waits for the show-back.
+        # Final review B2: a dish for which wording was read is proposed, and asked about in plain text, whatever the wording
+        # named; only one for which none was read goes to the selector.
+        "B2: the selector only where no wording was read": "an entry the person has just given, held as `unanswered`, for which no "
+                                                           "wording was read, has its identifier",
+        "B2: any other is asked in plain text": "Any other entry, `proposed` or one for which wording was read, whatever that wording "
+                                                "named, is shown with where its cells came from and asked about in plain text.",
+        "B2: what proposed means": "or a dish for which wording of a label, a specification or a supplier's statement was read, whatever "
+                                   "that wording named, as **The evidence for an ingredient** says",
         "ruling 26: a read cell waits for the show-back": "A dish with a cell read from wording, whether the wording was pasted in a "
                                                           "reply, held in a file or quoted in the request, is never `confirmed` until it "
                                                           "is shown whole and a named person agrees it.",
@@ -1824,7 +1835,12 @@ def test_the_allergens_guide_says_where_an_answer_comes_from():
                   "until you have one, every allergen not already marked contains stays NOT CONFIRMED",
                   "Anything made of more than one thing needs a label, a specification or a supplier's statement",
                   "It never decides an allergen's answer.",
-                  "A dish that does not use what changed is simply agreed again as it was.",
+                  # Final review B3: true of a dish stepped back in an earlier run too.
+                  "A dish that does not use what changed is agreed again as it was, when you say so in the same conversation in which "
+                  "it was stepped back. If it was stepped back in an earlier run, such as one nobody was there to answer, the command "
+                  "first asks you again for each of its \"does not contain\" answers.",
+                  # Final review B2: the selector goes by whether wording was read, not by what it named.
+                  "for a dish for which no label wording was read. A dish for which label wording was read, whatever that wording named,",
                   # Rulings 26 and 27, and the price of the strict reading.
                   "If the message quotes a label's wording, the command reads it as it reads any label, but what it read is only a "
                   "proposal: the dish waits until it has been shown to you and you have agreed it",
@@ -1836,7 +1852,9 @@ def test_the_allergens_guide_says_where_an_answer_comes_from():
                   "from a run that stopped before the dish was confirmed: before it shows you the dish, the command tells you which "
                   "allergens it is clearing and why, then asks you about them.",
                   "An allergen it had already recorded as contains is never put to you as not found.",
-                  "it asks you about by name: whether the dish contains it as it is now made, does not contain it, or you are not sure",
+                  # Final review B4: the guide asks what the command asks.
+                  "it asks you about by name: whether the dish contains it as it is now made or does not contain it, saying that if you "
+                  "are not sure, it stays NOT CONFIRMED",
                   "So expect a few questions about a label's words",
                   "If you cannot say, that allergen stays NOT CONFIRMED and the summary says it is waiting.",
                   "It does not say whether your statement is justified",
