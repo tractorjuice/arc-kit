@@ -23,6 +23,7 @@ export * from './uk-food-document.mjs';
 export * from './uk-food-status.mjs';
 export * from './uk-food-folder.mjs';
 export * from './uk-food-lists.mjs';
+export * from './uk-food-sheets.mjs';
 export { HELPER, loadValidData, optionError, readOptions, usageError, valueError };
 
 // The helper itself, for the commands a message tells a person to run next.

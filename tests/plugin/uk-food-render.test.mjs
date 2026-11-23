@@ -1201,7 +1201,7 @@ test('a document is added in one place: one row in DOCUMENTS renders, is counted
     assert.deepEqual(mine.worksheets, ['answers-own.md', 'answers-profile.md']);
     assert.match(mainSays('status', '--project', dir).out, new RegExp(`^FOODTEST \\(Test document\\): ${own.confirmed} of ${own.questions} ` +
       'test entries confirmed; not written; not signed off$', 'm'));
-    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, .*FOODOWN, FOODALG, FOODCS, FOODSUP, FOODTEST, or FOODCMP, the completion record;/);
+    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, .*FOODOWN, FOODALG, FOODCS, FOODSUP, FOODREC, FOODTEST, or FOODCMP, the completion record;/);
     // Written into the project, it passes check, and a named person can sign it off.
     const file = join(dir, 'ARC-001-FOODTEST-v1.0.md');
     writeFileSync(file, `Header text.\n\n${result.text}\n\nFooter text.\n`);
@@ -1230,7 +1230,7 @@ test('the profile reads only the worksheets it prints from: one another document
   const sections = { ...SECTION_DOCS };
   withDocuments(withRow(extra), () => {
     assert.deepEqual(SECTION_DOCS, sections);
-    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, FOODCLN, FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN, FOODALG, FOODCS, FOODSUP, FOODEXTRA, or FOODCMP/);
+    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, FOODCLN, FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN, FOODALG, FOODCS, FOODSUP, FOODREC, FOODEXTRA, or FOODCMP/);
     const result = renderDocument('FOODEXTRA', dir, data);
     assert.equal(result.exit, 1, 'the extra worksheet is read by the document that uses it');
     assert.match(result.messages.join('\n'), /answers-extra\.md:1: /);

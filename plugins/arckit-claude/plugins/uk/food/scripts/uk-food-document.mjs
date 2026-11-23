@@ -12,6 +12,7 @@ import {
   allergenChunks, allergenSource, cleaningScheduleChunks, cleaningScheduleSource, listAsked, listOutstanding, LISTS, listSummary, suppliersChunks,
   suppliersSource
 } from './uk-food-lists.mjs';
+import { recordSheetsChunks, recordSheetsLacking, recordSheetsSource } from './uk-food-sheets.mjs';
 export {
   BEFORE_RENDER, bodyText, businessText, closingNotice, COMPLETION_STALE, coverageChunks, DOC_OF_SECTION, extraCareDone,
   failure, misplaced, NAME_QUESTION, NOT_CONFIRMED, notConfirmed, notRelevantLine, otherText, packBlockChunks, paragraphs, questionCell,
@@ -99,9 +100,11 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'allergens', 'cleani
 //   it uses may be missing, and the document says so; one there with problems stops render all the same.
 // - dataNeeded: the section whose data file it cannot be rendered without, or null.
 // - signable: whether a named person signs it off. sign-off refuses one nobody signs, and its header
-//   says nothing but DRAFT and [PENDING].
-// - inStatus: whether status lists it among the documents. Only the completion record is not there: it
-//   reports on them.
+//   says nothing but DRAFT and [PENDING]. Status never tells such a document that it is not signed off.
+// - inStatus: whether status lists it among the documents, each with its counts, to be finished and signed.
+//   Two are not there, and each says why by a field of its own: the completion record (render), which
+//   reports on them, and the record sheets (blankForms), which status reports apart. tableProblems refuses
+//   any other row left out, as status would then say nothing of it.
 // - chunks(sources, data, project): its body, after the coverage sentence and before the closing
 //   notice, as chunks (see the layout above). `sources` maps each worksheet of `uses` that exists to
 //   what readWorksheets reads from it.
@@ -139,7 +142,12 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'allergens', 'cleani
 //   environmental health review, under this document.
 // - render(project, data), the completion record's: its own renderer, in uk-food-status.mjs, used in
 //   place of chunks and source. It is rendered from the project's status, so check reads any difference
-//   from a fresh render as out of date, in the words of `outOfDate`, never as an edit.
+//   from a fresh render as out of date, in the words of `outOfDate`, never as an edit. The row that has it
+//   is the completion record (COMPLETION_RECORD): one row at most, and never one in status.
+// - blankForms, the record sheets': true on the one document of blank forms that people at the business fill
+//   in by hand. Nobody signs it and it asks nothing, so it is not in status among the documents to finish;
+//   status says only whether it is written and in step, in its own key (recordSheets) and in the unfinished
+//   list (RECORD_SHEETS). One row at most, never in status, never signed off, with no render of its own.
 // - nobodySigns and signOffRefusal, on every row nobody signs: how a header claim and sign-off say so.
 // A new worksheet is added to SHEET_ORDER, at the place it is to be read (and to the worksheet module,
 // which makes and parses it). A row may use only worksheets SHEET_ORDER lists; status reads each
@@ -256,6 +264,22 @@ export let DOCUMENTS = [
   listDocument('suppliers', {
     code: 'FOODSUP', nouns: ['entry', 'entries'], chunks: (sources, data) => suppliersChunks(sources, data), source: (data) => suppliersSource(data)
   }),
+  // The pack's blank diary cover, opening and closing checks, week page and prove it records, for people at the
+  // business to print or copy and fill in by hand (uk-food-sheets.mjs). It has no worksheet of its own: it prints the
+  // business's name from the profile and its own opening and closing checks from the Management worksheet. It renders
+  // without that worksheet (it then adds no checks of the business's own), so the worksheet is in its uses and not its
+  // needs; one there with problems stops render, as for any worksheet a document uses, as it does the allergen
+  // information's. Nobody signs it off, as it is forms whose pages are for people to sign, and it asks nothing, so no
+  // line of it can show it unfinished, and status reports only whether it is written and in step (blankForms).
+  {
+    code: 'FOODREC', name: () => 'Diary and record sheets', sheet: null, uses: ['profile', 'MG'], needs: ['profile'], dataNeeded: null,
+    signable: false, inStatus: false, chunks: (sources, data) => recordSheetsChunks(sources, data), source: (data) => recordSheetsSource(data),
+    unfinishedLine: () => false, asks: null, nouns: null, entries: false, blankForms: true, lacking: (data) => recordSheetsLacking(data),
+    nobodySigns: 'the diary and record sheets are blank forms for people at the business to fill in and sign, so the document itself ' +
+      'is never signed off',
+    signOffRefusal: 'FOODREC, the diary and record sheets, is not signed off: it is a set of blank forms, for people at the business to ' +
+      'fill in and sign themselves as they use them'
+  },
   {
     // It reads no worksheet itself: status, which it is rendered from, reads them all.
     code: 'FOODCMP', name: () => 'Completion record', sheet: null, uses: [], needs: [], dataNeeded: null, signable: false,
@@ -296,6 +320,21 @@ function tableProblems(rows, sheets) {
     } else {
       if (!isFunction(row.render)) fault('render', 'is not a function');
       if (!isText(row.outOfDate?.message) || !isText(row.outOfDate?.reason)) fault('outOfDate', 'does not give the message and the reason check prints');
+      // The completion record is the row with a renderer of its own: rendered from the status of the others, so it is
+      // not one of them, and there is one.
+      if (row.inStatus) fault('render', 'is given on a row in status, and a document rendered from the status of the others is not one of them');
+      if (rows.findIndex((other) => other.render !== undefined) !== i) fault('render', 'is another row\'s too: one document is the completion record');
+    }
+    if (row.blankForms !== undefined && row.blankForms !== true) fault('blankForms', 'is neither true nor left out');
+    else if (row.blankForms && (row.inStatus || row.signable || row.render !== undefined)) {
+      fault('blankForms', 'is on a row in status, signed off or with a renderer of its own, where blank forms are none of these');
+    } else if (row.blankForms && rows.findIndex((other) => other.blankForms) !== i) {
+      fault('blankForms', 'is another row\'s too: status reports one document of blank forms, as the record sheets');
+    }
+    // Status lists every document but these two, and says nothing of any other row left out of it.
+    if (!row.inStatus && row.render === undefined && !row.blankForms) {
+      fault('inStatus', 'is false, though the row is neither the completion record (render) nor the record sheets (blankForms), so status ' +
+        'would say nothing of it');
     }
     if (row.inStatus) {
       if (!isFunction(row.asks)) fault('asks', 'is not a function, and status counts what a document in it asks');
@@ -322,6 +361,7 @@ export let STATUS_ORDER;
 export let SECTION_DOCS;
 let DOC_OF_SECTION;
 export let COMPLETION_RECORD;
+export let RECORD_SHEETS;
 // The worksheets status reads: each one some document uses, in SHEET_ORDER.
 let SHEETS_USED;
 // Checks the table, and derives the lists above from it. A table that is not whole is refused.
@@ -340,9 +380,12 @@ function deriveLists() {
   SECTION_DOCS = Object.fromEntries(sections.map((row) => [row.code, row.section]));
   DOC_OF_SECTION = Object.fromEntries(sections.map((row) => [row.section, row.code]));
   // The completion record: rendered and checked like the documents above, but it reports on them, so it
-  // is neither in their status nor signed off itself. Its renderer and its line in status are in
-  // uk-food-status.mjs.
-  COMPLETION_RECORD = DOCUMENTS.find((row) => !row.inStatus)?.code;
+  // is neither in their status nor signed off itself. It is the row with a renderer of its own (render),
+  // which tableProblems holds to one. Its renderer and its line in status are in uk-food-status.mjs.
+  COMPLETION_RECORD = DOCUMENTS.find((row) => row.render !== undefined)?.code;
+  // The record sheets: blank forms, rendered and checked like the documents, but nobody signs them and they ask
+  // nothing, so status reports them apart (blankForms, held to one row). Undefined in a table without them.
+  RECORD_SHEETS = DOCUMENTS.find((row) => row.blankForms)?.code;
   SHEETS_USED = SHEET_ORDER.filter((name) => DOCUMENTS.some((row) => row.uses.includes(name)));
 }
 deriveLists();

@@ -1,0 +1,375 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import {
+  CHECK_FORMS, COMPLETION_RECORD, DEFAULT_DATA_DIR, DIARY_COVER, DOC_CODES, DOCUMENTS, NOT_CONFIRMED, NOT_CONFIRMED_CELL, PROVE_IT_FORM,
+  RECORD_SHEETS, RENDERED_CODES, STATUS_ORDER, UNANSWERED, WEEK_PAGE, checkDocument, documentOf, loadData, main, projectStatus, renderDocument,
+  sentenceCase, signOffDocument, withDocuments
+} from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
+
+// The diary and record sheets (FOODREC): the pack's blank forms. The pack's words are never typed here: every
+// label, check and prompt is read from the data, as the helper reads it.
+
+const helper = 'plugins/arckit-uk-food/scripts/uk-food.mjs';
+const run = (...args) => spawnSync('node', [helper, ...args], { encoding: 'utf8' });
+const data = loadData(DEFAULT_DATA_DIR);
+const CAFE = 'tests/fixtures/uk-food/project-cafe';
+const EXPECTED = join(CAFE, 'expected', 'FOODREC.body.md');
+// The date the commands would give as today, as the other tests pass it to every reading.
+const TODAY = '2026-11-22';
+
+// A temporary copy of the cafe's worksheets, with any changed ({ section: text }) or taken away ({ section: null }).
+const cafe = (changes = {}) => {
+  const dir = mkdtempSync(join(tmpdir(), 'uk-food-sheets-'));
+  cpSync(join(CAFE, 'food-safety'), join(dir, 'food-safety'), { recursive: true });
+  for (const [section, text] of Object.entries(changes)) {
+    const file = join(dir, 'food-safety', `answers-${section}.md`);
+    if (text === null) rmSync(file);
+    else writeFileSync(file, text);
+  }
+  return dir;
+};
+const cafeText = (section) => readFileSync(join(CAFE, 'food-safety', `answers-${section}.md`), 'utf8');
+const swap = (text, from, to) => {
+  assert.ok(text.includes(from), `${JSON.stringify(from)} is not in the text`);
+  return text.replace(from, to);
+};
+const render = (dir, from = data) => renderDocument('FOODREC', dir, from, { today: TODAY });
+const rendered = (dir) => {
+  const result = render(dir);
+  assert.equal(result.exit, 0, (result.messages ?? []).join('\n'));
+  return result.text;
+};
+// The lines between the markers.
+const inner = (text) => text.split('\n').slice(1, -1);
+// The lines of a body under the "## " heading given, up to the next one (or the line after the forms).
+const sectionOf = (text, heading) => {
+  const lines = inner(text);
+  const from = lines.indexOf(`## ${heading}`);
+  assert.ok(from >= 0, `## ${heading} is not in the body`);
+  const next = lines.findIndex((line, i) => i > from && (line.startsWith('## ') || line.startsWith('One week page')));
+  return lines.slice(from + 1, next);
+};
+// A table row's cells, split at each pipe not escaped.
+const cellsOf = (row) => row.slice(2, -2).split(/(?<!\\) \| /);
+const rowsOf = (lines) => lines.filter((line) => line.startsWith('| ') && !/^\|( --- \|)+$/.test(line)).map(cellsOf);
+
+// The forms in the data, found as the constants name them.
+const pageOf = (page) => data.diary.pages.find((p) => p.page === page);
+const coverBlock = () => pageOf(DIARY_COVER.page).blocks.find((block) => block.kind === 'table');
+const checkBlock = (form) => pageOf(CHECK_FORMS.page).blocks.find((block) => block.form === form);
+const checksOf = (form) => checkBlock(form).questions.filter((q) => q.type === 'tick').map((q) => q.text);
+const weekBoxes = () => pageOf(WEEK_PAGE.page).blocks.filter((block) => block.form === WEEK_PAGE.form);
+const proveIt = () => pageOf(PROVE_IT_FORM.page).blocks.find((block) => block.form === PROVE_IT_FORM.form);
+const headingOf = (form) => sentenceCase(checkBlock(form).heading);
+// The days of the week, Monday first, as this computer names them in English: not typed here.
+const DAYS = Array.from({ length: 7 }, (_, i) => new Date(Date.UTC(2024, 0, 1 + i)).toLocaleDateString('en-GB', { weekday: 'long', timeZone: 'UTC' }));
+
+// An answer in the cafe's Management worksheet, which leaves MG-01-Q11 and MG-01-Q21 unanswered, given as the lines that
+// replace its unanswered fields.
+const BLANK_ANSWER = 'Answer:\nState: unanswered\nBy:\nOn:\nSource:';
+const answered = (text, id, lines) => {
+  const at = text.indexOf(`### ${id}\n`);
+  const from = text.indexOf(BLANK_ANSWER, at);
+  assert.ok(at >= 0 && from > at && from - at < 400, id);
+  return `${text.slice(0, from)}${lines.join('\n')}${text.slice(from + BLANK_ANSWER.length)}`;
+};
+const typed = (answer) => `Answer: ${answer.join('\n  ')}`;
+const confirmed = (...answer) => [typed(answer), 'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-17', 'Source:'];
+const proposed = (...answer) => [typed(answer), 'State: proposed', 'By:', 'On:', 'Source: Walk-round notes'];
+const OWN = ['Ice machine scoop is in its holder', 'Extractor fan is switched on'];
+const mgWith = (id, lines) => answered(cafeText('MG'), id, lines);
+
+// ---- The forms, tied to the data ----
+
+test('DIARY_COVER names the one table of the diary\'s cover, every question of it a label, and the one label for the business', () => {
+  const tables = pageOf(DIARY_COVER.page).blocks.filter((block) => block.kind === 'table');
+  assert.equal(tables.length, 1);
+  const labels = tables[0].questions;
+  assert.ok(labels.length > 0 && labels.every((q) => q.type === 'text' && q.text !== ''));
+  assert.deepEqual(labels.filter((q) => /business/i.test(q.text)).map((q) => q.id), [DIARY_COVER.business]);
+});
+
+test('CHECK_FORMS names the opening and closing checks forms, each with the Management list question that holds the business\'s own checks for it', () => {
+  const mg = data.sections.get('MG').methods.find((method) => method.id === CHECK_FORMS.method);
+  assert.deepEqual(CHECK_FORMS.forms.map(({ form }) => form), ['openingChecks', 'closingChecks']);
+  for (const { form, own } of CHECK_FORMS.forms) {
+    const blocks = pageOf(CHECK_FORMS.page).blocks.filter((block) => block.form === form);
+    assert.equal(blocks.length, 1, form);
+    const [block] = blocks;
+    assert.equal(block.columns.length, 1, form);
+    // Ticks with words, then the empty list the pack leaves for the business's own, last.
+    assert.deepEqual(block.questions.map((q) => q.type), [...checksOf(form).map(() => 'tick'), 'list'], form);
+    assert.equal(block.questions.at(-1).text, '', form);
+    // The Management worksheet's question is that list in MG-01's block of the same heading, after the same checks.
+    const same = mg.blocks.find((b) => b.heading === block.heading);
+    assert.deepEqual(same.questions.map((q) => [q.type, q.text]), block.questions.map((q) => [q.type, q.text]), form);
+    assert.equal(same.questions.at(-1).id, own, form);
+  }
+  // The page's one text box, on extra checks, which the document prints after them.
+  assert.equal(pageOf(CHECK_FORMS.page).blocks.filter((block) => block.kind === 'text').length, 1);
+});
+
+test('WEEK_PAGE names a blank week page: no block read from a picture, and between its first box and its last, the seven days in order', () => {
+  const page = pageOf(WEEK_PAGE.page);
+  assert.ok(!page.blocks.some((block) => block.fromImage), 'the page holds no filled-in example');
+  const boxes = weekBoxes();
+  assert.equal(boxes.length, page.blocks.length);
+  assert.deepEqual(boxes.slice(1, -1).map((box) => box.heading), DAYS);
+  // The first box has no heading, the last is the extra checks box, headed as the checks page's text box is.
+  assert.equal(boxes[0].heading, null);
+  assert.equal(boxes.at(-1).heading, pageOf(CHECK_FORMS.page).blocks.find((block) => block.kind === 'text').heading);
+  // The page before it is the pack's filled-in example, which the document never reads.
+  assert.ok(pageOf(WEEK_PAGE.page - 1).blocks.some((block) => block.fromImage && block.form === WEEK_PAGE.form));
+});
+
+test('PROVE_IT_FORM names the one prove it table, whose first row is the pack\'s example and every other row blank', () => {
+  const tables = pageOf(PROVE_IT_FORM.page).blocks.filter((block) => block.form === PROVE_IT_FORM.form);
+  assert.equal(tables.length, 1);
+  const [example, ...rest] = tables[0].rows;
+  assert.ok(example.some((cell) => cell !== ''));
+  assert.ok(rest.length > 0 && rest.every((row) => row.length === tables[0].columns.length && row.every((cell) => cell === '')));
+});
+
+// ---- The body ----
+
+test('the cafe renders to the expected diary and record sheets body, through the function and the command', () => {
+  const expected = readFileSync(EXPECTED, 'utf8');
+  assert.equal(`${rendered(CAFE)}\n`, expected);
+  const cli = run('render', '--doc', 'FOODREC', '--project', CAFE);
+  assert.equal(cli.status, 0, cli.stderr);
+  assert.equal(cli.stdout, expected);
+});
+
+test('every check on page 82 appears once in its form\'s section, in order, beside an empty cell, and none is left out', () => {
+  const text = rendered(CAFE);
+  for (const { form } of CHECK_FORMS.forms) {
+    const rows = rowsOf(sectionOf(text, headingOf(form)));
+    assert.deepEqual(rows, [[checkBlock(form).columns[0], ''], ...checksOf(form).map((check) => [check, ''])], form);
+  }
+  // Each heading is the form's, and the sections come in the page's order.
+  const lines = inner(text);
+  const at = CHECK_FORMS.forms.map(({ form }) => lines.indexOf(`## ${headingOf(form)}`));
+  assert.ok(at[0] > 0 && at[1] > at[0], at.join(' '));
+});
+
+test('the week section prints page 95\'s boxes in order: each heading, each label beside an empty cell, the day\'s statement in the cell of its signature', () => {
+  const text = rendered(CAFE);
+  const tables = [];
+  for (const line of sectionOf(text, 'Week')) {
+    if (!line.startsWith('| ')) continue;
+    if (/^\|( --- \|)+$/.test(line)) continue;
+    const cells = cellsOf(line);
+    assert.equal(cells.length, 2, line);
+    assert.equal(cells[1], '', line);
+    // A header row starts a table: the row after a blank line.
+    tables.push(cells[0]);
+  }
+  // What the page holds, in order: each box's heading (or nothing), then its labels, a note joined to the label before it.
+  const want = weekBoxes().flatMap((box) => [box.heading ?? '', ...box.questions.reduce((labels, q) =>
+    (q.type === 'note' ? [...labels.slice(0, -1), `${labels.at(-1)}<br>${q.text}`] : [...labels, q.text]), [])]);
+  assert.deepEqual(tables, want);
+  // The statement is never a line of its own: only ever in a cell, after a label.
+  const notes = weekBoxes().flatMap((box) => box.questions.filter((q) => q.type === 'note').map((q) => q.text));
+  assert.ok(notes.length > 0);
+  for (const note of new Set(notes)) {
+    for (const line of inner(text).filter((l) => l.includes(note))) assert.match(line, new RegExp(`^\\| [^|]+<br>${note.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\|  \\|$`), line);
+  }
+});
+
+test('nothing of a filled-in example is printed: no text read from a picture, nor the prove it example row; the blank rows are the form\'s own count', () => {
+  const text = rendered(CAFE);
+  const blocks = data.diary.pages.flatMap((page) => page.blocks);
+  // Words the pack also prints on its forms (a label read from the picture as well as the page) are not the example's.
+  const printed = new Set(blocks.filter((block) => !block.fromImage).flatMap((block) => [block.heading, block.text, ...(block.columns ?? []),
+    ...(block.questions ?? []).map((q) => q.text)]).filter(Boolean));
+  const example = [...blocks.filter((block) => block.fromImage).map((block) => block.text), ...proveIt().rows[0].filter((cell) => cell !== '')]
+    .filter((words) => !printed.has(words));
+  assert.ok(example.length > 0);
+  for (const words of example) assert.ok(!text.includes(words), words);
+  // The prove it table: its columns over as many empty rows as the form leaves blank.
+  const rows = rowsOf(sectionOf(text, sentenceCase(pageOf(PROVE_IT_FORM.page).title)));
+  assert.deepEqual(rows[0], proveIt().columns);
+  assert.deepEqual(rows.slice(1), proveIt().rows.filter((row) => row.every((cell) => cell === '')));
+  assert.equal(rows.length - 1, proveIt().rows.length - 1);
+});
+
+test('own checks confirmed in MG-01-Q11 are printed, both lines, under the own-checks line after the pack\'s opening checks; proposed or unanswered, nothing', () => {
+  const [opening, closing] = CHECK_FORMS.forms;
+  const text = rendered(cafe({ MG: mgWith(opening.own, confirmed(...OWN)) }));
+  const section = sectionOf(text, headingOf(opening.form));
+  const own = section.indexOf(`| The business's own ${checkBlock(opening.form).heading.toLowerCase()} |  |`);
+  const last = section.indexOf(`| ${checksOf(opening.form).at(-1)} |  |`);
+  assert.ok(last > 0 && own > last, section.join('\n'));
+  assert.deepEqual(rowsOf(section.slice(own)), [[`The business's own ${checkBlock(opening.form).heading.toLowerCase()}`, ''], ...OWN.map((check) => [check, ''])]);
+  // The closing checks gain nothing from the opening checks' answer.
+  assert.deepEqual(sectionOf(text, headingOf(closing.form)), sectionOf(rendered(CAFE), headingOf(closing.form)));
+  // Proposed, it adds nothing and leaves no mark: the body is the fixture's.
+  const fixture = rendered(CAFE);
+  assert.equal(rendered(cafe({ MG: mgWith(opening.own, proposed(...OWN)) })), fixture);
+  for (const check of OWN) assert.ok(!fixture.includes(check));
+  // The closing checks' own, from MG-01-Q21, go under the closing checks.
+  const shut = rendered(cafe({ MG: mgWith(closing.own, confirmed('Back door is locked')) }));
+  assert.deepEqual(rowsOf(sectionOf(shut, headingOf(closing.form))).slice(-2),
+    [[`The business's own ${checkBlock(closing.form).heading.toLowerCase()}`, ''], ['Back door is locked', '']]);
+  assert.deepEqual(sectionOf(shut, headingOf(opening.form)), sectionOf(fixture, headingOf(opening.form)));
+});
+
+test('with MG-01 marked not relevant, every check the pack prints is still there, no own check is added and no not-relevant line is printed', () => {
+  // (The worksheet reader refuses an answer under a method marked not relevant, so its questions stay unanswered.)
+  const mg = swap(cafeText('MG'), '## MG-01 Opening and closing checks\n\nStatus: applies\nReason:\nDecided-by:',
+    '## MG-01 Opening and closing checks\n\nStatus: not-relevant\nReason: We keep our own check list on the wall.\nDecided-by: Sam Okafor');
+  const text = rendered(cafe({ MG: mg }));
+  assert.equal(text, rendered(CAFE));
+  assert.ok(!text.includes('Not relevant') && !text.includes('We keep our own check list'));
+});
+
+test('with no Management worksheet the record sheets render, adding no own checks; one with problems stops render, as for the allergen information', () => {
+  const none = render(cafe({ MG: null }));
+  assert.equal(none.exit, 0, (none.messages ?? []).join('\n'));
+  assert.equal(`${none.text}\n`, readFileSync(EXPECTED, 'utf8'));
+  // A worksheet with a problem is not printed from: render refuses, naming it, exactly as FOODALG does.
+  const broken = cafe({ MG: `${cafeText('MG')}a stray line\n` });
+  const refused = render(broken);
+  assert.equal(refused.exit, 1);
+  assert.match(refused.messages.join('\n'), /answers-MG\.md:\d+: /);
+  assert.deepEqual(refused, renderDocument('FOODALG', broken, data, { today: TODAY }));
+  // One for other data is refused as any document refuses it.
+  const other = render(cafe({ MG: cafeText('MG').replace('data=sfbb-caterers-2026-11-17', 'data=sfbb-caterers-2099-01-01') }));
+  assert.equal(other.exit, 2);
+  assert.match(other.messages.join('\n'), /answers data sfbb-caterers-2099-01-01/);
+  // With no profile there is nothing to render from.
+  assert.equal(render(cafe({ profile: null })).exit, 2);
+});
+
+test('the business\'s name is printed beside the cover\'s business label only when the profile confirms it, escaped', () => {
+  const label = coverBlock().questions.find((q) => q.id === DIARY_COVER.business).text;
+  const coverRows = (text) => rowsOf(sectionOf(text, sentenceCase(pageOf(DIARY_COVER.page).title)));
+  assert.deepEqual(coverRows(rendered(CAFE)), [['', ''], ...coverBlock().questions.map((q) => [q.text, q.id === DIARY_COVER.business ? 'Bramble Cafe' : ''])]);
+  const named = 'Answer: Bramble Cafe\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-17\nSource:';
+  const unconfirmed = rendered(cafe({ profile: swap(cafeText('profile'), named, 'Answer: Bramble Cafe\nState: proposed\nBy:\nOn:\nSource: The shop sign') }));
+  assert.ok(coverRows(unconfirmed).every(([, value]) => value === ''), 'nothing beside any label');
+  assert.ok(unconfirmed.includes('This is the business\'s own food safety record.'));
+  // A name holding a pipe and the unfinished marks keeps the table's two columns and shows neither mark.
+  const odd = rendered(cafe({ profile: swap(cafeText('profile'), named, 'Answer: Bramble | **NOT YET ANSWERED** Cafe\nState: confirmed\nBy: Sam Okafor\n' +
+    'On: 2026-11-17\nSource:') }));
+  const row = coverRows(odd).find(([text]) => text === label);
+  assert.deepEqual(row, [label, 'Bramble \\| \\*\\*NOT YET ANSWERED\\*\\* Cafe']);
+  assert.ok(coverRows(odd).every((cells) => cells.length === 2));
+  assert.ok(!odd.includes(UNANSWERED));
+});
+
+test('an own check holding a pipe or an unfinished mark is escaped, keeps its table\'s columns, and nothing in the body marks it unfinished', () => {
+  const [opening] = CHECK_FORMS.forms;
+  const dir = cafe({ MG: mgWith(opening.own, confirmed('Ice machine | scoop', UNANSWERED, `${NOT_CONFIRMED}x`, NOT_CONFIRMED_CELL)) });
+  const text = rendered(dir);
+  const rows = rowsOf(sectionOf(text, headingOf(opening.form)));
+  assert.ok(rows.every((cells) => cells.length === 2));
+  assert.deepEqual(rows.slice(-4).map(([check]) => check), ['Ice machine \\| scoop', '\\*\\*NOT YET ANSWERED\\*\\*', `${NOT_CONFIRMED}x`,
+    '\\*\\*NOT CONFIRMED\\*\\*']);
+  // No line is one that any document's row reads as unfinished, and this one reads none so.
+  const marks = DOCUMENTS.map((row) => row.unfinishedLine);
+  for (const line of inner(text)) assert.ok(!marks.some((marked) => marked(line)), line);
+  assert.ok(!text.includes(UNANSWERED) && !text.includes(NOT_CONFIRMED_CELL));
+  // Written into the project it passes check.
+  const file = join(dir, 'ARC-001-FOODREC-v1.0.md');
+  writeFileSync(file, `Header text.\n\n${text}\n\nFooter text.\n`);
+  assert.equal(checkDocument('FOODREC', dir, file, data, undefined, { today: TODAY }).exit, 0);
+});
+
+test('every figure in the body comes from the data: none is typed by the helper', () => {
+  const lines = inner(rendered(CAFE));
+  const known = JSON.stringify([data.diary, data.source]);
+  const figures = lines.join('\n').match(/\d+/g) ?? [];
+  assert.ok(figures.length > 0);
+  for (const figure of figures) assert.ok(known.includes(figure), figure);
+});
+
+test('data that lacks a form, or lays it out otherwise, is refused with a message naming it, and nothing is printed', () => {
+  const changed = (change) => {
+    const copy = structuredClone(data);
+    change(copy.diary.pages);
+    return copy;
+  };
+  const page = (pages, n) => pages.find((p) => p.page === n);
+  const refusals = [
+    // The pack's filled-in example in place of the blank week page.
+    [(pages) => { page(pages, WEEK_PAGE.page).blocks = structuredClone(page(pages, WEEK_PAGE.page - 1).blocks); }, /weekPage form on page 95/],
+    // A prove it form with no blank row.
+    [(pages) => { proveItOf(pages).rows = proveItOf(pages).rows.slice(0, 1); }, /proveItRecords form on page 93/],
+    // A cover with no label for the business.
+    [(pages) => { page(pages, DIARY_COVER.page).blocks[0].questions = page(pages, DIARY_COVER.page).blocks[0].questions.filter((q) => q.id !== DIARY_COVER.business); },
+      /diary cover on page 80/],
+    // A check form with a question of a kind it does not print.
+    [(pages) => { page(pages, CHECK_FORMS.page).blocks[0].questions[0].type = 'text'; }, /openingChecks and closingChecks forms on page 82/],
+    // No text box on extra checks.
+    [(pages) => { page(pages, CHECK_FORMS.page).blocks = page(pages, CHECK_FORMS.page).blocks.filter((b) => b.kind !== 'text'); }, /extra checks on page 82/]
+  ];
+  for (const [change, pattern] of refusals) {
+    const result = render(CAFE, changed(change));
+    assert.equal(result.exit, 2, String(pattern));
+    assert.equal(result.text, undefined);
+    assert.match(result.messages.join('\n'), pattern);
+  }
+});
+const proveItOf = (pages) => pages.find((p) => p.page === PROVE_IT_FORM.page).blocks.find((b) => b.form === PROVE_IT_FORM.form);
+
+// ---- The table, sign-off and check ----
+
+test('FOODREC is in the table before the completion record: rendered and checked, never signed, not among the documents status counts', () => {
+  const row = documentOf('FOODREC');
+  assert.deepEqual([row.sheet, row.uses, row.needs, row.signable, row.inStatus, row.blankForms], [null, ['profile', 'MG'], ['profile'], false, false, true]);
+  assert.equal(row.unfinishedLine(UNANSWERED), false);
+  assert.equal(RECORD_SHEETS, 'FOODREC');
+  assert.deepEqual(RENDERED_CODES.slice(-2), ['FOODREC', 'FOODCMP']);
+  assert.ok(!DOC_CODES.includes('FOODREC') && !STATUS_ORDER.includes('FOODREC'));
+  // The completion record is the row with a renderer of its own, said so in the table, not the one row left out of status.
+  assert.equal(COMPLETION_RECORD, DOCUMENTS.find((r) => r.render).code);
+  assert.equal(COMPLETION_RECORD, 'FOODCMP');
+});
+
+test('sign-off refuses FOODREC in its own words, through the function and the command, and records nothing', () => {
+  const dir = cafe();
+  writeFileSync(join(dir, 'ARC-001-FOODREC-v1.0.md'), `Header text.\n\n${rendered(dir)}\n\nFooter text.\n`);
+  const person = { name: 'Sam Okafor', role: 'Owner', version: '1.0', date: '2026-11-17', paperSigned: 'no', otherTextRead: 'yes' };
+  const refused = signOffDocument('FOODREC', dir, person, data, { today: TODAY });
+  assert.equal(refused.exit, 2);
+  assert.deepEqual(refused.messages, [documentOf('FOODREC').signOffRefusal]);
+  assert.match(refused.messages[0], /^FOODREC, the diary and record sheets, is not signed off: it is a set of blank forms/);
+  const cli = run('sign-off', '--doc', 'FOODREC', '--project', dir, '--name', 'Sam Okafor', '--role', 'Owner', '--version', '1.0', '--date', '2026-11-17');
+  assert.equal(cli.status, 2);
+  assert.equal(cli.stderr, `${documentOf('FOODREC').signOffRefusal}\n`);
+  assert.ok(!existsSync(join(dir, 'food-safety', 'sign-offs.json')));
+});
+
+test('a written FOODREC passes check, and a header that says it is approved fails, saying nobody signs it off', () => {
+  const dir = cafe();
+  const body = rendered(dir);
+  const file = join(dir, 'ARC-001-FOODREC-v1.0.md');
+  writeFileSync(file, `Header text.\n\n${body}\n\nFooter text.\n`);
+  assert.equal(checkDocument('FOODREC', dir, file, data, undefined, { today: TODAY }).exit, 0);
+  writeFileSync(file, `| Field | Value |\n| --- | --- |\n| **Status** | APPROVED |\n\n${body}\n`);
+  const claimed = checkDocument('FOODREC', dir, file, data, undefined, { today: TODAY });
+  assert.deepEqual([claimed.exit, claimed.kind], [1, 'header']);
+  assert.match(claimed.message, /this line says Status is "APPROVED", but the diary and record sheets are blank forms for people at the business to fill in and sign, so the document itself is never signed off/);
+});
+
+// A row for these tests only, made from FOODOWN's, with what changes given.
+const testRow = (changes) => ({ ...documentOf('FOODOWN'), code: 'FOODTEST', name: () => 'Test document', specialProcesses: undefined, ...changes });
+const withRow = (row) => [...DOCUMENTS.slice(0, -1), row, DOCUMENTS.at(-1)];
+
+test('the table refuses a row left out of status that is neither the completion record nor blank forms, and a second of either', () => {
+  const refused = (rows, pattern) => assert.throws(() => withDocuments(rows, () => assert.fail('a table that is not whole was used')), pattern);
+  refused(withRow(testRow({ inStatus: false })), /FOODTEST: inStatus is false, though the row is neither the completion record \(render\) nor the record sheets \(blankForms\)/);
+  refused(withRow(testRow({ inStatus: false, signable: false, nobodySigns: 'x', signOffRefusal: 'y', blankForms: true })),
+    /FOODTEST: blankForms is another row's too/);
+  refused(withRow(testRow({ blankForms: true })), /FOODTEST: blankForms is on a row in status, signed off or with a renderer of its own/);
+  refused(withRow(testRow({ inStatus: false, render: () => ({ exit: 0, text: '' }), outOfDate: { message: 'm', reason: 'r' } })),
+    /render is another row's too: one document is the completion record/);
+  refused(withRow(testRow({ blankForms: 'yes' })), /FOODTEST: blankForms is neither true nor left out/);
+  assert.equal(documentOf('FOODTEST'), undefined);
+  assert.equal(RECORD_SHEETS, 'FOODREC');
+});

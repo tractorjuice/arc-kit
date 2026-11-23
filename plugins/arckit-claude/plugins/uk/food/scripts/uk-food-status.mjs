@@ -548,8 +548,11 @@ function completionRecordDocument(project, data, options = {}) {
 // is 'yes': the person signing has been shown those lines. The refusal lists them.
 // `person` is { name, role, version, date, paperSigned, otherTextRead }. Returns { exit: 0, record, message }, or
 // { exit, messages }: 1 for a refusal, which writes nothing and gives every reason with what to do
-// next, and 2 when the project cannot be read.
+// next, and 2 when the project cannot be read, or for a document nobody signs, as the command treats it.
 export function signOffDocument(code, project, person, data, options = {}) {
+  // A document nobody signs is refused in its row's own words, as the command refuses it, before anything is read.
+  const row = documentOf(code);
+  if (row && !row.signable) return { exit: 2, messages: [row.signOffRefusal] };
   const collected = collectStatus(project, data, options);
   if (collected.exit) return collected;
   const { status, hashes, blockers, signOffs } = collected;

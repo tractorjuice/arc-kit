@@ -29,8 +29,8 @@ commands:
   render --doc DOC --project DIR [--data DIR]        print a document's body, from the worksheets in
                                                      DIR/food-safety; DOC is one of FOODXC, FOODCLN,
                                                      FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN,
-                                                     FOODALG, FOODCS, FOODSUP, or FOODCMP, the
-                                                     completion record; exit 1, printing nothing,
+                                                     FOODALG, FOODCS, FOODSUP, FOODREC, or FOODCMP,
+                                                     the completion record; exit 1, printing nothing,
                                                      when a worksheet a document needs has problems
   check --doc DOC --project DIR --report FILE        exit 0 when the body between the UK-FOOD markers
         [--data DIR] [--json]                        in FILE equals a fresh render and the file claims

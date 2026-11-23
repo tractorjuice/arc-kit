@@ -71,6 +71,7 @@ RUNTIME_ASSETS = [
     "scripts/uk-food-status.mjs",
     "scripts/uk-food-folder.mjs",
     "scripts/uk-food-lists.mjs",
+    "scripts/uk-food-sheets.mjs",
     "scripts/generate-document-id.mjs",
     "schemas/uk-food-sfbb-data-1.0.schema.json",
     *[f"data/sfbb-caterers-2026-11-17/{name}.json"
