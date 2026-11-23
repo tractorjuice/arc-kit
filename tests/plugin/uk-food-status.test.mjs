@@ -901,6 +901,33 @@ test('the cafe\'s completion record, with no document written, equals the golden
   assert.equal(cli.stdout, golden);
 });
 
+test('item 2: the cafe\'s completion record differs from the one Plan 1 printed only by lines added under ## Unfinished, and the pack\'s table is byte-identical', () => {
+  // The lines between the markers: the marker's hash differs whenever the body does, so it is left out.
+  const inner = (text) => text.replace(/\n$/, '').split('\n').slice(1, -1);
+  const before = inner(readFileSync(join(CAFE, 'expected', 'FOODCMP.plan-1.body.md'), 'utf8'));
+  const now = inner(rendered('FOODCMP', cafe()));
+  // Everything up to and including the heading is as it was: the coverage sentence, the pack's title and text, and its table.
+  const [was, is] = [before, now].map((lines) => lines.indexOf('## Unfinished'));
+  assert.ok(was > 0 && is > 0);
+  assert.deepEqual(now.slice(0, is + 1), before.slice(0, was + 1));
+  const table = (lines) => {
+    const start = lines.indexOf(`| ${recordTables[0].columns.join(' | ')} |`);
+    const length = lines.slice(start).findIndex((line) => !line.startsWith('|'));
+    return lines.slice(start, start + length).join('\n');
+  };
+  assert.ok(table(before).split('\n').length > recordRows.length);
+  assert.equal(table(now), table(before));
+  // After the heading, every line Plan 1 printed is there, in its order, with lines added among them and nothing taken out.
+  const rest = now.slice(is + 1);
+  let at = 0;
+  for (const line of before.slice(was + 1)) {
+    const found = rest.indexOf(line, at);
+    assert.ok(found >= 0, `missing or out of order: ${line}`);
+    at = found + 1;
+  }
+  assert.ok(now.length > before.length, 'the new documents add lines under ## Unfinished');
+});
+
 test('the completion record prints the pack\'s title, introduction, columns and rows in printed order, all pending until signed off', () => {
   const text = rendered('FOODCMP', cafe());
   const [page] = data.diary.pages.filter((p) => p.blocks.some((b) => b.form === 'completionRecord'));
