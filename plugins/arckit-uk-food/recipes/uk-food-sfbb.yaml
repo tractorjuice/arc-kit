@@ -20,8 +20,10 @@
 #
 # A build never signs anything off: /arckit-uk-food:uk-food-sign-off is not a
 # target. For a document that is signed off and in step, the commands write
-# nothing, inside a build too. Nor does the record sheets command write over a
-# diary and record sheets file that someone has typed into.
+# nothing, inside a build too. Nor does the record sheets command, inside a
+# build, write over a diary and record sheets file that someone has changed by
+# hand, whatever the build's request says: only a person running the command
+# can say that what was typed there has been copied or is not wanted.
 #
 # The project must exist before a build. Running
 # /arckit-uk-food:uk-food-profile once creates it.
@@ -57,13 +59,16 @@
 # document it writes (without it the build wants more than 100). Each is about
 # a fifth below the smallest the document can be, measured on 23 November 2026
 # without the provenance block the hook adds: the profile 117 lines, with every
-# answer a plain no; each section with every safe method in it marked not
-# relevant, XC 100, CL 70, CH 70, CK 86 and MG 92; own methods 52, with no
-# entries; the cleaning schedule 52 and the suppliers and contacts 58, each
-# blank, as a build on a new project writes it; the allergen information 95,
-# blank, or with nothing in it but where the business keeps it; the diary and
-# record sheets 142, with none of the business's own checks; the completion
-# record 97, with nothing outstanding. tests/plugin/test_uk_food_commands.py
+# answer confirmed as a plain no but the nation, England; each section with
+# every safe method in it marked not relevant, XC 100, CL 70, CH 70, CK 86 and
+# MG 92; own methods 52, with no entries; the cleaning schedule 52, blank, as a
+# build on a new project writes it, or with nothing in it but where the
+# business keeps it; the suppliers and contacts 58, blank (66 at its smallest
+# finished, with where the business keeps its suppliers' list and the
+# environmental health team's entry); the allergen information 95, with nothing
+# in it but where the business keeps it (97 blank); the diary and record sheets
+# 142, with none of the business's own checks; the completion record 97, with
+# nothing outstanding. tests/plugin/test_uk_food_commands.py
 # builds those documents and fails if one is shorter than its min_lines.
 
 recipe: uk-food-sfbb
@@ -74,10 +79,11 @@ description: >
   the business profile, the five sections of safe methods (cross-contamination,
   cleaning, chilling, cooking, management), the business's own methods, the
   allergen information, the cleaning schedule, the suppliers and contacts, the
-  blank diary and record sheets, and the completion record. A build has nobody to answer, and its prompts give no named
-  person's answers, so it confirms nothing: it makes the worksheets that are
-  missing and writes each document that does not exist yet as a draft, from
-  the answers a named person has already confirmed.
+  blank diary and record sheets, and the completion record. A build has nobody
+  to answer, and its prompts give no named person's answers, so it confirms
+  nothing: it makes the worksheets that are missing and writes each document
+  that does not exist yet as a draft, from the answers a named person has
+  already confirmed.
   A document that is already there is taken as done and left as it is, unless
   its target is named with --refresh. On a new project every answer reads NOT
   YET ANSWERED. It does not sign anything off.
