@@ -1196,7 +1196,7 @@ const RULE_LINE = /^ {0,3}([-*_])(?:[ \t]*\1){2,}[ \t]*$/;
 const FRAME_COMMENTS = ['<!-- DOC-CONTROL-HEADER -->', '<!-- Resolved at command-execution time per _partials/RENDERING.md. -->',
   '<!-- UK-FOOD-BODY -->', PROVENANCE.start, PROVENANCE.end];
 const FRAME_NOTES = ['6fe5a55718f40fbb5aeb1fc5e03f5caf629c07c15985ce122b9899ca8737f8d3', 'a9b0cbc3f58b12aca743acb7e344f5b2a998e6231116b621ddd6cfa3d8e8d3d9',
-  '33f1bc78a00361c791b1a3651a9c23e5607d926a4ca07af57592625991e1908d', '553af93150f2eafa466d609d1b7b14ee2ce7cbe9cd3d04891127202320e413f9'];
+  '33f1bc78a00361c791b1a3651a9c23e5607d926a4ca07af57592625991e1908d', '853212c86046bac9aeabb925159045c7cacdb6df48462c34de20702ffc7e4587'];
 function otherText(lines, body) {
   const stamp = stampedBlock(lines, body);
   const once = new Set();

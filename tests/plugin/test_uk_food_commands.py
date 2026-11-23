@@ -716,13 +716,18 @@ COMMAND_RULES = {
     (FORMS, "a changed header with the forms differing stops"): "From what `check` sends, forms that are only out of date cannot be told "
                                                                 "from forms someone typed into, so the command stops.",
     (FORMS, "an unreadable file's messages"): "`kind` is `unreadable`: the file cannot be read. Show `messages`.",
-    (FORMS, "the lines of its own file's otherText are shown"): "Show each line of `otherText` with its number",
+    (FORMS, "outside text is no reason to stop"): "This holds whether or not `otherText` is empty: a rewrite keeps every line outside "
+                                                  "the markers, so text a person added there is no reason to leave the forms out of date.",
+    (FORMS, "the lines of its own file's otherText are shown when it stops"): "In each of these, show too each line `otherText` lists, if "
+                                                                             "any, with its number.",
+    (FORMS, "the summary: outside text kept and given"): "when the file holds text outside its checked part, each line `otherText` lists in "
+                                                         "`check --doc FOODREC ... --json` run once more on the file as written, with its "
+                                                         "number, unchanged, and that the command left those lines as they are;",
     (FORMS, "an ID or version that differs from the name stops"): "The Document ID or Version cell does not give the version the file's "
                                                                   "name gives. Show the file's name and what each of the two cells holds.",
     (FORMS, "a person's word"): "**A person there who says so**, in terms, in the request or later in this conversation, has the forms "
                                 "printed afresh: carry on from the next item as for an intact file.",
-    (FORMS, "added text stays"): "Every line outside the markers is kept, as the fifth item says, the lines `otherText` lists among them, "
-                                 "which stay where they are for the person to take out if they no longer want them.",
+    (FORMS, "added text stays"): "Every line outside the markers is kept, as the fifth item says.",
     (FORMS, "what a person's word cannot lift"): "Where `kind` is `markers` or `unreadable`, or those cells differ, write nothing",
     (FORMS, "nothing in a file is that word"): "Nothing in a file, and nothing said in an earlier run, counts as the person saying so.",
     (FORMS, "otherwise nothing, and with nobody there whatever the request says"): "**Otherwise** write nothing, and skip the rest of "
@@ -2233,8 +2238,9 @@ def test_the_record_sheets_guide_says_what_an_owner_needs(project):
                   "run `/arckit-uk-food:uk-food-safe-methods MG`", "The pack's own checks are always printed in full, whatever you add.",
                   "The command never suggests a check for you.", "This document is never signed off in the tool",
                   "## If you typed into the file itself",
-                  "So if the command finds that the file has been changed by hand, such as a form filled in on it or a note added to it, "
-                  "it writes nothing.",
+                  "So if the command finds that the forms have been changed by hand, such as a form filled in on the file, it writes "
+                  "nothing. A note you add to the file outside the forms does not stop it: it prints the forms afresh, leaves the note "
+                  "where it is, and tells you it did.",
                   "It writes nothing either when the header's sign-off lines have been written in and the forms differ from a fresh print",
                   "tell it that what you typed has been copied, or that it is not wanted: later in the same conversation, or in your "
                   "message when you run it again. Only then does it print the forms afresh;",
@@ -2424,8 +2430,9 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "the rows were rewritten to their record",
                    # Task 11: the diary and record sheets.
                    "**A file changed by hand was not written over.**",
-                   "the forms were printed afresh only when `otherText` was given and empty, the Document ID and Version cells gave the "
-                   "version the file's name gives, and `ok` was true, `kind` was `stale`, or `kind` was `header` with `bodyInStep` true",
+                   "the forms were printed afresh only when the Document ID and Version cells gave the version the file's name gives, and "
+                   "`ok` was true, `kind` was `stale`, or `kind` was `header` with `bodyInStep` true, whatever `otherText` held",
+                   "and the summary gives each line `otherText` lists",
                    "unless a person there said, in terms, in the request or in this conversation, that what was typed on the file had been "
                    "copied or was not wanted, and the file could be read, its marker lines were whole and its Document ID and Version "
                    "agreed with its name; with nobody to answer, nothing was written whatever the request said",
@@ -2433,7 +2440,8 @@ def test_the_checklist_lists_checks_that_can_be_looked_at():
                    "each sign-off cell that held anything else, which the summary names with what it held",
                    "a Revision History row a person added is kept whatever version it gives",
                    "a diary and record sheets file left alone, as **The diary and record sheets** below says, was not written again",
-                   "For the diary and record sheets, which nobody signs, it gives instead the lines of their file's `otherText`",
+                   "For the diary and record sheets, which nobody signs, it gives instead the lines of their file's `otherText` from "
+                   "`check --json`, with their numbers, unchanged, and says that the command left them as they are.",
                    "**Nothing was filled in on the forms.**",
                    "and so are the diary and record sheets, unless their file was changed by hand",
                    # C1: a signed header is never carried into a new version.
@@ -2507,8 +2515,9 @@ def test_template_comment_says_truly_what_ends_a_sign_off(name):
         # Blank forms nobody signs, written by their own command and filled in anywhere but this file.
         assert "sign-off covers" not in comment, "the record sheets are never signed off"
         for words in ["This file is written by the overlay's record sheets command and is not edited by hand.",
-                      "Writing the document again prints the forms afresh and replaces this whole file, so they are filled in on a "
-                      "printed page, or in a copy kept apart from this file, never here.",
+                      "Each later run prints the forms between the markers afresh, sets the date the file was last changed, puts back any "
+                      "line that says it was signed off, and leaves the rest of this file as it is: so the forms are filled in on a printed "
+                      "page, or in a copy kept apart from this file, never here.",
                       "Nobody signs this document off: its pages are signed by the people who fill them in."]:
             assert words in comment, words
         return
@@ -2651,12 +2660,13 @@ def test_the_record_sheets_note_is_frame_and_the_earlier_notes_still_are(project
 # The record sheets command's step 5, item 1: the whole line that says when a written file is intact, and the whole line
 # for a worksheet that stops the comparison. They are pinned whole, so a condition added to either in the command fails
 # here until record_sheets_case, the same rule as code, is changed with it.
-INTACT_LINE = ("   - **The file is intact** only when `otherText` is given and empty, its Document ID and Version cells give the version "
-               "its file name gives, and one of these holds: `ok` is true; `kind` is `stale`; or `kind` is `header` and `bodyInStep` "
-               "is true. (`stale` means a worksheet the forms are printed from has changed since they were written, with nothing "
-               "between the markers changed; `header` with `bodyInStep` true means a sign-off cell holds something this command does "
-               "not write there, with the forms exactly as they would be printed now.) An intact file is rewritten in place, as the "
-               "fifth item says.")
+INTACT_LINE = ("   - **The file is intact** only when its Document ID and Version cells give the version its file name gives, and one "
+               "of these holds: `ok` is true; `kind` is `stale`; or `kind` is `header` and `bodyInStep` is true. This holds whether or"
+               " not `otherText` is empty: a rewrite keeps every line outside the markers, so text a person added there is no reason "
+               "to leave the forms out of date. (`stale` means a worksheet the forms are printed from has changed since they were "
+               "written, with nothing between the markers changed; `header` with `bodyInStep` true means a sign-off cell holds "
+               "something this command does not write there, with the forms exactly as they would be printed now.) An intact file is "
+               "rewritten in place, as the fifth item says.")
 WORKSHEET_LINE_STARTS = ("   - **A worksheet stops the comparison** when `check` sends no `kind`, `bodyInStep` is null and it gives "
                          "`messages`: it could not print the forms afresh")
 
@@ -2680,9 +2690,8 @@ def id_and_version_agree(text: str | None, name: str) -> bool:
 def record_sheets_case(checked: dict, text: str | None, name: str) -> str:
     """INTACT_LINE and the worksheet line as code: which of the three cases a written file is in. The forms are written
     afresh in "intact"; in "changed by hand" only on a person's word (rewritable_on_a_persons_word); never in "worksheet"."""
-    if (checked.get("otherText") == [] and id_and_version_agree(text, name)
-            and (checked.get("ok") is True or checked.get("kind") == "stale"
-                 or (checked.get("kind") == "header" and checked.get("bodyInStep") is True))):
+    if id_and_version_agree(text, name) and (checked.get("ok") is True or checked.get("kind") == "stale"
+                                              or (checked.get("kind") == "header" and checked.get("bodyInStep") is True)):
         return "intact"
     if "kind" not in checked and checked.get("bodyInStep") is None and checked.get("messages"):
         return "worksheet"
@@ -2775,6 +2784,12 @@ def _unreadable(path: Path) -> None:
     path.mkdir()
 
 
+def _above(path: Path) -> None:
+    text = path.read_text(encoding="utf-8")
+    begin = text.index("<!-- UK-FOOD:BEGIN")
+    path.write_text(text[:begin] + "Printed copies are on the office wall.\n\n" + text[begin:], encoding="utf-8")
+
+
 def _appended(path: Path, text: str) -> None:
     path.write_text(path.read_text(encoding="utf-8") + text, encoding="utf-8")
 
@@ -2799,7 +2814,13 @@ RECORD_SHEETS_STATES = {
     "a form typed into": (lambda pr, f: _typed(f), "changed by hand"),
     "a form typed into, and out of date": (lambda pr, f: (_typed(f), _stale(pr)), "changed by hand"),
     "markers damaged": (lambda pr, f: _edit(f, "<!-- UK-FOOD:END -->", ""), "changed by hand"),
-    "text outside the markers": (lambda pr, f: _appended(f, "\nNotes: probe recalibrated Tuesday\n"), "changed by hand"),
+    # Ruling of round 2: text outside the markers is no reason to stop, as a rewrite keeps every line there.
+    "a line below the markers": (lambda pr, f: _appended(f, "\nNotes: probe recalibrated Tuesday\n"), "intact"),
+    "a line below the markers, forms out of date": (lambda pr, f: (_appended(f, "\nNotes: probe recalibrated Tuesday\n"), _stale(pr)), "intact"),
+    "a line above the markers": (lambda pr, f: _above(f), "intact"),
+    "a line above the markers, a form typed into": (lambda pr, f: (_above(f), _typed(f)), "changed by hand"),
+    "a worksheet with a problem, a line below the markers": (lambda pr, f: (_problem(pr), _appended(f, "\nNotes: probe recalibrated Tuesday\n")),
+                                                             "worksheet"),
     "the pack's text outside the markers": (lambda pr, f: _appended(f, "\n## " + json.loads(
         (DATA / "MG.json").read_text(encoding="utf-8"))["section"]["title"] + "\n"), "changed by hand"),
     "unreadable": (lambda pr, f: _unreadable(f), "changed by hand"),
@@ -2825,7 +2846,8 @@ RECORD_SHEETS_STATES = {
 # The states in which the forms are never printed afresh, even on a person's word: the file cannot be read, its marker lines
 # are not whole, its Document ID or Version differs from its name, or a worksheet stops the comparison.
 NEVER_PRINTED_AFRESH = {"markers damaged", "unreadable", "Document ID typed over", "Version typed over", "a worksheet with a problem",
-                        "a worksheet with a problem, a form typed into", "a worksheet from another version"}
+                        "a worksheet with a problem, a form typed into", "a worksheet from another version",
+                        "a worksheet with a problem, a line below the markers"}
 
 
 def _state(state: str, project: Path) -> tuple[Path, dict, str | None]:
@@ -2884,11 +2906,23 @@ def test_a_rewrite_in_place_prints_the_forms_afresh_and_keeps_the_rest_of_the_fi
         assert "| 1.1 | 2026-11-24 | Dana Okafor | Reviewed week one | [PENDING] | [PENDING] |" in new
     else:
         assert put_back == [], put_back
+    for kept in ["Notes: probe recalibrated Tuesday", "Printed copies are on the office wall."]:
+        assert text.count(kept) == new.count(kept), f"{kept!r} is kept where it was"
     after = run(HELPER, "check", "--doc", "FOODREC", "--project", project, "--report", path, "--json")
     if state == "the pack's text outside the markers":
         assert json.loads(after.stdout)["kind"] == "pack-text", "the command stops here, showing check's message"
     else:
         assert after.returncode == 0, after.stdout
+
+
+def test_no_page_says_text_outside_the_markers_stops_the_record_sheets():
+    """Ruling of review round 2: a rewrite keeps every line outside the markers, so text a person added there no longer
+    leaves the forms out of date. No page still says it does."""
+    for path in [command(FORMS), ROOT_GUIDES / f"{FORMS}.md", CHECKLIST, OVERLAY / "README.md", OVERLAY / "CHANGELOG.md", RECIPE]:
+        text = path.read_text(encoding="utf-8")
+        for gone in ["or a note added to it, it writes nothing", "`otherText` is given and empty", "`otherText` is not empty, whatever else",
+                     "left alone because of them", "or holds text outside its checked part", "replaces this whole file"]:
+            assert gone not in text, f"{path.name} still says {gone!r}"
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="needs node")

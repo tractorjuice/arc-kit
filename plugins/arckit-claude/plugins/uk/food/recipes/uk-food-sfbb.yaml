@@ -21,9 +21,11 @@
 # A build never signs anything off: /arckit-uk-food:uk-food-sign-off is not a
 # target. For a document that is signed off and in step, the commands write
 # nothing, inside a build too. Nor does the record sheets command, inside a
-# build, write over a diary and record sheets file that someone has changed by
-# hand, whatever the build's request says: only a person running the command
-# can say that what was typed there has been copied or is not wanted.
+# build, print the forms afresh over a diary and record sheets file whose forms
+# someone has changed by hand, whatever the build's request says: only a person
+# running the command can say that what was typed there has been copied or is
+# not wanted. When it does print them afresh, it keeps everything outside the
+# forms as it is, a line someone added there included.
 #
 # The project must exist before a build. Running
 # /arckit-uk-food:uk-food-profile once creates it.

@@ -15,7 +15,7 @@
 
 ---
 
-<!-- This file is written by the overlay's record sheets command and is not edited by hand. The forms between the UK-FOOD markers below are printed by the overlay's helper, with the business's name from its profile and its own opening and closing checks from its Management safe methods worksheet: to change those, change the worksheet and run the command again. Writing the document again prints the forms afresh and replaces this whole file, so they are filled in on a printed page, or in a copy kept apart from this file, never here. Nobody signs this document off: its pages are signed by the people who fill them in. A note of the business's own belongs in its own methods, recorded with the own methods command, not in this file. -->
+<!-- This file is written by the overlay's record sheets command and is not edited by hand. The forms between the UK-FOOD markers below are printed by the overlay's helper, with the business's name from its profile and its own opening and closing checks from its Management safe methods worksheet: to change those, change the worksheet and run the command again. Each later run prints the forms between the markers afresh, sets the date the file was last changed, puts back any line that says it was signed off, and leaves the rest of this file as it is: so the forms are filled in on a printed page, or in a copy kept apart from this file, never here. Nobody signs this document off: its pages are signed by the people who fill them in. A note of the business's own belongs in its own methods, recorded with the own methods command, not in this file. -->
 
 <!-- UK-FOOD-BODY -->
 
