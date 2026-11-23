@@ -83,9 +83,9 @@ Recipe: `uk-food-sfbb` (the business profile, the five sections of safe methods,
 
 ## For maintainers
 
-The bundled data under a data identifier never changes once it has shipped, and neither does the wording a worksheet or document prints from it. A business holds worksheets and signed-off documents made from that data, and a change would quietly make them out of date. A correction ships under a new data identifier, together with the upgrade a business then needs to bring its own worksheets across. `tests/plugin/uk-food-frozen.test.mjs` holds the first release's blank worksheets and documents to this.
+The bundled data under a data identifier never changes once it has shipped, and neither does the wording a worksheet or document prints from it. A business holds worksheets and signed-off documents made from that data, and a change would quietly make them out of date. A correction ships under a new data identifier, together with the upgrade a business then needs to bring its own worksheets across. `tests/plugin/uk-food-frozen.test.mjs` holds every released blank worksheet and document to this.
 
-The three list worksheets (`allergens`, `cleaning` and `suppliers`) and the four documents added since the first release (`FOODALG`, `FOODCS`, `FOODSUP` and `FOODREC`) are not in that test yet. No release has shipped them, and a ruling that changes their wording may still be overturned before one does. Their wording freezes the day a release first ships them, for the same reasons, so they are added to the test in the last commit before that release.
+The three list worksheets (`allergens`, `cleaning` and `suppliers`) and the four documents added since the first release (`FOODALG`, `FOODCS`, `FOODSUP` and `FOODREC`) joined that test on 23 November 2026, in the last commit before the release that first ships them. A worksheet or document added later joins the same way: its wording freezes the day a release first ships it, so it is added to the test in the last commit before that release, and not sooner, while its wording can still change in review.
 
 ## Not legal advice
 

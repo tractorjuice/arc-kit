@@ -3605,8 +3605,9 @@ def test_the_readme_lists_each_command_as_claude_code_names_it():
 
 
 def test_the_maintainers_are_told_when_the_new_wording_freezes():
-    """Final review A4 and ruling 33: the new worksheets and documents join the frozen set in the last commit before the
-    release that first ships them, and the README and the frozen test both say so, naming each one."""
+    """Final review A4 and ruling 33: the new worksheets and documents joined the frozen set in the last commit before the
+    release that first ships them, and the README and the frozen test both say so, naming each one and saying a later
+    one joins the same way."""
     readme = (OVERLAY / "README.md").read_text(encoding="utf-8")
     maintainers = readme.split("## For maintainers", 1)[1].split("\n## ", 1)[0]
     frozen = (ROOT / "tests" / "plugin" / "uk-food-frozen.test.mjs").read_text(encoding="utf-8")
@@ -3614,7 +3615,8 @@ def test_the_maintainers_are_told_when_the_new_wording_freezes():
         for name in ["allergens", "cleaning", "suppliers", "FOODALG", "FOODCS", "FOODSUP", "FOODREC"]:
             assert name in text, name
         assert "the last commit before" in text
-    assert "so they are added to the test in the last commit before that release." in maintainers
+    assert "so it is added to the test in the last commit before that release, and not sooner" in maintainers
+    assert "holds every released blank worksheet and document to this." in maintainers
 
 
 def test_the_readme_and_guides_say_truly_what_ends_a_sign_off():
