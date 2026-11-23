@@ -323,6 +323,46 @@ test('P1: a worksheet with problems gives one line, under its own document, nami
   assert.deepEqual(reasons(signOff(other, 'FOODCOOK').stderr), [problemsLine('profile', 1)]);
 });
 
+test('item 6: a problem in the Management worksheet is told under the two documents that print from it too, as neither can be written; one in the profile is told once, under the profile, for every document', () => {
+  const FORMS_NOT_WRITTEN = 'document not written yet: write it, so that people at the business have the blank forms to print and fill in';
+  const dir = cafe();
+  const forms = writeDocument(dir, 'FOODREC');
+  setSheet(dir, 'MG', `${sheet(dir, 'MG')}a stray line\n`);
+  const mg = problemsLine('MG', 1);
+  // Neither the allergen information nor the record sheets can be written while that worksheet has a problem.
+  for (const doc of ['FOODALG', 'FOODREC']) assert.equal(renderDocument(doc, dir, data, { today: TODAY }).exit, 1, doc);
+  assert.deepEqual(linesFor(dir, 'FOODMGT'), [mg, NOT_WRITTEN, NOT_SIGNED]);
+  assert.equal(linesFor(dir, 'FOODALG')[0], mg);
+  assert.equal(linesFor(dir, 'FOODALG').filter((line) => line.includes('answers-MG.md')).length, 1, 'told once there');
+  // The record sheets, written before the problem, cannot be compared with a fresh print, so only the worksheet is told.
+  assert.deepEqual(linesFor(dir, 'FOODREC'), [mg]);
+  const said = run('status', '--project', dir).stdout;
+  assert.ok(said.includes(`\n- FOODALG: ${mg}\n`) && said.includes(`\n- FOODREC: ${mg}\n`), said);
+  assert.match(said, /\nFOODALG \(Allergen information\): 1 worksheet problem; /);
+  assert.match(said, new RegExp(`\\nFOODREC \\(Diary and record sheets\\): 1 worksheet problem; ${basename(forms)} not checked, `));
+  assert.ok(rendered('FOODCMP', dir).includes(`\n- Diary and record sheets (FOODREC): ${mg}\n`));
+  // Not written, the record sheets are told the worksheet first, then that they are not written.
+  rmSync(forms);
+  assert.deepEqual(linesFor(dir, 'FOODREC'), [mg, FORMS_NOT_WRITTEN]);
+  // The profile document reads that worksheet too, for each safe method's status, and says what it always said: the
+  // worksheet's line is under its own document, which follows.
+  assert.deepEqual(linesFor(dir, 'FOODPROF'), [NOT_WRITTEN, NOT_SIGNED]);
+  // Followed, the line is gone from all three.
+  setSheet(dir, 'MG', sheet(dir, 'MG').replace(/a stray line\n$/, ''));
+  for (const doc of ['FOODMGT', 'FOODALG', 'FOODREC']) assert.ok(!linesFor(dir, doc).includes(mg), doc);
+
+  // A problem in the profile, which every document reads: one line, under the profile document at the head of the list.
+  // Every other document, the new ones and the record sheets among them, counts it in its own line and says no more.
+  const other = cafe();
+  setSheet(other, 'profile', `${sheet(other, 'profile')}a stray line\n`);
+  const profile = problemsLine('profile', 1);
+  assert.deepEqual(status(other).unfinished.filter((line) => line.what === profile).map((line) => line.code), ['FOODPROF']);
+  const out = run('status', '--project', other).stdout;
+  for (const code of STATUS_ORDER.slice(1)) assert.match(out, new RegExp(`\\n${code} \\([^)]+\\): 1 worksheet problem; `), code);
+  assert.match(out, /\nFOODREC \(Diary and record sheets\): 1 worksheet problem; not written\n/);
+  assert.deepEqual(linesFor(other, 'FOODREC'), [FORMS_NOT_WRITTEN]);
+});
+
 test('I1: a status read from a worksheet with problems is not used: the method counts as applying, and the record leaves its tick empty', () => {
   for (const [from, to] of [[/^Reason: We never keep food hot.*$/m, 'Reason:'], [/^Decided-by: Sam Okafor$/m, 'Decided-by:']]) {
     const dir = cafe();

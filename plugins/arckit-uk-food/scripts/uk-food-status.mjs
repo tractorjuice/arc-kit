@@ -305,16 +305,19 @@ function countLines(row, counts, section, sheet, data) {
 // is check's result, or null with no file. `lines` are the record sheets' lines in the unfinished list: that
 // they are not written, or check's own first reason for a fault, as for a document; check words it for blank
 // forms, which have no worksheet of their own to send a person to (remedies). A worksheet they are written from that is
-// missing, in the wrong place or with problems is told once, under the document whose worksheet it is, and while
-// it is so the record sheets are not called out of date, as they cannot be compared with a fresh print; only what
-// check finds before it prints anything (BEFORE_RENDER) is told all the same.
+// missing, in the wrong place or with problems is told under the document whose worksheet it is, and first here as well
+// when their row says they tell it too (tellsToo: the Management worksheet, whose checks they print, as they cannot be
+// written while it cannot be read). While it is so the record sheets are not called out of date, as they cannot be
+// compared with a fresh print; only what check finds before it prints anything (BEFORE_RENDER) is told all the same.
 function recordSheetsState(row, current, project, data, sheets, signOffs, options) {
-  if (!current) return { state: { written: false, inStep: false, file: null }, check: null, lines: [FORMS_NOT_WRITTEN] };
+  const told = (row.tellsToo ?? []).filter((section) => sheets.get(section) && !sheets.get(section).clean)
+    .map((section) => sheetLine(section, sheets.get(section), project, row));
+  if (!current) return { state: { written: false, inStep: false, file: null }, check: null, lines: [...told, FORMS_NOT_WRITTEN] };
   const check = checkDocument(row.code, project, join(project, current.file), data, signOffs, options);
   const inStep = check.exit === 0;
   const comparable = row.uses.every((section) => (sheets.get(section) ? sheets.get(section).clean : !row.needs.includes(section)));
-  let lines = [];
-  if (!inStep && (comparable || BEFORE_RENDER.includes(check.kind))) lines = [checkLine(current.file, check)];
+  let lines = told;
+  if (!inStep && (comparable || BEFORE_RENDER.includes(check.kind))) lines = [...told, checkLine(current.file, check)];
   return { state: { written: true, inStep, file: current.file }, check, lines };
 }
 
@@ -435,13 +438,15 @@ function collectStatus(project, data, options = {}) {
     blockers.set(code, held);
     return doc;
   });
-  // The unfinished list tells each worksheet's state once, under the document whose own worksheet it is
-  // (its row's sheet), then the special processes with no entry and the entries awaiting review, under
-  // the document whose row says it holds them (specialProcesses). A document with no worksheet of its
-  // own has only its own lines there.
+  // The unfinished list tells each worksheet's state under the document whose own worksheet it is (its row's
+  // sheet), and again under a document whose row says it tells it too, as that document prints from it and cannot
+  // be written while it cannot be read (tellsToo); then the special processes with no entry and the entries
+  // awaiting review, under the document whose row says it holds them (specialProcesses). A document with no
+  // worksheet of its own has only its own lines there, and those of tellsToo.
   const unfinished = documents.flatMap((doc) => {
-    const mine = documentOf(doc.code).sheet;
-    const lines = blockers.get(doc.code).filter(({ sheet, after }) => !after && (sheet === null || sheet === mine)).map(({ what }) => what);
+    const { sheet: mine, tellsToo = [] } = documentOf(doc.code);
+    const lines = blockers.get(doc.code).filter(({ sheet, after }) => !after && (sheet === null || sheet === mine || tellsToo.includes(sheet)))
+      .map(({ what }) => what);
     if (signLines.get(doc.code)) lines.push(signLines.get(doc.code));
     return lines.map((what) => ({ code: doc.code, what }));
   });
@@ -711,12 +716,16 @@ function statusLines(status, data, sheets, checks) {
     ];
     lines.push(`${doc.code} (${docName(doc.code, data)}): ${parts.join('; ')}`);
   }
-  // The record sheets, as they come in the table: written or not, and in step with their worksheets or how not. The
-  // unfinished list says what to do.
+  // The record sheets, as they come in the table: how many problems the worksheets they are written from have, as a
+  // document's line counts them, then written or not, and in step with their worksheets or how not. The unfinished list
+  // says what to do.
   const forms = status.recordSheets;
   if (forms) {
-    lines.push(`${RECORD_SHEETS} (${docName(RECORD_SHEETS, data)}): ${!forms.written ? 'not written' : `${forms.file} ${forms.inStep
-      ? 'in step with its worksheets' : faultWords(documentOf(RECORD_SHEETS), checks.get(RECORD_SHEETS)?.kind) ?? NOT_CHECKED}`}`);
+    const row = documentOf(RECORD_SHEETS);
+    const problems = row.uses.reduce((sum, section) => sum + (sheets.get(section)?.problems.length ?? 0), 0);
+    const parts = [...(problems ? [counted(problems, 'worksheet problem', 'worksheet problems')] : []), !forms.written ? 'not written'
+      : `${forms.file} ${forms.inStep ? 'in step with its worksheets' : faultWords(row, checks.get(RECORD_SHEETS)?.kind) ?? NOT_CHECKED}`];
+    lines.push(`${RECORD_SHEETS} (${docName(RECORD_SHEETS, data)}): ${parts.join('; ')}`);
   }
   const record = status.completionRecord;
   lines.push(`${COMPLETION_RECORD} (${docName(COMPLETION_RECORD, data)}): ${!record ? 'not written' : record.problem ?? `${record.file} up to date`}`);

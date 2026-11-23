@@ -1685,9 +1685,12 @@ test('an MG worksheet with a problem, or for other data, is never printed from: 
   const refused = renderDocument('FOODALG', other, data, { today: TODAY });
   assert.equal(refused.exit, 2);
   assert.match(refused.messages.join('\n'), /answers-MG\.md answers data sfbb-caterers-2025-01-01/);
-  // Status tells the problem once, under the Management document, and the allergen information is not signed off.
-  assert.ok(projectStatus(dir, data, { today: TODAY }).unfinished.some((l) => l.code === 'FOODMGT' && /answers-MG\.md has 1 problem/.test(l.what)));
-  assert.deepEqual(algUnfinished(dir), [NOT_WRITTEN, NOT_SIGNED]);
+  // Status tells the problem under the Management document, and under this one too, as it cannot be written until that
+  // worksheet is put right; and the allergen information is not signed off.
+  const problem = 'worksheet food-safety/answers-MG.md has 1 problem, so none of its answers counts until it is fixed: parse-worksheet --file ' +
+    'food-safety/answers-MG.md lists it';
+  assert.ok(projectStatus(dir, data, { today: TODAY }).unfinished.some((l) => l.code === 'FOODMGT' && l.what === problem));
+  assert.deepEqual(algUnfinished(dir), [problem, NOT_WRITTEN, NOT_SIGNED]);
 });
 
 test('Kept elsewhere confirmed alone: the document is finished, prints where, the pack\'s table, PPDS, the business\'s statements and how customers are told, and no Dishes table', () => {

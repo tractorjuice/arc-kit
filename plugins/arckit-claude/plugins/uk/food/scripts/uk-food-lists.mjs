@@ -205,8 +205,9 @@ const ANSWER_COUNTS = 'an answer counts when its State is confirmed and By and O
 // Management worksheet as status read it (`sheets`, every worksheet read): not started, or one or more of the three
 // questions without a confirmed answer. Nothing when MG-04 is marked not relevant (the document prints the not-relevant
 // line then, which is finished), and nothing when that worksheet has problems or is for other data or in the wrong file:
-// the allergen information is not rendered from it then, and status tells that worksheet's state once, under the
-// Management document. Nothing either when no worksheets are given, as nothing is then known of that one.
+// the allergen information is not rendered from it then, and status tells that worksheet's state in its own line, under
+// the Management document and under this one (its row's tellsToo). Nothing either when no worksheets are given, as
+// nothing is then known of that one.
 function customerLines(sheets) {
   if (!sheets?.has('MG')) return [];
   const mg = sheets.get('MG');

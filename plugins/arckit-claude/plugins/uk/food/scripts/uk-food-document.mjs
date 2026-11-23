@@ -144,6 +144,12 @@ export let SHEET_ORDER = ['profile', ...SECTION_IDS, 'own', 'allergens', 'cleani
 // A rule that belongs to one document alone is a field of its row and no other:
 // - lacking(data), the profile's and the list documents': what the data lacks that the document quotes,
 //   beyond its data file, as render says it, or null.
+// - tellsToo, the allergen information's and the record sheets': the worksheets besides its own whose state status's
+//   unfinished list gives under this document as well as under their own, as it prints words from them and cannot be
+//   written while one of them cannot be read: both print from the Management worksheet. The profile is never one: every
+//   document reads it, and its state is told once, under the profile document at the head of the list. Nor are the
+//   worksheets the profile document reads for each safe method's status: they are told under their own documents,
+//   which follow it, as they always were.
 // - specialProcesses, the own methods document's: a special process the profile confirms that has no
 //   own entry keeps it from being signed off, and status lists that, and each own entry awaiting
 //   environmental health review, under this document.
@@ -275,10 +281,10 @@ export let DOCUMENTS = [
   // direct sale food, its own "free from" statements beside the pack's conditions for them, and, from the Management
   // worksheet, its answers on how customers are told. It renders without that worksheet (it says what is not yet
   // answered), so the worksheet is in its uses and not its needs; one there with problems stops render, as for any
-  // worksheet a document uses. An allergen cell nobody confirmed shows it unfinished, as UNANSWERED and an entry not
-  // confirmed do.
+  // worksheet a document uses, and status tells it under this document too (tellsToo). An allergen cell nobody confirmed
+  // shows it unfinished, as UNANSWERED and an entry not confirmed do.
   listDocument('allergens', {
-    code: 'FOODALG', nouns: ['dish', 'dishes'], uses: ['profile', 'allergens', 'MG'], needs: ['profile', 'allergens'],
+    code: 'FOODALG', nouns: ['dish', 'dishes'], uses: ['profile', 'allergens', 'MG'], needs: ['profile', 'allergens'], tellsToo: ['MG'],
     chunks: (sources, data) => allergenChunks(sources, data), source: (data, sources) => allergenSource(sources, data),
     unfinishedLine: (line) => unanswered(line) || line.includes(NOT_CONFIRMED_CELL) || line.startsWith(NOT_CONFIRMED)
   }),
@@ -298,10 +304,10 @@ export let DOCUMENTS = [
   // business's name from the profile and its own opening and closing checks from the Management worksheet. It renders
   // without that worksheet (it then adds no checks of the business's own), so the worksheet is in its uses and not its
   // needs; one there with problems stops render, as for any worksheet a document uses, as it does the allergen
-  // information's. Nobody signs it off, as it is forms whose pages are for people to sign, and it asks nothing, so no
+  // information's, and status tells it under this document too (tellsToo). Nobody signs it off, as it is forms whose pages are for people to sign, and it asks nothing, so no
   // line of it can show it unfinished, and status reports only whether it is written and in step (blankForms).
   {
-    code: 'FOODREC', name: () => 'Diary and record sheets', sheet: null, uses: ['profile', 'MG'], needs: ['profile'], dataNeeded: null,
+    code: 'FOODREC', name: () => 'Diary and record sheets', sheet: null, uses: ['profile', 'MG'], needs: ['profile'], tellsToo: ['MG'], dataNeeded: null,
     signable: false, inStatus: false, chunks: (sources, data) => recordSheetsChunks(sources, data), source: (data) => recordSheetsSource(data),
     unfinishedLine: () => false, asks: null, nouns: null, entries: false, blankForms: true, lacking: (data) => recordSheetsLacking(data),
     remedies: RECORD_SHEETS_REMEDIES,
@@ -337,6 +343,10 @@ function tableProblems(rows, sheets) {
     if (!Array.isArray(row.uses) || !Array.isArray(row.needs)) return fault('uses and needs', 'are not both lists of worksheets');
     for (const name of row.uses) if (!sheets.includes(name)) fault('uses', `names ${name}, which is not in SHEET_ORDER, so nothing reads it`);
     for (const name of row.needs) if (!row.uses.includes(name)) fault('needs', `names ${name}, which is not in its uses`);
+    if (row.tellsToo !== undefined && !Array.isArray(row.tellsToo)) fault('tellsToo', 'is not a list of worksheets');
+    for (const name of row.tellsToo ?? []) {
+      if (!row.uses.includes(name) || name === row.sheet) fault('tellsToo', `names ${name}, which is not one of its uses other than its own worksheet`);
+    }
     if (row.sheet !== null && !row.uses.includes(row.sheet)) fault('sheet', 'is neither null nor one of its uses');
     if (row.section !== undefined && (!SECTION_IDS.includes(row.section) || row.section !== row.sheet)) {
       fault('section', 'is not a section of the pack that is also its own worksheet');

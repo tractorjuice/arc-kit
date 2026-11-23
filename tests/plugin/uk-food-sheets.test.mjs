@@ -460,11 +460,14 @@ test('status reports the record sheets apart: not written, then written and in s
   for (const said of [JSON.stringify(status(dir)), statusText(dir).filter((line) => line.includes('FOODREC')).join('\n'), completionList(dir)]) {
     assert.ok(!/FOODREC[^\n]*not signed off/.test(said), said);
   }
-  // While the Management worksheet has problems the document cannot be compared, and that worksheet's own line says so.
+  // While the Management worksheet has problems the document cannot be compared, and that worksheet's own line says so, under
+  // the Management document and here too, as the record sheets cannot be written until it is put right.
   writeFileSync(join(dir, 'food-safety', 'answers-MG.md'), `${cafeText('MG')}a stray line\n`);
   assert.deepEqual(status(dir).recordSheets, { written: true, inStep: false, file: 'ARC-001-FOODREC-v1.0.md' });
-  assert.deepEqual(linesOf(), []);
-  assert.ok(status(dir).unfinished.some((line) => line.code === 'FOODMGT' && line.what.startsWith('worksheet food-safety/answers-MG.md has 1 problem')));
+  const problem = 'worksheet food-safety/answers-MG.md has 1 problem, so none of its answers counts until it is fixed: parse-worksheet --file ' +
+    'food-safety/answers-MG.md lists it';
+  assert.deepEqual(linesOf(), [problem]);
+  assert.ok(status(dir).unfinished.some((line) => line.code === 'FOODMGT' && line.what === problem));
 });
 
 // What check and status say of a FOODREC changed by hand: the forms are printed afresh, so a filled-in copy is kept apart,
