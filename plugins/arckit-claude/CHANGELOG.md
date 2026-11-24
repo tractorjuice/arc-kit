@@ -9,6 +9,8 @@ Releases before 6.15.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+## [6.26.0] — 2026-11-24
+
 ### Added
 
 - **Core knows the food safety overlay's four new document types.** `FOODALG` (Allergen Information), `FOODCS` (Cleaning Schedule), `FOODSUP` (Suppliers and Contacts) and `FOODREC` (Diary and Record Sheets) are in the registry, so the file-name check accepts them and `/arckit:pages` lists them with the overlay's guides. Only the overlay's own commands set their status, so `/arckit:health` and the session-start notice leave their drafts out, as they do the overlay's other eight; an overdue review is still reported. `/arckit:arckit-build` lists the `uk-food-sfbb` recipe with its twelve targets. The overlay's four new commands, `/arckit-uk-food:uk-food-allergens`, `/arckit-uk-food:uk-food-cleaning-schedule`, `/arckit-uk-food:uk-food-suppliers` and `/arckit-uk-food:uk-food-record-sheets`, need this release of core.

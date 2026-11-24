@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.26.0] — 2026-11-24
+
 ### Added
 
 - **Antigravity: subagents, write checks and a rule.** The plugin now carries three more of the five parts an Antigravity plugin can hold. Twelve research commands hand their work to a subagent (`agents/arckit-<command>-agent.md`) and keep the full instructions beside the skill for a session that can't start one. `hooks.json` runs ArcKit's file-name, protected-file and secret gates before a file is written and the manifest update after, through one adapter (`scripts/antigravity/agy-hook.mjs`) that translates Antigravity's hook input and output so the gates ship unchanged. A glob-triggered rule carries the artefact conventions. The adapter works on real paths, so a workspace and a file spelt through different links are treated as the same place, and it shares one time budget between the gates so it always answers before Antigravity's hook timeout. All three pass `agy plugin validate --strict`; none has been run in a live Antigravity session yet. `/arckit-evaluate` and `/arckit-score` stay in the main conversation.
@@ -14,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **If you already use the food safety overlay:** after updating, run `/arckit-uk-food:uk-food-check`. Your completion record shows as out of date, because it now also lists the four new documents; nothing you have written or signed off changes. Asked to sign off "cleaning" on its own, `/arckit-uk-food:uk-food-sign-off` now asks whether you mean the Cleaning safe methods or the cleaning schedule.
 - **The Antigravity plugin installs with one command.** It has its own repository, `tractorjuice/arckit-antigravity`, filled at each release: `agy plugin install https://github.com/tractorjuice/arckit-antigravity`. Before, you built it from a clone of arc-kit.
 - **arckit.org covers Antigravity.** The getting-started page has an Antigravity tab with the install steps, and the home page, the Claude Code plugin page and `llms.txt` list it as experimental. The Gemini CLI and Antigravity instructions point to each other, on the site and in the READMEs.
 
