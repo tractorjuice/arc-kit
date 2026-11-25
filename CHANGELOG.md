@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Migrating old file names puts G-Cloud and DOS documents where ArcKit expects them.** `migrate-filenames.sh` moved G-Cloud and DOS files out of `procurement/` to the project root, where ArcKit's file-name check blocks them. They now go to `procurement/`. It also no longer renames a correctly named document in a folder that holds several types (an AWS research document became `RSCH`), and it numbers migrated files after the highest number already in the folder, so `--force` can't overwrite an existing document.
+- **Commands find design reviews where `/arckit:hld-review` and `/arckit:dld-review` write them.** The reviews go in `vendors/<vendor>/`; `/arckit:conformance`, `/arckit:service-assessment`, `/arckit:story` and `/arckit-arc42:arc42-debt` looked only in a `reviews/` folder. They now look in both.
+- **Re-running a research command gives the next numbered report.** `/arckit:research`, `datascout`, `gov-reuse`, `grants`, `gov-landscape`, `gov-code-search` and the three cloud-research commands could produce an ID such as `GLND-002-v1.1`. Each run now writes the next report at `v1.0`, as `/arckit:tenders` already did.
+
 ## [6.26.0] — 2026-11-24
 
 ### Added
