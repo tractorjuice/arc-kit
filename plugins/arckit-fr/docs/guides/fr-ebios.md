@@ -10,10 +10,10 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`ARC-<id>-REQ-v1.0.md`) | IS scope, essential missions |
-| Risk register (`ARC-<id>-RISK-v*.md`) | Pre-identified risks and mitigations |
+| Requirements (`ARC-<id>-REQ-v1.0.md`), required | IS scope, essential missions. The command stops without them |
 | Data model | Data assets and sensitivity |
-| Architecture diagrams | IS boundaries and components |
+| Stakeholders (`ARC-<id>-STKE-v*.md`) | System owners, users and external entities |
+| Risk register (`ARC-<id>-RISK-v*.md`) | Pre-identified risks and mitigations |
 
 ---
 

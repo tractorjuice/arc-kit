@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration.
+ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration. They are Node.js scripts (`.mjs`) that Claude Code runs with `node`, so Node.js must be on your `PATH`.
 
 ## Three-Layer Protection Model
 
@@ -10,21 +10,21 @@ The security hooks implement defence in depth with three complementary layers:
 
 | Layer | Hook | Hook Type | Trigger | Purpose |
 |-------|------|-----------|---------|---------|
-| 1 | `secret-detection.py` | UserPromptSubmit | Every user message | Catches secrets pasted into prompts |
-| 2 | `file-protection.py` | PreToolUse (Edit\|Write) | File edit/write operations | Blocks writes to sensitive file paths |
-| 3 | `secret-file-scanner.py` | PreToolUse (Edit\|Write) | File edit/write operations | Scans content being written for embedded secrets |
+| 1 | `secret-detection.mjs` | UserPromptSubmit | Every user message | Catches secrets pasted into prompts |
+| 2 | `file-protection.mjs` | PreToolUse (Edit\|Write\|NotebookEdit) | File edit/write operations | Blocks writes to sensitive file paths |
+| 3 | `secret-file-scanner.mjs` | PreToolUse (Edit\|Write) | File edit/write operations | Scans content being written for embedded secrets |
 
 ### How the layers work together
 
-1. **Layer 1 — Prompt scanning**: Before your message reaches the model, `secret-detection.py` scans the prompt text for known secret patterns (API keys, tokens, passwords, connection strings). If a secret is detected, the message is blocked before it is sent.
+1. **Layer 1 — Prompt scanning**: Before your message reaches the model, `secret-detection.mjs` scans the prompt text for known secret patterns (API keys, tokens, passwords, connection strings). If a secret is detected, the message is blocked before it is sent.
 
-2. **Layer 2 — Path protection**: When Claude attempts to edit or write a file, `file-protection.py` checks whether the target file path is sensitive (environment files, credential stores, private keys, lock files). Protected files are blocked regardless of content.
+2. **Layer 2 — Path protection**: When Claude attempts to edit or write a file, `file-protection.mjs` checks whether the target file path is sensitive (environment files, credential stores, private keys, lock files). Protected files are blocked regardless of content.
 
-3. **Layer 3 — Content scanning**: For files that pass the path check, `secret-file-scanner.py` examines the actual content being written for secret patterns. This catches cases where a secret is embedded in an otherwise safe file path.
+3. **Layer 3 — Content scanning**: For files that pass the path check, `secret-file-scanner.mjs` examines the actual content being written for secret patterns. This catches cases where a secret is embedded in an otherwise safe file path.
 
 ## What Each Hook Detects
 
-### secret-detection.py (Prompt Scanner)
+### secret-detection.mjs (Prompt Scanner)
 
 Scans user prompts for:
 
@@ -38,12 +38,13 @@ Scans user prompts for:
 **Example block:**
 
 ```text
-$ echo '{"userPrompt": "Use this key sk-ant-abc123def456ghi789"}' \
-    | python3 plugins/arckit-claude/hooks/secret-detection.py
+$ fake="sk-ant-$(printf 'x%.0s' {1..24})"   # a made-up key, built at run time
+$ echo "{\"prompt\": \"Use this key $fake\"}" \
+    | node plugins/arckit-claude/hooks/secret-detection.mjs
 # Output: {"decision": "block", "reason": "Warning: Potential secrets detected: ..."}
 ```
 
-### file-protection.py (Path Guard)
+### file-protection.mjs (Path Guard)
 
 Blocks writes to:
 
@@ -60,19 +61,19 @@ Blocks writes to:
 
 ```text
 $ echo '{"tool_name": "Write", "tool_input": {"file_path": ".env", "content": "DB_HOST=localhost"}}' \
-    | python3 plugins/arckit-claude/hooks/file-protection.py
-# Output: {"decision": "block", "reason": "Protected: Protected file: .env\nFile: .env\n..."}
+    | node plugins/arckit-claude/hooks/file-protection.mjs
+# Output: {"decision":"block","reason":"Protected: Protected file: .env*\nFile: .env\n..."}
 ```
 
-### secret-file-scanner.py (Content Scanner)
+### secret-file-scanner.mjs (Content Scanner)
 
-Scans the content of files being written or edited using the same pattern library as `secret-detection.py`. This catches secrets that might be embedded in source code, configuration files, or documentation.
+Scans the content of files being written or edited using the same pattern library as `secret-detection.mjs`. This catches secrets that might be embedded in source code, configuration files, or documentation.
 
 **Example block:**
 
 ```text
 $ echo '{"tool_name": "Write", "tool_input": {"file_path": "config.py", "content": "db_host=localhost"}}' \
-    | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
+    | node plugins/arckit-claude/hooks/secret-file-scanner.mjs
 # Output: no output (safe content passes through)
 ```
 
@@ -80,32 +81,38 @@ $ echo '{"tool_name": "Write", "tool_input": {"file_path": "config.py", "content
 
 ### File protection exceptions
 
-To allow edits to files that would normally be blocked by `file-protection.py`, you have three options:
+To allow edits to files that would normally be blocked by `file-protection.mjs`, you have two options. Both relax only the sensitive-keyword check on filenames; protected paths such as `.env*`, lock files and `*.pem` are always blocked.
 
 **1. Add to `ALLOWED_EXCEPTIONS`** — for specific filenames that are legitimate security tools:
 
-```python
-ALLOWED_EXCEPTIONS = [
-    ".secrets.baseline",
-    ".pre-commit-config.yaml",
-    "secret-detection.py",
-    "secret-file-scanner.py",
-    "your-new-exception.py",  # Add here
-]
+```js
+const ALLOWED_EXCEPTIONS = [
+  '.secrets.baseline',
+  '.pre-commit-config.yaml',
+  'secret-detection.mjs',
+  'secret-file-scanner.mjs',
+  'your-new-exception.mjs', // Add here
+];
 ```
 
-**2. Add to `ALLOWED_DIRECTORIES`** — for directories containing documentation or tool files that discuss secrets:
+**2. Add to the allowed directories** — for directories containing documentation or tool files that discuss secrets. Plugin directories are matched relative to the plugin root, repository directories relative to the repository root:
 
-```python
-ALLOWED_DIRECTORIES = [
-    "plugins/arckit-claude/commands/",
-    "plugins/arckit-claude/templates/",
-    "plugins/arckit-claude/agents/",
-    "plugins/arckit-claude/hooks/",
-    "docs/",
-    ".arckit/templates/",
-    "your-project/docs/",  # Add here
-]
+```js
+// Relative to the plugin root
+const ALLOWED_PLUGIN_DIRECTORIES = [
+  'commands/',
+  'templates/',
+  'agents/',
+  'hooks/',
+];
+
+// Relative to the repository root
+const ALLOWED_REPO_DIRECTORIES = [
+  'docs/',
+  '.arckit/templates/',
+  'projects/',
+  'your-folder/', // Add here
+];
 ```
 
 ### Content scanner skip patterns
@@ -158,40 +165,41 @@ This is a Claude Code permission policy, not an ArcKit hook — ArcKit ships no 
 
 ## Testing
 
-You can test each hook by piping JSON to stdin. All hooks handle empty input gracefully.
+You can test each hook by piping JSON to stdin, from the root of an ArcKit source checkout. All hooks handle empty input gracefully.
 
 ### Test file protection blocks .env writes
 
 ```bash
 echo '{"tool_name": "Write", "tool_input": {"file_path": ".env", "content": "VALUE=abc"}}' \
-    | python3 plugins/arckit-claude/hooks/file-protection.py
+    | node plugins/arckit-claude/hooks/file-protection.mjs
 ```
 
-Expected: `{"decision": "block", ...}`
+Expected: `{"decision":"block", ...}`
 
 ### Test secret detection blocks API keys in prompts
 
 ```bash
-echo '{"userPrompt": "Use this key sk-ant-abc123def456ghi789"}' \
-    | python3 plugins/arckit-claude/hooks/secret-detection.py
+fake="sk-ant-$(printf 'x%.0s' {1..24})"   # a made-up key, built at run time
+echo "{\"prompt\": \"Use this key $fake\"}" \
+    | node plugins/arckit-claude/hooks/secret-detection.mjs
 ```
 
-Expected: `{"decision": "block", ...}`
+Expected: `{"decision":"block", ...}`
 
 ### Test secret file scanner blocks secrets in content
 
 ```bash
 echo '{"tool_name": "Write", "tool_input": {"file_path": "test.md", "content": "pwd=hunter2"}}' \
-    | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
+    | node plugins/arckit-claude/hooks/secret-file-scanner.mjs
 ```
 
-Expected: `{"decision": "block", ...}`
+Expected: `{"decision":"block", ...}`
 
 ### Test that allowed files pass through
 
 ```bash
 echo '{"tool_name": "Write", "tool_input": {"file_path": "plugins/arckit-claude/commands/research.md", "content": "Use API key format: sk-xxx"}}' \
-    | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
+    | node plugins/arckit-claude/hooks/secret-file-scanner.mjs
 ```
 
 Expected: no output (exit code 0, file is in a skip pattern)
@@ -199,9 +207,9 @@ Expected: no output (exit code 0, file is in a skip pattern)
 ### Test that empty input does not crash
 
 ```bash
-echo '' | python3 plugins/arckit-claude/hooks/file-protection.py
-echo '' | python3 plugins/arckit-claude/hooks/secret-detection.py
-echo '' | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
+echo '' | node plugins/arckit-claude/hooks/file-protection.mjs
+echo '' | node plugins/arckit-claude/hooks/secret-detection.mjs
+echo '' | node plugins/arckit-claude/hooks/secret-file-scanner.mjs
 ```
 
 Expected: no output or `{}` (exit code 0 for all)

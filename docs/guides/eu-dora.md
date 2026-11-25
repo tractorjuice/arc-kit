@@ -32,15 +32,13 @@ Output: `projects/<id>/ARC-<id>-DORA-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Entity Classification | Credit institution / insurer / investment firm / etc. |
-| ICT Risk Management | 5-pillar framework (Art. 5–16) |
-| Incident Classification | Major ICT-related incident criteria (RTS) |
-| Incident Reporting | 4h → 72h → 1-month final report |
-| TLPT | Threat-Led Penetration Testing obligation (significant institutions) |
-| Third-Party Management | Critical ICT provider designation and contractual requirements |
-| Information Sharing | Threat intelligence sharing arrangements |
-| Oversight Framework | ESA (EBA / ESMA / EIOPA) supervision |
-| Gap Analysis | Gaps with priority and DORA deadline |
+| 1. Entity Scoping (Art. 2) | Credit institution / insurer / investment firm / etc. |
+| 2. ICT Risk Management Framework (Arts. 5–16) | 5-pillar framework |
+| 3. ICT-Related Incident Management (Arts. 17–23) | Major incident criteria; 4h → 72h → 1-month reporting |
+| 4. Digital Operational Resilience Testing (Arts. 24–27) | Testing programme and TLPT for significant institutions |
+| 5. ICT Third-Party Risk Management (Arts. 28–44) | Critical ICT provider designation and contractual requirements |
+| 6. French Supervisory Authority Context | ESA and national supervision |
+| 7. Gap Analysis and Roadmap | Gaps with priority and DORA deadline |
 
 ---
 

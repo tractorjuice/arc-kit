@@ -10,7 +10,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`ARC-<id>-REQ-v1.0.md`) | IS scope and business missions |
+| Requirements (`ARC-<id>-REQ-v1.0.md`), required | IS scope and business missions. The command stops without them |
 | Data model (`ARC-<id>-DATA-v1.0.md`) | Application data flows |
 | Architecture diagrams | Existing network and system topology |
 

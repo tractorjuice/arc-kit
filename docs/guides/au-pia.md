@@ -33,7 +33,7 @@ Output: `projects/<id>/ARC-<id>-AUPIA-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
+| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) |
 | Revision History | Version, date, author, changes, approvals |
 | Executive Summary | Project assessed, personal information involved, overall privacy risk posture, key findings and recommendations |
 | Project Description | Project name, owning agency, phase, data subjects, personal information types, sensitive information, data volume, AI or automated decisions, assessment date, Privacy Officer |

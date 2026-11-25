@@ -1,8 +1,10 @@
 # Plugin / Extension Capability Comparison
 
-**Claude Code (v2.1.117–128) vs Gemini CLI vs OpenAI Codex CLI**
+**Claude Code (v2.1.117–144) vs Gemini CLI vs OpenAI Codex CLI**
 
-Compiled from official docs in early 2026. Sources cited at the end.
+Compiled from official docs in early 2026, with Claude Code entries up to v2.1.144. Sources cited at the end.
+
+This page does not cover the other formats ArcKit ships: GitHub Copilot, OpenCode CLI, Mistral Vibe, Kimi Code CLI, Paperclip and the experimental Google Antigravity plugin.
 
 ---
 
@@ -167,9 +169,9 @@ Handler: `command` (JSON stdio + exit-code-2 block). Matcher: regex only — no 
 - **Plugin-shipped settings.json** — currently supports `agent` (default subagent) and `subagentStatusLine` keys.
 - **Plugin dependencies** — `dependencies` array with semver constraints; `claude plugin prune`/`autoremove` for orphans.
 - **Background monitors** (`experimental.monitors` key, moved from top-level in v2.1.129) — persistent subprocess; `when: always` or `on-skill-invoke:<skill>`; stdout → in-session notifications.
-- **Hook `args: string[]` exec form** (v2.1.139) — alternative to the legacy single-string `command` field; harness execs the binary directly instead of parsing a shell-quoted command line. ArcKit uses this form for all 16 registered hook entries.
+- **Hook `args: string[]` exec form** (v2.1.139) — alternative to the legacy single-string `command` field; harness execs the binary directly instead of parsing a shell-quoted command line. ArcKit uses this form for every hook entry it registers.
 - **PostToolUse `continueOnBlock: true`** (v2.1.139) — observational PostToolUse hooks (stamping, manifest refresh, telemetry) can opt out of block semantics so a hook failure never derails the user's turn. Block-as-gate semantics are reserved for genuine PreToolUse / UserPromptSubmit guards.
-- **Plugin dependency enforcement** (v2.1.143) — `claude plugin disable` refuses when another enabled plugin depends on the target (with a copy-pasteable disable-chain hint); `claude plugin enable` force-enables transitive dependencies. ArcKit's 6 community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`) declare `dependencies` against the core `arckit` plugin, so users now get a clear error instead of a silently-broken overlay.
+- **Plugin dependency enforcement** (v2.1.143) — `claude plugin disable` refuses when another enabled plugin depends on the target (with a copy-pasteable disable-chain hint); `claude plugin enable` force-enables transitive dependencies. Every ArcKit community plugin declares `dependencies` against the core `arckit` plugin (and `arckit-au-energy` against `arckit-au` as well), so users get a clear error instead of a silently-broken overlay.
 - **Plugin monitor / session-title isolation** (v2.1.144) — fixes a bug where new sessions were named from plugin monitor stdout instead of the user's first prompt. ArcKit's `stale-artifact-scan` monitor was the canonical hit, so the v2.1.144 floor restores correct session titles in `/resume` and `claude agents`.
 
 ### Gemini CLI
@@ -263,8 +265,8 @@ Handler: `command` (JSON stdio + exit-code-2 block). Matcher: regex only — no 
 ## 12. ArcKit-specific implications
 
 - Converter strategy is well-aligned: stripping `effort`, `keep-coding-instructions`, `handoffs`, `tools`/`disallowedTools`, `initialPrompt`, and rewriting `${user_config.KEY}` → `${KEY}` matches what Gemini and Codex actually accept.
-- **Opportunity**: Gemini now supports `skills/` and Markdown+YAML subagents — the converter could emit ArcKit's 5 skills and 10 agents to `extensions/arckit-gemini/skills/` and `extensions/arckit-gemini/agents/` instead of inlining agent prompts.
-- **Opportunity**: package `extensions/arckit-codex/` as a real Codex plugin (`.codex-plugin/plugin.json` + `marketplace.json`) for `/plugins install` parity; consider adding `agents/openai.yaml` per skill for branding.
+- Gemini supports `skills/` and Markdown+YAML subagents, and the converter emits ArcKit's reference skills and 14 agents to `extensions/arckit-gemini/skills/` and `extensions/arckit-gemini/agents/`.
+- `extensions/arckit-codex/` is packaged as a Codex plugin (`.codex-plugin/plugin.json`, with `.agents/plugins/marketplace.json`) for `/plugins install`. Each command skill carries an `agents/openai.yaml` that turns off implicit invocation; the branding is set once, in the plugin manifest.
 - **Unportable to non-Claude**: `monitors` (stale-artifact-scan), `alwaysLoad`, `if:` hook scoping, typed `userConfig`, output styles, LSP, bin, channels, plugin dependencies — document as known gaps.
 - **Not yet adopted**: agent teams + forked subagents (experimental); `${CLAUDE_PLUGIN_DATA}` for cached deps; `subagentStatusLine`.
 

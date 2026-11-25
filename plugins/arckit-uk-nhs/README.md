@@ -2,10 +2,10 @@
 
 4 slash commands and the `uk-nhs-clinical-safety` build recipe covering NHS digital-health clinical safety and UK/EU medical-device regulation:
 
-- `/arckit:uk-nhs-dcb0129` — NHS DCB0129 manufacturer Clinical Safety Case + Hazard Log (3-file output: `SAFETY.md`, `SAFETY-CASE.md`, `HAZARD-LOG.md`)
-- `/arckit:uk-nhs-dcb0160` — NHS DCB0160 deployer Clinical Safety Case + deployment Hazard Log (3-file output, deployer variant)
-- `/arckit:uk-nhs-dtac` — NHS Digital Technology Assessment Criteria (DTAC), following the DTAC form version 2.0 (24 February 2026): context sections A and B, assessed sections C1–C4, scored section D1, plus an optional AI supplement that is not part of DTAC
-- `/arckit:uk-mdr-classification` — UK MDR 2002 (as amended) + EU MDR 2017/745 software-as-medical-device (SaMD / AIaMD) classification, UKCA / UKNI / CE marking pathway, Windsor Framework NI handling
+- `/arckit-uk-nhs:uk-nhs-dcb0129` — NHS DCB0129 manufacturer Clinical Safety Case + Hazard Log (3-file output: `SAFETY.md`, `SAFETY-CASE.md`, `HAZARD-LOG.md`)
+- `/arckit-uk-nhs:uk-nhs-dcb0160` — NHS DCB0160 deployer Clinical Safety Case + deployment Hazard Log (3-file output, deployer variant)
+- `/arckit-uk-nhs:uk-nhs-dtac` — NHS Digital Technology Assessment Criteria (DTAC), following the DTAC form version 2.0 (24 February 2026): context sections A and B, assessed sections C1–C4, scored section D1, plus an optional AI supplement that is not part of DTAC
+- `/arckit-uk-nhs:uk-mdr-classification` — UK MDR 2002 (as amended) + EU MDR 2017/745 software-as-medical-device (SaMD / AIaMD) classification, UKCA / UKNI / CE marking pathway, Windsor Framework NI handling
 
 Recipe: `uk-nhs-clinical-safety` (composes with the UK SaaS baseline; no swaps — NHS digital products still need TCoP, Secure by Design, DPIA, ATRS).
 

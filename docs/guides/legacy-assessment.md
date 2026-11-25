@@ -8,10 +8,12 @@ under review following the August 2026 definition.
 
 ## Install the optional overlay
 
-In Claude Code, install the core plugin and this overlay from the ArcKit marketplace:
+In Claude Code, add the ArcKit marketplace, then install and enable this overlay. The core plugin installs with it as a dependency:
 
 ```bash
-claude plugin install arckit arckit-uk-legacy
+claude plugin marketplace add tractorjuice/arckit-claude
+claude plugin install arckit-uk-legacy@arckit-claude
+claude plugin enable arckit-uk-legacy
 ```
 
 The Claude command is `/arckit-uk-legacy:uk-legacy-assessment`. Other generated targets
@@ -28,7 +30,7 @@ core commands do not require or automatically recommend this optional assessment
 ```
 
 Codex uses `$arckit-uk-legacy-assessment`; Copilot uses `/arckit-uk-legacy-assessment`.
-Gemini and OpenCode use `/arckit:uk-legacy-assessment`.
+Gemini uses `/arckit:uk-legacy-assessment`; OpenCode uses `/arckit.uk-legacy-assessment`.
 The date defaults to the local calendar date. The command resolves an existing project
 and confirms ambiguous system boundaries; it does not silently create a new project.
 It writes `ARC-001-LEGACY-v1.0.md`, a JSON sidecar and, when numerical scoring is

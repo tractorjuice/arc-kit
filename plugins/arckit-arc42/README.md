@@ -4,11 +4,11 @@
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
-| `/arckit:arc42` | `ARC42` | Assembles all 12 arc42 sections from the project's artefacts, cites each source, and lists the sections no artefact covers yet in a Gap Register |
-| `/arckit:arc42-quality` | `QUAL` | Quality tree and measurable quality scenarios for section 10, classified by the nine Q42 dimensions; goals without a measurable target are listed, never estimated |
-| `/arckit:arc42-concepts` | `CONC` | Crosscutting concepts for section 8, each Decided, Partially decided, Open, Not applicable or Not assessed, traced to the ADRs and designs that settle it |
-| `/arckit:arc42-debt` | `DEBT` | Technical debt register for section 11.2, consolidated from audits, conformance assessments, reviews, ADRs and risks |
-| `/arckit:arc42-handover` | `SDDH` | SDD handover pack for Spec Kit: a constitution, one feature brief per epic and plan inputs, each tagged with its ArcKit IDs |
+| `/arckit-arc42:arc42` | `ARC42` | Assembles all 12 arc42 sections from the project's artefacts, cites each source, and lists the sections no artefact covers yet in a Gap Register |
+| `/arckit-arc42:arc42-quality` | `QUAL` | Quality tree and measurable quality scenarios for section 10, classified by the nine Q42 dimensions; goals without a measurable target are listed, never estimated |
+| `/arckit-arc42:arc42-concepts` | `CONC` | Crosscutting concepts for section 8, each Decided, Partially decided, Open, Not applicable or Not assessed, traced to the ADRs and designs that settle it |
+| `/arckit-arc42:arc42-debt` | `DEBT` | Technical debt register for section 11.2, consolidated from audits, conformance assessments, reviews, ADRs and risks |
+| `/arckit-arc42:arc42-handover` | `SDDH` | SDD handover pack for Spec Kit: a constitution, one feature brief per epic and plan inputs, each tagged with its ArcKit IDs |
 
 Recipe: `arc42-full` — principles, stakeholders, requirements, two ADRs, data model, the four C4/runtime/deployment diagrams, Secure by Design, risk register, glossary, quality scenarios and crosscutting concepts, then the arc42 assembly. `--enable DEBT` adds the technical debt register and `--enable SDDH` the handover pack. Existing evidence (backlog, codebase audits, conformance assessment, design reviews, principles compliance) is adopted and read, never generated; `--enable` builds one that does not exist yet.
 
@@ -24,9 +24,9 @@ Without `arckit` (core), the recipe cannot resolve the commands the description 
 
 ## Why an Assembly Command and Four Source Commands
 
-arc42 is a documentation structure, not a process like the TOGAF ADM, and most of its sections map onto artefacts ArcKit already produces. One command per section would duplicate core commands and drift from them. `/arckit:arc42` is instead a view over the project: it summarises and cites its sources, and those sources stay authoritative.
+arc42 is a documentation structure, not a process like the TOGAF ADM, and most of its sections map onto artefacts ArcKit already produces. One command per section would duplicate core commands and drift from them. `/arckit-arc42:arc42` is instead a view over the project: it summarises and cites its sources, and those sources stay authoritative.
 
-Three sections have no core artefact behind them: crosscutting concepts (8), quality scenarios (10) and technical debt (11.2). The overlay's source commands write those artefacts, and the assembly cites them like any other source. They never make architecture decisions or invent targets: an undecided concept is routed to an ADR, and a goal without a measurable target is listed as "Target needed". `/arckit:arc42-handover` then turns the description into inputs for [Spec Kit](https://github.com/github/spec-kit).
+Three sections have no core artefact behind them: crosscutting concepts (8), quality scenarios (10) and technical debt (11.2). The overlay's source commands write those artefacts, and the assembly cites them like any other source. They never make architecture decisions or invent targets: an undecided concept is routed to an ADR, and a goal without a measurable target is listed as "Target needed". `/arckit-arc42:arc42-handover` then turns the description into inputs for [Spec Kit](https://github.com/github/spec-kit).
 
 | arc42 section | Assembled from |
 |---------------|----------------|
@@ -43,7 +43,7 @@ Three sections have no core artefact behind them: crosscutting concepts (8), qua
 | 11. Risks and Technical Debt | `RISK`; debt from `DEBT`, otherwise `CDAU`, `CONF` or `DLDR` |
 | 12. Glossary | `GLOS` |
 
-Sections with no source are marked "Not yet documented." and listed in the Gap Register with the command that would fill them. Re-run `/arckit:arc42` after running those commands, or after any source changes, to produce the next version. `/arckit:health` flags a description, or a handover pack, whose sources have moved on as `STALE-VIEW`.
+Sections with no source are marked "Not yet documented." and listed in the Gap Register with the command that would fill them. Re-run `/arckit-arc42:arc42` after running those commands, or after any source changes, to produce the next version. `/arckit:health` flags a description, or a handover pack, whose sources have moved on as `STALE-VIEW`.
 
 ## Artefact Naming
 
@@ -72,7 +72,7 @@ See [LICENSE](LICENSE) and the [template's third-party notice](templates/arc42-L
 
 ## Roadmap
 
-Phase 1, tracked on [#1053](https://github.com/tractorjuice/arc-kit/issues/1053), delivered the assembly command and recipe. Phase 2 added the quality, concepts, debt and handover commands, Spec Kit evidence in `/arckit:traceability`, `/arckit:conformance` and `/arckit:repo-audit`, and `STALE-VIEW` in `/arckit:health`; it and any later additions are tracked in separate follow-on issues. Possible later additions:
+Phase 1, tracked on [#1053](https://github.com/tractorjuice/arc-kit/issues/1053), delivered the assembly command and recipe. Phase 2 added the quality, concepts, debt and handover commands, Spec Kit evidence in `/arckit:traceability`, `/arckit:conformance` and `/arckit-repo:repo-audit`, and `STALE-VIEW` in `/arckit:health`; it and any later additions are tracked in separate follow-on issues. Possible later additions:
 
-- A link from `/arckit:repo-docs` to the arc42 description, since arc42 is a common target format for code-level architecture documentation
+- A link from `/arckit-repo:repo-docs` to the arc42 description, since arc42 is a common target format for code-level architecture documentation
 - Behavioural eval cases for the overlay's commands, once the eval harness can load an overlay beside core

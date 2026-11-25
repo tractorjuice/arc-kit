@@ -83,7 +83,7 @@ Scoring is still a judgement on what the supplier claims, so check the claims be
 | Task | When to Use | Output |
 |------|-------------|--------|
 | Create Framework | Before receiving proposals | `ARC-<id>-EVAL-v1.0.md` |
-| Score Vendor | After receiving a proposal | `vendors/<name>/ARC-<id>-EVAL-<name>-v1.0.md` |
+| Score Vendor | After receiving a proposal | `vendors/_evaluations/<vendor>/evaluation.md` |
 | Compare Vendors | After scoring multiple vendors | `ARC-<id>-VEND-v1.0.md` |
 
 ---

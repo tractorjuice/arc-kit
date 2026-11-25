@@ -31,14 +31,19 @@ Running `/arckit:requirements` then `/arckit:risk` then `/arckit:tcop`… sequen
 | `--no-commit` | Skip the per-wave git commit |
 | `--recipe NAME` | Recipe to use; default `uk-saas` |
 | `--enable ID` | Build an optional target (e.g. `--enable AIP`), even when the project already has an artefact of its type; existing evidence is then not adopted |
+| `--skip-hash-check` | On `--resume`, treat a complete target whose files are all present as up to date, and skip the check that its inputs have changed. Faster, but misses edits to inputs |
 | `--exclude ID` | Exclude an optional target: neither build it nor read an existing one (e.g. `--exclude SVCASS`) |
 
 ## Built-in recipes
 
 | Recipe | Targets | Use case |
 |--------|--------:|----------|
-| `uk-saas` | 31 | UK Government managed multi-tenant SaaS — civilian departments, GDS Service Standard, NCSC CAF |
-| `uk-mod-sovereign` | 32 | UK MOD / sovereign / air-gapped — `mod-secure` + `jsp-936`, no SVCASS, sealed-media distribution |
+| `uk-saas` | 38 | UK Government managed multi-tenant SaaS — civilian departments, GDS Service Standard, NCSC CAF |
+| `uk-mod-sovereign` | 38 | UK MOD / sovereign / air-gapped — `mod-secure` + `jsp-936`, no SVCASS, sealed-media distribution |
+| `uk-fs-payments` | 11 | UK financial services payments overlay on the baseline — FCA/PRA artefacts for payment firms |
+| `uk-nhs-clinical-safety` | 44 | UK NHS clinical safety and medical device overlay on the SaaS baseline — DCB0129, DCB0160, DTAC |
+
+Target counts include the optional targets.
 
 Recipes ship at `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{name}.yaml`. Override per project at `.arckit/recipes/{name}.yaml`.
 
@@ -50,7 +55,7 @@ Recipes ship at `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{name}.yaml`.
 4. **Topological wave computation** — targets group into waves where every dep is complete; wave 0 is no-deps targets, wave 1 depends only on wave 0, etc.
 5. **Per-wave dispatch** — single assistant message containing N `Agent` tool calls runs in parallel; each subagent invokes its assigned `arckit:*` skill, validates the output, returns a ≤200-word summary. A subagent reads only its dependencies' outputs, plus its own target's previous version when it is rebuilding one, so a regenerated artefact keeps its IDs and Revision History
 6. **Per-wave commit** — atomic git commit covering all artefacts in the wave plus the updated `state.json`
-7. **Halt-on-fail** — if any subagent fails or validation fails, write state, do *not* commit, surface a per-target error report. Resume with `--resume`
+7. **Halt-on-fail** — if any subagent fails or validation fails, write state, do *not* commit, surface a per-target error report. Resume with `--resume`, which hashes each completed target's inputs and rebuilds any target whose inputs have changed since it was built
 8. **Post-build hooks** — `arckit:health` and `arckit:pages` run in parallel after the final target wave
 
 ## Session limits (subagents and searches)

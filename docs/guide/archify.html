@@ -476,7 +476,7 @@
 <h3 id="why-arckit-does-not-bundle-archify">Why ArcKit does not bundle Archify</h3>
 <p>Archify is an independently maintained agent skill by <a href="https://github.com/tt-a1i/archify">tt-a1i</a>, MIT licensed. ArcKit <strong>detects</strong> it rather than vendoring it:</p>
 <ul>
-<li>It is roughly 7.5MB of renderer. ArcKit's <code>sync-shared-assets.py</code> copies shared assets into ten community plugins and <code>converter.py</code> ships them to seven generated extensions, so a vendored copy would multiply many times over.</li>
+<li>It is roughly 7.5MB of renderer. ArcKit's <code>sync-shared-assets.py</code> copies shared assets into every community plugin and <code>converter.py</code> ships them to seven generated extensions, so a vendored copy would multiply many times over.</li>
 <li>It moves quickly (v2.17 development series). A fork would drift within weeks, and ArcKit would own the divergence.</li>
 <li>Its skill contract includes an update check that contacts <code>tt-a1i.github.io</code>. That is the upstream project's choice to make, not one ArcKit should silently inherit on a user's behalf.</li>
 </ul>

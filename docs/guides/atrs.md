@@ -29,27 +29,25 @@ Output: `projects/<id>/ARC-<id>-ATRS-v1.0.md`
 
 ## ATRS Record Structure
 
-| Section | Contents |
-|---------|----------|
-| Basic Information | Name, owner, description, deployment date |
-| Purpose and Scope | Why the tool exists and what decisions it supports |
-| How It Works | Technical overview (accessible to public) |
-| Data Used | Input data, sources, personal data handling |
-| Human Oversight | How humans are involved in the process |
-| Risk Management | Identified risks and mitigations |
-| Impact Assessment | Who is affected and how |
-| Performance Monitoring | How accuracy and fairness are measured |
-| Contact Information | Who to contact for questions |
+The record has two tiers, following the published standard. Tier 1 is a plain-language summary for the public. Tier 2 is the detail for specialists.
 
----
-
-## ATRS Tiers
-
-| Tier | Description | Disclosure Level |
-|------|-------------|------------------|
-| Tier 1 | Low impact, simple algorithms | Basic disclosure |
-| Tier 2 | Moderate impact, ML-based | Standard disclosure |
-| Tier 3 | High impact, complex AI | Full disclosure |
+| Part | Contents |
+|------|----------|
+| Tier 1: Basic Information | Name, description, website URL, contact email |
+| Tier 1: Organisation and Phase | Organisation, function, geographic region, phase |
+| Tier 2, Section 1: Owner and Responsibility | Organisation, team, senior responsible owner, external suppliers |
+| Section 2: Description and Rationale | Detailed description, scope, benefit, previous process, alternatives considered |
+| Section 3: Decision-Making Process | Process integration, information provided, scale of use, human review, training, appeals |
+| Section 4: Data | Sources, sharing, quality, storage and security |
+| Section 5: Impact Assessments | DPIA, equality, human rights and other assessments |
+| Section 6: Fairness, Bias and Discrimination | Bias risks and how they are tested for |
+| Section 7: Technical Details | Model, architecture and dependencies |
+| Section 8: Testing and Assurance | Testing, assurance and evaluation |
+| Section 9: Transparency and Explainability | How decisions can be explained |
+| Section 10: Governance and Oversight | Accountability and oversight arrangements |
+| Section 11: Compliance | Legal and policy compliance |
+| Section 12: Performance and Outcomes | Performance measures and results |
+| Section 13: Review and Updates | Review cycle and change control |
 
 ---
 

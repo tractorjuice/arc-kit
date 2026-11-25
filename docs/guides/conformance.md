@@ -83,7 +83,7 @@ Keywords determine severity:
 
 | Section | What It Contains |
 |---------|-----------------|
-| Executive Summary | Conformance score, recommendation (Conformant / With Exceptions / Non-Conformant) |
+| Executive Summary | Conformance score, recommendation (Conformant / Conformant With Conditions / Non-Conformant) |
 | Conformance Scorecard | All 12 checks with PASS/FAIL/NOT ASSESSED |
 | ADR Decision Conformance | Implementation status, cross-ADR conflicts, superseded residue |
 | Design-Principles Alignment | Binary constraint checking per principle |
@@ -101,8 +101,8 @@ Keywords determine severity:
 | Rating | Criteria | Gate Decision |
 |--------|----------|---------------|
 | **CONFORMANT** | All checks PASS (or NOT ASSESSED) | ✅ Proceed |
-| **CONFORMANT WITH EXCEPTIONS** | Some FAIL but LOW/MEDIUM with plans, >= 80% | ⚠️ Conditional proceed |
-| **NON-CONFORMANT** | Any HIGH FAIL or < 80% | ❌ Block until resolved |
+| **CONFORMANT WITH CONDITIONS** | No RED findings, YELLOW and GREEN findings have remediation plans, >= 80% | ⚠️ Conditional proceed |
+| **NON-CONFORMANT** | Any RED finding or < 80% | ❌ Block until resolved |
 
 ---
 

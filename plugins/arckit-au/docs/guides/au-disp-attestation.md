@@ -19,8 +19,6 @@ This is the consolidation artefact. It draws from every other AU command's outpu
 | `/arckit:au-pia` (`ARC-<id>-AUPIA-v1.0.md`) | Personal information handling for Information & Cyber |
 | `/arckit:au-ndb-playbook` (`ARC-<id>-AUNDB-v1.0.md`) | Breach response capability |
 | `/arckit:au-pspf` (`ARC-<id>-AUPSPF-v1.0.md`) | PSPF maturity for Governance, Personnel, Physical, Information |
-| `/arckit:au-ai-assurance` (`ARC-<id>-AUAIA-v1.0.md`) | AI assurance for Defence-facing AI systems |
-| Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, security advisor, FOCI signatory |
 | Risk register (`ARC-<id>-RISK-v1.0.md`) | Supplier-side risks |
 
 ---
@@ -39,7 +37,7 @@ Output: `projects/<id>/ARC-<id>-AUDISP-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
+| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) |
 | Revision History | Version, date, author, changes, approvals |
 | Executive Summary | Organisation, DISP level sought, attestation readiness, key gaps, target attestation date |
 | 1. Organisation Profile | Legal entity and ABN, trading names, business activity, headcount, sites, Defence contracts in scope, level sought, target date |

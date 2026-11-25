@@ -486,7 +486,7 @@ arckit init --here --ai codex
 </tbody>
 </table>
 <blockquote>
-<p><strong>Note:</strong> For Claude Code users, commands and agents are provided by the ArcKit plugin and update automatically via the marketplace. No <code>arckit init</code> needed.</p>
+<p><strong>Note:</strong> For Claude Code users, commands and agents are provided by the ArcKit plugin, so no <code>arckit init</code> is needed. Claude Code updates plugins from the <code>arckit-claude</code> marketplace automatically only when auto-update is on for it: turn it on in <code>/plugin</code> under the <strong>Marketplaces</strong> tab, or set <code>&quot;autoUpdate&quot;: true</code> in the marketplace's settings entry (see the <a href="mcp-servers.html#auto-enabling-for-team-repos">plugin setup guide</a>). To update by hand, run <code>claude plugin update arckit@arckit-claude</code>, then <code>/reload-plugins</code>. Update each installed overlay the same way, for example <code>claude plugin update arckit-uae@arckit-claude</code>.</p>
 </blockquote>
 <blockquote>
 <p><strong>Note:</strong> For Gemini CLI users, use the ArcKit extension (<code>gemini extensions install https://github.com/tractorjuice/arckit-gemini</code>). Updates via <code>gemini extensions update arckit</code>.</p>
@@ -510,6 +510,22 @@ mv README.md.bak README.md
 <tr>
 <td><code>--ai codex</code></td>
 <td>Update Codex CLI commands</td>
+</tr>
+<tr>
+<td><code>--ai opencode</code></td>
+<td>Update OpenCode CLI commands</td>
+</tr>
+<tr>
+<td><code>--ai copilot</code></td>
+<td>Update GitHub Copilot prompt files</td>
+</tr>
+<tr>
+<td><code>--here</code></td>
+<td>Update the project in the current directory</td>
+</tr>
+<tr>
+<td><code>--no-git</code></td>
+<td>Skip git repository initialisation</td>
 </tr>
 <tr>
 <td><code>--minimal</code></td>

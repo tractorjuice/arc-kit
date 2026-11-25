@@ -160,10 +160,10 @@ The recipe ships with the `arckit` core plugin, at
 
 | Code | Artefact name | Severity |
 |------|---------------|----------|
-| FSSCA | SCA-RTS Exemption Design | Standard |
+| FSSCA | SCA-RTS Exemption Design | HIGH |
 | FSSAFE | Safeguarding Assessment | CRITICAL |
-| FSCD | Consumer Duty Board Report | Standard |
-| FSCTP | CTP Dependency Assessment | Standard |
+| FSCD | Consumer Duty Board Report | HIGH |
+| FSCTP | CTP Dependency Assessment | HIGH |
 
 FSSAFE carries CRITICAL severity because safeguarding failures have led to firm collapse and FCA
 action: Allied Wallet (FCA requirements and winding-up petition 2019, winding-up order March 2020)

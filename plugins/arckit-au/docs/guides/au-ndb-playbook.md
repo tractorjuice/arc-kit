@@ -13,9 +13,8 @@ The NDB playbook is operational — it is read in the middle of an incident, not
 | Artefact | Purpose |
 |----------|---------|
 | `/arckit:au-pia` output (`ARC-<id>-AUPIA-v1.0.md`) | Personal information inventory; eligible-data-breach criteria already drafted |
-| Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, privacy officer, security incident commander |
 | Risk register (`ARC-<id>-RISK-v1.0.md`) | Data-breach risks identified at design time |
-| Runbooks (the operational readiness pack, `ARC-<id>-OPS-v*.md`) | Existing incident response procedures the NDB workflow plugs into |
+| Data model (`ARC-<id>-DATA-v*.md`) and data flow diagrams (`ARC-<id>-DFD-*`) | Affected personal-information entities and disclosure paths |
 
 ---
 
@@ -33,7 +32,7 @@ Output: `projects/<id>/ARC-<id>-AUNDB-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
+| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) |
 | Revision History | Version, date, author, changes, approvals |
 | Executive Summary | APP entity status, NDB scheme applicability, playbook readiness, last test date, key risks |
 | 1. Entity Profile | APP entity status, Privacy Officer, accountable officer for NDB response, business-hours and after-hours leads, legal counsel, communications lead, CISO, last exercise and last live incident |

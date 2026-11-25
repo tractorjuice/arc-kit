@@ -42,7 +42,7 @@ arckit init --here --ai codex
 | Documentation and guides (`docs/`) | |
 | `VERSION`, `CHANGELOG.md` | |
 
-> **Note:** For Claude Code users, commands and agents are provided by the ArcKit plugin and update automatically via the marketplace. No `arckit init` needed.
+> **Note:** For Claude Code users, commands and agents are provided by the ArcKit plugin, so no `arckit init` is needed. Claude Code updates plugins from the `arckit-claude` marketplace automatically only when auto-update is on for it: turn it on in `/plugin` under the **Marketplaces** tab, or set `"autoUpdate": true` in the marketplace's settings entry (see the [plugin setup guide](mcp-servers.md#auto-enabling-for-team-repos)). To update by hand, run `claude plugin update arckit@arckit-claude`, then `/reload-plugins`. Update each installed overlay the same way, for example `claude plugin update arckit-uae@arckit-claude`.
 
 > **Note:** For Gemini CLI users, use the ArcKit extension (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`). Updates via `gemini extensions update arckit`.
 
@@ -59,6 +59,10 @@ arckit init --here --ai codex
 | Flag | Description |
 |------|-------------|
 | `--ai codex` | Update Codex CLI commands |
+| `--ai opencode` | Update OpenCode CLI commands |
+| `--ai copilot` | Update GitHub Copilot prompt files |
+| `--here` | Update the project in the current directory |
+| `--no-git` | Skip git repository initialisation |
 | `--minimal` | Skip updating docs and guides |
 
 ---

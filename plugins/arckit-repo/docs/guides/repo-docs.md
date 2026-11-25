@@ -13,7 +13,9 @@ The command ships in the optional `arckit-repo` plugin. It is inspired by OpenWi
 Install the optional repository plugin with the ArcKit core plugin:
 
 ```bash
-claude plugin install arckit-repo
+claude plugin marketplace add tractorjuice/arckit-claude
+claude plugin install arckit-repo@arckit-claude
+claude plugin enable arckit-repo
 ```
 
 Create the first repository wiki:

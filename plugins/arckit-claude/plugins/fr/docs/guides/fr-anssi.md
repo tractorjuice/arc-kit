@@ -11,8 +11,8 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | IS scope, security requirements |
-| Risk register | Security risks and existing controls |
-| Architecture diagrams | Network and system topology |
+| Secure by Design assessment, EBIOS study, security policy (PSSI) | Existing controls and baseline measures |
+| Data model | Data sensitivity levels |
 
 ---
 

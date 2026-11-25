@@ -4,7 +4,7 @@
 
 `/arckit:gov-code-search` provides general-purpose natural language search across 24,500+ UK government open-source repositories, returning matching repositories, patterns, and implementation approaches without requiring an active project.
 
-> **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent performs multiple govreposcrape searches, uses WebFetch to inspect top results on GitHub, and synthesises findings into a structured report, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
+> **Agent Architecture**: In Claude Code the command runs in your main session. It sends reader subagents to gather evidence, and a writer subagent with no network tools then writes the document, which keeps the research out of your main context. Other assistants run a single combined prompt instead. The readers run one govreposcrape query variation each and use WebFetch to inspect top results on GitHub.
 
 ---
 
@@ -45,9 +45,9 @@ Add domain qualifiers (NHS, HMRC, MoD, GDS) in the prompt to narrow results to s
 /arckit:gov-code-search <query>
 ```
 
-Outputs: `projects/<id>/research/ARC-<id>-GCSR-001-v1.0.md` (if a project exists), or to a timestamped file in the current directory.
+Outputs: `projects/<id>/research/ARC-<id>-GCSR-<NNN>-v1.0.md`. If no project exists, the command creates one first.
 
-> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version.
+> **Re-running**: each run writes a new report with the next sequence number (`GCSR-001`, `GCSR-002` and so on), so earlier reports are kept.
 
 ---
 
@@ -69,7 +69,7 @@ Avoid vague single-word queries such as "authentication" or "database" — these
 
 ## How It Works
 
-The agent issues multiple query variations against the govreposcrape semantic search API:
+The command issues multiple query variations against the govreposcrape semantic search API:
 
 | Step | Action |
 |------|--------|

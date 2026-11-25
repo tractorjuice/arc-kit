@@ -453,11 +453,11 @@
 <li><strong>Federal defense (DoD, IC).</strong> CMMC, RMF for DoD IT, DISA-STIGs, JSIG, NIST SP 800-171 for CUI in non-federal systems — covered by a future <code>arckit-us-dod</code> overlay, not this one.</li>
 <li><strong>State governments.</strong> StateRAMP, TX-RAMP, AZ-RAMP, CJIS Security Policy — sibling state overlays where they exist.</li>
 <li><strong>Sector-specific regimes.</strong> HIPAA (HHS / HIPAA-covered entities), GLBA (financial), SOX (publicly traded), PCI-DSS (payment card) — these layer on top and need their own assessments.</li>
-<li><strong>Section 508 accessibility.</strong> Deferred to v5.2. Until then, use agency-specific Section 508 guidance and the GSA accessibility resources directly.</li>
+<li><strong>Section 508 accessibility.</strong> Not yet covered. Until it is, use agency-specific Section 508 guidance and the GSA accessibility resources directly.</li>
 </ul>
 <hr />
 <h2 id="citation-register">Citation Register</h2>
-<p>Every regulatory anchor used across the overlay's commands, with verification timestamps. Verification is repeated quarterly — next scheduled review <strong>2026-08-23</strong>.</p>
+<p>Every regulatory anchor used across the overlay's commands, with verification timestamps. Verification is repeated quarterly. The review planned for 2026-08-23 is not recorded as done; rows dated 2026-10-27 and 2026-10-28 come from the #982 and #1042 checks.</p>
 <table>
 <thead>
 <tr>
@@ -718,11 +718,11 @@
 </table>
 <hr />
 <h2 id="quarterly-review-cadence">Quarterly Review Cadence</h2>
-<p>The citation register above is re-verified every quarter. <strong>Next scheduled review: 2026-08-23.</strong> The maintainer walks each URL in turn; if a URL 404s or the document has been superseded, the row is updated and the Notes column records the move (including a wayback-machine snapshot URL — <code>https://web.archive.org/web/&lt;timestamp&gt;/&lt;original-url&gt;</code> — where the original is gone). Material changes to a regulatory anchor (revision, supersession, revocation) trigger a corresponding update to the affected <code>us-*</code> command files within 14 days, plus a CHANGELOG entry.</p>
+<p>The citation register above is re-verified every quarter. <strong>Last review planned for 2026-08-23; not yet recorded as done.</strong> The maintainer walks each URL in turn; if a URL 404s or the document has been superseded, the row is updated and the Notes column records the move (including a wayback-machine snapshot URL — <code>https://web.archive.org/web/&lt;timestamp&gt;/&lt;original-url&gt;</code> — where the original is gone). Material changes to a regulatory anchor (revision, supersession, revocation) trigger a corresponding update to the affected <code>us-*</code> command files within 14 days, plus a CHANGELOG entry.</p>
 <hr />
 <h2 id="known-limitations">Known Limitations</h2>
 <ul>
-<li><strong>Section 508 accessibility is not covered.</strong> Deferred to ArcKit v5.2; until then, use the GSA Section 508 resources and agency-specific accessibility guidance directly.</li>
+<li><strong>Section 508 accessibility is not covered.</strong> Not yet covered; use the GSA Section 508 resources and agency-specific accessibility guidance directly.</li>
 <li><strong>Classified-system architecture is not covered.</strong> The overlay focuses on civilian unclassified information; classified-system architecture sits with the future <code>arckit-us-dod</code> overlay. Since #746 the artefacts themselves do carry a US marking ladder — <code>_partials/document-control-us.md</code> offers UNCLASSIFIED / CUI / CONFIDENTIAL / SECRET / TOP SECRET so a Document Control header can record how the document is marked — but the overlay produces no CUI categorisation and no category or limited-dissemination markings (<code>CUI//SP-PRIV</code>, <code>CUI//NOFORN</code>). Those follow 32 CFR Part 2002 and the NARA CUI Registry, and belong in <code>Distribution</code>.</li>
 <li><strong>State-level regimes are not covered.</strong> StateRAMP, TX-RAMP, AZ-RAMP, CJIS Security Policy — sibling overlays where they exist; sector-specific overlays where they don't.</li>
 <li><strong>Sector-specific regimes are not covered.</strong> HIPAA, GLBA, SOX, PCI-DSS layer on top; if any apply, treat them as additional artefacts, not as parts of this overlay.</li>

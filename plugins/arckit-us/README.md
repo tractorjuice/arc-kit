@@ -2,16 +2,16 @@
 
 10 slash commands and the `us-federal` build recipe covering US Federal Civilian agency compliance:
 
-- `/arckit:us-fisma-categorization` — FIPS 199 categorization (NIST SP 800-60 information types)
-- `/arckit:us-nist-800-53` — NIST SP 800-53 Rev 5 tailoring against Low / Moderate / High baselines
-- `/arckit:us-fedramp-ssp` — FedRAMP System Security Plan (Moderate / High, 14 sections mapped to the FedRAMP Rev 5 SSP template)
-- `/arckit:us-fedramp-readiness` — internal readiness self-assessment in the FedRAMP 3PAO Readiness Assessment Report format + recommended certification route (type, path, class)
-- `/arckit:us-zero-trust` — CISA Zero Trust Maturity Model v2.0 across 5 pillars + 3 cross-cuts
-- `/arckit:us-icam` — OMB M-19-17 / NIST SP 800-63-3 IAL/AAL/FAL (PIV + login.gov integration)
-- `/arckit:us-ai-rmf` — NIST AI RMF 1.0 (Govern/Map/Measure/Manage) + Generative AI Profile (AI 600-1)
-- `/arckit:us-ai-impact` — OMB M-25-21 high-impact AI determination and minimum practices + M-25-22 acquisition terms
-- `/arckit:us-privacy-pia` — E-Gov Act §208 PIA + OMB M-03-22 + Privacy Act §552a SORN trigger
-- `/arckit:us-sbom-eo-14028` — EO 14028 + OMB M-26-05 secure-software evidence (the attestation form where the agency uses it) + SBOM to the CISA 2026 Minimum Elements
+- `/arckit-us:us-fisma-categorization` — FIPS 199 categorization (NIST SP 800-60 information types)
+- `/arckit-us:us-nist-800-53` — NIST SP 800-53 Rev 5 tailoring against Low / Moderate / High baselines
+- `/arckit-us:us-fedramp-ssp` — FedRAMP System Security Plan (Moderate / High, 14 sections mapped to the FedRAMP Rev 5 SSP template)
+- `/arckit-us:us-fedramp-readiness` — internal readiness self-assessment in the FedRAMP 3PAO Readiness Assessment Report format + recommended certification route (type, path, class)
+- `/arckit-us:us-zero-trust` — CISA Zero Trust Maturity Model v2.0 across 5 pillars + 3 cross-cuts
+- `/arckit-us:us-icam` — OMB M-19-17 / NIST SP 800-63-3 IAL/AAL/FAL (PIV + login.gov integration)
+- `/arckit-us:us-ai-rmf` — NIST AI RMF 1.0 (Govern/Map/Measure/Manage) + Generative AI Profile (AI 600-1)
+- `/arckit-us:us-ai-impact` — OMB M-25-21 high-impact AI determination and minimum practices + M-25-22 acquisition terms
+- `/arckit-us:us-privacy-pia` — E-Gov Act §208 PIA + OMB M-03-22 + Privacy Act §552a SORN trigger
+- `/arckit-us:us-sbom-eo-14028` — EO 14028 + OMB M-26-05 secure-software evidence (the attestation form where the agency uses it) + SBOM to the CISA 2026 Minimum Elements
 
 Recipe: `us-federal` (5 waves: baseline → controls → posture → ai → authorization).
 
@@ -45,4 +45,4 @@ This overlay adds commands, templates and reference material only. It sends no d
 
 ## Maintainer
 
-`[COMMUNITY]` — recruiting domain co-maintainer. Originally contributed in PR [pending].
+`[COMMUNITY]` — recruiting domain co-maintainer. Originally contributed in PR #512.

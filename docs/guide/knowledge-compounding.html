@@ -436,13 +436,14 @@
 </blockquote>
 <p><code>/arckit:research</code> automatically extracts reusable knowledge from research output into standalone vendor profiles and tech notes.</p>
 <blockquote>
-<p><strong>Compound Knowledge Pattern</strong>: One research document contains findings about vendors and technologies that persist beyond the project that discovered them. By extracting these into standalone files, future projects can find and reference existing knowledge instead of re-researching from scratch.</p>
+<p><strong>Compound Knowledge Pattern</strong>: One research document contains findings about vendors and technologies that are worth keeping beyond a single run. By extracting these into standalone files, later research runs in the project can find and update existing knowledge instead of re-researching from scratch.</p>
 </blockquote>
 <hr />
 <h2 id="why-knowledge-compounding-matters">Why Knowledge Compounding Matters</h2>
-<p>Research is expensive — each run performs dozens of web searches, fetches vendor pricing pages, and cross-references compliance data. Without compounding, this knowledge is locked inside a single research document and invisible to future projects.</p>
-<p><strong>The problem:</strong> Project A researches AWS, Stripe, and Auth0 in depth. Six months later, Project B needs payment processing research. Without compounding, Project B starts from zero.</p>
-<p><strong>The solution:</strong> Project A's research spawns <code>vendors/stripe-profile.md</code> with pricing, compliance, and strengths/weaknesses. When Project B runs research, the existing profile provides a head start — the agent updates it with fresh data rather than rebuilding from nothing.</p>
+<p>Research is expensive — each run performs dozens of web searches, fetches vendor pricing pages, and cross-references compliance data. Without compounding, this knowledge is locked inside a single research document and has to be gathered again on the next run.</p>
+<p><strong>The problem:</strong> A project researches AWS, Stripe, and Auth0 in depth. Six months later, the team re-runs research to refresh the payment processing options. Without compounding, the second run starts from zero.</p>
+<p><strong>The solution:</strong> The first run spawns <code>vendors/stripe-profile.md</code> with pricing, compliance, and strengths/weaknesses. When research runs again in the same project, the existing profile provides a head start — the run updates it with fresh data rather than rebuilding from nothing.</p>
+<p>Profiles and tech notes are kept per project. A research run reads and updates only its own project's <code>vendors/</code> and <code>tech-notes/</code> folders, so another project starts its own.</p>
 <hr />
 <h2 id="what-gets-spawned">What Gets Spawned</h2>
 <h3 id="vendor-profiles">Vendor Profiles</h3>
@@ -482,7 +483,8 @@
 <p>After research with spawning enabled, a project directory looks like this:</p>
 <pre><code class="language-text">projects/001-my-project/
 ├── ARC-001-REQ-v1.0.md          # Requirements (input)
-├── ARC-001-RSCH-v1.0.md         # Research findings (main output)
+├── research/
+│   └── ARC-001-RSCH-001-v1.0.md # Research findings (main output)
 ├── vendors/                      # Spawned vendor profiles
 │   ├── aws-profile.md
 │   ├── stripe-profile.md
@@ -502,13 +504,10 @@
 <p><strong>When no match is found</strong>, the agent creates a new file from the appropriate template.</p>
 <hr />
 <h2 id="source-traceability">Source Traceability</h2>
-<p>Every spawned file includes a <code>Source Research</code> field in its Document Control table linking back to the research document that created it:</p>
-<pre><code class="language-markdown">| Source Research | ARC-001-RSCH-v1.0 |
-</code></pre>
-<p>The main research document includes a <code>## Spawned Knowledge</code> section at the end listing all vendor profiles and tech notes that were created or updated during that research run.</p>
+<p>The research document ends with a <code>## Spawned Knowledge</code> section listing every vendor profile and tech note that run created or updated, so each one can be traced back to the research that produced it. Each spawned file's revision history and footer name the command that wrote it.</p>
 <hr />
 <h2 id="skipping-knowledge-spawning">Skipping Knowledge Spawning</h2>
-<p>Use the <code>--no-spawn</code> flag to produce only the main research document without creating additional files:</p>
+<p>In Claude Code, <code>/arckit:research</code> always writes the vendor profiles and tech notes alongside the main document. In the other assistants, use the <code>--no-spawn</code> flag to produce only the main research document without creating additional files:</p>
 <pre><code class="language-bash">/arckit:research Research options for authentication --no-spawn
 </code></pre>
 <p><strong>When to skip:</strong></p>

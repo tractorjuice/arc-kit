@@ -482,17 +482,14 @@
 </code></pre>
 <hr />
 <h2 id="interview-process">Interview Process</h2>
-<p>The command conducts a 2-round interview (4 questions total):</p>
-<h3 id="round-1-purpose--structure">Round 1: Purpose &amp; Structure</h3>
+<p>The command asks four questions in a single call, and takes the recommended option for any you leave unanswered, listing it as an assumption:</p>
 <ol>
 <li><strong>Template Category</strong> — Governance, Technical, Procurement, or Strategy</li>
 <li><strong>Structural Elements</strong> — Scoring matrix, compliance checklist, approval workflow, risk assessment (multi-select)</li>
-</ol>
-<h3 id="round-2-context--options">Round 2: Context &amp; Options</h3>
-<ol>
 <li><strong>Organizational Context</strong> — UK Government, Enterprise, Regulated Industry, or Startup</li>
-<li><strong>Additional Outputs</strong> — Slash command, shareable bundle, minimal template (multi-select)</li>
+<li><strong>Additional Outputs</strong> — Slash command, minimal template (multi-select)</li>
 </ol>
+<p>For a shareable bundle, add <code>--share</code> to the arguments, for example <code>/arckit:template-builder vendor scorecard --share</code>.</p>
 <hr />
 <h2 id="output-files">Output Files</h2>
 <table>
@@ -522,7 +519,7 @@
 <tr>
 <td>Shareable bundle</td>
 <td><code>.arckit/community/{name}/</code></td>
-<td>If selected</td>
+<td>With <code>--share</code></td>
 </tr>
 </tbody>
 </table>

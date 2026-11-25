@@ -112,9 +112,9 @@ Add constraints (budget, classification, region) in the prompt for tailored resu
 /arckit:gcp-research Research Google Cloud services for <project>
 ```
 
-Outputs: `projects/<id>/research/ARC-<id>-GCRS-v1.0.md`
+Outputs: `projects/<id>/research/ARC-<id>-GCRS-<NNN>-v1.0.md`
 
-> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
+> **Re-running**: each run writes a new report with the next sequence number (`GCRS-001`, `GCRS-002` and so on), so earlier reports are kept.
 
 ---
 

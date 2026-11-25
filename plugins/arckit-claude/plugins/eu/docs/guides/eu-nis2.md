@@ -32,15 +32,14 @@ Output: `projects/<id>/ARC-<id>-NIS2-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Scope and Classification | Essential (Annex I) vs Important (Annex II) entity |
-| French OIV/OSE Status | OIV (Code de la défense) and OSE (loi n° 2018-133) designation, ANSSI obligations, status of France's NIS2 transposition bill |
-| Governance | Management body accountability (Art. 20) |
-| Risk Management | 10 minimum security measures (Art. 21) |
-| Incident Reporting | 24h early warning → 72h notification → final report no later than one month after the notification (Art. 23(4)) |
-| Supply Chain Security | Third-party ICT risk management |
-| Vulnerability Disclosure | Coordinated disclosure policy |
-| Enforcement | Supervisory authority (ANSSI for France) |
-| Gap Analysis | Gaps with priority and NIS2 deadline |
+| 1. Entity Scoping | Essential (Annex I) vs Important (Annex II) entity; French OIV/OSE status and status of France's NIS2 transposition bill |
+| 2. Governance Obligations (Art. 20) | Management body accountability |
+| 3. Risk Management Measures (Art. 21) | 10 minimum security measures |
+| 4. Incident Reporting (Arts. 23–24) | 24h early warning → 72h notification → final report no later than one month after the notification (Art. 23(4)) |
+| 5. Supply Chain Security | Third-party ICT risk management (Art. 21(2)(d) and Art. 22) |
+| 6. Business Continuity | Business continuity (Art. 21(2)(c)) |
+| 7. Member State Specifics | Supervisory authority (ANSSI for France) |
+| 8. Gap Analysis and Roadmap | Gaps with priority and NIS2 deadline |
 
 ---
 

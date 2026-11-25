@@ -27,13 +27,13 @@ The overlay is shipped as **`[COMMUNITY]`** tier rather than official baseline. 
 - **Federal defense (DoD, IC).** CMMC, RMF for DoD IT, DISA-STIGs, JSIG, NIST SP 800-171 for CUI in non-federal systems — covered by a future `arckit-us-dod` overlay, not this one.
 - **State governments.** StateRAMP, TX-RAMP, AZ-RAMP, CJIS Security Policy — sibling state overlays where they exist.
 - **Sector-specific regimes.** HIPAA (HHS / HIPAA-covered entities), GLBA (financial), SOX (publicly traded), PCI-DSS (payment card) — these layer on top and need their own assessments.
-- **Section 508 accessibility.** Deferred to v5.2. Until then, use agency-specific Section 508 guidance and the GSA accessibility resources directly.
+- **Section 508 accessibility.** Not yet covered. Until it is, use agency-specific Section 508 guidance and the GSA accessibility resources directly.
 
 ---
 
 ## Citation Register
 
-Every regulatory anchor used across the overlay's commands, with verification timestamps. Verification is repeated quarterly — next scheduled review **2026-08-23**.
+Every regulatory anchor used across the overlay's commands, with verification timestamps. Verification is repeated quarterly. The review planned for 2026-08-23 is not recorded as done; rows dated 2026-10-27 and 2026-10-28 come from the #982 and #1042 checks.
 
 | Anchor | URL | Verified | Last Checked | Notes |
 |---|---|---|---|---|
@@ -77,13 +77,13 @@ Every regulatory anchor used across the overlay's commands, with verification ti
 
 ## Quarterly Review Cadence
 
-The citation register above is re-verified every quarter. **Next scheduled review: 2026-08-23.** The maintainer walks each URL in turn; if a URL 404s or the document has been superseded, the row is updated and the Notes column records the move (including a wayback-machine snapshot URL — `https://web.archive.org/web/<timestamp>/<original-url>` — where the original is gone). Material changes to a regulatory anchor (revision, supersession, revocation) trigger a corresponding update to the affected `us-*` command files within 14 days, plus a CHANGELOG entry.
+The citation register above is re-verified every quarter. **Last review planned for 2026-08-23; not yet recorded as done.** The maintainer walks each URL in turn; if a URL 404s or the document has been superseded, the row is updated and the Notes column records the move (including a wayback-machine snapshot URL — `https://web.archive.org/web/<timestamp>/<original-url>` — where the original is gone). Material changes to a regulatory anchor (revision, supersession, revocation) trigger a corresponding update to the affected `us-*` command files within 14 days, plus a CHANGELOG entry.
 
 ---
 
 ## Known Limitations
 
-- **Section 508 accessibility is not covered.** Deferred to ArcKit v5.2; until then, use the GSA Section 508 resources and agency-specific accessibility guidance directly.
+- **Section 508 accessibility is not covered.** Not yet covered; use the GSA Section 508 resources and agency-specific accessibility guidance directly.
 - **Classified-system architecture is not covered.** The overlay focuses on civilian unclassified information; classified-system architecture sits with the future `arckit-us-dod` overlay. Since #746 the artefacts themselves do carry a US marking ladder — `_partials/document-control-us.md` offers UNCLASSIFIED / CUI / CONFIDENTIAL / SECRET / TOP SECRET so a Document Control header can record how the document is marked — but the overlay produces no CUI categorisation and no category or limited-dissemination markings (`CUI//SP-PRIV`, `CUI//NOFORN`). Those follow 32 CFR Part 2002 and the NARA CUI Registry, and belong in `Distribution`.
 - **State-level regimes are not covered.** StateRAMP, TX-RAMP, AZ-RAMP, CJIS Security Policy — sibling overlays where they exist; sector-specific overlays where they don't.
 - **Sector-specific regimes are not covered.** HIPAA, GLBA, SOX, PCI-DSS layer on top; if any apply, treat them as additional artefacts, not as parts of this overlay.

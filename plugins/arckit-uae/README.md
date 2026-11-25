@@ -2,18 +2,18 @@
 
 12 slash commands covering UAE federal compliance:
 
-- `/arckit:uae-ai-autonomy-tier` — AI autonomy tier posture
-- `/arckit:uae-ai-charter` — AI Charter compliance
-- `/arckit:uae-classification` — Smart Data classification register
-- `/arckit:uae-cloud-residency` — Sovereign cloud residency
-- `/arckit:uae-data-sharing` — Data sharing agreement
-- `/arckit:uae-digital-records` — Digital records plan
-- `/arckit:uae-ias` — IAS Statement of Applicability
-- `/arckit:uae-pdpl` — PDPL compliance assessment
-- `/arckit:uae-priorities-alignment` — National priorities alignment
-- `/arckit:uae-procurement` — Federal procurement strategy
-- `/arckit:uae-uaepass` — UAE Pass integration design
-- `/arckit:uae-zero-bureaucracy` — Zero bureaucracy service review
+- `/arckit-uae:uae-ai-autonomy-tier` — AI autonomy tier posture
+- `/arckit-uae:uae-ai-charter` — AI Charter compliance
+- `/arckit-uae:uae-classification` — Smart Data classification register
+- `/arckit-uae:uae-cloud-residency` — Sovereign cloud residency
+- `/arckit-uae:uae-data-sharing` — Data sharing agreement
+- `/arckit-uae:uae-digital-records` — Digital records plan
+- `/arckit-uae:uae-ias` — IAS Statement of Applicability
+- `/arckit-uae:uae-pdpl` — PDPL compliance assessment
+- `/arckit-uae:uae-priorities-alignment` — National priorities alignment
+- `/arckit-uae:uae-procurement` — Federal procurement strategy
+- `/arckit-uae:uae-uaepass` — UAE Pass integration design
+- `/arckit-uae:uae-zero-bureaucracy` — Zero bureaucracy service review
 
 Recipes: `uae-federal-ai`, `uae-agentic-transformation`.
 

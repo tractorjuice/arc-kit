@@ -21,8 +21,8 @@ consistent across developer machines.
 Source basis for this section: Anthropic's Claude Code organization setup,
 server-managed settings, managed MCP, enterprise deployment, network, security,
 data usage, plugin marketplace, plugin recommendation, and Claude Enterprise
-administrator docs, plus the Claude Code changelog reviewed through v2.1.201
-on 2026-07-04.
+administrator docs, plus the Claude Code changelog reviewed through v2.1.321
+on 2026-11-13.
 
 ### 1. Choose the Claude deployment model
 
@@ -124,7 +124,7 @@ or golden images, pre-populate the plugin cache with `CLAUDE_CODE_PLUGIN_SEED_DI
 so startup does not need to clone the marketplace at runtime.
 
 **Keep the second ArcKit marketplace out.** The `tractorjuice/arc-kit`
-repository publishes the same 20 plugins, under the same names, as a
+repository publishes the same 21 plugins, under the same names, as a
 marketplace called `arc-kit`. A machine with both `arc-kit` and
 `arckit-claude` registered lists every plugin twice. The allowlist above
 prevents that, because it admits only `tractorjuice/arckit-claude`. If you
@@ -167,11 +167,12 @@ defaults and optional MCP credentials:
 | `DATA_COMMONS_API_KEY` | Data Commons MCP | Leave blank until statistical lookups are approved |
 | `desktop_notifications` | Terminal desktop notifications for stale artifacts | Keep `false` unless the terminal fleet supports OSC notifications |
 
-ArcKit bundles six HTTP MCP servers in `plugins/arckit-claude/.mcp.json`:
+ArcKit bundles seven HTTP MCP servers in `plugins/arckit-claude/.mcp.json`:
 AWS Knowledge, Microsoft Learn, Google Developer Knowledge, Data Commons,
-govreposcrape, and UK Tenders. AWS Knowledge, Microsoft Learn, govreposcrape,
-and UK Tenders are keyless. Google Developer Knowledge and Data Commons need
-the sensitive plugin user-config keys above.
+govreposcrape, UK Tenders, and Trello. AWS Knowledge, Microsoft Learn,
+govreposcrape, and UK Tenders are keyless. Google Developer Knowledge and Data
+Commons need the sensitive plugin user-config keys above. Trello (Atlassian's
+hosted server, used only by `/arckit:trello`) signs each user in with OAuth.
 
 If your organization blocks ad-hoc MCP additions, lock customization to plugin
 or managed sources and allowlist the ArcKit MCP endpoints by URL:
@@ -186,7 +187,8 @@ or managed sources and allowlist the ArcKit MCP endpoints by URL:
     { "serverUrl": "https://developerknowledge.googleapis.com/mcp" },
     { "serverUrl": "https://api.datacommons.org/mcp" },
     { "serverUrl": "https://govreposcrape-api-1060386346356.us-central1.run.app/mcp" },
-    { "serverUrl": "https://tenders.run.cns.me/mcp" }
+    { "serverUrl": "https://tenders.run.cns.me/mcp" },
+    { "serverUrl": "https://mcp.trello.com/v1" }
   ]
 }
 ```
@@ -306,14 +308,14 @@ Use a narrow pilot before broad installation:
 
 | ArcKit entry | Enterprise impact |
 |--------------|-------------------|
-| Unreleased | The status band mod is removed from core: the Claude plugin directory holds any plugin with a mod for a reviewer. Every gate was always a classic hook, so nothing enforced changes; the v2.1.287 floor stays for the SessionStart fix |
-| Unreleased #580 | Claude Code floor raised to v2.1.319: after-write hooks run on an interrupted write, so no artefact lands without its provenance block, and three permission and sandbox bypasses are closed. Update `minimumVersion` and `requiredMinimumVersion` to match |
+| v6.18.2 | The status band mod is removed from core: the Claude plugin directory holds any plugin with a mod for a reviewer. Every gate was always a classic hook, so nothing enforced changes; the v2.1.287 floor stays for the SessionStart fix |
+| v6.22.1 #580 | Claude Code floor raised to v2.1.319: after-write hooks run on an interrupted write, so no artefact lands without its provenance block, and three permission and sandbox bypasses are closed. Update `minimumVersion` and `requiredMinimumVersion` to match |
 | v6.20.0 #580 | Claude Code floor raised to v2.1.295 for `onFailure: "block"`, so a gate that can't run stops the write rather than letting it through. `version-check.mjs` still warns rather than blocks, so also set `requiredMinimumVersion` in managed settings |
-| Unreleased #580 | Claude Code floor raised to v2.1.287 for Claude mods, which ArcKit uses for an observe-only status band above the prompt; classic hooks still carry every gate |
+| v6.17.3 #580 | Claude Code floor raised to v2.1.287 for Claude mods, which ArcKit used for an observe-only status band above the prompt; classic hooks still carry every gate |
 | v6.16.5 #580 | Claude Code floor raised to v2.1.284 for Claude Sonnet 5.5, the default Sonnet model on the Anthropic API, which like Opus 5.5 always thinks |
 | v6.15.0 #580 | Claude Code floor raised to v2.1.280 for Claude Opus 5.5, the default Opus model, which always thinks and so keeps `effort: max` and the provenance Effective Effort row honest |
-| Unreleased #580 | Claude Code floor raised to v2.1.251 for the file-tool symlink and Grep/Glob deny-rule fixes, the Opus 5 thinking-off effort fallback, and v2.1.246's plugin-loading fixes that hit ArcKit's exact layout |
-| Unreleased #580 | Reactive `FileChanged` context for `projects/*/external/` means newly added evidence can enter Claude Code context without restart or `/compact` |
+| v6.14.0 #580 | Claude Code floor raised to v2.1.251 for the file-tool symlink and Grep/Glob deny-rule fixes, the Opus 5 thinking-off effort fallback, and v2.1.246's plugin-loading fixes that hit ArcKit's exact layout |
+| v6.2.0 #580 | Reactive `FileChanged` context for `projects/*/external/` means newly added evidence can enter Claude Code context without restart or `/compact` |
 | v6.12.0 #580 | Claude Code floor raised to v2.1.234 so MCP connection diagnostics can no longer print resolved secrets, and so the WebSearch `xhigh`/`max`, background-agent permission, and sandbox deny-path fixes are guaranteed |
 | v6.6.0 #580 | Claude Code floor raised to v2.1.219 for Claude Opus 5 support, and docs refreshed for managed model governance, OTEL response logging, MCP auth, safe-mode troubleshooting, and plugin branch testing |
 | v6.0.0 | `tractorjuice/arckit-claude` became the preferred single Claude Code marketplace repo for the core plugin plus overlays |
@@ -637,12 +639,12 @@ Cloud and Foundry). ArcKit runs on either: Sonnet 5.5 costs less per token and
 suits well-scoped commands, while Opus 5.5 is the better choice for long
 research runs and `/arckit:build`. Both always think and both default to
 `effort: medium`; ArcKit's heavier commands set their own `effort:`. Allow
-Claude Fable 5.1 (the default Fable model since
-Claude Code v2.1.257, Fable 5 before that) only where the tenant exposes it and
-the work justifies the higher tier. Behind a Claude apps gateway the `fable`
-and `best` aliases keep resolving to Fable 5 until the gateway is configured
-for 5.1, so a gateway fleet does not pick up the new default on its own —
-users select Fable 5.1 in `/model`, or you set it centrally.
+Claude Fable 5.2 (the default Fable model since Claude Code v2.1.321) only
+where the tenant exposes it and the work justifies the higher tier. Behind a
+Claude apps gateway, check which model the `fable` and `best` aliases resolve
+to: when Fable 5.1 became the default, they kept resolving to Fable 5 until the
+gateway was configured for it, so a gateway fleet may not pick up a new default
+on its own. Users can select the model in `/model`, or you set it centrally.
 
 Five newer settings sit alongside `enforceAvailableModels`:
 

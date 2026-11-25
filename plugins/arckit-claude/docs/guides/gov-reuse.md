@@ -4,7 +4,7 @@
 
 `/arckit:gov-reuse` searches 24,500+ UK government open-source repositories to discover existing implementations that can be reused, forked, or referenced before building from scratch.
 
-> **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent performs multiple govreposcrape searches per capability and uses WebFetch to assess each candidate's GitHub repository, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
+> **Agent Architecture**: In Claude Code the command runs in your main session. It sends reader subagents to gather evidence, and a writer subagent with no network tools then writes the document, which keeps the research out of your main context. Other assistants run a single combined prompt instead. The readers run the govreposcrape searches for each capability and use WebFetch to assess each candidate's GitHub repository.
 
 ---
 
@@ -44,33 +44,33 @@ Add constraints (language, framework, license) in the prompt for tailored result
 /arckit:gov-reuse <capability or domain>
 ```
 
-Outputs: `projects/<id>/research/ARC-<id>-GOVR-v1.0.md`
+Outputs: `projects/<id>/research/ARC-<id>-GOVR-<NNN>-v1.0.md`
 
-> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version.
+> **Re-running**: each run writes a new report with the next sequence number (`GOVR-001`, `GOVR-002` and so on), so earlier reports are kept.
 
 ---
 
 ## How It Works
 
-The agent uses the govreposcrape semantic search API to query 24,500+ UK government repositories:
+The command uses the govreposcrape semantic search API to query 24,500+ UK government repositories:
 
 | Step | Action |
 |------|--------|
 | 1 | Extract capabilities from project requirements |
 | 2 | Search govreposcrape with 3-5 query variations per capability |
 | 3 | Fetch GitHub repo details via WebFetch for each candidate |
-| 4 | Score candidates on 5 criteria (1-5 scale) |
+| 4 | Score candidates on 5 weighted criteria (0-100 scale) |
 | 5 | Recommend strategy: Fork, Library, Reference, or None |
 
 ### Scoring Criteria
 
 | Criterion | Weight | 5 (Best) | 1 (Worst) |
 |-----------|--------|----------|-----------|
-| License compatibility | Equal | OGL / MIT | Proprietary |
-| Code quality | Equal | Tests, CI, clean | No tests, unmaintained |
-| Documentation | Equal | Comprehensive README, guides | No documentation |
-| Tech stack alignment | Equal | Same stack | Incompatible |
-| Activity / maintenance | Equal | Active (recent commits) | Abandoned (>2 years) |
+| License compatibility | 25% | OGL / MIT | Proprietary |
+| Code quality | 20% | Tests, CI, clean | No tests, unmaintained |
+| Documentation | 20% | Comprehensive README, guides | No documentation |
+| Tech stack alignment | 20% | Same stack | Incompatible |
+| Activity / maintenance | 15% | Active (recent commits) | Abandoned (>2 years) |
 
 ---
 

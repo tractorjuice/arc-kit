@@ -680,8 +680,8 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ## Version
 
-- **ArcKit Version**: 6.18.2
-- **Matrix Date**: 2026-10-17
+- **ArcKit Version**: 6.26.0
+- **Matrix Date**: 2026-11-24
 - **Commands Documented**: 76 core commands in the matrix; 137 community overlay and tooling commands in Community Overlay Dependencies
 - **Matrix Rows**: 65 (63 commands + 2 external documents)
 - **Note**: `/arckit:build`, `/arckit:customize`, `/arckit:export-okf`, `/arckit:graph-report`, `/arckit:health`, `/arckit:impact`, `/arckit:import-okf`, `/arckit:init`, `/arckit:navigator`, `/arckit:pages`, `/arckit:search`, `/arckit:start`, `/arckit:template-builder` are not in the matrix. They need no earlier documents, or they work across whatever the project already holds rather than on particular documents, and no other command reads their output

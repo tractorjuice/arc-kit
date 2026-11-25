@@ -560,7 +560,7 @@
 </code></pre>
 <p>Output: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-AWRS-&lt;NNN&gt;-v1.0.md</code> (<code>AWRS</code> is a multi-instance type, numbered <code>AWRS-001</code>, <code>AWRS-002</code>, and so on)</p>
 <blockquote>
-<p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
+<p><strong>Re-running</strong>: each run writes a new report with the next sequence number (<code>AWRS-001</code>, <code>AWRS-002</code> and so on), so earlier reports are kept.</p>
 </blockquote>
 <hr />
 <h2 id="long-runs-remote-control--push-notifications">Long runs: Remote Control + push notifications</h2>
@@ -571,7 +571,7 @@
 <p>Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local <code>claude</code> process must keep running.</p>
 <hr />
 <h2 id="mcp-tools-used">MCP Tools Used</h2>
-<p>The command uses five AWS Knowledge MCP tools:</p>
+<p>The command uses four AWS Knowledge MCP tools:</p>
 <table>
 <thead>
 <tr>

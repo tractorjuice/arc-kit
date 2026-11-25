@@ -18,7 +18,7 @@
 
 ```bash
 /arckit:presentation Generate executive presentation for <project>
-/arckit:presentation <project> FOCUS=technical SLIDES=15
+/arckit:presentation <project> technical audience, 15 slides
 ```
 
 Output: `projects/<id>/ARC-<id>-PRES-v1.0.md`

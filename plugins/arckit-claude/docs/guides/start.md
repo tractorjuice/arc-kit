@@ -8,12 +8,13 @@ Command syntax depends on your AI platform:
 
 | Platform | Start | Init | Principles |
 | --- | --- | --- | --- |
-| Claude Code / OpenCode | `/arckit:start` | `/arckit:init` | `/arckit:principles` |
+| Claude Code | `/arckit:start` | `/arckit:init` | `/arckit:principles` |
 | Gemini CLI | `/arckit:start` | `/arckit:init` | `/arckit:principles` |
+| OpenCode CLI | `/arckit.start` | `/arckit.init` | `/arckit.principles` |
 | Codex CLI | `$arckit-start` | `$arckit-init` | `$arckit-principles` |
 | GitHub Copilot | `/arckit-start` | `/arckit-init` | `/arckit-principles` |
 
-Examples below use Claude Code / OpenCode syntax. Translate commands using the table above for other platforms.
+Examples below use Claude Code syntax. Translate commands using the table above for other platforms.
 
 ---
 
@@ -73,7 +74,7 @@ $arckit-principles
 
 ## Vibe Start — The 3-Prompt Super Prompt
 
-If you want to skip the decision tree and let ArcKit do the heavy lifting, this is the fastest possible path from empty repo to a fully-populated project. Three prompts, no manual orchestration:
+If you want to skip the triage and let ArcKit do the heavy lifting, this is the fastest possible path from empty repo to a fully-populated project. Three prompts, no manual orchestration:
 
 ```text
 1. /arckit:init  This is a project for {one-line description of what you're building}.
@@ -99,7 +100,7 @@ If you want to skip the decision tree and let ArcKit do the heavy lifting, this 
 
 - **Heavily regulated work** (UK Gov Secure by Design, MOD, EU AI Act) where each artifact needs reviewer sign-off before the next is generated.
 - **Existing projects** with artifacts already on disk — run `/arckit:navigator` first to see what is missing rather than regenerating.
-- **Token-constrained sessions** — the full chain can run dozens of commands. Use the Claude Code session default, normally Claude Sonnet 5, and move to Claude Fable 5.1 (the default Fable model since Claude Code v2.1.257) only where your tenant exposes it and the work justifies the higher tier.
+- **Token-constrained sessions** — the full chain can run dozens of commands. Use the Claude Code session default and move to Claude Fable 5.2 (the default Fable model since Claude Code v2.1.321) only where your tenant exposes it and the work justifies the higher tier.
 
 ### Tips For Vibe Start
 
@@ -123,63 +124,42 @@ If you want to skip the decision tree and let ArcKit do the heavy lifting, this 
 /arckit:start governance review
 ```
 
-Output: Console only (no file created). This is a navigation aid, not a governance artifact.
+Output: Console only (no file created). This is a navigation aid, not a governance artifact. The command runs nothing for you: it presents a plan and you run the commands.
 
 ### What It Does
 
-1. **Welcome banner** — shows ArcKit version, command count, and mode
-2. **Project detection** — scans `projects/` for existing artifacts and estimates completeness
-3. **Tool survey** — checks for connected MCP servers (AWS Knowledge, Microsoft Learn, Google Developer)
-4. **Command decision tree** — visual routing guide organised by workflow area
-5. **Context-aware recommendations** — suggests 3-5 next steps based on your project maturity
-6. **Conversational entry points** — three quick-start paths for common scenarios
+`/arckit:start` follows the `architecture-workflow` skill.
+
+1. **Project detection** — scans `projects/` for existing projects, the principles document and the artifacts each project already has, and classes the project as new, early, mid or late stage
+2. **Triage questions** — asks four questions, one at a time: sector, project type, current stage and primary goal. A focus argument may let it skip some
+3. **Deeper questions** — for UK Government, Defence, AI/ML or full-lifecycle projects it also asks about compliance frameworks, procurement, strategic analysis and timeline
+4. **Tailored plan** — selects a base workflow for your sector, adds modifiers for AI/ML or data projects, drops phases you have already done, and lists the commands in order, grouped by phase
+5. **Adjustment** — asks whether you want to change the plan or are ready to begin
 
 ### Example Output
 
 ```text
-ArcKit — The Enterprise Architecture Governance Harness
-Plugin mode
+Project State: [1 project found, 4 artifacts, ~20% complete]
 
-Your AI-powered harness for strategy, architecture, delivery, and assurance
-— all driven by templates and traceability.
+Recommended Command Sequence
+=============================
 
-Projects
---------
-🟢 [001] nhs-appointment (12 artifacts, ~75% complete)
-🟠 [002] data-platform   (4 artifacts, ~30% complete)
+Based on: [UK Government] + [AI/ML] project, starting fresh, full lifecycle
 
-Global foundations:
-  ✓ Architecture Principles (ARC-000-PRIN-v1.0.md)
-  ✓ Policies directory
-  ✗ No external reference documents
+Phase 1: Foundation
+  1. /arckit:principles — Governance foundation (GDS + TCoP aligned)
+  2. /arckit:stakeholders — Map DDaT roles, SROs, policy owners
+  3. /arckit:risk — HMG Orange Book risk methodology
 
-Connected Tools
----------------
-✓ AWS Knowledge — AWS service research and architecture patterns
-✓ Microsoft Learn — Azure and Microsoft documentation
-✗ Google Developer — not connected (GCP research available via web search fallback)
-
-What are you working on?
-
-Starting a new project
-├── No project structure?     → /arckit:init
-├── Need principles first?    → /arckit:principles
-├── Planning phases & gates?  → /arckit:plan
-└── Ready to scope?           → /arckit:stakeholders → /arckit:requirements
+Phase 2: Business Justification
+  4. /arckit:sobc — HM Treasury Green Book 5-case model
+  5. /arckit:requirements — Central artifact for all downstream work
 
 ...
 
-Suggested next steps
---------------------
-1. Project [002] data-platform needs attention (30% complete)
-2. Run /arckit:research for data-platform to evaluate technology options
-3. Run /arckit:health to scan all projects for stale artifacts
+[Total: N commands across M phases]
 
-How can I help today?
-
-1. "I'm starting a new project"
-2. "I need to make an architecture decision"
-3. "I want to review existing work"
+Run commands in order. Each command will guide you through its process.
 ```
 
 ---
@@ -244,15 +224,17 @@ Each command automatically creates numbered project directories (001-\*, 002-\*)
 
 ## Workflow Paths
 
-`/arckit:start` connects to all five standard ArcKit workflows:
+`/arckit:start` picks a base workflow from your sector, then applies modifiers:
 
-| Workflow | Entry Point | Key Commands |
-|----------|-------------|--------------|
-| Standard Delivery | "I'm starting a new project" | `init` → `principles` → `stakeholders` → `requirements` |
-| UK Government | Compliance focus | `service-assessment`, `tcop`, `secure`, `ai-playbook` |
-| AI/ML Projects | Architecture decisions | `research` → `adr` → `mlops` → `ai-playbook` |
-| Cloud Migration | Platform strategy | `aws-research` / `azure-research` → `platform-design` → `wardley` |
-| Data Platform | Data architecture | `data-model` → `datascout` → `data-mesh-contract` |
+| Workflow | Chosen when | Reference |
+|----------|-------------|-----------|
+| Standard | Private sector or public sector outside the UK | `standard-path` |
+| UK Government | Sector is UK Government (civilian departments) | `uk-gov-path` |
+| Defence | Sector is Defence (MOD, defence contractors) | `defence-path` |
+| AI/ML (modifier) | Project type is AI/ML | `ai-ml-path` |
+| Data (modifier) | Project type is a data platform or analytics | `data-path` |
+
+If a project is both AI/ML and data, both modifiers apply. The plan is then scaled to your goal, stage and timeline.
 
 See [WORKFLOW-DIAGRAMS.md](../WORKFLOW-DIAGRAMS.md) for visual workflow diagrams.
 
@@ -262,7 +244,7 @@ See [WORKFLOW-DIAGRAMS.md](../WORKFLOW-DIAGRAMS.md) for visual workflow diagrams
 
 - **Run `/arckit:start` at the beginning of any session** — it gives you a quick snapshot of where things stand and what to do next.
 - **Run `/arckit:init` once per repository** — it creates the project structure. Safe to re-run if the structure already exists.
-- **Use a focus argument** like `/arckit:start procurement` to skip directly to that section of the decision tree.
+- **Use a focus argument** like `/arckit:start procurement`. It is used as context during triage and may let the command skip some questions.
 - **Principles next** — after init, run `/arckit:principles` as most commands depend on architecture principles.
 - **Pairs well with `/arckit:health`** — start gives you navigation, health gives you artifact-level diagnostics.
 

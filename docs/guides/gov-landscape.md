@@ -4,7 +4,7 @@
 
 `/arckit:gov-landscape` maps what UK government has built in a domain — organisations active in the space, common technology patterns, adopted standards, maturity levels, and collaboration opportunities — giving architects a broad situational picture before making design decisions.
 
-> **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent issues 8-12 govreposcrape queries across the domain, uses WebFetch to inspect representative repositories at depth, and synthesises findings into a structured landscape report, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
+> **Agent Architecture**: In Claude Code the command runs in your main session. It sends reader subagents to gather evidence, and a writer subagent with no network tools then writes the document, which keeps the research out of your main context. Other assistants run a single combined prompt instead. The command splits the domain into 4 to 6 organisation and technology buckets, one per reader. Each reader runs govreposcrape searches and vulnerability-exposure queries and uses WebFetch to inspect representative repositories.
 
 ---
 
@@ -44,34 +44,36 @@ Add a time qualifier ("in the last 2 years") or a department name to scope the l
 /arckit:gov-landscape <domain>
 ```
 
-Outputs: `projects/<id>/research/ARC-<id>-GLND-v1.0.md`
+Outputs: `projects/<id>/research/ARC-<id>-GLND-<NNN>-v1.0.md`
 
-> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version.
+> **Re-running**: each run writes a new report with the next sequence number (`GLND-001`, `GLND-002` and so on), so earlier reports are kept.
 
 ---
 
 ## How It Works
 
-The agent uses a broad-to-specific search strategy across the govreposcrape semantic search API:
+The command uses a broad-to-specific search strategy across the govreposcrape semantic search API:
 
 | Step | Action |
 |------|--------|
-| 1 | Generate 8-12 domain-spanning queries covering different facets |
-| 2 | Run all queries, collecting a wide pool of repositories |
+| 1 | Split the domain into 4-6 buckets (organisations and technology facets), each searched with up to 3 queries |
+| 2 | Run the searches, and query vulnerability exposure for 3-5 organisation or package scopes, collecting a wide pool of repositories |
 | 3 | Cluster results by organisation and technology theme |
 | 4 | Fetch GitHub repo details via WebFetch for representative samples in each cluster |
-| 5 | Score each organisation's activity on domain maturity (depth, recency, documentation) |
+| 5 | Score each repository's maturity from a fixed rubric (activity, documentation, tests, CI/CD, community) |
 | 6 | Synthesise findings into a landscape map with technology breakdown and gap analysis |
 
 ### Maturity Scoring
 
-Each active organisation in the domain is rated on three dimensions:
+Each repository is scored from a fixed rubric (`gov-landscape-generic`) on five weighted dimensions, so the same evidence gives the same score on a re-run. The scores roll up into a band: Production-Grade, Mature, Developing or Experimental. The domain gets no overall grade, only the median and the distribution.
 
-| Dimension | High | Low |
-|-----------|------|-----|
-| Depth | Multiple repos, clear investment | Single exploratory repo |
-| Recency | Active commits within 12 months | No activity in 2+ years |
-| Documentation | Architecture docs, guides, READMEs | Minimal or no documentation |
+| Dimension | Weight | What it looks at |
+|-----------|--------|------------------|
+| Activity | 25% | Time since the last commit |
+| Documentation | 20% | README and docs tree |
+| Tests | 20% | Whether the repository has tests |
+| CI/CD | 15% | Whether it has a pipeline |
+| Community | 20% | Contributors and forks |
 
 ---
 
@@ -80,7 +82,8 @@ Each active organisation in the domain is rated on three dimensions:
 - **Landscape map** showing organisations active in the domain and their relative maturity
 - **Technology stack analysis** with language and framework distribution across repos
 - **Standards adoption** summary — which standards are widely, partially, or not yet adopted
-- **Maturity scores** per organisation for depth, recency, and documentation
+- **Maturity scores** per repository across the five dimensions, with the median for the domain
+- **Supply-chain exposure** — known vulnerabilities in dependencies, counted by severity for the queried organisations and packages. A scope that returns no data is reported as unknown exposure, not as clean
 - **Collaboration opportunities** identifying teams solving similar problems
 - **Gap analysis** for capabilities or standards with little or no existing government code
 
@@ -99,8 +102,8 @@ Each active organisation in the domain is rated on three dimensions:
 | Feature | `/arckit:gov-landscape` | `/arckit:gov-reuse` | `/arckit:gov-code-search` |
 |---------|------------------------|--------------------|--------------------------|
 | Purpose | Map an entire domain | Assess candidates for a project | Discover repos matching a query |
-| Scope | Domain-wide (8-12 queries) | Capability-specific (3-5 queries) | Query-specific (3-5 queries) |
-| Output | Landscape map + maturity scores | Scored reuse assessment per capability | Search results + repo profiles |
+| Scope | Domain-wide (4-6 buckets) | Capability-specific (3-5 queries) | Query-specific (3-5 queries) |
+| Output | Landscape map + maturity scores + exposure | Scored reuse assessment per capability | Search results + repo profiles |
 | Project required | No (recommended) | Yes (requirements MANDATORY) | No |
 | When to use | Early-stage situational awareness | Before building a capability | Exploratory or ad-hoc search |
 
