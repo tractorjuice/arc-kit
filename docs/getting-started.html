@@ -373,8 +373,6 @@
             <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
 
             <p class="govuk-body-l">This quick start is the official ArcKit AI harness setup path for new projects. Pick your AI platform, install the core plugin or extension, then run the first command to create traceable architecture governance artifacts.</p>
-            <p class="govuk-body">Kimi Code CLI and Paperclip have no tab here. For Kimi Code CLI, run <code>/plugins install https://github.com/tractorjuice/arckit-kimi.git</code> at the <code>kimi</code> prompt. For Paperclip, install <a href="https://github.com/tractorjuice/arckit-paperclip" class="govuk-link">tractorjuice/arckit-paperclip</a> through Paperclip's plugin installation flow.</p>
-
             <!-- Platform selector -->
             <h2 class="govuk-heading-l">Choose your AI platform</h2>
             <div class="app-platform-tabs">
@@ -384,6 +382,8 @@
                 <button class="app-platform-tab" data-platform="opencode">OpenCode CLI</button>
                 <button class="app-platform-tab" data-platform="copilot">GitHub Copilot</button>
                 <button class="app-platform-tab" data-platform="vibe">Mistral Vibe</button>
+                <button class="app-platform-tab" data-platform="kimi">Kimi Code CLI</button>
+                <button class="app-platform-tab" data-platform="paperclip">Paperclip</button>
                 <button class="app-platform-tab" data-platform="antigravity">Antigravity</button>
             </div>
 
@@ -666,6 +666,78 @@ vibe</code></pre></div>
                 </div>
             </div>
 
+            <!-- Kimi Code CLI -->
+            <div class="app-platform-content" id="platform-kimi">
+                <div class="app-step">
+                    <span class="app-step__number">1</span>
+                    <h2 class="govuk-heading-m app-step__title">Install Kimi Code CLI</h2>
+                    <p class="govuk-body">Install <a href="https://github.com/MoonshotAI/kimi-code" class="govuk-link">Kimi Code CLI</a> by following Moonshot AI's instructions, then sign in.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">2</span>
+                    <h2 class="govuk-heading-m app-step__title">Install ArcKit Plugin</h2>
+                    <p class="govuk-body">Start <code>kimi</code>, then install the plugin from its prompt:</p>
+                    <div class="app-code-block">/plugins install https://github.com/tractorjuice/arckit-kimi.git</div>
+                    <p class="govuk-body govuk-!-margin-top-3">The plugin brings every ArcKit command as an Agent Skill, plus seven MCP servers. Two of them need an API key in your environment, <code>GOOGLE_API_KEY</code> and <code>DATA_COMMONS_API_KEY</code>; without one, that server fails to connect and the rest of the plugin works normally. Update by running the same command again.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">3</span>
+                    <h2 class="govuk-heading-m app-step__title">Set Up Your Project</h2>
+                    <p class="govuk-body">ArcKit's skills read templates and helper scripts from your project's <code>.arckit/</code> folder, so scaffold it once:</p>
+                    <div class="app-code-block"><pre><code>pip install git+https://github.com/tractorjuice/arc-kit.git
+arckit init my-project --ai kimi
+cd my-project
+kimi</code></pre></div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">4</span>
+                    <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
+                    <div class="app-code-block">/skill:arckit-start</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Shows project status, the command decision tree and recommended next steps. Every ArcKit command in Kimi Code CLI starts <code>/skill:arckit-</code>, and the <code>architecture-workflow</code> skill loads at the start of each session to suggest what to run next.</p>
+                </div>
+            </div>
+
+            <!-- Paperclip -->
+            <div class="app-platform-content" id="platform-paperclip">
+                <div class="app-step">
+                    <span class="app-step__number">1</span>
+                    <h2 class="govuk-heading-m app-step__title">Install Paperclip</h2>
+                    <p class="govuk-body">Install and start <a href="https://paperclip.ing" class="govuk-link">Paperclip</a>. Its <code>paperclipai</code> command must be on your PATH, and the Paperclip server must be running when you install a plugin.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">2</span>
+                    <h2 class="govuk-heading-m app-step__title">Install ArcKit Plugin</h2>
+                    <p class="govuk-body">Paperclip installs a plugin from a folder or from npm. ArcKit's isn't on npm, so clone it, build it, and install the folder:</p>
+                    <div class="app-code-block"><pre><code>git clone https://github.com/tractorjuice/arckit-paperclip.git
+cd arckit-paperclip
+npm install
+npm run build
+paperclipai plugin install .</code></pre></div>
+                    <div class="app-install-note">Paperclip doesn't build plugins itself, so run <code>npm run build</code> before installing. To update, run <code>git pull</code> and <code>npm run build</code> in the same folder.</div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">3</span>
+                    <h2 class="govuk-heading-m app-step__title">Set Up Your Project</h2>
+                    <p class="govuk-body">ArcKit's tools read templates from your project's <code>.arckit/</code> folder, so scaffold it once with the ArcKit CLI:</p>
+                    <div class="app-code-block"><pre><code>pip install git+https://github.com/tractorjuice/arc-kit.git
+arckit init my-project --ai kimi</code></pre></div>
+                    <p class="govuk-body govuk-!-margin-top-3">Paperclip isn't one of the CLI's choices. <code>--ai kimi</code> creates the <code>.arckit/</code> and <code>projects/</code> folders without copying any assistant's command files, so the project suits Paperclip. Ignore the Kimi next steps it prints.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">4</span>
+                    <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
+                    <p class="govuk-body">Each ArcKit command is a Paperclip tool named <code>arckit-&lt;command&gt;</code>, such as <code>arckit-requirements</code>. List them with:</p>
+                    <div class="app-code-block">paperclipai plugin tools</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Start with the <code>arckit-start</code> tool, which shows project status and recommended next steps.</p>
+                </div>
+            </div>
+
             <!-- Google Antigravity -->
             <div class="app-platform-content" id="platform-antigravity">
                 <div class="app-step">
@@ -710,7 +782,7 @@ agy</code></pre></div>
                 <div class="govuk-notification-banner__content">
                     <h3 class="govuk-notification-banner__heading">Vibe Start &mdash; the 3-prompt super prompt</h3>
                     <p class="govuk-body">Skip the decision tree. Three prompts take you from empty repo to a fully-populated project. ArcKit chains commands via the <code>handoffs:</code> metadata in each command's frontmatter.</p>
-                    <div class="app-install-note">Use your platform syntax: Claude Code and Gemini CLI use <code>/arckit:command</code>; OpenCode uses <code>/arckit.&lt;command&gt;</code>; Codex CLI uses <code>$arckit-command</code>; GitHub Copilot, Mistral Vibe and Antigravity use <code>/arckit-command</code>; Kimi Code CLI uses <code>/skill:arckit-command</code>.</div>
+                    <div class="app-install-note">Use your platform syntax: Claude Code and Gemini CLI use <code>/arckit:command</code>; OpenCode uses <code>/arckit.&lt;command&gt;</code>; Codex CLI uses <code>$arckit-command</code>; GitHub Copilot, Mistral Vibe and Antigravity use <code>/arckit-command</code>; Kimi Code CLI uses <code>/skill:arckit-command</code>; in Paperclip each command is a tool named <code>arckit-command</code>.</div>
                     <p class="govuk-body govuk-!-margin-top-3"><strong>Claude Code and Gemini CLI example:</strong></p>
                     <div class="app-code-block govuk-!-margin-top-3">/arckit:init  This is a project for {one-line description of what you're building}.</div>
                     <div class="app-code-block govuk-!-margin-top-2">/arckit:principles</div>

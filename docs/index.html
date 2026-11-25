@@ -843,7 +843,7 @@
         <!-- 5. Works with your AI -->
         <div class="govuk-width-container govuk-!-margin-top-9" id="multi-ai">
             <h2 class="govuk-heading-l">Works with your AI</h2>
-            <p class="govuk-body">The commands and templates are the same on every assistant, apart from a few that need Claude Code, such as <code>/arckit:build</code> and the UK G-Cloud overlay. ArcKit also ships for Mistral Vibe, Kimi Code CLI and Paperclip, with an experimental plugin for Google Antigravity: see <a href="getting-started.html" class="govuk-link">Getting Started</a>. Choose the platform that fits your workflow.</p>
+            <p class="govuk-body">The commands and templates are the same on every assistant, apart from a few that need Claude Code, such as <code>/arckit:build</code> and the UK G-Cloud overlay. Choose the platform that fits your workflow; <a href="getting-started.html" class="govuk-link">Getting Started</a> has the full steps for each.</p>
 
             <div class="app-ai-compact">
                 <div class="app-ai-compact-card app-ai-compact-card--premier">
@@ -876,6 +876,30 @@
                     <strong class="govuk-tag govuk-tag--blue">Core</strong>
                     <p class="govuk-body-s govuk-!-margin-top-2">Prompt files and agents for VS Code Copilot Chat.</p>
                     <code>arckit init my-project --ai copilot</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">Mistral Vibe</h3>
+                    <strong class="govuk-tag govuk-tag--purple">Full</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Extension with skills, agents, templates, and MCP servers. Clone it and link it into your Vibe extensions folder.</p>
+                    <code>git clone https://github.com/tractorjuice/arckit-vibe.git</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">Kimi Code CLI</h3>
+                    <strong class="govuk-tag govuk-tag--purple">Full</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Plugin with every command as an Agent Skill, plus MCP servers. Install it from the Kimi prompt.</p>
+                    <code>/plugins install https://github.com/tractorjuice/arckit-kimi.git</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">Paperclip</h3>
+                    <strong class="govuk-tag govuk-tag--blue">Core</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Plugin with every command as a Paperclip tool. Clone it, build it, then install the folder.</p>
+                    <code>paperclipai plugin install .</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">Google Antigravity</h3>
+                    <strong class="govuk-tag govuk-tag--yellow">Experimental</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Plugin with every command as an Agent Skill. Eight core commands have been run there; the rest are untried.</p>
+                    <code>agy plugin install https://github.com/tractorjuice/arckit-antigravity</code>
                 </div>
             </div>
         </div>
