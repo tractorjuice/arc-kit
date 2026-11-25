@@ -30,7 +30,7 @@ core commands do not require or automatically recommend this optional assessment
 ```
 
 Codex uses `$arckit-uk-legacy-assessment`; Copilot uses `/arckit-uk-legacy-assessment`.
-Gemini uses `/arckit-uk-legacy:uk-legacy-assessment`; OpenCode uses `/arckit.uk-legacy-assessment`.
+Gemini uses `/arckit-uk-legacy:uk-legacy-assessment`; OpenCode puts a dot where the colon goes (`/arckit.<command>`).
 The date defaults to the local calendar date. The command resolves an existing project
 and confirms ambiguous system boundaries; it does not silently create a new project.
 It writes `ARC-001-LEGACY-v1.0.md`, a JSON sidecar and, when numerical scoring is

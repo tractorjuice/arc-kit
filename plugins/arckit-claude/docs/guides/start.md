@@ -10,11 +10,10 @@ Command syntax depends on your AI platform:
 | --- | --- | --- | --- |
 | Claude Code | `/arckit:start` | `/arckit:init` | `/arckit:principles` |
 | Gemini CLI | `/arckit:start` | `/arckit:init` | `/arckit:principles` |
-| OpenCode CLI | `/arckit.start` | `/arckit.init` | `/arckit.principles` |
 | Codex CLI | `$arckit-start` | `$arckit-init` | `$arckit-principles` |
 | GitHub Copilot | `/arckit-start` | `/arckit-init` | `/arckit-principles` |
 
-Examples below use Claude Code syntax. Translate commands using the table above for other platforms.
+OpenCode CLI uses the same names with a dot after `arckit` (`/arckit.<command>`). Examples below use Claude Code syntax. Translate commands using the table above for other platforms.
 
 ---
 

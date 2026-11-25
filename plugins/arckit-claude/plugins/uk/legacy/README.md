@@ -23,7 +23,7 @@ In Claude Code:
 ```
 
 The seven generated extension targets include the command in their merged ArcKit
-namespace: Codex `$arckit-uk-legacy-assessment`, Gemini `/arckit-uk-legacy:uk-legacy-assessment`, OpenCode `/arckit.uk-legacy-assessment`,
+namespace: Codex `$arckit-uk-legacy-assessment`, Gemini `/arckit-uk-legacy:uk-legacy-assessment`, OpenCode `/arckit.<command>` (`arckit.uk-legacy-assessment`),
 and Copilot `/arckit-uk-legacy-assessment`. See the [guide](docs/guides/legacy-assessment.md)
 for other targets, source versions, evidence requirements and examples.
 

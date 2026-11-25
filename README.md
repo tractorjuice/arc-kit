@@ -326,7 +326,7 @@ arckit init payment-modernization --ai opencode
 arckit init . --ai opencode
 ```
 
-Commands are invoked as `/arckit.requirements`, `/arckit.stakeholders`, etc. To update, upgrade the CLI and re-run `arckit init --here --ai opencode`.
+Commands are invoked as `/arckit.<command>`: OpenCode names each command after its file, so `arckit.requirements.md` is the requirements command. To update, upgrade the CLI and re-run `arckit init --here --ai opencode`.
 
 </details>
 
@@ -562,7 +562,7 @@ claude plugin install arckit-uae@arckit-claude
 claude plugin enable arckit-uae
 ```
 
-Commands on this page are written as Claude Code names them, with the overlay's plugin name first: `/arckit-uae:uae-pdpl`. The other assistants leave the plugin name out: `/arckit:uae-pdpl` in Gemini CLI, `/arckit.uae-pdpl` in OpenCode CLI, `/arckit-uae-pdpl` in GitHub Copilot and `$arckit-uae-pdpl` in Codex CLI.
+Commands on this page are written as Claude Code names them, with the overlay's plugin name first: `/arckit-uae:uae-pdpl`. The other assistants leave the plugin name out: `/arckit:uae-pdpl` in Gemini CLI, `/arckit.<command>` with a dot in OpenCode CLI, `/arckit-uae-pdpl` in GitHub Copilot and `$arckit-uae-pdpl` in Codex CLI.
 
 | Overlay | Plugin | Kind | Commands | More |
 |---------|--------|------|----------|------|
