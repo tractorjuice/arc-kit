@@ -35,7 +35,7 @@ The orchestrator passes you a JSON object in its Agent prompt:
   "project_path": "projects/001-fuel-prices",
   "project_id": "001",
   "project_name": "fuel-prices",
-  "document_id": "ARC-001-DSCT-v1.0",
+  "document_id": "ARC-001-DSCT-001-v1.0",
   "version": "1.0",
   "date_iso": "2026-05-06",
   "classification": "OFFICIAL",

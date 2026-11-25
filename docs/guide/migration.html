@@ -451,17 +451,26 @@
 </ul>
 <hr />
 <h2 id="command">Command</h2>
+<p>Run the script from the root of your repository. First set <code>MIGRATE</code> to where your install keeps it:</p>
+<pre><code class="language-bash"># Installed with `arckit init` (Codex, OpenCode, Copilot)
+MIGRATE=.arckit/scripts/bash/migrate-filenames.sh
+
+# Claude Code plugin: use the copy in the version Claude Code has installed
+MIGRATE=&quot;$(node -e 'const f = require(&quot;os&quot;).homedir() + &quot;/.claude/plugins/installed_plugins.json&quot;;
+  console.log(require(f).plugins[&quot;arckit@arckit-claude&quot;][0].installPath + &quot;/scripts/bash/migrate-filenames.sh&quot;)')&quot;
+</code></pre>
+<p>Then:</p>
 <pre><code class="language-bash"># Single project
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh projects/001-my-project
+&quot;$MIGRATE&quot; projects/001-my-project
 
 # Dry run (preview changes)
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh projects/001-my-project --dry-run
+&quot;$MIGRATE&quot; projects/001-my-project --dry-run
 
 # All projects
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --all
+&quot;$MIGRATE&quot; --all
 
 # Global directory only
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --global
+&quot;$MIGRATE&quot; --global
 </code></pre>
 <hr />
 <h2 id="options">Options</h2>
@@ -544,7 +553,7 @@ ${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --global
 <tr>
 <td><code>research-findings.md</code></td>
 <td>RSCH</td>
-<td><code>ARC-{PID}-RSCH-v1.0.md</code></td>
+<td><code>research/ARC-{PID}-RSCH-{NNN}-v1.0.md</code></td>
 </tr>
 <tr>
 <td><code>traceability-matrix.md</code></td>
@@ -846,14 +855,16 @@ ${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --global
 </tbody>
 </table>
 <h3 id="procurement-subdirectory">Procurement Subdirectory</h3>
-<p>Files in <code>procurement/</code> are migrated to the project root:</p>
+<p>G-Cloud and DOS files (GCLD, GCLC, DOS) go in <code>procurement/</code>, whether they start there or at the project root. Other files found in <code>procurement/</code>, such as <code>sow.md</code> and <code>evaluation-criteria.md</code>, move to the project root:</p>
 <pre><code class="language-text">Before:
   projects/001-project/procurement/gcloud-requirements.md
   projects/001-project/procurement/digital-marketplace-dos.md
+  projects/001-project/procurement/sow.md
 
 After:
-  projects/001-project/ARC-001-GCLD-v1.0.md
-  projects/001-project/ARC-001-DOS-v1.0.md
+  projects/001-project/procurement/ARC-001-GCLD-v1.0.md
+  projects/001-project/procurement/ARC-001-DOS-v1.0.md
+  projects/001-project/ARC-001-SOW-v1.0.md
 </code></pre>
 <h3 id="reviews-subdirectory">Reviews Subdirectory</h3>
 <p>HLD and DLD review files are moved to <code>reviews/</code>:</p>
@@ -863,6 +874,7 @@ After:
 After:
   projects/001-project/reviews/ARC-001-HLDR-v1.0.md
 </code></pre>
+<p><code>/arckit:hld-review</code> and <code>/arckit:dld-review</code> write new reviews to the vendor's folder, <code>projects/001-project/vendors/{vendor}/</code>. The script can't tell which vendor a review belongs to, so it leaves migrated reviews in <code>reviews/</code>. The commands that read reviews look in both places, so you only need to move a review if you want it beside the vendor's other documents.</p>
 <hr />
 <h2 id="legacy-locations">Legacy Locations</h2>
 <h3 id="global-principles">Global Principles</h3>
@@ -958,7 +970,7 @@ After:
 <hr />
 <h2 id="examples">Examples</h2>
 <h3 id="preview-all-changes">Preview All Changes</h3>
-<pre><code class="language-bash">${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --all --dry-run
+<pre><code class="language-bash">&quot;$MIGRATE&quot; --all --dry-run
 </code></pre>
 <p>Output:</p>
 <pre><code class="language-text">[INFO] Migrating project: 001-payment-gateway (ID: 001)
@@ -968,7 +980,7 @@ After:
 [DRY-RUN] No changes made
 </code></pre>
 <h3 id="migrate-global-principles">Migrate Global Principles</h3>
-<pre><code class="language-bash">${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --global
+<pre><code class="language-bash">&quot;$MIGRATE&quot; --global
 </code></pre>
 <p>This will:</p>
 <ol>
@@ -977,10 +989,10 @@ After:
 <li>Migrate to <code>projects/000-global/ARC-000-PRIN-v1.0.md</code></li>
 </ol>
 <h3 id="migrate-single-project">Migrate Single Project</h3>
-<pre><code class="language-bash">${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh projects/001-payment-gateway
+<pre><code class="language-bash">&quot;$MIGRATE&quot; projects/001-payment-gateway
 </code></pre>
 <h3 id="force-overwrite-existing">Force Overwrite Existing</h3>
-<pre><code class="language-bash">${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh projects/001-payment-gateway --force
+<pre><code class="language-bash">&quot;$MIGRATE&quot; projects/001-payment-gateway --force
 </code></pre>
 <hr />
 <h2 id="post-migration-steps">Post-Migration Steps</h2>

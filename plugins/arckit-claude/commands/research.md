@@ -273,9 +273,9 @@ Where an option's `tco_3yr_gbp` exceeds `budget_gbp_max`, say so. That is a fact
 - Build the traceability matrix: every requirement ID from Step 4 → the options that cover it, or `gap`.
 - Collect every `gap`: requirements with no capability tag, requirements no option covers, categories where every reader failed, and options whose pricing was never published.
 
-### Step 10: Detect version
+### Step 10: Allocate the document ID
 
-Glob `projects/{P}-{NAME}/research/ARC-{P}-RSCH-*-v*.md`. If none exists, the document is `v1.0`. Otherwise increment the minor version of the highest existing one. Allocate the document ID with `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`.
+`RSCH` is a multi-instance type: each run writes a new document with the next sequence number in `research/`, at `v1.0`. Allocate the ID with `node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {P} RSCH --next-num "projects/{P}-{NAME}/research"`, which returns, for example, `ARC-{P}-RSCH-002-v1.0`.
 
 ### Step 11: Dispatch writer subagent
 
