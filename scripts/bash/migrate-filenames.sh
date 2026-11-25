@@ -89,6 +89,16 @@ SUBDIR_MAPPING=(
     "research:RSCH"
 )
 
+# Subdirectory a single-instance type belongs in, or nothing for the project root.
+# GCLD, GCLC and DOS go in procurement/ (SUBDIR_MAP in config/doc-types.mjs);
+# validate-arc-filename.mjs blocks them anywhere else.
+type_subdir() {
+    case "$1" in
+        HLDR|DLDR) echo "reviews" ;;
+        GCLD|GCLC|DOS) echo "procurement" ;;
+    esac
+}
+
 usage() {
     cat <<EOF
 Usage: $0 [PROJECT_DIR] [OPTIONS]
@@ -219,9 +229,28 @@ migrate_file() {
         fi
 
         # Rename file
+        mkdir -p "$(dirname "$new_path")"
         mv "$old_path" "$new_path"
         log_success "Renamed: $(basename "$old_path") → $(basename "$new_path")"
     fi
+}
+
+# Highest sequence number among a folder's ARC-{PID}-{TYPE}-NNN files, or 0.
+# Migrated files are numbered after it, as generate-document-id.mjs --next-num
+# numbers new ones, so a migrated file never takes an existing file's number.
+last_sequence() {
+    local dir="$1" project_id="$2" type_code="$3"
+    local last=0 file num
+
+    for file in "$dir"/ARC-"$project_id"-"$type_code"-*.md; do
+        if [[ "$(basename "$file")" =~ ^ARC-${project_id}-${type_code}-([0-9]+)- ]]; then
+            num=$((10#${BASH_REMATCH[1]}))
+            if (( num > last )); then
+                last=$num
+            fi
+        fi
+    done
+    echo "$last"
 }
 
 # Migrate files in a subdirectory (ADR, diagrams, etc.)
@@ -235,7 +264,8 @@ migrate_subdir() {
         return 0
     fi
 
-    local count=0
+    local count
+    count=$(last_sequence "$subdir" "$project_id" "$type_code")
 
     # Find existing files that don't match new pattern
     for file in "$subdir"/*.md; do
@@ -245,8 +275,9 @@ migrate_subdir() {
 
         local basename=$(basename "$file")
 
-        # Skip if already in new format
-        if [[ "$basename" =~ ^ARC-[0-9]{3}-${type_code}-[0-9]{3}-v[0-9]+\.[0-9]+\.md$ ]]; then
+        # Skip if already in new format. A folder can hold several types
+        # (research/ holds AWRS, GOVR and others beside RSCH), so any ARC name counts.
+        if [[ "$basename" =~ ^ARC-[0-9]{3}-.+-v[0-9]+\.[0-9]+\.md$ ]]; then
             continue
         fi
 
@@ -329,19 +360,15 @@ migrate_project() {
         if [[ -f "$old_path" ]]; then
             # Handle date-suffixed files (e.g., principles-compliance-assessment-2025-01-15.md)
             local new_name="ARC-${project_id}-${type_code}-v1.0.md"
+            local subdir
+            subdir=$(type_subdir "$type_code")
 
-            # Determine subdirectory for reviews
-            if [[ "$type_code" == "HLDR" || "$type_code" == "DLDR" ]]; then
-                local new_path="$project_dir/reviews/$new_name"
-            else
-                local new_path="$project_dir/$new_name"
-            fi
-
-            migrate_file "$old_path" "$new_path" "$backup_dir"
+            migrate_file "$old_path" "$project_dir/${subdir:+$subdir/}$new_name" "$backup_dir"
         fi
     done
 
-    # Also check procurement/ subdirectory for old-style files
+    # Also check procurement/ subdirectory for old-style files. G-Cloud and DOS
+    # files stay in procurement/; other types go where the loop above puts them.
     if [[ -d "$project_dir/procurement" ]]; then
         for pair in "${FILE_MAPPING[@]}"; do
             local old_name="${pair%%:*}" type_code="${pair##*:}"
@@ -349,8 +376,9 @@ migrate_project() {
 
             if [[ -f "$old_path" ]]; then
                 local new_name="ARC-${project_id}-${type_code}-v1.0.md"
-                local new_path="$project_dir/$new_name"
-                migrate_file "$old_path" "$new_path" "$backup_dir"
+                local subdir
+                subdir=$(type_subdir "$type_code")
+                migrate_file "$old_path" "$project_dir/${subdir:+$subdir/}$new_name" "$backup_dir"
             fi
         done
     fi
@@ -380,10 +408,8 @@ migrate_project() {
     done
 
     # Also check for old wardley-maps location at root level
-    local ward_count=0
-    if [[ -d "$project_dir/wardley-maps" ]]; then
-        ward_count=$(find "$project_dir/wardley-maps" -maxdepth 1 -name "ARC-*.md" 2>/dev/null | wc -l)
-    fi
+    local ward_count
+    ward_count=$(last_sequence "$project_dir/wardley-maps" "$project_id" "WARD")
     for file in "$project_dir"/*-wardley.md "$project_dir"/*-map.md; do
         if [[ -f "$file" ]]; then
             ward_count=$((ward_count + 1))
@@ -398,10 +424,8 @@ migrate_project() {
     done
 
     # Check for old diagram files at root
-    local diag_count=0
-    if [[ -d "$project_dir/diagrams" ]]; then
-        diag_count=$(find "$project_dir/diagrams" -maxdepth 1 -name "ARC-*.md" 2>/dev/null | wc -l)
-    fi
+    local diag_count
+    diag_count=$(last_sequence "$project_dir/diagrams" "$project_id" "DIAG")
     for file in "$project_dir"/*-diagram.md "$project_dir"/diagram-*.md; do
         if [[ -f "$file" ]]; then
             diag_count=$((diag_count + 1))
@@ -416,10 +440,8 @@ migrate_project() {
     done
 
     # Check for ADR files at root level (should be in decisions/)
-    local adr_count=0
-    if [[ -d "$project_dir/decisions" ]]; then
-        adr_count=$(find "$project_dir/decisions" -maxdepth 1 -name "ARC-*.md" 2>/dev/null | wc -l)
-    fi
+    local adr_count
+    adr_count=$(last_sequence "$project_dir/decisions" "$project_id" "ADR")
     for file in "$project_dir"/adr-*.md "$project_dir"/ADR-*.md; do
         if [[ -f "$file" ]]; then
             adr_count=$((adr_count + 1))
@@ -434,10 +456,8 @@ migrate_project() {
     done
 
     # Check for research files at root level (should be in research/)
-    local rsch_count=0
-    if [[ -d "$project_dir/research" ]]; then
-        rsch_count=$(find "$project_dir/research" -maxdepth 1 -name "ARC-*.md" 2>/dev/null | wc -l)
-    fi
+    local rsch_count
+    rsch_count=$(last_sequence "$project_dir/research" "$project_id" "RSCH")
     for file in "$project_dir"/research-*.md "$project_dir"/research.md; do
         if [[ -f "$file" ]]; then
             rsch_count=$((rsch_count + 1))

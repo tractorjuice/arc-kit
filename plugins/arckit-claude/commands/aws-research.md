@@ -168,7 +168,7 @@ From `published_unit_prices` only. Pick the on-demand option unless the requirem
 
 ### Step 10: Rank, detect version, dispatch the writer
 
-Rank within each category by `total_score`, breaking ties by lower estimated cost then higher security pillar. Glob `projects/{P}-{NAME}/research/ARC-{P}-AWRS-*-v*.md` for the version, and allocate the ID with `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`.
+Rank within each category by `total_score`, breaking ties by lower estimated cost then higher security pillar. `AWRS` is a multi-instance type, so each run writes a new document with the next sequence number at `v1.0`: allocate the ID with `node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {P} AWRS --next-num "projects/{P}-{NAME}/research"`.
 
 Assemble the writer input documented in `arckit-cloud-research-writer`'s Input section, setting:
 

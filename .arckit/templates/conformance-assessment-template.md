@@ -412,8 +412,8 @@
 
 **Review Documents**:
 
-- [✅/❌] `projects/{project-dir}/reviews/ARC-*-HLDR-*.md` — [Available/Not available]
-- [✅/❌] `projects/{project-dir}/reviews/ARC-*-DLDR-*.md` — [Available/Not available]
+- [✅/❌] `projects/{project-dir}/vendors/*/ARC-*-HLDR-*.md` — [Available/Not available]
+- [✅/❌] `projects/{project-dir}/vendors/*/ARC-*-DLDR-*.md` — [Available/Not available]
 
 **Other Artifacts**:
 

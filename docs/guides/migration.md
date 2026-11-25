@@ -26,18 +26,30 @@ Examples:
 
 ## Command
 
+Run the script from the root of your repository. First set `MIGRATE` to where your install keeps it:
+
+```bash
+# Installed with `arckit init` (Codex, OpenCode, Copilot)
+MIGRATE=.arckit/scripts/bash/migrate-filenames.sh
+
+# Claude Code plugin: the plugin cache keeps a folder per version, so take the newest copy
+MIGRATE=$(find ~/.claude/plugins/cache -path '*/scripts/bash/migrate-filenames.sh' | sort -V | tail -1)
+```
+
+Then:
+
 ```bash
 # Single project
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh projects/001-my-project
+"$MIGRATE" projects/001-my-project
 
 # Dry run (preview changes)
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh projects/001-my-project --dry-run
+"$MIGRATE" projects/001-my-project --dry-run
 
 # All projects
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --all
+"$MIGRATE" --all
 
 # Global directory only
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --global
+"$MIGRATE" --global
 ```
 
 ---
@@ -67,7 +79,7 @@ ${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --global
 | `risk-register.md` | RISK | `ARC-{PID}-RISK-v1.0.md` |
 | `sobc.md` | SOBC | `ARC-{PID}-SOBC-v1.0.md` |
 | `data-model.md` | DATA | `ARC-{PID}-DATA-v1.0.md` |
-| `research-findings.md` | RSCH | `ARC-{PID}-RSCH-v1.0.md` |
+| `research-findings.md` | RSCH | `research/ARC-{PID}-RSCH-{NNN}-v1.0.md` |
 | `traceability-matrix.md` | TRAC | `ARC-{PID}-TRAC-v1.0.md` |
 | `analysis-report.md` | ANAL | `ARC-{PID}-ANAL-v1.0.md` |
 
@@ -159,16 +171,18 @@ Root-level research files are moved to `research/` subdirectory:
 
 ### Procurement Subdirectory
 
-Files in `procurement/` are migrated to the project root:
+G-Cloud and DOS files (GCLD, GCLC, DOS) go in `procurement/`, whether they start there or at the project root. Other files found in `procurement/`, such as `sow.md` and `evaluation-criteria.md`, move to the project root:
 
 ```text
 Before:
   projects/001-project/procurement/gcloud-requirements.md
   projects/001-project/procurement/digital-marketplace-dos.md
+  projects/001-project/procurement/sow.md
 
 After:
-  projects/001-project/ARC-001-GCLD-v1.0.md
-  projects/001-project/ARC-001-DOS-v1.0.md
+  projects/001-project/procurement/ARC-001-GCLD-v1.0.md
+  projects/001-project/procurement/ARC-001-DOS-v1.0.md
+  projects/001-project/ARC-001-SOW-v1.0.md
 ```
 
 ### Reviews Subdirectory
@@ -182,6 +196,8 @@ Before:
 After:
   projects/001-project/reviews/ARC-001-HLDR-v1.0.md
 ```
+
+`/arckit:hld-review` and `/arckit:dld-review` write new reviews to the vendor's folder, `projects/001-project/vendors/{vendor}/`. The script can't tell which vendor a review belongs to, so it leaves migrated reviews in `reviews/`. The commands that read reviews look in both places, so you only need to move a review if you want it beside the vendor's other documents.
 
 ---
 
@@ -247,7 +263,7 @@ Use `--no-backup` to skip backups (not recommended).
 ### Preview All Changes
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --all --dry-run
+"$MIGRATE" --all --dry-run
 ```
 
 Output:
@@ -263,7 +279,7 @@ Output:
 ### Migrate Global Principles
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh --global
+"$MIGRATE" --global
 ```
 
 This will:
@@ -275,13 +291,13 @@ This will:
 ### Migrate Single Project
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh projects/001-payment-gateway
+"$MIGRATE" projects/001-payment-gateway
 ```
 
 ### Force Overwrite Existing
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh projects/001-payment-gateway --force
+"$MIGRATE" projects/001-payment-gateway --force
 ```
 
 ---

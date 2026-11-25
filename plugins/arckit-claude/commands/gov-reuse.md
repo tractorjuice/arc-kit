@@ -231,12 +231,9 @@ The scoring is a pure function of `(evidence, rubric, project_profile)` — no L
 - Build the **traceability matrix**: one row per requirement, listing the capability it belongs to, the best candidate (if any), the strategy, and a status indicator (✅ matched / ⚠️ Reference only / ❌ build required).
 - Compute **strategy summary**: counts of Fork / Library / Reference / None across all capabilities.
 
-### Step 9: Detect version
+### Step 9: Allocate the document ID
 
-Glob `projects/{project-dir}/research/ARC-{PROJECT_ID}-GOVR-*-v*.md`. If none, version = `1.0`. If existing, read the highest-version file:
-
-- Minor (1.0 → 1.1) for refresh / additions within existing capabilities
-- Major (1.0 → 2.0) for capabilities added/removed or fundamentally different candidate mix
+`GOVR` is a multi-instance type: each run writes a new document with the next sequence number in `research/`, at `v1.0`. Allocate the ID with `node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} GOVR --next-num "projects/{project-dir}/research"`, which returns, for example, `ARC-{PROJECT_ID}-GOVR-002-v1.0`.
 
 ### Step 10: Dispatch writer subagent
 

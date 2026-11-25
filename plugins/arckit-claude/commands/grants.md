@@ -231,12 +231,9 @@ The scoring is a pure function of `(evidence, rubric, project_profile)` — no L
 - Build the **application calendar**: sorted list of `{date_iso, action, programme}` from each programme's deadline / status.
 - Compute **total potential funding range**: sum of `award_min_gbp` and `award_max_gbp` across all High-band programmes.
 
-### Step 9: Detect version
+### Step 9: Allocate the document ID
 
-Glob `projects/{project-dir}/research/ARC-{PROJECT_ID}-GRNT-*-v*.md`. If none, version = `1.0`. If existing, read the highest-version file to compute the increment:
-
-- Minor (1.0 → 1.1) if scope unchanged (refresh, additions within existing categories)
-- Major (1.0 → 2.0) if categories added/removed or fundamentally different funder mix
+`GRNT` is a multi-instance type: each run writes a new document with the next sequence number in `research/`, at `v1.0`. Allocate the ID with `node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} GRNT --next-num "projects/{project-dir}/research"`, which returns, for example, `ARC-{PROJECT_ID}-GRNT-002-v1.0`.
 
 ### Step 10: Dispatch writer subagent
 

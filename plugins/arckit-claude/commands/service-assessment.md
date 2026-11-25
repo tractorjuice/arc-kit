@@ -147,12 +147,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 
 #### Point 1: Understand Users and Their Needs
 
+Design reviews are written to `vendors/{vendor}/` by `/arckit:hld-review` and `/arckit:dld-review`; an older project may hold them in `reviews/` instead, so look in both.
+
 **Evidence Sources**:
 
 - `ARC-*-STKE-*.md` - User groups, needs, pain points, drivers
 - `ARC-*-REQ-*.md` - User stories, personas, user journeys, acceptance criteria
 - `ARC-*-PLAN-*.md` - User research activities planned/completed
-- `reviews/ARC-*-HLDR-*.md` - User needs validation, usability considerations
+- `vendors/*/ARC-*-HLDR-*.md` - User needs validation, usability considerations
 
 **Phase-Specific Evidence Requirements**:
 
@@ -188,7 +190,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - `ARC-*-STKE-*.md` - User goals, desired outcomes
 - `wardley-maps/ARC-*-WARD-*.md` - Value chain, user needs to components mapping
 - `diagrams/ARC-*-DIAG-*.md` - Service boundaries, external systems
-- `reviews/ARC-*-HLDR-*.md` - Integration strategy, channel coverage
+- `vendors/*/ARC-*-HLDR-*.md` - Integration strategy, channel coverage
 
 **Phase-Specific Evidence Requirements**:
 
@@ -218,7 +220,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Evidence Sources**:
 
 - `ARC-*-REQ-*.md` - Multi-channel requirements, integration points
-- `reviews/ARC-*-HLDR-*.md` - Channel strategy, integration architecture
+- `vendors/*/ARC-*-HLDR-*.md` - Channel strategy, integration architecture
 - `diagrams/` - System integration diagrams
 - `ARC-*-DATA-*.md` - Data consistency across channels
 
@@ -251,7 +253,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Evidence Sources**:
 
 - `ARC-*-REQ-*.md` - Usability requirements, simplicity NFRs
-- `reviews/ARC-*-HLDR-*.md` - UX design review, simplicity assessment
+- `vendors/*/ARC-*-HLDR-*.md` - UX design review, simplicity assessment
 - `ARC-*-PLAN-*.md` - Usability testing activities
 
 **Phase-Specific Evidence Requirements**:
@@ -284,8 +286,8 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 
 - `ARC-*-REQ-*.md` - WCAG 2.2 AA requirements, accessibility NFRs
 - `ARC-*-SECD-*.md` - Accessibility considerations
-- `reviews/ARC-*-HLDR-*.md` - Accessibility design review
-- `reviews/ARC-*-DLDR-*.md` - Assistive technology compatibility
+- `vendors/*/ARC-*-HLDR-*.md` - Accessibility design review
+- `vendors/*/ARC-*-DLDR-*.md` - Assistive technology compatibility
 
 **Phase-Specific Evidence Requirements**:
 
@@ -351,7 +353,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 
 - `ARC-*-PLAN-*.md` - GDS phases, sprint structure, agile ceremonies
 - `ARC-*-RISK-*.md` - Iterative risk management
-- `reviews/ARC-*-HLDR-*.md`, `reviews/ARC-*-DLDR-*.md` - Design iterations
+- `vendors/*/ARC-*-HLDR-*.md`, `vendors/*/ARC-*-DLDR-*.md` - Design iterations
 
 **Phase-Specific Evidence Requirements**:
 
@@ -381,7 +383,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 
 **Evidence Sources**:
 
-- `reviews/ARC-*-HLDR-*.md`, `reviews/ARC-*-DLDR-*.md` - Design iterations, review dates
+- `vendors/*/ARC-*-HLDR-*.md`, `vendors/*/ARC-*-DLDR-*.md` - Design iterations, review dates
 - `ARC-*-ANAL-*.md` - Governance improvements over time
 - `ARC-*-PLAN-*.md` - Iteration cycles, review gates
 - `ARC-*-REQ-*.md` - Requirements evolution
@@ -489,7 +491,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - `research/` - Technology research, proof of concepts
 - `wardley-maps/` - Build vs buy analysis, technology evolution
 - `ARC-*-TCOP-*.md` - Technology choices justified (TCoP Point 11)
-- `reviews/ARC-*-HLDR-*.md` - Technology stack, architecture decisions
+- `vendors/*/ARC-*-HLDR-*.md` - Technology stack, architecture decisions
 - `ARC-*-SOW-*.md` - Vendor selection, procurement justification
 - `ARC-*-EVAL-*.md` - Technology/vendor scoring
 
@@ -523,7 +525,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 
 **Evidence Sources**:
 
-- `reviews/ARC-*-HLDR-*.md` - Open source approach, repository links
+- `vendors/*/ARC-*-HLDR-*.md` - Open source approach, repository links
 - `ARC-*-TCOP-*.md` - TCoP Point 12 (Open source code)
 - `ARC-*-REQ-*.md` - Open source licensing requirements
 
@@ -557,7 +559,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Evidence Sources**:
 
 - `ARC-*-TCOP-*.md` - TCoP Point 13 (Open standards)
-- `reviews/ARC-*-HLDR-*.md` - GOV.UK Design System usage, API standards, common components
+- `vendors/*/ARC-*-HLDR-*.md` - GOV.UK Design System usage, API standards, common components
 - `ARC-*-REQ-*.md` - Standards compliance requirements
 - `ARC-*-DATA-*.md` - Data standards
 
@@ -591,8 +593,8 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Evidence Sources**:
 
 - `ARC-*-REQ-*.md` - Availability/reliability NFRs, SLAs
-- `reviews/ARC-*-HLDR-*.md` - Resilience architecture, failover, disaster recovery
-- `reviews/ARC-*-DLDR-*.md` - Infrastructure resilience, monitoring
+- `vendors/*/ARC-*-HLDR-*.md` - Resilience architecture, failover, disaster recovery
+- `vendors/*/ARC-*-DLDR-*.md` - Infrastructure resilience, monitoring
 - `ARC-*-RISK-*.md` - Operational risks, incident response
 
 **Phase-Specific Evidence Requirements**:
@@ -875,18 +877,18 @@ Example: `projects/001-nhs-appointment/ARC-001-SVCASS-v1.0.md`
 |------------------------|------------------|--------|---------------|
 | 1. Understand users | ARC-*-STKE-*.md, ARC-*-REQ-*.md | 🟡 Partial | Prototype testing with users |
 | 2. Solve whole problem | ARC-*-REQ-*.md, wardley-maps/ | 🟢 Complete | None |
-| 3. Joined up experience | reviews/ARC-*-HLDR-*.md, diagrams/ | 🟡 Partial | Channel integration testing |
-| 4. Simple to use | ARC-*-REQ-*.md, reviews/ARC-*-HLDR-*.md | 🟢 Complete | None |
+| 3. Joined up experience | vendors/*/ARC-*-HLDR-*.md, diagrams/ | 🟡 Partial | Channel integration testing |
+| 4. Simple to use | ARC-*-REQ-*.md, vendors/*/ARC-*-HLDR-*.md | 🟢 Complete | None |
 | 5. Everyone can use | ARC-*-REQ-*.md, ARC-*-SECD-*.md | 🔴 Not Ready | WCAG 2.2 AA testing |
 | 6. Multidisciplinary team | ARC-*-STKE-*.md, ARC-*-PLAN-*.md | 🟢 Complete | None |
 | 7. Agile ways of working | ARC-*-PLAN-*.md | 🟢 Complete | None |
-| 8. Iterate frequently | reviews/ARC-*-HLDR-*.md, reviews/ARC-*-DLDR-*.md | 🟡 Partial | Iteration log |
+| 8. Iterate frequently | vendors/*/ARC-*-HLDR-*.md, vendors/*/ARC-*-DLDR-*.md | 🟡 Partial | Iteration log |
 | 9. Secure and private | ARC-*-SECD-*.md, ARC-*-DATA-*.md | 🟢 Complete | None |
 | 10. Success metrics | ARC-*-REQ-*.md, ARC-*-SOBC-*.md | 🟡 Partial | Performance dashboard |
 | 11. Right tools | research/, wardley-maps/, ARC-*-TCOP-*.md | 🟢 Complete | None |
-| 12. Open source | reviews/ARC-*-HLDR-*.md | 🔴 Not Ready | Public code repository |
-| 13. Open standards | ARC-*-TCOP-*.md, reviews/ARC-*-HLDR-*.md | 🟢 Complete | None |
-| 14. Reliable service | ARC-*-REQ-*.md, reviews/ARC-*-HLDR-*.md | 🟡 Partial | Load testing results |
+| 12. Open source | vendors/*/ARC-*-HLDR-*.md | 🔴 Not Ready | Public code repository |
+| 13. Open standards | ARC-*-TCOP-*.md, vendors/*/ARC-*-HLDR-*.md | 🟢 Complete | None |
+| 14. Reliable service | ARC-*-REQ-*.md, vendors/*/ARC-*-HLDR-*.md | 🟡 Partial | Load testing results |
 
 **Summary**:
 - ✅ Strong evidence: Points X, Y, Z
@@ -977,7 +979,7 @@ Recommended documentation:
 - [ ] Key ArcKit artifacts:
   - `ARC-*-STKE-*.md` - Stakeholders and user needs
   - `ARC-*-REQ-*.md` - Requirements and user stories
-  - `reviews/ARC-*-HLDR-*.md` - Architecture decisions
+  - `vendors/*/ARC-*-HLDR-*.md` - Architecture decisions
   - `ARC-*-SECD-*.md` - Security approach
   - [List other relevant phase-specific artifacts]
 
