@@ -35,7 +35,7 @@ recommends which command to run next.
 
 ## MCP servers
 
-Six MCP servers ship with the plugin and are enabled by default. Toggle them
+Seven MCP servers ship with the plugin and are enabled by default. Toggle them
 from `/plugins`. Two need API keys in your environment:
 
 - `google-developer-knowledge` needs `GOOGLE_API_KEY`

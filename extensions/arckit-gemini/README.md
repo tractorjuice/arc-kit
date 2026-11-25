@@ -2,7 +2,7 @@
 
 **The Enterprise Architecture Governance Harness for Gemini CLI**
 
-ArcKit provides 75 slash commands across strategy, architecture, delivery, assurance, and interoperability — including UK Government compliance — all from within Gemini CLI.
+ArcKit provides 75 core slash commands across strategy, architecture, delivery, assurance, and interoperability — including UK Government compliance — all from within Gemini CLI. Regional, sector and method overlay commands are included too and are not listed below.
 
 ## Installation
 
@@ -83,10 +83,15 @@ gemini
 | `/arckit:dpia` | Data Protection Impact Assessment (GDPR Article 35) |
 | `/arckit:platform-design` | Platform strategy using Platform Design Toolkit |
 | `/arckit:wardley` | Wardley Map with strategic analysis |
+| `/arckit:wardley.value-chain` | Value chain decomposition for Wardley Mapping |
+| `/arckit:wardley.doctrine` | Doctrine maturity assessment |
+| `/arckit:wardley.climate` | Climatic pattern assessment |
+| `/arckit:wardley.gameplay` | Strategic play analysis |
 | `/arckit:roadmap` | Multi-year strategic architecture roadmap |
 | `/arckit:adr` | Architecture Decision Record (MADR format) |
 | `/arckit:dfd` | Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation |
 | `/arckit:diagram` | Architecture diagrams (C4, Mermaid) |
+| `/arckit:archify` | Governed artefacts as interactive HTML diagrams |
 
 ### Phase 3: Research & Procurement
 
@@ -97,12 +102,19 @@ gemini
 | `/arckit:aws-research` | AWS service research (via AWS Knowledge MCP) |
 | `/arckit:azure-research` | Azure service research (via Microsoft Learn MCP) |
 | `/arckit:gcp-research` | GCP service research (via Google Developer Knowledge MCP) |
-| `/arckit:gcloud-search` | G-Cloud 14 framework search |
+| `/arckit:gcloud-search` | G-Cloud framework search |
 | `/arckit:gcloud-clarify` | G-Cloud supplier clarification questions |
 | `/arckit:dos` | Digital Outcomes and Specialists procurement |
 | `/arckit:sow` | Statement of Work for RFP |
 | `/arckit:evaluate` | Vendor scoring and evaluation |
 | `/arckit:framework` | Transform artifacts into structured framework with principles and guidance |
+| `/arckit:gov-reuse` | Discover reusable UK government code before building from scratch |
+| `/arckit:gov-code-search` | Search UK government repositories using natural language |
+| `/arckit:gov-landscape` | Map the UK government code landscape for a domain |
+| `/arckit:grants` | UK grants, charitable funding and accelerator research |
+| `/arckit:tenders` | UK procurement market intelligence from the UK Tenders MCP |
+| `/arckit:competitors` | Competitor landscape from the UK Tenders MCP |
+| `/arckit:score` | Persistent vendor scoring, comparison and audit |
 
 ### Phase 4: Beta & Live
 
@@ -116,7 +128,7 @@ gemini
 | `/arckit:mod-secure` | MOD Secure by Design review |
 | `/arckit:jsp-936` | JSP 936 AI assurance documentation |
 | `/arckit:tcop` | Technology Code of Practice assessment |
-| `/arckit:atrs` | AI Transparency Risk Standards assessment |
+| `/arckit:atrs` | Algorithmic Transparency Recording Standard (ATRS) record |
 | `/arckit:ai-playbook` | AI Playbook compliance check |
 | `/arckit:conformance` | Architecture conformance assessment (ADR implementation, drift, debt) |
 
@@ -136,7 +148,7 @@ gemini
 
 | Command | Description |
 |---------|-------------|
-| `/arckit:analyze` | Comprehensive gap analysis across all artifacts |
+| `/arckit:analyze` | Comprehensive governance quality analysis across architecture artifacts |
 | `/arckit:traceability` | Requirements traceability matrix |
 | `/arckit:servicenow` | ServiceNow CMDB export design |
 | `/arckit:trello` | Trello board export |
@@ -144,6 +156,10 @@ gemini
 | `/arckit:health` | Project health scan (stale research, orphaned artifacts, drift) |
 | `/arckit:maturity-model` | Capability maturity model with assessment criteria |
 | `/arckit:pages` | GitHub Pages documentation site |
+| `/arckit:search` | Search project artifacts by keyword, document type or requirement ID |
+| `/arckit:navigator` | Coverage against the ArcKit baseline and next command to run |
+| `/arckit:impact` | Blast radius of a change to a requirement, decision or design |
+| `/arckit:graph-report` | Governance metrics dashboard |
 
 ### Utilities
 
@@ -161,7 +177,7 @@ gemini
 
 ## Agents
 
-ArcKit includes 6 autonomous research agents that handle web-intensive tasks:
+ArcKit includes 14 autonomous agents that handle web-intensive tasks. The main ones are:
 
 - **arckit-research** — Market research: options, checked facts, published costs
 - **arckit-datascout** — Data source discovery, API catalogue search
@@ -169,6 +185,10 @@ ArcKit includes 6 autonomous research agents that handle web-intensive tasks:
 - **arckit-azure-research** — Azure service research (via Microsoft Learn MCP)
 - **arckit-gcp-research** — GCP service research (via Google Developer Knowledge MCP)
 - **arckit-framework** — Transform artifacts into structured framework
+- **arckit-gov-reuse**, **arckit-gov-code-search**, **arckit-gov-landscape** — UK government code reuse, search and landscape (via govreposcrape)
+- **arckit-grants** — UK grants and funding research
+- **arckit-tenders**, **arckit-competitors** — UK procurement award benchmarks and competitor landscape
+- **arckit-evaluate**, **arckit-score** — Vendor evaluation and scoring
 
 ## Hooks
 
@@ -235,7 +255,7 @@ Common customizations:
 # 5. Research & procurement
 /arckit:research Research payment processing platforms
 /arckit:aws-research Evaluate AWS payment services
-/arckit:gcloud-search Search G-Cloud 14 for payment processing services
+/arckit:gcloud-search Search G-Cloud for payment processing services
 
 # 6. Design reviews
 /arckit:hld-review Review high-level design for microservices architecture
@@ -247,13 +267,15 @@ Common customizations:
 
 ## MCP Servers
 
-The extension bundles three MCP servers for cloud research:
+The extension bundles five MCP servers for cloud, data and UK government code research:
 
 | Server | Purpose | Auth Required |
 |--------|---------|---------------|
 | AWS Knowledge | AWS service docs, best practices | None |
 | Microsoft Learn | Azure and Microsoft docs | None |
 | Google Developer Knowledge | GCP docs | `GOOGLE_API_KEY` |
+| Data Commons | Statistical data | `DATA_COMMONS_API_KEY` |
+| govreposcrape | UK government code search | None |
 
 MCP servers are bridged via `mcp-remote` (requires Node.js).
 

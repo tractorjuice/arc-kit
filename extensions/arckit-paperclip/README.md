@@ -11,7 +11,7 @@ https://github.com/tractorjuice/arc-kit
 - ArcKit command tools from `src/data/commands.json`
 - 5 utility tools for project setup, document IDs, prerequisites, project lists,
   and plugin health checks
-- 109 document templates under `templates/`
+- Document templates under `templates/`
 - Reference guidance under `references/`
 - Handoff schemas and scoring rubrics under `schemas/`
 - Built plugin entrypoints under `dist/`
