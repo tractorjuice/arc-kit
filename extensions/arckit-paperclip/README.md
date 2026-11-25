@@ -18,24 +18,40 @@ https://github.com/tractorjuice/arc-kit
 
 ## Install
 
-Use the ArcKit CLI to scaffold a project with the standard ArcKit directory
-layout, templates, schemas, and project metadata:
+Paperclip installs a plugin from a folder or from npm, and never builds one
+itself. This plugin isn't on npm, so clone it, build it and install the
+folder. The Paperclip server must be running.
+
+```bash
+git clone https://github.com/tractorjuice/arckit-paperclip.git
+cd arckit-paperclip
+npm install
+npm run build
+paperclipai plugin install .
+```
+
+To update, run `git pull` and `npm run build` in the same folder.
+
+## Set up a project
+
+ArcKit's tools read templates from your project's `.arckit/` folder, so
+scaffold it once with the ArcKit CLI:
 
 ```bash
 pip install git+https://github.com/tractorjuice/arc-kit.git
-arckit init my-project
-cd my-project
+arckit init my-project --ai kimi
 ```
 
 Or with `uv`:
 
 ```bash
 uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
-arckit init my-project
+arckit init my-project --ai kimi
 ```
 
-Then install this repository as a Paperclip plugin using Paperclip's plugin
-installation flow.
+Paperclip isn't one of the CLI's choices. `--ai kimi` creates the `.arckit/`
+and `projects/` folders without copying any assistant's command files, so the
+project suits Paperclip. Ignore the Kimi next steps it prints.
 
 ## Development
 
