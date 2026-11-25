@@ -8,7 +8,7 @@ The Enterprise Architecture Governance Harness for Mistral Vibe CLI.
 
 ## Overview
 
-ArcKit for Mistral Vibe brings the full power of the Enterprise Architecture Governance Harness to Mistral's CLI coding agent. This extension provides 75+ commands (skills) across strategy, architecture, delivery, assurance, and interoperability workflows, plus 10+ specialized agents for complex research and analysis tasks.
+ArcKit for Mistral Vibe brings the full power of the Enterprise Architecture Governance Harness to Mistral's CLI coding agent. This extension provides 75 core commands (skills) across strategy, architecture, delivery, assurance, and interoperability workflows, plus the regional, sector and method overlay commands, and 14 specialized agents for complex research and analysis tasks.
 
 ## Installation
 
@@ -117,8 +117,8 @@ vibe /arckit-risk Create risk register for the new platform
 # Data modeling
 vibe /arckit-data-model Design data model for customer management
 
-# Build vs buy analysis
-vibe /arckit-build Analyze build vs buy for authentication system
+# Business case
+vibe /arckit-sobc Create a business case for the authentication system
 
 # OKF export
 vibe /arckit-export-okf --project 001 --out okf/001
@@ -165,27 +165,24 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 | `/arckit-dfd` | Create Data Flow Diagrams |
 | `/arckit-data-model` | Create data models |
 | `/arckit-diagram` | Create architecture diagrams |
-| `/arckit-trg` | Create Target Reference Architecture |
-| `/arckit-framework` | Evaluate architecture frameworks |
+| `/arckit-framework` | Transform project artifacts into a phased framework with overview and executive guide |
 
 ### Requirements & Analysis
 
 | Skill | Description |
 |-------|-------------|
 | `/arckit-requirements` | Create comprehensive requirements |
-| `/arckit-analyze` | Analyze existing systems |
-| `/arckit-competitors` | Analyze competitors |
-| `/arckit-datascout` | Scout data landscape |
-| `/arckit-gov-landscape` | Map government technology landscape |
+| `/arckit-analyze` | Governance quality analysis across architecture artifacts |
+| `/arckit-competitors` | Competitor landscape from UK award data |
+| `/arckit-datascout` | Discover external data sources and APIs |
+| `/arckit-gov-landscape` | Map the UK government code landscape |
 
 ### Delivery
 
 | Skill | Description |
 |-------|-------------|
-| `/arckit-build` | Build vs buy analysis |
-| `/arckit-devops` | DevOps assessment |
+| `/arckit-devops` | DevOps strategy: CI/CD, infrastructure as code, developer experience |
 | `/arckit-finops` | FinOps assessment |
-| `/arckit-devops` | DevOps capability assessment |
 
 ### Assurance & Compliance
 
@@ -194,8 +191,8 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 | `/arckit-conformance` | Conformance assessment |
 | `/arckit-risk` | Risk management |
 | `/arckit-dpia` | Data Protection Impact Assessment |
-| `/arckit-dos` | Digital Operation Standards |
-| `/arckit-dld-review` | Design review (HLD/DLD) |
+| `/arckit-dos` | Digital Outcomes and Specialists procurement |
+| `/arckit-dld-review` | Detailed Design review |
 
 ### Research
 
@@ -220,9 +217,8 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 |-------|-------------|
 | `/arckit-sow` | Create Statement of Work |
 | `/arckit-evaluate` | Vendor evaluation |
-| `/arckit-rfq` | Request for Quote |
-| `/arckit-tenders` | UK tender search |
-| `/arckit-gov-reuse` | Government platform reuse |
+| `/arckit-tenders` | UK procurement market intelligence |
+| `/arckit-gov-reuse` | Reusable UK government code |
 
 ## Templates
 
@@ -266,26 +262,36 @@ project-root/
 │   │   └── external/                # External documents
 │   └── 002-customer-portal/
 │       ├── ARC-002-STKE-v1.0.md      # Stakeholders
-│       └── ARC-002-USTOR-v1.0.md     # User stories
+│       └── ARC-002-STORY-v1.0.md     # Project story
 └── README.md
 ```
 
 ## Community Overlays
 
-ArcKit includes jurisdiction-specific command overlays:
+ArcKit includes jurisdiction, sector and method command overlays. Each overlay command is a skill; the table shows how their names start:
 
 | Overlay | Prefix | Description |
 |---------|--------|-------------|
-| UK Government | (default) | UK Service Standard, TCoP, NCSC CAF |
+| UK Government | (core) | UK Service Standard, TCoP, NCSC CAF |
 | UAE Federal | `arckit-uae-` | UAE Cabinet instruments, PDPL, IAS |
 | France | `arckit-fr-` | French government standards |
 | Canada | `arckit-ca-` | Canadian government standards |
 | EU | `arckit-eu-` | EU digital standards |
+| Netherlands | `arckit-nl-` | Dutch government standards |
 | Austria | `arckit-at-` | Austrian government standards |
 | Australia | `arckit-au-` | Australian government standards |
-| US Federal | `arckit-us-` | US federal standards |
-| UK NHS | `arckit-uk-nhs-` | NHS-specific standards |
-| UK G-Cloud | `arckit-uk-gcloud-` | G-Cloud procurement (proprietary) |
+| Australian energy | `arckit-au-aescsf`, `arckit-au-energy-compliance` | Australian energy sector |
+| US Federal | `arckit-us-` | US federal civilian standards |
+| UK NHS | `arckit-uk-nhs-` | NHS clinical safety standards |
+| UK financial services | `arckit-uk-fs-` | UK financial services payments |
+| UK legacy IT | `arckit-uk-legacy-` | UK legacy IT assessment (experimental) |
+| UK food safety | `arckit-uk-food-` | Food safety for small caterers (experimental) |
+| TOGAF ADM | `arckit-adm-preliminary`, `arckit-architecture-*` and others | TOGAF Architecture Development Method |
+| Open Agile Architecture | `arckit-agile-*`, `arckit-oaa-adm-lite`, `arckit-product-architecture` | Open Agile Architecture |
+| arc42 | `arckit-arc42-` | arc42 documentation |
+| AI agent architecture | `arckit-agent-` | AI agent architecture |
+
+The UK G-Cloud supplier bid overlay is not part of this extension.
 
 To use community overlays:
 
@@ -297,7 +303,7 @@ vibe /arckit-uae-ai-charter
 vibe /arckit-fr-secnumcloud
 ```
 
-**Note:** Community overlay commands are available for UK, UAE, France, Canada, EU, Austria, Australia, US Federal, UK NHS, and UK G-Cloud jurisdictions. Run `vibe /arckit-` and use tab completion to see available commands for each overlay.
+**Note:** Overlay commands are available for the jurisdictions, sectors and methods in the table above. Run `vibe /arckit-` and use tab completion to see available commands for each overlay.
 
 ## Quality Assurance
 
@@ -357,10 +363,10 @@ If a skill is not found:
    ls ~/.vibe/extensions/arckit/skills/
    ```
 
-4. **Run help command**:
+4. **Run the start command**:
 
    ```bash
-   vibe /arckit-help
+   vibe /arckit-start
    ```
 
 5. **Ensure you're using the latest version**

@@ -2,7 +2,7 @@
 
 ArcKit's enterprise architecture governance commands, packaged as an Antigravity plugin.
 
-> **Experimental.** This plugin passes Antigravity's own check (`agy plugin validate --strict`) and installs with `agy plugin install`. Eight core commands have been run in Antigravity (start, init, principles, stakeholders, requirements, devops, secure and aws-research, on 22 November 2026) and each wrote its document from its template. The other 182 have not been run there yet. Please [open an issue](https://github.com/tractorjuice/arc-kit/issues) with what you find.
+> **Experimental.** This plugin passes Antigravity's own check (`agy plugin validate --strict`) and installs with `agy plugin install`. Eight core commands have been run in Antigravity (start, init, principles, stakeholders, requirements, devops, secure and aws-research, on 22 November 2026) and each wrote its document from its template. The other 186 have not been run there yet. Please [open an issue](https://github.com/tractorjuice/arc-kit/issues) with what you find.
 
 ## Install
 
@@ -58,7 +58,7 @@ The protected-file check applies in every workspace while the plugin is enabled,
 ## What is not here yet
 
 - **Session context, provenance stamps and the other Claude Code hooks.** Antigravity has no event for some of them, and the stamp records settings only Claude Code has.
-- **Long commands.** Antigravity loads the first 24,000 bytes of a skill. Thirty-three ArcKit commands are longer, so each of those tells the agent to read the rest from a file in the skill's folder first.
+- **Long commands.** Antigravity loads the first 24,000 bytes of a skill. Forty-five ArcKit commands are longer, so each of those tells the agent to read the rest from a file in the skill's folder first.
 
 ## Licence
 

@@ -439,7 +439,7 @@ def test_the_readme_says_the_new_parts_are_unproven_in_a_live_session():
 def test_the_readme_says_how_far_it_has_been_tried():
     readme = (EXT / "README.md").read_text(encoding="utf-8")
     assert "> **Experimental.**" in readme
-    assert "The other 182 have not been run there yet." in readme
+    assert "The other 186 have not been run there yet." in readme
     assert "arckit init my-project --ai antigravity" in readme
     assert "agy plugin install https://github.com/tractorjuice/arckit-antigravity" in readme
 
