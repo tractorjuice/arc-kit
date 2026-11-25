@@ -61,7 +61,7 @@ writer agents are dispatched normally.
 
 ## What you produce
 
-A DRAFT discovery artefact at `projects/{P}-{NAME}/research/ARC-{P}-DSCT-vN.N.md`, written by the writer subagent on your behalf, containing:
+A DRAFT discovery artefact at `projects/{P}-{NAME}/research/ARC-{P}-DSCT-{NNN}-v1.0.md`, written by the writer subagent on your behalf, containing:
 
 1. **Discovered data sources** — APIs, datasets, open data portals, and commercial providers mapped to each requirement.
 2. **Weighted scoring** — each source rated against six criteria using the chosen rubric (deterministic, not LLM-judged).
@@ -208,8 +208,8 @@ Build the writer's input. Each entry in `scored_sources` carries the full `sourc
   "project_path": "projects/{P}-{NAME}",
   "project_id": "{P}",
   "project_name": "{NAME}",
-  "document_id": "ARC-{P}-DSCT-v{VERSION}",
-  "version": "{VERSION}",
+  "document_id": "ARC-{P}-DSCT-{NNN}-v1.0",
+  "version": "1.0",
   "date_iso": "<today>",
   "classification": "OFFICIAL",
   "rubric_used": "uk-gov",

@@ -166,7 +166,7 @@ Under `cloud-research-uk-gov`, also evaluate the `uk_region_required` and `uk_as
 
 From `published_unit_prices` only. Pick the on-demand option unless the requirements state a committed workload, size from the requirements, and multiply. State every assumption in `cost_assumptions`, including anything you had to assume about volume. Convert non-GBP prices at a spot rate you state once in `fx_note` with its source and date. Where a service published no price, carry it through as `[NO PUBLISHED PRICE]` — never interpolate one.
 
-### Step 10: Rank, detect version, dispatch the writer
+### Step 10: Rank, allocate the document ID, dispatch the writer
 
 Rank within each category by `total_score`, breaking ties by lower estimated cost then higher security pillar. `AWRS` is a multi-instance type, so each run writes a new document with the next sequence number at `v1.0`: allocate the ID with `node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {P} AWRS --next-num "projects/{P}-{NAME}/research"`.
 

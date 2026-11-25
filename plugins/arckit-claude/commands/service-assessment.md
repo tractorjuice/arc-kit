@@ -143,11 +143,9 @@ The ArcKit readiness ratings below (🟢/🟡/🔴 per point) are this command's
 
 ### Step 3: Map Evidence to Service Standard Points
 
-For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
+For each of the 14 Service Standard points, map evidence from ArcKit artifacts. Wherever an evidence list names `vendors/*/ARC-*-HLDR-*.md` or `vendors/*/ARC-*-DLDR-*.md`, also look in the project's `reviews/` folder: `/arckit:hld-review` and `/arckit:dld-review` write to `vendors/{vendor}/`, and an older project may hold its reviews in `reviews/`.
 
 #### Point 1: Understand Users and Their Needs
-
-Design reviews are written to `vendors/{vendor}/` by `/arckit:hld-review` and `/arckit:dld-review`; an older project may hold them in `reviews/` instead, so look in both.
 
 **Evidence Sources**:
 

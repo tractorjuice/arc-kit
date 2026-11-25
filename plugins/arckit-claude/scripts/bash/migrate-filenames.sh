@@ -260,12 +260,15 @@ migrate_subdir() {
     local type_code="$3"
     local backup_dir="$4"
 
+    local count
+    count=$(last_sequence "$subdir" "$project_id" "$type_code")
+    # Shared with the root-level loops in migrate_project, which number after it.
+    # In a dry run nothing is renamed, so the disk alone would give them a lower number.
+    eval "LAST_SEQ_${type_code}=\$count"
+
     if [[ ! -d "$subdir" ]]; then
         return 0
     fi
-
-    local count
-    count=$(last_sequence "$subdir" "$project_id" "$type_code")
 
     # Find existing files that don't match new pattern
     for file in "$subdir"/*.md; do
@@ -275,17 +278,29 @@ migrate_subdir() {
 
         local basename=$(basename "$file")
 
-        # Skip if already in new format. A folder can hold several types
-        # (research/ holds AWRS, GOVR and others beside RSCH), so any ARC name counts.
-        if [[ "$basename" =~ ^ARC-[0-9]{3}-.+-v[0-9]+\.[0-9]+\.md$ ]]; then
+        # Skip a name that already carries a sequence number, whatever its type:
+        # a folder can hold several (research/ holds AWRS, GOVR and others beside RSCH).
+        if [[ "$basename" =~ ^ARC-[0-9]{3}-[A-Z][A-Z0-9-]*-[0-9]{3}-v[0-9]+\.[0-9]+\.md$ ]]; then
             continue
+        fi
+
+        # An ARC name with no sequence number keeps its version. One of another
+        # type is left for a person: renaming it to this folder's type would be wrong.
+        local version="1.0"
+        if [[ "$basename" =~ ^ARC-[0-9]{3}-([A-Z][A-Z0-9-]*)-v([0-9]+\.[0-9]+)\.md$ ]]; then
+            if [[ "${BASH_REMATCH[1]}" != "$type_code" ]]; then
+                log_warning "Left as it is: $basename is a ${BASH_REMATCH[1]} document with no sequence number; give it one by hand"
+                continue
+            fi
+            version="${BASH_REMATCH[2]}"
         fi
 
         # Determine sequence number
         count=$((count + 1))
         local seq_num=$(printf "%03d" $count)
+        eval "LAST_SEQ_${type_code}=\$count"
 
-        local new_name="ARC-${project_id}-${type_code}-${seq_num}-v1.0.md"
+        local new_name="ARC-${project_id}-${type_code}-${seq_num}-v${version}.md"
         local new_path="$subdir/$new_name"
 
         migrate_file "$file" "$new_path" "$backup_dir"
@@ -409,7 +424,7 @@ migrate_project() {
 
     # Also check for old wardley-maps location at root level
     local ward_count
-    ward_count=$(last_sequence "$project_dir/wardley-maps" "$project_id" "WARD")
+    ward_count=${LAST_SEQ_WARD:-$(last_sequence "$project_dir/wardley-maps" "$project_id" "WARD")}
     for file in "$project_dir"/*-wardley.md "$project_dir"/*-map.md; do
         if [[ -f "$file" ]]; then
             ward_count=$((ward_count + 1))
@@ -425,7 +440,7 @@ migrate_project() {
 
     # Check for old diagram files at root
     local diag_count
-    diag_count=$(last_sequence "$project_dir/diagrams" "$project_id" "DIAG")
+    diag_count=${LAST_SEQ_DIAG:-$(last_sequence "$project_dir/diagrams" "$project_id" "DIAG")}
     for file in "$project_dir"/*-diagram.md "$project_dir"/diagram-*.md; do
         if [[ -f "$file" ]]; then
             diag_count=$((diag_count + 1))
@@ -441,7 +456,7 @@ migrate_project() {
 
     # Check for ADR files at root level (should be in decisions/)
     local adr_count
-    adr_count=$(last_sequence "$project_dir/decisions" "$project_id" "ADR")
+    adr_count=${LAST_SEQ_ADR:-$(last_sequence "$project_dir/decisions" "$project_id" "ADR")}
     for file in "$project_dir"/adr-*.md "$project_dir"/ADR-*.md; do
         if [[ -f "$file" ]]; then
             adr_count=$((adr_count + 1))
@@ -457,7 +472,7 @@ migrate_project() {
 
     # Check for research files at root level (should be in research/)
     local rsch_count
-    rsch_count=$(last_sequence "$project_dir/research" "$project_id" "RSCH")
+    rsch_count=${LAST_SEQ_RSCH:-$(last_sequence "$project_dir/research" "$project_id" "RSCH")}
     for file in "$project_dir"/research-*.md "$project_dir"/research.md; do
         if [[ -f "$file" ]]; then
             rsch_count=$((rsch_count + 1))

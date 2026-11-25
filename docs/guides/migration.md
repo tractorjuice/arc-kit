@@ -32,8 +32,9 @@ Run the script from the root of your repository. First set `MIGRATE` to where yo
 # Installed with `arckit init` (Codex, OpenCode, Copilot)
 MIGRATE=.arckit/scripts/bash/migrate-filenames.sh
 
-# Claude Code plugin: the plugin cache keeps a folder per version, so take the newest copy
-MIGRATE=$(find ~/.claude/plugins/cache -path '*/scripts/bash/migrate-filenames.sh' | sort -V | tail -1)
+# Claude Code plugin: use the copy in the version Claude Code has installed
+MIGRATE="$(node -e 'const f = require("os").homedir() + "/.claude/plugins/installed_plugins.json";
+  console.log(require(f).plugins["arckit@arckit-claude"][0].installPath + "/scripts/bash/migrate-filenames.sh")')"
 ```
 
 Then:

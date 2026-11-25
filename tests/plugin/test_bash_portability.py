@@ -214,6 +214,45 @@ def test_migrate_filenames_numbers_after_the_highest_existing_file(tmp_path, bas
             f"{name} should hold '{text}':\n{result.stdout}"
 
 
+@pytest.mark.parametrize("bash,copy", CASES)
+def test_migrate_filenames_numbers_an_unnumbered_arc_file(tmp_path, bash, copy):
+    """An ARC name with no sequence number, of a multi-instance type, is still invalid and must be
+    numbered, keeping its version. One of another type in a shared folder is left for a person:
+    renaming it to the folder's own type would be wrong."""
+    root = repo(tmp_path)
+    project = root / "projects" / "001-legacy"
+    (project / "research").mkdir(parents=True)
+    (project / "decisions").mkdir()
+    for name in ["research/ARC-001-RSCH-v1.2.md", "research/ARC-001-AWRS-v1.0.md", "decisions/ARC-001-ADR-v1.0.md"]:
+        (project / name).write_text("# Document\n", encoding="utf-8")
+    result = run(bash, copy, "migrate-filenames.sh", "projects/001-legacy", cwd=root)
+    assert result.returncode == 0, result.stderr
+    assert (project / "research/ARC-001-RSCH-001-v1.2.md").is_file(), result.stdout
+    assert (project / "decisions/ARC-001-ADR-001-v1.0.md").is_file(), result.stdout
+    assert (project / "research/ARC-001-AWRS-v1.0.md").is_file(), f"another type was renamed:\n{result.stdout}"
+    assert "AWRS" in result.stdout + result.stderr, "the unnumbered AWRS file should be reported"
+
+
+@pytest.mark.parametrize("bash,copy", CASES)
+def test_migrate_filenames_dry_run_numbers_as_a_real_run_does(tmp_path, bash, copy):
+    """A dry run renames nothing, so numbering a root-level file from the disk alone gave it the
+    number an old file inside the folder was about to take."""
+    root = repo(tmp_path)
+    project = root / "projects" / "001-legacy"
+    (project / "wardley-maps").mkdir(parents=True)
+    (project / "wardley-maps" / "old-map.md").write_text("# Map\n", encoding="utf-8")
+    (project / "payments-wardley.md").write_text("# Map\n", encoding="utf-8")
+    preview = run(bash, copy, "migrate-filenames.sh", "projects/001-legacy", "--dry-run", cwd=root)
+    assert preview.returncode == 0, preview.stderr
+    said = preview.stdout + preview.stderr
+    assert "old-map.md → ARC-001-WARD-001-v1.0.md" in said, said
+    assert "payments-wardley.md → ARC-001-WARD-002-v1.0.md" in said, said
+    result = run(bash, copy, "migrate-filenames.sh", "projects/001-legacy", cwd=root)
+    assert result.returncode == 0, result.stderr
+    assert sorted(p.name for p in (project / "wardley-maps").iterdir()) == \
+        ["ARC-001-WARD-001-v1.0.md", "ARC-001-WARD-002-v1.0.md"]
+
+
 @pytest.mark.parametrize("bash", BASHES)
 def test_stale_scan_reports_an_old_draft(tmp_path, bash):
     root = repo(tmp_path)

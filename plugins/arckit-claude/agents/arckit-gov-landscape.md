@@ -289,19 +289,15 @@ Identify what's missing in the domain based on what you'd expect to find:
 - Areas where all implementations are old/archived (no active alternatives)
 - Cross-government infrastructure that's being duplicated instead of shared
 
-### Step 15: Detect Version and Determine Increment
+### Step 15: Allocate the Document ID
 
-Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-GLND-*-v*.md` files. Read the highest version number from filenames.
+`GLND` is a multi-instance type: each run writes a new document with the next sequence number, at version 1.0, and earlier documents are kept. Get the ID with:
 
-**If no existing file**: Use VERSION="1.0"
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} GLND --next-num "projects/{project-dir}/research"
+```
 
-**If existing file found**:
-
-1. Read the existing document to understand its scope (domain, orgs mapped, repos analysed)
-2. Compare against current domain definition and findings
-3. Determine version increment:
-   - **Minor increment** (e.g., 1.0 → 1.1): Same domain scope — refreshed activity data, new repos added, corrected details
-   - **Major increment** (e.g., 1.0 → 2.0): Domain scope materially changed, new sub-domains added, significantly different landscape
+This returns the next sequenced ID, for example `ARC-{PROJECT_ID}-GLND-002-v1.0`. Use it as the Document ID and the filename, set the Document Control Version to 1.0, and add a Revision History row for version 1.0 ("AI Agent", a description of the document, "PENDING", "PENDING").
 
 ### Step 16: Quality Check
 
@@ -309,7 +305,7 @@ Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and
 
 ### Step 17: Write Output
 
-Use the **Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GLND-v${VERSION}.md` following the template structure.
+Use the **Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GLND-{NNN}-v1.0.md` following the template structure.
 
 Auto-populate fields:
 

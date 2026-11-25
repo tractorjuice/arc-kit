@@ -455,8 +455,9 @@
 <pre><code class="language-bash"># Installed with `arckit init` (Codex, OpenCode, Copilot)
 MIGRATE=.arckit/scripts/bash/migrate-filenames.sh
 
-# Claude Code plugin: the plugin cache keeps a folder per version, so take the newest copy
-MIGRATE=$(find ~/.claude/plugins/cache -path '*/scripts/bash/migrate-filenames.sh' | sort -V | tail -1)
+# Claude Code plugin: use the copy in the version Claude Code has installed
+MIGRATE=&quot;$(node -e 'const f = require(&quot;os&quot;).homedir() + &quot;/.claude/plugins/installed_plugins.json&quot;;
+  console.log(require(f).plugins[&quot;arckit@arckit-claude&quot;][0].installPath + &quot;/scripts/bash/migrate-filenames.sh&quot;)')&quot;
 </code></pre>
 <p>Then:</p>
 <pre><code class="language-bash"># Single project

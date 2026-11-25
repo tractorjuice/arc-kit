@@ -133,8 +133,8 @@ find "$PROJECT_DIR" -type f -name "*.md" | sort
 
 **Design Review Artifacts**:
 
-- `vendors/*/ARC-*-HLDR-*.md` - High-Level Design reviews
-- `vendors/*/ARC-*-DLDR-*.md` - Detailed Design reviews
+- `vendors/*/ARC-*-HLDR-*.md` (or `reviews/ARC-*-HLDR-*.md` in an older project) - High-Level Design reviews
+- `vendors/*/ARC-*-DLDR-*.md` (or `reviews/ARC-*-DLDR-*.md` in an older project) - Detailed Design reviews
 
 **Delivery Artifacts**:
 
