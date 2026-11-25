@@ -11,8 +11,8 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Technical and functional requirements |
-| Stakeholder analysis | Contracting authority and key stakeholders |
-| Research (`research/ARC-<id>-RSCH-*-v*.md`) | Market analysis and vendor landscape |
+| Risk register | Vendor, lock-in and sovereignty risks |
+| SecNumCloud and DINUM assessments | Sovereignty clauses and mandatory DINUM standards |
 
 ---
 

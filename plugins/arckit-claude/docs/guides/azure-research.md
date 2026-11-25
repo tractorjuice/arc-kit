@@ -49,9 +49,9 @@ Add constraints (budget, classification, region) in the prompt for tailored resu
 /arckit:azure-research Research Azure services for <project>
 ```
 
-Outputs: `projects/<id>/research/ARC-<id>-AZRS-v1.0.md`
+Outputs: `projects/<id>/research/ARC-<id>-AZRS-<NNN>-v1.0.md`
 
-> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
+> **Re-running**: each run writes a new report with the next sequence number (`AZRS-001`, `AZRS-002` and so on), so earlier reports are kept.
 
 ---
 
@@ -85,7 +85,7 @@ The command uses three Microsoft Learn MCP tools:
 
 - **Azure Service Recommendations**: Mapped to specific requirements (FR, NFR, INT, DR)
 - **Architecture Pattern**: Reference architecture from Azure Architecture Center
-- **Well-Architected Assessment**: All 5 pillars evaluated per service
+- **Well-Architected Assessment**: All six pillars scored per service from a fixed rubric
 - **Azure Security Benchmark**: 12 control domains mapped
 - **UK Government Compliance**: G-Cloud, UK regions, NCSC principles
 - **Cost Estimates**: Monthly and 3-year TCO with optimization recommendations

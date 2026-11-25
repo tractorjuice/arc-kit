@@ -54,7 +54,7 @@ The review process is:
 5. Roll the changes into the next ArcKit release (typically a patch or minor) with a changelog entry under `### UAE Overlay Updates`.
 6. Bump the verified date and next-review date in the table above.
 
-Cadence: 30 January, 30 April, 30 July, 30 October. Next scheduled review: **2026-10-30**. No 2026-07-30 review is recorded: the UAE IAS, UAE AI Charter, Federal Decree-Law No. 11 of 2023 and MoF Digital Procurement Platform rows were last verified on 2026-04-30 and are overdue. The other rows were re-verified on 2026-10-18 (issue #949), 2026-10-27 (issue #982) or 2026-10-28 (issue #1042).
+Cadence: 30 January, 30 April, 30 July, 30 October. The review planned for 2026-10-30 is not recorded as done. No 2026-07-30 review is recorded: the UAE IAS, UAE AI Charter, Federal Decree-Law No. 11 of 2023 and MoF Digital Procurement Platform rows were last verified on 2026-04-30 and are overdue. The other rows were re-verified on 2026-10-18 (issue #949), 2026-10-27 (issue #982) or 2026-10-28 (issue #1042).
 
 ---
 
@@ -121,9 +121,9 @@ To apply: open an issue tagged `uae-overlay` and `co-maintainer` on the [arc-kit
 
 ---
 
-## v4.11 / v5.0 Backlog
+## Later-release Backlog
 
-Four overlay extensions are deliberately out of scope for v4.10 and tracked here for the next minor release window:
+Four overlay extensions are deliberately out of scope for the first release and tracked here for a later release:
 
 ### Federal Mandate Doc-Types Category
 
@@ -131,7 +131,7 @@ The four Cabinet instruments (`ZBUR`, `DREC`, `DSHR`, `NPRA`) currently sit unde
 
 ### `uae-translate` (Bilingual Arabic / English)
 
-A future command that takes any ArcKit artefact and generates an Arabic-language version, plus a side-by-side bilingual version for ministerial submissions. Requires a translation backend, glossary management for federal terms (where Arabic precision matters), and cultural-review handoff. Complex enough to warrant a v5.0 commitment.
+A future command that takes any ArcKit artefact and generates an Arabic-language version, plus a side-by-side bilingual version for ministerial submissions. Requires a translation backend, glossary management for federal terms (where Arabic precision matters), and cultural-review handoff. Complex enough to warrant a separate commitment.
 
 ### Sector Overlays
 
@@ -147,4 +147,4 @@ A `uae-vendor-sovereignty` command that scores vendors against the federal sover
 **ArcKit Version**: [VERSION]
 **Last full review**: 2026-04-30
 **Partial reviews**: 2026-10-18 (issue #949), 2026-10-27 (issue #982) and 2026-10-28 (issue #1042); see the Verified column
-**Next scheduled review**: 2026-10-30
+**Last review planned for**: 2026-10-30; not yet recorded as done

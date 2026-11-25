@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-This guide explains how to add a new `/arckit.<n>` command. A command is a single Markdown file that ArcKit fans out to six AI-assistant formats automatically. Read this before opening a PR that adds a command.
+This guide explains how to add a new `/arckit.<n>` command. A command is a single Markdown file that ArcKit fans out to every other AI-assistant format automatically. Read this before opening a PR that adds a command.
 
 For template customisation (changing the output of an existing command), see [`customize.md`](customize.md). For background on why ArcKit uses commands rather than skills, see the README section "Why Commands, Not Skills".
 
@@ -10,7 +10,7 @@ For template customisation (changing the output of an existing command), see [`c
 
 ## How Commands Work
 
-You write **one** source file in `plugins/arckit-claude/commands/<n>.md`. The converter at `scripts/converter.py` reads it and produces six target-specific outputs:
+You write **one** source file in `plugins/arckit-claude/commands/<n>.md`. The converter at `scripts/converter.py` reads it and produces the target-specific outputs:
 
 | Target | Output path | Format |
 |-------|-------------|--------|
@@ -21,6 +21,9 @@ You write **one** source file in `plugins/arckit-claude/commands/<n>.md`. The co
 | Gemini CLI | `extensions/arckit-gemini/commands/arckit/<n>.toml` | TOML |
 | GitHub Copilot | `extensions/arckit-copilot/prompts/arckit-<n>.prompt.md` | Prompt frontmatter |
 | Paperclip | `extensions/arckit-paperclip/src/data/commands.json` (entry) | JSON |
+| Mistral Vibe | `extensions/arckit-vibe/skills/arckit-<n>.md` | Skill format |
+| Kimi Code CLI | `extensions/arckit-kimi/skills/arckit-<n>/SKILL.md` | Agent Skill |
+| Google Antigravity (experimental) | `extensions/arckit-antigravity/skills/arckit-<n>/SKILL.md` | Agent Skill |
 
 The first row is the file you edit by hand; the converter generates all others. You do not edit the generated files directly. The converter handles argument-placeholder rewriting, path rewriting for the Gemini sandbox, frontmatter stripping for Claude-only fields, and extension-file copying.
 
@@ -39,6 +42,7 @@ Create `plugins/arckit-claude/commands/<n>.md` with YAML frontmatter and a promp
 ````markdown
 ---
 description: One-line description in imperative mood
+doc-type: CODE
 argument-hint: "<hint shown in autocomplete>"
 effort: medium
 handoffs:
@@ -67,8 +71,9 @@ $ARGUMENTS
 | Field | Required | Notes |
 |-------|----------|-------|
 | `description` | Yes | Imperative, one line. Used as the slash-command description in every target. |
+| `doc-type` | Yes | The doc-type code the command writes, registered in `plugins/arckit-claude/config/doc-types.mjs`: a single code (`doc-type: REQ`), a `[A, B]` list for a command that writes more than one artefact, or `none` for a command that writes no `ARC-*` artefact. Stripped from other targets by the converter. |
 | `argument-hint` | Recommended | Shown in Claude Code autocomplete. Short hint showing the expected shape of input. |
-| `effort` | No | `low` / `medium` / `high`. Claude Code only — stripped from other targets by the converter. |
+| `effort` | No | `low` / `medium` / `high` / `xhigh` / `max`. Without it the command runs at the session default, which is `medium` on Opus 5.5 and Sonnet 5.5, so set it on any command that needs more depth. Claude Code only — stripped from other targets by the converter. |
 | `handoffs` | No | List of `{command, description}` entries suggesting follow-on commands. Rendered into a handoffs section in generated outputs. |
 | `paths` | No | Claude-only. Stripped from other targets. |
 | `keep-coding-instructions` | No | Claude-only. Stripped from other targets. |
@@ -97,7 +102,7 @@ Commands should prefer a user-customised template over the bundled default. Use 
 
 ```markdown
 1. **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/<your-template>.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/<your-template>.md` exists in the project root, then `.arckit/templates/<your-template>.md`
    - **If found**: Read the user's customised template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/<your-template>.md` (default)
 ```
@@ -143,7 +148,7 @@ $ARGUMENTS
 ## Instructions
 
 1. **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/sla-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/sla-template.md` exists in the project root, then `.arckit/templates/sla-template.md`
    - **If found**: Read the user's customised template
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/sla-template.md` (default)
 
@@ -170,7 +175,7 @@ $ARGUMENTS
 python scripts/converter.py
 ```
 
-This writes out the six target files with correct placeholders and paths.
+This writes out the target files with correct placeholders and paths.
 
 **5. Add the user-facing guide** at `docs/guides/sla.md` following the house style (see `docs/guides/principles.md` or `docs/guides/adr.md` for examples). This is the source location: `python3 scripts/check-guide-parity.py --sync` copies it to `plugins/arckit-claude/docs/guides/`, and the converter carries it into every extension's `docs/guides/` tree.
 

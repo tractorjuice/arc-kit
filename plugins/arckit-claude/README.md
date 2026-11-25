@@ -41,13 +41,15 @@ claude plugin install arckit@arckit-claude
 ### Installing with ArcKit overlay plugins
 
 The same marketplace hosts the core plugin plus regional, sector, and tooling overlays.
-Install only the plugins you need:
+Install only the plugins you need, one plugin per `claude plugin install`. An overlay is
+switched off until you enable it, and installing it installs the core plugin it depends on:
 
 ```bash
-claude plugin install arckit arckit-uae
-claude plugin install arckit arckit-au arckit-au-energy
-claude plugin install arckit arckit-uk-finance
+claude plugin install arckit-uae@arckit-claude
+claude plugin enable arckit-uae
 ```
+
+`arckit-au-energy` also needs `arckit-au`: install and enable both.
 
 The `arckit-uk-gcloud` overlay is public for installation and inspection, but remains
 proprietary and is not MIT licensed.
@@ -124,13 +126,13 @@ After installing the plugin:
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Commands | 75 | Slash commands for architecture artifacts and OKF interoperability |
-| Skills | 1 | Conversational Wardley Mapping with interactive guidance |
-| Agents | 20 | Autonomous research agents and subagent definitions |
-| Templates | 68 | Document templates with UK Government compliance |
-| Scripts | 15 | Helper bash, Python, and Node scripts |
-| Hooks | 17 | Automation hooks across 7 event types |
-| Guides | 167 | Command and reference documentation |
+| Commands | 76 | Slash commands for architecture artifacts and OKF interoperability |
+| Skills | 5 | Reference skills (Wardley Mapping, Mermaid, PlantUML, the architecture workflow) and the `arckit-build` harness |
+| Agents | 38 | Autonomous research agents, reader and writer subagents, and independent-review subagents |
+| Templates | 64 | Document templates with UK Government compliance |
+| Scripts | 22 | Helper bash, Python, and Node scripts |
+| Hooks | 43 | Hook entries across 10 events in `hooks/hooks.json` |
+| Guides | 130 | Command and reference documentation |
 
 ## Hooks
 
@@ -138,11 +140,15 @@ Automation hooks run automatically to provide context and enforce standards. See
 
 | Event | Hooks | Purpose |
 |-------|-------|---------|
-| SessionStart | arckit-session, version-check | Inject version/context, check for updates |
+| SessionStart | arckit-session, version-check, v5-migration-banner, notify-stale-artifacts | Inject version/context, check for updates, optional stale-artefact notification |
 | Stop / StopFailure | session-learner | Record session activity for future context |
-| UserPromptSubmit | arckit-context, secret-detection, + 6 command-specific | Project context, secret scanning, pre-processing |
-| PreToolUse | validate-arc-filename, score-validator, file-protection, secret-file-scanner | Filename enforcement, security, validation |
-| PostToolUse | update-manifest | Keep manifest.json in sync |
+| UserPromptSubmit | arckit-context, secret-detection, supplier-isolation, sync-guides, graph-inject | Project context, secret scanning, per-command pre-processing |
+| PreToolUse | validate-arc-filename, score-validator, validate-wardley-math, validate-backlog-totals, file-protection, secret-file-scanner, supplier-isolation, validate-reader-handoff | Filename enforcement, security, output validation |
+| PostToolUse | update-manifest, provenance-stamp, tidy-wardley-labels, telemetry, validate-reader-handoff | Keep manifest.json in sync, stamp provenance, tidy Wardley labels, record telemetry |
+| SubagentStart | inject-agent-context | Give ArcKit subagents the project context |
+| TaskCreated | telemetry | Record telemetry |
+| FileChanged | external-context-watch | Refresh context when an `external/` document changes |
+| PostCompact | postcompact-rehydrate | Re-inject project context after compaction |
 
 ## OKF Interoperability
 
@@ -156,7 +162,7 @@ ArcKit templates can be customized per-project to match your organization's requ
 
 ### How It Works
 
-1. **User templates override plugin templates**: If a template exists in `.arckit/templates/`, it takes precedence over the plugin's default template.
+1. **User templates override plugin templates**: If a template exists in `.arckit/templates-custom/`, it takes precedence over the plugin's default template.
 
 2. **Copy and customize**: Use `/arckit:customize` to copy templates to your project for editing.
 
@@ -193,7 +199,7 @@ ArcKit templates can be customized per-project to match your organization's requ
 ```text
 project-root/
 ├── .arckit/
-│   └── templates/              # Your customized templates
+│   └── templates-custom/       # Your customized templates
 │       ├── requirements-template.md
 │       ├── risk-register-template.md
 │       └── ...
@@ -211,9 +217,13 @@ When ArcKit plugin updates with new features:
 
 ## Skills
 
-The plugin includes conversational skills that activate automatically when you ask relevant questions:
+The plugin includes reference skills that activate automatically when you ask relevant questions:
 
 - **Wardley Mapping** — Ask about evolution stages, doctrine maturity, build vs. buy decisions, gameplay patterns, or create interactive maps. For formal documents, use `/arckit:wardley` instead.
+- **Mermaid syntax** and **PlantUML syntax** — Syntax references for writing or fixing a diagram. For a governed diagram artefact, use `/arckit:diagram`.
+- **Architecture workflow** — Which `/arckit:*` command to run, and in what order.
+
+One more skill runs only when you start it: **arckit-build** (`/arckit:arckit-build`), the bulk-build harness behind `/arckit:build`.
 
 ## Commands Overview
 

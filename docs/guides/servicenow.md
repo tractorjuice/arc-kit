@@ -70,21 +70,16 @@ Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Service Overview | Service definition, criticality, ownership |
-| CMDB Design | CI classes, relationships, discovery, data quality |
-| Service Portfolio | Service catalog entry, request items, bundles |
-| Incident Management | Categories, priorities, SLAs, escalation, major incident |
-| Problem Management | Root cause analysis, known errors, problem review |
-| Change Management | Change types, CAB process, approvals, windows |
-| Service Level Management | SLAs, OLAs, UCs, reporting |
-| Knowledge Management | Article structure, approval workflow, review cycle |
-| Service Request Management | Request catalog, fulfillment workflows, approvals |
-| Asset Management | Hardware/software assets, lifecycle, contracts |
-| Event Management | Alert integration, correlation, auto-remediation |
-| Reporting & Dashboards | KPIs, dashboards, executive reporting |
-| Integration Architecture | External system integrations, APIs, data flows |
-| Automation | Flow Designer, IntegrationHub, auto-assignment |
-| UK Government Considerations | Cross-government ITSM, NCSC alignment |
+| 1. Service Overview | Service description, dependencies, ownership |
+| 2. CMDB Design | CI classes, relationships, discovery, data quality |
+| 3. Service Level Agreements (SLAs) | Availability and response targets, reporting |
+| 4. Incident Management | Categories, priorities, escalation, major incident |
+| 5. Change Management | Change types, CAB process, approvals, windows |
+| 6. Monitoring & Alerting | Alert integration and event handling |
+| 7. Knowledge Management | Article structure, approval workflow, review cycle |
+| 8. Go-Live Checklist | Operational readiness checks before launch |
+| 9. Requirements Traceability | Links from requirements to the design |
+| 10. UK Government Compliance | Cross-government ITSM, NCSC alignment |
 
 ### CMDB CI Classes
 

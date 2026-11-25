@@ -489,40 +489,52 @@
 </thead>
 <tbody>
 <tr>
-<td>Processing Inventory</td>
-<td>All processing activities, lawful basis, purpose</td>
+<td>1. Scope and Role Determination</td>
+<td>Controller or processor role, territorial scope</td>
 </tr>
 <tr>
-<td>Data Subjects</td>
-<td>Categories of data subjects and their rights</td>
+<td>2. Lawful Basis Assessment</td>
+<td>Lawful basis and purpose per processing activity</td>
 </tr>
 <tr>
-<td>DPO Obligation</td>
-<td>Whether a DPO is required and their role</td>
+<td>3. Privacy by Design and Default (Art. 25)</td>
+<td>Data minimisation, retention and default settings</td>
 </tr>
 <tr>
-<td>Data Minimisation</td>
-<td>Retention periods, minimisation measures</td>
-</tr>
-<tr>
-<td>International Transfers</td>
-<td>SCCs, BCRs, adequacy decisions</td>
-</tr>
-<tr>
-<td>Breach Notification</td>
-<td>72-hour reporting capability</td>
-</tr>
-<tr>
-<td>Data Subject Rights</td>
+<td>4. Data Subject Rights (Arts. 15–22)</td>
 <td>SAR, erasure, portability, objection mechanisms</td>
 </tr>
 <tr>
-<td>Third-Party Processors</td>
+<td>5. Records of Processing Activities (Art. 30)</td>
+<td>Processing inventory</td>
+</tr>
+<tr>
+<td>6. Data Protection Impact Assessment (Art. 35)</td>
+<td>DPIA screening and, where required, hand-off to <code>/arckit:dpia</code></td>
+</tr>
+<tr>
+<td>7. Data Processors and Sub-Processors (Art. 28)</td>
 <td>DPA obligations, processor agreements</td>
 </tr>
 <tr>
-<td>Gap Analysis</td>
+<td>8. International Transfers (Arts. 44–49)</td>
+<td>SCCs, BCRs, adequacy decisions</td>
+</tr>
+<tr>
+<td>9. Breach Notification (Arts. 33–34)</td>
+<td>72-hour reporting capability</td>
+</tr>
+<tr>
+<td>10. National Supervisory Authority Context</td>
+<td>Supervisory authority and national specifics</td>
+</tr>
+<tr>
+<td>11. Gap Analysis and Action Plan</td>
 <td>Gaps with priority and remediation plan</td>
+</tr>
+<tr>
+<td>12. External References</td>
+<td>Documents cited</td>
 </tr>
 </tbody>
 </table>
@@ -543,14 +555,14 @@
 <td><code>/arckit:requirements</code>, <code>/arckit:data-model</code></td>
 </tr>
 <tr>
-<td>Risk</td>
-<td>DPIA for high-risk processing</td>
-<td><code>/arckit:dpia</code></td>
+<td>Assessment</td>
+<td>GDPR compliance assessment, including DPIA screening</td>
+<td><code>/arckit-eu:eu-rgpd</code></td>
 </tr>
 <tr>
-<td>Assessment</td>
-<td>GDPR compliance assessment</td>
-<td><code>/arckit-eu:eu-rgpd</code></td>
+<td>Risk</td>
+<td>DPIA where screening scores 2 or more</td>
+<td><code>/arckit:dpia</code></td>
 </tr>
 <tr>
 <td>French layer</td>
@@ -569,13 +581,13 @@
 <li>72-hour breach notification capability assessed.</li>
 <li>Processor agreements (Article 28) in place for all processors.</li>
 <li>Retention periods defined and enforced.</li>
-<li>DPIA conducted for high-risk processing (run <code>/arckit:dpia</code> first).</li>
+<li>DPIA screening completed; where the score is 2 or more, a DPIA conducted with <code>/arckit:dpia</code>.</li>
 </ul>
 <hr />
 <h2 id="key-notes">Key Notes</h2>
 <ul>
 <li><strong>French layer</strong>: Run <code>/arckit-fr:fr-rgpd</code> for CNIL-specific obligations (health data, cookies, age 15 for minors).</li>
-<li><strong>DPIA</strong>: For high-risk processing, a DPIA under Article 35 is mandatory — run <code>/arckit:dpia</code> before this command.</li>
+<li><strong>DPIA</strong>: The command screens for a DPIA itself (EDPB nine criteria). Where the screening score is 2 or more, a DPIA under Article 35 is mandatory, and the command hands off to <code>/arckit:dpia</code>.</li>
 <li><strong>Scope</strong>: This command covers EU GDPR. UK GDPR (post-Brexit) is covered by <code>/arckit:dpia</code> with UK ICO context.</li>
 </ul>
 </div>

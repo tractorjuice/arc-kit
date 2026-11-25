@@ -35,15 +35,18 @@ Output: `projects/<id>/ARC-<id>-RGPD-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Processing Inventory | All processing activities, lawful basis, purpose |
-| Data Subjects | Categories of data subjects and their rights |
-| DPO Obligation | Whether a DPO is required and their role |
-| Data Minimisation | Retention periods, minimisation measures |
-| International Transfers | SCCs, BCRs, adequacy decisions |
-| Breach Notification | 72-hour reporting capability |
-| Data Subject Rights | SAR, erasure, portability, objection mechanisms |
-| Third-Party Processors | DPA obligations, processor agreements |
-| Gap Analysis | Gaps with priority and remediation plan |
+| 1. Scope and Role Determination | Controller or processor role, territorial scope |
+| 2. Lawful Basis Assessment | Lawful basis and purpose per processing activity |
+| 3. Privacy by Design and Default (Art. 25) | Data minimisation, retention and default settings |
+| 4. Data Subject Rights (Arts. 15–22) | SAR, erasure, portability, objection mechanisms |
+| 5. Records of Processing Activities (Art. 30) | Processing inventory |
+| 6. Data Protection Impact Assessment (Art. 35) | DPIA screening and, where required, hand-off to `/arckit:dpia` |
+| 7. Data Processors and Sub-Processors (Art. 28) | DPA obligations, processor agreements |
+| 8. International Transfers (Arts. 44–49) | SCCs, BCRs, adequacy decisions |
+| 9. Breach Notification (Arts. 33–34) | 72-hour reporting capability |
+| 10. National Supervisory Authority Context | Supervisory authority and national specifics |
+| 11. Gap Analysis and Action Plan | Gaps with priority and remediation plan |
+| 12. External References | Documents cited |
 
 ---
 
@@ -52,8 +55,8 @@ Output: `projects/<id>/ARC-<id>-RGPD-v1.0.md`
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
 | Discovery | Data model and requirements | `/arckit:requirements`, `/arckit:data-model` |
-| Risk | DPIA for high-risk processing | `/arckit:dpia` |
-| Assessment | GDPR compliance assessment | `/arckit-eu:eu-rgpd` |
+| Assessment | GDPR compliance assessment, including DPIA screening | `/arckit-eu:eu-rgpd` |
+| Risk | DPIA where screening scores 2 or more | `/arckit:dpia` |
 | French layer | CNIL-specific requirements | `/arckit-fr:fr-rgpd` |
 
 ---
@@ -67,12 +70,12 @@ Output: `projects/<id>/ARC-<id>-RGPD-v1.0.md`
 - 72-hour breach notification capability assessed.
 - Processor agreements (Article 28) in place for all processors.
 - Retention periods defined and enforced.
-- DPIA conducted for high-risk processing (run `/arckit:dpia` first).
+- DPIA screening completed; where the score is 2 or more, a DPIA conducted with `/arckit:dpia`.
 
 ---
 
 ## Key Notes
 
 - **French layer**: Run `/arckit-fr:fr-rgpd` for CNIL-specific obligations (health data, cookies, age 15 for minors).
-- **DPIA**: For high-risk processing, a DPIA under Article 35 is mandatory — run `/arckit:dpia` before this command.
+- **DPIA**: The command screens for a DPIA itself (EDPB nine criteria). Where the screening score is 2 or more, a DPIA under Article 35 is mandatory, and the command hands off to `/arckit:dpia`.
 - **Scope**: This command covers EU GDPR. UK GDPR (post-Brexit) is covered by `/arckit:dpia` with UK ICO context.

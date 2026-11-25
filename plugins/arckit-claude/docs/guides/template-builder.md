@@ -29,17 +29,14 @@
 
 ## Interview Process
 
-The command conducts a 2-round interview (4 questions total):
-
-### Round 1: Purpose & Structure
+The command asks four questions in a single call, and takes the recommended option for any you leave unanswered, listing it as an assumption:
 
 1. **Template Category** — Governance, Technical, Procurement, or Strategy
 2. **Structural Elements** — Scoring matrix, compliance checklist, approval workflow, risk assessment (multi-select)
+3. **Organizational Context** — UK Government, Enterprise, Regulated Industry, or Startup
+4. **Additional Outputs** — Slash command, minimal template (multi-select)
 
-### Round 2: Context & Options
-
-1. **Organizational Context** — UK Government, Enterprise, Regulated Industry, or Startup
-2. **Additional Outputs** — Slash command, shareable bundle, minimal template (multi-select)
+For a shareable bundle, add `--share` to the arguments, for example `/arckit:template-builder vendor scorecard --share`.
 
 ---
 
@@ -50,7 +47,7 @@ The command conducts a 2-round interview (4 questions total):
 | Document template | `.arckit/templates-custom/{name}-template.md` | Yes |
 | Usage guide | `.arckit/guides-custom/{name}.md` | Yes |
 | Slash command | `.claude/commands/arckit.community.{name}.md` | If selected |
-| Shareable bundle | `.arckit/community/{name}/` | If selected |
+| Shareable bundle | `.arckit/community/{name}/` | With `--share` |
 
 ---
 

@@ -255,6 +255,8 @@ Visualize at: https://create.wardleymaps.ai
 
 ## Viewing Your Map
 
+**Interactive HTML** (default): the command also writes a self-contained interactive map, `ARC-<id>-WARD-<NNN>-v<N>.html`, beside the artefact in `wardley-maps/`. It opens offline, with pan and zoom and light and dark themes. Add `--no-html` to skip it. Add `--tidy-owm` to have the command auto-place the component labels in the OnlineWardleyMaps block.
+
 **OnlineWardleyMaps** (primary): Copy the `wardley` code block and paste into [https://create.wardleymaps.ai](https://create.wardleymaps.ai) for an interactive editor with drag-and-drop repositioning.
 
 **Mermaid** (secondary): Expand the `<details>` block in your generated artifact to see the Mermaid `wardley-beta` equivalent. Mermaid added [Wardley maps](https://mermaid.js.org/syntax/wardley.html) in version 11.14.0 (April 2026), still under the beta keyword `wardley-beta`. The block renders in any viewer running Mermaid 11.14.0 or later; a viewer on an older Mermaid version cannot draw it. The Mermaid version includes sourcing strategy markers (`build`/`buy`/`outsource`/`inertia`) as visual decorators on each component.

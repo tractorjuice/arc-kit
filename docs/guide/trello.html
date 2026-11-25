@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="Export your ArcKit product backlog to a Trello board with /arckit:trello. The command reads the JSON output from /arckit:backlog FORMAT=json and creates…">
+    <meta name="description" content="Export your ArcKit product backlog to a Trello board with /arckit:trello. The command reads the JSON file that /arckit:backlog always writes and creates…">
     <meta name="author" content="ArcKit">
     <title>Trello Export Quick Guide | ArcKit</title>
     <meta property="og:title" content="Trello Export Quick Guide">
-    <meta property="og:description" content="Export your ArcKit product backlog to a Trello board with /arckit:trello. The command reads the JSON output from /arckit:backlog FORMAT=json and creates a fully structured board with sprint lists, labelled cards, and…">
+    <meta property="og:description" content="Export your ArcKit product backlog to a Trello board with /arckit:trello. The command reads the JSON file that /arckit:backlog always writes and creates a fully structured board with sprint lists, labelled cards, and…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/trello.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Trello Export Quick Guide">
-    <meta name="twitter:description" content="Export your ArcKit product backlog to a Trello board with /arckit:trello. The command reads the JSON output from /arckit:backlog FORMAT=json and creates a fully structured board with sprint lists, labelled cards, and…">
+    <meta name="twitter:description" content="Export your ArcKit product backlog to a Trello board with /arckit:trello. The command reads the JSON file that /arckit:backlog always writes and creates a fully structured board with sprint lists, labelled cards, and…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/trello.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/trello.md">
@@ -339,7 +339,7 @@
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/trello.html",
                 "headline": "Trello Export Quick Guide",
-                "description": "Export your ArcKit product backlog to a Trello board with /arckit:trello. The command reads the JSON output from /arckit:backlog FORMAT=json and creates a fully structured board with sprint lists, labelled cards, and…",
+                "description": "Export your ArcKit product backlog to a Trello board with /arckit:trello. The command reads the JSON file that /arckit:backlog always writes and creates a fully structured board with sprint lists, labelled cards, and…",
                 "url": "https://arckit.org/guide/trello.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -423,7 +423,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
             <h1 class="app-page-hero__title">Trello Export Quick Guide</h1>
-            <p class="app-page-hero__description">Export your ArcKit product backlog to a Trello board with /arckit:trello. The command reads the JSON output from /arckit:backlog FORMAT=json and creates a fully structured board with sprint lists, labelled cards, and…</p>
+            <p class="app-page-hero__description">Export your ArcKit product backlog to a Trello board with /arckit:trello. The command reads the JSON file that /arckit:backlog always writes and creates a fully structured board with sprint lists, labelled cards, and…</p>
         </div>
     </div>
 
@@ -440,7 +440,7 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p>Export your ArcKit product backlog to a Trello board with <code>/arckit:trello</code>. The command reads the JSON output from <code>/arckit:backlog FORMAT=json</code> and creates a fully structured board with sprint lists, labelled cards, and acceptance criteria checklists.</p>
+<p>Export your ArcKit product backlog to a Trello board with <code>/arckit:trello</code>. The command reads the JSON file that <code>/arckit:backlog</code> always writes and creates a fully structured board with sprint lists, labelled cards, and acceptance criteria checklists.</p>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
 <table>
@@ -453,7 +453,7 @@
 <tbody>
 <tr>
 <td>Backlog JSON file (<code>ARC-*-BKLG-*.json</code>)</td>
-<td>Run <code>/arckit:backlog FORMAT=json</code></td>
+<td>Run <code>/arckit:backlog</code> (the JSON is always written)</td>
 </tr>
 <tr>
 <td>A Trello account</td>
@@ -573,7 +573,7 @@
 <tbody>
 <tr>
 <td>1. Generate backlog</td>
-<td><code>/arckit:backlog FORMAT=json</code> (or <code>FORMAT=all</code> for markdown + CSV + JSON)</td>
+<td><code>/arckit:backlog</code> (add <code>FORMAT=all</code> for the CSV export as well)</td>
 </tr>
 <tr>
 <td>2. Connect Trello (once)</td>

@@ -14,7 +14,7 @@ The Essential Eight is the ASD's prioritised baseline for mitigating cyber secur
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, hosting model, user populations |
 | Data model (`ARC-<id>-DATA-v*.md`) | Sensitive data categories that drive control intensity |
-| Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, security operations owner |
+| Risk register (`ARC-<id>-RISK-v1.0.md`) | Existing security risks and mitigations |
 
 ---
 
@@ -32,7 +32,7 @@ Output: `projects/<id>/ARC-<id>-AUE8-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
+| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) |
 | Revision History | Version, date, author, changes, approvals |
 | Executive Summary | System assessed, overall E8 maturity posture, highest-priority gaps, DISP position |
 | System Context | System name, classification, deployment model, IRAP status, cloud providers, data sovereignty, DISP membership, assessment date, assessor |

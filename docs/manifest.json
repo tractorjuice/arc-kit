@@ -1,23 +1,737 @@
 {
-  "generated": "2026-07-31T09:25:47.409Z",
+  "generated": "2026-11-25T07:04:01.305Z",
   "repository": {
     "name": "arc-kit"
   },
   "defaultDocument": "",
   "guides": [
     {
-      "path": "docs/guides/adm-preliminary.md",
-      "title": "TOGAF ADM Preliminary Playbook",
-      "category": "TOGAF ADM Overlay",
-      "status": "community",
-      "section": "Overlay Packs",
-      "pack": "TOGAF ADM Overlay"
-    },
-    {
       "path": "docs/guides/adr.md",
       "title": "Architecture Decision Record (ADR) Guide",
       "category": "Architecture",
       "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/ai-playbook.md",
+      "title": "AI Playbook for the UK Government: the 10 principles",
+      "category": "Compliance",
+      "status": "alpha",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/analyze.md",
+      "title": "Project Analysis Playbook",
+      "category": "Governance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/archify.md",
+      "title": "Interactive Diagram Guide",
+      "category": "Architecture",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/artifact-health.md",
+      "title": "Artifact Health Guide",
+      "category": "Governance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/atrs.md",
+      "title": "Algorithmic Transparency Recording Standard Playbook",
+      "category": "Compliance",
+      "status": "alpha",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/autoresearch.md",
+      "title": "Autoresearch Guide: Self-Improving Command Prompts",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/aws-documentation-mcp.md",
+      "title": "AWS documentation MCP servers: Knowledge, Documentation, AWS MCP",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/aws-research.md",
+      "title": "AWS Well-Architected Framework: the six pillars and AWS research",
+      "category": "Integrations",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/azure-research.md",
+      "title": "Azure Technology Research Guide",
+      "category": "Integrations",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/backlog.md",
+      "title": "Product backlog and user story template",
+      "category": "Planning",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/build.md",
+      "title": "Build Harness Guide",
+      "category": "Plugin Operations",
+      "status": "live",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/business-case.md",
+      "title": "Strategic Outline Business Case (SOBC) Guide",
+      "category": "Planning",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/byo-llm.md",
+      "title": "Bring Your Own LLM",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/c4-layout-science.md",
+      "title": "C4 Layout Science Guide",
+      "category": "Architecture",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/codes-of-practice.md",
+      "title": "UK Government Codes of Practice — ArcKit Reference Guide",
+      "category": "Compliance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/competitors.md",
+      "title": "Competitor Landscape Guide",
+      "category": "Procurement",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/conformance.md",
+      "title": "Architecture Conformance Guide",
+      "category": "Governance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/custom-commands.md",
+      "title": "Custom Commands Authoring Guide",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/customize.md",
+      "title": "Template Customization Guide",
+      "category": "Plugin Operations",
+      "status": "live",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/data-mesh-contract.md",
+      "title": "Data mesh and data contracts: a data product contract guide",
+      "category": "Architecture",
+      "status": "alpha",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/data-model.md",
+      "title": "Data model: entity relationship diagram (ERD) and logical model",
+      "category": "Architecture",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/data-quality-framework.md",
+      "title": "UK Government Data Quality Framework — ArcKit Reference Guide",
+      "category": "Governance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/datascout.md",
+      "title": "Data Source Discovery Guide",
+      "category": "Discovery",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/design-review.md",
+      "title": "Design Review Guide",
+      "category": "Architecture",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/devops.md",
+      "title": "DevOps Strategy Playbook",
+      "category": "Operations",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/dfd.md",
+      "title": "Data flow diagram (DFD): Yourdon-DeMarco symbols and levels",
+      "category": "Architecture",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/diagram.md",
+      "title": "C4 model architecture diagrams: context, container and component",
+      "category": "Architecture",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/dld-review.md",
+      "title": "Detailed Design Review Playbook",
+      "category": "Architecture",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/dos.md",
+      "title": "Digital Outcomes and Specialists Playbook",
+      "category": "Procurement",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/dpia.md",
+      "title": "Data protection impact assessment (DPIA): when you need one and how",
+      "category": "Compliance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/enterprise-scale.md",
+      "title": "ArcKit at Enterprise Scale",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/evaluate.md",
+      "title": "Vendor Evaluation Playbook",
+      "category": "Procurement",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/export-okf.md",
+      "title": "`/arckit:export-okf` - Open Knowledge Format export",
+      "category": "Interoperability",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/finops.md",
+      "title": "FinOps framework: a guide to cloud cost management",
+      "category": "Operations",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/framework.md",
+      "title": "Framework Guide",
+      "category": "Architecture",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/gcloud-clarify.md",
+      "title": "G-Cloud Clarification Questions Playbook",
+      "category": "Procurement",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/gcloud-search.md",
+      "title": "G-Cloud 15 (and G-Cloud 14): searching the Digital Marketplace",
+      "category": "Procurement",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/gcp-research.md",
+      "title": "Google Cloud research with the Developer Knowledge MCP server",
+      "category": "Integrations",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/glossary.md",
+      "title": "Glossary Guide",
+      "category": "Reporting",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/gov-code-search.md",
+      "title": "Government Code Search Guide",
+      "category": "Discovery",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/gov-landscape.md",
+      "title": "Government Code Landscape Analysis Guide",
+      "category": "Discovery",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/gov-reuse.md",
+      "title": "Government Code Reuse Assessment Guide",
+      "category": "Discovery",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/govs-007-security.md",
+      "title": "GovS 007: Security — ArcKit Reference Guide",
+      "category": "Compliance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/grants.md",
+      "title": "Innovate UK grants and UK government funding: a research guide",
+      "category": "Discovery",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/graph-report.md",
+      "title": "`/arckit:graph-report` — governance metrics dashboard",
+      "category": "Governance",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/health.md",
+      "title": "Health Check Guide",
+      "category": "Governance",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/hld-review.md",
+      "title": "High-Level Design Review Playbook",
+      "category": "Architecture",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/hooks.md",
+      "title": "Hooks Guide",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/impact.md",
+      "title": "Impact Analysis",
+      "category": "Governance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/import-okf.md",
+      "title": "`/arckit:import-okf` - Open Knowledge Format import",
+      "category": "Interoperability",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/init.md",
+      "title": "Init Guide",
+      "category": "Getting Started",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/jsp-936.md",
+      "title": "JSP 936: Dependable AI in Defence and how to evidence it",
+      "category": "Compliance",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/knowledge-compounding.md",
+      "title": "Knowledge Compounding Guide",
+      "category": "Governance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/maturity-model.md",
+      "title": "Maturity Model Guide",
+      "category": "Governance",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/mcp-servers.md",
+      "title": "ArcKit Plugin Setup Guide",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/microsoft-learn-mcp.md",
+      "title": "Microsoft Learn MCP server: setup, tools and endpoint",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/migration.md",
+      "title": "File Migration Playbook",
+      "category": "Planning",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/mlops.md",
+      "title": "MLOps framework: model lifecycle and maturity guide",
+      "category": "Operations",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/mod-secure.md",
+      "title": "MOD Secure by Design: the 7 principles and assessment",
+      "category": "Compliance",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/national-data-strategy.md",
+      "title": "UK National Data Strategy — ArcKit Reference Guide",
+      "category": "Compliance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/navigator.md",
+      "title": "`/arckit:navigator` — what should I do next?",
+      "category": "Governance",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/nl-overlay.md",
+      "title": "Netherlands Public Sector Overlay Guide",
+      "category": "Community overlays - Netherlands",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Community overlays - Netherlands"
+    },
+    {
+      "path": "docs/guides/operationalize.md",
+      "title": "Operational Readiness Playbook",
+      "category": "Operations",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/pages.md",
+      "title": "GitHub Pages Generator Playbook",
+      "category": "Reporting",
+      "status": "alpha",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/pinecone-mcp.md",
+      "title": "Pinecone MCP Integration Guide",
+      "category": "Plugin Operations",
+      "status": "experimental",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/plan.md",
+      "title": "Project Plan Playbook",
+      "category": "Planning",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/platform-design.md",
+      "title": "Platform Strategy Design Guide",
+      "category": "Architecture",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/presentation.md",
+      "title": "Presentation Guide",
+      "category": "Reporting",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/principles-compliance.md",
+      "title": "Principles Compliance Guide",
+      "category": "Governance",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/principles.md",
+      "title": "Architecture Principles Guide",
+      "category": "Architecture",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/procurement.md",
+      "title": "Vendor Procurement Guide",
+      "category": "Procurement",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/productivity.md",
+      "title": "Architecture Productivity Guide",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/remote-control.md",
+      "title": "Govern Architecture from Anywhere: Using Claude Code Remote Control with ArcKit",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/requirements.md",
+      "title": "Non-functional requirements and the business requirements document",
+      "category": "Discovery",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/research.md",
+      "title": "Technology Research Guide",
+      "category": "Discovery",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/risk-management.md",
+      "title": "Risk Management Guide",
+      "category": "Governance",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/risk.md",
+      "title": "Risk register: template and Orange Book guide",
+      "category": "Governance",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/roadmap.md",
+      "title": "Architecture Roadmap Playbook",
+      "category": "Planning",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/score.md",
+      "title": "Vendor Scoring",
+      "category": "Procurement",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/search.md",
+      "title": "Project Search",
+      "category": "Governance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/secure.md",
+      "title": "Secure by Design for UK government: the 10 principles and assessment",
+      "category": "Compliance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/security-hooks.md",
+      "title": "Security Hooks Guide",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/service-assessment.md",
+      "title": "GDS Service Standard assessment: the 14 points and how to prepare",
+      "category": "Compliance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/servicenow.md",
+      "title": "CMDB and ServiceNow service design: a practical guide",
+      "category": "Integrations",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/session-memory.md",
+      "title": "Session Memory",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/sobc.md",
+      "title": "Business case template: Green Book five case model and SOBC",
+      "category": "Planning",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/sow.md",
+      "title": "Statement of work (SOW): template and what to include",
+      "category": "Procurement",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/stakeholder-analysis.md",
+      "title": "Stakeholder Analysis Guide",
+      "category": "Discovery",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/stakeholders.md",
+      "title": "Stakeholder mapping and analysis: power/interest grid guide",
+      "category": "Discovery",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/start.md",
+      "title": "Getting Started with ArcKit",
+      "category": "Getting Started",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/story.md",
+      "title": "Project Story Guide",
+      "category": "Reporting",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/strategy.md",
+      "title": "Architecture Strategy Playbook",
+      "category": "Planning",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/tcop.md",
+      "title": "Technology Code of Practice (TCoP): 13 points and assessment evidence",
+      "category": "Compliance",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/template-builder.md",
+      "title": "Template Builder Guide",
+      "category": "Plugin Operations",
+      "status": "alpha",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/tenders.md",
+      "title": "Find a Tender and Contracts Finder: UK public contract award data",
+      "category": "Procurement",
+      "status": "beta",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/traceability.md",
+      "title": "Requirements traceability matrix: guide and template",
+      "category": "Governance",
+      "status": "live",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/trello.md",
+      "title": "Trello Export Quick Guide",
+      "category": "Integrations",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/upgrading.md",
+      "title": "Upgrading ArcKit",
+      "category": "Plugin Operations",
+      "status": "beta",
+      "section": "Plugin and Extension Operations"
+    },
+    {
+      "path": "docs/guides/wardley-climate.md",
+      "title": "Climate Assessment Playbook",
+      "category": "Wardley Mapping",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/wardley-doctrine.md",
+      "title": "Doctrine Assessment Playbook",
+      "category": "Wardley Mapping",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/wardley-gameplay.md",
+      "title": "Gameplay Analysis Playbook",
+      "category": "Wardley Mapping",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/wardley-value-chain.md",
+      "title": "Value Chain Decomposition Playbook",
+      "category": "Wardley Mapping",
+      "status": "experimental",
+      "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/wardley.md",
+      "title": "Wardley mapping: value chains, evolution and build vs buy",
+      "category": "Wardley Mapping",
+      "status": "experimental",
       "section": "Core Workflows"
     },
     {
@@ -69,65 +783,52 @@
       "pack": "AI Agent Architecture Overlay"
     },
     {
-      "path": "docs/guides/ai-playbook.md",
-      "title": "AI Playbook Assessment Playbook",
-      "category": "Compliance",
-      "status": "alpha",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/analyze.md",
-      "title": "Project Analysis Playbook",
-      "category": "Governance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/application-inventory.md",
-      "title": "Application Inventory Playbook",
-      "category": "TOGAF ADM Overlay",
+      "path": "docs/guides/arc42-concepts.md",
+      "title": "arc42 Crosscutting Concepts Playbook",
+      "category": "arc42 Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "TOGAF ADM Overlay"
+      "pack": "arc42 Overlay"
     },
     {
-      "path": "docs/guides/application-rationalization.md",
-      "title": "Application Rationalization Playbook",
-      "category": "TOGAF ADM Overlay",
+      "path": "docs/guides/arc42-debt.md",
+      "title": "arc42 Technical Debt Register Playbook",
+      "category": "arc42 Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "TOGAF ADM Overlay"
+      "pack": "arc42 Overlay"
     },
     {
-      "path": "docs/guides/architecture-board.md",
-      "title": "Architecture Board Playbook",
-      "category": "TOGAF ADM Overlay",
+      "path": "docs/guides/arc42-handover.md",
+      "title": "arc42 SDD Handover Playbook",
+      "category": "arc42 Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "TOGAF ADM Overlay"
+      "pack": "arc42 Overlay"
     },
     {
-      "path": "docs/guides/architecture-change.md",
-      "title": "Architecture Change Request Playbook",
-      "category": "TOGAF ADM Overlay",
+      "path": "docs/guides/arc42-quality.md",
+      "title": "arc42 Quality Scenarios Playbook",
+      "category": "arc42 Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "TOGAF ADM Overlay"
+      "pack": "arc42 Overlay"
     },
     {
-      "path": "docs/guides/architecture-repository.md",
-      "title": "Architecture Repository Playbook",
-      "category": "TOGAF ADM Overlay",
+      "path": "docs/guides/arc42.md",
+      "title": "arc42 Architecture Description Playbook",
+      "category": "arc42 Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "TOGAF ADM Overlay"
+      "pack": "arc42 Overlay"
     },
     {
-      "path": "docs/guides/artifact-health.md",
-      "title": "Artifact Health Guide",
-      "category": "Governance",
-      "status": "beta",
-      "section": "Core Workflows"
+      "path": "docs/guides/at-barrierefreiheit.md",
+      "title": "Austrian Accessibility (BaFG / WZG) Playbook",
+      "category": "Community overlays - Austria",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Community overlays - Austria"
     },
     {
       "path": "docs/guides/at-bvergg.md",
@@ -152,21 +853,6 @@
       "status": "community",
       "section": "Overlay Packs",
       "pack": "Community overlays - Austria"
-    },
-    {
-      "path": "docs/guides/atrs.md",
-      "title": "Algorithmic Transparency Recording Standard Playbook",
-      "category": "Compliance",
-      "status": "alpha",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/au-aescsf.md",
-      "title": "AU AESCSF Maturity Assessment",
-      "category": "Australian Federal / Energy Overlay",
-      "status": "community",
-      "section": "Overlay Packs",
-      "pack": "Australian Federal / Energy Overlay"
     },
     {
       "path": "docs/guides/au-ai-assurance.md",
@@ -195,14 +881,6 @@
     {
       "path": "docs/guides/au-e8-posture.md",
       "title": "Australian Essential Eight Maturity Posture Playbook",
-      "category": "Australian Federal / Energy Overlay",
-      "status": "community",
-      "section": "Overlay Packs",
-      "pack": "Australian Federal / Energy Overlay"
-    },
-    {
-      "path": "docs/guides/au-energy-compliance.md",
-      "title": "AU Energy Compliance Pack",
       "category": "Australian Federal / Energy Overlay",
       "status": "community",
       "section": "Overlay Packs",
@@ -257,61 +935,20 @@
       "pack": "Australian Federal / Energy Overlay"
     },
     {
-      "path": "docs/guides/autoresearch.md",
-      "title": "Autoresearch Guide: Self-Improving Command Prompts",
-      "category": "Plugin Operations",
-      "status": "beta",
-      "section": "Plugin and Extension Operations"
-    },
-    {
-      "path": "docs/guides/aws-research.md",
-      "title": "AWS Technology Research Guide",
-      "category": "Integrations",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/azure-research.md",
-      "title": "Azure Technology Research Guide",
-      "category": "Integrations",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/backlog.md",
-      "title": "Product Backlog Quick Guide",
-      "category": "Planning",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/build.md",
-      "title": "Build Harness Guide",
-      "category": "Plugin Operations",
-      "status": "live",
-      "section": "Plugin and Extension Operations"
-    },
-    {
-      "path": "docs/guides/business-capability-map.md",
-      "title": "Business Capability Map Playbook",
-      "category": "TOGAF ADM Overlay",
+      "path": "docs/guides/au-aescsf.md",
+      "title": "AU AESCSF Maturity Assessment",
+      "category": "Australian Federal / Energy Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "TOGAF ADM Overlay"
+      "pack": "Australian Federal / Energy Overlay"
     },
     {
-      "path": "docs/guides/business-case.md",
-      "title": "Strategic Outline Business Case (SOBC) Guide",
-      "category": "Planning",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/c4-layout-science.md",
-      "title": "C4 Layout Science Guide",
-      "category": "Architecture",
-      "status": "beta",
-      "section": "Core Workflows"
+      "path": "docs/guides/au-energy-compliance.md",
+      "title": "AU Energy Compliance Pack",
+      "category": "Australian Federal / Energy Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Australian Federal / Energy Overlay"
     },
     {
       "path": "docs/guides/ca-aia.md",
@@ -410,143 +1047,16 @@
       "pack": "Canada Federal Overlay"
     },
     {
-      "path": "docs/guides/codes-of-practice.md",
-      "title": "UK Government Codes of Practice — ArcKit Reference Guide",
-      "category": "Compliance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/competitors.md",
-      "title": "Competitor Landscape Guide",
-      "category": "Procurement",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/conformance.md",
-      "title": "Architecture Conformance Guide",
-      "category": "Governance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/create.md",
-      "title": "FDE Site Generator Guide",
-      "category": "FDE Site Generator",
-      "status": "community",
-      "section": "Overlay Packs",
-      "pack": "FDE Site Generator"
-    },
-    {
-      "path": "docs/guides/custom-commands.md",
-      "title": "Custom Commands Authoring Guide",
-      "category": "Plugin Operations",
-      "status": "beta",
-      "section": "Plugin and Extension Operations"
-    },
-    {
-      "path": "docs/guides/customize.md",
-      "title": "Template Customization Guide",
-      "category": "Plugin Operations",
-      "status": "live",
-      "section": "Plugin and Extension Operations"
-    },
-    {
-      "path": "docs/guides/data-mesh-contract.md",
-      "title": "Data Mesh Contract Quick Guide",
-      "category": "Architecture",
-      "status": "alpha",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/data-model.md",
-      "title": "Data Model Quick Guide",
-      "category": "Architecture",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/data-quality-framework.md",
-      "title": "UK Government Data Quality Framework — ArcKit Reference Guide",
-      "category": "Governance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/datascout.md",
-      "title": "Data Source Discovery Guide",
-      "category": "Discovery",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/declaration.md",
-      "title": "G-Cloud Supplier Declaration Guide",
-      "category": "UK G-Cloud Supplier Overlay",
-      "status": "community",
-      "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
-    },
-    {
-      "path": "docs/guides/design-review.md",
-      "title": "Design Review Guide",
-      "category": "Architecture",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/devops.md",
-      "title": "DevOps Strategy Playbook",
-      "category": "Operations",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/dfd.md",
-      "title": "Data Flow Diagram Guide",
-      "category": "Architecture",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/diagram.md",
-      "title": "Architecture Diagram Guide",
-      "category": "Architecture",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/dld-review.md",
-      "title": "Detailed Design Review Playbook",
-      "category": "Architecture",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/dos.md",
-      "title": "Digital Outcomes and Specialists Playbook",
-      "category": "Procurement",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/dpia.md",
-      "title": "Data Protection Impact Assessment (DPIA) Guide",
-      "category": "Compliance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/enterprise-scale.md",
-      "title": "ArcKit at Enterprise Scale",
-      "category": "Plugin Operations",
-      "status": "beta",
-      "section": "Plugin and Extension Operations"
-    },
-    {
       "path": "docs/guides/eu-ai-act.md",
       "title": "EU AI Act Compliance Assessment Playbook",
+      "category": "Community overlays - EU",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Community overlays - EU"
+    },
+    {
+      "path": "docs/guides/eu-cloud-sovereignty.md",
+      "title": "EU Cloud Sovereignty Framework Playbook",
       "category": "Community overlays - EU",
       "status": "community",
       "section": "Overlay Packs",
@@ -601,25 +1111,12 @@
       "pack": "Community overlays - EU"
     },
     {
-      "path": "docs/guides/evaluate.md",
-      "title": "Vendor Evaluation Playbook",
-      "category": "Procurement",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/export-okf.md",
-      "title": "`/arckit:export-okf` - Open Knowledge Format export",
-      "category": "Interoperability",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/finops.md",
-      "title": "FinOps Strategy Playbook",
-      "category": "Operations",
-      "status": "experimental",
-      "section": "Core Workflows"
+      "path": "docs/guides/create.md",
+      "title": "FDE Site Generator Guide",
+      "category": "FDE Site Generator",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "FDE Site Generator"
     },
     {
       "path": "docs/guides/fr-algorithme-public.md",
@@ -718,295 +1215,92 @@
       "pack": "Community overlays - France"
     },
     {
-      "path": "docs/guides/framework.md",
-      "title": "Framework Guide",
-      "category": "Architecture",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/gap-analysis.md",
-      "title": "TOGAF Gap Analysis Playbook",
-      "category": "TOGAF ADM Overlay",
+      "path": "docs/guides/nl-bio.md",
+      "title": "BIO2 Conformance Playbook",
+      "category": "Community overlays - Netherlands",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "TOGAF ADM Overlay"
+      "pack": "Community overlays - Netherlands"
     },
     {
-      "path": "docs/guides/gcloud-clarify.md",
-      "title": "G-Cloud Clarification Questions Playbook",
-      "category": "Procurement",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/gcloud-competitors.md",
-      "title": "G-Cloud Competitor Benchmark Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/nl-cloud.md",
+      "title": "Rijksbreed Cloudbeleid Compliance Playbook",
+      "category": "Community overlays - Netherlands",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
+      "pack": "Community overlays - Netherlands"
     },
     {
-      "path": "docs/guides/gcloud-search.md",
-      "title": "G-Cloud Search Playbook",
-      "category": "Procurement",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/gcp-research.md",
-      "title": "Google Cloud Technology Research Guide",
-      "category": "Integrations",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/glossary.md",
-      "title": "Glossary Guide",
-      "category": "Reporting",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/gov-code-search.md",
-      "title": "Government Code Search Guide",
-      "category": "Discovery",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/gov-landscape.md",
-      "title": "Government Code Landscape Analysis Guide",
-      "category": "Discovery",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/gov-reuse.md",
-      "title": "Government Code Reuse Assessment Guide",
-      "category": "Discovery",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/govs-007-security.md",
-      "title": "GovS 007: Security — ArcKit Reference Guide",
-      "category": "Compliance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/grants.md",
-      "title": "UK Grants & Funding Research Playbook",
-      "category": "Discovery",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/graph-report.md",
-      "title": "`/arckit:graph-report` — governance metrics dashboard",
-      "category": "Governance",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/health.md",
-      "title": "Health Check Guide",
-      "category": "Governance",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/hld-review.md",
-      "title": "High-Level Design Review Playbook",
-      "category": "Architecture",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/hooks.md",
-      "title": "Hooks Guide",
-      "category": "Plugin Operations",
-      "status": "beta",
-      "section": "Plugin and Extension Operations"
-    },
-    {
-      "path": "docs/guides/impact.md",
-      "title": "Impact Analysis",
-      "category": "Governance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/import-okf.md",
-      "title": "`/arckit:import-okf` - Open Knowledge Format import",
-      "category": "Interoperability",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/init.md",
-      "title": "Init Guide",
-      "category": "Getting Started",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/jsp-936.md",
-      "title": "JSP 936 AI Assurance Guide",
-      "category": "Compliance",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/knowledge-compounding.md",
-      "title": "Knowledge Compounding Guide",
-      "category": "Governance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/lot-questions.md",
-      "title": "G-Cloud Lot Questions Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/nl-exit.md",
+      "title": "Cloud Exit Plan (Clause 3.2) Playbook",
+      "category": "Community overlays - Netherlands",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
+      "pack": "Community overlays - Netherlands"
     },
     {
-      "path": "docs/guides/maturity-model.md",
-      "title": "Maturity Model Guide",
-      "category": "Governance",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/mcp-servers.md",
-      "title": "ArcKit Plugin Setup Guide",
-      "category": "Plugin Operations",
-      "status": "beta",
-      "section": "Plugin and Extension Operations"
-    },
-    {
-      "path": "docs/guides/migration.md",
-      "title": "File Migration Playbook",
-      "category": "Planning",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/mlops.md",
-      "title": "MLOps Strategy Playbook",
-      "category": "Operations",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/mod-secure.md",
-      "title": "MOD Secure by Design Playbook",
-      "category": "Compliance",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/national-data-strategy.md",
-      "title": "UK National Data Strategy — ArcKit Reference Guide",
-      "category": "Compliance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/navigator.md",
-      "title": "`/arckit:navigator` — what should I do next?",
-      "category": "Governance",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/operationalize.md",
-      "title": "Operational Readiness Playbook",
-      "category": "Operations",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/pages.md",
-      "title": "GitHub Pages Generator Playbook",
-      "category": "Reporting",
-      "status": "alpha",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/pinecone-mcp.md",
-      "title": "Pinecone MCP Integration Guide",
-      "category": "Plugin Operations",
-      "status": "experimental",
-      "section": "Plugin and Extension Operations"
-    },
-    {
-      "path": "docs/guides/plan.md",
-      "title": "Project Plan Playbook",
-      "category": "Planning",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/platform-design.md",
-      "title": "Platform Strategy Design Guide",
-      "category": "Architecture",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/presentation.md",
-      "title": "Presentation Guide",
-      "category": "Reporting",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/pricing.md",
-      "title": "G-Cloud Pricing Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/nl-gemma.md",
+      "title": "GEMMA Alignment Playbook",
+      "category": "Community overlays - Netherlands",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
+      "pack": "Community overlays - Netherlands"
     },
     {
-      "path": "docs/guides/principles-compliance.md",
-      "title": "Principles Compliance Guide",
-      "category": "Governance",
-      "status": "live",
-      "section": "Core Workflows"
+      "path": "docs/guides/nl-nora.md",
+      "title": "NORA Conformance Assessment Playbook",
+      "category": "Community overlays - Netherlands",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Community overlays - Netherlands"
     },
     {
-      "path": "docs/guides/principles.md",
-      "title": "Architecture Principles Guide",
-      "category": "Architecture",
-      "status": "live",
-      "section": "Core Workflows"
+      "path": "docs/guides/nl-tbb.md",
+      "title": "Te Beschermen Belangen (TBB) Determination Playbook",
+      "category": "Community overlays - Netherlands",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Community overlays - Netherlands"
     },
     {
-      "path": "docs/guides/procurement.md",
-      "title": "Vendor Procurement Guide",
-      "category": "Procurement",
-      "status": "beta",
-      "section": "Core Workflows"
+      "path": "docs/guides/agile-governance.md",
+      "title": "O-AA Agile Governance Playbook",
+      "category": "Open Agile Architecture Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Open Agile Architecture Overlay"
     },
     {
-      "path": "docs/guides/productivity.md",
-      "title": "Architecture Productivity Guide",
-      "category": "Plugin Operations",
-      "status": "beta",
-      "section": "Plugin and Extension Operations"
+      "path": "docs/guides/agile-security.md",
+      "title": "O-AA Agile Security Playbook",
+      "category": "Open Agile Architecture Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Open Agile Architecture Overlay"
     },
     {
-      "path": "docs/guides/remote-control.md",
-      "title": "Govern Architecture from Anywhere: Using Claude Code Remote Control with ArcKit",
-      "category": "Plugin Operations",
-      "status": "beta",
-      "section": "Plugin and Extension Operations"
+      "path": "docs/guides/agile-strategy.md",
+      "title": "O-AA Agile Strategy Playbook",
+      "category": "Open Agile Architecture Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Open Agile Architecture Overlay"
+    },
+    {
+      "path": "docs/guides/oaa-adm-lite.md",
+      "title": "O-AA ADM Lite Playbook",
+      "category": "Open Agile Architecture Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Open Agile Architecture Overlay"
+    },
+    {
+      "path": "docs/guides/product-architecture.md",
+      "title": "O-AA Product Architecture Playbook",
+      "category": "Open Agile Architecture Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "Open Agile Architecture Overlay"
     },
     {
       "path": "docs/guides/repo-audit.md",
@@ -1025,253 +1319,68 @@
       "pack": "Repository Plugin"
     },
     {
-      "path": "docs/guides/requirements.md",
-      "title": "Requirements Guide",
-      "category": "Discovery",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/research.md",
-      "title": "Technology Research Guide",
-      "category": "Discovery",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/review.md",
-      "title": "G-Cloud Submission Review Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/adm-preliminary.md",
+      "title": "TOGAF ADM Preliminary Playbook",
+      "category": "TOGAF ADM Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
+      "pack": "TOGAF ADM Overlay"
     },
     {
-      "path": "docs/guides/risk-management.md",
-      "title": "Risk Management Guide",
-      "category": "Governance",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/risk.md",
-      "title": "Risk Register Playbook",
-      "category": "Governance",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/roadmap.md",
-      "title": "Architecture Roadmap Playbook",
-      "category": "Planning",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/score.md",
-      "title": "Vendor Scoring",
-      "category": "Procurement",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/sdd-lot1a.md",
-      "title": "G-Cloud Lot 1a Service Definition Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/application-inventory.md",
+      "title": "Application Inventory Playbook",
+      "category": "TOGAF ADM Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
+      "pack": "TOGAF ADM Overlay"
     },
     {
-      "path": "docs/guides/sdd-lot1b.md",
-      "title": "G-Cloud Lot 1b Service Definition Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/application-rationalization.md",
+      "title": "Application Rationalization Playbook",
+      "category": "TOGAF ADM Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
+      "pack": "TOGAF ADM Overlay"
     },
     {
-      "path": "docs/guides/sdd-lot2a.md",
-      "title": "G-Cloud Lot 2a Service Definition Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/architecture-board.md",
+      "title": "Architecture Board Playbook",
+      "category": "TOGAF ADM Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
+      "pack": "TOGAF ADM Overlay"
     },
     {
-      "path": "docs/guides/sdd-lot2b.md",
-      "title": "G-Cloud Lot 2b Service Definition Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/architecture-change.md",
+      "title": "Architecture Change Request Playbook",
+      "category": "TOGAF ADM Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
+      "pack": "TOGAF ADM Overlay"
     },
     {
-      "path": "docs/guides/sdd-lot3.md",
-      "title": "G-Cloud Lot 3 Service Definition Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/architecture-repository.md",
+      "title": "Architecture Repository Playbook",
+      "category": "TOGAF ADM Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
+      "pack": "TOGAF ADM Overlay"
     },
     {
-      "path": "docs/guides/search.md",
-      "title": "Project Search",
-      "category": "Governance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/secure.md",
-      "title": "Secure by Design Playbook",
-      "category": "Compliance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/security-hooks.md",
-      "title": "Security Hooks Guide",
-      "category": "Plugin Operations",
-      "status": "beta",
-      "section": "Plugin and Extension Operations"
-    },
-    {
-      "path": "docs/guides/security.md",
-      "title": "G-Cloud Security Assertions Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/business-capability-map.md",
+      "title": "Business Capability Map Playbook",
+      "category": "TOGAF ADM Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
+      "pack": "TOGAF ADM Overlay"
     },
     {
-      "path": "docs/guides/service-assessment.md",
-      "title": "GDS Service Assessment Guide",
-      "category": "Compliance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/service-design.md",
-      "title": "G-Cloud Service Design Guide",
-      "category": "UK G-Cloud Supplier Overlay",
+      "path": "docs/guides/gap-analysis.md",
+      "title": "TOGAF Gap Analysis Playbook",
+      "category": "TOGAF ADM Overlay",
       "status": "community",
       "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
-    },
-    {
-      "path": "docs/guides/servicenow.md",
-      "title": "ServiceNow Service Design Playbook",
-      "category": "Integrations",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/session-memory.md",
-      "title": "Session Memory",
-      "category": "Plugin Operations",
-      "status": "beta",
-      "section": "Plugin and Extension Operations"
-    },
-    {
-      "path": "docs/guides/sobc.md",
-      "title": "Strategic Outline Business Case Playbook",
-      "category": "Planning",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/social-value.md",
-      "title": "G-Cloud Social Value Guide",
-      "category": "UK G-Cloud Supplier Overlay",
-      "status": "community",
-      "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
-    },
-    {
-      "path": "docs/guides/sow.md",
-      "title": "Statement of Work Playbook",
-      "category": "Procurement",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/stakeholder-analysis.md",
-      "title": "Stakeholder Analysis Guide",
-      "category": "Discovery",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/stakeholders.md",
-      "title": "Stakeholder Analysis Playbook",
-      "category": "Discovery",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/start.md",
-      "title": "Getting Started with ArcKit",
-      "category": "Getting Started",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/story.md",
-      "title": "Project Story Guide",
-      "category": "Reporting",
-      "status": "live",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/strategy.md",
-      "title": "Architecture Strategy Playbook",
-      "category": "Planning",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/submission-pack.md",
-      "title": "G-Cloud Submission Pack Guide",
-      "category": "UK G-Cloud Supplier Overlay",
-      "status": "community",
-      "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
-    },
-    {
-      "path": "docs/guides/supplier-profile.md",
-      "title": "G-Cloud Supplier Profile Guide",
-      "category": "UK G-Cloud Supplier Overlay",
-      "status": "community",
-      "section": "Overlay Packs",
-      "pack": "UK G-Cloud Supplier Overlay"
-    },
-    {
-      "path": "docs/guides/tcop.md",
-      "title": "Technology Code of Practice Playbook",
-      "category": "Compliance",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/template-builder.md",
-      "title": "Template Builder Guide",
-      "category": "Plugin Operations",
-      "status": "alpha",
-      "section": "Plugin and Extension Operations"
-    },
-    {
-      "path": "docs/guides/tenders.md",
-      "title": "Procurement Market Intelligence Guide",
-      "category": "Procurement",
-      "status": "beta",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/traceability.md",
-      "title": "Traceability Guide",
-      "category": "Governance",
-      "status": "live",
-      "section": "Core Workflows"
+      "pack": "TOGAF ADM Overlay"
     },
     {
       "path": "docs/guides/transition-architecture.md",
@@ -1280,13 +1389,6 @@
       "status": "community",
       "section": "Overlay Packs",
       "pack": "TOGAF ADM Overlay"
-    },
-    {
-      "path": "docs/guides/trello.md",
-      "title": "Trello Export Quick Guide",
-      "category": "Integrations",
-      "status": "experimental",
-      "section": "Core Workflows"
     },
     {
       "path": "docs/guides/uae-ai-autonomy-tier.md",
@@ -1417,6 +1519,206 @@
       "pack": "UK Finance Payments Overlay"
     },
     {
+      "path": "docs/guides/uk-food-allergens.md",
+      "title": "Food Safety: Allergen Information",
+      "category": "UK Food Safety Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK Food Safety Overlay"
+    },
+    {
+      "path": "docs/guides/uk-food-check.md",
+      "title": "Food Safety: Where Things Stand",
+      "category": "UK Food Safety Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK Food Safety Overlay"
+    },
+    {
+      "path": "docs/guides/uk-food-cleaning-schedule.md",
+      "title": "Food Safety: Cleaning Schedule",
+      "category": "UK Food Safety Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK Food Safety Overlay"
+    },
+    {
+      "path": "docs/guides/uk-food-own-methods.md",
+      "title": "Food Safety: Own Methods and Special Processes",
+      "category": "UK Food Safety Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK Food Safety Overlay"
+    },
+    {
+      "path": "docs/guides/uk-food-profile.md",
+      "title": "Food Safety: Business Profile",
+      "category": "UK Food Safety Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK Food Safety Overlay"
+    },
+    {
+      "path": "docs/guides/uk-food-record-sheets.md",
+      "title": "Food Safety: Diary and Record Sheets",
+      "category": "UK Food Safety Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK Food Safety Overlay"
+    },
+    {
+      "path": "docs/guides/uk-food-safe-methods.md",
+      "title": "Food Safety: Safe Methods",
+      "category": "UK Food Safety Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK Food Safety Overlay"
+    },
+    {
+      "path": "docs/guides/uk-food-sign-off.md",
+      "title": "Food Safety: Sign-off",
+      "category": "UK Food Safety Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK Food Safety Overlay"
+    },
+    {
+      "path": "docs/guides/uk-food-suppliers.md",
+      "title": "Food Safety: Suppliers and Contacts",
+      "category": "UK Food Safety Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK Food Safety Overlay"
+    },
+    {
+      "path": "docs/guides/declaration.md",
+      "title": "G-Cloud Supplier Declaration Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/gcloud-competitors.md",
+      "title": "G-Cloud Competitor Benchmark Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/lot-questions.md",
+      "title": "G-Cloud Lot Questions Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/pricing.md",
+      "title": "G-Cloud Pricing Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/review.md",
+      "title": "G-Cloud Submission Review Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/sdd-lot1a.md",
+      "title": "G-Cloud Lot 1a Service Definition Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/sdd-lot1b.md",
+      "title": "G-Cloud Lot 1b Service Definition Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/sdd-lot2a.md",
+      "title": "G-Cloud Lot 2a Service Definition Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/sdd-lot2b.md",
+      "title": "G-Cloud Lot 2b Service Definition Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/sdd-lot3.md",
+      "title": "G-Cloud Lot 3 Service Definition Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/security.md",
+      "title": "G-Cloud Security Assertions Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/service-design.md",
+      "title": "G-Cloud Service Design Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/social-value.md",
+      "title": "G-Cloud Social Value Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/submission-pack.md",
+      "title": "G-Cloud Submission Pack Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/supplier-profile.md",
+      "title": "G-Cloud Supplier Profile Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/legacy-assessment.md",
+      "title": "Legacy IT assessment",
+      "category": "UK Legacy IT Assessment Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK Legacy IT Assessment Overlay"
+    },
+    {
       "path": "docs/guides/uk-mdr-classification.md",
       "title": "UK + EU MDR SaMD / AIaMD Classification Guide",
       "category": "UK NHS Clinical Safety Overlay",
@@ -1447,13 +1749,6 @@
       "status": "community",
       "section": "Overlay Packs",
       "pack": "UK NHS Clinical Safety Overlay"
-    },
-    {
-      "path": "docs/guides/upgrading.md",
-      "title": "Upgrading ArcKit",
-      "category": "Plugin Operations",
-      "status": "beta",
-      "section": "Plugin and Extension Operations"
     },
     {
       "path": "docs/guides/us-ai-impact.md",
@@ -1534,48 +1829,6 @@
       "status": "community",
       "section": "Overlay Packs",
       "pack": "USA Federal Civilian Overlay"
-    },
-    {
-      "path": "docs/guides/wardley-climate.md",
-      "title": "Climate Assessment Playbook",
-      "category": "Wardley Mapping",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/wardley-doctrine.md",
-      "title": "Doctrine Assessment Playbook",
-      "category": "Wardley Mapping",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/wardley-gameplay.md",
-      "title": "Gameplay Analysis Playbook",
-      "category": "Wardley Mapping",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/wardley-value-chain.md",
-      "title": "Value Chain Decomposition Playbook",
-      "category": "Wardley Mapping",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/wardley.md",
-      "title": "Wardley Mapping Playbook",
-      "category": "Wardley Mapping",
-      "status": "experimental",
-      "section": "Core Workflows"
-    },
-    {
-      "path": "docs/guides/workflow.md",
-      "title": "The ArcKit Workflow, Phase by Phase",
-      "category": "Getting Started",
-      "status": "live",
-      "section": "Core Workflows"
     }
   ],
   "roleGuides": [
@@ -1713,14 +1966,19 @@
     "FDE Site Generator",
     "Repository Plugin",
     "TOGAF ADM Overlay",
+    "Open Agile Architecture Overlay",
+    "arc42 Overlay",
     "Australian Federal / Energy Overlay",
     "Community overlays - Austria",
     "Canada Federal Overlay",
     "Community overlays - EU",
     "Community overlays - France",
+    "Community overlays - Netherlands",
     "UAE Federal Overlay",
     "UK G-Cloud Supplier Overlay",
     "UK Finance Payments Overlay",
+    "UK Food Safety Overlay",
+    "UK Legacy IT Assessment Overlay",
     "UK NHS Clinical Safety Overlay",
     "USA Federal Civilian Overlay",
     "Community",
@@ -1767,6 +2025,16 @@
     "AAIN": "Architecture",
     "AASE": "Governance",
     "AAMT": "Governance",
+    "OASTR": "Planning",
+    "OAPR": "Architecture",
+    "OAAL": "Architecture",
+    "OASEC": "Governance",
+    "OAGOV": "Governance",
+    "ARC42": "Architecture",
+    "QUAL": "Architecture",
+    "CONC": "Architecture",
+    "DEBT": "Architecture",
+    "SDDH": "Planning",
     "RISK": "Governance",
     "TRAC": "Governance",
     "PRIN-COMP": "Governance",
@@ -1785,6 +2053,7 @@
     "ATRS": "Compliance",
     "DPIA": "Compliance",
     "JSP936": "Compliance",
+    "LEGACY": "Compliance",
     "SVCASS": "Compliance",
     "SNOW": "Operations",
     "DEVOPS": "Operations",
@@ -1824,6 +2093,7 @@
     "CRA": "Compliance",
     "DSA": "Compliance",
     "DATAACT": "Compliance",
+    "EUCSF": "Compliance",
     "IRN": "Governance",
     "CNIL": "Compliance",
     "SECNUM": "Compliance",
@@ -1836,6 +2106,7 @@
     "ALGO": "Compliance",
     "PSSI": "Compliance",
     "REUSE": "Procurement",
+    "ATBFR": "Compliance",
     "ATDSG": "Compliance",
     "ATNISG": "Compliance",
     "BVERGG": "Procurement",
@@ -1885,12 +2156,30 @@
     "AUPSPF": "Governance",
     "AUAIA": "Compliance",
     "AUDISP": "Compliance",
+    "RBCLOUD": "Compliance",
+    "TBB": "Compliance",
+    "BIO2": "Compliance",
+    "NLEXIT": "Governance",
+    "NORA": "Governance",
+    "GEMMA": "Architecture",
     "FSSCA": "Compliance",
     "FSSAFE": "Compliance",
     "FSCD": "Compliance",
     "FSCTP": "Compliance",
     "NHSDTAC": "Compliance",
     "NHSMDR": "Compliance",
+    "FOODPROF": "Compliance",
+    "FOODXC": "Compliance",
+    "FOODCLN": "Compliance",
+    "FOODCHL": "Compliance",
+    "FOODCOOK": "Compliance",
+    "FOODMGT": "Compliance",
+    "FOODOWN": "Compliance",
+    "FOODCMP": "Compliance",
+    "FOODALG": "Compliance",
+    "FOODCS": "Compliance",
+    "FOODSUP": "Compliance",
+    "FOODREC": "Compliance",
     "MMOD": "Governance"
   },
   "projects": []

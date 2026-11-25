@@ -15,7 +15,8 @@ The ISM is the authoritative control library for Australian Federal entities and
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, hosting model, data flows |
 | Data model (`ARC-<id>-DATA-v*.md`) | Sensitivity categories driving control intensity |
 | `/arckit:au-e8-posture` output (`ARC-<id>-AUE8-v1.0.md`) | Cyber baseline that the ISM SoA cross-references |
-| Vendor HLD (`vendors/*/hld-v*.md`) | Architecture, identity model, key management |
+| Risk register (`ARC-<id>-RISK-v1.0.md`) | Existing security risks |
+| Diagrams (`ARC-<id>-DIAG-*`) and data flow diagrams (`ARC-<id>-DFD-*`) | Boundaries, gateways, zones and data transfers |
 
 ---
 
@@ -33,7 +34,7 @@ Output: `projects/<id>/ARC-<id>-AUISM-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
+| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) |
 | Revision History | Version, date, author, changes, approvals |
 | Executive Summary | System, classification, ISM edition used, overall applicability posture, key gaps, IRAP and DISP position |
 | System Context | System name, classification, deployment model, IRAP status and scope, DISP membership, ISM edition used, sovereignty, assessment date, assessor |

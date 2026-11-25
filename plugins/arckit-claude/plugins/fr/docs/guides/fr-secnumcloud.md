@@ -30,13 +30,15 @@ Output: `projects/<id>/ARC-<id>-SECNUM-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Scope Determination | Is SecNumCloud required (OIV SIIV / ministerial decree / sensitive data)? |
-| Visa vs Qualification | Critical distinction — only full qualification satisfies legal obligations |
-| Provider Assessment | Qualified providers list, service scope, IS boundary |
-| Customer Obligations | Homologation prerequisites, data classification, access controls |
-| Architecture Requirements | SecNumCloud-compatible design (no non-qualified cloud dependencies) |
-| Procurement Clauses | Contractual minimum requirements for public-cloud contracts |
-| Gap Analysis | Gaps to achieve SecNumCloud-compliant architecture |
+| Executive Summary | Summary of findings and recommendation |
+| 1. Context and Scope | Project sensitivity level; applicable regulatory framework |
+| 2. SecNumCloud 3.2 Qualification Matrix | Qualification status and criteria assessment for shortlisted providers |
+| 3. Extraterritorial Legal Risk Assessment | Risk framework and provider exposure matrix |
+| 4. OIV/OSE and Arrêté du 12 août 2026 Obligation Mapping | OIV and OSE obligations; binding obligation under the Arrêté |
+| 5. Architecture Recommendations | Recommended patterns for sensitive workloads; key management |
+| 6. Procurement Guidance | UGAP catalogue alignment; Code de la commande publique |
+| 7. Residual Risk Register | Remaining risks after mitigation |
+| 8. Decision Matrix and Recommendation | Provider decision and recommendation |
 
 ---
 

@@ -148,7 +148,7 @@ After creating the glossary, typical next steps include:
 | Command | Purpose |
 |---------|---------|
 | `/arckit:data-model` | Review data model using validated entity/attribute names from glossary |
-| `/arckit:framework` | Create assessment framework with consistent terminology |
+| `/arckit:framework` | Organise project artifacts into a phased framework with consistent terminology |
 
 ---
 

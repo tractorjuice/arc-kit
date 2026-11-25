@@ -15,7 +15,7 @@ Commands you typically own and drive:
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit:init` | Set up project structure with numbered directories and global artifacts | [Guide](../plan.md) |
+| `/arckit:init` | Set up project structure with numbered directories and global artifacts | [Guide](../init.md) |
 | `/arckit:principles` | Define enterprise architecture principles that govern all projects | [Guide](../principles.md) |
 | `/arckit:strategy` | Synthesise strategic artifacts into executive-level Architecture Strategy | [Guide](../strategy.md) |
 | `/arckit:roadmap` | Create multi-year strategic roadmap with capability evolution | [Guide](../roadmap.md) |

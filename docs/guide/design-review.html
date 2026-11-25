@@ -480,7 +480,8 @@
 <pre><code class="language-bash">/arckit:hld-review Review &lt;vendor&gt; high-level design for &lt;project&gt;
 /arckit:dld-review Review &lt;vendor&gt; detailed design for &lt;project&gt;
 </code></pre>
-<p>Outputs (<code>reviews/ARC-&lt;id&gt;-HLDR-v1.0.md</code>, <code>reviews/ARC-&lt;id&gt;-DLDR-v1.0.md</code>) capture compliance results, gaps, and actions.</p>
+<p>Outputs (<code>vendors/&lt;vendor&gt;/ARC-&lt;id&gt;-HLDR-v1.0.md</code>, <code>vendors/&lt;vendor&gt;/ARC-&lt;id&gt;-DLDR-v1.0.md</code>) capture compliance results, gaps, and actions.</p>
+<p>In Claude Code, each review also starts three fresh-eyes reviewers, which read the design with none of the session's draft findings, each through one lens. The review settles every finding they return in its Fresh-Eyes Review section (11.5 in the HLD review, 10.5 in the DLD review).</p>
 <hr />
 <h2 id="review-agenda-template">Review Agenda Template</h2>
 <ol>
@@ -526,7 +527,7 @@
 <ul>
 <li>Update backlog with actions (mark blockers as “must fix before approval”).</li>
 <li>Re-run the relevant review command once actions are complete.</li>
-<li>Store approved artefacts in <code>reviews/</code> directory for audit.</li>
+<li>Store approved artefacts in the vendor's <code>vendors/&lt;vendor&gt;/</code> directory for audit.</li>
 <li>Notify governance boards with key findings and approval state.</li>
 </ul>
 </div>

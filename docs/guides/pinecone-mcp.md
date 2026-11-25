@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-Pinecone is an optional vector database MCP that enables semantic search across architecture artifacts and organisational documents. Unlike the bundled MCPs (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, Data Commons), Pinecone is **not included in the ArcKit plugin** and must be configured separately.
+Pinecone is an optional vector database MCP that enables semantic search across architecture artifacts and organisational documents. Unlike the bundled MCPs (such as AWS Knowledge, Microsoft Learn, Google Developer Knowledge and Data Commons), Pinecone is **not included in the ArcKit plugin** and must be configured separately.
 
 > **Optional Integration**: This MCP is for advanced users who want semantic search capabilities. ArcKit works fully without it.
 

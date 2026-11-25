@@ -442,7 +442,7 @@
 </blockquote>
 <p><code>/arckit:research</code> investigates market, SaaS, open-source, and government marketplace options and reports what each offers, lacks and costs. It makes no build-or-buy decision: <code>/arckit:wardley</code> decides how to source each capability, and <code>/arckit:sobc</code> appraises value for money.</p>
 <blockquote>
-<p><strong>Agent Architecture</strong>: This command delegates to the <code>arckit-research</code> autonomous agent. The agent runs as a subprocess with its own context window, performing dozens of WebSearch and WebFetch calls for vendor pricing, reviews, and compliance data without polluting your main conversation. The slash command launches the agent and relays its summary back to you.</p>
+<p><strong>Agent Architecture</strong>: In Claude Code the command runs in your main session. It sends reader subagents to gather evidence, and a writer subagent with no network tools then writes the document, which keeps the research out of your main context. Other assistants run a single combined prompt instead. The reader subagents make the many WebSearch and WebFetch calls for vendor pricing, reviews and compliance data.</p>
 </blockquote>
 <hr />
 <h2 id="scenario-matrix">Scenario Matrix</h2>
@@ -487,9 +487,9 @@
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit:research Research &lt;topic&gt; for &lt;project&gt;
 </code></pre>
-<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-RSCH-001-v1.0.md</code>, plus a vendor profile in <code>vendors/</code> for each vendor found and a tech note in <code>tech-notes/</code> for each significant technology finding.</p>
+<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-RSCH-&lt;NNN&gt;-v1.0.md</code>, plus a vendor profile in <code>vendors/</code> for each vendor found and a tech note in <code>tech-notes/</code> for each significant technology finding.</p>
 <blockquote>
-<p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
+<p><strong>Re-running</strong>: each run writes a new report with the next sequence number (<code>RSCH-001</code>, <code>RSCH-002</code> and so on), so earlier reports are kept.</p>
 </blockquote>
 <hr />
 <h2 id="long-runs-remote-control--push-notifications">Long runs: Remote Control + push notifications</h2>

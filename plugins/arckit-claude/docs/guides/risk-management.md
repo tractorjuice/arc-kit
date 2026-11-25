@@ -24,7 +24,7 @@ Run after stakeholder analysis and before `/arckit:sobc` so the business case in
 /arckit:risk Create risk register for <project>
 ```
 
-Output: `projects/<id>/ARC-<id>-RISK-v1.0.md` plus heatmap images.
+Output: `projects/<id>/ARC-<id>-RISK-v1.0.md`, including 5×5 likelihood × impact matrices before and after controls.
 
 ---
 

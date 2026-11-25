@@ -1217,6 +1217,7 @@ graph TD
 > **\*** `azure-research` and `aws-research` are alternatives to `research` for cloud-specific projects. Each requires its respective MCP server.
 > **datascout** discovers external data sources (APIs, datasets, open data portals). It reads the data model; neither data-model nor research reads its report, so carry its findings into them yourself.
 > **†** `gov-reuse`, `gov-code-search`, and `gov-landscape` use the govreposcrape MCP server (no API key required) to search 24,500+ UK government repositories.
+> Not in the table: `init`, `customize`, `template-builder` and `import-okf` need no earlier documents, and `build`, `export-okf`, `health`, `search`, `impact`, `navigator` and `graph-report` work across whatever the project already holds rather than on particular documents.
 
 ---
 
@@ -1402,7 +1403,7 @@ graph LR
 - **ArcKit Version**: 6.18.2
 - **Document Date**: 2026-10-17
 - **Based On**: DEPENDENCY-MATRIX.md (rebuilt 2026-10-17 from the command files) and the `ca-federal-fitaa` and `uae-federal-ai` build recipes
-- **Commands Drawn**: 75
+- **Commands Drawn**: 75 (51 core commands, 12 Canada and 12 UAE overlay commands)
 - **Key Changes**:
   - Diagrams 1-6 and the Common Variations redrawn from the dependency matrix. The old arrows mostly showed a suggested order: nearly three in four joined commands that don't read each other, or marked an input at the wrong level
   - Arrows now mean a mandatory input (solid) or a recommended input (dotted); the legend explains what is left out

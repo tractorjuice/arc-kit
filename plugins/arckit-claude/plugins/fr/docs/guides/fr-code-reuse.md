@@ -11,7 +11,9 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Functional requirements to match against existing code |
-| Research (`research/ARC-<id>-RSCH-*-v*.md`) | Market analysis context |
+| Data model | Data constraints on component selection |
+| Stakeholders (`ARC-<id>-STKE-v*.md`) | Technology preferences and procurement constraints |
+| DINUM assessment | Open source obligations and SILL requirements |
 
 ---
 
@@ -30,15 +32,14 @@ Output: `projects/<id>/ARC-<id>-REUSE-v1.0.md`
 | Section | Contents |
 |---------|----------|
 | Legal Framework | Circulaire PM n°6264/SG (27 April 2021), Loi 2016-1321 (République Numérique), CRPA L300-2 and L312-1-1 |
-| Component Inventory | Software components needed (COMP-xx identifiers) |
-| code.gouv.fr Results | French public code catalogue search results |
-| SILL Matches | Recommended open source from SILL |
-| EU Sources | Joinup, EC Open Source Observatory results |
-| Licence Compatibility | EUPL-1.2, GPL, LGPL, Apache compatibility matrix |
-| Decision Matrix | For each component: Reuse / Fork / SILL / Procure / Build |
-| Contribution-Back Plan | Obligations when modifying existing public code |
-| Publication Obligation | If building new code: publication on code.gouv.fr required |
-| Gap Analysis | Components lacking reuse solution (build/procure justified) |
+| 1. Project Requirements Summary | Components needed |
+| 2. code.gouv.fr Assessment | Search results and candidate repository assessment |
+| 3. SILL Assessment | Matches and SILL compliance |
+| 4. European and International Public Code | Joinup and EU sources |
+| 5. Open Source Licence Compatibility | EUPL-1.2, GPL, LGPL, Apache compatibility matrix |
+| 6. Contribution-Back Plan | Obligations when modifying existing public code |
+| 7. Decision Matrix | For each component: Reuse / Fork / SILL / Procure / Build |
+| 8. Reused Components Register | Components reused and their sources |
 
 ---
 

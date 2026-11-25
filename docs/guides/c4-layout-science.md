@@ -164,7 +164,7 @@ After generating any architecture diagram, evaluate it against these six criteri
 
 ### Quality Gate Integration
 
-The `/arckit:diagram` command includes a **Step 5b: Diagram Quality Gate** that automatically evaluates generated diagrams against these criteria and reports results in a structured table. Any failing criterion triggers an iterative refinement cycle.
+The `/arckit:diagram` command includes a **Step 5d: Diagram Quality Gate** that automatically evaluates generated diagrams against these criteria and reports results in a structured table. Any failing criterion triggers an iterative refinement cycle.
 
 ---
 

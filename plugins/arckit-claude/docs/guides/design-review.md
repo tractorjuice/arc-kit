@@ -32,7 +32,9 @@ Run `/arckit:hld-review` and `/arckit:dld-review` to apply structured quality ga
 /arckit:dld-review Review <vendor> detailed design for <project>
 ```
 
-Outputs (`reviews/ARC-<id>-HLDR-v1.0.md`, `reviews/ARC-<id>-DLDR-v1.0.md`) capture compliance results, gaps, and actions.
+Outputs (`vendors/<vendor>/ARC-<id>-HLDR-v1.0.md`, `vendors/<vendor>/ARC-<id>-DLDR-v1.0.md`) capture compliance results, gaps, and actions.
+
+In Claude Code, each review also starts three fresh-eyes reviewers, which read the design with none of the session's draft findings, each through one lens. The review settles every finding they return in its Fresh-Eyes Review section (11.5 in the HLD review, 10.5 in the DLD review).
 
 ---
 
@@ -62,5 +64,5 @@ Record these directly in the generated review file to maintain traceability.
 
 - Update backlog with actions (mark blockers as “must fix before approval”).
 - Re-run the relevant review command once actions are complete.
-- Store approved artefacts in `reviews/` directory for audit.
+- Store approved artefacts in the vendor's `vendors/<vendor>/` directory for audit.
 - Notify governance boards with key findings and approval state.

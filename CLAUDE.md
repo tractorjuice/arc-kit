@@ -72,7 +72,7 @@ Commands exist in multiple formats across the distribution. The plugin source is
 | Claude Code | `/arckit:requirements` (plugin) | `plugins/arckit-claude/commands/requirements.md` |
 | Codex CLI | `$arckit-requirements` (skill) | `.agents/skills/arckit-requirements/SKILL.md` |
 | Gemini CLI | `/arckit:requirements` (extension) | `extensions/arckit-gemini/commands/arckit/requirements.toml` |
-| OpenCode CLI | `/arckit:requirements` | `.opencode/commands/arckit.requirements.md` |
+| OpenCode CLI | `/arckit.<command>` (the file name without `.md`) | `.opencode/commands/arckit.requirements.md` |
 | Copilot | `/arckit-requirements` (prompt) | `extensions/arckit-copilot/prompts/arckit-requirements.prompt.md` |
 | Kimi Code CLI | `/skill:arckit-requirements` (skill) | `extensions/arckit-kimi/skills/arckit-requirements/SKILL.md` |
 
@@ -199,7 +199,7 @@ project/
         └── vendors/
 ```
 
-**Init flags**: `--ai {codex|opencode|copilot}` (`claude` redirects to plugin install, `gemini` to extension install), `--minimal` (skip docs/guides), `--no-git`, `--here`.
+**Init flags**: `--ai {codex|opencode|copilot|kimi|antigravity}` (`claude` redirects to plugin install, `gemini` to extension install), `--minimal` (skip docs/guides), `--no-git`, `--here`.
 
 ### Helper Scripts
 

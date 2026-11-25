@@ -29,7 +29,7 @@ ArcKit's `/arckit:diagram` produces Mermaid and PlantUML C4 as text inside a gov
 
 Archify is an independently maintained agent skill by [tt-a1i](https://github.com/tt-a1i/archify), MIT licensed. ArcKit **detects** it rather than vendoring it:
 
-- It is roughly 7.5MB of renderer. ArcKit's `sync-shared-assets.py` copies shared assets into ten community plugins and `converter.py` ships them to seven generated extensions, so a vendored copy would multiply many times over.
+- It is roughly 7.5MB of renderer. ArcKit's `sync-shared-assets.py` copies shared assets into every community plugin and `converter.py` ships them to seven generated extensions, so a vendored copy would multiply many times over.
 - It moves quickly (v2.17 development series). A fork would drift within weeks, and ArcKit would own the divergence.
 - Its skill contract includes an update check that contacts `tt-a1i.github.io`. That is the upstream project's choice to make, not one ArcKit should silently inherit on a user's behalf.
 

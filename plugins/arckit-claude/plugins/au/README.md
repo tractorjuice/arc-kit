@@ -15,7 +15,7 @@
 
 Recipe: `au-federal` (37 default targets across 13 build waves, plus optional default-off OT and SOCI/CIRMP targets).
 
-`au-ot-security` and `au-soci-cirmp` are general Australian critical-infrastructure capabilities, not energy-specific commands. They are optional in `au-federal` and intended to be reused by the first industry-specific Australian menu, `au-energy`, which will layer AESCSF, AER ring-fencing, NER/NGR, and AEMO obligations on top.
+`au-ot-security` and `au-soci-cirmp` are general Australian critical-infrastructure capabilities, not energy-specific commands. They are optional in `au-federal` and reused by the first industry-specific Australian overlay, `arckit-au-energy`, which layers AESCSF, AER ring-fencing, NER/NGR, and AEMO obligations on top.
 
 ## Requires arckit core plugin
 

@@ -516,7 +516,7 @@
 <p>Outputs:</p>
 <ul>
 <li><code>projects/&lt;id&gt;/framework/</code> -- directory with phase subdirectories</li>
-<li><code>projects/&lt;id&gt;/ARC-&lt;id&gt;-FWRK-v1.0.md</code> -- Framework Overview</li>
+<li><code>projects/&lt;id&gt;/framework/ARC-&lt;id&gt;-FWRK-v1.0.md</code> -- Framework Overview</li>
 <li><code>projects/&lt;id&gt;/framework/&lt;Project-Name&gt;-Executive-Guide.md</code> -- Executive Guide</li>
 </ul>
 <hr />
@@ -536,10 +536,10 @@
 </tr>
 <tr>
 <td><strong>Phase subdirectories</strong></td>
-<td>Numbered directories (e.g., <code>phase-1-foundation/</code>, <code>phase-2-core/</code>) grouping related recommendations</td>
+<td>Numbered directories (e.g., <code>phase-1-foundation/</code>, <code>phase-2-requirements-and-data/</code>) grouping related recommendations</td>
 </tr>
 <tr>
-<td><strong>Framework Overview</strong> (<code>ARC-{PID}-FWRK-v1.0.md</code>)</td>
+<td><strong>Framework Overview</strong> (<code>framework/ARC-{PID}-FWRK-v1.0.md</code>)</td>
 <td>Comprehensive document mapping all artifacts, requirements, and recommendations into the phased structure with traceability</td>
 </tr>
 <tr>
@@ -550,7 +550,7 @@
 </table>
 <hr />
 <h2 id="framework-structure">Framework Structure</h2>
-<p>The framework organises recommendations into five default phases, though these adapt based on the project's domain and content:</p>
+<p>The framework organises artifacts into five default phases. Only phases that have artifacts are created, and the names adapt to the project's domain and content:</p>
 <table>
 <thead>
 <tr>
@@ -563,27 +563,27 @@
 <tr>
 <td>1</td>
 <td><strong>Foundation</strong></td>
-<td>Governance, principles, standards, and baseline capabilities that must be established first</td>
+<td>Principles, stakeholders, glossary and maturity model</td>
 </tr>
 <tr>
 <td>2</td>
-<td><strong>Core</strong></td>
-<td>Essential platform components, data architecture, and integration patterns</td>
+<td><strong>Requirements and Data</strong></td>
+<td>Requirements, data model, data source discovery and data flows</td>
 </tr>
 <tr>
 <td>3</td>
-<td><strong>Enhancement</strong></td>
-<td>Extended capabilities, advanced features, and optimisation of core components</td>
+<td><strong>Architecture and Design</strong></td>
+<td>Strategy, diagrams, platform design, decisions, Wardley maps and roadmap</td>
 </tr>
 <tr>
 <td>4</td>
-<td><strong>Integration</strong></td>
-<td>Cross-system integration, external interfaces, and ecosystem connectivity</td>
+<td><strong>Governance and Compliance</strong></td>
+<td>Risk, analysis, principles compliance, conformance, DPIA, service assessment, TCoP and ATRS</td>
 </tr>
 <tr>
 <td>5</td>
-<td><strong>Optimisation</strong></td>
-<td>Continuous improvement, maturity advancement, and operational excellence</td>
+<td><strong>Delivery and Operations</strong></td>
+<td>Backlog, stories, DevOps, operational readiness, FinOps, MLOps, statement of work and project plan</td>
 </tr>
 </tbody>
 </table>
@@ -683,7 +683,7 @@
 /arckit:adr Record decision on authentication approach for NHS Appointment Booking
 /arckit:diagram Create integration architecture diagram for NHS Appointment Booking
 /arckit:wardley Create wardley map for NHS Appointment Booking
-/arckit:codes-of-practice Assess codes of practice for NHS Appointment Booking
+/arckit:tcop Assess the Technology Code of Practice for NHS Appointment Booking
 /arckit:conformance Create conformance assessment for NHS Appointment Booking
 /arckit:devops Create DevOps strategy for NHS Appointment Booking
 

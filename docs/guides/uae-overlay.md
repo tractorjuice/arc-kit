@@ -62,11 +62,11 @@ Generates a UAE Smart Data Classification Register for the project, mapping ever
 
 #### `/arckit:uae-pdpl`
 
-Generates a UAE PDPL (Federal Decree-Law No. 45 of 2021) compliance assessment including DPIA, lawful-basis register, data-subject-rights procedure, and cross-border transfer log. Anchored on the UAE Data Office statutory framework. Handoffs: `risks` (DPIA into the risk register), `uae-data-sharing` (lawful basis into shares), `uae-classification` (PDPL-relevant datasets must be classified).
+Generates a UAE PDPL (Federal Decree-Law No. 45 of 2021) compliance assessment including DPIA, lawful-basis register, data-subject-rights procedure, and cross-border transfer log. Anchored on the UAE Data Office statutory framework. Handoffs: `risk` (DPIA into the risk register), `uae-data-sharing` (lawful basis into shares), `uae-classification` (PDPL-relevant datasets must be classified).
 
 #### `/arckit:uae-ias`
 
-Generates a UAE IAS Statement of Applicability against the 188 controls (60 management M1 to M6 plus 128 technical T1 to T9), priority-tiered P1 to P4. Anchored on the UAE Cybersecurity Council Information Assurance Standard v2. Handoffs: `risks` (gaps and treatment plan), `uae-cloud-residency` (T-family controls constrain CSP choice).
+Generates a UAE IAS Statement of Applicability against the 188 controls (60 management M1 to M6 plus 128 technical T1 to T9), priority-tiered P1 to P4. Anchored on the UAE Cybersecurity Council Information Assurance Standard v2. Handoffs: `risk` (gaps and treatment plan), `uae-cloud-residency` (T-family controls constrain CSP choice).
 
 #### `/arckit:uae-cloud-residency`
 
@@ -76,7 +76,7 @@ Assesses sovereign cloud residency under the UAE National Cloud Security Policy 
 
 #### `/arckit:uae-uaepass`
 
-Generates a UAE Pass integration design covering the OIDC/OAuth flow, claim mapping, Basic vs Verified profile selection, the Service Provider onboarding pack, and the e-signature audit trail. Handoffs: `integration` (OIDC endpoints into the integration spec), `adr` (profile selection and e-signature mechanism are architecturally significant).
+Generates a UAE Pass integration design covering the OIDC/OAuth flow, claim mapping, Basic vs Verified profile selection, the Service Provider onboarding pack, and the e-signature audit trail. Handoffs: `platform-design` (UAE Pass integration into the platform design), `adr` (profile selection and e-signature mechanism are architecturally significant).
 
 ### Cabinet Instruments
 
@@ -90,7 +90,7 @@ Generates a Digital Records Plan under the UAE Government Services Digital Recor
 
 #### `/arckit:uae-data-sharing`
 
-Generates a Data Sharing Agreement under the UAE Government Services Data Sharing Policy ("collect once, use securely"). Captures collect-once mapping, federation/API plan, and PDPL lawful basis per share. Handoffs: `integration` (federation mechanisms), `uae-pdpl` (lawful basis into the PDPL assessment).
+Generates a Data Sharing Agreement under the UAE Government Services Data Sharing Policy ("collect once, use securely"). Captures collect-once mapping, federation/API plan, and PDPL lawful basis per share. Handoffs: `platform-design` (federation mechanisms into the platform design), `uae-pdpl` (lawful basis into the PDPL assessment).
 
 #### `/arckit:uae-priorities-alignment`
 
@@ -100,11 +100,11 @@ Generates a National Priorities Alignment Statement under the UAE Federal Govern
 
 #### `/arckit:uae-ai-charter`
 
-Generates a UAE Charter for AI compliance assessment against the 12 principles (human-machine ties, safety, bias mitigation, data privacy, transparency, human oversight, governance/accountability, technological excellence, human commitment, peaceful coexistence, inclusive access, lawful compliance). Handoffs: `uae-ai-autonomy-tier` (charter posture into the per-tier guard-rails), `risks` (gaps into the risk register).
+Generates a UAE Charter for AI compliance assessment against the 12 principles (human-machine ties, safety, bias mitigation, data privacy, transparency, human oversight, governance/accountability, technological excellence, human commitment, peaceful coexistence, inclusive access, lawful compliance). Handoffs: `uae-ai-autonomy-tier` (charter posture into the per-tier guard-rails), `risk` (gaps into the risk register).
 
 #### `/arckit:uae-ai-autonomy-tier`
 
-Generates a three-tier AI autonomy posture (Tier 1 internal-productivity, Tier 2 investor-facing-with-approval, Tier 3 regulated/financial). Captures per-tier guard-rails, approval gates, audit obligations, and tier-promotion criteria. Handoffs: `adr` (tier-promotion is architecturally significant), `risks` (per-tier residual risks).
+Generates a three-tier AI autonomy posture (Tier 1 internal-productivity, Tier 2 investor-facing-with-approval, Tier 3 regulated/financial). Captures per-tier guard-rails, approval gates, audit obligations, and tier-promotion criteria. Handoffs: `adr` (tier-promotion is architecturally significant), `risk` (per-tier residual risks).
 
 ### Procurement
 

@@ -50,7 +50,7 @@ The `/arckit:framework` command **synthesises and organises** all existing artif
 Outputs:
 
 - `projects/<id>/framework/` -- directory with phase subdirectories
-- `projects/<id>/ARC-<id>-FWRK-v1.0.md` -- Framework Overview
+- `projects/<id>/framework/ARC-<id>-FWRK-v1.0.md` -- Framework Overview
 - `projects/<id>/framework/<Project-Name>-Executive-Guide.md` -- Executive Guide
 
 ---
@@ -62,23 +62,23 @@ The framework command generates a structured output comprising:
 | Output | Description |
 |--------|-------------|
 | **Framework directory** (`framework/`) | Top-level directory containing phase subdirectories that organise recommendations by implementation stage |
-| **Phase subdirectories** | Numbered directories (e.g., `phase-1-foundation/`, `phase-2-core/`) grouping related recommendations |
-| **Framework Overview** (`ARC-{PID}-FWRK-v1.0.md`) | Comprehensive document mapping all artifacts, requirements, and recommendations into the phased structure with traceability |
+| **Phase subdirectories** | Numbered directories (e.g., `phase-1-foundation/`, `phase-2-requirements-and-data/`) grouping related recommendations |
+| **Framework Overview** (`framework/ARC-{PID}-FWRK-v1.0.md`) | Comprehensive document mapping all artifacts, requirements, and recommendations into the phased structure with traceability |
 | **Executive Guide** (`{Project-Name}-Executive-Guide.md`) | Concise, non-technical summary designed for senior stakeholders and decision-makers |
 
 ---
 
 ## Framework Structure
 
-The framework organises recommendations into five default phases, though these adapt based on the project's domain and content:
+The framework organises artifacts into five default phases. Only phases that have artifacts are created, and the names adapt to the project's domain and content:
 
 | Phase | Name | Purpose |
 |-------|------|---------|
-| 1 | **Foundation** | Governance, principles, standards, and baseline capabilities that must be established first |
-| 2 | **Core** | Essential platform components, data architecture, and integration patterns |
-| 3 | **Enhancement** | Extended capabilities, advanced features, and optimisation of core components |
-| 4 | **Integration** | Cross-system integration, external interfaces, and ecosystem connectivity |
-| 5 | **Optimisation** | Continuous improvement, maturity advancement, and operational excellence |
+| 1 | **Foundation** | Principles, stakeholders, glossary and maturity model |
+| 2 | **Requirements and Data** | Requirements, data model, data source discovery and data flows |
+| 3 | **Architecture and Design** | Strategy, diagrams, platform design, decisions, Wardley maps and roadmap |
+| 4 | **Governance and Compliance** | Risk, analysis, principles compliance, conformance, DPIA, service assessment, TCoP and ATRS |
+| 5 | **Delivery and Operations** | Backlog, stories, DevOps, operational readiness, FinOps, MLOps, statement of work and project plan |
 
 Phases adapt to the project domain. For example, a data governance project might use phases like "Data Discovery", "Data Quality", "Data Cataloguing", "Data Stewardship", and "Data Monetisation". The command analyses the content of available artifacts to determine the most appropriate phase structure.
 
@@ -158,7 +158,7 @@ The framework command sits LATE in the ArcKit workflow -- it requires many artif
 /arckit:adr Record decision on authentication approach for NHS Appointment Booking
 /arckit:diagram Create integration architecture diagram for NHS Appointment Booking
 /arckit:wardley Create wardley map for NHS Appointment Booking
-/arckit:codes-of-practice Assess codes of practice for NHS Appointment Booking
+/arckit:tcop Assess the Technology Code of Practice for NHS Appointment Booking
 /arckit:conformance Create conformance assessment for NHS Appointment Booking
 /arckit:devops Create DevOps strategy for NHS Appointment Booking
 

@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="This guide explains how to add a new /arckit.&lt;n&gt; command. A command is a single Markdown file that ArcKit fans out to six AI-assistant formats…">
+    <meta name="description" content="This guide explains how to add a new /arckit.&lt;n&gt; command. A command is a single Markdown file that ArcKit fans out to every other AI-assistant format…">
     <meta name="author" content="ArcKit">
     <title>Custom Commands Authoring Guide | ArcKit</title>
     <meta property="og:title" content="Custom Commands Authoring Guide">
-    <meta property="og:description" content="This guide explains how to add a new /arckit.&lt;n&gt; command. A command is a single Markdown file that ArcKit fans out to six AI-assistant formats automatically. Read this before opening a PR that adds a command.">
+    <meta property="og:description" content="This guide explains how to add a new /arckit.&lt;n&gt; command. A command is a single Markdown file that ArcKit fans out to every other AI-assistant format automatically. Read this before opening a PR that adds a command.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/custom-commands.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Custom Commands Authoring Guide">
-    <meta name="twitter:description" content="This guide explains how to add a new /arckit.&lt;n&gt; command. A command is a single Markdown file that ArcKit fans out to six AI-assistant formats automatically. Read this before opening a PR that adds a command.">
+    <meta name="twitter:description" content="This guide explains how to add a new /arckit.&lt;n&gt; command. A command is a single Markdown file that ArcKit fans out to every other AI-assistant format automatically. Read this before opening a PR that adds a command.">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/custom-commands.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/custom-commands.md">
@@ -339,7 +339,7 @@
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/custom-commands.html",
                 "headline": "Custom Commands Authoring Guide",
-                "description": "This guide explains how to add a new /arckit.<n> command. A command is a single Markdown file that ArcKit fans out to six AI-assistant formats automatically. Read this before opening a PR that adds a command.",
+                "description": "This guide explains how to add a new /arckit.<n> command. A command is a single Markdown file that ArcKit fans out to every other AI-assistant format automatically. Read this before opening a PR that adds a command.",
                 "url": "https://arckit.org/guide/custom-commands.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -423,7 +423,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
             <h1 class="app-page-hero__title">Custom Commands Authoring Guide</h1>
-            <p class="app-page-hero__description">This guide explains how to add a new /arckit.&lt;n&gt; command. A command is a single Markdown file that ArcKit fans out to six AI-assistant formats automatically. Read this before opening a PR that adds a command.</p>
+            <p class="app-page-hero__description">This guide explains how to add a new /arckit.&lt;n&gt; command. A command is a single Markdown file that ArcKit fans out to every other AI-assistant format automatically. Read this before opening a PR that adds a command.</p>
         </div>
     </div>
 
@@ -434,11 +434,11 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p>This guide explains how to add a new <code>/arckit.&lt;n&gt;</code> command. A command is a single Markdown file that ArcKit fans out to six AI-assistant formats automatically. Read this before opening a PR that adds a command.</p>
+<p>This guide explains how to add a new <code>/arckit.&lt;n&gt;</code> command. A command is a single Markdown file that ArcKit fans out to every other AI-assistant format automatically. Read this before opening a PR that adds a command.</p>
 <p>For template customisation (changing the output of an existing command), see <a href="customize.html"><code>customize.md</code></a>. For background on why ArcKit uses commands rather than skills, see the README section &quot;Why Commands, Not Skills&quot;.</p>
 <hr />
 <h2 id="how-commands-work">How Commands Work</h2>
-<p>You write <strong>one</strong> source file in <code>plugins/arckit-claude/commands/&lt;n&gt;.md</code>. The converter at <code>scripts/converter.py</code> reads it and produces six target-specific outputs:</p>
+<p>You write <strong>one</strong> source file in <code>plugins/arckit-claude/commands/&lt;n&gt;.md</code>. The converter at <code>scripts/converter.py</code> reads it and produces the target-specific outputs:</p>
 <table>
 <thead>
 <tr>
@@ -483,6 +483,21 @@
 <td><code>extensions/arckit-paperclip/src/data/commands.json</code> (entry)</td>
 <td>JSON</td>
 </tr>
+<tr>
+<td>Mistral Vibe</td>
+<td><code>extensions/arckit-vibe/skills/arckit-&lt;n&gt;.md</code></td>
+<td>Skill format</td>
+</tr>
+<tr>
+<td>Kimi Code CLI</td>
+<td><code>extensions/arckit-kimi/skills/arckit-&lt;n&gt;/SKILL.md</code></td>
+<td>Agent Skill</td>
+</tr>
+<tr>
+<td>Google Antigravity (experimental)</td>
+<td><code>extensions/arckit-antigravity/skills/arckit-&lt;n&gt;/SKILL.md</code></td>
+<td>Agent Skill</td>
+</tr>
 </tbody>
 </table>
 <p>The first row is the file you edit by hand; the converter generates all others. You do not edit the generated files directly. The converter handles argument-placeholder rewriting, path rewriting for the Gemini sandbox, frontmatter stripping for Claude-only fields, and extension-file copying.</p>
@@ -496,6 +511,7 @@ adds root-level skill support.</p>
 <p>Create <code>plugins/arckit-claude/commands/&lt;n&gt;.md</code> with YAML frontmatter and a prompt body.</p>
 <pre><code class="language-markdown">---
 description: One-line description in imperative mood
+doc-type: CODE
 argument-hint: &quot;&lt;hint shown in autocomplete&gt;&quot;
 effort: medium
 handoffs:
@@ -534,6 +550,11 @@ $ARGUMENTS
 <td>Imperative, one line. Used as the slash-command description in every target.</td>
 </tr>
 <tr>
+<td><code>doc-type</code></td>
+<td>Yes</td>
+<td>The doc-type code the command writes, registered in <code>plugins/arckit-claude/config/doc-types.mjs</code>: a single code (<code>doc-type: REQ</code>), a <code>[A, B]</code> list for a command that writes more than one artefact, or <code>none</code> for a command that writes no <code>ARC-*</code> artefact. Stripped from other targets by the converter.</td>
+</tr>
+<tr>
 <td><code>argument-hint</code></td>
 <td>Recommended</td>
 <td>Shown in Claude Code autocomplete. Short hint showing the expected shape of input.</td>
@@ -541,7 +562,7 @@ $ARGUMENTS
 <tr>
 <td><code>effort</code></td>
 <td>No</td>
-<td><code>low</code> / <code>medium</code> / <code>high</code>. Claude Code only — stripped from other targets by the converter.</td>
+<td><code>low</code> / <code>medium</code> / <code>high</code> / <code>xhigh</code> / <code>max</code>. Without it the command runs at the session default, which is <code>medium</code> on Opus 5.5 and Sonnet 5.5, so set it on any command that needs more depth. Claude Code only — stripped from other targets by the converter.</td>
 </tr>
 <tr>
 <td><code>handoffs</code></td>
@@ -602,7 +623,7 @@ $ARGUMENTS
 <h3 id="reading-templates-with-user-overrides">Reading Templates with User Overrides</h3>
 <p>Commands should prefer a user-customised template over the bundled default. Use this pattern in the prompt body:</p>
 <pre><code class="language-markdown">1. **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/&lt;your-template&gt;.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/&lt;your-template&gt;.md` exists in the project root, then `.arckit/templates/&lt;your-template&gt;.md`
    - **If found**: Read the user's customised template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/&lt;your-template&gt;.md` (default)
 </code></pre>
@@ -640,7 +661,7 @@ $ARGUMENTS
 ## Instructions
 
 1. **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/sla-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/sla-template.md` exists in the project root, then `.arckit/templates/sla-template.md`
    - **If found**: Read the user's customised template
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/sla-template.md` (default)
 
@@ -661,7 +682,7 @@ $ARGUMENTS
 <p><strong>4. Run the converter:</strong></p>
 <pre><code class="language-bash">python scripts/converter.py
 </code></pre>
-<p>This writes out the six target files with correct placeholders and paths.</p>
+<p>This writes out the target files with correct placeholders and paths.</p>
 <p><strong>5. Add the user-facing guide</strong> at <code>docs/guides/sla.md</code> following the house style (see <code>docs/guides/principles.md</code> or <code>docs/guides/adr.md</code> for examples). This is the source location: <code>python3 scripts/check-guide-parity.py --sync</code> copies it to <code>plugins/arckit-claude/docs/guides/</code>, and the converter carries it into every extension's <code>docs/guides/</code> tree.</p>
 <p><strong>6. Update <code>CHANGELOG.md</code></strong> under <code>## [Unreleased]</code>.</p>
 <hr />

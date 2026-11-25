@@ -147,6 +147,42 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 
 ---
 
+### REVIEW-OVERDUE — Overdue Review
+
+**Severity**: HIGH
+
+**What it means**: An artifact's Document Control `Next Review Date` is in the past. Artifacts with status `DRAFT`, `SUPERSEDED` or `ARCHIVED` are skipped, because a review schedule applies only to an artifact in use.
+
+**Why it matters**: The review cycle is a governance commitment recorded in Document Control. An approved or published artifact past its review date is still treated as authoritative, but nobody has checked that it still matches reality.
+
+**How to resolve**:
+
+1. Run the review the date calls for
+2. If the artifact still holds, bump the version and refresh its Document Control dates, including `Next Review Date`
+3. If it is no longer in use, archive it
+
+**Example scenario**: The architecture principles were approved a year ago with a 12-month review cycle. The Next Review Date passed last week, and two new projects are about to cite them.
+
+---
+
+### STALE-DRAFT — Long-running Draft
+
+**Severity**: MEDIUM
+
+**What it means**: An artifact has `Status: DRAFT`, and its `Last Modified` date (or `Created Date`, if that is missing) is more than 30 days old. Set `STALE_DRAFT_DAYS=N` to use a different threshold. Document types whose status only their own command sets, such as a sign-off command, are skipped.
+
+**Why it matters**: A draft left untouched for a month is usually stalled work, abandoned scaffolding, or a decision that events have overtaken. Readers may still be treating it as settled.
+
+**How to resolve**:
+
+1. Decide whether the draft is still needed
+2. If it is ready, promote it to `IN_REVIEW` or `APPROVED`
+3. If work is continuing, bump the version; if it has been abandoned, archive it
+
+**Example scenario**: A data model was drafted at project kick-off six weeks ago and never reviewed. The backlog is now being written from it.
+
+---
+
 ### VERSION-DRIFT — Version Drift
 
 **Severity**: LOW
@@ -177,6 +213,8 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 | Missing Traceability | Any age | Traceability is a best practice for auditability. Missing references should be added as part of regular governance hygiene. |
 | Unincorporated External Files | Any age | External files newer than all artifacts indicate content not yet reflected in governance artifacts. No safe deferral window. |
 | Out-of-date Generated View | Any newer source | A view records the versions it was built from, so any newer source is a precise signal; regenerating it is cheap. |
+| Overdue Review | Past the `Next Review Date` | The review date is a commitment recorded in Document Control. Once it passes, the artifact is in use without the check it promised. |
+| Long-running Draft | 30 days (`STALE_DRAFT_DAYS=N` to change) | A draft untouched for a month has usually stalled or been overtaken. |
 | Version Drift | 3 months | Multiple versions indicate active iteration. Three months of inactivity suggests the iteration has stalled or been abandoned. |
 
 ---
@@ -225,9 +263,15 @@ The health check and the analyse command serve different purposes:
 
 ---
 
-## Customising Thresholds (Future Enhancement)
+## Customising Thresholds
 
-A future release will support a `.arckit/health-config.yaml` file to override default thresholds:
+One threshold can be set today: `STALE_DRAFT_DAYS=N` changes the STALE-DRAFT threshold for a run (default 30 days):
+
+```bash
+/arckit:health STALE_DRAFT_DAYS=14
+```
+
+A future release will support a `.arckit/health-config.yaml` file to override the other default thresholds:
 
 ```yaml
 # .arckit/health-config.yaml (planned — not yet implemented)
@@ -244,4 +288,4 @@ exclude:
     - PRES                     # Presentation decks don't need freshness checks
 ```
 
-Until this is implemented, the built-in thresholds apply. If you need different thresholds, specify the `SINCE` argument to shift the baseline date.
+Until this is implemented, the built-in thresholds apply to the other rules. If you need different thresholds, specify the `SINCE` argument to shift the baseline date.

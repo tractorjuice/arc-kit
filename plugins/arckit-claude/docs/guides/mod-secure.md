@@ -75,25 +75,29 @@ Output: `projects/<id>/ARC-<id>-SECD-MOD-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| System Overview | Name, purpose, classification, boundaries |
-| 7 SbD Principles Assessment | Compliance against each MOD SbD principle |
-| CAAT Summary | Continuous Assurance Assessment Tool results |
-| Security Classification | Data classification and handling requirements |
-| Threat Assessment | Threat actors, attack vectors, mitigations |
-| Security Controls | Technical, procedural, and physical controls |
-| Accreditation Status | Path to accreditation and outstanding actions |
-| Risk Acceptance | Residual risks requiring SIRO acceptance |
+| 1. Security Classification and Data Handling | Data classification and handling requirements |
+| 2. MOD Secure by Design Principles Compliance | Compliance against each of the 7 principles |
+| 3. MOD Secure by Design Assurance | Continuous assurance and CAAT |
+| 4. Threat Modeling and Risk Assessment | Threat actors, attack vectors, risks |
+| 5. Technical Security Controls | Technical controls |
+| 6. Secure Development Lifecycle | Secure development and testing |
+| 7. Supply Chain Security | Supplier assurance |
+| 8. Operational Security | Monitoring, incident response, continuity |
+| 9. Personnel Security | Vetting and clearances |
+| 10. Compliance and Governance | Policy and standards compliance |
+
+The document also holds an overall assessment summary, an action plan and sign-off.
 
 ---
 
-## CAAT (Continuous Assurance Assessment Tool)
+## CAAT (Cyber Activity and Assurance Tracker)
 
 | Aspect | Description |
 |--------|-------------|
 | Purpose | Structured security assessment methodology |
 | Scope | Covers all 7 SbD principles |
 | Output | RAG status per principle with evidence |
-| Integration | Feeds into accreditation documentation |
+| Integration | Feeds into continuous assurance records |
 
 ---
 
@@ -115,7 +119,7 @@ Output: `projects/<id>/ARC-<id>-SECD-MOD-v1.0.md`
 | Discovery | Define requirements and classification | `/arckit:requirements`, `/arckit:data-model` |
 | Risk | Identify security risks and threats | `/arckit:risk` |
 | Assessment | Create MOD SbD assessment | `/arckit:mod-secure` |
-| Accreditation | Progress through accreditation stages | Manual |
+| Assurance | Register on CAAT and keep the assessment current | Manual |
 | Operations | Continuous assurance monitoring | `/arckit:operationalize` |
 
 ---
@@ -129,7 +133,7 @@ Output: `projects/<id>/ARC-<id>-SECD-MOD-v1.0.md`
 - JSP 440 requirements addressed for classification.
 - CAAT assessment completed and documented.
 - Residual risks documented for SIRO acceptance.
-- Accreditation pathway and timeline defined.
+- Continuous assurance process and review cadence defined.
 
 ---
 

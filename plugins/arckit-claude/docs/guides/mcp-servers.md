@@ -11,6 +11,7 @@ This guide covers installing the ArcKit plugin, configuring MCP servers, and com
 ### Prerequisites
 
 - **Claude Code** v2.1.319 or later (or **Claude Cowork** desktop app)
+- **Node.js** on your `PATH`. ArcKit's hooks and helper scripts need it, and without it ArcKit artefacts can't be written
 - **Bash** shell (for helper scripts)
 
 ### Step 0: Make sure Claude Code is up to date
@@ -33,7 +34,7 @@ export ENABLE_PROMPT_CACHING_1H=1
 claude
 ```
 
-Recommended for: overnight `autoresearch` runs, multi-command workflows (`/arckit:requirements` -> `/arckit:data-model` -> `/arckit:components`), and research agents that re-read large project context. Verify cache uplift in your Anthropic billing dashboard (`cache_read_input_tokens` should grow as a fraction of input tokens).
+Recommended for: overnight `autoresearch` runs, multi-command workflows (`/arckit:requirements` -> `/arckit:data-model` -> `/arckit:backlog`), and research agents that re-read large project context. Verify cache uplift in your Anthropic billing dashboard (`cache_read_input_tokens` should grow as a fraction of input tokens).
 
 ### Optional: MCP per-request timeout (Claude Code v2.1.142+)
 
@@ -119,9 +120,9 @@ To have the plugin auto-enable for anyone who opens your repo, add `.claude/sett
 
 ## MCP Servers
 
-ArcKit includes 4 bundled MCP (Model Context Protocol) servers for cloud research, plus support for optional third-party MCPs like Pinecone.
+ArcKit bundles MCP (Model Context Protocol) servers for cloud, government code, data and procurement research, and for Trello, plus support for optional third-party MCPs like Pinecone.
 
-> **Two servers work out of the box** (AWS Knowledge, Microsoft Learn). The other two require free API keys (Google Developer Knowledge, Data Commons). If you don't configure the API keys, you'll see errors in the plugin UI — **these are harmless and all other commands work normally**.
+> **Four servers work out of the box** (AWS Knowledge, Microsoft Learn, govreposcrape, UK Tenders), and Trello needs a one-time sign-in. The other two require free API keys (Google Developer Knowledge, Data Commons). If you don't configure the API keys, you'll see errors in the plugin UI — **these are harmless and all other commands work normally**.
 
 ---
 
@@ -133,6 +134,8 @@ ArcKit includes 4 bundled MCP (Model Context Protocol) servers for cloud researc
 | Microsoft Learn | Not required | `/arckit:azure-research` | Works out of the box |
 | Google Developer Knowledge | `GOOGLE_API_KEY` | `/arckit:gcp-research` | Requires setup |
 | Data Commons | `DATA_COMMONS_API_KEY` | Data statistics lookups | Requires setup |
+| govreposcrape | Not required | `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landscape` | Works out of the box |
+| UK Tenders | Not required | `/arckit:tenders`, `/arckit:competitors` | Works out of the box |
 | Trello (Atlassian) | None; sign in once through `/mcp` | `/arckit:trello` | Sign-in on first use |
 
 ### Approving MCP tool calls
@@ -223,7 +226,7 @@ export DATA_COMMONS_API_KEY="your-api-key-here"
 
 4. Restart your assistant
 
-> **Your keys stay hidden in `claude mcp` output.** Both keyed servers carry their key in an HTTP header (`X-Goog-Api-Key`, `X-API-Key`) via `${GOOGLE_API_KEY}` / `${DATA_COMMONS_API_KEY}`. As of Claude Code v2.1.161, `claude mcp list` / `get` / `add` no longer expand `${VAR}` references and redact credential headers and URL secrets — so inspecting your MCP config (or screen-sharing it) won't leak the keys. Relevant for OFFICIAL-SENSITIVE / regulated deployments. The other four bundled servers are keyless, so there's nothing to redact.
+> **Your keys stay hidden in `claude mcp` output.** Both keyed servers carry their key in an HTTP header (`X-Goog-Api-Key`, `X-API-Key`) via `${user_config.GOOGLE_API_KEY}` / `${user_config.DATA_COMMONS_API_KEY}` (`${GOOGLE_API_KEY}` / `${DATA_COMMONS_API_KEY}` for other assistants). As of Claude Code v2.1.161, `claude mcp list` / `get` / `add` no longer expand `${VAR}` references and redact credential headers and URL secrets — so inspecting your MCP config (or screen-sharing it) won't leak the keys. Relevant for OFFICIAL-SENSITIVE / regulated deployments. The other bundled servers carry no key in their configuration, so there's nothing to redact.
 
 ### Managing MCP authentication
 
@@ -258,14 +261,16 @@ Invalid MCP server config for 'google-developer-knowledge': Missing environment 
 Invalid MCP server config for 'datacommons-mcp': Missing environment variables: DATA_COMMONS_API_KEY
 ```
 
+In Claude Code, a server with no key shows as failed in `/plugin` instead.
+
 **These errors are harmless.** They mean you haven't configured the optional API keys. All ArcKit commands, agents, hooks, and skills work without them. Only `/arckit:gcp-research` and Data Commons lookups are affected.
 
-**To fix**: Set the environment variables as described above and restart Claude Code.
+**To fix**: In Claude Code, add the keys in the plugin's settings as described above (open `/plugin`, choose **arckit**, and open its configure screen). For other assistants, set the environment variables. Then restart.
 
 ### MCP server not responding after setup
 
-1. Verify the environment variable is set without printing it: `[ -n "$GOOGLE_API_KEY" ] && echo set || echo unset`
-2. Restart Claude Code (MCP servers load at startup)
+1. **Claude Code:** check the key is set in the **arckit** plugin's configure screen in `/plugin`. **Other assistants:** verify the environment variable is set without printing it: `[ -n "$GOOGLE_API_KEY" ] && echo set || echo unset`
+2. Restart your assistant (MCP servers load at startup)
 3. Check the plugin UI — errors should disappear once the key is valid
 4. Run `claude mcp list` or `/mcp`. As of Claude Code v2.1.218 a failed server reports its **HTTP status and error text**, so an invalid key shows as a real `401` rather than a bare "failed to connect". The same release warns about config values carrying hidden leading or trailing whitespace — a common cause of a key that looks correct but is rejected.
 5. On Amazon Bedrock, Google Vertex AI and Microsoft Foundry — and in any session with telemetry disabled — Claude Code v2.1.246+ tells the model when a configured server failed to connect. Before that the model concluded the server's tools did not exist, so a keyless session on those providers made `/arckit:gcp-research` and Data Commons lookups fail with a confusing "no such tool" instead of a connection error. If you see that symptom, update the client and re-check `/mcp`.
@@ -296,29 +301,49 @@ The plugin's bundled MCP configuration (`.mcp.json`):
   "mcpServers": {
     "aws-knowledge": {
       "type": "http",
-      "url": "https://knowledge-mcp.global.api.aws"
+      "url": "https://knowledge-mcp.global.api.aws",
+      "alwaysLoad": true
     },
     "microsoft-learn": {
       "type": "http",
-      "url": "https://learn.microsoft.com/api/mcp"
+      "url": "https://learn.microsoft.com/api/mcp",
+      "alwaysLoad": true
     },
     "google-developer-knowledge": {
       "type": "http",
       "url": "https://developerknowledge.googleapis.com/mcp",
       "headers": {
-        "X-Goog-Api-Key": "${GOOGLE_API_KEY}"
-      }
+        "X-Goog-Api-Key": "${user_config.GOOGLE_API_KEY}"
+      },
+      "alwaysLoad": true
     },
     "datacommons-mcp": {
       "type": "http",
       "url": "https://api.datacommons.org/mcp",
       "headers": {
-        "X-API-Key": "${DATA_COMMONS_API_KEY}"
-      }
+        "X-API-Key": "${user_config.DATA_COMMONS_API_KEY}"
+      },
+      "alwaysLoad": true
+    },
+    "govreposcrape": {
+      "type": "http",
+      "url": "https://govreposcrape-api-1060386346356.us-central1.run.app/mcp",
+      "alwaysLoad": true
+    },
+    "uk-tenders": {
+      "type": "http",
+      "url": "https://tenders.run.cns.me/mcp",
+      "alwaysLoad": true
+    },
+    "trello": {
+      "type": "http",
+      "url": "https://mcp.trello.com/v1"
     }
   }
 }
 ```
+
+`alwaysLoad` makes Claude Code load a research server at startup, so the research subagents can reach it. Trello is used only from the main conversation, so it loads when first needed. Other assistants get the keys from `${GOOGLE_API_KEY}` and `${DATA_COMMONS_API_KEY}` in the environment instead of `${user_config.*}`.
 
 > **Note**: You do not need to copy this configuration — it is automatically loaded by the plugin. This is shown for reference only.
 

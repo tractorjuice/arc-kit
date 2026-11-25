@@ -413,7 +413,7 @@
                 "applicationCategory": "DeveloperApplication",
                 "applicationSubCategory": "Enterprise Architecture Governance",
                 "operatingSystem": "macOS, Linux, Windows",
-                "description": "ArcKit is The Enterprise Architecture Governance Harness: open-source, covering strategy, architecture, delivery, and assurance, distributed as a plugin or extension for AI coding assistants — Claude Code, Gemini CLI, GitHub Copilot, OpenAI Codex CLI, and OpenCode CLI. It wraps the assistant with slash commands across an official UK Government baseline plus community-contributed jurisdiction and sector overlays (EU, France, Netherlands, Austria, Canada, UAE, Australia, USA, UK Finance, UK NHS, UK Legacy IT, UK Food Safety, UK G-Cloud) that generate architecture artefacts using versioned templates with full traceability.",
+                "description": "ArcKit is The Enterprise Architecture Governance Harness: open-source, covering strategy, architecture, delivery, and assurance, distributed as a plugin or extension for AI coding assistants — Claude Code, Gemini CLI, GitHub Copilot, OpenAI Codex CLI, OpenCode CLI, Mistral Vibe, Kimi Code CLI and Paperclip, with an experimental plugin for Google Antigravity. It wraps the assistant with slash commands across an official UK Government baseline plus community-contributed jurisdiction and sector overlays (EU, France, Netherlands, Austria, Canada, UAE, Australia, USA, UK Finance, UK NHS, UK Legacy IT, UK Food Safety, UK G-Cloud) that generate architecture artefacts using versioned templates with full traceability.",
                 "softwareVersion": "6.26.0",
                 "license": "https://github.com/tractorjuice/arc-kit/blob/main/LICENSE",
                 "codeRepository": "https://github.com/tractorjuice/arc-kit",
@@ -459,7 +459,7 @@
                         "name": "Which AI coding assistants does ArcKit work with?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "ArcKit ships for Claude Code (premier), Google Gemini CLI, GitHub Copilot, OpenAI Codex CLI, OpenCode CLI, Mistral Vibe, Kimi Code CLI and Paperclip, with an experimental plugin for Google Antigravity. The same commands and templates are available across every supported assistant."
+                            "text": "ArcKit ships for Claude Code (premier), Google Gemini CLI, GitHub Copilot, OpenAI Codex CLI, OpenCode CLI, Mistral Vibe, Kimi Code CLI and Paperclip, with an experimental plugin for Google Antigravity. The same commands and templates are available across every supported assistant, apart from a few that need Claude Code, such as /arckit:build and the UK G-Cloud overlay."
                         }
                     },
                     {
@@ -467,7 +467,7 @@
                         "name": "Which jurisdictions and compliance frameworks does ArcKit cover?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "The official baseline covers UK Government frameworks: GDS Service Standard, Technology Code of Practice, Secure by Design, NCSC Cyber Assessment Framework, HM Treasury Orange and Green Books, and G-Cloud/DOS procurement. Community-maintained overlays add UK Legacy IT assessment (updated-definition classification, separate numerical prioritisation and remediation), UK Food Safety for small caterers in England and Wales (Safer food, better business for caterers), the European Union (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act, Cloud Sovereignty Framework), France (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI), Austria (DSG/DSGVO, NISG, BVergG, BaFG/WZG accessibility), Canada Federal (FITAA, Privacy Act PIA, ATIP, AIA, ITSG-33, GC Digital Standards), the UAE Federal (PDPL, IAS, AI Charter, sovereign cloud residency, UAE Pass), Australian Federal / DISP-supplier (ASD Essential Eight, ISM, DTA Digital Service Standard, Privacy Act 1988 PIA, OAIC NDB, PSPF, AI Assurance, DISP attestation), USA Federal Civilian (FedRAMP, FISMA / NIST 800-53 Rev 5, CISA Zero Trust, OMB M-19-17 ICAM, NIST AI RMF, OMB M-25-21/M-25-22 AI assurance, E-Gov §208 PIA, EO 14028 SBOM), UK Finance Payments (PSD2 SCA-RTS, EMI/PI safeguarding, FCA Consumer Duty, Critical Third Parties — first sector-specific overlay), and UK NHS Clinical Safety (DCB0129, DCB0160, DTAC, UK MDR + EU MDR SaMD/AIaMD classification — second sector-specific overlay)."
+                            "text": "The official baseline covers UK Government frameworks: GDS Service Standard, Technology Code of Practice, Secure by Design, NCSC Cyber Assessment Framework, HM Treasury Orange and Green Books, and G-Cloud/DOS procurement. Community-maintained overlays add UK Legacy IT assessment (updated-definition classification, separate numerical prioritisation and remediation), UK Food Safety for small caterers in England and Wales (Safer food, better business for caterers), the European Union (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act, Cloud Sovereignty Framework), France (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI), the Netherlands (Rijksbreed cloudbeleid, VIRBI 2025 / TBB, BIO2, NORA and GEMMA), Austria (DSG/DSGVO, NISG, BVergG, BaFG/WZG accessibility), Canada Federal (FITAA, Privacy Act PIA, ATIP, AIA, ITSG-33, GC Digital Standards), the UAE Federal (PDPL, IAS, AI Charter, sovereign cloud residency, UAE Pass), Australian Federal / DISP-supplier (ASD Essential Eight, ISM, DTA Digital Service Standard, Privacy Act 1988 PIA, OAIC NDB, PSPF, AI Assurance, DISP attestation), USA Federal Civilian (FedRAMP, FISMA / NIST 800-53 Rev 5, CISA Zero Trust, OMB M-19-17 ICAM, NIST AI RMF, OMB M-25-21/M-25-22 AI assurance, E-Gov §208 PIA, EO 14028 SBOM), UK Finance Payments (PSD2 SCA-RTS, EMI/PI safeguarding, FCA Consumer Duty, Critical Third Parties), and UK NHS Clinical Safety (DCB0129, DCB0160, DTAC, UK MDR + EU MDR SaMD/AIaMD classification)."
                         }
                     },
                     {
@@ -475,7 +475,7 @@
                         "name": "How do I install ArcKit?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "For Claude Code, run \"/plugin marketplace add tractorjuice/arckit-claude\" then install arckit. For Gemini CLI, run \"gemini extensions install tractorjuice/arckit-gemini\". For Codex CLI, OpenCode CLI, or GitHub Copilot, install the Python CLI with \"pip install git+https://github.com/tractorjuice/arc-kit.git\" and run \"arckit init --ai codex|opencode|copilot|kimi\" inside your project. For Google Antigravity (experimental), run \"agy plugin install https://github.com/tractorjuice/arckit-antigravity\"."
+                            "text": "For Claude Code, run \"/plugin marketplace add tractorjuice/arckit-claude\" then install arckit. For Gemini CLI, run \"gemini extensions install tractorjuice/arckit-gemini\". For Codex CLI, OpenCode CLI, or GitHub Copilot, install the Python CLI with \"pip install git+https://github.com/tractorjuice/arc-kit.git\" and run \"arckit init --ai codex|opencode|copilot\" inside your project; Codex CLI can also install ArcKit as a plugin with \"codex plugin marketplace add tractorjuice/arckit-codex\". For Kimi Code CLI, run \"/plugins install https://github.com/tractorjuice/arckit-kimi.git\" at the kimi prompt. For Mistral Vibe, clone tractorjuice/arckit-vibe and link it into ~/.vibe/extensions/. For Paperclip, install tractorjuice/arckit-paperclip through Paperclip's plugin installation flow. For Google Antigravity (experimental), run \"agy plugin install https://github.com/tractorjuice/arckit-antigravity\"."
                         }
                     },
                     {
@@ -483,7 +483,7 @@
                         "name": "Is ArcKit free and open source?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yes. ArcKit is released under the MIT licence with source code on GitHub at tractorjuice/arc-kit. You only pay for the underlying AI assistant subscription (Claude Code, Gemini, Copilot, Codex, or OpenCode)."
+                            "text": "Yes. ArcKit is released under the MIT licence with source code on GitHub at tractorjuice/arc-kit. The one exception is the UK G-Cloud supplier overlay, which is public but proprietary. You only pay for the underlying AI assistant subscription (Claude Code, Gemini, Copilot, Codex, or OpenCode)."
                         }
                     },
                     {
@@ -578,7 +578,7 @@
         <!-- 3. What is ArcKit? -->
         <div class="govuk-width-container govuk-!-margin-top-9">
             <h2 class="govuk-heading-l">What is ArcKit?</h2>
-            <p class="govuk-body">ArcKit is an AI harness that wraps your AI coding assistant: it gates, traces, and provenance-stamps everything the assistant produces. From stakeholder analysis and risk registers to design reviews and traceability matrices, every artifact is template-driven and audit-ready. A UK Government baseline ships alongside community-contributed jurisdiction and sector overlays (EU, France, Netherlands, Austria, Canada, UAE, Australia, USA, UK Finance, UK NHS, UK Legacy IT, UK Food Safety, UK G-Cloud). It installs as a <a href="claude-code-plugin.html" class="govuk-link">Claude Code plugin</a>, and as an extension for Gemini CLI, Codex CLI, OpenCode CLI and GitHub Copilot.</p>
+            <p class="govuk-body">ArcKit is an AI harness that wraps your AI coding assistant: it gates, traces, and provenance-stamps everything the assistant produces. From stakeholder analysis and risk registers to design reviews and traceability matrices, every artifact is template-driven and audit-ready. A UK Government baseline ships alongside community-contributed jurisdiction and sector overlays (EU, France, Netherlands, Austria, Canada, UAE, Australia, USA, UK Finance, UK NHS, UK Legacy IT, UK Food Safety, UK G-Cloud). It installs as a <a href="claude-code-plugin.html" class="govuk-link">Claude Code plugin</a>, and for Gemini CLI, Codex CLI, OpenCode CLI, GitHub Copilot, Mistral Vibe, Kimi Code CLI and Paperclip, with an experimental plugin for Google Antigravity.</p>
 
             <div class="app-feature-grid">
                 <div class="app-feature-card">
@@ -591,7 +591,7 @@
                 </div>
                 <div class="app-feature-card">
                     <h3 class="govuk-heading-m">AI-Assisted</h3>
-                    <p class="govuk-body">Works with Claude Code, Gemini CLI, Codex CLI, OpenCode CLI, and GitHub Copilot. AI generates first drafts from templates; architects review and refine.</p>
+                    <p class="govuk-body">Works with Claude Code, Gemini CLI, Codex CLI, OpenCode CLI, GitHub Copilot, Mistral Vibe, Kimi Code CLI and Paperclip, and experimentally with Google Antigravity. AI generates first drafts from templates; architects review and refine.</p>
                 </div>
             </div>
         </div>
@@ -731,7 +731,7 @@
                     <div class="app-jurisdiction-card__flag">🇺🇸</div>
                     <div class="app-jurisdiction-card__title">USA Federal Civilian</div>
                     <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 10 commands</span>
-                    <p class="app-jurisdiction-card__desc">FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity, OMB M-19-17 ICAM, NIST AI RMF, OMB M-25-21/M-25-22 AI assurance, E-Gov §208 PIA, EO 14028 SBOM. Install: <code>claude plugin install arckit arckit-us</code>.</p>
+                    <p class="app-jurisdiction-card__desc">FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity, OMB M-19-17 ICAM, NIST AI RMF, OMB M-25-21/M-25-22 AI assurance, E-Gov §208 PIA, EO 14028 SBOM. Install: <code>claude plugin install arckit-us@arckit-claude</code>, then <code>claude plugin enable arckit-us</code>.</p>
                 </a>
                 <a href="commands.html?jurisdiction=uk-finance" class="app-jurisdiction-card govuk-link--no-visited-state">
                     <div class="app-jurisdiction-card__flag">🏦</div>
@@ -743,7 +743,7 @@
                     <div class="app-jurisdiction-card__flag">🍽️</div>
                     <div class="app-jurisdiction-card__title">UK Food Safety (sector)</div>
                     <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 9 commands · sector overlay · experimental</span>
-                    <p class="app-jurisdiction-card__desc">For small caterers in England and Wales: the business profile, the five sections of safe methods, the business's own methods, its allergen information, cleaning schedule and suppliers and contacts, the pack's blank diary and record sheets, and a completion record, built from the Food Standards Agency's Safer food, better business for caterers pack. Only an answer a named person at the business confirms is printed as the business's answer, the allergen information never works an allergen out or looks a product up, and a named person signs off each finished document; the blank forms are filled in and signed by hand. Not legal advice; the Food Standards Agency has not reviewed or endorsed it. Install: <code>claude plugin install arckit-uk-food --marketplace tractorjuice/arckit-claude</code>.</p>
+                    <p class="app-jurisdiction-card__desc">For small caterers in England and Wales: the business profile, the five sections of safe methods, the business's own methods, its allergen information, cleaning schedule and suppliers and contacts, the pack's blank diary and record sheets, and a completion record, built from the Food Standards Agency's Safer food, better business for caterers pack. Only an answer a named person at the business confirms is printed as the business's answer, the allergen information never works an allergen out or looks a product up, and a named person signs off each finished document; the blank forms are filled in and signed by hand. Not legal advice; the Food Standards Agency has not reviewed or endorsed it. Install: <code>claude plugin install arckit-uk-food@arckit-claude</code>, then <code>claude plugin enable arckit-uk-food</code>.</p>
                 </a>
                 <a href="commands.html?jurisdiction=uk-legacy" class="app-jurisdiction-card govuk-link--no-visited-state">
                     <div class="app-jurisdiction-card__flag">🇬🇧</div>
@@ -757,27 +757,27 @@
                     <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 4 commands · sector overlay</span>
                     <p class="app-jurisdiction-card__desc">NHS DCB0129 (manufacturer) and DCB0160 (deployer) Clinical Safety Case + Hazard Log (Marcus Baw SAFETY.md spec), NHS DTAC (form v2.0), UK MDR 2002 + EU MDR 2017/745 software-as-medical-device (SaMD / AIaMD) classification.</p>
                 </a>
-                <a href="commands.html?jurisdiction=australia" class="app-jurisdiction-card govuk-link--no-visited-state">
+                <a href="commands.html?jurisdiction=au-energy" class="app-jurisdiction-card govuk-link--no-visited-state">
                     <div class="app-jurisdiction-card__flag">⚡</div>
                     <div class="app-jurisdiction-card__title">Australian Energy (sector)</div>
                     <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 2 commands · sector overlay</span>
-                    <p class="app-jurisdiction-card__desc">AESCSF maturity assessment and energy-sector compliance (AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS, SOCI escalation), layered on the Australian Federal baseline. Install: <code>claude plugin install arckit arckit-au arckit-au-energy</code>.</p>
+                    <p class="app-jurisdiction-card__desc">AESCSF maturity assessment and energy-sector compliance (AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS, SOCI escalation), layered on the Australian Federal baseline. Install: <code>claude plugin install arckit-au@arckit-claude</code> and <code>claude plugin install arckit-au-energy@arckit-claude</code>, then <code>claude plugin enable arckit-au</code> and <code>claude plugin enable arckit-au-energy</code>.</p>
                 </a>
-                <a href="commands.html?jurisdiction=uk-gcloud" class="app-jurisdiction-card govuk-link--no-visited-state">
+                <a href="commands.html?category=uk-gcloud-overlay" class="app-jurisdiction-card govuk-link--no-visited-state">
                     <div class="app-jurisdiction-card__flag">☁️</div>
                     <div class="app-jurisdiction-card__title">UK G-Cloud (sector)</div>
                     <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Proprietary · Claude Code only · 15 commands · sector overlay</span>
-                    <p class="app-jurisdiction-card__desc">Supplier-side UK G-Cloud 15 (Digital Marketplace) bid authoring: supplier profile, social value, lot questions, the Procurement Act 2023 supplier declaration, service design, Service Definition Documents for Lots 1a, 1b, 2a, 2b and 3, pricing and DDaT rate card, security evidence, competitor benchmark, submission review, and final submission pack. Proprietary licence (not MIT), not distributed to the non-Claude extension formats. Recipe <code>uk-gcloud-submission</code>. Install: <code>claude plugin install arckit arckit-uk-gcloud</code>.</p>
+                    <p class="app-jurisdiction-card__desc">Supplier-side UK G-Cloud 15 (Digital Marketplace) bid authoring: supplier profile, social value, lot questions, the Procurement Act 2023 supplier declaration, service design, Service Definition Documents for Lots 1a, 1b, 2a, 2b and 3, pricing and DDaT rate card, security evidence, competitor benchmark, submission review, and final submission pack. Proprietary licence (not MIT), not distributed to the non-Claude extension formats. Recipe <code>uk-gcloud-submission</code>. Install: <code>claude plugin install arckit-uk-gcloud@arckit-claude</code>, then <code>claude plugin enable arckit-uk-gcloud</code>.</p>
                 </a>
             </div>
             <h3 class="govuk-heading-m govuk-!-margin-top-6">Architecture documentation</h3>
-            <p class="govuk-body">Community overlays also include <a href="commands.html?jurisdiction=arc42" class="govuk-link">arc42</a>, a documentation structure for a system's architecture. It assembles existing artefacts into 12 sections with source citations and a Gap Register, documents the quality scenarios, crosscutting concepts and technical debt it summarises, hands the result over to Spec Kit, and works across jurisdictions.</p>
+            <p class="govuk-body">Community overlays also include <a href="commands.html?jurisdiction=arc42" class="govuk-link">arc42</a>, a documentation structure for a system's architecture. It assembles existing artefacts into 12 sections with source citations and a Gap Register, documents the quality scenarios, crosscutting concepts and technical debt it summarises, hands the result over to Spec Kit, and works across jurisdictions. Other overlays cover <a href="commands.html?jurisdiction=togaf-adm" class="govuk-link">TOGAF ADM</a>, <a href="commands.html?jurisdiction=oaa" class="govuk-link">Open Agile Architecture</a>, <a href="commands.html?jurisdiction=agent-architecture" class="govuk-link">AI agent architecture</a> and <a href="commands.html?category=repo-tooling" class="govuk-link">repository tooling</a>.</p>
             <div class="app-jurisdiction-grid">
                 <a href="commands.html?jurisdiction=arc42" class="app-jurisdiction-card govuk-link--no-visited-state">
                     <div class="app-jurisdiction-card__flag">📐</div>
                     <div class="app-jurisdiction-card__title">arc42 (documentation method)</div>
                     <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 5 commands · method overlay</span>
-                    <p class="app-jurisdiction-card__desc">An arc42 architecture description assembled from existing requirements, ADRs, diagrams and other artefacts. Every section cites its sources; undocumented sections are listed in a Gap Register. Quality scenarios, crosscutting concepts and a technical debt register fill the sections core does not cover, and an SDD handover pack carries requirement and decision IDs into Spec Kit. Install: <code>claude plugin install arckit arckit-arc42</code>.</p>
+                    <p class="app-jurisdiction-card__desc">An arc42 architecture description assembled from existing requirements, ADRs, diagrams and other artefacts. Every section cites its sources; undocumented sections are listed in a Gap Register. Quality scenarios, crosscutting concepts and a technical debt register fill the sections core does not cover, and an SDD handover pack carries requirement and decision IDs into Spec Kit. Install: <code>claude plugin install arckit-arc42@arckit-claude</code>, then <code>claude plugin enable arckit-arc42</code>.</p>
                 </a>
             </div>
             <p class="govuk-body govuk-!-margin-top-4"><a href="commands.html" class="govuk-link">Browse all commands &rarr;</a></p>
@@ -812,7 +812,7 @@
                     </div>
                 </div>
 
-                <p class="govuk-body govuk-!-margin-top-4">Supports TCoP Point 3 ("Be open and use open source") and the CDDO "reuse before build" principle. Existing research commands now include a government reuse check as a fifth build-vs-buy option.</p>
+                <p class="govuk-body govuk-!-margin-top-4">Supports TCoP Point 3 ("Be open and use open source") and the CDDO "reuse before build" principle. <code>/arckit:research</code> also reports whether a GOV.UK platform or open-source project already covers each capability, as evidence; <code>/arckit:wardley</code> and <code>/arckit:sobc</code> make the build-or-buy call.</p>
             </div>
         </div>
 
@@ -843,7 +843,7 @@
         <!-- 5. Works with your AI -->
         <div class="govuk-width-container govuk-!-margin-top-9" id="multi-ai">
             <h2 class="govuk-heading-l">Works with your AI</h2>
-            <p class="govuk-body">Every core command and community overlay produces identical outputs across AI systems. Choose the platform that fits your workflow.</p>
+            <p class="govuk-body">The commands and templates are the same on every assistant, apart from a few that need Claude Code, such as <code>/arckit:build</code> and the UK G-Cloud overlay. Choose the platform that fits your workflow; <a href="getting-started.html" class="govuk-link">Getting Started</a> has the full steps for each.</p>
 
             <div class="app-ai-compact">
                 <div class="app-ai-compact-card app-ai-compact-card--premier">
@@ -856,13 +856,13 @@
                 <div class="app-ai-compact-card">
                     <h3 class="govuk-heading-s">Gemini CLI</h3>
                     <strong class="govuk-tag govuk-tag--purple">Full</strong>
-                    <p class="govuk-body-s govuk-!-margin-top-2">Native extension with all commands, templates, scripts, and MCP servers.</p>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Native extension with the commands, templates, scripts, and MCP servers.</p>
                     <code>gemini extensions install tractorjuice/arckit-gemini</code>
                 </div>
                 <div class="app-ai-compact-card">
                     <h3 class="govuk-heading-s">OpenAI Codex CLI</h3>
                     <strong class="govuk-tag govuk-tag--blue">Core</strong>
-                    <p class="govuk-body-s govuk-!-margin-top-2">Commands and templates copied into your project via CLI.</p>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Skills and templates as a Codex plugin, or copied into your project by the CLI.</p>
                     <code>arckit init my-project --ai codex</code>
                 </div>
                 <div class="app-ai-compact-card">
@@ -876,6 +876,30 @@
                     <strong class="govuk-tag govuk-tag--blue">Core</strong>
                     <p class="govuk-body-s govuk-!-margin-top-2">Prompt files and agents for VS Code Copilot Chat.</p>
                     <code>arckit init my-project --ai copilot</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">Mistral Vibe</h3>
+                    <strong class="govuk-tag govuk-tag--purple">Full</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Extension with skills, agents, templates, and MCP servers. Clone it and link it into your Vibe extensions folder.</p>
+                    <code>git clone https://github.com/tractorjuice/arckit-vibe.git</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">Kimi Code CLI</h3>
+                    <strong class="govuk-tag govuk-tag--purple">Full</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Plugin with every command as an Agent Skill, plus MCP servers. Install it from the Kimi prompt.</p>
+                    <code>/plugins install https://github.com/tractorjuice/arckit-kimi.git</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">Paperclip</h3>
+                    <strong class="govuk-tag govuk-tag--blue">Core</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Plugin with every command as a Paperclip tool. Clone it, build it, then install the folder.</p>
+                    <code>paperclipai plugin install .</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">Google Antigravity</h3>
+                    <strong class="govuk-tag govuk-tag--yellow">Experimental</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Plugin with every command as an Agent Skill. Eight core commands have been run there; the rest are untried.</p>
+                    <code>agy plugin install https://github.com/tractorjuice/arckit-antigravity</code>
                 </div>
             </div>
         </div>
@@ -1082,13 +1106,13 @@
                 </div>
                 <div class="app-explore-card">
                     <h3 class="govuk-heading-m"><a href="use-cases.html" class="govuk-link">Example Projects</a></h3>
-                    <p class="govuk-body-s">AI-generated architecture documentation from 44 public test projects spanning health, AI, cloud, and data.</p>
+                    <p class="govuk-body-s">AI-generated architecture documentation from 25 public test repositories spanning health, AI, cloud, and data.</p>
                 </div>
                 <div class="app-explore-card app-explore-card--wide">
                     <img src="certification/badges/awareness.svg" alt="" width="88" height="88">
                     <div>
                         <h3 class="govuk-heading-m"><a href="certification/index.html" class="govuk-link">ArcKit Certification</a></h3>
-                        <p class="govuk-body-s">Show you can use ArcKit. Take the free Awareness quiz and add a signed Open Badges 3.0 credential to your LinkedIn profile. Foundation follows in November.</p>
+                        <p class="govuk-body-s">Show you can use ArcKit. Take the free Awareness quiz and add a signed Open Badges 3.0 credential to your LinkedIn profile. Foundation follows in January 2027.</p>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,7 @@ Reviewed by the ISSO, System Owner, Common Control Provider (CCP) representative
 
 | Artefact | Purpose |
 |----------|---------|
-| FIPS 199 Categorization (`ARC-<id>-FIPS199-v1.0.md`) | Determines the high-water mark baseline (Low / Moderate / High) |
+| FIPS 199 Categorization (`ARC-<id>-FIPS199-v1.0.md`), required | Determines the high-water mark baseline (Low / Moderate / High). The command stops without it and points to `/arckit:us-fisma-categorization` |
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | `NFR-SEC-*` and `INT-*` drive control tailoring |
 | Architecture Principles (`ARC-<id>-PRIN-v1.0.md`) | Inheritance posture and tailoring guidance |
 

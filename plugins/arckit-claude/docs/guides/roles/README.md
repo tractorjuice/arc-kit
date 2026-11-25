@@ -8,7 +8,7 @@ Which ArcKit commands should **you** use? These guides map ArcKit's commands to 
 
 | Role | Primary Commands | Guide |
 |------|-----------------|-------|
-| [Enterprise Architect](enterprise-architect.md) | All 52 — owns the governance framework | Full lifecycle |
+| [Enterprise Architect](enterprise-architect.md) | All core commands — owns the governance framework | Full lifecycle |
 | [Solution Architect](solution-architect.md) | requirements, research, adr, diagram, hld-review, wardley | Technical design |
 | [Data Architect](data-architect.md) | data-model, data-mesh-contract, dpia, datascout | Data governance |
 | [Security Architect](security-architect.md) | secure, mod-secure, dpia, risk, conformance | Security & compliance |

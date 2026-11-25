@@ -505,9 +505,9 @@
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit:azure-research Research Azure services for &lt;project&gt;
 </code></pre>
-<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-AZRS-v1.0.md</code></p>
+<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-AZRS-&lt;NNN&gt;-v1.0.md</code></p>
 <blockquote>
-<p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
+<p><strong>Re-running</strong>: each run writes a new report with the next sequence number (<code>AZRS-001</code>, <code>AZRS-002</code> and so on), so earlier reports are kept.</p>
 </blockquote>
 <hr />
 <h2 id="long-runs-remote-control--push-notifications">Long runs: Remote Control + push notifications</h2>
@@ -546,7 +546,7 @@
 <ul>
 <li><strong>Azure Service Recommendations</strong>: Mapped to specific requirements (FR, NFR, INT, DR)</li>
 <li><strong>Architecture Pattern</strong>: Reference architecture from Azure Architecture Center</li>
-<li><strong>Well-Architected Assessment</strong>: All 5 pillars evaluated per service</li>
+<li><strong>Well-Architected Assessment</strong>: All six pillars scored per service from a fixed rubric</li>
 <li><strong>Azure Security Benchmark</strong>: 12 control domains mapped</li>
 <li><strong>UK Government Compliance</strong>: G-Cloud, UK regions, NCSC principles</li>
 <li><strong>Cost Estimates</strong>: Monthly and 3-year TCO with optimization recommendations</li>

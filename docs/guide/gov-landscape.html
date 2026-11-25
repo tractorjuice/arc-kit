@@ -442,7 +442,7 @@
 </blockquote>
 <p><code>/arckit:gov-landscape</code> maps what UK government has built in a domain — organisations active in the space, common technology patterns, adopted standards, maturity levels, and collaboration opportunities — giving architects a broad situational picture before making design decisions.</p>
 <blockquote>
-<p><strong>Agent Architecture</strong>: This command runs as an autonomous agent via the Task tool. The agent issues 8-12 govreposcrape queries across the domain, uses WebFetch to inspect representative repositories at depth, and synthesises findings into a structured landscape report, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.</p>
+<p><strong>Agent Architecture</strong>: In Claude Code the command runs in your main session. It sends reader subagents to gather evidence, and a writer subagent with no network tools then writes the document, which keeps the research out of your main context. Other assistants run a single combined prompt instead. The command splits the domain into 4 to 6 organisation and technology buckets, one per reader. Each reader runs govreposcrape searches and vulnerability-exposure queries and uses WebFetch to inspect representative repositories.</p>
 </blockquote>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
@@ -498,13 +498,13 @@
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit:gov-landscape &lt;domain&gt;
 </code></pre>
-<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-GLND-v1.0.md</code></p>
+<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-GLND-&lt;NNN&gt;-v1.0.md</code></p>
 <blockquote>
-<p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version.</p>
+<p><strong>Re-running</strong>: each run writes a new report with the next sequence number (<code>GLND-001</code>, <code>GLND-002</code> and so on), so earlier reports are kept.</p>
 </blockquote>
 <hr />
 <h2 id="how-it-works">How It Works</h2>
-<p>The agent uses a broad-to-specific search strategy across the govreposcrape semantic search API:</p>
+<p>The command uses a broad-to-specific search strategy across the govreposcrape semantic search API:</p>
 <table>
 <thead>
 <tr>
@@ -515,11 +515,11 @@
 <tbody>
 <tr>
 <td>1</td>
-<td>Generate 8-12 domain-spanning queries covering different facets</td>
+<td>Split the domain into 4-6 buckets (organisations and technology facets), each searched with up to 3 queries</td>
 </tr>
 <tr>
 <td>2</td>
-<td>Run all queries, collecting a wide pool of repositories</td>
+<td>Run the searches, and query vulnerability exposure for 3-5 organisation or package scopes, collecting a wide pool of repositories</td>
 </tr>
 <tr>
 <td>3</td>
@@ -531,7 +531,7 @@
 </tr>
 <tr>
 <td>5</td>
-<td>Score each organisation's activity on domain maturity (depth, recency, documentation)</td>
+<td>Score each repository's maturity from a fixed rubric (activity, documentation, tests, CI/CD, community)</td>
 </tr>
 <tr>
 <td>6</td>
@@ -540,30 +540,40 @@
 </tbody>
 </table>
 <h3 id="maturity-scoring">Maturity Scoring</h3>
-<p>Each active organisation in the domain is rated on three dimensions:</p>
+<p>Each repository is scored from a fixed rubric (<code>gov-landscape-generic</code>) on five weighted dimensions, so the same evidence gives the same score on a re-run. The scores roll up into a band: Production-Grade, Mature, Developing or Experimental. The domain gets no overall grade, only the median and the distribution.</p>
 <table>
 <thead>
 <tr>
 <th>Dimension</th>
-<th>High</th>
-<th>Low</th>
+<th>Weight</th>
+<th>What it looks at</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Depth</td>
-<td>Multiple repos, clear investment</td>
-<td>Single exploratory repo</td>
-</tr>
-<tr>
-<td>Recency</td>
-<td>Active commits within 12 months</td>
-<td>No activity in 2+ years</td>
+<td>Activity</td>
+<td>25%</td>
+<td>Time since the last commit</td>
 </tr>
 <tr>
 <td>Documentation</td>
-<td>Architecture docs, guides, READMEs</td>
-<td>Minimal or no documentation</td>
+<td>20%</td>
+<td>README and docs tree</td>
+</tr>
+<tr>
+<td>Tests</td>
+<td>20%</td>
+<td>Whether the repository has tests</td>
+</tr>
+<tr>
+<td>CI/CD</td>
+<td>15%</td>
+<td>Whether it has a pipeline</td>
+</tr>
+<tr>
+<td>Community</td>
+<td>20%</td>
+<td>Contributors and forks</td>
 </tr>
 </tbody>
 </table>
@@ -573,7 +583,8 @@
 <li><strong>Landscape map</strong> showing organisations active in the domain and their relative maturity</li>
 <li><strong>Technology stack analysis</strong> with language and framework distribution across repos</li>
 <li><strong>Standards adoption</strong> summary — which standards are widely, partially, or not yet adopted</li>
-<li><strong>Maturity scores</strong> per organisation for depth, recency, and documentation</li>
+<li><strong>Maturity scores</strong> per repository across the five dimensions, with the median for the domain</li>
+<li><strong>Supply-chain exposure</strong> — known vulnerabilities in dependencies, counted by severity for the queried organisations and packages. A scope that returns no data is reported as unknown exposure, not as clean</li>
 <li><strong>Collaboration opportunities</strong> identifying teams solving similar problems</li>
 <li><strong>Gap analysis</strong> for capabilities or standards with little or no existing government code</li>
 </ul>
@@ -604,13 +615,13 @@
 </tr>
 <tr>
 <td>Scope</td>
-<td>Domain-wide (8-12 queries)</td>
+<td>Domain-wide (4-6 buckets)</td>
 <td>Capability-specific (3-5 queries)</td>
 <td>Query-specific (3-5 queries)</td>
 </tr>
 <tr>
 <td>Output</td>
-<td>Landscape map + maturity scores</td>
+<td>Landscape map + maturity scores + exposure</td>
 <td>Scored reuse assessment per capability</td>
 <td>Search results + repo profiles</td>
 </tr>
