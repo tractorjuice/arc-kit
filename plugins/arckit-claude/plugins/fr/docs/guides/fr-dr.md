@@ -33,15 +33,15 @@ Output: `projects/<id>/ARC-<id>-DR-v1.0.md`
 | Section | Contents |
 |---------|----------|
 | Scope Statement | DR boundary (explicitly not IGI 1300) |
-| DR Asset Inventory | Documents and data classified DR |
-| Marking Rules | Correct DR marking on all document formats |
-| Access Control | Need-to-know enforcement, personnel habilitation |
-| Electronic Storage | Approved storage media and IS requirements |
-| Transmission | Approved encryption and transmission channels |
-| Physical Handling | Physical document controls, meeting security |
-| Destruction | Approved destruction methods by media type |
-| IS Homologation | Homologation requirement for DR-processing IS |
-| Gap Analysis | Compliance gaps with remediation plan |
+| 1. DR Asset Inventory | Documents and data classified DR |
+| 2. DR Marking and Labelling Rules | Correct DR marking on electronic documents; DR registry |
+| 3. Access Control | Need-to-know enforcement, authorised recipients |
+| 4. Electronic Storage Requirements | Approved storage media and IS requirements |
+| 5. Electronic Transmission Rules | Approved encryption and transmission channels |
+| 6. Physical Handling Rules | Physical document controls, meeting security |
+| 7. Destruction Requirements | Approved destruction methods by media type |
+| 8. Incident Reporting | Reporting of DR compromises |
+| 9. System Compliance Checklist | IS requirements for DR processing and gap summary |
 
 ---
 

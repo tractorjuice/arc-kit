@@ -167,7 +167,7 @@ To update by hand at any time, run `claude plugin update arckit@arckit-claude`, 
 
 The standalone `tractorjuice/arckit-claude` marketplace hosts all Claude Code plugins: the `arckit` core plugin, regional overlays, sector overlays, the TOGAF ADM, O-AA, arc42 and AI agent architecture overlays, the `arckit-fde` tooling plugin, and the public-but-proprietary `arckit-uk-gcloud` supplier overlay. The 19 community plugins (`arckit-uae`, `arckit-fr`, `arckit-nl`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-legacy`, `arckit-uk-food`, `arckit-uk-gcloud`, `arckit-togaf-adm`, `arckit-agent-architecture`, `arckit-oaa`, `arckit-arc42`, `arckit-repo`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install `arckit-au@arckit-claude` and `arckit-au-energy@arckit-claude`, one `claude plugin install` each, and enable both. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is public for installation and inspection, but not MIT licensed and not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
 
-The older `tractorjuice/arc-kit` marketplace remains available for compatibility, but new Claude Code installs should use `tractorjuice/arckit-claude`. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all official commands, autonomous research agents, automation hooks, bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape, uk-tenders), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+Use `tractorjuice/arckit-claude`, not the older `tractorjuice/arc-kit` marketplace: both publish the same plugins under the same names, so adding both registers every plugin twice. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all official commands, autonomous research agents, automation hooks, bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, Data Commons, govreposcrape, uk-tenders, Trello), and updates through the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
 <details>
 <summary><strong>Why Claude Code v2.1.319 or later?</strong></summary>
@@ -220,6 +220,8 @@ gemini extensions install https://github.com/tractorjuice/arckit-gemini
 Zero-config: 75 core commands, templates, scripts, and five bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, Data Commons, govreposcrape). Updates via `gemini extensions update arckit`.
 
 There is nothing to initialise. Commands are invoked as `/arckit:requirements`, `/arckit:stakeholders`, etc.
+
+Using Google Antigravity as well, or instead? ArcKit has an experimental plugin for it: see **Google Antigravity** below.
 
 </details>
 
@@ -292,7 +294,7 @@ $arckit-stakeholders Analyze stakeholders for cloud migration
 $arckit-requirements Create comprehensive requirements
 ```
 
-See [.codex/README.md](.codex/README.md) for full Codex CLI setup and usage.
+See the [Codex CLI extension README](extensions/arckit-codex/README.md) for full Codex CLI setup and usage.
 
 **Updating:**
 
@@ -324,7 +326,7 @@ arckit init payment-modernization --ai opencode
 arckit init . --ai opencode
 ```
 
-Commands are invoked as `/arckit:requirements`, `/arckit:stakeholders`, etc. To update, upgrade the CLI and re-run `arckit init --here --ai opencode`.
+Commands are invoked as `/arckit.<command>`: OpenCode names each command after its file, so `arckit.requirements.md` is the requirements command. To update, upgrade the CLI and re-run `arckit init --here --ai opencode`.
 
 </details>
 
@@ -372,7 +374,7 @@ Start `kimi`, then install the ArcKit plugin from the prompt:
 /plugins install https://github.com/tractorjuice/arckit-kimi.git
 ```
 
-Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
+Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries the bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
 
 Create a project with the ArcKit CLI (install it as for Codex CLI):
 
@@ -397,7 +399,35 @@ kimi
 
 </details>
 
-**Latest Release**: [v6.24.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.24.0)
+<details>
+<summary><strong>Google Antigravity (experimental)</strong></summary>
+
+It passes Antigravity's own plugin check and eight core commands have been run there; the rest are untried.
+
+```bash
+agy plugin install https://github.com/tractorjuice/arckit-antigravity
+```
+
+Create a project with the ArcKit CLI (install it as for Codex CLI):
+
+```bash
+arckit init payment-modernization --ai antigravity
+```
+
+Every ArcKit command is an Agent Skill whose name starts `arckit-`:
+
+```text
+/arckit-principles Create principles for a financial services company
+/arckit-requirements Build a payment processing system...
+```
+
+See [the plugin's README](https://github.com/tractorjuice/arckit-antigravity) for the MCP servers and what is not there yet. **Updating:** run the install command again.
+
+Using Gemini CLI as well, or instead? ArcKit's established extension for it is under **Gemini CLI** above.
+
+</details>
+
+**Latest Release**: [v6.26.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.26.0)
 
 If upgrading from v0.x, you may also need to migrate legacy filenames — see the [upgrading guide](docs/guides/upgrading.md) for full details.
 
@@ -532,7 +562,7 @@ claude plugin install arckit-uae@arckit-claude
 claude plugin enable arckit-uae
 ```
 
-Commands on this page are written as Claude Code names them, with the overlay's plugin name first: `/arckit-uae:uae-pdpl`. The other assistants leave the plugin name out: `/arckit:uae-pdpl` in Gemini CLI and OpenCode CLI, `/arckit-uae-pdpl` in GitHub Copilot and `$arckit-uae-pdpl` in Codex CLI.
+Commands on this page are written as Claude Code names them, with the overlay's plugin name first: `/arckit-uae:uae-pdpl`. The other assistants leave the plugin name out: `/arckit:uae-pdpl` in Gemini CLI, `/arckit.<command>` with a dot in OpenCode CLI, `/arckit-uae-pdpl` in GitHub Copilot and `$arckit-uae-pdpl` in Codex CLI.
 
 | Overlay | Plugin | Kind | Commands | More |
 |---------|--------|------|----------|------|
@@ -547,7 +577,7 @@ Commands on this page are written as Claude Code names them, with the overlay's 
 | UK financial services payments | `arckit-uk-finance` | Sector | 4 | [Below](#uk-finance-payments-overlay) |
 | UK NHS clinical safety | `arckit-uk-nhs` | Sector | 4 | [Below](#uk-nhs-clinical-safety-overlay) |
 | UK legacy IT assessment | `arckit-uk-legacy` | Sector | 1 | [Below](#uk-legacy-it-assessment-overlay) |
-| UK food safety (England and Wales) | `arckit-uk-food` | Sector | 5 | [Below](#uk-food-safety-overlay) |
+| UK food safety (England and Wales) | `arckit-uk-food` | Sector | 9 | [Below](#uk-food-safety-overlay) |
 | Australian energy | `arckit-au-energy` | Sector | 2 | [README](plugins/arckit-au-energy/README.md) |
 | TOGAF ADM | `arckit-togaf-adm` | Method | 9 | [Below](#togaf-adm-overlay) |
 | Open Agile Architecture (O-AA) | `arckit-oaa` | Method | 5 | [Below](#o-aa-overlay) |
@@ -670,10 +700,10 @@ The commands chain together in a canonical order from `principles → uae-classi
 
 > **EXPERIMENTAL sector overlay, England and Wales only.** The optional `arckit-uk-food` overlay helps a small catering business (a café, takeaway, restaurant, pub or mobile caterer) build its food safety documents from the Food Standards Agency's *Safer food, better business for caterers* pack. It is community-maintained, switched off until enabled, and has not been reviewed by a food safety professional. It is not legal advice: the food business operator is responsible for the food and the records, and the council's environmental health team is the authority. The Food Standards Agency has not reviewed or endorsed it.
 
-The pack's wording is bundled with the overlay and printed into each document unchanged by a helper script, which checks every document against a fresh print. The commands ask their questions in conversation, and only an answer a named person at the business confirms is printed as the business's answer; anything else reads NOT YET ANSWERED, with any proposed answer and where it came from beside it. A named person signs each finished document off. The overlay needs no ArcKit architecture documents.
+The pack's wording is bundled with the overlay and printed into each document unchanged by a helper script, which checks every document against a fresh print. The commands that gather answers ask their questions in conversation, and only an answer a named person at the business confirms is printed as the business's answer; anything else reads NOT YET ANSWERED, with any proposed answer and where it came from beside it. The allergen information, cleaning schedule and suppliers and contacts are lists in the business's own words: a dish or an entry counts once a named person confirms it, and the commands suggest nothing and look nothing up. A named person signs each finished document off, except the completion record and the blank diary and record sheets, which nobody signs. The overlay needs no ArcKit architecture documents.
 
 ```bash
-claude plugin install arckit-uk-food --marketplace tractorjuice/arckit-claude
+claude plugin install arckit-uk-food@arckit-claude
 claude plugin enable arckit-uk-food
 ```
 
@@ -682,10 +712,14 @@ claude plugin enable arckit-uk-food
 | `/arckit-uk-food:uk-food-profile` | Record the business profile: who runs it, where it is, what it sells, its equipment and staff, and any special process, in the business's own words (`FOODPROF`) | [Guide](docs/guides/uk-food-profile.md) | Experimental |
 | `/arckit-uk-food:uk-food-safe-methods` | Work through one of the pack's five sections of safe methods, one safe method and one question at a time (`FOODXC`, `FOODCLN`, `FOODCHL`, `FOODCOOK`, `FOODMGT`) | [Guide](docs/guides/uk-food-safe-methods.md) | Experimental |
 | `/arckit-uk-food:uk-food-own-methods` | Record the business's own controls, and its written procedure for any special process, word for word (`FOODOWN`) | [Guide](docs/guides/uk-food-own-methods.md) | Experimental |
+| `/arckit-uk-food:uk-food-allergens` | Record each dish against the fourteen allergens, one dish and one detail at a time: "contains" only from the labels, product specifications and suppliers' statements you give, "does not contain" only as a named person's own statement. It never looks a product up and never says a dish is free from anything (`FOODALG`) | [Guide](docs/guides/uk-food-allergens.md) | Experimental |
+| `/arckit-uk-food:uk-food-cleaning-schedule` | Record the cleaning schedule on the pack's form, one item at a time in the business's own words: how often, what to take care over and how. It suggests none of it (`FOODCS`) | [Guide](docs/guides/uk-food-cleaning-schedule.md) | Experimental |
+| `/arckit-uk-food:uk-food-suppliers` | Record the suppliers, the council's environmental health team and other contacts on the pack's forms, one entry at a time in the business's own words. It looks nobody up (`FOODSUP`) | [Guide](docs/guides/uk-food-suppliers.md) | Experimental |
+| `/arckit-uk-food:uk-food-record-sheets` | Write the pack's blank diary and record sheets, with the business's own opening and closing checks once a named person confirms them, for people at the business to print or copy, fill in and sign by hand. It asks nothing about the forms and is never signed off (`FOODREC`) | [Guide](docs/guides/uk-food-record-sheets.md) | Experimental |
 | `/arckit-uk-food:uk-food-check` | Show what is finished and what is still waiting, and write the completion record (`FOODCMP`) | [Guide](docs/guides/uk-food-check.md) | Experimental |
 | `/arckit-uk-food:uk-food-sign-off` | Record that a named person has read a finished document and confirms it, with their name, role and version | [Guide](docs/guides/uk-food-sign-off.md) | Experimental |
 
-Start with the profile, work through the five sections and your own methods, and sign the profile off last. Recipe: `uk-food-sfbb` (the profile, the five sections, your own methods and the completion record). A build has nobody to answer, so it confirms nothing: it writes draft documents in which every unconfirmed answer reads NOT YET ANSWERED, and it never signs anything off. It commits after each wave, so run it with `--no-commit` if the records folder is not a git repository; the recipe passes the recipe checks but has not yet been run end to end. Overview: [`docs/guides/uk-food-safety-overlay.md`](docs/guides/uk-food-safety-overlay.md). Help wanted: a food safety co-maintainer (open an issue tagged `co-maintainer: uk-food`).
+Start with the profile, work through the five sections and your own methods, then the allergen information, cleaning schedule and suppliers and contacts in any order, and sign the profile off last. Recipe: `uk-food-sfbb` (12 targets in 4 waves: the profile, the five sections, your own methods, the allergen information, the cleaning schedule, the suppliers and contacts, the blank diary and record sheets, and the completion record). A build has nobody to answer, and its prompts give no named person's answers, so it confirms nothing: it writes draft documents in which every unconfirmed answer reads NOT YET ANSWERED, and it never signs anything off. It commits after each wave, so run it with `--no-commit` if the records folder is not a git repository; the recipe passes the recipe checks but has not yet been run end to end. Overview: [`docs/guides/uk-food-safety-overlay.md`](docs/guides/uk-food-safety-overlay.md). Help wanted: a food safety co-maintainer (open an issue tagged `co-maintainer: uk-food`).
 
 Contains public sector information licensed under the Open Government Licence v3.0.
 
@@ -726,7 +760,7 @@ The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — the
 
 ### USA federal civilian overlay
 
-> ⚠️ **Community-contributed overlay.** The 10 commands below cover US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-25-21/M-25-22 AI assurance, E-Government Act §208 PIA, EO 14028 secure-software evidence and SBOM under OMB M-26-05). They ship as the **arckit-us** community-contributed overlay (not part of the officially-maintained baseline of 72). **EO 14110 was revoked January 2025**; the live AI mandates are **OMB M-25-21** (use of AI; it rescinded and replaced M-24-10 on 3 April 2025) **+ M-25-22** (acquisition of AI; it replaced M-24-18). **FedRAMP completed the Rev 5 transition in 2024**. The overlay is currently solo-maintained by @tractorjuice; a US federal-civilian domain co-maintainer is being recruited (CISO / SAOP / FedRAMP PMO / CAIO backgrounds welcome) before the overlay can be re-evaluated for official-baseline promotion. Output should be reviewed by qualified US federal counsel before reliance.
+> ⚠️ **Community-contributed overlay.** The 10 commands below cover US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-25-21/M-25-22 AI assurance, E-Government Act §208 PIA, EO 14028 secure-software evidence and SBOM under OMB M-26-05). They ship as the **arckit-us** community-contributed overlay (not part of the officially-maintained baseline of 76). **EO 14110 was revoked January 2025**; the live AI mandates are **OMB M-25-21** (use of AI; it rescinded and replaced M-24-10 on 3 April 2025) **+ M-25-22** (acquisition of AI; it replaced M-24-18). **FedRAMP completed the Rev 5 transition in 2024**. The overlay is currently solo-maintained by @tractorjuice; a US federal-civilian domain co-maintainer is being recruited (CISO / SAOP / FedRAMP PMO / CAIO backgrounds welcome) before the overlay can be re-evaluated for official-baseline promotion. Output should be reviewed by qualified US federal counsel before reliance.
 
 **In scope (v1)**: federal civilian agencies and the vendors that sell to them.
 
@@ -791,7 +825,7 @@ Install: `claude plugin install arckit-uk-finance@arckit-claude`, then `claude p
 
 Recommended order: supplier-profile → social-value → service-design → the lot's SDD command → pricing and security → lot-questions → declaration → review → submission-pack. The lot questions come after the SDDs because their award criteria repeat each service's answers.
 
-Skills: `gcloud-framework` (G-Cloud 15 question set, limits and evaluation), `cloud-security`, `ddat-rate-card` (Lot 3 job families, roles and levels; replaces `sfia-skills`). Recipe: `uk-gcloud-submission` (end-to-end bid assembly). G-Cloud 14 is no longer supported: `/arckit:sdd-lot1` is replaced by `sdd-lot1a` and `sdd-lot1b`, and `/arckit:sdd-lot2` by `sdd-lot2a` and `sdd-lot2b`.
+Skills: `gcloud-framework` (G-Cloud 15 question set, limits and evaluation), `cloud-security`, `ddat-rate-card` (Lot 3 job families, roles and levels; replaces `sfia-skills`). Recipe: `uk-gcloud-submission` (end-to-end bid assembly). G-Cloud 14 is no longer supported: its `sdd-lot1` command is replaced by `sdd-lot1a` and `sdd-lot1b`, and `sdd-lot2` by `sdd-lot2a` and `sdd-lot2b`.
 
 Install: `claude plugin install arckit-uk-gcloud@arckit-claude`, then `claude plugin enable arckit-uk-gcloud`. Proprietary — see the licence-exception note at the foot of this README. Ported from the standalone gcloud-kit plugin.
 
@@ -833,7 +867,7 @@ Handoff chain: `oaa-adm-lite` → `product-architecture` → `agile-strategy` �
 
 ### Using TOGAF ADM and O-AA together
 
-The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.24.0` pin) — neither depends on the other. O-AA maps the ADM cycle onto sprints within a 4–8 week engagement; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.26.0` pin) — neither depends on the other. O-AA maps the ADM cycle onto sprints within a 4–8 week engagement; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Pattern | When to use | Sequence |
 |---------|-------------|----------|
@@ -844,14 +878,14 @@ The two overlays are **complementary, not competitors**. Each depends only on th
 **Install for pattern A** (one plugin per CLI invocation; community plugins install disabled):
 
 ```bash
-claude plugin install arckit
-claude plugin install arckit-togaf-adm && claude plugin enable arckit-togaf-adm
-claude plugin install arckit-oaa && claude plugin enable arckit-oaa
+claude plugin install arckit@arckit-claude
+claude plugin install arckit-togaf-adm@arckit-claude && claude plugin enable arckit-togaf-adm
+claude plugin install arckit-oaa@arckit-claude && claude plugin enable arckit-oaa
 ```
 
 **Running both in the same project:**
 
-- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.24.0` pins.
+- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.26.0` pins.
 - No schema files are shared between the overlays. The O-AA YAML sprint artefacts are defined in the O-AA templates and kept consistent with the matching TOGAF documents: `vision.yaml` with the ADM Preliminary, which `oaa-adm-lite` reads, and `implementation-strategy.yaml` with the transition architecture. `oaa-adm-lite` sends Sprint 4+ architecture change requests through `/arckit-togaf-adm:architecture-change`. `agile-governance` defines its own `change-request.yaml` and `compliance-evidence.yaml` (the latter shared with `agile-security`) and does not read `architecture-change` output.
 - Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands read TOGAF outputs when they exist (ADM Preliminary, business capability map, transition architecture) but do not require them, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
@@ -890,10 +924,10 @@ Governance, design, and security for autonomous AI agent programs — 6 commands
 
 #### Combined Recipe: `togaf-agent-full`
 
-For organisations adopting both enterprise architecture and AI agent governance:
+For organisations adopting both enterprise architecture and AI agent governance. The recipe ships with `arckit-togaf-adm` and also runs the AI agent architecture commands, so install and enable both overlays, then run it with `/arckit:build`:
 
-```bash
-claude agent recipes/togaf-agent-full.yaml
+```text
+/arckit:build 001 --recipe togaf-agent-full
 ```
 
 ---
@@ -905,10 +939,11 @@ claude agent recipes/togaf-agent-full.yaml
 | [Claude Code](https://www.anthropic.com/claude-code) | ✅ Premier | **Primary platform.** Plugin with agents, hooks, MCP servers, and auto-updates |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ Full | Extension with commands, MCP servers, and auto-updates |
 | [GitHub Copilot](https://github.com/features/copilot) | ✅ Core | VS Code prompt files, custom agents, and repo-wide instructions (`arckit init --ai copilot`) |
-| [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ Core | CLI with commands and templates. ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
+| [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ Core | CLI with commands and templates. ChatGPT Plus/Pro/Enterprise ([Setup Guide](extensions/arckit-codex/README.md)) |
 | [OpenCode CLI](https://opencode.net/cli) | ✅ Core | CLI with commands and templates |
 | Mistral Vibe CLI | ✅ Full | Extension with skills, agents, and MCP servers ([arckit-vibe](https://github.com/tractorjuice/arckit-vibe)) |
 | Kimi Code CLI | ✅ Full | Plugin with Agent Skills and MCP servers ([arckit-kimi](https://github.com/tractorjuice/arckit-kimi)) |
+| Google Antigravity | 🧪 Experimental | Plugin with Agent Skills and MCP servers; it passes Antigravity's own check; eight core commands have been run there and the rest are untried ([arckit-antigravity](https://github.com/tractorjuice/arckit-antigravity)) |
 
 ### Platform support
 
@@ -930,23 +965,22 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 | 75 cross-AI slash commands | ✅ | ✅ | ✅ | ✅ |
 | `/arckit:build` parallel build harness (Claude-only — depends on parallel `Agent` dispatch) | ✅ | — | — | — |
 | Templates & scripts | ✅ | ✅ | ✅ | ✅ |
-| Bundled MCP servers (AWS, Azure, GCP, Data Commons, govreposcrape, UK Tenders) | ✅ | ✅ (5 servers) | — | Manual setup |
-| **Autonomous research agents** (14 agents for research, data sources, cloud research, government code discovery, grants, tenders, competitors, scoring and frameworks) | ✅ | — | ✅ (14 agents) | — |
-| **SessionStart hook** (auto-detect version + projects) | ✅ | — | — | — |
-| **UserPromptSubmit hook** (project context injection on every prompt) | ✅ | — | — | — |
-| **PreToolUse hook** (ARC filename auto-correction) | ✅ | — | — | — |
-| **PermissionRequest hook** (auto-allow MCP documentation tools) | ✅ | — | — | — |
+| Bundled MCP servers (AWS, Azure, GCP, Data Commons, govreposcrape, UK Tenders, Trello) | ✅ (7 servers) | ✅ (5 servers) | — | ✅ (Codex 7, OpenCode 3) |
+| **Autonomous research agents** (14 agents for research, data sources, cloud research, government code discovery, grants, tenders, competitors, scoring and frameworks) | ✅ | ✅ (14 agents) | ✅ (14 agents) | ✅ (14 agents) |
+| **SessionStart hook** (auto-detect version + projects) | ✅ | ✅ | — | ✅ Codex |
+| **UserPromptSubmit hook** (project context injection on every prompt) | ✅ | ✅ (`BeforeAgent`) | — | ✅ Codex |
+| **PreToolUse hook** (ARC filename check: blocks a wrongly named file and gives the correct name) | ✅ | ✅ (`BeforeTool`) | — | ✅ Codex |
 | **Per-command Stop hooks** (output validation, e.g. Wardley Map math checks) | ✅ | — | — | — |
-| Wardley Mapping skill (with Pinecone MCP book corpus) | ✅ | — | — | — |
+| Wardley Mapping skill | ✅ | — | — | — |
 | Mermaid Syntax Reference skill (23 diagram types + config) | ✅ | ✅ | — | ✅ |
 | Automatic marketplace updates | ✅ | ✅ | Manual reinstall | Manual reinstall |
 | Zero-config installation | ✅ | ✅ | `arckit init` required | `arckit init` required |
 
 **Agents** run research-heavy commands (market research, data source discovery, cloud service evaluation) in isolated context windows, keeping the main conversation clean and enabling dozens of WebSearch/WebFetch/MCP calls without context bloat.
 
-**Hooks** provide automated governance: filenames are auto-corrected to ArcKit conventions, project context is injected into every prompt so commands know what artefacts exist, MCP tools are auto-approved, and generated outputs like Wardley Maps are validated for mathematical consistency before being finalized.
+**Hooks** provide automated governance: a write to a wrongly named ARC file is blocked, with the reason and the correct name, so Claude writes it there instead; project context is injected into every prompt so commands know what artefacts exist; and generated outputs like Wardley Maps are validated for mathematical consistency before being finalized.
 
-Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 76 official commands as prompt files and 10 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
+Gemini CLI provides a strong experience with the commands, 14 agents and five MCP servers. GitHub Copilot provides a prompt file for each of the 75 core commands that run outside Claude Code and for the overlay commands, and 14 custom agents, but no hooks or MCP servers. Codex CLI and OpenCode CLI provide the commands and 14 agents, with seven and three MCP servers respectively, and need `arckit init` scaffolding.
 
 ### Why Commands, Not Skills
 
@@ -963,7 +997,7 @@ Claude Code automatically exposes ArcKit commands as **skills** (they appear in 
 
 <a id="what-it-costs-plugin-footprint"></a>
 
-What the `arckit` core plugin adds to a Claude Code session, in tokens, from `claude plugin details arckit` on Claude Code v2.1.326 with ArcKit 6.23.0:
+What the `arckit` core plugin adds to a Claude Code session, in tokens, from `claude plugin details arckit` on Claude Code v2.1.331 with ArcKit 6.26.0:
 
 - **Always on: about 14,600 tokens.** Added to every session's context: the names and descriptions of the 76 commands, 5 utility skills (`architecture-workflow`, `arckit-build`, `mermaid-syntax`, `plantuml-syntax`, `wardley-mapping`) and 38 agents. Hooks (10 events) and MCP servers (7) are resolved by Claude Code at run time and are not counted.
 - **On invoke: about 240 to 61,000 tokens for a command.** Used only when that command runs.
@@ -1024,8 +1058,7 @@ payment-modernization/
 │       │   │   ├── proposal.pdf
 │       │   │   ├── scoring.md
 │       │   │   ├── hld-v1.md
-│       │   │   └── reviews/
-│       │   │       └── hld-v1-review.md
+│       │   │   └── ARC-001-HLDR-v1.0.md  # HLD review
 │       │   ├── beta-systems/
 │       │   │   └── ...
 │       │   └── comparison.md
@@ -1040,8 +1073,8 @@ payment-modernization/
 │   ├── agents/                            # Agent configs
 │   └── config.toml                        # MCP servers + agent roles
 ├── .github/
-│   ├── prompts/arckit-*.prompt.md         # GitHub Copilot prompt files (70 official + community overlays)
-│   ├── agents/arckit-*.agent.md           # GitHub Copilot custom agents (10 agents)
+│   ├── prompts/arckit-*.prompt.md         # GitHub Copilot prompt files (75 core + community overlays)
+│   ├── agents/arckit-*.agent.md           # GitHub Copilot custom agents (14 agents)
 │   └── copilot-instructions.md            # Repo-wide Copilot context
 └── .opencode/commands/                    # OpenCode CLI commands
 ```
@@ -1128,6 +1161,7 @@ Core ArcKit commands with maturity status and example outputs from public test r
 |---------|-------------|----------|--------|
 | `/arckit:init` | Initialise ArcKit project structure with numbered project directories and global artefacts | — | 🟢 Live |
 | `/arckit:start` | Get oriented with ArcKit — check project status, explore available commands, and choose your next step | — | 🟢 Live |
+| `/arckit:build` | Build a project's artefacts in parallel waves from a YAML recipe, with one commit per wave and resumable state (Claude Code only) | — | 🟢 Live |
 | `/arckit:plan` | Create project plan with timeline, phases, gates, and Mermaid diagrams | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-PLAN-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-PLAN-v1.0.md) [v3/004](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/004-conference-facilities-modernization/ARC-004-PLAN-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/ARC-005-PLAN-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-PLAN-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-PLAN-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/ARC-001-PLAN-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/ARC-001-PLAN-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-PLAN-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-PLAN-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-PLAN-v1.0.md) | 🟢 Live |
 | `/arckit:principles` | Create or update enterprise architecture principles | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/000-global/ARC-000-PRIN-v1.0.md) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/000-global/ARC-000-PRIN-v1.0.md) [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/000-global/ARC-000-PRIN-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/000-global/ARC-000-PRIN-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/000-global/ARC-000-PRIN-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/000-global/ARC-000-PRIN-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/000-global/ARC-000-PRIN-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/000-global/ARC-000-PRIN-v1.0.md) [v7](https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/#projects/000-global/ARC-000-PRIN-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/000-global/ARC-000-PRIN-v1.0.md) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/000-global/ARC-000-PRIN-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/000-global/ARC-000-PRIN-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/000-global/ARC-000-PRIN-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/000-global/ARC-000-PRIN-v1.0.md) | 🟢 Live |
 
@@ -1178,7 +1212,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
-| `/arckit:azure-research` | Research Azure services and architecture patterns using [Microsoft Learn MCP](https://www.npmjs.com/package/@anthropic/mcp-server-microsoft-docs) | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/research/ARC-001-AZRS-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/research/ARC-002-AZRS-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AZRS-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/research/ARC-001-AZRS-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/research/ARC-001-AZRS-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/research/ARC-001-AZRS-v1.0.md) | 🟣 Experimental |
+| `/arckit:azure-research` | Research Azure services and architecture patterns using [Microsoft Learn MCP](https://learn.microsoft.com/training/support/mcp) | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/research/ARC-001-AZRS-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/research/ARC-002-AZRS-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AZRS-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/research/ARC-001-AZRS-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/research/ARC-001-AZRS-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/research/ARC-001-AZRS-v1.0.md) | 🟣 Experimental |
 | `/arckit:aws-research` | Research AWS services and architecture patterns using [AWS Knowledge MCP](https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server) | [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AWRS-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/research/ARC-001-AWRS-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/research/ARC-001-AWRS-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/research/ARC-001-AWRS-v1.0.md) | 🟣 Experimental |
 | `/arckit:gcp-research` | Research Google Cloud services and architecture patterns using [Google Developer Knowledge MCP](https://developerknowledge.googleapis.com/mcp) | — | 🟣 Experimental |
 
@@ -1226,6 +1260,7 @@ These commands use the [govreposcrape MCP](https://github.com/chrisns/govreposcr
 |---------|-------------|----------|--------|
 | `/arckit:archify` | Render governed artefacts as interactive, self-contained HTML diagrams via Archify, or Wardley Maps via ArcKit's built-in renderer | — | 🧪 Experimental |
 | `/arckit:diagram` | Generate architecture diagrams using Mermaid for visual documentation | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/diagrams/ARC-001-DIAG-001-v1.0.md) [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/diagrams/ARC-001-DIAG-001-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/diagrams/ARC-005-DIAG-001-v1.0.md) [v3/007](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/007-vpn-service-windows11-autopilot/diagrams/ARC-007-DIAG-001-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/diagrams/ARC-001-DIAG-001-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/diagrams/ARC-001-DIAG-001-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/diagrams/ARC-001-DIAG-001-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/diagrams/ARC-001-DIAG-001-v1.0.md) | 🟢 Live |
+| `/arckit:dfd` | Generate Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation | — | 🔵 Beta |
 | `/arckit:hld-review` | Review High-Level Design (HLD) against architecture principles and requirements | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/reviews/ARC-001-HLDR-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/reviews/ARC-001-HLDR-v1.0.md) | 🔵 Beta |
 | `/arckit:dld-review` | Review Detailed Design (DLD) for implementation readiness | — | 🔵 Beta |
 
@@ -1444,8 +1479,6 @@ Your Claude plan sets the maximum:
 - Mitigated by an agent: `/arckit:research`, `/arckit:datascout`, `/arckit:tenders`, `/arckit:competitors`, `/arckit:aws-research`, `/arckit:azure-research`, `/arckit:gcp-research`, `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landscape`, `/arckit:grants` — run as autonomous agents in separate context windows
 - Medium risk: `/arckit:risk`, `/arckit:evaluate`, `/arckit:principles`
 
-**See full guide**: [docs/TOKEN-LIMITS.md](docs/TOKEN-LIMITS.md)
-
 ### Common Issues
 
 **Command not found**: Ensure commands are available
@@ -1471,7 +1504,7 @@ ls .opencode/commands/
 
 ```bash
 # Check if templates exist
-ls templates/
+ls .arckit/templates/
 ```
 
 **Project creation fails**: Ensure you have an ArcKit repository initialised
@@ -1502,7 +1535,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Community**: the [ArcKit LinkedIn group](https://www.linkedin.com/groups/17641034/) for worked examples, office hours and questions, and [Discord](https://discord.gg/HsA4Y3hQ4) for chat with other users
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v6.24.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.24.0)
+- **Latest Version**: [v6.26.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.26.0)
 
 ---
 

@@ -537,6 +537,30 @@
 </ol>
 <p><strong>Example scenario</strong>: The arc42 description <code>ARC-001-ARC42-v1.0.md</code> was assembled from <code>ARC-001-REQ-v1.0</code> and two ADRs. The requirements have since moved to v1.1 and a third ADR has been accepted. STALE-VIEW lists both and recommends re-running <code>/arckit-arc42:arc42</code>.</p>
 <hr />
+<h3 id="review-overdue--overdue-review">REVIEW-OVERDUE — Overdue Review</h3>
+<p><strong>Severity</strong>: HIGH</p>
+<p><strong>What it means</strong>: An artifact's Document Control <code>Next Review Date</code> is in the past. Artifacts with status <code>DRAFT</code>, <code>SUPERSEDED</code> or <code>ARCHIVED</code> are skipped, because a review schedule applies only to an artifact in use.</p>
+<p><strong>Why it matters</strong>: The review cycle is a governance commitment recorded in Document Control. An approved or published artifact past its review date is still treated as authoritative, but nobody has checked that it still matches reality.</p>
+<p><strong>How to resolve</strong>:</p>
+<ol>
+<li>Run the review the date calls for</li>
+<li>If the artifact still holds, bump the version and refresh its Document Control dates, including <code>Next Review Date</code></li>
+<li>If it is no longer in use, archive it</li>
+</ol>
+<p><strong>Example scenario</strong>: The architecture principles were approved a year ago with a 12-month review cycle. The Next Review Date passed last week, and two new projects are about to cite them.</p>
+<hr />
+<h3 id="stale-draft--long-running-draft">STALE-DRAFT — Long-running Draft</h3>
+<p><strong>Severity</strong>: MEDIUM</p>
+<p><strong>What it means</strong>: An artifact has <code>Status: DRAFT</code>, and its <code>Last Modified</code> date (or <code>Created Date</code>, if that is missing) is more than 30 days old. Set <code>STALE_DRAFT_DAYS=N</code> to use a different threshold. Document types whose status only their own command sets, such as a sign-off command, are skipped.</p>
+<p><strong>Why it matters</strong>: A draft left untouched for a month is usually stalled work, abandoned scaffolding, or a decision that events have overtaken. Readers may still be treating it as settled.</p>
+<p><strong>How to resolve</strong>:</p>
+<ol>
+<li>Decide whether the draft is still needed</li>
+<li>If it is ready, promote it to <code>IN_REVIEW</code> or <code>APPROVED</code></li>
+<li>If work is continuing, bump the version; if it has been abandoned, archive it</li>
+</ol>
+<p><strong>Example scenario</strong>: A data model was drafted at project kick-off six weeks ago and never reviewed. The backlog is now being written from it.</p>
+<hr />
 <h3 id="version-drift--version-drift">VERSION-DRIFT — Version Drift</h3>
 <p><strong>Severity</strong>: LOW</p>
 <p><strong>What it means</strong>: Multiple versions of the same artifact type exist for a project, and the latest version has not been updated in over 3 months. This suggests the artifact was being actively iterated but the iteration has stalled.</p>
@@ -594,6 +618,16 @@
 <td>Out-of-date Generated View</td>
 <td>Any newer source</td>
 <td>A view records the versions it was built from, so any newer source is a precise signal; regenerating it is cheap.</td>
+</tr>
+<tr>
+<td>Overdue Review</td>
+<td>Past the <code>Next Review Date</code></td>
+<td>The review date is a commitment recorded in Document Control. Once it passes, the artifact is in use without the check it promised.</td>
+</tr>
+<tr>
+<td>Long-running Draft</td>
+<td>30 days (<code>STALE_DRAFT_DAYS=N</code> to change)</td>
+<td>A draft untouched for a month has usually stalled or been overtaken.</td>
 </tr>
 <tr>
 <td>Version Drift</td>
@@ -657,8 +691,11 @@
 </table>
 <p><strong>Recommended workflow</strong>: Run <code>/arckit:health</code> frequently for quick checks. Run <code>/arckit:analyze</code> before formal gates or when the health check reveals issues that need deeper investigation.</p>
 <hr />
-<h2 id="customising-thresholds-future-enhancement">Customising Thresholds (Future Enhancement)</h2>
-<p>A future release will support a <code>.arckit/health-config.yaml</code> file to override default thresholds:</p>
+<h2 id="customising-thresholds">Customising Thresholds</h2>
+<p>One threshold can be set today: <code>STALE_DRAFT_DAYS=N</code> changes the STALE-DRAFT threshold for a run (default 30 days):</p>
+<pre><code class="language-bash">/arckit:health STALE_DRAFT_DAYS=14
+</code></pre>
+<p>A future release will support a <code>.arckit/health-config.yaml</code> file to override the other default thresholds:</p>
 <pre><code class="language-yaml"># .arckit/health-config.yaml (planned — not yet implemented)
 thresholds:
   stale-research-days: 90      # Default: 180
@@ -672,7 +709,7 @@ exclude:
   types:
     - PRES                     # Presentation decks don't need freshness checks
 </code></pre>
-<p>Until this is implemented, the built-in thresholds apply. If you need different thresholds, specify the <code>SINCE</code> argument to shift the baseline date.</p>
+<p>Until this is implemented, the built-in thresholds apply to the other rules. If you need different thresholds, specify the <code>SINCE</code> argument to shift the baseline date.</p>
 </div>
         </div>
     </main>

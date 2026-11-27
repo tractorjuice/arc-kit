@@ -2,10 +2,10 @@
 
 2 slash commands and the `au-energy` build recipe covering Australian energy-sector cyber security and regulatory compliance:
 
-- `/arckit:au-aescsf` — Australian Energy Sector Cyber Security Framework (AESCSF) maturity assessment for projects with IT, OT, market, and grid-edge dependencies
-- `/arckit:au-energy-compliance` — Australian energy compliance pack covering AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS, privacy/NDB, and SOCI escalation evidence
+- `/arckit-au-energy:au-aescsf` — Australian Energy Sector Cyber Security Framework (AESCSF) maturity assessment for projects with IT, OT, market, and grid-edge dependencies
+- `/arckit-au-energy:au-energy-compliance` — Australian energy compliance pack covering AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS, privacy/NDB, and SOCI escalation evidence
 
-Run `/arckit:au-aescsf` before `/arckit:au-energy-compliance`: the compliance pack reads the AESCSF assessment, when there is one, as cyber-posture context. It does not need it.
+Run `/arckit-au-energy:au-aescsf` before `/arckit-au-energy:au-energy-compliance`: the compliance pack reads the AESCSF assessment, when there is one, as cyber-posture context. It does not need it.
 
 Recipe: `au-energy` (23 targets) composes the `arckit-au` federal baseline — Essential Eight, ISM, OT security, SOCI/CIRMP, Privacy Act 1988 / OAIC NDB — then layers energy-sector coverage (AESCSF maturity, AER ring-fencing, NER/NGR, AEMO obligations, IT/OT evidence, data flows, energy-sector ADRs, a risk register fed by the gaps, and traceability) on top. It includes an optional default-off `SERVICE_INVENTORY` target (`/arckit:servicenow`) for teams with a CMDB / service-inventory need.
 

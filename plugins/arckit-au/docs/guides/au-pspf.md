@@ -15,10 +15,9 @@ Earlier PSPF editions used four outcomes and 16 core requirements. The current r
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, hosting model, personnel requirements |
-| Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, security advisor, vetting officer |
 | `/arckit:au-ism-controls` output (`ARC-<id>-AUISM-v1.0.md`) | ISM evidence for the Technology domain |
 | `/arckit:au-e8-posture` output (`ARC-<id>-AUE8-v1.0.md`) | Essential Eight evidence for the Technology domain (Maturity Level Two requirement) |
-| Vendor HLD (`vendors/*/hld-v*.md`) | Physical environment, personnel scope, information flows |
+| Privacy impact assessment (`ARC-<id>-AUPIA-v*.md`) and risk register | Privacy and risk evidence |
 
 ---
 
@@ -36,7 +35,7 @@ Output: `projects/<id>/ARC-<id>-AUPSPF-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
+| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) |
 | Revision History | Version, date, author, changes, approvals |
 | Executive Summary | Applicability, release assessed, posture by domain, key gaps, annual report status |
 | Entity Profile | Entity type, applicability driver, applicability tags, CSO and CISO, release assessed, last annual report |

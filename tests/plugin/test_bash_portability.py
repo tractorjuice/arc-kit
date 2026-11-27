@@ -146,6 +146,113 @@ def test_migrate_filenames_dry_run(tmp_path, bash, copy):
     assert (legacy / "requirements.md").exists(), "a dry run must not rename anything"
 
 
+@pytest.mark.parametrize("bash,copy", CASES)
+def test_migrate_filenames_keeps_gcloud_and_dos_in_procurement(tmp_path, bash, copy):
+    """SUBDIR_MAP in config/doc-types.mjs puts GCLD, GCLC and DOS in procurement/, and
+    validate-arc-filename.mjs blocks them at the project root. The script moved them out of
+    procurement/ to the root. Another type found in procurement/, such as a SOW, still goes to
+    the root, and a G-Cloud file at the root goes into procurement/."""
+    root = repo(tmp_path)
+    project = root / "projects" / "001-legacy"
+    (project / "procurement").mkdir(parents=True)
+    old = ["procurement/gcloud-requirements.md", "procurement/dos-requirements.md",
+           "procurement/sow.md", "gcloud-clarification-questions.md"]
+    for name in old:
+        (project / name).write_text("# Document\n", encoding="utf-8")
+
+    preview = run(bash, copy, "migrate-filenames.sh", "projects/001-legacy", "--dry-run", cwd=root)
+    assert preview.returncode == 0, preview.stderr
+    assert all((project / name).exists() for name in old), "a dry run must not move anything"
+
+    result = run(bash, copy, "migrate-filenames.sh", "projects/001-legacy", cwd=root)
+    assert result.returncode == 0, result.stderr
+    for name in ["procurement/ARC-001-GCLD-v1.0.md", "procurement/ARC-001-DOS-v1.0.md",
+                 "procurement/ARC-001-GCLC-v1.0.md", "ARC-001-SOW-v1.0.md"]:
+        assert (project / name).is_file(), f"{name} missing after migration:\n{result.stdout}"
+    for code in ["GCLD", "GCLC", "DOS"]:
+        assert not list(project.glob(f"ARC-001-{code}-*")), f"{code} left at the project root"
+
+
+@pytest.mark.parametrize("bash,copy", CASES)
+def test_migrate_filenames_leaves_arc_files_in_shared_folders_alone(tmp_path, bash, copy):
+    """research/, diagrams/ and wardley-maps/ each hold several types (SUBDIR_MAP). The script
+    took any ARC file not of the folder's first type for an old one and renamed it, turning an
+    AWS research note into RSCH, a DFD into DIAG and a gameplay analysis into WARD."""
+    root = repo(tmp_path)
+    project = root / "projects" / "001-legacy"
+    current = ["research/ARC-001-AWRS-001-v1.0.md", "diagrams/ARC-001-DFD-001-v1.0.md",
+               "wardley-maps/ARC-001-WGAM-001-v1.0.md"]
+    for name in current:
+        (project / name).parent.mkdir(parents=True, exist_ok=True)
+        (project / name).write_text("# Document\n", encoding="utf-8")
+    result = run(bash, copy, "migrate-filenames.sh", "projects/001-legacy", cwd=root)
+    assert result.returncode == 0, result.stderr
+    for name in current:
+        assert (project / name).is_file(), f"{name} was renamed:\n{result.stdout}"
+
+
+@pytest.mark.parametrize("bash,copy", CASES)
+def test_migrate_filenames_numbers_after_the_highest_existing_file(tmp_path, bash, copy):
+    """A migrated file is numbered after the highest existing one of its type in the folder, as
+    generate-document-id.mjs --next-num numbers a new one. The script counted from 001 in a
+    subfolder, and counted the ARC files for one moved up from the root, so a migrated file
+    could take an existing number, and --force overwrote the existing file."""
+    root = repo(tmp_path)
+    project = root / "projects" / "001-legacy"
+    (project / "decisions").mkdir(parents=True)
+    (project / "diagrams").mkdir()
+    files = {"decisions/ARC-001-ADR-001-v1.0.md": "existing ADR", "decisions/adr-use-postgres.md": "old ADR",
+             "diagrams/ARC-001-DIAG-002-v1.0.md": "existing diagram", "context-diagram.md": "old diagram"}
+    for name, text in files.items():
+        (project / name).write_text(text, encoding="utf-8")
+    result = run(bash, copy, "migrate-filenames.sh", "projects/001-legacy", "--force", cwd=root)
+    assert result.returncode == 0, result.stderr
+    expected = {"decisions/ARC-001-ADR-001-v1.0.md": "existing ADR", "decisions/ARC-001-ADR-002-v1.0.md": "old ADR",
+                "diagrams/ARC-001-DIAG-002-v1.0.md": "existing diagram", "diagrams/ARC-001-DIAG-003-v1.0.md": "old diagram"}
+    for name, text in expected.items():
+        assert (project / name).is_file() and (project / name).read_text(encoding="utf-8") == text, \
+            f"{name} should hold '{text}':\n{result.stdout}"
+
+
+@pytest.mark.parametrize("bash,copy", CASES)
+def test_migrate_filenames_numbers_an_unnumbered_arc_file(tmp_path, bash, copy):
+    """An ARC name with no sequence number, of a multi-instance type, is still invalid and must be
+    numbered, keeping its version. One of another type in a shared folder is left for a person:
+    renaming it to the folder's own type would be wrong."""
+    root = repo(tmp_path)
+    project = root / "projects" / "001-legacy"
+    (project / "research").mkdir(parents=True)
+    (project / "decisions").mkdir()
+    for name in ["research/ARC-001-RSCH-v1.2.md", "research/ARC-001-AWRS-v1.0.md", "decisions/ARC-001-ADR-v1.0.md"]:
+        (project / name).write_text("# Document\n", encoding="utf-8")
+    result = run(bash, copy, "migrate-filenames.sh", "projects/001-legacy", cwd=root)
+    assert result.returncode == 0, result.stderr
+    assert (project / "research/ARC-001-RSCH-001-v1.2.md").is_file(), result.stdout
+    assert (project / "decisions/ARC-001-ADR-001-v1.0.md").is_file(), result.stdout
+    assert (project / "research/ARC-001-AWRS-v1.0.md").is_file(), f"another type was renamed:\n{result.stdout}"
+    assert "AWRS" in result.stdout + result.stderr, "the unnumbered AWRS file should be reported"
+
+
+@pytest.mark.parametrize("bash,copy", CASES)
+def test_migrate_filenames_dry_run_numbers_as_a_real_run_does(tmp_path, bash, copy):
+    """A dry run renames nothing, so numbering a root-level file from the disk alone gave it the
+    number an old file inside the folder was about to take."""
+    root = repo(tmp_path)
+    project = root / "projects" / "001-legacy"
+    (project / "wardley-maps").mkdir(parents=True)
+    (project / "wardley-maps" / "old-map.md").write_text("# Map\n", encoding="utf-8")
+    (project / "payments-wardley.md").write_text("# Map\n", encoding="utf-8")
+    preview = run(bash, copy, "migrate-filenames.sh", "projects/001-legacy", "--dry-run", cwd=root)
+    assert preview.returncode == 0, preview.stderr
+    said = preview.stdout + preview.stderr
+    assert "old-map.md → ARC-001-WARD-001-v1.0.md" in said, said
+    assert "payments-wardley.md → ARC-001-WARD-002-v1.0.md" in said, said
+    result = run(bash, copy, "migrate-filenames.sh", "projects/001-legacy", cwd=root)
+    assert result.returncode == 0, result.stderr
+    assert sorted(p.name for p in (project / "wardley-maps").iterdir()) == \
+        ["ARC-001-WARD-001-v1.0.md", "ARC-001-WARD-002-v1.0.md"]
+
+
 @pytest.mark.parametrize("bash", BASHES)
 def test_stale_scan_reports_an_old_draft(tmp_path, bash):
     root = repo(tmp_path)

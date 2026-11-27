@@ -66,6 +66,12 @@ AGENT_CONFIG = {
         "install_url": "https://github.com/tractorjuice/arckit-kimi",
         "requires_cli": True,
     },
+    "antigravity": {
+        "name": "Google Antigravity",
+        "folder": ".arckit/",
+        "install_url": "https://github.com/tractorjuice/arckit-antigravity",
+        "requires_cli": True,
+    },
 }
 
 BANNER = """
@@ -170,6 +176,9 @@ REQUIRED_ASSETS_BY_AI = {
     "opencode": ("opencode_commands", "opencode_agents"),
     "copilot": ("copilot_prompts", "copilot_agents", "copilot_instructions"),
     "kimi": (),
+    # Like kimi: the commands arrive with the Antigravity plugin, and the project
+    # only needs the shared templates and scripts.
+    "antigravity": (),
 }
 
 
@@ -481,7 +490,7 @@ def init(
         None,
         help="Name for your new project directory (optional, use '.' for current directory)",
     ),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex, opencode, copilot, kimi"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex, opencode, copilot, kimi, antigravity"),
     no_git: bool = typer.Option(
         False, "--no-git", help="Skip git repository initialization"
     ),
@@ -571,6 +580,7 @@ def init(
         console.print("2. opencode (OpenCode CLI)")
         console.print("3. copilot (GitHub Copilot in VS Code)")
         console.print("4. kimi (Kimi Code CLI)")
+        console.print("5. antigravity (Google Antigravity)")
         console.print()
         console.print("[dim]For Claude Code, use the ArcKit plugin instead:[/dim]")
         console.print("[dim]  /plugin marketplace add tractorjuice/arckit-claude[/dim]")
@@ -580,7 +590,7 @@ def init(
         )
 
         choice = typer.prompt("Enter choice", default="1")
-        ai_map = {"1": "codex", "2": "opencode", "3": "copilot", "4": "kimi"}
+        ai_map = {"1": "codex", "2": "opencode", "3": "copilot", "4": "kimi", "5": "antigravity"}
         ai_assistant = ai_map.get(choice, "codex")
 
     if ai_assistant == "claude":
@@ -942,6 +952,8 @@ def init(
         p = "/arckit-"  # copilot prompt invocation
     elif ai_assistant == "kimi":
         p = "/skill:arckit-"  # kimi agent skill invocation
+    elif ai_assistant == "antigravity":
+        p = "/arckit-"  # antigravity skill invocation
     else:
         p = "/arckit."  # slash command
 
@@ -1215,6 +1227,17 @@ export OPENCODE_HOME="$PWD/.opencode"
     elif ai_assistant == "copilot":
         next_steps.append("2. Open in VS Code: [cyan]code .[/cyan]")
         next_steps.append("3. Open Copilot Chat and type: [cyan]/arckit-principles[/cyan]")
+        next_steps.append(
+            "4. Create your first project: [cyan]/arckit-requirements[/cyan]"
+        )
+    elif ai_assistant == "antigravity":
+        next_steps.append("2. Install the ArcKit plugin for Antigravity:")
+        next_steps.append(
+            "   [cyan]agy plugin install https://github.com/tractorjuice/arckit-antigravity[/cyan]"
+        )
+        next_steps.append(
+            "3. Establish architecture principles: [cyan]/arckit-principles[/cyan]"
+        )
         next_steps.append(
             "4. Create your first project: [cyan]/arckit-requirements[/cyan]"
         )

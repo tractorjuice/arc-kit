@@ -1,0 +1,35 @@
+schema_version: '1.1'
+name: allergen-recorded-as-stated
+tags:
+- artefact
+- uk-food
+- allergens
+- should-serve
+prompt: >-
+  /arckit-uk-food:uk-food-allergens 001 I'm Sam Okafor, the owner of Bramble Cafe. Nobody
+  is here to answer questions right now, so please record this dish with its allergens and
+  write the document. Dish: Tuna mayonnaise sandwich. Ingredients: Mill Lane Bakery white
+  bloomer, Harbourside tuna chunks, Copperleaf mayonnaise, Larkspur Dairy salted butter.
+  PPDS: no. Checked-against: Mill Lane Bakery white bloomer label; Harbourside tuna chunks
+  tin; Copperleaf mayonnaise jar; Larkspur Dairy salted butter label. Checked-on:
+  2026-11-22. Nuts: does not contain. Peanuts: does not contain. Eggs: contains. Milk:
+  contains. Fish: contains. Crustaceans: does not contain. Molluscs: does not contain.
+  Cereals-containing-gluten: contains. Celery: does not contain. Lupin: does not contain.
+  Mustard: contains. Sesame-seeds: does not contain. Soya: does not contain.
+  Sulphur-dioxide: does not contain.
+plugins:
+- ../..
+runs: 1
+max_turns: 60
+timeout_seconds: 1500
+allowed_tools:
+- Read
+- Write
+- Edit
+- Glob
+- Grep
+- Bash
+context:
+  add_dirs:
+  - source: ../fixtures/cafe-no-cooking
+    dest: .

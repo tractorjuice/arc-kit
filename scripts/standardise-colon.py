@@ -75,6 +75,9 @@ EXCLUDE_PREFIXES = [
     "scripts/converter.py",        # community-rewrite literals patched by hand
     "scripts/standardise-colon.py",
     "tests/",                      # test fixtures feed the dot form in on purpose
+    # OpenCode names a command after its file, so arckit.requirements.md runs as
+    # /arckit.requirements; its README has to show that form.
+    "extensions/arckit-opencode/README.md",
 ]
 
 TEXT_EXT = {".md", ".html", ".txt", ".xml", ".sh", ".py", ".json",

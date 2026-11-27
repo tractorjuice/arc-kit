@@ -4,15 +4,13 @@
 
 The Australian Federal / DISP-supplier Overlay adds 10 community-contributed commands covering the regulatory anchors that apply to Australian Federal entities, Defence-cleared suppliers (DISP Members), and optional cross-sector critical-infrastructure use cases. It is anchored on ASD Essential Eight + Information Security Manual, ASD operational technology guidance, the Security of Critical Infrastructure Act 2018 / CIRMP, the DTA Digital Service Standard, the Privacy Act 1988 + 13 Australian Privacy Principles, the OAIC Notifiable Data Breach scheme, the Defence Industry Security Program (DISP, Levels 1–3), the Protective Security Policy Framework, the November 2025 Commonwealth Procurement Rules overhaul, the DTA AI Assurance Framework + Responsible AI Policy v2.0, the PGPA Act s16 financial-management duties, and IRAP for cloud-service assessment.
 
-The overlay closes [#424](https://github.com/tractorjuice/arc-kit/issues/424). A sibling sector recipe `au-energy` covering AESCSF, AER ring-fencing, NER/NGR, and AEMO obligations for energy-sector / SOCI-covered critical-asset operators addresses [#440](https://github.com/tractorjuice/arc-kit/issues/440). The general `au-ot-security` and `au-soci-cirmp` commands live here because OT security and SOCI/CIRMP apply beyond energy; `au-energy` consumes them rather than redefining them privately.
-
-> **Follow-up**: after the AU energy PR lands, refresh the main AU community command guidance so `au-e8-posture`, `au-ism-controls`, `au-pia`, `au-ndb-playbook`, `au-ot-security`, and `au-soci-cirmp` explicitly recommend the energy overlay, diagrams, data flows, data modelling, and traceability where relevant.
+The overlay closes [#424](https://github.com/tractorjuice/arc-kit/issues/424). The sibling `au-energy` plugin, covering AESCSF, AER ring-fencing, NER/NGR, and AEMO obligations for energy-sector / SOCI-covered critical-asset operators, addresses [#440](https://github.com/tractorjuice/arc-kit/issues/440). The general `au-ot-security` and `au-soci-cirmp` commands live here because OT security and SOCI/CIRMP apply beyond energy; `au-energy` consumes them rather than redefining them privately.
 
 ---
 
 ## Purpose
 
-Five jobs in one overlay:
+Six jobs in one overlay:
 
 1. **Make ASD's cyber stack a first-class architectural artefact**, not a security-team afterthought — Essential Eight maturity posture and ISM Statement of Applicability sit alongside requirements and HLD.
 2. **Replace UK GDPR / DPA 2018 with Privacy Act 1988**, including the Tranche 1 reforms (December 2024) and the December 2026 AI-decision notification provisions.
@@ -47,9 +45,9 @@ Before running the commands, set the plugin userConfig values:
 | userConfig key | Value |
 |---|---|
 | `governance_framework` | `AU Federal` |
-| `classification_scheme` | `PSPF` (UNOFFICIAL → TOP SECRET ladder) |
+| `classification_scheme` | `PSPF` (UNOFFICIAL → SECRET ladder) |
 | `organisation_name` | the Federal entity name (or the contracting Defence supplier name) |
-| `default_classification` | one of `UNOFFICIAL`, `OFFICIAL`, `OFFICIAL:Sensitive`, `PROTECTED`, `SECRET`, `TOP SECRET` |
+| `default_classification` | one of `UNOFFICIAL`, `OFFICIAL`, `OFFICIAL:Sensitive`, `PROTECTED`, `SECRET` |
 
 > **Note on rendering**: The PSPF classification taxonomy is applied to AU artefacts twice over, and neither route depends on these userConfig values. Every AU doc-type carries `regime: AU`, which routes the `<!-- DOC-CONTROL-HEADER -->` marker to the `document-control-au.md` partial — regime beats user config, so an AU artefact renders `UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET` whoever runs the command. The older per-command override (each `au-*` command instructing the resolver to swap the UK classification line, mirroring the Canadian-overlay pattern in `ca-pia.md:32`) is still in place and says the same thing. See `templates/_partials/RENDERING.md` for the resolution order.
 >
@@ -65,7 +63,7 @@ If you are a Defence supplier rather than a Federal entity, set `organisation_na
 
 #### `/arckit:au-e8-posture`
 
-Generates an ASD Essential Eight maturity posture assessment covering all 8 mitigation strategies (patch applications, patch operating systems, multi-factor authentication, restrict administrative privileges, application control, restrict Microsoft Office macros, user application hardening, regular backups) at maturity levels ML0 through ML3. Anchored on the ASD Essential Eight Maturity Model. Handoffs: `au-ism-controls` (E8 maturity feeds the ISM Guidelines for system hardening, system access and system management), `au-disp-attestation` (E8 ML2 evidence is primary input to DISP Domain 4 — Information & Cyber Security), and `au-aescsf` in the sibling `au-energy` recipe.
+Generates an ASD Essential Eight maturity posture assessment covering all 8 mitigation strategies (patch applications, patch operating systems, multi-factor authentication, restrict administrative privileges, application control, restrict Microsoft Office macros, user application hardening, regular backups) at maturity levels ML0 through ML3. Anchored on the ASD Essential Eight Maturity Model. Handoffs: `au-ism-controls` (E8 maturity feeds the ISM Guidelines for system hardening, system access and system management), `risk` (E8 gaps into the risk register). `au-disp-attestation` reads the E8 posture as primary input to DISP Domain 4 — Information & Cyber Security, and `au-aescsf` in the sibling `au-energy` plugin builds on it.
 
 #### `/arckit:au-ism-controls`
 
@@ -75,7 +73,7 @@ Generates an ASD Information Security Manual Statement of Applicability across a
 
 #### `/arckit:au-pia`
 
-Generates a Privacy Impact Assessment under Privacy Act 1988 s33D (introduced by the Tranche 1 reforms, December 2024) including assessment against all 13 Australian Privacy Principles (APP 1 — Open and transparent management of personal information; APP 2 — Anonymity and pseudonymity; APP 3 — Collection of solicited personal information; APP 4 — Dealing with unsolicited personal information; APP 5 — Notification of collection; APP 6 — Use or disclosure; APP 7 — Direct marketing; APP 8 — Cross-border disclosure; APP 9 — Adoption / use / disclosure of government related identifiers; APP 10 — Quality of personal information; APP 11 — Security of personal information; APP 12 — Access to personal information; APP 13 — Correction of personal information). Replaces the UK `dpia` command for AU projects. Handoffs: `au-ndb-playbook` (NDB depends on PIA — APP 11 + Privacy Officer designation), `au-ai-assurance` (APP 1, 5, 10, 12 cross-refs for AI-decision notification per the December 2026 amendments), `data-model` (per-entity sensitivity), `risk`.
+Generates a Privacy Impact Assessment under Privacy Act 1988 s33D (introduced by the Tranche 1 reforms, December 2024) including assessment against all 13 Australian Privacy Principles (APP 1 — Open and transparent management of personal information; APP 2 — Anonymity and pseudonymity; APP 3 — Collection of solicited personal information; APP 4 — Dealing with unsolicited personal information; APP 5 — Notification of collection; APP 6 — Use or disclosure; APP 7 — Direct marketing; APP 8 — Cross-border disclosure; APP 9 — Adoption / use / disclosure of government related identifiers; APP 10 — Quality of personal information; APP 11 — Security of personal information; APP 12 — Access to personal information; APP 13 — Correction of personal information). Replaces the UK `dpia` command for AU projects. Handoffs: `au-dss` (PIA findings feed DSS Criterion 7), `au-e8-posture` (APP 11 informs the E8 target maturity), `data-model` (per-entity sensitivity), `risk`. `au-ndb-playbook` and `au-ai-assurance` read the PIA: NDB depends on it for APP 11 and the Privacy Officer designation, and AI assurance uses its APP 1, 5, 10 and 12 cross-refs for AI-decision notification.
 
 #### `/arckit:au-ndb-playbook`
 
@@ -103,7 +101,7 @@ Generates a Protective Security Policy Framework scorecard against the six secur
 
 #### `/arckit:au-ai-assurance`
 
-Generates a DTA AI Assurance Framework baseline aligned to Responsible AI Policy v2.0 (effective December 2025), incorporating ISO 42001 readiness mapping, AI Accountable Officer designation, foundation-model selection and sovereignty, AI-use disclosure requirements, and Privacy Act AI-decision notification provisions (December 2026 commencement). Also covers **AU Essential AI Practices ("AI6")** — the National AI Centre's 6 essential practices for safe and responsible AI adoption (accountability / impact assessment / risk management / information sharing / testing-and-monitoring / human control), with each practice anchored to the canonical [ai.gov.au Foundations](https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-foundations) and [Implementation Guidance](https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-implementation-guidance) pages. Handoffs: `au-pia` (APP cross-refs for AI-decision notification), `au-e8-posture` (DLP cross-refs), `risk` (AI-specific risks), `adr` (AI/LLM provider decision is architecturally significant).
+Generates a DTA AI Assurance Framework baseline aligned to Responsible AI Policy v2.0 (effective December 2025), incorporating ISO 42001 readiness mapping, AI Accountable Officer designation, foundation-model selection and sovereignty, AI-use disclosure requirements, and Privacy Act AI-decision notification provisions (December 2026 commencement). Also covers **AU Essential AI Practices ("AI6")** — the National AI Centre's 6 essential practices for safe and responsible AI adoption (accountability / impact assessment / risk management / information sharing / testing-and-monitoring / human control), with each practice anchored to the canonical [ai.gov.au Foundations](https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-foundations) and [Implementation Guidance](https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-implementation-guidance) pages. Handoffs: `au-pia` (APP cross-refs for AI-decision notification), `au-dss` (DSS Criteria 5 and 7), `au-ism-controls` (security of training and inference data), `risk` (AI-specific risks).
 
 ### DISP attestation (consolidation)
 

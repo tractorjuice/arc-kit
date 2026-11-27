@@ -196,6 +196,23 @@ extensions/arckit-kimi/scripts/
 extensions/arckit-kimi/hooks/
 extensions/arckit-kimi/kimi.plugin.json
 
+# -- extensions/arckit-antigravity (generated) --
+extensions/arckit-antigravity/skills/
+extensions/arckit-antigravity/templates/
+extensions/arckit-antigravity/docs/guides/
+extensions/arckit-antigravity/config/
+extensions/arckit-antigravity/data/
+extensions/arckit-antigravity/assets/
+extensions/arckit-antigravity/schemas/
+extensions/arckit-antigravity/references/
+extensions/arckit-antigravity/scripts/
+extensions/arckit-antigravity/hooks/
+extensions/arckit-antigravity/hooks.json
+extensions/arckit-antigravity/agents/
+extensions/arckit-antigravity/rules/
+extensions/arckit-antigravity/plugin.json
+extensions/arckit-antigravity/mcp_config.json
+
 # Draft articles (not for version control)
 docs/articles/
 .tmp*

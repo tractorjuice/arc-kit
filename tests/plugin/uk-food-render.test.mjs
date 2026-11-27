@@ -6,9 +6,9 @@ import { cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  DATA_ID, DEFAULT_DATA_DIR, DOC_CODES, EXTRA_CARE, EXTRA_CARE_BOX, PROFILE_QUESTIONS, SECTION_DOCS, SECTION_IDS,
-  UNANSWERED, blankWorksheet, checkDocument, emitWorksheet, loadData, parseWorksheet, referenceText, renderDocument,
-  sourceLine
+  DATA_ID, DEFAULT_DATA_DIR, DOC_CODES, DOCUMENTS, EXTRA_CARE, EXTRA_CARE_BOX, LIST_SECTIONS, PROFILE_QUESTIONS, SECTION_DOCS, SECTION_IDS,
+  SHEET_ORDER, UNANSWERED, blankWorksheet, checkDocument, documentOf, emitWorksheet, loadData, main, parseWorksheet, projectStatus,
+  referenceText, renderDocument, sourceLine, withDocuments
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
 const helper = 'plugins/arckit-uk-food/scripts/uk-food.mjs';
@@ -16,7 +16,7 @@ const run = (...args) => spawnSync('node', [helper, ...args], { encoding: 'utf8'
 const data = loadData(DEFAULT_DATA_DIR);
 const CAFE = 'tests/fixtures/uk-food/project-cafe';
 const EXPECTED = join(CAFE, 'expected');
-const WORKSHEETS = ['profile', ...SECTION_IDS, 'own'];
+const WORKSHEETS = ['profile', ...SECTION_IDS, 'own', ...LIST_SECTIONS];
 const cafeText = (section) => readFileSync(join(CAFE, 'food-safety', `answers-${section}.md`), 'utf8');
 const referenceFile = (section) => `plugins/arckit-uk-food/references/sfbb-caterers-${section}-2026-11-17.md`;
 // The section document of each section: FOODXC for XC and so on.
@@ -33,7 +33,10 @@ const project = (worksheets) => {
 };
 // The cafe's worksheets in a new project, with any of them replaced.
 const cafe = (changes = {}) => project({ ...Object.fromEntries(WORKSHEETS.map((s) => [s, cafeText(s)])), ...changes });
-const render = (doc, dir) => renderDocument(doc, dir, data);
+// The date the commands would give as today. A worksheet with dated entries (the allergens worksheet's Checked-on) is read
+// with it, as every command reads one: a reading given no date refuses such a date rather than take it unchecked.
+const TODAY = '2026-11-22';
+const render = (doc, dir) => renderDocument(doc, dir, data, { today: TODAY });
 const rendered = (doc, dir) => {
   const result = render(doc, dir);
   assert.equal(result.exit, 0, (result.messages ?? []).join('\n'));
@@ -506,7 +509,12 @@ test('the BEGIN marker names the document, the data and the sha256 of the lines 
 test('each section document is named by its section\'s code in the data', () => {
   assert.deepEqual(Object.keys(SECTION_DOCS).sort(), SECTION_IDS.map((id) => data.sections.get(id).section.code).sort());
   for (const [doc, section] of Object.entries(SECTION_DOCS)) assert.equal(data.sections.get(section).section.code, doc);
-  assert.deepEqual(DOC_CODES, [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN']);
+  // Today's value, as the helper has always listed it.
+  assert.deepEqual(DOC_CODES, [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN', 'FOODALG', 'FOODCS', 'FOODSUP']);
+  // The rule it is derived by: the documents a named person signs, those that print a section first,
+  // then the others, each in the table's order. A change to the literal above is checked against this.
+  const listed = [...DOCUMENTS.filter((row) => row.section !== undefined), ...DOCUMENTS.filter((row) => row.section === undefined)];
+  assert.deepEqual(DOC_CODES, listed.filter((row) => row.signable).map((row) => row.code));
 });
 
 test('a section or own document whose worksheet is missing exits 2, naming the file and the command that makes it', () => {
@@ -642,7 +650,8 @@ test('the section document opens with the section\'s title and its introduction,
 
 test('every document ends with the closing notice, naming the business when its name is confirmed, then the source line', () => {
   assert.equal(sourceLine(data.source), SOURCE_LINE);
-  for (const doc of DOC_CODES.filter((code) => code !== 'FOODOWN')) {
+  // The own methods document quotes nothing, and a list document says what it quotes (uk-food-lists.test.mjs).
+  for (const doc of DOC_CODES.filter((code) => !['FOODOWN', 'FOODALG', 'FOODCS', 'FOODSUP'].includes(code))) {
     const lines = rendered(doc, CAFE).split('\n');
     assert.deepEqual(lines.slice(-5), [notice('Bramble Cafe'), '', SOURCE_LINE, '', '<!-- UK-FOOD:END -->'], doc);
   }
@@ -870,7 +879,7 @@ const RAW = [/<details/, /<summary/, /<div/, /<img/, /(?<!\\)\[link/, /(?<!\\)\]
 function nastyCafe() {
   const worksheets = {};
   for (const section of WORKSHEETS) {
-    const parsed = parseWorksheet(cafeText(section), data);
+    const parsed = parseWorksheet(cafeText(section), data, { today: TODAY });
     for (const answer of parsed.answers.values()) {
       if (answer.state === 'unanswered') continue;
       if (['text', 'list', 'yes-no-else'].includes(answer.type) && answer.id !== 'PR-Q06') answer.answer = NASTY;
@@ -882,12 +891,16 @@ function nastyCafe() {
     }
     for (const entry of parsed.entries.values()) {
       entry.title = NASTY_LINE;
-      for (const field of ['hazard', 'control', 'limit', 'limitSource', 'check', 'ifItFails']) if (entry[field]) entry[field] = NASTY;
+      for (const field of ['hazard', 'control', 'limit', 'limitSource', 'check', 'ifItFails', 'otherFrequency', 'precautions', 'method',
+        'contactName', 'telephone', 'email', 'address', 'deliveryDays', 'leadTime', 'goodsSupplied', 'usefulFor', 'ingredients', 'notes',
+        'checkedAgainst', 'freeFromClaim']) {
+        if (entry[field]) entry[field] = NASTY;
+      }
       if (entry.suppliedText) entry.suppliedText = `${NASTY}\n\`\`\`\`four backticks\`\`\`\``;
       if (entry.ehReview === 'pending') entry.ehReview = `2026-11-03 ${NASTY_LINE}`;
     }
     const text = emitWorksheet(parsed, data);
-    assert.deepEqual(parseWorksheet(text, data).problems, [], section);
+    assert.deepEqual(parseWorksheet(text, data, { today: TODAY }).problems, [], section);
     worksheets[section] = text;
   }
   return project(worksheets);
@@ -1129,4 +1142,158 @@ test('G5: render prints no line that ends in a space or a tab, and one blank lin
   }
   assert.ok(rendered('FOODOWN', spaced).includes('\nWe cook British Lion eggs in their shells,\nin a covered water bath.\n\nA paragraph after a line of spaces.\n'));
   for (const section of SECTION_IDS) assert.deepEqual(referenceText(section, data).split('\n').filter((line) => /[ \t]$/.test(line)), [], section);
+});
+
+// The usage text as the helper prints it. This fixture changes only when a document or a command is
+// added, on purpose, and a reviewer reads its diff: it is never edited to make some other change pass.
+const USAGE_TEXT = 'tests/fixtures/uk-food/usage.txt';
+// The usage text the helper prints in this process, as main prints it for an unknown command.
+const usageNow = () => {
+  const said = [];
+  assert.equal(main(['--help'], { out: (text) => said.push(text), err: (text) => said.push(text) }), 2);
+  return said.join('\n');
+};
+
+test('--help prints the recorded usage text, byte for byte', () => {
+  const result = run('--help');
+  assert.equal(result.status, 2);
+  assert.equal(result.stderr, `unknown command: --help\n${readFileSync(USAGE_TEXT, 'utf8')}\n`);
+});
+
+// A document the pack does not have, made only for these tests. Its own worksheet is the own worksheet,
+// not the profile, and its uses name the profile first, so that nothing can take the first of its uses
+// for its own worksheet. Every field a row has is filled in.
+const testRow = (changes = {}) => ({
+  code: 'FOODTEST', name: () => 'Test document', sheet: 'own', uses: ['profile', 'own'], needs: ['profile', 'own'], dataNeeded: null,
+  signable: true, inStatus: true, chunks: () => [['## A test document']], unfinishedLine: (line) => line.includes(UNANSWERED),
+  source: () => 'This line says where the words of the test document come from.',
+  asks: (sheet) => ({ items: [...(sheet?.parsed?.entries.values() ?? [])].map((entry) => [entry.id, entry]) }),
+  nouns: ['test entry', 'test entries'], entries: true, ...changes
+});
+// The table with `row` added before the completion record, where a new document goes.
+const withRow = (row) => [...DOCUMENTS.slice(0, -1), row, DOCUMENTS.at(-1)];
+// What main prints for a command, run in this process so that it sees the table withDocuments puts in place.
+const mainSays = (...args) => {
+  const [out, err] = [[], []];
+  const exit = main(args, { out: (text) => out.push(text), err: (text) => err.push(text) });
+  return { exit, out: out.join('\n'), err: err.join('\n') };
+};
+
+test('a document is added in one place: one row in DOCUMENTS renders, is counted and listed by status, is checked and signed off, and is named in the usage text', () => {
+  assert.equal(DOCUMENTS.at(-1).code, 'FOODCMP', 'a new row goes in before the completion record');
+  const dir = cafe();
+  withDocuments(withRow(testRow()), () => {
+    const result = renderDocument('FOODTEST', dir, data);
+    assert.equal(result.exit, 0, (result.messages ?? []).join('\n'));
+    const lines = result.text.split('\n');
+    assert.match(lines[0], /^<!-- UK-FOOD:BEGIN doc=FOODTEST data=\S+ body=[0-9a-f]{64} -->$/);
+    assert.equal(lines.at(-1), '<!-- UK-FOOD:END -->');
+    assert.ok(lines.includes('## A test document'), result.text);
+    assert.equal(lines.at(-3), 'This line says where the words of the test document come from.');
+    // Status lists it after the last document before the completion record, counts the entries of its own
+    // worksheet (as many as the own methods document counts there) and lists that worksheet first.
+    const documents = projectStatus(dir, data).documents;
+    const codes = documents.map((doc) => doc.code);
+    assert.equal(codes[codes.indexOf('FOODSUP') + 1], 'FOODTEST', codes.join(', '));
+    const [mine, own] = ['FOODTEST', 'FOODOWN'].map((code) => documents.find((doc) => doc.code === code));
+    assert.ok(own.questions > 0);
+    assert.deepEqual([mine.questions, mine.confirmed, mine.proposed], [own.questions, own.confirmed, own.proposed]);
+    assert.deepEqual(mine.worksheets, ['answers-own.md', 'answers-profile.md']);
+    assert.match(mainSays('status', '--project', dir).out, new RegExp(`^FOODTEST \\(Test document\\): ${own.confirmed} of ${own.questions} ` +
+      'test entries confirmed; not written; not signed off$', 'm'));
+    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, .*FOODOWN, FOODALG, FOODCS, FOODSUP, FOODREC, FOODTEST, or FOODCMP, the completion record;/);
+    // Written into the project, it passes check, and a named person can sign it off.
+    const file = join(dir, 'ARC-001-FOODTEST-v1.0.md');
+    writeFileSync(file, `Header text.\n\n${result.text}\n\nFooter text.\n`);
+    const checked = mainSays('check', '--doc', 'FOODTEST', '--project', dir, '--report', file);
+    assert.equal(checked.exit, 0, checked.err);
+    const signed = mainSays('sign-off', '--doc', 'FOODTEST', '--project', dir, '--name', 'Sam Okafor', '--role', 'Owner',
+      '--version', '1.0', '--date', '2026-11-17', '--other-text-read', 'yes');
+    assert.equal(signed.exit, 0, signed.err);
+    assert.equal(projectStatus(dir, data).documents.find((doc) => doc.code === 'FOODTEST').signedOff, true);
+    assert.match(mainSays('status', '--project', dir).out, /^FOODTEST \(Test document\): .*; signed off by Sam Okafor, Owner, on 2026-11-17[;,]/m);
+  });
+  // The table is put back.
+  assert.equal(documentOf('FOODTEST'), undefined);
+  assert.equal(usageNow(), `unknown command: --help\n${readFileSync(USAGE_TEXT, 'utf8')}`);
+});
+
+// What the usage text says of a command, from its description column alone: the lines of its entry from the description's
+// column on, joined, so that no line of its options on the left is read among its words. A line of options too long for
+// the left column stands alone, and holds no description.
+const describedIn = (usage, name) => {
+  const lines = usage.split('\n');
+  const start = lines.findIndex((line) => line.startsWith(`  ${name} `));
+  const length = lines.slice(start + 1).findIndex((line) => /^ {2}\S/.test(line)) + 1;
+  return lines.slice(start, length > 0 ? start + length : undefined).map((line) => (line.length <= 53 || /^.{51} {2}/.test(line) ? line.slice(53) : ''))
+    .join(' ').replace(/\s+/g, ' ').trim();
+};
+
+test('item 9: every list in the usage text is read from where the helper keeps it, and what it says of the documents is true of the new ones', () => {
+  const said = (name) => describedIn(usageNow(), name);
+  // The worksheets, the pack's sections, and the documents sign-off takes and those it refuses, each from its source.
+  assert.ok(said('worksheet').endsWith(`; SECTION is one of ${SECTION_IDS.join(', ')}, profile, own, ${LIST_SECTIONS.join(', ')}`), said('worksheet'));
+  assert.ok(said('reference').endsWith(`; SECTION is one of ${SECTION_IDS.join(', ')}`), said('reference'));
+  assert.ok(said('sign-off').includes(`; DOC is one of ${DOC_CODES.join(', ')}; FOODREC and FOODCMP are refused, as nobody signs them; `), said('sign-off'));
+  assert.ok(said('sign-off').includes(' (for FOODOWN) a special process the profile confirms has no own entry,'), said('sign-off'));
+  // What sign-off refuses for a list document, what render and check take, what status reports, and what upgrade-worksheet
+  // shows of a list worksheet, which has no questions.
+  for (const [name, words] of [['sign-off', 'an entry is not confirmed'], ['sign-off', 'the document shows anything else not yet answered or not yet confirmed'],
+    ['sign-off', 'a worksheet it needs is missing or has problems, or another it is written from has problems'],
+    ['render', 'exit 1, printing nothing, when a worksheet it is written from has problems'], ['check', 'DOC is any document render takes'],
+    ['status', 'whether the record sheets (FOODREC) are written and in step'],
+    ['upgrade-worksheet', 'print each line of its guidance, or of its questions\' wording, that would be taken out or put in']]) {
+    assert.ok(said(name).includes(words), `${name}: ${words}`);
+  }
+  // A document added to the table is named among those sign-off takes, or, if nobody signs it, among those it refuses.
+  withDocuments(withRow(testRow()), () => {
+    assert.match(said('sign-off'), /; DOC is one of FOODXC, [A-Z, ]*FOODSUP, FOODTEST; FOODREC and FOODCMP are refused, /);
+  });
+  withDocuments(withRow(testRow({ signable: false, nobodySigns: 'the test document is not signed', signOffRefusal: 'FOODTEST is not signed off' })), () => {
+    assert.match(said('sign-off'), /; DOC is one of FOODXC, [A-Z, ]*FOODSUP; FOODREC, FOODTEST and FOODCMP are refused, /);
+  });
+});
+
+test('the profile reads only the worksheets it prints from: one another document adds, with problems, changes nothing of the profile', () => {
+  const dir = cafe({ extra: 'This is not a worksheet.\n' });
+  // Outside the seam no document uses the extra worksheet, so nothing reads it.
+  const before = projectStatus(dir, data);
+  const profileOf = (status) => [status.documents.find((doc) => doc.code === 'FOODPROF'),
+    status.unfinished.filter((line) => line.code === 'FOODPROF')];
+  // It also uses a section's worksheet, listed first: that makes it no section document.
+  const extra = testRow({ code: 'FOODEXTRA', name: () => 'Extra document', sheet: 'extra', uses: ['MG', 'profile', 'extra'],
+    needs: ['profile', 'extra'] });
+  const sections = { ...SECTION_DOCS };
+  withDocuments(withRow(extra), () => {
+    assert.deepEqual(SECTION_DOCS, sections);
+    assert.match(usageNow().replace(/\s+/g, ' '), /DOC is one of FOODXC, FOODCLN, FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN, FOODALG, FOODCS, FOODSUP, FOODREC, FOODEXTRA, or FOODCMP/);
+    const result = renderDocument('FOODEXTRA', dir, data);
+    assert.equal(result.exit, 1, 'the extra worksheet is read by the document that uses it');
+    assert.match(result.messages.join('\n'), /answers-extra\.md:1: /);
+    const status = projectStatus(dir, data);
+    assert.equal(status.documents.find((doc) => doc.code === 'FOODEXTRA').problems, 1);
+    assert.deepEqual(profileOf(status), profileOf(before));
+    const profile = renderDocument('FOODPROF', dir, data);
+    assert.equal(profile.exit, 0, (profile.messages ?? []).join('\n'));
+    assert.equal(`${profile.text}\n`, readFileSync(join(EXPECTED, 'FOODPROF.body.md'), 'utf8'));
+  }, [...SHEET_ORDER, 'extra']);
+});
+
+test('the table refuses a row that is not whole, naming the row and the field, and withDocuments refuses an async function', () => {
+  const refused = (row, pattern) => {
+    assert.throws(() => withDocuments(withRow(row), () => assert.fail('a table that is not whole was used')), pattern);
+    assert.equal(documentOf('FOODTEST'), undefined, 'the table is put back');
+  };
+  refused(testRow({ signable: false }), /FOODTEST: nobodySigns is not given[^]*FOODTEST: signOffRefusal is not given/);
+  refused(testRow({ uses: ['profile', 'own', 'nowhere'] }), /FOODTEST: uses names nowhere, which is not in SHEET_ORDER/);
+  refused(testRow({ needs: ['profile', 'own', 'MG'] }), /FOODTEST: needs names MG, which is not in its uses/);
+  refused(testRow({ sheet: 'MG' }), /FOODTEST: sheet is neither null nor one of its uses/);
+  refused(testRow({ sheet: 'MG', uses: ['profile', 'MG'], needs: ['profile', 'MG'], section: 'MG' }),
+    /FOODTEST: section is MG, which another row prints too/);
+  refused(testRow({ render: () => ({ exit: 0, text: '' }) }), /FOODTEST: outOfDate does not give/);
+  refused(testRow({ needs: ['own'] }), /FOODTEST: needs leaves out profile/);
+  refused(testRow({ nouns: undefined }), /FOODTEST: nouns is not the two words/);
+  refused(testRow({ code: 'FOODOWN' }), /FOODOWN: code is another row's too/);
+  assert.throws(() => withDocuments(DOCUMENTS, async () => {}), /runs fn synchronously/);
+  assert.deepEqual(DOC_CODES, [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN', 'FOODALG', 'FOODCS', 'FOODSUP']);
 });

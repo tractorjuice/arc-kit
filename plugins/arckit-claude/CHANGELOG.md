@@ -9,6 +9,22 @@ Releases before 6.15.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+### Fixed
+
+- **Migrating old file names puts G-Cloud and DOS documents where ArcKit expects them.** `migrate-filenames.sh` moved G-Cloud and DOS files out of `procurement/` to the project root, where ArcKit's file-name check blocks them. They now go to `procurement/`. It also no longer renames a correctly numbered document in a folder that holds several types (an AWS research document became `RSCH`), still numbers an old `ARC-…-v1.0` name that lacks a sequence number, and numbers migrated files after the highest number already in the folder, so `--force` can't overwrite an existing document. A dry run now shows the same numbers a real run gives.
+- **Commands find design reviews where `/arckit:hld-review` and `/arckit:dld-review` write them.** The reviews go in `vendors/<vendor>/`; `/arckit:conformance`, `/arckit:service-assessment`, `/arckit:story` and `/arckit-arc42:arc42-debt` looked only in a `reviews/` folder. They now look in both.
+- **Re-running a research command gives the next numbered report.** `/arckit:research`, `datascout`, `gov-reuse`, `grants`, `gov-landscape`, `gov-code-search` and the three cloud-research commands could produce an ID such as `GLND-002-v1.1`. Each run now writes the next report at `v1.0`, as `/arckit:tenders` already did, in Claude Code and in the other assistants ArcKit supports.
+
+## [6.26.0] — 2026-11-24
+
+### Added
+
+- **Core knows the food safety overlay's four new document types.** `FOODALG` (Allergen Information), `FOODCS` (Cleaning Schedule), `FOODSUP` (Suppliers and Contacts) and `FOODREC` (Diary and Record Sheets) are in the registry, so the file-name check accepts them and `/arckit:pages` lists them with the overlay's guides. Only the overlay's own commands set their status, so `/arckit:health` and the session-start notice leave their drafts out, as they do the overlay's other eight; an overdue review is still reported. `/arckit:arckit-build` lists the `uk-food-sfbb` recipe with its twelve targets. The overlay's four new commands, `/arckit-uk-food:uk-food-allergens`, `/arckit-uk-food:uk-food-cleaning-schedule`, `/arckit-uk-food:uk-food-suppliers` and `/arckit-uk-food:uk-food-record-sheets`, need this release of core.
+
+## [6.25.0] — 2026-11-22
+
+No change to the Claude Code plugin. This release adds an experimental plugin for Google Antigravity and fixes a file path in the Mistral Vibe extension; see the [main changelog](https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md).
+
 ## [6.24.0] — 2026-11-20
 
 ### Changed

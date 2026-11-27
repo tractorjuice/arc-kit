@@ -2,10 +2,10 @@
 
 4 slash commands and the `uk-fs-payments` build recipe covering UK Financial Services payments compliance for established Payment Service Providers, E-Money Institutions, and Payment Institutions:
 
-- `/arckit:uk-fs-sca-rts` — UK PSD2 SCA-RTS exemption design (UK SCA-RTS Articles 10-18 under PSRs 2017 Reg 100 and 106A, TRA thresholds, fraud-monitoring framework)
-- `/arckit:uk-fs-safeguarding` — EMI/PI safeguarding assessment (EMR 2011, PSRs 2017, CASS 15 from 7 May 2026, FCA Dear CEO letter of July 2019) — **CRITICAL severity**
-- `/arckit:uk-fs-consumer-duty` — FCA Consumer Duty annual Board Report (PS22/9, FG22/5)
-- `/arckit:uk-fs-ctp-dependency` — Critical Third Parties dependency assessment (BoE/PRA/FCA PS24/16)
+- `/arckit-uk-finance:uk-fs-sca-rts` — UK PSD2 SCA-RTS exemption design (UK SCA-RTS Articles 10-18 under PSRs 2017 Reg 100 and 106A, TRA thresholds, fraud-monitoring framework)
+- `/arckit-uk-finance:uk-fs-safeguarding` — EMI/PI safeguarding assessment (EMR 2011, PSRs 2017, CASS 15 from 7 May 2026, FCA Dear CEO letter of July 2019) — **CRITICAL severity**
+- `/arckit-uk-finance:uk-fs-consumer-duty` — FCA Consumer Duty annual Board Report (PS22/9, FG22/5)
+- `/arckit-uk-finance:uk-fs-ctp-dependency` — Critical Third Parties dependency assessment (BoE/PRA/FCA PS24/16)
 
 Recipe: `uk-fs-payments` (11 targets across baseline + overlay).
 

@@ -9,8 +9,8 @@ https://github.com/tractorjuice/arc-kit
 ## What Is Included
 
 - ArcKit commands under `commands/`
-- 10 research and specialist agents under `agents/`
-- 112 document templates under `templates/`
+- 14 research and specialist agents under `agents/`
+- Document templates under `templates/`
 - Handoff schemas and scoring rubrics under `schemas/`
 - Helper scripts under `scripts/`
 - MCP configuration in `opencode.json`
@@ -35,23 +35,23 @@ arckit init my-project --ai opencode
 
 ## Usage
 
-ArcKit commands are available in OpenCode with `/arckit.<command>`:
+ArcKit commands are available in OpenCode with `/arckit.<command>`, matching the file names in `commands/`:
 
 ```text
-/arckit:plan
-/arckit:principles
-/arckit:requirements
-/arckit:risk
-/arckit:sow
-/arckit:evaluate
-/arckit:health
-/arckit:export-okf
-/arckit:import-okf
+/arckit.plan
+/arckit.principles
+/arckit.requirements
+/arckit.risk
+/arckit.sow
+/arckit.evaluate
+/arckit.health
+/arckit.export-okf
+/arckit.import-okf
 ```
 
 ## OKF Interoperability
 
-Use `/arckit:export-okf` to export ArcKit artifacts as an OKF-compatible Markdown bundle. Use `/arckit:import-okf` to import OKF bundles as reviewable ArcKit research notes.
+Use `/arckit.export-okf` to export ArcKit artifacts as an OKF-compatible Markdown bundle. Use `/arckit.import-okf` to import OKF bundles as reviewable ArcKit research notes.
 
 ## Updating
 

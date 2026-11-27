@@ -237,31 +237,19 @@ Create a Mermaid diagram showing:
 - Security boundaries (Security Groups, NACLs, WAF)
 - Data flows
 
-### Step 9: Detect Version and Determine Increment
+### Step 9: Allocate the Document ID
 
-Check if a previous version of this document exists in the project directory:
+`AWRS` is a multi-instance type: each run writes a new document with the next sequence number, at version 1.0, and earlier documents are kept. Get the ID with:
 
-Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-AWRS-*-v*.md` files. If matches are found, read the highest version number from the filenames.
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} AWRS --next-num "projects/{project-dir}/research"
+```
 
-**If no existing file**: Use VERSION="1.0"
-
-**If existing file found**:
-
-1. Read the existing document to understand its scope (AWS services researched, architecture patterns, recommendations made)
-2. Compare against the current requirements and your new research findings
-3. Determine version increment:
-   - **Minor increment** (e.g., 1.0 → 1.1, 2.1 → 2.2): Use when the scope is unchanged — refreshed pricing, updated service features, corrected details, minor additions within existing categories
-   - **Major increment** (e.g., 1.0 → 2.0, 1.3 → 2.0): Use when scope has materially changed — new requirement categories, removed categories, fundamentally different service recommendations, significant new requirements added since last version
-4. Use the determined version for ALL subsequent references:
-   - Document ID and filename: `ARC-{PROJECT_ID}-AWRS-v${VERSION}.md`
-   - Document Control: Version field
-   - Revision History: Add new row with version, date, "AI Agent", description of changes, "PENDING", "PENDING"
-
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AWRS** per-type checks pass. Fix any failures before proceeding.
+This returns the next sequenced ID, for example `ARC-{PROJECT_ID}-AWRS-002-v1.0`. Use it as the Document ID and the filename, set the Document Control Version to 1.0, and add a Revision History row for version 1.0 ("AI Agent", a description of the document, "PENDING", "PENDING").
 
 ### Step 10: Write Output
 
-**Use the Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AWRS-v${VERSION}.md` following the template structure.
+**Use the Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AWRS-{NNN}-v1.0.md` following the template structure.
 
 Auto-populate fields:
 

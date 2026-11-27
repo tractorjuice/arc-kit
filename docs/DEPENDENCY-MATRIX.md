@@ -442,8 +442,12 @@ The overlay reads no ArcKit core document. Its commands read each other's worksh
 | `/arckit-uk-food:uk-food-profile` | — | — | — |
 | `/arckit-uk-food:uk-food-safe-methods` | — | uk-food-profile | — |
 | `/arckit-uk-food:uk-food-own-methods` | — | uk-food-profile | — |
-| `/arckit-uk-food:uk-food-check` | — | uk-food-profile, uk-food-safe-methods, uk-food-own-methods | uk-food-sign-off |
-| `/arckit-uk-food:uk-food-sign-off` | the document being signed: uk-food-profile, uk-food-safe-methods or uk-food-own-methods | — | — |
+| `/arckit-uk-food:uk-food-allergens` | — | uk-food-profile, uk-food-safe-methods | — |
+| `/arckit-uk-food:uk-food-cleaning-schedule` | — | uk-food-profile | — |
+| `/arckit-uk-food:uk-food-suppliers` | — | uk-food-profile | — |
+| `/arckit-uk-food:uk-food-record-sheets` | — | uk-food-profile, uk-food-safe-methods | — |
+| `/arckit-uk-food:uk-food-check` | — | uk-food-profile, uk-food-safe-methods, uk-food-own-methods, uk-food-allergens, uk-food-cleaning-schedule, uk-food-suppliers, uk-food-record-sheets | uk-food-sign-off |
+| `/arckit-uk-food:uk-food-sign-off` | the document being signed: uk-food-profile, uk-food-safe-methods, uk-food-own-methods, uk-food-allergens, uk-food-cleaning-schedule or uk-food-suppliers | — | — |
 
 ### ArcKit UK Legacy IT Assessment Overlay (`arckit-uk-legacy`)
 
@@ -676,13 +680,20 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ## Version
 
-- **ArcKit Version**: 6.18.2
-- **Matrix Date**: 2026-10-17
-- **Commands Documented**: 76 core commands in the matrix; 133 community overlay and tooling commands in Community Overlay Dependencies
+- **ArcKit Version**: 6.26.0
+- **Matrix Date**: 2026-11-24
+- **Commands Documented**: 76 core commands in the matrix; 137 community overlay and tooling commands in Community Overlay Dependencies
 - **Matrix Rows**: 65 (63 commands + 2 external documents)
 - **Note**: `/arckit:build`, `/arckit:customize`, `/arckit:export-okf`, `/arckit:graph-report`, `/arckit:health`, `/arckit:impact`, `/arckit:import-okf`, `/arckit:init`, `/arckit:navigator`, `/arckit:pages`, `/arckit:search`, `/arckit:start`, `/arckit:template-builder` are not in the matrix. They need no earlier documents, or they work across whatever the project already holds rather than on particular documents, and no other command reads their output
 
 ## Changelog
+
+### 2026-11-23 - UK Food Safety Overlay: four more commands (Community, Sector)
+
+- **Added**: four rows to the `arckit-uk-food` table for the commands that record a small caterer's allergen information, cleaning schedule, and suppliers and contacts, and write the pack's blank diary and record sheets: `uk-food-allergens`, `uk-food-cleaning-schedule`, `uk-food-suppliers` and `uk-food-record-sheets`
+- **Dependencies**: no ArcKit core document. Each recommends the profile, whose worksheet it makes blank if it is missing, and carries on without it. The allergen information also recommends the Management section of safe methods, whose answers on how customers are told about allergens it repeats; the diary and record sheets recommend it too, for the business's own opening and closing checks
+- **Updated**: the check command now reads the four new documents as well, and the sign-off command signs the allergen information, the cleaning schedule and the suppliers and contacts. Nobody signs the diary and record sheets
+- **Updated**: Commands Documented from 133 to 137 community overlay and tooling commands
 
 ### 2026-11-18 - UK Food Safety Overlay (Community, Sector)
 

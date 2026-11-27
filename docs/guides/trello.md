@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-Export your ArcKit product backlog to a Trello board with `/arckit:trello`. The command reads the JSON output from `/arckit:backlog FORMAT=json` and creates a fully structured board with sprint lists, labelled cards, and acceptance criteria checklists.
+Export your ArcKit product backlog to a Trello board with `/arckit:trello`. The command reads the JSON file that `/arckit:backlog` always writes and creates a fully structured board with sprint lists, labelled cards, and acceptance criteria checklists.
 
 ---
 
@@ -10,7 +10,7 @@ Export your ArcKit product backlog to a Trello board with `/arckit:trello`. The 
 
 | Requirement | How to get it |
 |-------------|---------------|
-| Backlog JSON file (`ARC-*-BKLG-*.json`) | Run `/arckit:backlog FORMAT=json` |
+| Backlog JSON file (`ARC-*-BKLG-*.json`) | Run `/arckit:backlog` (the JSON is always written) |
 | A Trello account | Any plan works |
 | Trello connected to Claude Code | One-time sign-in: run `/mcp`, choose **trello**, select **Authenticate**, and sign in to Trello in the browser |
 
@@ -90,7 +90,7 @@ Cards use the six colour labels every new Trello board comes with. Trello's MCP 
 
 | Stage | Action |
 |-------|--------|
-| 1. Generate backlog | `/arckit:backlog FORMAT=json` (or `FORMAT=all` for markdown + CSV + JSON) |
+| 1. Generate backlog | `/arckit:backlog` (add `FORMAT=all` for the CSV export as well) |
 | 2. Connect Trello (once) | `/mcp` → **trello** → **Authenticate** |
 | 3. Run export | `/arckit:trello` |
 | 4. Review board | Open the returned Trello URL |

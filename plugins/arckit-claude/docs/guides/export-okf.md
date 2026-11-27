@@ -66,5 +66,5 @@ The export mirrors source paths beneath the output directory so reviewers can tr
 
 - The command exports Markdown artifacts only.
 - It does not promise compatibility with every future OKF consumer.
-- It does not import OKF content back into ArcKit; use the import workflow when available.
+- It does not import OKF content back into ArcKit; use `/arckit:import-okf` to bring an OKF bundle in.
 - Existing malformed frontmatter in a source file is left unchanged in the copied output.

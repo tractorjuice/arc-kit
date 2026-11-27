@@ -18,14 +18,14 @@
     <meta name="author" content="ArcKit">
     <title>Project Analysis Playbook | ArcKit</title>
     <meta property="og:title" content="Project Analysis Playbook">
-    <meta property="og:description" content="Use /arckit:analyze as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then prints gap-focused actions.">
+    <meta property="og:description" content="Use /arckit:analyze as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then writes a gap-focused report to projects/&lt;id&gt;/ARC-&lt;id&gt;-ANAL-v&lt;N&gt;.md…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/analyze.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Project Analysis Playbook">
-    <meta name="twitter:description" content="Use /arckit:analyze as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then prints gap-focused actions.">
+    <meta name="twitter:description" content="Use /arckit:analyze as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then writes a gap-focused report to projects/&lt;id&gt;/ARC-&lt;id&gt;-ANAL-v&lt;N&gt;.md…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/analyze.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/analyze.md">
@@ -339,7 +339,7 @@
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/analyze.html",
                 "headline": "Project Analysis Playbook",
-                "description": "Use /arckit:analyze as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then prints gap-focused actions.",
+                "description": "Use /arckit:analyze as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then writes a gap-focused report to projects/<id>/ARC-<id>-ANAL-v<N>.md…",
                 "url": "https://arckit.org/guide/analyze.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -423,7 +423,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
             <h1 class="app-page-hero__title">Project Analysis Playbook</h1>
-            <p class="app-page-hero__description">Use /arckit:analyze as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then prints gap-focused actions.</p>
+            <p class="app-page-hero__description">Use /arckit:analyze as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then writes a gap-focused report to projects/&lt;id&gt;/ARC-&lt;id&gt;-ANAL-v&lt;N&gt;.md…</p>
         </div>
     </div>
 
@@ -440,7 +440,7 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p>Use <code>/arckit:analyze</code> as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then prints gap-focused actions.</p>
+<p>Use <code>/arckit:analyze</code> as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then writes a gap-focused report to <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-ANAL-v&lt;N&gt;.md</code>. It changes no other artefact.</p>
 <hr />
 <h2 id="when-to-run">When to Run</h2>
 <table>
@@ -474,7 +474,7 @@
 </tr>
 </tbody>
 </table>
-<p><em>Command:</em> <code>arckit.analyze --project &lt;path&gt;</code> or run inside the project root.</p>
+<p><em>Command:</em> <code>/arckit:analyze &lt;project ID or scope&gt;</code>, for example <code>/arckit:analyze 001</code>.</p>
 <hr />
 <h2 id="prep-checklist">Prep Checklist</h2>
 <ul>
@@ -531,7 +531,7 @@
 <h2 id="tips">Tips</h2>
 <ul>
 <li>Automate weekly via CI to post summaries in team chat.</li>
-<li>Track history (store reports in <code>/reports/analysis/</code>) to show continuous improvement.</li>
+<li>Track history by keeping each run's <code>ARC-&lt;id&gt;-ANAL-v&lt;N&gt;.md</code> to show continuous improvement.</li>
 <li>Pair with <code>/arckit:story</code> for end-of-phase retrospectives.</li>
 </ul>
 </div>

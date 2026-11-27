@@ -4,17 +4,19 @@
 
 `/arckit:research` automatically extracts reusable knowledge from research output into standalone vendor profiles and tech notes.
 
-> **Compound Knowledge Pattern**: One research document contains findings about vendors and technologies that persist beyond the project that discovered them. By extracting these into standalone files, future projects can find and reference existing knowledge instead of re-researching from scratch.
+> **Compound Knowledge Pattern**: One research document contains findings about vendors and technologies that are worth keeping beyond a single run. By extracting these into standalone files, later research runs in the project can find and update existing knowledge instead of re-researching from scratch.
 
 ---
 
 ## Why Knowledge Compounding Matters
 
-Research is expensive — each run performs dozens of web searches, fetches vendor pricing pages, and cross-references compliance data. Without compounding, this knowledge is locked inside a single research document and invisible to future projects.
+Research is expensive — each run performs dozens of web searches, fetches vendor pricing pages, and cross-references compliance data. Without compounding, this knowledge is locked inside a single research document and has to be gathered again on the next run.
 
-**The problem:** Project A researches AWS, Stripe, and Auth0 in depth. Six months later, Project B needs payment processing research. Without compounding, Project B starts from zero.
+**The problem:** A project researches AWS, Stripe, and Auth0 in depth. Six months later, the team re-runs research to refresh the payment processing options. Without compounding, the second run starts from zero.
 
-**The solution:** Project A's research spawns `vendors/stripe-profile.md` with pricing, compliance, and strengths/weaknesses. When Project B runs research, the existing profile provides a head start — the agent updates it with fresh data rather than rebuilding from nothing.
+**The solution:** The first run spawns `vendors/stripe-profile.md` with pricing, compliance, and strengths/weaknesses. When research runs again in the same project, the existing profile provides a head start — the run updates it with fresh data rather than rebuilding from nothing.
+
+Profiles and tech notes are kept per project. A research run reads and updates only its own project's `vendors/` and `tech-notes/` folders, so another project starts its own.
 
 ---
 
@@ -67,7 +69,8 @@ After research with spawning enabled, a project directory looks like this:
 ```text
 projects/001-my-project/
 ├── ARC-001-REQ-v1.0.md          # Requirements (input)
-├── ARC-001-RSCH-v1.0.md         # Research findings (main output)
+├── research/
+│   └── ARC-001-RSCH-001-v1.0.md # Research findings (main output)
 ├── vendors/                      # Spawned vendor profiles
 │   ├── aws-profile.md
 │   ├── stripe-profile.md
@@ -94,19 +97,13 @@ The research agent always checks for existing files before creating new ones. It
 
 ## Source Traceability
 
-Every spawned file includes a `Source Research` field in its Document Control table linking back to the research document that created it:
-
-```markdown
-| Source Research | ARC-001-RSCH-v1.0 |
-```
-
-The main research document includes a `## Spawned Knowledge` section at the end listing all vendor profiles and tech notes that were created or updated during that research run.
+The research document ends with a `## Spawned Knowledge` section listing every vendor profile and tech note that run created or updated, so each one can be traced back to the research that produced it. Each spawned file's revision history and footer name the command that wrote it.
 
 ---
 
 ## Skipping Knowledge Spawning
 
-Use the `--no-spawn` flag to produce only the main research document without creating additional files:
+In Claude Code, `/arckit:research` always writes the vendor profiles and tech notes alongside the main document. In the other assistants, use the `--no-spawn` flag to produce only the main research document without creating additional files:
 
 ```bash
 /arckit:research Research options for authentication --no-spawn

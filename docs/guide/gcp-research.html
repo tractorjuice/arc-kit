@@ -570,9 +570,9 @@ gcloud services api-keys create --project=PROJECT_ID --display-name=&quot;DK API
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit:gcp-research Research Google Cloud services for &lt;project&gt;
 </code></pre>
-<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-GCRS-v1.0.md</code></p>
+<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-GCRS-&lt;NNN&gt;-v1.0.md</code></p>
 <blockquote>
-<p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
+<p><strong>Re-running</strong>: each run writes a new report with the next sequence number (<code>GCRS-001</code>, <code>GCRS-002</code> and so on), so earlier reports are kept.</p>
 </blockquote>
 <hr />
 <h2 id="long-runs-remote-control--push-notifications">Long runs: Remote Control + push notifications</h2>

@@ -2,14 +2,14 @@
 
 8 slash commands covering EU regulatory compliance:
 
-- `/arckit:eu-ai-act` — EU AI Act (Regulation 2024/1689) compliance and risk classification
-- `/arckit:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework v1.2.1 assessment, weighted and scored per the Commission's June 2026 Implementation guidance and calculator (SOV-1..SOV-8, SEAL levels)
-- `/arckit:eu-cra` — Cyber Resilience Act (Regulation 2024/2847) for products with digital elements
-- `/arckit:eu-data-act` — Data Act (Regulation 2023/2854) for connected products and data holders
-- `/arckit:eu-dora` — Digital Operational Resilience Act (EU 2022/2554) for financial sector entities
-- `/arckit:eu-dsa` — Digital Services Act (Regulation 2022/2065) for online intermediaries and platforms
-- `/arckit:eu-nis2` — NIS2 Directive compliance for essential and important entities
-- `/arckit:eu-rgpd` — GDPR (EU 2016/679) compliance across all member states
+- `/arckit-eu:eu-ai-act` — EU AI Act (Regulation 2024/1689) compliance and risk classification
+- `/arckit-eu:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework v1.2.1 assessment, weighted and scored per the Commission's June 2026 Implementation guidance and calculator (SOV-1..SOV-8, SEAL levels)
+- `/arckit-eu:eu-cra` — Cyber Resilience Act (Regulation 2024/2847) for products with digital elements
+- `/arckit-eu:eu-data-act` — Data Act (Regulation 2023/2854) for connected products and data holders
+- `/arckit-eu:eu-dora` — Digital Operational Resilience Act (EU 2022/2554) for financial sector entities
+- `/arckit-eu:eu-dsa` — Digital Services Act (Regulation 2022/2065) for online intermediaries and platforms
+- `/arckit-eu:eu-nis2` — NIS2 Directive compliance for essential and important entities
+- `/arckit-eu:eu-rgpd` — GDPR (EU 2016/679) compliance across all member states
 
 In Claude Code the overlay installs as its own plugin, `arckit-eu`, so its commands carry that prefix: `/arckit-eu:eu-ai-act` and so on. Core commands such as `/arckit:requirements` keep the `arckit` prefix.
 

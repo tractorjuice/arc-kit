@@ -13,17 +13,17 @@ Reference for every Model Context Protocol (MCP) tool exposed by ArcKit, the ser
 
 | Server | Endpoint | Type | Auth | `alwaysLoad` | Tools |
 |---|---|---|---|---|---|
-| `aws-knowledge` | `https://knowledge-mcp.global.api.aws` | http | none | **yes** | 6 |
+| `aws-knowledge` | `https://knowledge-mcp.global.api.aws` | http | none | **yes** | 5 |
 | `microsoft-learn` | `https://learn.microsoft.com/api/mcp` | http | none | **yes** | 3 |
-| `google-developer-knowledge` | `https://developerknowledge.googleapis.com/mcp` | http | `GOOGLE_API_KEY` (user_config) | **yes** | 3 |
+| `google-developer-knowledge` | `https://developerknowledge.googleapis.com/mcp` | http | `GOOGLE_API_KEY` (user_config) | **yes** | 2 |
 | `datacommons-mcp` | `https://api.datacommons.org/mcp` | http | `DATA_COMMONS_API_KEY` (user_config) | **yes** | 2 |
 | `govreposcrape` | `https://govreposcrape-api-1060386346356.us-central1.run.app/mcp` | http | none | **yes** | 9 |
 | `uk-tenders` | `https://tenders.run.cns.me/mcp` | http | none | **yes** | 11 |
 | `trello` | `https://mcp.trello.com/v1` | http | OAuth 2.0 (sign in through `/mcp`) | no | 9 families |
 
-Total: **7 servers**: six research servers with 34 tools, and Atlassian's Trello server. Every research server sets `alwaysLoad`, because its tools are called from reader subagents, which can't reach a deferred server; `trello` is deliberately deferred, because only `/arckit:trello` uses it, from the main conversation, and the other sessions shouldn't pay for loading it. ArcKit agents currently consume **24** of them — 7 `uk-tenders` tools via `arckit-tenders-reader`, `search_uk_gov_code` (discovery), `dependency_compare` (gov-reuse overlap %), and `vulnerability_exposure` (gov-landscape CVE blast-radius) from govreposcrape, plus the 14 tools on the other four servers. The remaining 6 govreposcrape dependency-intelligence tools and 4 `uk-tenders` tools (including `query_sql`) are exposed by their servers but not yet wired into any ArcKit agent (see the individual sections below).
+Total: **7 servers**: six research servers with 32 tools, and Atlassian's Trello server. Every research server sets `alwaysLoad`, because its tools are called from reader subagents, which can't reach a deferred server; `trello` is deliberately deferred, because only `/arckit:trello` uses it, from the main conversation, and the other sessions shouldn't pay for loading it. ArcKit agents currently consume **22** of them — 7 `uk-tenders` tools via `arckit-tenders-reader`, `search_uk_gov_code` (discovery), `dependency_compare` (gov-reuse overlap %), and `vulnerability_exposure` (gov-landscape CVE blast-radius) from govreposcrape, plus the 12 tools on the other four servers. The remaining 6 govreposcrape dependency-intelligence tools and 4 `uk-tenders` tools (including `query_sql`) are exposed by their servers but not yet wired into any ArcKit agent (see the individual sections below).
 
-`alwaysLoad: true` is set on `aws-knowledge` and `microsoft-learn` because the AWS and Azure research commands always reach for them; the others stay deferred to keep cold-start tool budgets lean. See `plugins/arckit-claude/.mcp.json`.
+See `plugins/arckit-claude/.mcp.json` for each server's `alwaysLoad` setting.
 
 ---
 
@@ -33,15 +33,15 @@ AWS official Knowledge MCP server (no API key required). Backs all UK and global
 
 | Tool | Purpose |
 |---|---|
-| `mcp__aws-knowledge__aws___search_documentation` | Free-text search across `docs.aws.amazon.com`, returning ranked chunks |
-| `mcp__aws-knowledge__aws___read_documentation` | Fetch a specific AWS doc URL as markdown for deep reads |
-| `mcp__aws-knowledge__aws___list_regions` | Enumerate AWS regions |
-| `mcp__aws-knowledge__aws___get_regional_availability` | Per-service regional availability (used for `eu-west-2` / `eu-west-1` / sovereign region gating) |
-| `mcp__aws-knowledge__aws___retrieve_skill` | Pull structured AWS Skill Hub content |
+| `mcp__plugin_arckit_aws-knowledge__aws___search_documentation` | Free-text search across `docs.aws.amazon.com`, returning ranked chunks |
+| `mcp__plugin_arckit_aws-knowledge__aws___read_documentation` | Fetch a specific AWS doc URL as markdown for deep reads |
+| `mcp__plugin_arckit_aws-knowledge__aws___list_regions` | Enumerate AWS regions |
+| `mcp__plugin_arckit_aws-knowledge__aws___get_regional_availability` | Per-service regional availability (used for `eu-west-2` / `eu-west-1` / sovereign region gating) |
+| `mcp__plugin_arckit_aws-knowledge__aws___retrieve_skill` | Pull structured AWS Skill Hub content |
 
-**Consumers** (1): `arckit-aws-research`.
+**Consumers** (2): `arckit-aws-research-reader`, which `/arckit:aws-research` dispatches in Claude Code and which allowlists every tool here except `retrieve_skill`; and `arckit-aws-research`, the single-prompt agent that runtimes without subagents run, which allowlists all five.
 
-Triggered by `/arckit:aws-research`. Workflow: search → read → recommend → list/availability for UK region gating → retrieve_skill for Well-Architected pillar mapping.
+Triggered by `/arckit:aws-research`. Workflow: search → read → list/availability for UK region gating.
 
 ---
 
@@ -51,11 +51,11 @@ Microsoft Learn MCP server (no API key required). Backs Azure architecture resea
 
 | Tool | Purpose |
 |---|---|
-| `mcp__microsoft-learn__microsoft_docs_search` | Search official Microsoft and Azure documentation. Up to 10 chunks (500 tokens each) |
-| `mcp__microsoft-learn__microsoft_docs_fetch` | Fetch a full Microsoft Learn page as markdown when search snippets are insufficient |
-| `mcp__microsoft-learn__microsoft_code_sample_search` | Search official Microsoft Learn code samples; optional `language` filter |
+| `mcp__plugin_arckit_microsoft-learn__microsoft_docs_search` | Search official Microsoft and Azure documentation. Up to 10 chunks (500 tokens each) |
+| `mcp__plugin_arckit_microsoft-learn__microsoft_docs_fetch` | Fetch a full Microsoft Learn page as markdown when search snippets are insufficient |
+| `mcp__plugin_arckit_microsoft-learn__microsoft_code_sample_search` | Search official Microsoft Learn code samples; optional `language` filter |
 
-**Consumers** (1): `arckit-azure-research`.
+**Consumers** (2): `arckit-azure-research-reader`, which `/arckit:azure-research` dispatches in Claude Code, and `arckit-azure-research`, the single-prompt agent that runtimes without subagents run.
 
 Triggered by `/arckit:azure-research`. Workflow per server docs: search → code-sample search (when implementation examples are needed) → fetch (when search snippets are incomplete).
 
@@ -67,12 +67,12 @@ Google Developer Knowledge MCP. Backs Google Cloud architecture research. Requir
 
 | Tool | Purpose |
 |---|---|
-| `mcp__google-developer-knowledge__search_documents` | Search Google Cloud and developer documentation |
-| `mcp__google-developer-knowledge__get_documents` | Fetch one or more documents by name (replaced `get_document` and `batch_get_documents` on 8 March 2026) |
+| `mcp__plugin_arckit_google-developer-knowledge__search_documents` | Search Google Cloud and developer documentation |
+| `mcp__plugin_arckit_google-developer-knowledge__get_documents` | Fetch one or more documents by name (replaced `get_document` and `batch_get_documents` on 8 March 2026) |
 
-**Consumers** (1): `arckit-gcp-research`.
+**Consumers** (2): `arckit-gcp-research-reader`, which `/arckit:gcp-research` dispatches in Claude Code, and `arckit-gcp-research`, the single-prompt agent that runtimes without subagents run.
 
-Triggered by `/arckit:gcp-research`. Workflow: search → batch_get → get (for any document needing fuller content).
+Triggered by `/arckit:gcp-research`. Workflow: search → get_documents (for any document needing fuller content).
 
 ---
 
@@ -82,8 +82,8 @@ Google Data Commons MCP server. Backs statistical and demographic data discovery
 
 | Tool | Purpose |
 |---|---|
-| `mcp__datacommons-mcp__search_indicators` | Search the Data Commons knowledge graph for statistical indicators by name or topic |
-| `mcp__datacommons-mcp__get_observations` | Fetch observation values (numeric data points) for a given indicator and entity |
+| `mcp__plugin_arckit_datacommons-mcp__search_indicators` | Search the Data Commons knowledge graph for statistical indicators by name or topic |
+| `mcp__plugin_arckit_datacommons-mcp__get_observations` | Fetch observation values (numeric data points) for a given indicator and entity |
 
 **Consumers** (1): `arckit-datascout-reader`.
 
@@ -97,30 +97,30 @@ MCP server fronting a semantic search index over 24,500+ UK government open-sour
 
 | Tool | Purpose | Consumed by ArcKit? |
 |---|---|---|
-| `mcp__govreposcrape__search_uk_gov_code` | Natural-language semantic search across UK government repos. Returns repo URL, language, owner, snippet | **yes** — candidate/domain discovery |
-| `mcp__govreposcrape__dependency_compare` | Shared/unique deps + overlap % between two repos | **yes** — `arckit-gov-reuse-reader` (near-duplicate / fork detection) |
-| `mcp__govreposcrape__vulnerability_exposure` | CVE blast-radius via live [OSV.dev](https://osv.dev) — scoped to a package, repo, or org | **yes** — `arckit-gov-landscape` (estate supply-chain exposure) |
-| `mcp__govreposcrape__search_dependency` | Who depends on a package + ecosystem-aware version ranges (e.g. "who runs express < 2") | not yet |
-| `mcp__govreposcrape__package_popularity` | Most-depended-on packages + licence rollups | not yet |
-| `mcp__govreposcrape__dependency_landscape` | Per-org tech profile: ecosystems, top packages, frameworks with end-of-life flags ([endoflife.date](https://endoflife.date)), licences | not yet |
-| `mcp__govreposcrape__repo_dependencies` | Full untruncated dependency list for one repo | not yet |
-| `mcp__govreposcrape__sbom_export` | Full deps + per-ecosystem counts + SBOM URL | not yet |
-| `mcp__govreposcrape__dependency_trends` | Package usage across daily snapshots | not yet |
+| `mcp__plugin_arckit_govreposcrape__search_uk_gov_code` | Natural-language semantic search across UK government repos. Returns repo URL, language, owner, snippet | **yes** — candidate/domain discovery |
+| `mcp__plugin_arckit_govreposcrape__dependency_compare` | Shared/unique deps + overlap % between two repos | **yes** — `arckit-gov-reuse-reader` (near-duplicate / fork detection) |
+| `mcp__plugin_arckit_govreposcrape__vulnerability_exposure` | CVE blast-radius via live [OSV.dev](https://osv.dev) — scoped to a package, repo, or org | **yes** — `arckit-gov-landscape-reader` (estate supply-chain exposure) |
+| `mcp__plugin_arckit_govreposcrape__search_dependency` | Who depends on a package + ecosystem-aware version ranges (e.g. "who runs express < 2") | not yet |
+| `mcp__plugin_arckit_govreposcrape__package_popularity` | Most-depended-on packages + licence rollups | not yet |
+| `mcp__plugin_arckit_govreposcrape__dependency_landscape` | Per-org tech profile: ecosystems, top packages, frameworks with end-of-life flags ([endoflife.date](https://endoflife.date)), licences | not yet |
+| `mcp__plugin_arckit_govreposcrape__repo_dependencies` | Full untruncated dependency list for one repo | not yet |
+| `mcp__plugin_arckit_govreposcrape__sbom_export` | Full deps + per-ecosystem counts + SBOM URL | not yet |
+| `mcp__plugin_arckit_govreposcrape__dependency_trends` | Package usage across daily snapshots | not yet |
 
 > **Permissions:** ArcKit doesn't auto-approve MCP tools. Claude Code asks the first time; add the server to `permissions.allow` to stop asking. The reader subagent's `tools:` allowlist still limits which of the server's tools it can call.
 
-**Consumers of `search_uk_gov_code`** (6):
+**Consumers of `search_uk_gov_code`** (8):
 
-- `arckit-gov-code-search` — general-purpose UK government code search
-- `arckit-gov-reuse` (orchestrator) — declares the tool in its toolchain for context; does not call it directly
-- `arckit-gov-reuse-reader` — actually invokes the tool, returns schema-validated handoffs
-- `arckit-gov-landscape` — domain landscape mapping (who built what)
+- `arckit-gov-code-search-reader` — general-purpose UK government code search, one query variation per dispatch from `/arckit:gov-code-search`
+- `arckit-gov-landscape-reader` — domain landscape mapping (who built what), one organisation or technology facet per dispatch from `/arckit:gov-landscape`
+- `arckit-gov-reuse-reader` — reuse evidence for one capability per dispatch from `/arckit:gov-reuse`, returned as schema-validated handoffs
 - `arckit-datascout-reader` — checks for UK gov data implementations alongside other data sources
-- `commands/gov-reuse.md` — declares the tool in its guardrails ("only the reader subagent calls this; orchestrator never sees raw output")
+- `arckit-gov-code-search`, `arckit-gov-landscape`, `arckit-gov-reuse` — the single-prompt agents that runtimes without subagents run
+- `commands/gov-reuse.md` — names the tool in its guardrails ("only the reader subagent calls this; orchestrator never sees raw output")
 
 **Consumers of `dependency_compare`** (1): `arckit-gov-reuse-reader` — runs pairwise overlap between candidate repos so the orchestrator can collapse near-duplicate / forked candidates (emitted as `dependency_comparisons` in the handoff schema).
 
-**Consumers of `vulnerability_exposure`** (1): `arckit-gov-landscape` — scans the domain's major orgs and dominant packages for known-CVE blast-radius and end-of-life dependencies.
+**Consumers of `vulnerability_exposure`** (2): `arckit-gov-landscape-reader` and the single-prompt `arckit-gov-landscape` — scan the domain's major orgs and dominant packages for known-CVE blast-radius and end-of-life dependencies.
 
 Triggered by `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landscape`, and indirectly by `/arckit:datascout`.
 
@@ -132,19 +132,19 @@ UK Tenders MCP server fronting more than 700,000 UK contracting processes (Octob
 
 | Tool | Purpose | Consumed by ArcKit? |
 |---|---|---|
-| `mcp__uk-tenders__search_tenders` | Full-text search across tender notices by keyword, CPV, buyer, or supplier | **yes** — `arckit-tenders-reader` (initial evidence gathering) |
-| `mcp__uk-tenders__top_suppliers` | Ranked supplier list by awarded value, scoped by buyer / CPV / keyword | **yes** — `arckit-tenders-reader` (incumbency + concentration) |
-| `mcp__uk-tenders__awarded_value_by_buyer` | Awarded value breakdown scoped to a named buyer | **yes** — `arckit-tenders-reader` (buyer-focus queries) |
-| `mcp__uk-tenders__aggregate_tenders` | Summary statistics (median, total, award count) over a filtered set | **yes** — `arckit-tenders-reader` (market-size benchmarks) |
-| `mcp__uk-tenders__awards_over_time` | Awarded value and award count per period (financial year / calendar year) | **yes** — `arckit-tenders-reader` (trend time series) |
-| `mcp__uk-tenders__get_tender` | Fetch a single tender notice by ID to confirm its `notice_url` | **yes** — `arckit-tenders-reader` (notice-URL confirmation only) |
-| `mcp__uk-tenders__get_status` | Feed health check — reports timestamp, coverage, and per-portal health | **yes** — `arckit-tenders-reader` (data-freshness section) |
-| `mcp__uk-tenders__query_sql` | Free-form SQL against the underlying contracting dataset | **no** — documented-only; never allowlisted (see note below) |
+| `mcp__plugin_arckit_uk-tenders__search_tenders` | Full-text search across tender notices by keyword, CPV, buyer, or supplier | **yes** — `arckit-tenders-reader` (initial evidence gathering) |
+| `mcp__plugin_arckit_uk-tenders__top_suppliers` | Ranked supplier list by awarded value, scoped by buyer / CPV / keyword | **yes** — `arckit-tenders-reader` (incumbency + concentration) |
+| `mcp__plugin_arckit_uk-tenders__awarded_value_by_buyer` | Awarded value breakdown scoped to a named buyer | **yes** — `arckit-tenders-reader` (buyer-focus queries) |
+| `mcp__plugin_arckit_uk-tenders__aggregate_tenders` | Summary statistics (median, total, award count) over a filtered set | **yes** — `arckit-tenders-reader` (market-size benchmarks) |
+| `mcp__plugin_arckit_uk-tenders__awards_over_time` | Awarded value and award count per period (financial year / calendar year) | **yes** — `arckit-tenders-reader` (trend time series) |
+| `mcp__plugin_arckit_uk-tenders__get_tender` | Fetch a single tender notice by ID to confirm its `notice_url` | **yes** — `arckit-tenders-reader` (notice-URL confirmation only) |
+| `mcp__plugin_arckit_uk-tenders__get_status` | Feed health check — reports timestamp, coverage, and per-portal health | **yes** — `arckit-tenders-reader` (data-freshness section) |
+| `mcp__plugin_arckit_uk-tenders__query_sql` | Free-form SQL against the underlying contracting dataset | **no** — documented-only; never allowlisted (see note below) |
 | *(3 additional server tools)* | Not yet documented in ArcKit | not yet |
 
 > **Permissions:** ArcKit doesn't auto-approve MCP tools. Claude Code asks the first time; add the server to `permissions.allow` to stop asking. The reader subagent's `tools:` allowlist still limits which of the server's tools it can call.
 
-**Consumers** (2): `arckit-tenders-reader`, shared by both `/arckit:tenders` and `/arckit:competitors`.
+**Consumers** (3): `arckit-tenders-reader`, shared by both `/arckit:tenders` and `/arckit:competitors` in Claude Code, and `arckit-tenders` and `arckit-competitors`, the single-prompt agents that runtimes without subagents run.
 
 Triggered by `/arckit:tenders` and `/arckit:competitors`. The reader subagent calls `get_status`, then dispatches by query focus (`buyer`, `capability`, or `supplier`) using the appropriate subset of the 7 allowlisted tools, and returns a schema-validated JSON handoff to the respective orchestrator tier. The tenders orchestrator renders market-wide benchmarks and incumbency (`TNDR` artefact); the competitors orchestrator renders rival-supplier landscape and head-to-head market share (`CMPT` artefact).
 
@@ -164,28 +164,28 @@ Reverse lookup, by tool, for the linter to grep against.
 
 | Tool | Consumed by |
 |---|---|
-| `mcp__aws-knowledge__aws___get_regional_availability` | `arckit-aws-research` |
-| `mcp__aws-knowledge__aws___list_regions` | `arckit-aws-research` |
-| `mcp__aws-knowledge__aws___read_documentation` | `arckit-aws-research` |
-| `mcp__aws-knowledge__aws___retrieve_skill` | `arckit-aws-research` |
-| `mcp__aws-knowledge__aws___search_documentation` | `arckit-aws-research` |
-| `mcp__datacommons-mcp__get_observations` | `arckit-datascout-reader` |
-| `mcp__datacommons-mcp__search_indicators` | `arckit-datascout-reader` |
-| `mcp__google-developer-knowledge__get_documents` | `arckit-gcp-research` |
-| `mcp__google-developer-knowledge__search_documents` | `arckit-gcp-research` |
-| `mcp__govreposcrape__dependency_compare` | `arckit-gov-reuse-reader` |
-| `mcp__govreposcrape__search_uk_gov_code` | `arckit-datascout-reader`, `arckit-gov-code-search`, `arckit-gov-landscape`, `arckit-gov-reuse`, `arckit-gov-reuse-reader`, `gov-reuse` |
-| `mcp__govreposcrape__vulnerability_exposure` | `arckit-gov-landscape` |
-| `mcp__microsoft-learn__microsoft_code_sample_search` | `arckit-azure-research` |
-| `mcp__microsoft-learn__microsoft_docs_fetch` | `arckit-azure-research` |
-| `mcp__microsoft-learn__microsoft_docs_search` | `arckit-azure-research` |
-| `mcp__uk-tenders__aggregate_tenders` | `arckit-tenders-reader` |
-| `mcp__uk-tenders__awarded_value_by_buyer` | `arckit-tenders-reader` |
-| `mcp__uk-tenders__awards_over_time` | `arckit-tenders-reader` |
-| `mcp__uk-tenders__get_status` | `arckit-tenders-reader` |
-| `mcp__uk-tenders__get_tender` | `arckit-tenders-reader` |
-| `mcp__uk-tenders__search_tenders` | `arckit-tenders-reader` |
-| `mcp__uk-tenders__top_suppliers` | `arckit-tenders-reader` |
+| `mcp__plugin_arckit_aws-knowledge__aws___get_regional_availability` | `arckit-aws-research`, `arckit-aws-research-reader` |
+| `mcp__plugin_arckit_aws-knowledge__aws___list_regions` | `arckit-aws-research`, `arckit-aws-research-reader` |
+| `mcp__plugin_arckit_aws-knowledge__aws___read_documentation` | `arckit-aws-research`, `arckit-aws-research-reader` |
+| `mcp__plugin_arckit_aws-knowledge__aws___retrieve_skill` | `arckit-aws-research` |
+| `mcp__plugin_arckit_aws-knowledge__aws___search_documentation` | `arckit-aws-research`, `arckit-aws-research-reader` |
+| `mcp__plugin_arckit_datacommons-mcp__get_observations` | `arckit-datascout-reader` |
+| `mcp__plugin_arckit_datacommons-mcp__search_indicators` | `arckit-datascout-reader` |
+| `mcp__plugin_arckit_google-developer-knowledge__get_documents` | `arckit-gcp-research`, `arckit-gcp-research-reader` |
+| `mcp__plugin_arckit_google-developer-knowledge__search_documents` | `arckit-gcp-research`, `arckit-gcp-research-reader` |
+| `mcp__plugin_arckit_govreposcrape__dependency_compare` | `arckit-gov-reuse-reader` |
+| `mcp__plugin_arckit_govreposcrape__search_uk_gov_code` | `arckit-datascout-reader`, `arckit-gov-code-search`, `arckit-gov-code-search-reader`, `arckit-gov-landscape`, `arckit-gov-landscape-reader`, `arckit-gov-reuse`, `arckit-gov-reuse-reader`, `gov-reuse` |
+| `mcp__plugin_arckit_govreposcrape__vulnerability_exposure` | `arckit-gov-landscape`, `arckit-gov-landscape-reader` |
+| `mcp__plugin_arckit_microsoft-learn__microsoft_code_sample_search` | `arckit-azure-research`, `arckit-azure-research-reader` |
+| `mcp__plugin_arckit_microsoft-learn__microsoft_docs_fetch` | `arckit-azure-research`, `arckit-azure-research-reader` |
+| `mcp__plugin_arckit_microsoft-learn__microsoft_docs_search` | `arckit-azure-research`, `arckit-azure-research-reader` |
+| `mcp__plugin_arckit_uk-tenders__aggregate_tenders` | `arckit-competitors`, `arckit-tenders`, `arckit-tenders-reader` |
+| `mcp__plugin_arckit_uk-tenders__awarded_value_by_buyer` | `arckit-competitors`, `arckit-tenders`, `arckit-tenders-reader` |
+| `mcp__plugin_arckit_uk-tenders__awards_over_time` | `arckit-competitors`, `arckit-tenders`, `arckit-tenders-reader` |
+| `mcp__plugin_arckit_uk-tenders__get_status` | `arckit-competitors`, `arckit-tenders`, `arckit-tenders-reader` |
+| `mcp__plugin_arckit_uk-tenders__get_tender` | `arckit-competitors`, `arckit-tenders`, `arckit-tenders-reader` |
+| `mcp__plugin_arckit_uk-tenders__search_tenders` | `arckit-competitors`, `arckit-tenders`, `arckit-tenders-reader` |
+| `mcp__plugin_arckit_uk-tenders__top_suppliers` | `arckit-competitors`, `arckit-tenders`, `arckit-tenders-reader` |
 
 ---
 
@@ -193,8 +193,8 @@ Reverse lookup, by tool, for the linter to grep against.
 
 Every MCP response is **untrusted input** under the reader/orchestrator/writer pattern (#442 item 1):
 
-- For commands with the three-tier split (`/arckit:datascout`, `/arckit:gov-reuse`, `/arckit:tenders`, `/arckit:competitors`), only the reader subagent calls MCP tools. The reader returns schema-validated, length-capped JSON via `validate-handoff.mjs`. The orchestrator and writer never see raw MCP output.
-- For single-tier research agents (`arckit-aws-research`, `arckit-azure-research`, `arckit-gcp-research`, `arckit-gov-code-search`, `arckit-gov-landscape`), the agent's `## Guardrails` section names MCP responses as untrusted bytes and requires citation traceability for any figure pulled from them. Extending the reader/writer split to these agents is the next slice of #442 item 1.
+- For every command that calls an MCP server (`/arckit:aws-research`, `/arckit:azure-research`, `/arckit:gcp-research`, `/arckit:datascout`, `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landscape`, `/arckit:tenders`, `/arckit:competitors`), Claude Code runs the three-tier split: only the reader subagent calls MCP tools. The reader returns schema-validated, length-capped JSON via `validate-handoff.mjs`. The orchestrator and writer never see raw MCP output.
+- The single-tier agents (`arckit-aws-research`, `arckit-azure-research`, `arckit-gcp-research`, `arckit-gov-code-search`, `arckit-gov-landscape`, `arckit-gov-reuse`, `arckit-tenders`, `arckit-competitors`) are the prompts that runtimes without subagents run. Each agent's `## Guardrails` section names MCP responses as untrusted bytes and requires citation traceability for any figure pulled from them.
 - Tool allowlist (#442 item 18, shipped in #445): every research agent now declares MCP tools explicitly in its `tools:` frontmatter. No agent inherits MCP tools by default.
 
 ## User-config keys

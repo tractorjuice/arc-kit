@@ -40,8 +40,8 @@ More artifacts = better conformance assessment:
 - **REQ** (Requirements) in `projects/{project-dir}/` — Requirements to cross-reference
 - `projects/{project-dir}/vendors/{vendor}/hld-v*.md` — High-Level Design
 - `projects/{project-dir}/vendors/{vendor}/dld-v*.md` — Detailed Low-Level Design
-- **HLDR** (HLD Review) in `projects/{project-dir}/reviews/` — Design review findings
-- **DLDR** (DLD Review) in `projects/{project-dir}/reviews/` — Detailed review findings
+- **HLDR** (HLD Review), `ARC-*-HLDR-*.md` anywhere in the project: `/arckit:hld-review` writes it to `projects/{project-dir}/vendors/{vendor}/`, and older projects may hold it in `reviews/` — Design review findings
+- **DLDR** (DLD Review), `ARC-*-DLDR-*.md` anywhere in the project (written to `vendors/{vendor}/`; older projects may hold it in `reviews/`) — Detailed review findings
 - **PRIN-COMP** (Principles Compliance) in `projects/{project-dir}/` — Prior compliance assessment
 - **TRAC** (Traceability Matrix) in `projects/{project-dir}/` — Requirements traceability
 - **RISK** (Risk Register) in `projects/{project-dir}/` — Risk context for exceptions
@@ -135,8 +135,8 @@ Read the following artifacts. Do NOT read entire files — extract relevant sect
 
 **Review Documents** (if exist):
 
-- `ARC-*-HLDR-*.md` in `reviews/` — HLD review conditions, findings
-- `ARC-*-DLDR-*.md` in `reviews/` — DLD review conditions, findings
+- `ARC-*-HLDR-*.md` in `vendors/{vendor}/` (or `reviews/` in older projects) — HLD review conditions, findings
+- `ARC-*-DLDR-*.md` in `vendors/{vendor}/` (or `reviews/` in older projects) — DLD review conditions, findings
 
 **Other Artifacts** (if exist):
 

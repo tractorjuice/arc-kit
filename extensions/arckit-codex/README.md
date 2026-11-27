@@ -37,9 +37,9 @@ That's it -- no environment variables, no config files. Codex auto-discovers ski
 This creates a project with:
 
 - `.agents/skills/` -- ArcKit command skills plus 4 reference skills, auto-discovered by Codex
-- `.codex/agents/` -- 10 agent configs (research, datascout, gov reuse, grants, cloud providers, framework)
+- `.codex/agents/` -- 14 agent configs (research, datascout, gov code reuse, search and landscape, grants, tenders, competitors, evaluate, score, cloud providers, framework)
 - `.codex/hooks/` -- ArcKit lifecycle hooks for context injection, secret checks, file guardrails, and MCP approval policy
-- `.codex/config.toml` -- 5 MCP servers, agent roles, and hook wiring
+- `.codex/config.toml` -- 7 MCP servers, agent roles, and hook wiring
 - `.arckit/templates/` -- document templates
 - `.arckit/templates-custom/` -- project-specific template overrides
 - `.arckit/schemas/` -- handoff schemas for research and scoring workflows
@@ -256,12 +256,16 @@ Agents run as autonomous sub-processes to handle research-intensive tasks. They 
 | **arckit-gov-reuse** | UK government code reuse assessment by capability |
 | **arckit-grants** | UK grant and funding opportunity research |
 | **arckit-framework** | Transform project artifacts into a structured framework with phased organization, overview document, and executive guide |
+| **arckit-tenders** | UK procurement award benchmarks via the UK Tenders MCP |
+| **arckit-competitors** | Competitor landscape via the UK Tenders MCP |
+| **arckit-evaluate** | Vendor evaluation framework and scoring |
+| **arckit-score** | Persistent vendor scoring, comparison and audit |
 
 Each agent has a system prompt (`agents/arckit-{name}.md`) and a TOML configuration (`agents/arckit-{name}.toml`).
 
 ## MCP Servers
 
-Five Model Context Protocol servers are configured in `config.toml` to provide cloud platform, data, and UK government repository knowledge:
+Seven Model Context Protocol servers are configured in `config.toml` to provide cloud platform, data, and UK government repository knowledge:
 
 | Server | URL | Auth Required |
 |--------|-----|---------------|
@@ -270,6 +274,8 @@ Five Model Context Protocol servers are configured in `config.toml` to provide c
 | **google-developer-knowledge** | `https://developerknowledge.googleapis.com/mcp` | Yes (`GOOGLE_API_KEY`) |
 | **datacommons-mcp** | `https://api.datacommons.org/mcp` | Yes (`DATA_COMMONS_API_KEY`) |
 | **govreposcrape** | `https://govreposcrape-api-1060386346356.us-central1.run.app/mcp` | No |
+| **uk-tenders** | `https://tenders.run.cns.me/mcp` | No |
+| **trello** | `https://mcp.trello.com/v1` | OAuth |
 
 ## Differences from Claude Code
 

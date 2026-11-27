@@ -24,7 +24,7 @@ ArcKit ships in multiple formats, each with its own version file. They are all b
 
 - `extensions/arckit-gemini/VERSION` + `extensions/arckit-gemini/gemini-extension.json`
 - `extensions/arckit-paperclip/VERSION` + `extensions/arckit-paperclip/package.json`
-- `extensions/arckit-opencode/VERSION`, `extensions/arckit-codex/VERSION`, `extensions/arckit-copilot/VERSION`, `extensions/arckit-vibe/VERSION` and `extensions/arckit-kimi/VERSION`
+- `extensions/arckit-opencode/VERSION`, `extensions/arckit-codex/VERSION`, `extensions/arckit-copilot/VERSION`, `extensions/arckit-vibe/VERSION`, `extensions/arckit-kimi/VERSION` and `extensions/arckit-antigravity/VERSION`
 
 `scripts/bump-version.sh <version>` updates all of these in one go, plus the README badges, `docs/README.md` and the `softwareVersion` in `docs/index.html`. It does not touch the `=X.Y.Z` core pin written as prose in `README.md` and `plugins/arckit-oaa/README.md`; change those by hand (step 4 below).
 
@@ -187,6 +187,7 @@ After step 13, verify the umbrella GitHub Release and every standalone GitHub Re
 - `tractorjuice/arckit-paperclip`
 - `tractorjuice/arckit-vibe`
 - `tractorjuice/arckit-kimi`
+- `tractorjuice/arckit-antigravity`
 
 The Claude plugin directory picks up the new `tractorjuice/arckit-claude` version through its push webhook, usually within minutes, or through its scheduled check about every six hours. Confirm the new version appears in the developer portal at <https://claude.ai/directory/manage>. After 6.18.3 the webhook recorded no delivery at all, so a version that hasn't appeared within the hour is waiting for the scheduled check, or for **Check for new commits** in the portal.
 

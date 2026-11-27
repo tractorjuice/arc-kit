@@ -1,55 +1,55 @@
 {
   "articles.html": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "791de856bb54ae092ce4742701fc3428c085e8846583631b4b7be2c100d3d015"
+    "lastmod": "2026-11-22",
+    "text_sha256": "33293a2f7864b672e729277192c2ce30758141de8b70f4f474e3e57444cc4bed"
   },
   "certification/awareness.html": {
     "lastmod": "2026-10-14",
     "text_sha256": "5c5834f46a0182f6d68484ffb37737fae72d1a131f4a70231dac757927379486"
   },
   "certification/index.html": {
-    "lastmod": "2026-10-14",
-    "text_sha256": "b008712b274f4084cfed24d834387b7786f542b5cea0b98429c2370818d1a1f0"
+    "lastmod": "2026-11-25",
+    "text_sha256": "bac0a5a87f9f83525828624f8a5e78429b00fa02412b21e9765aab14403acbe6"
   },
   "certification/policies.html": {
     "lastmod": "2026-10-14",
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
   "claude-code-plugin.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "51cc93ee5c2b70b9e6f3ce920a9fa0c708a8b87c6f8ece4305b26aea639570d4"
+    "lastmod": "2026-11-25",
+    "text_sha256": "5b0cc424423b65e3786effc9965bca4c4634ccf16b92736d7235ad4cf612c0f4"
   },
   "commands.html": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "1ffca26c52b5a32f16c513c6b16fcd4c992512deb33e73fbc4bd38df05ece43a"
+    "lastmod": "2026-11-25",
+    "text_sha256": "5f42e3779ea0dbbcc171a7b4a777714d731d5906e100cab737a5794972240b99"
   },
   "contributors.html": {
     "lastmod": "2026-10-28",
     "text_sha256": "4f6d326d59a89379799675a069fec9b60c7a9e7f899b861073dde7edef69e249"
   },
   "fde/architects.html": {
-    "lastmod": "2026-10-19",
-    "text_sha256": "1140a812550b7586f3f4a7871629963c4f78d09ee9b90fc6408b7dcd9debbbd0"
+    "lastmod": "2026-11-25",
+    "text_sha256": "9762048084c112f87360dc42e4b6d917dc80c2ee97905612ce476c4668700403"
   },
   "fde/index.html": {
-    "lastmod": "2026-10-19",
-    "text_sha256": "6b24f8040aaf59e3ca43f2e42cd4e3fdf39dae0a74e1eaa22310d40c6c5cdd2b"
+    "lastmod": "2026-11-25",
+    "text_sha256": "172edb6c35056b60f6c1e93382fd979b3b9d2447ffbac9630525c5a09dc5793b"
   },
   "fde/samples/governance-pack.html": {
     "lastmod": "2026-10-19",
     "text_sha256": "00a39ac1aac6c32fbbf6ef7ae53116933583b0649e92aa2d208b06372f15b813"
   },
   "getting-started.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "be8e5c90ab944c2a3992d0d62357464ebfa44139ed46b2aeac3ca6b48f286fce"
+    "lastmod": "2026-11-25",
+    "text_sha256": "e099d3cec4421097de1b0ae485ec15a2282f41f44867b2e22d993260c22fe755"
   },
   "guide/adm-preliminary.html": {
     "lastmod": "2026-07-01",
     "text_sha256": "373c4c9a858e6a780cfeb0494ebff64736d5754d68b5ee4362dc71a05816de79"
   },
   "guide/adr.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "18dbe0b3590c49b18ab0beda52f52620937ab51d5be77e781dd73c8805bce4ae"
+    "lastmod": "2026-11-25",
+    "text_sha256": "fec7dd5cb6da4c5bbd48d4528c9309cb1e434b79edecefebe6c4594a62883dda"
   },
   "guide/agent-design.html": {
     "lastmod": "2026-10-27",
@@ -92,8 +92,8 @@
     "text_sha256": "8c97f64ff5c28f8c86baaf2385f49f46e7b6fbc5e2a66057b5735d882d305913"
   },
   "guide/analyze.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "bcfe7ed3a352bd29d281d397e9ac754926c1c766cc4fc89b41bc93eb5b9c9175"
+    "lastmod": "2026-11-25",
+    "text_sha256": "032e8fdc0c7d9b0e9576779ab4e7e6ab846c73cf6e9d7ff1b52dc837322f8d16"
   },
   "guide/application-inventory.html": {
     "lastmod": "2026-10-18",
@@ -124,12 +124,12 @@
     "text_sha256": "e386165243ec3c3a62faf7373471449eeb002afbe44f626b2f3dc379eb4a45e8"
   },
   "guide/archify.html": {
-    "lastmod": "2026-09-03",
-    "text_sha256": "cac1abf5e8a32e9fa6e5354625efa954aab4bb9b720461e1f16bf7b7f0fb625e"
+    "lastmod": "2026-11-25",
+    "text_sha256": "7e164cf976961fac7c23c9782d7a46340d02ff40dae9017912a53782b7363758"
   },
   "guide/architecture-board.html": {
-    "lastmod": "2026-07-01",
-    "text_sha256": "51ebdbce3503bc145088537f32722d56a2c2faaabb67dacd3230fbbe4a992675"
+    "lastmod": "2026-11-25",
+    "text_sha256": "1f3cb1f48297da20de6b01b1046b2b86a63582a0f41ffe5f8a9501e7a8bc9dff"
   },
   "guide/architecture-change.html": {
     "lastmod": "2026-10-18",
@@ -140,8 +140,8 @@
     "text_sha256": "b3cfcca30698d98698c2317a6231dcf9f31110289ba74357eec045a58bf39fc8"
   },
   "guide/artifact-health.html": {
-    "lastmod": "2026-10-31",
-    "text_sha256": "731d0f2d99af351616a59fc784f52cb7f3fb3c9862bb039e4af9e41799b33433"
+    "lastmod": "2026-11-25",
+    "text_sha256": "f3599d341dfb16c46061145ed2a2e19345bdcc4feb41e32e4df4bcc462746f8b"
   },
   "guide/at-barrierefreiheit.html": {
     "lastmod": "2026-10-27",
@@ -160,56 +160,56 @@
     "text_sha256": "07f5c12941dc07202c58755b1cd78e786aea4a486e0918dd2e61cc18b4e6538e"
   },
   "guide/atrs.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "7f88c71d51c40175e5fdb960e579195c2ab02f25976d28dbbc058e25d97751fc"
+    "lastmod": "2026-11-25",
+    "text_sha256": "45e3c870ff1f98b708dd22b3918374d2eecde1cba369ef35ce0c4740e35c5e5e"
   },
   "guide/au-aescsf.html": {
     "lastmod": "2026-10-27",
     "text_sha256": "3081c1d41bf9756056c635796f4d212865d147bc4f650f72ff08d212b90a5693"
   },
   "guide/au-ai-assurance.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "fb37081aba87c37c86831e441adfbd989bd3ccba3f9ff48dbb95ae1dced0fcaa"
+    "lastmod": "2026-11-25",
+    "text_sha256": "adcc298a6b4631604859835438359d7910bb8af4511e0676bdeef1bda12cd6c9"
   },
   "guide/au-disp-attestation.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "0964df7f8ec66383a39a18194bd02b0e69f9a7c9423a3be10a012a1c41bc7b9b"
+    "lastmod": "2026-11-25",
+    "text_sha256": "0c10835e916cdc422885c7470d03023c80824e2da1311d764b5cfa0a9354115c"
   },
   "guide/au-dss.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "60da15eb0e665cfb318c589d3f19d98d84b25706cd7a021abd8bf74dcc4d07e4"
+    "lastmod": "2026-11-25",
+    "text_sha256": "f7bdbc1e971b09ed2c05b1011ba5590b386c4492ed6f2c25b7a5d724f0cc917b"
   },
   "guide/au-e8-posture.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "f0ce06c48124cbcce3c0c3eab6eb9f2ef81711c577cec0a4a7e237960f53f327"
+    "lastmod": "2026-11-25",
+    "text_sha256": "bb86d1eea13f2bdfb517342c19f56fa9a1bcb43ba2a3f662174cf374b8642bc8"
   },
   "guide/au-energy-compliance.html": {
     "lastmod": "2026-10-18",
     "text_sha256": "b25e6f64c4ba7ec6fdda66816ef9d571fd3919123bb1d66ded30be8151fe94d5"
   },
   "guide/au-federal-overlay.html": {
-    "lastmod": "2026-10-28",
-    "text_sha256": "f5d4ddf44729fb03617463df3f37176d46d5c0f214b8ad8f266f07ca2185b769"
+    "lastmod": "2026-11-25",
+    "text_sha256": "ae668fbe2565d40ce8977e7e38d9ee42c57b5d50569ab50e20c9818a60526ea0"
   },
   "guide/au-ism-controls.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "1c67136015691e2f2bc5a2f8edba7856f0d1a8ed939c8a59f0b44eb32d50bfbe"
+    "lastmod": "2026-11-25",
+    "text_sha256": "1b06f23bf896a033cc9fad8a133c0bd0fe332b7dbee4f4d5e4a919f1a795d3fa"
   },
   "guide/au-ndb-playbook.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "828edae618dd61db063778fd0ec0e5ece9b2776f4aff41d0777917ed8461a131"
+    "lastmod": "2026-11-25",
+    "text_sha256": "1263a19be87208cf6249b981f903a58b7ad49f8bf4a77819506a55cd7b295a88"
   },
   "guide/au-ot-security.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "2e5214dbbaac99ad2efcafda2e294e964b5a3dfa885b15c213372d6553ef0f1c"
+    "lastmod": "2026-11-25",
+    "text_sha256": "cfd1ad01d153e5312a6bcc849bae31bf3641471a20fda25627ae5c20346bf9b6"
   },
   "guide/au-pia.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "20af019f1fa607c77ec10bf8b8f7e0f94ca7cfce597003558f20440ef1a00bc8"
+    "lastmod": "2026-11-25",
+    "text_sha256": "a841f730f1cb474e428ba14e529435508db7eeb36b5dfa8c8fea8671ba635b26"
   },
   "guide/au-pspf.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "4c6a22c526990fbc9cb075c95bf2c391afeaebb377e5a6c0ab8072c766aa4e3f"
+    "lastmod": "2026-11-25",
+    "text_sha256": "d1bcde601eb7a40ca15b82cb9b0211685eabb5b7e295d6dbfcf1a760e9cde301"
   },
   "guide/au-soci-cirmp.html": {
     "lastmod": "2026-10-28",
@@ -224,20 +224,20 @@
     "text_sha256": "594f3cd0bad3be32a88d4c0495dac92f0475e47f9eac999586ddc7da2870208c"
   },
   "guide/aws-research.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "b5f54f0e27b6307bb9848798d17d7860cccb721fd332737f2f9556a0149726d8"
+    "lastmod": "2026-11-25",
+    "text_sha256": "6d92c614048e7ea70d98b863ba0ccba5148583b3cd5a03e5d25626539c40ccd3"
   },
   "guide/azure-research.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "1ecefb9fa625aeca1901f2f19d28373f6e1736381b15566b8339faa02f210d9c"
+    "lastmod": "2026-11-25",
+    "text_sha256": "ab2b994f63821bba1abf2fc37f84e55c0c5a13b360ee81825ab48b927ab925e2"
   },
   "guide/backlog.html": {
     "lastmod": "2026-10-25",
     "text_sha256": "1c4d744aa1a81bd5d30a3d9ed4b536695e488dc66336bc6569895d3b9493dfb3"
   },
   "guide/build.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "b2d68621e9f6b0f2122d5146d38ad130438516cf92342e2fcf927bcc8a957139"
+    "lastmod": "2026-11-25",
+    "text_sha256": "6a5aee72484f95a3fc022c72becafe9573265f51d8731b2ba4c5b503e2f0272e"
   },
   "guide/business-capability-map.html": {
     "lastmod": "2026-10-18",
@@ -252,8 +252,8 @@
     "text_sha256": "240afa81ad9592312832632d593495e9e592da1d196cc83fad81ead99c8edd91"
   },
   "guide/c4-layout-science.html": {
-    "lastmod": "2026-06-07",
-    "text_sha256": "2e9897c78e77515e1a82cece3933c01dea007fbe0debd525d8a6c3a37bf4d740"
+    "lastmod": "2026-11-25",
+    "text_sha256": "1e9de0a340c488c9a1c11abf2956214758b7d17272d63f493366ed262c457b92"
   },
   "guide/ca-aia.html": {
     "lastmod": "2026-10-27",
@@ -312,16 +312,16 @@
     "text_sha256": "d8005bb7f974612bb819c27b905c3afd1c9a32937759911a97420c48d59530fe"
   },
   "guide/conformance.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "99bed27e46ab2060ad21bd2f9d745459ea364fe1fc6dcecd9ca1a4e57c1a230c"
+    "lastmod": "2026-11-25",
+    "text_sha256": "335e9ee26d8a93e42fdb93540d946d01fab08318c9252dd034639e57c106a2f6"
   },
   "guide/create.html": {
     "lastmod": "2026-07-01",
     "text_sha256": "bc3fba85aef28653fa6dcfbe1377b083f7e83642f30a0953b329ceb717e5da11"
   },
   "guide/custom-commands.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "b4c738c91392f86cf0bf5f93e98c8ead46978951603ad74e3d96f0c416a7c809"
+    "lastmod": "2026-11-25",
+    "text_sha256": "3e0c2cdd712ed1e0f74f2dabd33db1b9f11931a2faec59ca572b976a708d3fd4"
   },
   "guide/customize.html": {
     "lastmod": "2026-09-27",
@@ -340,8 +340,8 @@
     "text_sha256": "7ec0f52604fca1531f0dece0ab274eb9ad6233ec00765a8101cc2666d02fe053"
   },
   "guide/datascout.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "1bed118c97baa34f0b81a380ec8af403e8a22d5ca9217578ad5e2b81e5783338"
+    "lastmod": "2026-11-25",
+    "text_sha256": "23d2c5e6f153f91ddfb0bbdd3f3a81114dcc6a70c3bce12c80d128e63a539682"
   },
   "guide/declaration.html": {
     "lastmod": "2026-10-07",
@@ -352,8 +352,8 @@
     "text_sha256": "d50baeffcad022fffc42c1ffb7e0a9f039a62f2ffc040fa3c527d46faa815267"
   },
   "guide/design-review.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "ca7106a9516a848eb7b63574ed54f51f97578b6913184ad390e2968edfa2dbc5"
+    "lastmod": "2026-11-25",
+    "text_sha256": "8b13a3c017972e0cbd39ae4d7f27162331616ef69dc37fea172e104117bdebb1"
   },
   "guide/devops.html": {
     "lastmod": "2026-06-04",
@@ -368,8 +368,8 @@
     "text_sha256": "f255d1026f782a1bf540a424642eca43c8f54ce79fa438802241286764642977"
   },
   "guide/dld-review.html": {
-    "lastmod": "2026-11-08",
-    "text_sha256": "307d87d4a3f33a81a47bc5556d5982a775c21314305612371e4fecd07e654a35"
+    "lastmod": "2026-11-25",
+    "text_sha256": "2d0e23d4fe58d9e213b864adf3a0771ef68404e802141fd13093b856187988d1"
   },
   "guide/dos.html": {
     "lastmod": "2026-10-26",
@@ -380,12 +380,12 @@
     "text_sha256": "e9ff55967e7f19fee68cd0529262d3ab50c9844e280932a43c283c8120481711"
   },
   "guide/enterprise-scale.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "132d0e9aebc5d37b374907553963934842d32074e58cd337cbbcf1fd46f477d2"
+    "lastmod": "2026-11-25",
+    "text_sha256": "ed04593a674a4468c341163b1d6d09c10aeb14385316dcf89402ea02117bbe1b"
   },
   "guide/eu-ai-act.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "41d328101ffa77362853fd7f831a3536e84ddd8775e7a3c8e6851ac4e9b7320a"
+    "lastmod": "2026-11-25",
+    "text_sha256": "65b367de8d4f0e1a7889636188da0be1148ada6a6ca09b77e39db0ede50c8334"
   },
   "guide/eu-cloud-sovereignty.html": {
     "lastmod": "2026-10-27",
@@ -400,68 +400,68 @@
     "text_sha256": "a88089961ea2ea4914dc32f46cd3ad2a55a48bb7802cff595db8015896618e25"
   },
   "guide/eu-dora.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "ce04ac211beaaaf060af1399da6bd58beb214e43a10269bb4b8f148aacdf4295"
+    "lastmod": "2026-11-25",
+    "text_sha256": "f433a33ecf68c1d3d6367a17262e0b530b07419d6dff6f07530a1f465a0bd20d"
   },
   "guide/eu-dsa.html": {
     "lastmod": "2026-10-18",
     "text_sha256": "d7b0ad854c4441d2700c99ca90c70747d88150991b3b33d4bef8da0d920feb4a"
   },
   "guide/eu-nis2.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "5b37bf6b5a682d8e4d12554349ea5acb7efee303fa9252d6a50174ef611268f3"
+    "lastmod": "2026-11-25",
+    "text_sha256": "d2b78484afc8b5a2ea166eb48133c7005f16460300159058cf405d94eb562573"
   },
   "guide/eu-rgpd.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "8b4ed2f30b1c74232ae3d3e2e7bb1314fdf1576d5b1794641b5999d299858219"
+    "lastmod": "2026-11-25",
+    "text_sha256": "45f2c0d7d742be8c060a5e13263a1d468633e6dd27c11b212f7e90e8ba4a2865"
   },
   "guide/evaluate.html": {
-    "lastmod": "2026-11-08",
-    "text_sha256": "8d56c66785c6f844bd2ce7df95c8e29b1a59389ecd5aca6bca2bcb9df70140dd"
+    "lastmod": "2026-11-25",
+    "text_sha256": "9daa7e4e77a96ba86115368d19e256ac399bfd141b0d7f12a1c604c1d5e1c54e"
   },
   "guide/export-okf.html": {
-    "lastmod": "2026-06-18",
-    "text_sha256": "576892830f47b9b04136c5ef3339c671d4f2cb4fb1e2ee213ba4d12f4d8011b9"
+    "lastmod": "2026-11-25",
+    "text_sha256": "1ef6e88a1ce1a24aad8bac1d7ddb05c25771112345d0f707818d3e36850146d0"
   },
   "guide/finops.html": {
     "lastmod": "2026-10-25",
     "text_sha256": "421ace3ac7316e8b05f36d626df1bebd90e88141982821e8cd3208fc1d7e877f"
   },
   "guide/fr-algorithme-public.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "0f90805be05d25eea4f93cd6e9b647b9fccce6ef378797c410d455dff9945fe2"
+    "lastmod": "2026-11-25",
+    "text_sha256": "618200945f8c8050506adefc6e6eefdeec84c50a7cdac67e737f78ae9cbb85a4"
   },
   "guide/fr-anssi-carto.html": {
-    "lastmod": "2026-08-13",
-    "text_sha256": "b191498bd47817ee980a32bca24e942ad8a06f1a365134e268d56305e3bb1ab1"
+    "lastmod": "2026-11-25",
+    "text_sha256": "764c22f20fd3a1a88f5185356c4c7f5ea2cdc3c2d5046b31b66df9f5f30d0f73"
   },
   "guide/fr-anssi.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "aecc2712cd500c9378a22d7a0fc30c65bf2dc5f598c88996344993e65be05bf4"
+    "lastmod": "2026-11-25",
+    "text_sha256": "957f4552d2f36fd2b089bd090857790461ebc832cc2e0c8f3c9ff807f6828329"
   },
   "guide/fr-code-reuse.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "08d86a289d26a171556a6ada4033314c60e4cb206aa7ab0a92a4438a9c35d927"
+    "lastmod": "2026-11-25",
+    "text_sha256": "a28b9fe791179bdb7fc212dc6c9a817afd3c57801a4581cea0a1e6ed6b72994b"
   },
   "guide/fr-dinum.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "03ea79f0fadf6b145cea2e069c8448241b59483c8b3670917d1482bd94137478"
+    "lastmod": "2026-11-25",
+    "text_sha256": "fd8eff3980eb1c11168d04831056afbaf7f0bb5d52151890db23263df8c7dbdc"
   },
   "guide/fr-dr.html": {
-    "lastmod": "2026-08-13",
-    "text_sha256": "2dbc891331d28a80cb19d36a73040fb611dc121512fe78b6219ac644bdc3d2ef"
+    "lastmod": "2026-11-25",
+    "text_sha256": "c64f34608b18063163f3da1193d4e59e2f7d033cbc6cd332540b2f644c5913be"
   },
   "guide/fr-ebios.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "63cc6fccfde88f55a59b7f26cbf145892bf30e4adcc0d9f68b7367b97dac958a"
+    "lastmod": "2026-11-25",
+    "text_sha256": "757b153243572ad08f384f9e52092c9a94cea2d3b82f76b5971b32dc6b6c80be"
   },
   "guide/fr-irn.html": {
     "lastmod": "2026-10-04",
     "text_sha256": "4f65866dd93bf1699996128beef7b2e9df320e5122694c706497f292badbfd0b"
   },
   "guide/fr-marche-public.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "2f899212f0185fd75802d3c72081a8cc35c8c011a8169fd12b91f2cb5d29fe77"
+    "lastmod": "2026-11-25",
+    "text_sha256": "312f0eb3f7b555650f981395e2999175854b3665791d35545f5b946e0e4f9320"
   },
   "guide/fr-pssi.html": {
     "lastmod": "2026-10-18",
@@ -472,12 +472,12 @@
     "text_sha256": "de7935bc5d70e4185b42238fe44f0929084215c232d4e1a83a226a3aa1aaffa2"
   },
   "guide/fr-secnumcloud.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "0b264b662767f484a9fb5fd3d9ebac0586e5df9f254af62f6cf045f5929a4e16"
+    "lastmod": "2026-11-25",
+    "text_sha256": "3e6008abb39aa0de0d4e74145811267b3503d4cf999db579f21822836e96e88a"
   },
   "guide/framework.html": {
-    "lastmod": "2026-11-11",
-    "text_sha256": "4a4067195b5379a8ab8bedbb5c8952576636c565b9717850a73f9963e2227f8e"
+    "lastmod": "2026-11-25",
+    "text_sha256": "67ee39ff8d05b56f4b0617a7f829068b29dfb3b56ceefdbbe1d7e2c7d78d5bf5"
   },
   "guide/gap-analysis.html": {
     "lastmod": "2026-07-01",
@@ -496,24 +496,24 @@
     "text_sha256": "fb83a7ff86b756d7c004d0f5fdd5b956b79c19506711d68c59fde9f8d9d62b8d"
   },
   "guide/gcp-research.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "fb8164a064f6f646b027b21807673c0813208216a875081f47d21dbe9c25fdc2"
+    "lastmod": "2026-11-25",
+    "text_sha256": "e2be5d37ae3fa3eba855fc1f999996b5d9b916e90c2e30f5240468c8e7b98f78"
   },
   "guide/glossary.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "6372daa990d1bf63d22cf278eff5beecd090f367d25795259e8e6f5131261860"
+    "lastmod": "2026-11-25",
+    "text_sha256": "cb3d501b6508329cec840000407b4e7099971e8f0e3ee45441c079a529d1e07e"
   },
   "guide/gov-code-search.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "4a4ef6fea8ad19e1a6c182f7104e5601f61dbb21abffdeb4b54921b8a4a002a3"
+    "lastmod": "2026-11-25",
+    "text_sha256": "ccf4469c67543d874b50c41245a75803dc9f13d8a0fbc48edda0780d10487fd4"
   },
   "guide/gov-landscape.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "7f47a09d9257cab105af7e52e6e38b5283aa601d6482515bd98bd75d11611c6a"
+    "lastmod": "2026-11-25",
+    "text_sha256": "12a897844cc9196f79ef1136342ae48e00cee4b081ac47d946cc181ecaa558bf"
   },
   "guide/gov-reuse.html": {
-    "lastmod": "2026-11-11",
-    "text_sha256": "2335af273409c833d3f92370006cee4a0bce3efe2910cb693bc63cd3cd97ff33"
+    "lastmod": "2026-11-25",
+    "text_sha256": "a021fd101d1598a6d5395cafe91d0973c7be279519188ff90671dcaad9ab578f"
   },
   "guide/govs-007-security.html": {
     "lastmod": "2026-06-04",
@@ -532,8 +532,8 @@
     "text_sha256": "1cb95b4a25a64463786a5106bfc5909b61d62a628c49bedb5f10d8898cdae732"
   },
   "guide/hld-review.html": {
-    "lastmod": "2026-11-08",
-    "text_sha256": "231b74555a48f80bf4b26826ec89fb322ae9b34056a4cf858b013c8d4bb88240"
+    "lastmod": "2026-11-25",
+    "text_sha256": "5ad3fe7b834b959c2344fba57cbd7d0cba4d050f3c98fa94482c0d30d8dbb39b"
   },
   "guide/hooks.html": {
     "lastmod": "2026-11-19",
@@ -556,12 +556,12 @@
     "text_sha256": "83e885296b3734eec5da5a490ac943b711d9f6894967f66344da9ea871a3a204"
   },
   "guide/knowledge-compounding.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "1de9cc81c9e891e504de0a2a338bb8c4323d7b307400e3fbb6a7b25ffddf4833"
+    "lastmod": "2026-11-25",
+    "text_sha256": "342e3fb404e5dbae20cd08c345b9865caea82827d0a1efeeb9e8aa96a1b451e0"
   },
   "guide/legacy-assessment.html": {
-    "lastmod": "2026-11-02",
-    "text_sha256": "984f6fb8fcee01aa1a6f2d5cb0426af8c09eeb37bdd7616450190076c283913b"
+    "lastmod": "2026-11-25",
+    "text_sha256": "89d83af6536fa2f80d05be3b64fe42e0910dfdd4799d7e44225b27a974dc3aad"
   },
   "guide/lot-questions.html": {
     "lastmod": "2026-10-07",
@@ -572,24 +572,24 @@
     "text_sha256": "f9a6696799e088c982a8266a0a0f0f1f2dcca2ec6c512bf7a0eb5913bb07b061"
   },
   "guide/mcp-servers.html": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "7cb468761276f89f5e72b5cdda3583daf5f549d7e4c676d3a638c5b88dbc5fec"
+    "lastmod": "2026-11-25",
+    "text_sha256": "4209f00fc82f477b787e938e2d21ab29b38a1b5fb8a8c5df0e07d22431f160cf"
   },
   "guide/microsoft-learn-mcp.html": {
     "lastmod": "2026-10-25",
     "text_sha256": "e9b03a4cdc6d1d9c7815db55c11af173ab3c1d671af24f4d16aa6544ee08f367"
   },
   "guide/migration.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "cae9c7f68c9165fb16d3c3e71f1cbb6f4361258c2b2b987e8a5d3f57eeb7d918"
+    "lastmod": "2026-11-25",
+    "text_sha256": "eeefc9c9c9dd2238a7cae49c0055d2c4a8896a81a0e8dabdcd9fca11cb4b00ff"
   },
   "guide/mlops.html": {
     "lastmod": "2026-10-25",
     "text_sha256": "4636735712c2c538aa13b8b38f94ea5725c5d75842bed9f08dc8642da6a1567f"
   },
   "guide/mod-secure.html": {
-    "lastmod": "2026-10-25",
-    "text_sha256": "dfb3f5e5fda644e2eef9e388be8941ce4aea054bd170d99f4042b641b2758f01"
+    "lastmod": "2026-11-25",
+    "text_sha256": "c698a6684d50bdacf9be8685e08b8ca8f51f58453617c075afc831c73d507653"
   },
   "guide/national-data-strategy.html": {
     "lastmod": "2026-03-02",
@@ -640,8 +640,8 @@
     "text_sha256": "198385390ae0edbb8f8db362cdf0b2fa2d9ee4f7d7bce0e8ed4aac6d18aeb784"
   },
   "guide/pinecone-mcp.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "60086a4032a3603772e463268a43d1ffd45d382d78e25fe727d9110bad03a61a"
+    "lastmod": "2026-11-25",
+    "text_sha256": "687af2d93509d464a319520170b0dda7c7c62fd8428ccceb5213b6c4f84bb920"
   },
   "guide/plan.html": {
     "lastmod": "2026-06-04",
@@ -652,8 +652,8 @@
     "text_sha256": "4af97f6c12f5a31199a1b00331c715dc306d6c70632ee00e9e417c9416e01076"
   },
   "guide/presentation.html": {
-    "lastmod": "2026-10-17",
-    "text_sha256": "b3eb28082f712667ac93936b5626fdfeba10a425352bb05666a0654847e66d69"
+    "lastmod": "2026-11-25",
+    "text_sha256": "0dbf80809fde93fdcffdef59bf6c152920e4c0bf9557a8ac13e770634bd5165b"
   },
   "guide/pricing.html": {
     "lastmod": "2026-10-07",
@@ -668,8 +668,8 @@
     "text_sha256": "bd25463d0bc3180ed238f286de58b9a60011fca3d47d75695170fc4d8dc76080"
   },
   "guide/procurement.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "419a8403a1a6717e49d9ace78c393bdb2db0ae9196b0dceaf0172599fcffe060"
+    "lastmod": "2026-11-25",
+    "text_sha256": "a382515399221ac6d181e5e2455ebe21aad63bb834b12c949c99bdd82ddab4b6"
   },
   "guide/product-architecture.html": {
     "lastmod": "2026-10-27",
@@ -680,32 +680,32 @@
     "text_sha256": "8c500d8dbca2cad432556e63ed8ad8ccf5b29a748d24549afdacc37251e08558"
   },
   "guide/remote-control.html": {
-    "lastmod": "2026-06-18",
-    "text_sha256": "4cfd6b7ed8f0f4818bf201194a84e9e85b6c64c423de7240dbc9ee5c09e62139"
+    "lastmod": "2026-11-25",
+    "text_sha256": "e1013833270be0e37bd10b4639b5b29c5bcb65e9e7bb2aee9383529ea771f898"
   },
   "guide/repo-audit.html": {
-    "lastmod": "2026-07-30",
-    "text_sha256": "1636e9dbd2218606d1b81038c7e7d0f0a2a9417f1722ef87cfd579f3a27c2db1"
+    "lastmod": "2026-11-25",
+    "text_sha256": "1ee5a9ee9e548423f4576bc16c867847560bf642e331fbc736a8a99db3b3c363"
   },
   "guide/repo-docs.html": {
-    "lastmod": "2026-07-27",
-    "text_sha256": "f3b7a664e7272a029c1629bc701c3dae1a546dc00bf709c09e2ecbf52f37eccf"
+    "lastmod": "2026-11-25",
+    "text_sha256": "68f038101a7890b3a81a72cb3b987824361119702349c62db28e369ed10fa683"
   },
   "guide/requirements.html": {
     "lastmod": "2026-10-25",
     "text_sha256": "190193dc6617c3f3b5aec03fd42a6afca747db444ce8ad2ebe2298a0722786ca"
   },
   "guide/research.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "1fcf3b55e8a8eb7285bb04b8c12c0db970d274c74d5152948c1249029008bddb"
+    "lastmod": "2026-11-25",
+    "text_sha256": "de51cd48f9afd914f12cec2d9b68785d37c9049d05e822bd94f41a751ca96630"
   },
   "guide/review.html": {
     "lastmod": "2026-10-07",
     "text_sha256": "bd8f65c11c31f488abd849f2b6385ca6b460294807d07edc59fec6f93256910f"
   },
   "guide/risk-management.html": {
-    "lastmod": "2026-06-04",
-    "text_sha256": "d4e57c23970e6d00e13320beb5b4c2ff420791f400b90990627e9bc81672824d"
+    "lastmod": "2026-11-25",
+    "text_sha256": "97c8cee25dcd7b85325ba6d49efcab4f1de32f3f53eeaaabbc3d081425ac0242"
   },
   "guide/risk.html": {
     "lastmod": "2026-10-25",
@@ -716,8 +716,8 @@
     "text_sha256": "4571f3a85ee12771f589ae281fc93366346d6f8ffd1ee3bc4c19b4249cf8f5b7"
   },
   "guide/roles/README.html": {
-    "lastmod": "2026-05-25",
-    "text_sha256": "70c3c044f00366e43f62ae3440875d7cbdc59014d046bb5ea183fde36a6bae1a"
+    "lastmod": "2026-11-25",
+    "text_sha256": "39133792040577b3726b1b43e244902bf56af7486da4f963284ed4d9fb4500e2"
   },
   "guide/roles/business-analyst.html": {
     "lastmod": "2026-06-04",
@@ -824,8 +824,8 @@
     "text_sha256": "1cb3adaefc9cc89d7444277d00675b012af3d3afc67b4973e4e600afa066b8ee"
   },
   "guide/security-hooks.html": {
-    "lastmod": "2026-10-01",
-    "text_sha256": "b65ca95513c94d4cd5bd3f8dc2b5b2f818014a4be67750ad1dfd3938560fcb0f"
+    "lastmod": "2026-11-25",
+    "text_sha256": "bf63d6ebb305da05602912a6ec9a0cef45686600214b2e9df64109bce9e6188f"
   },
   "guide/security.html": {
     "lastmod": "2026-10-07",
@@ -840,12 +840,12 @@
     "text_sha256": "eaf33aece092e9c64a46d63852c58e3874781ac6e0d3df3af0b70366388e718e"
   },
   "guide/servicenow.html": {
-    "lastmod": "2026-10-25",
-    "text_sha256": "e254fa868a6573528a4b03877413eddbc3278a177deb307e13d6fcc6d33ee522"
+    "lastmod": "2026-11-25",
+    "text_sha256": "d3ed11f0456c27818a050298ba3aa8c45d773195ceb55694faf17d086015be9f"
   },
   "guide/session-memory.html": {
-    "lastmod": "2026-03-09",
-    "text_sha256": "e59be8575ad69a1006bd3ffdce43ddd4a6a86b32fdcacf4126025fef24fb891a"
+    "lastmod": "2026-11-25",
+    "text_sha256": "475c1e8709cc6ee9cdc1c5d4e5c1fd79c2c1a5240ceaf5c7f0e6c909a943b348"
   },
   "guide/sobc.html": {
     "lastmod": "2026-10-25",
@@ -868,8 +868,8 @@
     "text_sha256": "fffae8957a5b1d415d08d6bfc7c7fc7f9181bba1192d3a55558bdd37357af925"
   },
   "guide/start.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "40e647a71ad0719357cd9ddc5deb1b0c2e4d8641a3dceb28bee8b8a11845c092"
+    "lastmod": "2026-11-25",
+    "text_sha256": "bc4b02f680bbf8ec59c007b9f2afdec29007bfe3917149b043c0c09ca60d94f9"
   },
   "guide/story.html": {
     "lastmod": "2026-06-04",
@@ -892,8 +892,8 @@
     "text_sha256": "e96e246aa7398bfaeb77b8b23ac4e257f3f6ba36bde4f81578cadbecbe7675fb"
   },
   "guide/template-builder.html": {
-    "lastmod": "2026-07-27",
-    "text_sha256": "d9947c17dc18cdf71b6b7d29cfdf75f3f998e3f6851a51c994ca6452ac530bd2"
+    "lastmod": "2026-11-25",
+    "text_sha256": "688bb4c46ecf42915f65d4b1585b5dcd5cacaa241a5a7ec2df16f02f655d89d9"
   },
   "guide/tenders.html": {
     "lastmod": "2026-11-13",
@@ -912,8 +912,8 @@
     "text_sha256": "4cf03cdbe63c94661ad596ee322db8d858ce201be6a16bb8a39ddca4e2f0e67e"
   },
   "guide/trello.html": {
-    "lastmod": "2026-09-29",
-    "text_sha256": "a09bf1fe1caa928468a2aa74581a936f97f2bc2283f67c386f17a16b7427e2d5"
+    "lastmod": "2026-11-25",
+    "text_sha256": "8ab5f2689dad31f7476c222b21dfa9e296d7818f068f2925323f75e7ae35775c"
   },
   "guide/uae-ai-autonomy-tier.html": {
     "lastmod": "2026-10-18",
@@ -944,12 +944,12 @@
     "text_sha256": "9d572eb9809e8deced219fdf444ccd1a1e8b5a57c15b8d6cbfce92e0bc85d8e4"
   },
   "guide/uae-overlay-maintenance.html": {
-    "lastmod": "2026-10-28",
-    "text_sha256": "0c60c8495aaac8b0b977665dae3dacb55ac6897e95343d66b29eee769280a48e"
+    "lastmod": "2026-11-25",
+    "text_sha256": "2d7775c91a6d9740a0b03ae814f8a2ea24e1b842bc0010c7d39dc7adc8d15ca8"
   },
   "guide/uae-overlay.html": {
-    "lastmod": "2026-10-28",
-    "text_sha256": "fa7f7fe76b06075a9aa6785b87ca6a5587a13cfad76ce7f17dafebd6e7efa641"
+    "lastmod": "2026-11-25",
+    "text_sha256": "599ae037048914fde28fb6f4e2678314b75fb6880e9edd5164b4af4ed31b3bea"
   },
   "guide/uae-pdpl.html": {
     "lastmod": "2026-10-27",
@@ -971,9 +971,17 @@
     "lastmod": "2026-10-28",
     "text_sha256": "2210533774b3945f8ace46fee73494ff815e94dabe82f85692000a2211c157a0"
   },
+  "guide/uk-food-allergens.html": {
+    "lastmod": "2026-11-23",
+    "text_sha256": "3540ba4e324181eaafe840c9a04d00ed85b8f225a6404f1e8d117bf3a81ab464"
+  },
   "guide/uk-food-check.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "cfe51d1376b90f0d96b8f16f1025c6f4d67aa5041633a1b22826a04b88a4e97a"
+    "lastmod": "2026-11-23",
+    "text_sha256": "168f193b9aba2b8ffbdd71adb4e3082a0c71940cfc847fe844fa047a8982b6d4"
+  },
+  "guide/uk-food-cleaning-schedule.html": {
+    "lastmod": "2026-11-23",
+    "text_sha256": "be02b3d7d51f7e9f921b1a2d15f0b0812007d1a5b1ec80ecbdc0b2daebba18a8"
   },
   "guide/uk-food-own-methods.html": {
     "lastmod": "2026-11-19",
@@ -983,17 +991,25 @@
     "lastmod": "2026-11-19",
     "text_sha256": "a6d1f6388068ba9760972c994c13531b35cb682e63395d6518b055e77e643b56"
   },
+  "guide/uk-food-record-sheets.html": {
+    "lastmod": "2026-11-23",
+    "text_sha256": "5e7f85f080166401d7888b74027a98b32fab22a64ba855158e70f0d540bec441"
+  },
   "guide/uk-food-safe-methods.html": {
     "lastmod": "2026-11-19",
     "text_sha256": "a28b638f8183f627e9e649019481d1eeae1d6d73dd9c6aef0710712e109477aa"
   },
   "guide/uk-food-safety-overlay.html": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "8eb3f788ee96b59ea9c74e7625dc615980f3966dbeb0ded7a50d147c21d89b9c"
+    "lastmod": "2026-11-23",
+    "text_sha256": "bbbba2d71cca713d55a9e00d6f0ecf714af566939caf6487bd2da41649c3b976"
   },
   "guide/uk-food-sign-off.html": {
-    "lastmod": "2026-11-18",
-    "text_sha256": "a5fc665a6d6df8303d88b38424262c9f309307a6486f4f7624d035a3077907a1"
+    "lastmod": "2026-11-23",
+    "text_sha256": "4b1c21bf70303f5e2418debb46df7a56bbabd1cb7ae2041bf403c550b6e58ffa"
+  },
+  "guide/uk-food-suppliers.html": {
+    "lastmod": "2026-11-23",
+    "text_sha256": "f10b40369bf4542517fcb877541be8f0b7c8fc4257137b62f06e594c4350c3a6"
   },
   "guide/uk-fs-consumer-duty.html": {
     "lastmod": "2026-10-27",
@@ -1004,8 +1020,8 @@
     "text_sha256": "18f9b59e5250e8e46edcd18a967ffd397197aa75a82dc6df16fd9efb7df7c9e1"
   },
   "guide/uk-fs-payments-overlay.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "622ed5629d6244b7cc2bb03fec88ddb23bb07c0994ffd2ac1faf0ddfe5ed39f0"
+    "lastmod": "2026-11-25",
+    "text_sha256": "6fd8182854ce59b514045ce58ba039ad7ecf5c2598d3959ea95aabe0b68279f1"
   },
   "guide/uk-fs-safeguarding.html": {
     "lastmod": "2026-10-27",
@@ -1020,8 +1036,8 @@
     "text_sha256": "4d53a8b268703980db87b2fc84e42784e2345de0af837c3d661bd23bb9ff3fdb"
   },
   "guide/uk-government/digital-marketplace.html": {
-    "lastmod": "2026-11-11",
-    "text_sha256": "8bc3fe465ceb1b9ce2ca06f88a3ab048cef2132e8a4db45ce720c7eb50056463"
+    "lastmod": "2026-11-25",
+    "text_sha256": "5eb995e442e33fdf9bc50d726c5cf7d51c14a6932b38a614e500480e686ed3df"
   },
   "guide/uk-government/standards-map.html": {
     "lastmod": "2026-10-19",
@@ -1048,8 +1064,8 @@
     "text_sha256": "855d9271547c94b6a67087a764afafd5875b6273e7f3de28c791450930d52703"
   },
   "guide/upgrading.html": {
-    "lastmod": "2026-08-04",
-    "text_sha256": "532a8f933733a04f16ebda4b8ffdc15c1cbecaf09df4d04a5a3c4b0ee20e504c"
+    "lastmod": "2026-11-25",
+    "text_sha256": "2cb3e185fca4fa3e69792df1b82b7c199184d10670669ad584caeb005793305d"
   },
   "guide/us-ai-impact.html": {
     "lastmod": "2026-10-27",
@@ -1060,16 +1076,16 @@
     "text_sha256": "1f709969580af71c6ef44d8e79c8a9893381d55ec4550f1a99c8e2b28cf2c942"
   },
   "guide/us-federal-overlay.html": {
-    "lastmod": "2026-10-28",
-    "text_sha256": "c983f49eea676829ba82a8b511c52d502a1dfbc2965e55d9e8f3861d469cead1"
+    "lastmod": "2026-11-25",
+    "text_sha256": "ff5d6cc70b507783b7e01cd67463cbed1dd957295f1bc6358b36e617a9a233f9"
   },
   "guide/us-fedramp-readiness.html": {
     "lastmod": "2026-10-27",
     "text_sha256": "d0d14bc621c011831f2464098e22af457e03b3213b8387beb898fad5fc14dd99"
   },
   "guide/us-fedramp-ssp.html": {
-    "lastmod": "2026-10-28",
-    "text_sha256": "15b2155d2e4a6fad452174c633cee18bb1ad19772694d3b56dc48f8bd2d08130"
+    "lastmod": "2026-11-25",
+    "text_sha256": "10ea5cca432b9192d8f90482c3bed4799b985f8d440933c78a1e79d778cd614b"
   },
   "guide/us-fisma-categorization.html": {
     "lastmod": "2026-05-24",
@@ -1080,8 +1096,8 @@
     "text_sha256": "353b649511f06ce83e0f1f19239a7de1725cc2725aba48fd156b4613c4388174"
   },
   "guide/us-nist-800-53.html": {
-    "lastmod": "2026-10-28",
-    "text_sha256": "0639be339379e1439742226c452c9c8e9a0333c3aab9a19336d19840b0fa72d0"
+    "lastmod": "2026-11-25",
+    "text_sha256": "00f5d35fc9793b1783b35daddc6372c84195ba205129b894883ea8cfbf9fb6bb"
   },
   "guide/us-privacy-pia.html": {
     "lastmod": "2026-10-27",
@@ -1112,36 +1128,36 @@
     "text_sha256": "c489c8aec64d1b4509089e5bea93a2e7cfa7b66efeaa1819505eb4aefc99d3d5"
   },
   "guide/wardley.html": {
-    "lastmod": "2026-10-25",
-    "text_sha256": "b46bcbcbdce0c5725e9522d081bdd184df98c7347ba1737b2c8e77a3f1530d75"
+    "lastmod": "2026-11-25",
+    "text_sha256": "26c008bf0ff958ebef4f6da7cd74bf62bd1f624abc6b2bbaa24c749c59cce45f"
   },
   "guide/workflow.html": {
     "lastmod": "2026-11-19",
     "text_sha256": "be6b6290becf0a78637c292145655bc8bc9ec5fa61253f32b2cd0939330a008e"
   },
   "guides.html": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "e42390cdfd8061df64281a2d66dff9d605ee440af5e271a90d9def25c963f7fd"
+    "lastmod": "2026-11-25",
+    "text_sha256": "dbcb8242e2e022b868154c511e94bec1e7cd4c823006c36b23bfefe70370a62d"
   },
   "index.html": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "ca9a3929485f06a5c689672b7dd945e135327fe1966dd0dba035d776d178ef8f"
+    "lastmod": "2026-11-25",
+    "text_sha256": "6232c599f3813271260aba6507c3c7645a39e858351322bf135c0d5d78784237"
   },
   "llms.txt": {
-    "lastmod": "2026-11-19",
-    "text_sha256": "1660268b7c4729f75116ef2c990c5c09665192f3b0269e3dd7a8f7e1612360f1"
+    "lastmod": "2026-11-25",
+    "text_sha256": "a0b7a7d8c928423a7419e99f9b109adf074b44fffdad36fb96a1cfa08891bc69"
   },
   "on-github.html": {
     "lastmod": "2026-11-16",
     "text_sha256": "45ee62d70861630efea04cd6c6a6e204cb8e293e6c229ce738a543ac1d740992"
   },
   "privacy.html": {
-    "lastmod": "2026-11-14",
-    "text_sha256": "44f57ebf52ed6cc19bcddac0c8ea6da0a0254a500a040bf1e18ab0cdc62864a8"
+    "lastmod": "2026-11-25",
+    "text_sha256": "a505a5256a616bcd729bce332060ceedbecdb5bdedd43325bdf2028a0000044b"
   },
   "public-sector.html": {
-    "lastmod": "2026-11-13",
-    "text_sha256": "ef6c9382951ce9958339b195708fe7a6ae3fb3ce933135d90a663137d0d2578c"
+    "lastmod": "2026-11-25",
+    "text_sha256": "4a10676b537013e94934120dd3fdf746da900e557d9322dae77356d5439c662b"
   },
   "roles.html": {
     "lastmod": "2026-06-15",

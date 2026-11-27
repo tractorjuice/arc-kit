@@ -442,7 +442,7 @@
 </blockquote>
 <p><code>/arckit:datascout</code> discovers external data sources — APIs, datasets, open data portals, and commercial providers — that can fulfil a project's data and integration requirements.</p>
 <blockquote>
-<p><strong>Agent Architecture</strong>: This command delegates to the <code>arckit-datascout</code> autonomous agent. The agent runs as a subprocess with its own context window, searching <a href="http://api.gov.uk">api.gov.uk</a>, <a href="http://data.gov.uk">data.gov.uk</a>, department developer hubs, and commercial API providers without polluting your main conversation. The slash command launches the agent and relays its summary back to you.</p>
+<p><strong>Agent Architecture</strong>: In Claude Code the command runs in your main session. It sends reader subagents to gather evidence, and a writer subagent with no network tools then writes the document, which keeps the research out of your main context. Other assistants run a single combined prompt instead. The reader subagents search <a href="http://api.gov.uk">api.gov.uk</a>, <a href="http://data.gov.uk">data.gov.uk</a>, department developer hubs and commercial API providers.</p>
 </blockquote>
 <hr />
 <h2 id="what-is-data-source-discovery">What is Data Source Discovery?</h2>
@@ -532,9 +532,9 @@
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit:datascout Discover data sources for &lt;project&gt;
 </code></pre>
-<p>Outputs: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-DSCT-v1.0.md</code></p>
+<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-DSCT-&lt;NNN&gt;-v1.0.md</code></p>
 <blockquote>
-<p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
+<p><strong>Re-running</strong>: each run writes a new report with the next sequence number (<code>DSCT-001</code>, <code>DSCT-002</code> and so on), so earlier reports are kept.</p>
 </blockquote>
 <hr />
 <h2 id="long-runs-remote-control--push-notifications">Long runs: Remote Control + push notifications</h2>

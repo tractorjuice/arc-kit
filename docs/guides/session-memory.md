@@ -94,7 +94,7 @@ The two systems are complementary, not competing. Auto-memory captures *insights
 
 **Session classification seems wrong:**
 
-- Classification is based on artifact type codes in filenames (e.g., `ARC-001-SECD-v1.md`)
+- Classification is based on artifact type codes in filenames (e.g., `ARC-001-SECD-v1.0.md`)
 - Non-ARC files don't contribute to classification
 - Sessions with no detected ARC artifacts default to `general`
 - When multiple categories are present, the highest-priority one wins (compliance > governance > research > ...)

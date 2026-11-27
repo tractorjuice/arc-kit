@@ -35,6 +35,7 @@ Use `/arckit:sow`, `/arckit:evaluate`, and `/arckit:research` to prepare complia
 | Evaluation design | `/arckit:evaluate Create evaluation framework for <procurement>` | Weight criteria (technical, delivery, compliance, price, social value) |
 | Proposal scoring | `/arckit:evaluate Score <supplier>` | Consistent scoring, evidence, comments |
 | Comparison | `/arckit:evaluate Compare vendors for <procurement>` | Final justification and recommendation |
+| Scoring record | `/arckit:score vendor <supplier> --project=<id>`, then `compare` or `audit` | Structured, moderated scores in `vendors/scores.json`, with comparison and audit trail |
 
 Store outputs under `projects/<id>/vendors/` for audit.
 

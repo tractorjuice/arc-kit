@@ -208,19 +208,15 @@ Evaluate the search results honestly:
 
 This section prevents users from drawing false conclusions (e.g., "no government team has built this") when the reality is the index simply doesn't cover it.
 
-### Step 12: Detect Version and Determine Increment
+### Step 12: Allocate the Document ID
 
-Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCSR-*-v*.md` files. Read the highest version number from filenames.
+`GCSR` is a multi-instance type: each run writes a new document with the next sequence number, at version 1.0, and earlier documents are kept. Get the ID with:
 
-**If no existing file**: Use VERSION="1.0"
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} GCSR --next-num "projects/{project-dir}/research"
+```
 
-**If existing file found**:
-
-1. Read the existing document to understand its scope (queries searched, repos found)
-2. Compare against current query and findings
-3. Determine version increment:
-   - **Minor increment** (e.g., 1.0 → 1.1): Same query scope — refreshed results, updated repo details, minor additions
-   - **Major increment** (e.g., 1.0 → 2.0): Substantially different query, new capability areas, significantly different results landscape
+This returns the next sequenced ID, for example `ARC-{PROJECT_ID}-GCSR-002-v1.0`. Use it as the Document ID and the filename, set the Document Control Version to 1.0, and add a Revision History row for version 1.0 ("AI Agent", a description of the document, "PENDING", "PENDING").
 
 ### Step 13: Quality Check
 
@@ -228,7 +224,7 @@ Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and
 
 ### Step 14: Write Output
 
-Use the **Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCSR-v${VERSION}.md` following the template structure.
+Use the **Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCSR-{NNN}-v1.0.md` following the template structure.
 
 Auto-populate fields:
 

@@ -452,24 +452,35 @@
 <tr>
 <td>Evaluation Framework</td>
 <td><code>/arckit:evaluate</code></td>
-<td><code>ARC-&lt;id&gt;-EVAL-v1.0.md</code> plus scoring spreadsheet</td>
+<td><code>ARC-&lt;id&gt;-EVAL-v1.0.md</code> with mandatory qualifications, scoring criteria and weights</td>
 </tr>
 <tr>
 <td>Proposal Scoring</td>
 <td><code>/arckit:evaluate Score &lt;vendor&gt;</code></td>
-<td><code>vendors/&lt;vendor&gt;/ARC-&lt;id&gt;-EVAL-&lt;vendor&gt;-v1.0.md</code> and comparison matrix</td>
+<td><code>vendors/_evaluations/&lt;vendor&gt;/</code> (<code>claims.json</code>, <code>evaluation.md</code>, <code>notes.md</code>), and the EVAL's comparative table updated</td>
+</tr>
+<tr>
+<td>Vendor Comparison</td>
+<td><code>/arckit:evaluate Compare vendors</code></td>
+<td><code>ARC-&lt;id&gt;-VEND-v1.0.md</code> with a comparison matrix and recommendation</td>
+</tr>
+<tr>
+<td>Persistent Scores</td>
+<td><code>/arckit:score vendor &lt;name&gt; --project=&lt;id&gt;</code>, then <code>compare</code> or <code>audit</code></td>
+<td><code>vendors/scores.json</code>, a structured scoring record with comparison and audit trail</td>
 </tr>
 </tbody>
 </table>
+<p>In Claude Code, each vendor's bid is read by a separate reader subagent, so no bid reaches the scoring conversation. A second, independent scorer scores the same claims without seeing the first scores, and a neutral moderator settles any criterion where the two differ materially.</p>
 <hr />
 <h2 id="decision-flow">Decision Flow</h2>
 <pre><code class="language-text">Requirements ready? → run /arckit:sow
 ↓
 Agree evaluation criteria with stakeholders → /arckit:evaluate
 ↓
-Receive proposals → /arckit:evaluate Score &lt;vendor&gt;
+Receive proposals → /arckit:evaluate Score &lt;vendor&gt; (or /arckit:score vendor &lt;name&gt;)
 ↓
-/arckit:evaluate Compare vendors → board decision
+/arckit:evaluate Compare vendors (or /arckit:score compare) → board decision
 </code></pre>
 <hr />
 <h2 id="inputs-checklist">Inputs Checklist</h2>
@@ -522,7 +533,7 @@ Receive proposals → /arckit:evaluate Score &lt;vendor&gt;
 <h2 id="best-practice-tips">Best Practice Tips</h2>
 <ul>
 <li>Include a supplier Q&amp;A window; capture clarifications inside the SOW annex.</li>
-<li>Run moderated scoring sessions; document consensus reasons in <code>comparison.md</code>.</li>
+<li>Run moderated scoring sessions. ArcKit records each moderated criterion, with both scores, the moderator's final score and its reason, in the vendor's <code>evaluation.md</code> (<code>/arckit:evaluate</code>) or under <code>moderation</code> in <code>vendors/scores.json</code> (<code>/arckit:score</code>).</li>
 <li>Track mandatory gate checks (financial due diligence, security vetting) alongside evaluation.</li>
 <li>Store all artefacts in <code>projects/&lt;id&gt;/vendors/</code> for audit and reuse.</li>
 </ul>

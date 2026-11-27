@@ -38,4 +38,4 @@ This overlay adds commands, templates and reference material only. It sends no d
 
 ## Maintainer
 
-`[COMMUNITY]` — recruiting domain co-maintainer. Originally contributed in PR [pending].
+`[COMMUNITY]` — recruiting domain co-maintainer. Originally contributed in PR #626.

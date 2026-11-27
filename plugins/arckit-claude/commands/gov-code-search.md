@@ -155,9 +155,9 @@ Compute directly in this conversation — no helper script. For each deduplicate
 - **Coverage gaps** — variations returning fewer than 5 hits, whole organisation types absent, conflicting facts from Step 6, and every reader error.
 - **Suggested follow-ups** — adjacent queries worth running, derived from the vocabulary that actually appeared in the results.
 
-### Step 9: Detect version
+### Step 9: Allocate the document ID
 
-Glob `projects/{P}-{NAME}/research/ARC-{P}-GCSR-*-v*.md`. If none, the document is `v1.0`; otherwise increment the minor version of the highest. Allocate the ID with `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`.
+`GCSR` is a multi-instance type: each run writes a new document with the next sequence number in `research/`, at `v1.0`. Allocate the ID with `node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {P} GCSR --next-num "projects/{P}-{NAME}/research"`, which returns, for example, `ARC-{P}-GCSR-002-v1.0`.
 
 ### Step 10: Dispatch the writer
 

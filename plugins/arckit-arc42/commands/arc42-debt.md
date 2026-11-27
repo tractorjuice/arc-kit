@@ -41,7 +41,7 @@ Resolve the existing project as described in step 1 before reading its sources. 
 
 - **CDAU** (Codebase Audit, in `audits/`): findings (`F-001` and so on) with their dimension, severity and evidence; drift between the code and the documented architecture
 - **CONF** (Conformance Assessment): the ATD-KNOWN and ATD-UNTRACK checks (`ATD-001` and so on), deviations, and expired or unremediated exceptions
-- **DLDR** and **HLDR** (design reviews, in `reviews/`): conditions, deferred items and findings
+- **DLDR** and **HLDR** (design reviews, in `vendors/{vendor}/`, or `reviews/` in older projects): conditions, deferred items and findings
 - **ADR** (every instance, in `decisions/`): negative consequences the decision accepted, and superseded decisions not yet migrated
 - **RISK** (Risk Register): risks accepted as trade-offs (ACCEPT treatment) and technical risks caused by existing debt
 - **PRIN-COMP** (Principles Compliance), where one exists: approved principle exceptions (`EXC-001` and so on) and their expiry dates

@@ -159,9 +159,9 @@ Apply the rubric's `domain_aggregates` block: organisations active, repositories
 
 An opportunity is a **counted observation with citations**, not an impression: two or more organisations holding repositories with the same `framework_hints` and overlapping `topics`, the same capability implemented separately in three or more places, or a repository forked across organisations. Report the count and cite each instance. If nothing meets the bar, say so rather than reaching.
 
-### Step 11: Detect version
+### Step 11: Allocate the document ID
 
-Glob `projects/{P}-{NAME}/research/ARC-{P}-GLND-*-v*.md`. If none, `v1.0`; otherwise increment the minor version of the highest. Allocate the ID with `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`.
+`GLND` is a multi-instance type: each run writes a new document with the next sequence number in `research/`, at `v1.0`. Allocate the ID with `node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {P} GLND --next-num "projects/{P}-{NAME}/research"`, which returns, for example, `ARC-{P}-GLND-002-v1.0`.
 
 ### Step 12: Dispatch the writer
 

@@ -30,14 +30,14 @@ Output: `projects/<id>/ARC-<id>-DINUM-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| RGI v2 | Interoperability standards (open formats, APIs, protocols) |
-| RGAA v4.1 | Accessibility compliance (WCAG 2.1 AA + French extensions) |
+| State Cloud Doctrine | Data classification, cloud strategy, SecNumCloud triggers |
+| RGI v2.0 | Interoperability standards (open formats, APIs, protocols) |
+| RGAA 4.1 | Accessibility compliance (WCAG 2.1 AA + French extensions) |
 | RGESN | Eco-design for digital services (RGESN 2024: 78 criteria in 9 families) |
-| RGS v2 | General security baseline for information systems |
-| Doctrine Cloud | Data classification, cloud strategy, SecNumCloud triggers |
-| SILL | Recommended open source software stack |
-| Code Reuse | Circulaire 2021 obligations (see `/arckit-fr:fr-code-reuse`) |
-| Gap Analysis | Priority gaps with regulatory reference |
+| RGS v2.0 | General security baseline for information systems |
+| FranceConnect / ProConnect | Identity integration |
+| DSFR | French State design system |
+| Gap Analysis and Action Plan | Priority gaps with regulatory reference |
 
 ---
 

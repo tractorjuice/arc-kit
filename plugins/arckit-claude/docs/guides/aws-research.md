@@ -91,7 +91,7 @@ Add constraints (budget, classification, region) in the prompt for tailored resu
 
 Output: `projects/<id>/research/ARC-<id>-AWRS-<NNN>-v1.0.md` (`AWRS` is a multi-instance type, numbered `AWRS-001`, `AWRS-002`, and so on)
 
-> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
+> **Re-running**: each run writes a new report with the next sequence number (`AWRS-001`, `AWRS-002` and so on), so earlier reports are kept.
 
 ---
 
@@ -111,7 +111,7 @@ Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a 
 
 ## MCP Tools Used
 
-The command uses five AWS Knowledge MCP tools:
+The command uses four AWS Knowledge MCP tools:
 
 | Tool | Purpose |
 |------|---------|

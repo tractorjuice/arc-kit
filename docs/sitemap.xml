@@ -2,55 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://arckit.org/</loc>
-        <lastmod>2026-11-19</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://arckit.org/commands.html</loc>
-        <lastmod>2026-11-19</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://arckit.org/getting-started.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://arckit.org/guides.html</loc>
-        <lastmod>2026-11-19</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://arckit.org/articles.html</loc>
-        <lastmod>2026-11-19</lastmod>
+        <lastmod>2026-11-22</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://arckit.org/claude-code-plugin.html</loc>
-        <lastmod>2026-11-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://arckit.org/public-sector.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://arckit.org/fde/</loc>
-        <lastmod>2026-10-19</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://arckit.org/fde/architects.html</loc>
-        <lastmod>2026-10-19</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -86,19 +86,19 @@
     </url>
     <url>
         <loc>https://arckit.org/privacy.html</loc>
-        <lastmod>2026-11-14</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
         <loc>https://arckit.org/llms.txt</loc>
-        <lastmod>2026-11-19</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://arckit.org/certification/index.html</loc>
-        <lastmod>2026-10-14</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -123,7 +123,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/adr.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -189,7 +189,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/analyze.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -237,13 +237,13 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/archify.html</loc>
-        <lastmod>2026-09-03</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/architecture-board.html</loc>
-        <lastmod>2026-07-01</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -261,7 +261,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/artifact-health.html</loc>
-        <lastmod>2026-10-31</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -291,7 +291,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/atrs.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -303,25 +303,25 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/au-ai-assurance.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/au-disp-attestation.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/au-dss.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/au-e8-posture.html</loc>
-        <lastmod>2026-10-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -333,37 +333,37 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/au-federal-overlay.html</loc>
-        <lastmod>2026-10-28</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/au-ism-controls.html</loc>
-        <lastmod>2026-10-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/au-ndb-playbook.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/au-ot-security.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/au-pia.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/au-pspf.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -387,13 +387,13 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/aws-research.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/azure-research.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -405,7 +405,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/build.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -429,7 +429,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/c4-layout-science.html</loc>
-        <lastmod>2026-06-07</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -519,7 +519,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/conformance.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -531,7 +531,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/custom-commands.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -561,7 +561,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/datascout.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -579,7 +579,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/design-review.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -603,7 +603,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/dld-review.html</loc>
-        <lastmod>2026-11-08</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -621,13 +621,13 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/enterprise-scale.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/eu-ai-act.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -651,7 +651,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/eu-dora.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -663,25 +663,25 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/eu-nis2.html</loc>
-        <lastmod>2026-10-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/eu-rgpd.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/evaluate.html</loc>
-        <lastmod>2026-11-08</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/export-okf.html</loc>
-        <lastmod>2026-06-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -693,43 +693,43 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/fr-algorithme-public.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/fr-anssi.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/fr-anssi-carto.html</loc>
-        <lastmod>2026-08-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/fr-code-reuse.html</loc>
-        <lastmod>2026-10-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/fr-dinum.html</loc>
-        <lastmod>2026-10-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/fr-dr.html</loc>
-        <lastmod>2026-08-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/fr-ebios.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -741,7 +741,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/fr-marche-public.html</loc>
-        <lastmod>2026-10-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -759,13 +759,13 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/fr-secnumcloud.html</loc>
-        <lastmod>2026-10-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/framework.html</loc>
-        <lastmod>2026-11-11</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -795,31 +795,31 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/gcp-research.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/glossary.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/gov-code-search.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/gov-landscape.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/gov-reuse.html</loc>
-        <lastmod>2026-11-11</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -849,7 +849,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/hld-review.html</loc>
-        <lastmod>2026-11-08</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -885,13 +885,13 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/knowledge-compounding.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/legacy-assessment.html</loc>
-        <lastmod>2026-11-02</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -909,7 +909,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/mcp-servers.html</loc>
-        <lastmod>2026-11-19</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -921,7 +921,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/migration.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -933,7 +933,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/mod-secure.html</loc>
-        <lastmod>2026-10-25</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -1011,7 +1011,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/pinecone-mcp.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1029,7 +1029,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/presentation.html</loc>
-        <lastmod>2026-10-17</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1053,7 +1053,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/procurement.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1071,19 +1071,19 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/remote-control.html</loc>
-        <lastmod>2026-06-18</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/repo-audit.html</loc>
-        <lastmod>2026-07-30</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/repo-docs.html</loc>
-        <lastmod>2026-07-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1095,7 +1095,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/research.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1113,7 +1113,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/risk-management.html</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1125,7 +1125,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/roles/README.html</loc>
-        <lastmod>2026-05-25</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1293,7 +1293,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/security-hooks.html</loc>
-        <lastmod>2026-10-01</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1311,13 +1311,13 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/servicenow.html</loc>
-        <lastmod>2026-10-25</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/session-memory.html</loc>
-        <lastmod>2026-03-09</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1353,7 +1353,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/start.html</loc>
-        <lastmod>2026-11-13</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1389,7 +1389,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/template-builder.html</loc>
-        <lastmod>2026-07-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1419,7 +1419,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/trello.html</loc>
-        <lastmod>2026-09-29</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1467,13 +1467,13 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/uae-overlay.html</loc>
-        <lastmod>2026-10-28</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/uae-overlay-maintenance.html</loc>
-        <lastmod>2026-10-28</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1508,8 +1508,20 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://arckit.org/guide/uk-food-allergens.html</loc>
+        <lastmod>2026-11-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/guide/uk-food-check.html</loc>
-        <lastmod>2026-11-18</lastmod>
+        <lastmod>2026-11-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/guide/uk-food-cleaning-schedule.html</loc>
+        <lastmod>2026-11-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1526,6 +1538,12 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://arckit.org/guide/uk-food-record-sheets.html</loc>
+        <lastmod>2026-11-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/guide/uk-food-safe-methods.html</loc>
         <lastmod>2026-11-19</lastmod>
         <changefreq>monthly</changefreq>
@@ -1533,13 +1551,19 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/uk-food-safety-overlay.html</loc>
-        <lastmod>2026-11-19</lastmod>
+        <lastmod>2026-11-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/uk-food-sign-off.html</loc>
-        <lastmod>2026-11-18</lastmod>
+        <lastmod>2026-11-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/guide/uk-food-suppliers.html</loc>
+        <lastmod>2026-11-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1557,7 +1581,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/uk-fs-payments-overlay.html</loc>
-        <lastmod>2026-10-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1581,7 +1605,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/uk-government/digital-marketplace.html</loc>
-        <lastmod>2026-11-11</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1623,7 +1647,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/upgrading.html</loc>
-        <lastmod>2026-08-04</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1641,7 +1665,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/us-federal-overlay.html</loc>
-        <lastmod>2026-10-28</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1653,7 +1677,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/us-fedramp-ssp.html</loc>
-        <lastmod>2026-10-28</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1671,7 +1695,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/us-nist-800-53.html</loc>
-        <lastmod>2026-10-28</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1695,7 +1719,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/wardley.html</loc>
-        <lastmod>2026-10-25</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -2098,6 +2122,12 @@
     <url>
         <loc>https://arckit.org/share/2026-11-19-arckit-v6-23-safer-food-better-business-sfbb-for-caterers.html</loc>
         <lastmod>2026-11-19</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/share/2026-11-22-arckit-v6-25-google-antigravity-plugin-agent-skills.html</loc>
+        <lastmod>2026-11-22</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>

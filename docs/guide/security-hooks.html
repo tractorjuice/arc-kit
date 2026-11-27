@@ -18,14 +18,14 @@
     <meta name="author" content="ArcKit">
     <title>Security Hooks Guide | ArcKit</title>
     <meta property="og:title" content="Security Hooks Guide">
-    <meta property="og:description" content="ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration.">
+    <meta property="og:description" content="ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration. They are Node.js…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/security-hooks.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Security Hooks Guide">
-    <meta name="twitter:description" content="ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration.">
+    <meta name="twitter:description" content="ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration. They are Node.js…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/security-hooks.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/security-hooks.md">
@@ -339,7 +339,7 @@
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/security-hooks.html",
                 "headline": "Security Hooks Guide",
-                "description": "ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration.",
+                "description": "ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration. They are Node.js…",
                 "url": "https://arckit.org/guide/security-hooks.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -423,7 +423,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
             <h1 class="app-page-hero__title">Security Hooks Guide</h1>
-            <p class="app-page-hero__description">ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration.</p>
+            <p class="app-page-hero__description">ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration. They are Node.js…</p>
         </div>
     </div>
 
@@ -434,7 +434,7 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p>ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration.</p>
+<p>ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration. They are Node.js scripts (<code>.mjs</code>) that Claude Code runs with <code>node</code>, so Node.js must be on your <code>PATH</code>.</p>
 <h2 id="three-layer-protection-model">Three-Layer Protection Model</h2>
 <p>The security hooks implement defence in depth with three complementary layers:</p>
 <table>
@@ -450,21 +450,21 @@
 <tbody>
 <tr>
 <td>1</td>
-<td><code>secret-detection.py</code></td>
+<td><code>secret-detection.mjs</code></td>
 <td>UserPromptSubmit</td>
 <td>Every user message</td>
 <td>Catches secrets pasted into prompts</td>
 </tr>
 <tr>
 <td>2</td>
-<td><code>file-protection.py</code></td>
-<td>PreToolUse (Edit|Write)</td>
+<td><code>file-protection.mjs</code></td>
+<td>PreToolUse (Edit|Write|NotebookEdit)</td>
 <td>File edit/write operations</td>
 <td>Blocks writes to sensitive file paths</td>
 </tr>
 <tr>
 <td>3</td>
-<td><code>secret-file-scanner.py</code></td>
+<td><code>secret-file-scanner.mjs</code></td>
 <td>PreToolUse (Edit|Write)</td>
 <td>File edit/write operations</td>
 <td>Scans content being written for embedded secrets</td>
@@ -474,17 +474,17 @@
 <h3 id="how-the-layers-work-together">How the layers work together</h3>
 <ol>
 <li>
-<p><strong>Layer 1 — Prompt scanning</strong>: Before your message reaches the model, <code>secret-detection.py</code> scans the prompt text for known secret patterns (API keys, tokens, passwords, connection strings). If a secret is detected, the message is blocked before it is sent.</p>
+<p><strong>Layer 1 — Prompt scanning</strong>: Before your message reaches the model, <code>secret-detection.mjs</code> scans the prompt text for known secret patterns (API keys, tokens, passwords, connection strings). If a secret is detected, the message is blocked before it is sent.</p>
 </li>
 <li>
-<p><strong>Layer 2 — Path protection</strong>: When Claude attempts to edit or write a file, <code>file-protection.py</code> checks whether the target file path is sensitive (environment files, credential stores, private keys, lock files). Protected files are blocked regardless of content.</p>
+<p><strong>Layer 2 — Path protection</strong>: When Claude attempts to edit or write a file, <code>file-protection.mjs</code> checks whether the target file path is sensitive (environment files, credential stores, private keys, lock files). Protected files are blocked regardless of content.</p>
 </li>
 <li>
-<p><strong>Layer 3 — Content scanning</strong>: For files that pass the path check, <code>secret-file-scanner.py</code> examines the actual content being written for secret patterns. This catches cases where a secret is embedded in an otherwise safe file path.</p>
+<p><strong>Layer 3 — Content scanning</strong>: For files that pass the path check, <code>secret-file-scanner.mjs</code> examines the actual content being written for secret patterns. This catches cases where a secret is embedded in an otherwise safe file path.</p>
 </li>
 </ol>
 <h2 id="what-each-hook-detects">What Each Hook Detects</h2>
-<h3 id="secret-detectionpy-prompt-scanner"><a href="http://secret-detection.py">secret-detection.py</a> (Prompt Scanner)</h3>
+<h3 id="secret-detectionmjs-prompt-scanner">secret-detection.mjs (Prompt Scanner)</h3>
 <p>Scans user prompts for:</p>
 <ul>
 <li><strong>Key-value secrets</strong>: <code>pwd=</code>, <code>api_key=</code>, <code>auth_token=</code>, <code>api_secret=</code></li>
@@ -495,11 +495,12 @@
 <li><strong>High-entropy credentials</strong>: Long base64-like strings assigned to key/secret variables</li>
 </ul>
 <p><strong>Example block:</strong></p>
-<pre><code class="language-text">$ echo '{&quot;userPrompt&quot;: &quot;Use this key sk-ant-abc123def456ghi789&quot;}' \
-    | python3 plugins/arckit-claude/hooks/secret-detection.py
+<pre><code class="language-text">$ fake=&quot;sk-ant-$(printf 'x%.0s' {1..24})&quot;   # a made-up key, built at run time
+$ echo &quot;{\&quot;prompt\&quot;: \&quot;Use this key $fake\&quot;}&quot; \
+    | node plugins/arckit-claude/hooks/secret-detection.mjs
 # Output: {&quot;decision&quot;: &quot;block&quot;, &quot;reason&quot;: &quot;Warning: Potential secrets detected: ...&quot;}
 </code></pre>
-<h3 id="file-protectionpy-path-guard"><a href="http://file-protection.py">file-protection.py</a> (Path Guard)</h3>
+<h3 id="file-protectionmjs-path-guard">file-protection.mjs (Path Guard)</h3>
 <p>Blocks writes to:</p>
 <ul>
 <li><strong>Environment files</strong>: <code>.env</code>, <code>.env.local</code>, <code>.env.production</code>, <code>.env.development</code></li>
@@ -513,38 +514,44 @@
 </ul>
 <p><strong>Example block:</strong></p>
 <pre><code class="language-text">$ echo '{&quot;tool_name&quot;: &quot;Write&quot;, &quot;tool_input&quot;: {&quot;file_path&quot;: &quot;.env&quot;, &quot;content&quot;: &quot;DB_HOST=localhost&quot;}}' \
-    | python3 plugins/arckit-claude/hooks/file-protection.py
-# Output: {&quot;decision&quot;: &quot;block&quot;, &quot;reason&quot;: &quot;Protected: Protected file: .env\nFile: .env\n...&quot;}
+    | node plugins/arckit-claude/hooks/file-protection.mjs
+# Output: {&quot;decision&quot;:&quot;block&quot;,&quot;reason&quot;:&quot;Protected: Protected file: .env*\nFile: .env\n...&quot;}
 </code></pre>
-<h3 id="secret-file-scannerpy-content-scanner"><a href="http://secret-file-scanner.py">secret-file-scanner.py</a> (Content Scanner)</h3>
-<p>Scans the content of files being written or edited using the same pattern library as <code>secret-detection.py</code>. This catches secrets that might be embedded in source code, configuration files, or documentation.</p>
+<h3 id="secret-file-scannermjs-content-scanner">secret-file-scanner.mjs (Content Scanner)</h3>
+<p>Scans the content of files being written or edited using the same pattern library as <code>secret-detection.mjs</code>. This catches secrets that might be embedded in source code, configuration files, or documentation.</p>
 <p><strong>Example block:</strong></p>
 <pre><code class="language-text">$ echo '{&quot;tool_name&quot;: &quot;Write&quot;, &quot;tool_input&quot;: {&quot;file_path&quot;: &quot;config.py&quot;, &quot;content&quot;: &quot;db_host=localhost&quot;}}' \
-    | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
+    | node plugins/arckit-claude/hooks/secret-file-scanner.mjs
 # Output: no output (safe content passes through)
 </code></pre>
 <h2 id="adding-exceptions">Adding Exceptions</h2>
 <h3 id="file-protection-exceptions">File protection exceptions</h3>
-<p>To allow edits to files that would normally be blocked by <code>file-protection.py</code>, you have three options:</p>
+<p>To allow edits to files that would normally be blocked by <code>file-protection.mjs</code>, you have two options. Both relax only the sensitive-keyword check on filenames; protected paths such as <code>.env*</code>, lock files and <code>*.pem</code> are always blocked.</p>
 <p><strong>1. Add to <code>ALLOWED_EXCEPTIONS</code></strong> — for specific filenames that are legitimate security tools:</p>
-<pre><code class="language-python">ALLOWED_EXCEPTIONS = [
-    &quot;.secrets.baseline&quot;,
-    &quot;.pre-commit-config.yaml&quot;,
-    &quot;secret-detection.py&quot;,
-    &quot;secret-file-scanner.py&quot;,
-    &quot;your-new-exception.py&quot;,  # Add here
-]
+<pre><code class="language-js">const ALLOWED_EXCEPTIONS = [
+  '.secrets.baseline',
+  '.pre-commit-config.yaml',
+  'secret-detection.mjs',
+  'secret-file-scanner.mjs',
+  'your-new-exception.mjs', // Add here
+];
 </code></pre>
-<p><strong>2. Add to <code>ALLOWED_DIRECTORIES</code></strong> — for directories containing documentation or tool files that discuss secrets:</p>
-<pre><code class="language-python">ALLOWED_DIRECTORIES = [
-    &quot;plugins/arckit-claude/commands/&quot;,
-    &quot;plugins/arckit-claude/templates/&quot;,
-    &quot;plugins/arckit-claude/agents/&quot;,
-    &quot;plugins/arckit-claude/hooks/&quot;,
-    &quot;docs/&quot;,
-    &quot;.arckit/templates/&quot;,
-    &quot;your-project/docs/&quot;,  # Add here
-]
+<p><strong>2. Add to the allowed directories</strong> — for directories containing documentation or tool files that discuss secrets. Plugin directories are matched relative to the plugin root, repository directories relative to the repository root:</p>
+<pre><code class="language-js">// Relative to the plugin root
+const ALLOWED_PLUGIN_DIRECTORIES = [
+  'commands/',
+  'templates/',
+  'agents/',
+  'hooks/',
+];
+
+// Relative to the repository root
+const ALLOWED_REPO_DIRECTORIES = [
+  'docs/',
+  '.arckit/templates/',
+  'projects/',
+  'your-folder/', // Add here
+];
 </code></pre>
 <h3 id="content-scanner-skip-patterns">Content scanner skip patterns</h3>
 <p><code>secret-file-scanner.mjs</code> skips only ArcKit's own security tooling and documentation, which legitimately discuss secret formats. Paths are resolved (so <code>..</code> and symlinks cannot escape) and matched relative to the plugin root, and — when the plugin runs from an ArcKit source checkout (<code>&lt;repo&gt;/plugins/arckit-claude</code>) — relative to that repo root. Files in your own projects, including <code>docs/*.md</code>, <code>README.md</code> and <code>CHANGELOG.md</code>, are always scanned.</p>
@@ -583,31 +590,32 @@ const SOURCE_REPO_SKIP_PATTERNS = [
 <p>This is a Claude Code permission policy, not an ArcKit hook — ArcKit ships no domain restrictions by default, leaving the choice to the deployment.</p>
 <p><strong>Sandboxed commands can be restricted harder (Claude Code v2.1.219+).</strong> <code>WebFetch</code> rules govern the model's own fetches. Commands that run inside the sandbox reach the network on their own, and <code>sandbox.network.strictAllowlist</code> denies any non-allowlisted host outright rather than prompting for it. Pair it with the MCP endpoint allowlist — see <a href="enterprise-scale.html#5-set-the-security-and-network-baseline">the enterprise security baseline</a>.</p>
 <h2 id="testing">Testing</h2>
-<p>You can test each hook by piping JSON to stdin. All hooks handle empty input gracefully.</p>
+<p>You can test each hook by piping JSON to stdin, from the root of an ArcKit source checkout. All hooks handle empty input gracefully.</p>
 <h3 id="test-file-protection-blocks-env-writes">Test file protection blocks .env writes</h3>
 <pre><code class="language-bash">echo '{&quot;tool_name&quot;: &quot;Write&quot;, &quot;tool_input&quot;: {&quot;file_path&quot;: &quot;.env&quot;, &quot;content&quot;: &quot;VALUE=abc&quot;}}' \
-    | python3 plugins/arckit-claude/hooks/file-protection.py
+    | node plugins/arckit-claude/hooks/file-protection.mjs
 </code></pre>
-<p>Expected: <code>{&quot;decision&quot;: &quot;block&quot;, ...}</code></p>
+<p>Expected: <code>{&quot;decision&quot;:&quot;block&quot;, ...}</code></p>
 <h3 id="test-secret-detection-blocks-api-keys-in-prompts">Test secret detection blocks API keys in prompts</h3>
-<pre><code class="language-bash">echo '{&quot;userPrompt&quot;: &quot;Use this key sk-ant-abc123def456ghi789&quot;}' \
-    | python3 plugins/arckit-claude/hooks/secret-detection.py
+<pre><code class="language-bash">fake=&quot;sk-ant-$(printf 'x%.0s' {1..24})&quot;   # a made-up key, built at run time
+echo &quot;{\&quot;prompt\&quot;: \&quot;Use this key $fake\&quot;}&quot; \
+    | node plugins/arckit-claude/hooks/secret-detection.mjs
 </code></pre>
-<p>Expected: <code>{&quot;decision&quot;: &quot;block&quot;, ...}</code></p>
+<p>Expected: <code>{&quot;decision&quot;:&quot;block&quot;, ...}</code></p>
 <h3 id="test-secret-file-scanner-blocks-secrets-in-content">Test secret file scanner blocks secrets in content</h3>
 <pre><code class="language-bash">echo '{&quot;tool_name&quot;: &quot;Write&quot;, &quot;tool_input&quot;: {&quot;file_path&quot;: &quot;test.md&quot;, &quot;content&quot;: &quot;pwd=hunter2&quot;}}' \
-    | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
+    | node plugins/arckit-claude/hooks/secret-file-scanner.mjs
 </code></pre>
-<p>Expected: <code>{&quot;decision&quot;: &quot;block&quot;, ...}</code></p>
+<p>Expected: <code>{&quot;decision&quot;:&quot;block&quot;, ...}</code></p>
 <h3 id="test-that-allowed-files-pass-through">Test that allowed files pass through</h3>
 <pre><code class="language-bash">echo '{&quot;tool_name&quot;: &quot;Write&quot;, &quot;tool_input&quot;: {&quot;file_path&quot;: &quot;plugins/arckit-claude/commands/research.md&quot;, &quot;content&quot;: &quot;Use API key format: sk-xxx&quot;}}' \
-    | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
+    | node plugins/arckit-claude/hooks/secret-file-scanner.mjs
 </code></pre>
 <p>Expected: no output (exit code 0, file is in a skip pattern)</p>
 <h3 id="test-that-empty-input-does-not-crash">Test that empty input does not crash</h3>
-<pre><code class="language-bash">echo '' | python3 plugins/arckit-claude/hooks/file-protection.py
-echo '' | python3 plugins/arckit-claude/hooks/secret-detection.py
-echo '' | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
+<pre><code class="language-bash">echo '' | node plugins/arckit-claude/hooks/file-protection.mjs
+echo '' | node plugins/arckit-claude/hooks/secret-detection.mjs
+echo '' | node plugins/arckit-claude/hooks/secret-file-scanner.mjs
 </code></pre>
 <p>Expected: no output or <code>{}</code> (exit code 0 for all)</p>
 </div>

@@ -16,8 +16,8 @@ The DTA Digital Service Standard is the Australian counterpart to the UK GDS Ser
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, user needs, accessibility targets |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | User populations, accountable authority, partners |
+| Diagrams (`ARC-<id>-DIAG-*`) and data flow diagrams (`ARC-<id>-DFD-*`) | Service context, channels, integrations, user data flows |
 | Strategy (`ARC-<id>-STRAT-v1.0.md`) | Programme phase, success measures |
-| Vendor HLD (`vendors/*/hld-v*.md`) | Technical posture, accessibility implementation |
 
 ---
 
@@ -35,7 +35,7 @@ Output: `projects/<id>/ARC-<id>-AUDSS-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
+| Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) |
 | Revision History | Version, date, author, changes, approvals |
 | Executive Summary | Applicability, posture against the 10 criteria, key gaps, exemptions sought, reporting readiness |
 | Service Context | Service name, owning agency, informational or transactional, public- or staff-facing, new / replacement / existing, IOF applicability, date the Standard applies from, phase, transaction volume |

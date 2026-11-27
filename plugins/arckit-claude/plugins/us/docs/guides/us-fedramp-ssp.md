@@ -14,11 +14,11 @@ Reviewed by the CSP's CISO, the System Owner, ISSO, AO, and the FedRAMP PMO. Man
 
 | Artefact | Purpose |
 |----------|---------|
-| FIPS 199 Categorization (`ARC-<id>-FIPS199-v1.0.md`) | Impact level for baseline selection |
-| Tailored Control Set (`ARC-<id>-NIST-v1.0.md`) | Control implementations to document |
-| ICAM Architecture (`ARC-<id>-ICAM-v1.0.md`) | Identity, credential, access management posture |
+| FIPS 199 Categorization (`ARC-<id>-FIPS199-v1.0.md`), required | Impact level for baseline selection |
+| Tailored Control Set (`ARC-<id>-NIST-v1.0.md`), required | Control implementations to document |
 | Architecture Principles (`ARC-<id>-PRIN-v1.0.md`) | Agency-specific posture statements |
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Functional context, integration points |
+| Data model, vendor HLD / DLD and diagrams | System description, boundary and interconnections |
 
 ---
 

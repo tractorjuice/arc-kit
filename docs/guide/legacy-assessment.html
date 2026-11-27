@@ -443,8 +443,10 @@ records evidence and policy gaps, and supplies remediation actions for investmen
 planning. It separately calculates the older published numerical model, which remains
 under review following the August 2026 definition.</p>
 <h2 id="install-the-optional-overlay">Install the optional overlay</h2>
-<p>In Claude Code, install the core plugin and this overlay from the ArcKit marketplace:</p>
-<pre><code class="language-bash">claude plugin install arckit arckit-uk-legacy
+<p>In Claude Code, add the ArcKit marketplace, then install and enable this overlay. The core plugin installs with it as a dependency:</p>
+<pre><code class="language-bash">claude plugin marketplace add tractorjuice/arckit-claude
+claude plugin install arckit-uk-legacy@arckit-claude
+claude plugin enable arckit-uk-legacy
 </code></pre>
 <p>The Claude command is <code>/arckit-uk-legacy:uk-legacy-assessment</code>. Other generated targets
 use their merged ArcKit namespace. The overlay consumes existing core artifacts;
@@ -456,7 +458,7 @@ core commands do not require or automatically recommend this optional assessment
 /arckit-uk-legacy:uk-legacy-assessment 001 risk-model none
 </code></pre>
 <p>Codex uses <code>$arckit-uk-legacy-assessment</code>; Copilot uses <code>/arckit-uk-legacy-assessment</code>.
-Gemini and OpenCode use <code>/arckit-uk-legacy:uk-legacy-assessment</code>.
+Gemini uses <code>/arckit-uk-legacy:uk-legacy-assessment</code>; OpenCode puts a dot where the colon goes (<code>/arckit.&lt;command&gt;</code>).
 The date defaults to the local calendar date. The command resolves an existing project
 and confirms ambiguous system boundaries; it does not silently create a new project.
 It writes <code>ARC-001-LEGACY-v1.0.md</code>, a JSON sidecar and, when numerical scoring is

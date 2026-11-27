@@ -531,7 +531,7 @@ Features:
 - Uses relative paths — works on any static hosting provider
 
 Health Integration:
-- Run `/arckit:health JSON=true` to generate docs/health.json
+- Run `/arckit:health` to generate docs/health.json (every run writes it)
 - Re-run `/arckit:pages` to display health data on the dashboard
 
 Deployment:

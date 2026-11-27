@@ -4,7 +4,7 @@
 
 `/arckit:research` investigates market, SaaS, open-source, and government marketplace options and reports what each offers, lacks and costs. It makes no build-or-buy decision: `/arckit:wardley` decides how to source each capability, and `/arckit:sobc` appraises value for money.
 
-> **Agent Architecture**: This command delegates to the `arckit-research` autonomous agent. The agent runs as a subprocess with its own context window, performing dozens of WebSearch and WebFetch calls for vendor pricing, reviews, and compliance data without polluting your main conversation. The slash command launches the agent and relays its summary back to you.
+> **Agent Architecture**: In Claude Code the command runs in your main session. It sends reader subagents to gather evidence, and a writer subagent with no network tools then writes the document, which keeps the research out of your main context. Other assistants run a single combined prompt instead. The reader subagents make the many WebSearch and WebFetch calls for vendor pricing, reviews and compliance data.
 
 ---
 
@@ -28,9 +28,9 @@ Add constraints (budget, data residency, clearance) in the prompt for tailored r
 /arckit:research Research <topic> for <project>
 ```
 
-Outputs: `projects/<id>/research/ARC-<id>-RSCH-001-v1.0.md`, plus a vendor profile in `vendors/` for each vendor found and a tech note in `tech-notes/` for each significant technology finding.
+Outputs: `projects/<id>/research/ARC-<id>-RSCH-<NNN>-v1.0.md`, plus a vendor profile in `vendors/` for each vendor found and a tech note in `tech-notes/` for each significant technology finding.
 
-> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
+> **Re-running**: each run writes a new report with the next sequence number (`RSCH-001`, `RSCH-002` and so on), so earlier reports are kept.
 
 ---
 

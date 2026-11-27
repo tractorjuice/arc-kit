@@ -12,12 +12,12 @@ This guide explains what Remote Control is, why it matters for ArcKit workflows,
 
 Remote Control is a Claude Code feature (available on Pro and Max plans) that lets you connect to a running local Claude Code session from [claude.ai/code](https://claude.ai/code) or the Claude mobile app ([iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) / [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude)).
 
-The key distinction: **your session never leaves your machine**. Claude Code continues running locally with full access to your filesystem, ArcKit plugin, MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and project configuration. The web or mobile interface is simply a window into that local session.
+The key distinction: **your session never leaves your machine**. Claude Code continues running locally with full access to your filesystem, ArcKit plugin, the bundled MCP servers (such as AWS Knowledge, Microsoft Learn and Google Developer Knowledge), and project configuration. The web or mobile interface is simply a window into that local session.
 
 This means:
 
 - Your `projects/` directory, templates, and generated artifacts stay local
-- All 75 ArcKit commands and research agents remain fully available
+- All ArcKit commands and research agents remain fully available
 - MCP servers for cloud research (AWS, Azure, GCP) keep working
 - Automation hooks (session init, project context injection, filename enforcement) continue to fire
 - You can send messages from terminal, browser, and phone interchangeably — the conversation stays in sync
@@ -147,5 +147,5 @@ Here's a practical workflow combining ArcKit and Remote Control for a typical ar
 ## Learn More
 
 - [Claude Code Remote Control Documentation](https://code.claude.com/docs/en/remote-control)
-- [ArcKit Plugin Installation Guide](https://github.com/tractorjuice/arc-kit)
+- [ArcKit Plugin Installation Guide](mcp-servers.md#installing-the-arckit-plugin)
 - [Claude Mobile App — iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) | [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude)

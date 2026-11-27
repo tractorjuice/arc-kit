@@ -5,11 +5,11 @@ using the Open Agile Architecture™ Standard, Version 2.0 (C262) — product-dr
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
-| `/arckit:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (4–8 week engagement windows) |
-| `/arckit:product-architecture` | `OAPR` | Product-centric architecture — cross-functional teams, backlog-driven delivery |
-| `/arckit:agile-strategy` | `OASTR` | Dual transformation canvas — digital transformation + agile transformation |
-| `/arckit:agile-security` | `OASEC` | Security embedded in sprint rhythm — threat modeling, compliance evidence |
-| `/arckit:agile-governance` | `OAGOV` | Lightweight governance cadence aligned to sprint cycles |
+| `/arckit-oaa:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (4–8 week engagement windows) |
+| `/arckit-oaa:product-architecture` | `OAPR` | Product-centric architecture — cross-functional teams, backlog-driven delivery |
+| `/arckit-oaa:agile-strategy` | `OASTR` | Dual transformation canvas — digital transformation + agile transformation |
+| `/arckit-oaa:agile-security` | `OASEC` | Security embedded in sprint rhythm — threat modeling, compliance evidence |
+| `/arckit-oaa:agile-governance` | `OAGOV` | Lightweight governance cadence aligned to sprint cycles |
 
 Recipe: `oaa-full` — all five O-AA commands (ADM Lite → product → strategy → security → governance) on top of the core `PRIN`/`STKE`/`REQ` foundation.
 
@@ -85,7 +85,7 @@ Each command is a **prompt template** — not an interactive questionnaire. The 
 PRIN → STKE → REQ → OAAL → OAPR → OASTR → OASEC → OAGOV
 ```
 
-Foundation commands (`principles`, `stakeholders`, `requirements`) should run first; each O-AA command reads them when present and notes the gap when they are missing. The O-AA order follows what each command reads: product architecture reads the ADM Lite sprint plan, the strategy canvas reads both, and security and governance read all three. Breaking core `arckit` (=6.24.0) breaks doc-type validators.
+Foundation commands (`principles`, `stakeholders`, `requirements`) should run first; each O-AA command reads them when present and notes the gap when they are missing. The O-AA order follows what each command reads: product architecture reads the ADM Lite sprint plan, the strategy canvas reads both, and security and governance read all three. Breaking core `arckit` (=6.26.0) breaks doc-type validators.
 
 ### Artefact Naming
 
@@ -104,7 +104,7 @@ Output uses the `ARC-NNN-TYPE-vN.N.md` convention:
 Commands declare explicit next-step targets. Claude Code auto-suggests subsequent commands mid-engagement:
 
 ```text
-/arckit:oaa-adm-lite "my project"
+/arckit-oaa:oaa-adm-lite "my project"
   → Handoff: product-architecture ("Design product-centric architecture")
   → Handoff: agile-strategy ("Plan dual transformation")
   → Handoff: agile-security ("Embed security into sprint rhythm")
@@ -176,11 +176,11 @@ Gate criteria at each sprint: artefact matches the inlined template structure, s
 claude plugin install arckit-oaa --marketplace tractorjuice/arckit-claude
 
 # Run individual commands
-/arckit:oaa-adm-lite "my project"
-/arckit:product-architecture "Observability Stack"
-/arckit:agile-strategy "enterprise AI transformation"
-/arckit:agile-security "AI platform"
-/arckit:agile-governance "enterprise AI platform"
+/arckit-oaa:oaa-adm-lite "my project"
+/arckit-oaa:product-architecture "Observability Stack"
+/arckit-oaa:agile-strategy "enterprise AI transformation"
+/arckit-oaa:agile-security "AI platform"
+/arckit-oaa:agile-governance "enterprise AI platform"
 ```
 
 ### Codex (Skills)

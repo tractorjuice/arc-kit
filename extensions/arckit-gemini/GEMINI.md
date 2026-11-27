@@ -1,6 +1,6 @@
 # ArcKit - Gemini Extension Context
 
-ArcKit is **The Enterprise Architecture Governance Harness**, providing 75 slash commands across strategy, architecture, delivery, assurance, and interoperability. It transforms architecture governance from scattered documents into a systematic, template-driven process.
+ArcKit is **The Enterprise Architecture Governance Harness**, providing 75 core slash commands, plus overlay commands, across strategy, architecture, delivery, assurance, and interoperability. It transforms architecture governance from scattered documents into a systematic, template-driven process.
 
 ## Extension File Locations
 
@@ -136,7 +136,7 @@ Many commands target UK public sector contexts:
 - **HM Treasury Orange Book** (Risk Management)
 - **G-Cloud / DOS** procurement frameworks
 - **Secure by Design** (Cabinet Office + MOD variants)
-- **AI Playbook** and **AI Transparency Recording Standards** (ATRS)
+- **AI Playbook** and **Algorithmic Transparency Recording Standard** (ATRS)
 - **JSP 936** (MOD AI assurance)
 
 ## Wardley Map Format

@@ -9,9 +9,9 @@ https://github.com/tractorjuice/arc-kit
 ## What Is Included
 
 - Reusable ArcKit Copilot prompts under `prompts/`
-- 10 custom agent definitions under `agents/`
+- 14 custom agent definitions under `agents/`
 - Project instructions in `copilot-instructions.md`
-- 112 document templates under `templates/`
+- Document templates under `templates/`
 - Handoff schemas and scoring rubrics under `schemas/`
 - Helper scripts under `scripts/`
 

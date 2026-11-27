@@ -36,4 +36,4 @@ Output: `projects/<id>/ARC-<id>-AUOT-v1.0.md`
 
 ## Notes
 
-This is a general Australian OT security command, not an energy-sector command. The later `au-energy` recipe should consume this artefact before adding AESCSF and energy-market obligations.
+This is a general Australian OT security command, not an energy-sector command. The `au-energy` plugin consumes this artefact before adding AESCSF and energy-market obligations.

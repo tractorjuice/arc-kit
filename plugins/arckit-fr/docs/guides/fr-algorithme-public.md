@@ -30,16 +30,12 @@ Output: `projects/<id>/ARC-<id>-ALGO-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Legal Framework | CRPA Art. L311-3-1, Loi République Numérique, GDPR Art. 22 |
-| Scope Determination | Which decisions are covered (administrative decisions affecting individuals) |
-| Algorithm Inventory | Per-algorithm section (ALGO-xx identifier) |
-| Algorithm Description | Plain-language description, purpose, legal basis |
-| Parameters and Weights | Input parameters and their influence; weighting applied to a person's case is communicated to them on request |
-| Human Oversight | Human review mechanisms and appeal rights |
-| GDPR Art. 22 | Automated individual decisions — safeguards required |
-| EU AI Act | Flag if ML system falls under AI Act high-risk category |
-| Publication Plan | Publication channel, update frequency |
-| Gap Analysis | Gaps with legal obligation reference |
+| Algorithm Inventory Summary | Algorithms in scope (ALGO-xx identifiers) |
+| Legal Framework | CRPA Art. L311-3-1, Loi République Numérique, obligation scope |
+| Per-algorithm sections | Identification, purpose and context, plain-language description, parameters and their influence, data used, citizen rights and recourse |
+| GDPR Intersection | Automated individual decisions (Art. 22) and safeguards required |
+| AI Act Intersection | Flag if a ML system falls under the AI Act high-risk category |
+| Publication and Maintenance | Publication channel, update frequency |
 
 ---
 

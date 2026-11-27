@@ -442,7 +442,7 @@
 </blockquote>
 <p><code>/arckit:gov-reuse</code> searches 24,500+ UK government open-source repositories to discover existing implementations that can be reused, forked, or referenced before building from scratch.</p>
 <blockquote>
-<p><strong>Agent Architecture</strong>: This command runs as an autonomous agent via the Task tool. The agent performs multiple govreposcrape searches per capability and uses WebFetch to assess each candidate's GitHub repository, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.</p>
+<p><strong>Agent Architecture</strong>: In Claude Code the command runs in your main session. It sends reader subagents to gather evidence, and a writer subagent with no network tools then writes the document, which keeps the research out of your main context. Other assistants run a single combined prompt instead. The readers run the govreposcrape searches for each capability and use WebFetch to assess each candidate's GitHub repository.</p>
 </blockquote>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
@@ -498,13 +498,13 @@
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit:gov-reuse &lt;capability or domain&gt;
 </code></pre>
-<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-GOVR-v1.0.md</code></p>
+<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-GOVR-&lt;NNN&gt;-v1.0.md</code></p>
 <blockquote>
-<p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version.</p>
+<p><strong>Re-running</strong>: each run writes a new report with the next sequence number (<code>GOVR-001</code>, <code>GOVR-002</code> and so on), so earlier reports are kept.</p>
 </blockquote>
 <hr />
 <h2 id="how-it-works">How It Works</h2>
-<p>The agent uses the govreposcrape semantic search API to query 24,500+ UK government repositories:</p>
+<p>The command uses the govreposcrape semantic search API to query 24,500+ UK government repositories:</p>
 <table>
 <thead>
 <tr>
@@ -527,7 +527,7 @@
 </tr>
 <tr>
 <td>4</td>
-<td>Score candidates on 5 criteria (1-5 scale)</td>
+<td>Score candidates on 5 weighted criteria (0-100 scale)</td>
 </tr>
 <tr>
 <td>5</td>
@@ -548,31 +548,31 @@
 <tbody>
 <tr>
 <td>License compatibility</td>
-<td>Equal</td>
+<td>25%</td>
 <td>OGL / MIT</td>
 <td>Proprietary</td>
 </tr>
 <tr>
 <td>Code quality</td>
-<td>Equal</td>
+<td>20%</td>
 <td>Tests, CI, clean</td>
 <td>No tests, unmaintained</td>
 </tr>
 <tr>
 <td>Documentation</td>
-<td>Equal</td>
+<td>20%</td>
 <td>Comprehensive README, guides</td>
 <td>No documentation</td>
 </tr>
 <tr>
 <td>Tech stack alignment</td>
-<td>Equal</td>
+<td>20%</td>
 <td>Same stack</td>
 <td>Incompatible</td>
 </tr>
 <tr>
 <td>Activity / maintenance</td>
-<td>Equal</td>
+<td>15%</td>
 <td>Active (recent commits)</td>
 <td>Abandoned (&gt;2 years)</td>
 </tr>

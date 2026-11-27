@@ -10,11 +10,10 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Global architecture principles (`ARC-000-PRIN-v1.0.md`) | Mandatory standards and decision guardrails |
+| Global architecture principles (`ARC-000-PRIN-v1.0.md`), required | Mandatory standards and decision guardrails. The command stops without them |
 | ADM preliminary (`ARC-<id>-ADMP-v1.0.md`) | Scope, phases, governance model |
 | Business capability map (`ARC-<id>-BPCM-v1.0.md`) | Business scope and owners |
-| Gap analysis (`ARC-<id>-GAPA-v1.0.md`) | Prioritised gap closure needs |
-| Transition architecture (`ARC-<id>-TRANS-v1.0.md`) | Work packages requiring governance |
+| High-level design (the vendor's `vendors/<vendor>/hld-v*.md`) | Architecture decisions requiring governance review |
 | Existing governance policies or board minutes | Decision precedent and local operating model |
 
 ---

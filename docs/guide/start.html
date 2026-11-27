@@ -453,7 +453,7 @@
 </thead>
 <tbody>
 <tr>
-<td>Claude Code / OpenCode</td>
+<td>Claude Code</td>
 <td><code>/arckit:start</code></td>
 <td><code>/arckit:init</code></td>
 <td><code>/arckit:principles</code></td>
@@ -478,7 +478,7 @@
 </tr>
 </tbody>
 </table>
-<p>Examples below use Claude Code / OpenCode syntax. Translate commands using the table above for other platforms.</p>
+<p>OpenCode CLI uses the same names with a dot after <code>arckit</code> (<code>/arckit.&lt;command&gt;</code>). Examples below use Claude Code syntax. Translate commands using the table above for other platforms.</p>
 <hr />
 <h2 id="quick-start">Quick Start</h2>
 <h3 id="step-0-check-your-platform-setup">Step 0: Check your platform setup</h3>
@@ -517,7 +517,7 @@ $arckit-principles
 </blockquote>
 <hr />
 <h2 id="vibe-start--the-3-prompt-super-prompt">Vibe Start — The 3-Prompt Super Prompt</h2>
-<p>If you want to skip the decision tree and let ArcKit do the heavy lifting, this is the fastest possible path from empty repo to a fully-populated project. Three prompts, no manual orchestration:</p>
+<p>If you want to skip the triage and let ArcKit do the heavy lifting, this is the fastest possible path from empty repo to a fully-populated project. Three prompts, no manual orchestration:</p>
 <pre><code class="language-text">1. /arckit:init  This is a project for {one-line description of what you're building}.
 
 2. /arckit:principles
@@ -540,7 +540,7 @@ $arckit-principles
 <ul>
 <li><strong>Heavily regulated work</strong> (UK Gov Secure by Design, MOD, EU AI Act) where each artifact needs reviewer sign-off before the next is generated.</li>
 <li><strong>Existing projects</strong> with artifacts already on disk — run <code>/arckit:navigator</code> first to see what is missing rather than regenerating.</li>
-<li><strong>Token-constrained sessions</strong> — the full chain can run dozens of commands. Use the Claude Code session default, normally Claude Sonnet 5, and move to Claude Fable 5.1 (the default Fable model since Claude Code v2.1.257) only where your tenant exposes it and the work justifies the higher tier.</li>
+<li><strong>Token-constrained sessions</strong> — the full chain can run dozens of commands. Use the Claude Code session default and move to Claude Fable 5.2 (the default Fable model since Claude Code v2.1.321) only where your tenant exposes it and the work justifies the higher tier.</li>
 </ul>
 <h3 id="tips-for-vibe-start">Tips For Vibe Start</h3>
 <ul>
@@ -559,60 +559,38 @@ $arckit-principles
 /arckit:start procurement
 /arckit:start governance review
 </code></pre>
-<p>Output: Console only (no file created). This is a navigation aid, not a governance artifact.</p>
+<p>Output: Console only (no file created). This is a navigation aid, not a governance artifact. The command runs nothing for you: it presents a plan and you run the commands.</p>
 <h3 id="what-it-does">What It Does</h3>
+<p><code>/arckit:start</code> follows the <code>architecture-workflow</code> skill.</p>
 <ol>
-<li><strong>Welcome banner</strong> — shows ArcKit version, command count, and mode</li>
-<li><strong>Project detection</strong> — scans <code>projects/</code> for existing artifacts and estimates completeness</li>
-<li><strong>Tool survey</strong> — checks for connected MCP servers (AWS Knowledge, Microsoft Learn, Google Developer)</li>
-<li><strong>Command decision tree</strong> — visual routing guide organised by workflow area</li>
-<li><strong>Context-aware recommendations</strong> — suggests 3-5 next steps based on your project maturity</li>
-<li><strong>Conversational entry points</strong> — three quick-start paths for common scenarios</li>
+<li><strong>Project detection</strong> — scans <code>projects/</code> for existing projects, the principles document and the artifacts each project already has, and classes the project as new, early, mid or late stage</li>
+<li><strong>Triage questions</strong> — asks four questions, one at a time: sector, project type, current stage and primary goal. A focus argument may let it skip some</li>
+<li><strong>Deeper questions</strong> — for UK Government, Defence, AI/ML or full-lifecycle projects it also asks about compliance frameworks, procurement, strategic analysis and timeline</li>
+<li><strong>Tailored plan</strong> — selects a base workflow for your sector, adds modifiers for AI/ML or data projects, drops phases you have already done, and lists the commands in order, grouped by phase</li>
+<li><strong>Adjustment</strong> — asks whether you want to change the plan or are ready to begin</li>
 </ol>
 <h3 id="example-output">Example Output</h3>
-<pre><code class="language-text">ArcKit — The Enterprise Architecture Governance Harness
-Plugin mode
+<pre><code class="language-text">Project State: [1 project found, 4 artifacts, ~20% complete]
 
-Your AI-powered harness for strategy, architecture, delivery, and assurance
-— all driven by templates and traceability.
+Recommended Command Sequence
+=============================
 
-Projects
---------
-🟢 [001] nhs-appointment (12 artifacts, ~75% complete)
-🟠 [002] data-platform   (4 artifacts, ~30% complete)
+Based on: [UK Government] + [AI/ML] project, starting fresh, full lifecycle
 
-Global foundations:
-  ✓ Architecture Principles (ARC-000-PRIN-v1.0.md)
-  ✓ Policies directory
-  ✗ No external reference documents
+Phase 1: Foundation
+  1. /arckit:principles — Governance foundation (GDS + TCoP aligned)
+  2. /arckit:stakeholders — Map DDaT roles, SROs, policy owners
+  3. /arckit:risk — HMG Orange Book risk methodology
 
-Connected Tools
----------------
-✓ AWS Knowledge — AWS service research and architecture patterns
-✓ Microsoft Learn — Azure and Microsoft documentation
-✗ Google Developer — not connected (GCP research available via web search fallback)
-
-What are you working on?
-
-Starting a new project
-├── No project structure?     → /arckit:init
-├── Need principles first?    → /arckit:principles
-├── Planning phases &amp; gates?  → /arckit:plan
-└── Ready to scope?           → /arckit:stakeholders → /arckit:requirements
+Phase 2: Business Justification
+  4. /arckit:sobc — HM Treasury Green Book 5-case model
+  5. /arckit:requirements — Central artifact for all downstream work
 
 ...
 
-Suggested next steps
---------------------
-1. Project [002] data-platform needs attention (30% complete)
-2. Run /arckit:research for data-platform to evaluate technology options
-3. Run /arckit:health to scan all projects for stale artifacts
+[Total: N commands across M phases]
 
-How can I help today?
-
-1. &quot;I'm starting a new project&quot;
-2. &quot;I need to make an architecture decision&quot;
-3. &quot;I want to review existing work&quot;
+Run commands in order. Each command will guide you through its process.
 </code></pre>
 <hr />
 <h2 id="arckitinit--create-project-structure"><code>/arckit:init</code> — Create Project Structure</h2>
@@ -660,50 +638,51 @@ Individual projects will be created automatically in numbered directories (001-*
 <p>Each command automatically creates numbered project directories (001-*, 002-*) as needed.</p>
 <hr />
 <h2 id="workflow-paths">Workflow Paths</h2>
-<p><code>/arckit:start</code> connects to all five standard ArcKit workflows:</p>
+<p><code>/arckit:start</code> picks a base workflow from your sector, then applies modifiers:</p>
 <table>
 <thead>
 <tr>
 <th>Workflow</th>
-<th>Entry Point</th>
-<th>Key Commands</th>
+<th>Chosen when</th>
+<th>Reference</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Standard Delivery</td>
-<td>&quot;I'm starting a new project&quot;</td>
-<td><code>init</code> → <code>principles</code> → <code>stakeholders</code> → <code>requirements</code></td>
+<td>Standard</td>
+<td>Private sector or public sector outside the UK</td>
+<td><code>standard-path</code></td>
 </tr>
 <tr>
 <td>UK Government</td>
-<td>Compliance focus</td>
-<td><code>service-assessment</code>, <code>tcop</code>, <code>secure</code>, <code>ai-playbook</code></td>
+<td>Sector is UK Government (civilian departments)</td>
+<td><code>uk-gov-path</code></td>
 </tr>
 <tr>
-<td>AI/ML Projects</td>
-<td>Architecture decisions</td>
-<td><code>research</code> → <code>adr</code> → <code>mlops</code> → <code>ai-playbook</code></td>
+<td>Defence</td>
+<td>Sector is Defence (MOD, defence contractors)</td>
+<td><code>defence-path</code></td>
 </tr>
 <tr>
-<td>Cloud Migration</td>
-<td>Platform strategy</td>
-<td><code>aws-research</code> / <code>azure-research</code> → <code>platform-design</code> → <code>wardley</code></td>
+<td>AI/ML (modifier)</td>
+<td>Project type is AI/ML</td>
+<td><code>ai-ml-path</code></td>
 </tr>
 <tr>
-<td>Data Platform</td>
-<td>Data architecture</td>
-<td><code>data-model</code> → <code>datascout</code> → <code>data-mesh-contract</code></td>
+<td>Data (modifier)</td>
+<td>Project type is a data platform or analytics</td>
+<td><code>data-path</code></td>
 </tr>
 </tbody>
 </table>
+<p>If a project is both AI/ML and data, both modifiers apply. The plan is then scaled to your goal, stage and timeline.</p>
 <p>See <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/WORKFLOW-DIAGRAMS.md">WORKFLOW-DIAGRAMS.md</a> for visual workflow diagrams.</p>
 <hr />
 <h2 id="tips">Tips</h2>
 <ul>
 <li><strong>Run <code>/arckit:start</code> at the beginning of any session</strong> — it gives you a quick snapshot of where things stand and what to do next.</li>
 <li><strong>Run <code>/arckit:init</code> once per repository</strong> — it creates the project structure. Safe to re-run if the structure already exists.</li>
-<li><strong>Use a focus argument</strong> like <code>/arckit:start procurement</code> to skip directly to that section of the decision tree.</li>
+<li><strong>Use a focus argument</strong> like <code>/arckit:start procurement</code>. It is used as context during triage and may let the command skip some questions.</li>
 <li><strong>Principles next</strong> — after init, run <code>/arckit:principles</code> as most commands depend on architecture principles.</li>
 <li><strong>Pairs well with <code>/arckit:health</code></strong> — start gives you navigation, health gives you artifact-level diagnostics.</li>
 </ul>

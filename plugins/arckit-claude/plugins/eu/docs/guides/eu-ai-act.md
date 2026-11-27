@@ -33,16 +33,14 @@ Output: `projects/<id>/ARC-<id>-AIACT-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Scope Determination | Is it an AI system under Art. 3? GPAI model? |
-| Risk Classification | Unacceptable / High-risk / Limited / Minimal |
-| Prohibited Practices | Art. 5 checks (social scoring, biometric categorisation) |
-| High-Risk Obligations | Conformity assessment, technical documentation, CE marking |
-| Transparency | Art. 50 disclosure requirements (chatbots, deepfakes) |
-| GPAI Model Obligations | Training data transparency, copyright policy, systemic risk |
-| Human Oversight | Art. 14 human oversight mechanisms |
-| EUDB Registration | EU AI Act database registration (high-risk systems) |
-| Fundamental Rights | Impact on protected groups |
-| Gap Analysis | Gaps with priority and deadline |
+| 1. AI System Classification | Is it an AI system under Art. 3? GPAI model? Risk class: unacceptable / high-risk / limited / minimal |
+| 2. Prohibited AI Practices (Art. 5) | Social scoring, biometric categorisation and the other Art. 5 checks |
+| 3. High-Risk AI Requirements (Arts. 8–17) | Risk management, data governance, technical documentation, human oversight |
+| 4. Transparency Obligations (Arts. 50–52) | Disclosure requirements (chatbots, deepfakes) |
+| 5. GPAI Model Obligations (Arts. 53–55) | Training data transparency, copyright policy, systemic risk |
+| 6. Conformity Assessment and Registration | Conformity route, CE marking, EU database registration |
+| 7. French Market Context | National supervisory context |
+| 8. Gap Analysis and Roadmap | Gaps with priority and deadline |
 
 ---
 

@@ -133,8 +133,8 @@ find "$PROJECT_DIR" -type f -name "*.md" | sort
 
 **Design Review Artifacts**:
 
-- `vendors/*/reviews/ARC-*-HLDR-*.md` - High-Level Design reviews
-- `vendors/*/reviews/ARC-*-DLDR-*.md` - Detailed Design reviews
+- `vendors/*/ARC-*-HLDR-*.md` (or `reviews/ARC-*-HLDR-*.md` in an older project) - High-Level Design reviews
+- `vendors/*/ARC-*-DLDR-*.md` (or `reviews/ARC-*-DLDR-*.md` in an older project) - Detailed Design reviews
 
 **Delivery Artifacts**:
 
@@ -318,7 +318,7 @@ For each artifact found, **read the file** and extract key information:
 - Winner: Vendor name and score
 - Score breakdown: Individual vendor scores
 
-**vendors/*/reviews/ARC-*-HLDR-*.md**:
+**vendors/*/ARC-*-HLDR-*.md**:
 
 - Verdict: APPROVED/APPROVED WITH CONDITIONS/REJECTED
 - Principles compliance: Percentage
@@ -327,7 +327,7 @@ For each artifact found, **read the file** and extract key information:
 - Concerns: Count of concerns
 - Gaps: Count of gaps
 
-**vendors/*/reviews/ARC-*-DLDR-*.md**:
+**vendors/*/ARC-*-DLDR-*.md**:
 
 - Verdict: APPROVED/APPROVED WITH CONDITIONS/REJECTED
 - Implementation readiness: Assessment

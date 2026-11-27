@@ -61,7 +61,7 @@ writer agents are dispatched normally.
 
 ## What you produce
 
-A DRAFT discovery artefact at `projects/{P}-{NAME}/research/ARC-{P}-DSCT-vN.N.md`, written by the writer subagent on your behalf, containing:
+A DRAFT discovery artefact at `projects/{P}-{NAME}/research/ARC-{P}-DSCT-{NNN}-v1.0.md`, written by the writer subagent on your behalf, containing:
 
 1. **Discovered data sources** — APIs, datasets, open data portals, and commercial providers mapped to each requirement.
 2. **Weighted scoring** — each source rated against six criteria using the chosen rubric (deterministic, not LLM-judged).
@@ -189,12 +189,9 @@ The scoring is a pure function of `(evidence, rubric)` — no LLM judgment. If y
 - Build the gap analysis: for each requirement that has no matched source, record `{ requirement_id, reason }`.
 - Build the traceability matrix: one row per data-related requirement, listing the matched source name + score, or `—` for gaps.
 
-### Step 8: Detect version
+### Step 8: Allocate the document ID
 
-Glob `projects/{project-dir}/research/ARC-{PROJECT_ID}-DSCT-*-v*.md`. If none, version = `1.0`. If existing, read the highest-version file to compute the increment:
-
-- Minor (1.0 → 1.1) if scope unchanged (refresh, additions within existing categories)
-- Major (1.0 → 2.0) if categories added/removed or fundamentally different sources
+`DSCT` is a multi-instance type: each run writes a new document with the next sequence number in `research/`, at `v1.0`. Allocate the ID with `node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} DSCT --next-num "projects/{project-dir}/research"`, which returns, for example, `ARC-{PROJECT_ID}-DSCT-002-v1.0`.
 
 ### Step 9: Dispatch writer subagent
 
@@ -211,8 +208,8 @@ Build the writer's input. Each entry in `scored_sources` carries the full `sourc
   "project_path": "projects/{P}-{NAME}",
   "project_id": "{P}",
   "project_name": "{NAME}",
-  "document_id": "ARC-{P}-DSCT-v{VERSION}",
-  "version": "{VERSION}",
+  "document_id": "ARC-{P}-DSCT-{NNN}-v1.0",
+  "version": "1.0",
   "date_iso": "<today>",
   "classification": "OFFICIAL",
   "rubric_used": "uk-gov",
