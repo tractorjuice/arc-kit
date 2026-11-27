@@ -803,6 +803,7 @@ All artifacts must pass these 10 checks:
 - Overlaps are examined for sector-specific use before a rationalisation candidate is proposed
 - Unfilled components carry a relevance judgement (Expected / Possibly not needed / To be confirmed) with a reason
 - Bedrijfsfunctie coverage distinguishes *Not supported* (landscape gap) from *No GEMMA component* (reference-model property)
+- Without the bedrijfsfunctiemodel extract, Section 4 is skipped and its absence is recorded under Source limitations
 - Standards support and data exchange are evidence-based, with Unknown as the default where evidence is missing
 - Every roadmap candidate traces to a finding in Sections 3–6, and no product or supplier is recommended or called GEMMA-compliant
 - Every roadmap candidate has a priority (High / Medium / Low) with a reason

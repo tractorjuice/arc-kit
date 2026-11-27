@@ -97,6 +97,8 @@ Only relations stated in the extracts count. A relation an extract lists under *
 - Every implicatie under each NAP has a status, evidence and gap, and missing evidence is Unknown.
 - Each NAP's conformance follows the rule above, and Not applicable always carries a justification.
 - In GEMMA mode, every GAP is matched by title or NORA link, its implicaties are numbered `GAPnn.i`, and NAP and GAP conformance stay separate.
+- In GEMMA mode, Section 3b assesses GEMMA's own principles (GAP18 onwards) in ID order.
+- The Vijflaagsmodel view counts each NORA implicatie once per layer it is tagged with, not once per NAP, and leaves GEMMA implicaties out.
 - Roll-ups use only extract relations; there is no overall percentage or single score.
 - Deviations are separated from gaps and each has an ADR or "ADR required".
 - Non-conformance is described as an architecture finding, never as a legal breach: NORA and GEMMA are afsprakenstelsels, not law.
